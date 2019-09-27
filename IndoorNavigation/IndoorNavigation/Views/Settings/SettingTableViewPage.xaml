@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+             x:Class="IndoorNavigation.Views.Settings.SettingTableViewPage"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Title="{i18n:Translate SETTING_STRING}">
+    
+    <ContentPage.Resources>
+        <!-- SettingsView properties settings -->
+        <ResourceDictionary>
+            <Color x:Key="AppBackground">#ffffff</Color>
+            <Color x:Key="AccentColor">#3F51B5</Color>
+            <Color x:Key="DisabledColor">#E6DAB9</Color>
+            <Color x:Key="TitleTextColor">#3F51B5</Color>
+            <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
+            <Color x:Key="DeepTextColor">#000</Color>
+            <Color x:Key="NormalTextColor">#666666</Color>
+            <Color x:Key="PaleTextColor">#999999</Color>
+            <Color x:Key="EmphasisTextColor">#FF0000</Color>
+            <x:Double x:Key="BaseFontSize">16</x:Double>
+            <x:Double x:Key="BaseFontSize+">14</x:Double>
+            <x:Double x:Key="BaseFontSize++">16</x:Double>
+            <x:Double x:Key="BaseFontSize-">12</x:Double>
+
+            <Style TargetType="sv:SettingsView">
+                <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
+                <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
+                <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
+                <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />
+                <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />
+                <Setter Property="CellValueTextFontSize" Value="{StaticResource BaseFontSize}" />
+                <Setter Property="CellDescriptionColor" Value="{StaticResource NormalTextColor}" />
+                <Setter Property="CellDescriptionFontSize" Value="{StaticResource BaseFontSize-}" />
+                <Setter Property="CellAccentColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="SelectedColor" Value="#ecf5ff" />
+                <Setter Property="HeaderTextColor" Value="{StaticResource TitleTextColor}" />
+                <Setter Property="HeaderFontSize" Value="{StaticResource BaseFontSize++}" />
+                <Setter Property="FooterFontSize" Value="{StaticResource BaseFontSize-}" />
+                <Setter Property="FooterTextColor" Value="{StaticResource PaleTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        
+        <sv:SettingsView HasUnevenRows="true">
+    
+            <sv:Section Title="{i18n:Translate SETTING_STRING}">
+                <sv:CommandCell IconSource="icon.png" IconSize="60,60"
+                                Title="{i18n:Translate BEDITECH_STRING}" Description=""/>
+                <sv:TextPickerCell x:Name="OptionPicker" Title="{i18n:Translate DOWNLOAD_MAP_STRING}" 
+                                   Items="{Binding _chooseMap}" SelectedCommand="{Binding _chooseMapCommand}"/>
+                <sv:CommandCell x:Name="DownloadMapButton" Title="{i18n:Translate DOWNLOAD_QRCODE_MAP_STRING}" 
+                                Tapped="DownloadGraphBtn_Tapped"/>
+                <sv:TextPickerCell x:Name="CleanMapPicker" Title="{i18n:Translate DELETE_MAP_STRING}" 
+                                   Items="{Binding _cleanNaviGraphItems}" SelectedCommand="{Binding _cleanMapCommand}"/>
+                <sv:CommandCell x:Name="SpeechTestButton" Title="{i18n:Translate VOICE_TEST_STRING}" 
+                                Tapped="SpeechTestBtn_Tapped"/>
+                <sv:TextPickerCell x:Name="LanguagePicker" Title="{i18n:Translate CHANGE_LANGUAGE_STRING}" 
+                                   Items="{Binding _languageItems}" SelectedCommand="{Binding _changeLanguageCommand}"/>
+            </sv:Section>
+
+            <sv:Section Title="{i18n:Translate LICENSE_AND_PRIVACY_STRING}">
+                    <sv:CommandCell x:Name="LicenseButton" Title="{i18n:Translate LICENSE_STRING}" Tapped="LicenseBtn_Tapped"/>
+                    <sv:CommandCell Title="{i18n:Translate PRIVACY_STRING}"/>
+            </sv:Section>
+                
+            <sv:Section Title="{i18n:Translate OTHERS_STRING}">
+                    <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate ABOUT_BEDI_STRING}"/>
+            </sv:Section>
+        
+        </sv:SettingsView>
+        
+    </ContentPage.Content>
+    
+</ContentPage>

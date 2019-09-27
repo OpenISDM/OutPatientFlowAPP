@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{838E3226-4020-4B90-A20E-0166CB9B65B5}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>IndoorNavigation.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>IndoorNavigation.iOS</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <LangVersion>7.1</LangVersion>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Distribution: Chun Yu Lai (9K6K5L2N6F)</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchArch>ARM64</MtouchArch>
+    <BuildIpa>True</BuildIpa>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhoneSimulator'">
+    <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhoneSimulator'">
+    <LangVersion>7.1</LangVersion>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BeaconScan.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <None Include="Entitlements.plist" />
+    <None Include="Info.plist" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QrCodeDecoder.cs" />
+    <Compile Include="Renderers\CustomContentPageRenderer.cs" />
+    <None Include="Helpers\TranslateExtension.txt" />
+    <Compile Include="TextToSpeech.cs" />
+    <Compile Include="BeaconScanForIBeacon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2688%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28828x1792%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281125x2436%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%281242x2208%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28750x1334%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x960%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28640x1136%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\path-guide-2%28320x480%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
+    <PackageReference Include="Xamarin.CustomControls.ProgressBarView">
+      <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms.Visual.Material">
+      <Version>3.6.0.344457</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Multilingual">
+      <Version>1.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\IndoorNavigation\IndoorNavigation.csproj">
+      <Project>{36779A2B-18D9-4509-BAE5-01652A9D37E8}</Project>
+      <Name>IndoorNavigation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\navigation_button.png" />
+    <BundleResource Include="Resources\tracking_button.png" />
+    <BundleResource Include="Resources\position_FAB.png" />
+    <BundleResource Include="Resources\location_icon.png" />
+    <BundleResource Include="Resources\position_FAB_white.png" />
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\tabitem1_navigator.png" />
+    <BundleResource Include="Resources\tabitem2_routes.png" />
+    <BundleResource Include="Resources\tabitem3_setting.png" />
+    <BundleResource Include="Resources\tabitem3_setting_tabbed.png" />
+    <BundleResource Include="Resources\tabitem2_routes_tabbed.png" />
+    <BundleResource Include="Resources\tabitem1_navigator_tabbed.png" />
+    <BundleResource Include="Resources\settings_gears_imagebutton.png" />
+    <BundleResource Include="Resources\Warning.png" />
+    <BundleResource Include="Resources\Waiting.png" />
+    <BundleResource Include="Resources\Arrived.png" />
+    <BundleResource Include="Resources\Stairs_down.png" />
+    <BundleResource Include="Resources\Stairs_up.png" />
+    <BundleResource Include="Resources\waittingscan.gif" />
+    <BundleResource Include="Resources\homeicon_wc.png" />
+    <BundleResource Include="Resources\homeicon_store.png" />
+    <BundleResource Include="Resources\homeicon_stairs.png" />
+    <BundleResource Include="Resources\homeicon_parking.png" />
+    <BundleResource Include="Resources\homeicon_other.png" />
+    <BundleResource Include="Resources\homeicon_office2.png" />
+    <BundleResource Include="Resources\homeicon_exit.png" />
+    <BundleResource Include="Resources\homeicon_elevator2.png" />
+    <BundleResource Include="Resources\homeicon_branch2.png" />
+    <BundleResource Include="Resources\appicon2.png" />
+    <BundleResource Include="Resources\Bathroom.png" />
+    <BundleResource Include="Resources\BloodCollectionCounter.png" />
+    <BundleResource Include="Resources\Cashier.png" />
+    <BundleResource Include="Resources\Clinics.png" />
+    <BundleResource Include="Resources\ConvenienceStore.png" />
+    <BundleResource Include="Resources\ExaminationRoom.png" />
+    <BundleResource Include="Resources\Exit.png" />
+    <BundleResource Include="Resources\Others.png" />
+    <BundleResource Include="Resources\Pharmacy.png" />
+    <BundleResource Include="Resources\Arrow_frontleft.png" />
+    <BundleResource Include="Resources\Arrow_frontright.png" />
+    <BundleResource Include="Resources\Arrow_rearleft.png" />
+    <BundleResource Include="Resources\Arrow_rearright.png" />
+    <BundleResource Include="Resources\Arrow_up.png" />
+    <BundleResource Include="Resources\service_hospital_logo.png" />
+    <BundleResource Include="Resources\Lab\Lab11100004.png" />
+    <BundleResource Include="Resources\Elevtor_down.png" />
+    <BundleResource Include="Resources\Elevator_up.png" />
+    <BundleResource Include="Resources\Escalator_down.png" />
+    <BundleResource Include="Resources\Escalator_up.png" />
+    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101415.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100209.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100208.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100202.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100203.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100205.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100206.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100213.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100214.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100113.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100114.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100106.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100105.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\Arrow_down.png" />
+    <BundleResource Include="Resources\Arrow_left.png" />
+    <BundleResource Include="Resources\Arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\close_circle_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloud_computing.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\Lab\" />
+    <Folder Include="Resources\NTUH_YunLin\" />
+    <Folder Include="Resources\Taipei_City_Hall\" />
+  </ItemGroup>
+</Project>

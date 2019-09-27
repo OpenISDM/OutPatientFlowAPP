@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+             xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage"
+             Title="{i18n:Translate PREFERENCES_STRING}">
+    
+    <ContentPage.Resources>
+        <!-- SettingsView properties settings -->
+        <ResourceDictionary>
+            <Color x:Key="AppBackground">#ffffff</Color>
+            <Color x:Key="AccentColor">#009FCC</Color>
+            <Color x:Key="DisabledColor">#E6DAB9</Color>
+            <Color x:Key="TitleTextColor">#3F51B5</Color>
+            <!--Color x:Key="PaleBackColorPrimary"></Color-->
+            <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
+            <Color x:Key="DeepTextColor">#000</Color>
+            <Color x:Key="NormalTextColor">#666666</Color>
+            <Color x:Key="PaleTextColor">#999999</Color>
+            <Color x:Key="EmphasisTextColor">#FF0000</Color>
+            <x:Double x:Key="BaseFontSize">16</x:Double>
+            <x:Double x:Key="BaseFontSize+">14</x:Double>
+            <x:Double x:Key="BaseFontSize++">16</x:Double>
+            <x:Double x:Key="BaseFontSize-">12</x:Double>
+
+            <Style TargetType="sv:SettingsView">
+                <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
+                <!--Setter Property="BackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
+                <!--Setter Property="HeaderBackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
+                <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
+                <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
+                <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />
+                <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />
+                <Setter Property="CellValueTextFontSize" Value="{StaticResource BaseFontSize}" />
+                <Setter Property="CellDescriptionColor" Value="{StaticResource NormalTextColor}" />
+                <Setter Property="CellDescriptionFontSize" Value="{StaticResource BaseFontSize-}" />
+                <Setter Property="CellAccentColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="SelectedColor" Value="#ecf5ff" />
+                <Setter Property="HeaderTextColor" Value="{StaticResource TitleTextColor}" />
+                <Setter Property="HeaderFontSize" Value="{StaticResource BaseFontSize++}" />
+                <Setter Property="FooterFontSize" Value="{StaticResource BaseFontSize-}" />
+                <Setter Property="FooterTextColor" Value="{StaticResource PaleTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        
+        <sv:SettingsView x:Name="NavigationSettingsView" 
+                         HasUnevenRows="true" >
+    
+            <sv:Section Title="{i18n:Translate ROUTE_OPTION_STRING}">
+                <sv:SwitchCell x:Name="AvoidStair" Title="{i18n:Translate AVOID_STAIR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidElevator" Title="{i18n:Translate AVOID_ELEVATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+                <sv:SwitchCell x:Name="AvoidEscalator" Title="{i18n:Translate AVOID_ESCALATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
+            </sv:Section>
+            
+            <sv:Section Title="{i18n:Translate RSSI_OPTION_STRING}">
+                <sv:TextPickerCell x:Name="OptionPicker" Title="{i18n:Translate RSSI_OPTION_STRING}" 
+                                   Items="{Binding _chooseRssi}" SelectedCommand="{Binding _changeRssiCommand}"/>
+            </sv:Section>
+            
+        </sv:SettingsView>
+        
+    </ContentPage.Content>
+    
+</ContentPage>
