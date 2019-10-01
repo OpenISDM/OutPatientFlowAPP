@@ -17,6 +17,7 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\MvvmHelpers.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Newtonsoft.Json.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.CurrentActivity.dll
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.InputKit.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.Multilingual.Abstractions.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.Multilingual.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.Permissions.dll

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Title="{i18n:Translate LOGIN_STRING}"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.SignInPage">
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="0, 0, 0, 25" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+    
+    <ContentPage.Content>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <Entry x:Name="IDNumEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Medium" Grid.Row="1"  MinimumHeightRequest="20" />
+            <Entry x:Name="PatientIDEntry" Placeholder="{i18n:Translate INPUT_PATIENT_ID_STRING}" Grid.Row="2" FontSize="Medium" MinimumHeightRequest="20"/>
+            <Label Text="{i18n:Translate BIRTHDAY_STRING}" Grid.Row="4" VerticalOptions="EndAndExpand" FontSize="Large"/>
+            <DatePicker x:Name="BirthDayPicker" Grid.Row="5"/>
+            <Label Text="{i18n:Translate REGISTERDAY_STRING}" Grid.Row="6" VerticalOptions="EndAndExpand" FontSize="Large"/>
+            <DatePicker x:Name="RgDayPicker" Grid.Row="7"/>
+            <Button Text="{i18n:Translate OK_STRING}" Clicked="Button_Clicked" HorizontalOptions="CenterAndExpand" Grid.Row="8"/>
+        </Grid>
+            
+        
+    </ContentPage.Content>
+</ContentPage>

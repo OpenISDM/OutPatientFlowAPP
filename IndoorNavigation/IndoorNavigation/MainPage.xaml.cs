@@ -55,6 +55,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
+using Xamarin.Essentials;
 
 namespace IndoorNavigation
 {
@@ -138,7 +139,7 @@ namespace IndoorNavigation
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (e.Item is Location location)
+            if (e.Item is ViewModels.Location location)
             {
                 NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(location.UserNaming);
 
@@ -149,9 +150,30 @@ namespace IndoorNavigation
                             _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
                             location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
                             _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                        string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+                        string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
+                        DateTime birthday = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
+
                         if (answser)
                         {
-                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+                            await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
+                            bool isRigister = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+                                  _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
+                                  _resourceManager.GetString("OK_STRING", currentLanguage),
+                                  _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                            if (isRigister)
+                            {
+                                await Navigation.PushAsync(new NavigatorPage(location.UserNaming, new Guid(), new Guid(""), "Registation Station", new XMLInformation(new System.Xml.XmlDocument())));
+                            }
+                            if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty) || birthday.Equals(DateTime.Now))
+                            {
+                                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+                                    _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                            }
+                            else
+                            {
+                                //query server data to observablecollection
+                            }
                         }
                         break;
 
@@ -186,7 +208,7 @@ namespace IndoorNavigation
 
         void Item_Delete(object sender, EventArgs e)
         {
-            var item = (Location)((MenuItem)sender).CommandParameter;
+            var item = (ViewModels.Location)((MenuItem)sender).CommandParameter;
 
             if (item != null)
             {

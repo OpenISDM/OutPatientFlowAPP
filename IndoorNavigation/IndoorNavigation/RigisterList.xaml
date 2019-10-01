@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+             xmlns:local="clr-namespace:IndoorNavigation"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+            Title="{i18n:Translate NAVIGATION_LIST_STRING}"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.RigisterList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
+                <ViewCell >
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Medium" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
+                                    HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                            <StackLayout Orientation="Horizontal">
+                                <Label x:Name="OutpatientimeString" FontSize="Medium" Text="{i18n:Translate OUTPATIENT_TIME_STRING}"/>
+                                <Label x:Name="PatientTime" FontSize="Medium"  
+                               Text="{Binding DptTime,StringFormat='{0}'}"/>
+                            </StackLayout>
+                            <Label x:Name="SeqAndRoom" FontSize="Medium"
+                               Text="{Binding SeqAndRoom, StringFormat='{0}'}"/>
+                            <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="NotComplete"> <!--to show schedule that was added. this name got something wrong..-->
+                <ViewCell>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                            <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" 
+                                   HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                            <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Medium" IsEnabled="{Binding isComplete}"
+                                    IsVisible="{Binding isComplete}" Clicked="YetFinishBtn_Clicked" CommandParameter="{Binding .}"/>
+                        </StackLayout>
+                        <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Complete" > <!--to show finished schedule-->
+                <ViewCell IsEnabled="False" Height="50">
+                    <StackLayout BackgroundColor="#bfbfbf">
+                        <Label Text="{Binding DptName}" FontSize="Large" TextColor="#999999"/>
+                        <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="0, 0, 0, 25" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+
+    <ContentPage.Content>
+        <AbsoluteLayout>
+           
+            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="+"
+                    FontSize="Large" TextColor="White" WidthRequest="30" HeightRequest="30" CornerRadius="40"
+                    Clicked="AddBtn_Clicked" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.95,0.85,60,60"/>
+
+            <Button x:Name="ShiftBtn" Text="↑↓" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="30" 
+                    HeightRequest="30" CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" 
+                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.95,0.7,60,60"/>
+
+            <Grid x:Name="RigistListGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
+                   VerticalOptions="CenterAndExpand" FontSize="Medium" Grid.Row="0"/>
+                <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>
+                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"  ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+                </ListView>
+
+                <Button x:Name="PaymemtListBtn" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" Grid.Row="2" IsEnabled="False" Clicked="PaymemtListBtn_Clicked"/>
+            </Grid>
+           
+            
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

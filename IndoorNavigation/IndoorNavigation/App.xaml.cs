@@ -55,13 +55,16 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using IndoorNavigation.Resources;
 using Plugin.Multilingual;
+using System.Collections.ObjectModel;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
     public partial class App : Application
     {
-
+        public RgRecord AddRgRecord;
+        public ObservableCollection<RgRecord> records;
+        public int FinishCount = 0;
         public App()
         {
             InitializeComponent();

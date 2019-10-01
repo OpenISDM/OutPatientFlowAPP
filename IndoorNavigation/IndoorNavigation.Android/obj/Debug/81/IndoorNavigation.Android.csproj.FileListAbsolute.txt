@@ -1251,3 +1251,11 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\stamp\_GenerateJavaStubs.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\linksrc\Plugin.InputKit.dll
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\assets\Plugin.InputKit.dll
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\AutoCompleteViewRenderer.java
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\BoxArrayAdapter.java
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\CustomFilter.java
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\EmptyEntryRenderer.java
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\NewIconViewRenderer.java
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Debug\81\android\src\md5ffeca0b21d3d64625b97da200d27681b\StatefulStackLayoutRenderer.java

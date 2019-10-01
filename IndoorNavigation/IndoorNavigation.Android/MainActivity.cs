@@ -44,7 +44,7 @@ namespace IndoorNavigation.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
-
+            Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
@@ -54,7 +54,7 @@ namespace IndoorNavigation.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }

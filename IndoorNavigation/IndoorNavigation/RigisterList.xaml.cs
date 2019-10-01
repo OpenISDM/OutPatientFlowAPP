@@ -1,0 +1,236 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
+using IndoorNavigation.Views.Navigation;
+using Plugin.Multilingual;
+using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
+using Rg.Plugins.Popup;
+using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
+
+namespace IndoorNavigation
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class RigisterList : ContentPage
+    {
+        
+        private string _navigationGraphName;
+        private NavigationGraph _navigationGraph;
+        public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private XMLInformation _nameInformation;
+        private bool HavePayment = false;
+        //private int FinisihCount = 0;
+
+        App app = (App)Application.Current;
+
+       // public ObservableCollection<DestinationItem> _destinationItems { get; set; }
+        const string resourceId = "IndoorNavigation.Resources.AppResources";
+
+       /* public ObservableCollection<RgRecord> rgRecords;
+        public ObservableCollection<ExaminationRoom> rooms;*/
+        public RigisterList(string navigationGraphName,QueryResult result)
+        {
+            InitializeComponent();
+
+          
+          
+            _navigationGraphName = navigationGraphName;
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+
+
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+            }
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+            }
+            app.records = LoadData();
+            RgListView.ItemsSource = app.records;
+            
+        }
+
+        ObservableCollection<RgRecord> LoadData()   //for fake data
+         {
+            ObservableCollection<RgRecord> rgs = new ObservableCollection<RgRecord>();
+
+            rgs.Add(new RgRecord
+            {
+                Date = "10-10",
+                DptName = "心臟內科",
+                Shift = "50",
+                CareRoom = "0205",
+                DptTime = "8:30~10:00",
+                DrName = "waston",
+                SeeSeq = "50",
+                Key = "QueryResult",
+                isAccept = false,
+                isComplete=false
+            }); ;
+
+            rgs.Add(new RgRecord
+            {
+                Date="10-11",
+                DptName="復健醫學科",
+                DptTime = "8:30~10:00",
+                Shift ="55",
+                CareRoom="102",
+                DrName="gary",
+                SeeSeq="2",
+                Key= "QueryResult",
+                isAccept = false,
+                isComplete = false
+            });
+
+            rgs.Add(new RgRecord
+            {
+                Date = "10-12",
+                DptName = "聯發科",
+                DptTime = "8:30~10:00",
+                Shift = "1",
+                DrName = "pp",
+                SeeSeq = "444",
+                isComplete = true,
+                Key= "QueryResult",
+                isAccept = false,
+                //isComplete = false
+            }); ;
+
+            rgs.Add(new RgRecord
+            {
+                Date = "10-12",
+                DptName = "婦產科",
+                DptTime = "8:30~10:00",
+                Shift = "1",
+                DrName = "pp",
+                SeeSeq = "444",
+                Key= "QueryResult",
+                isComplete = true,
+                isAccept = false
+            }) ;
+
+            return rgs;
+         }
+
+
+        async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+           
+            if (e.Item is DestinationItem destination)
+            {
+                Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
+                var index = app.records.IndexOf(e.Item as RgRecord);
+               
+                await Navigation.PushAsync(new TestPage(e.Item as DestinationItem, index));
+                /*await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                                                             destination._regionID,
+                                                             destination._waypointID,
+                                                             destination._waypointName,
+                                                             _nameInformation
+                                                             ));*/
+            }
+           
+            //Deselect Item
+            ((ListView)sender).SelectedItem = null;
+           
+            //var test = ((ListView)sender).
+        }
+
+        private void ShiftBtn_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        async private void SignInItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SignInPage("1"));
+        }
+
+        private void PaymemtListBtn_Clicked(object sender, EventArgs e)
+        {
+            AddBtn.IsEnabled = false;
+            AddBtn.IsVisible = false;
+
+            ShiftBtn.IsVisible = false;
+            ShiftBtn.IsEnabled = false;
+
+            app.records.Add(new RgRecord
+            {
+                DptName="批價",
+                Key= "AddItem"
+            });
+            app.records.Add(new RgRecord
+            {
+                DptName="領藥",
+                Key= "AddItem"
+            });
+            PaymemtListBtn.IsEnabled = false;
+        }
+
+        async private void AddBtn_Clicked(object sender, EventArgs e)
+        {
+            //await Navigation.PushAsync(new NewItemPage());
+            await PopupNavigation.Instance.PushAsync(new AddPopupPage());
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //to refresh listview template 
+            RgListView.ItemsSource = null;      
+            RgListView.ItemsSource = app.records;
+            
+           
+        }
+
+        async private void YetFinishBtn_Clicked(object sender, EventArgs e)
+        {
+            var o = (Button)sender;
+            var index = o.CommandParameter as RgRecord;
+
+            if(index != null)   // click finish button , it will refresh certain cell template
+            {
+                index.isComplete = true;
+                index.isAccept = true;
+                app.FinishCount++;
+                RgListView.ItemsSource = null;
+                RgListView.ItemsSource = app.records;
+            }
+
+            if (app.FinishCount == (app.records.Count)) //when all item is finished, enable pay/get medicine button
+            {
+                if (HavePayment)
+                {
+                    HavePayment = false;
+                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
+                        _resourceManager.GetString("OK_STRING", currentLanguage));
+                    await PopupNavigation.Instance.PushAsync(new ExitPopupPage());
+                }
+                else
+                {
+                    PaymemtListBtn.IsEnabled = true;
+                    HavePayment = true;
+                }
+                
+            }
+           
+            
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return base.OnBackButtonPressed();
+        }
+    }
+}

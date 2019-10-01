@@ -8,6 +8,7 @@ Microsoft.AppCenter.Crashes.Android.Bindings
 Microsoft.AppCenter.Crashes
 Microsoft.AppCenter
 Plugin.CurrentActivity
+Plugin.InputKit
 Plugin.Multilingual
 Plugin.Permissions
 Rg.Plugins.Popup.Droid

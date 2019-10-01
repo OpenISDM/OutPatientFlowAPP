@@ -53,7 +53,13 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\IndoorNavigation.csproj.CoreCompileInputs.cache
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\IndoorNavigation.AssemblyInfoInputs.cache
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\IndoorNavigation.AssemblyInfo.cs
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\zh\IndoorNavigation.resources.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\IndoorNavigation.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\IndoorNavigation.pdb
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\AddPopupPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\ExitPopupPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\NewItemPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\RigisterList.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\SignInPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\TestPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Debug\netstandard2.0\XamlC.stamp
