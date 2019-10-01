@@ -943,6 +943,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Please pick exit you want to leave. 的當地語系化字串。
+        /// </summary>
+        internal static string PICK_EXIT_STRING {
+            get {
+                return ResourceManager.GetString("PICK_EXIT_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 【Click picture to select the location】 的當地語系化字串。
         /// </summary>
         internal static string PICK_LOCATION_STRING {

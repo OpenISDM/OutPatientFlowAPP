@@ -522,4 +522,10 @@
   <data name="COMMEND_ORDER_STRING" xml:space="preserve">
     <value>建議順序</value>
   </data>
+  <data name="PICK_EXIT_STRING" xml:space="preserve">
+    <value>請選擇要離開的出口</value>
+  </data>
+  <data name="REGISTERDAY_STRING" xml:space="preserve">
+    <value>看病日期</value>
+  </data>
 </root>

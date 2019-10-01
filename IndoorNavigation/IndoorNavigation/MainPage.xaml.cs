@@ -153,7 +153,7 @@ namespace IndoorNavigation
                         string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
                         string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
                         DateTime birthday = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-
+                       
                         if (answser)
                         {
                             await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
@@ -167,8 +167,14 @@ namespace IndoorNavigation
                             }
                             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty) || birthday.Equals(DateTime.Now))
                             {
+                                /* var isLogin = */
                                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                                    _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                                    _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));//,_resourceManager.GetString("CANCEL_STRING",currentLanguage));
+                              //  if (isLogin)
+                                
+                                    await Navigation.PushAsync(new SignInPage("1"));
+                                
+                                
                             }
                             else
                             {

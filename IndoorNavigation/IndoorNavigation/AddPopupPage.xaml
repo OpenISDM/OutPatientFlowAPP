@@ -27,7 +27,7 @@
         <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="300" WidthRequest="400">
             <StackLayout>
                 <ScrollView HorizontalOptions="Start" Padding="20,0,20,0" Margin="10" WidthRequest="200">
-                    <StackLayout x:Name="CheckBoxStackLayout"> <!--to test layout-->
+                    <StackLayout x:Name="CheckBoxStackLayout"> <!--   to test layout
                         <input:CheckBox Text="回診" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
@@ -35,7 +35,7 @@
                         <input:CheckBox Text="回診" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
-                        <input:CheckBox Text="X光" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
+                        <input:CheckBox Text="X光" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>-->
                         <input:CheckBox Text="回診" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>

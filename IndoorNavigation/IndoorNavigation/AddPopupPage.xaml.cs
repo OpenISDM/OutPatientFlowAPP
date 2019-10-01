@@ -105,61 +105,10 @@ namespace IndoorNavigation
                 _waypointName="回診",
                 Key= "Hosiptal round"
             });
-            items.Add(new DestinationItem
-            {
-                _waypointID = new Guid(),
-                _regionID = new Guid(),
-                _waypointName = "內視鏡",
-                Key = "examination"
-            });
-
-            items.Add(new DestinationItem
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "超音波",
-                Key = "examination"
-            });
-            items.Add(new DestinationItem
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "回診",
-                Key = "Hosiptal round"
-            });
-            items.Add(new DestinationItem
-            {
-                _waypointID = new Guid(),
-                _regionID = new Guid(),
-                _waypointName = "內視鏡",
-                Key = "examination"
-            });
-
-            items.Add(new DestinationItem
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "超音波",
-                Key = "examination"
-            });
-            items.Add(new DestinationItem
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "回診",
-                Key = "Hosiptal round"
-            });
+            
             return items;
         }
 
-        private void Box_CheckChanged1(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void Box_CheckChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         async private void AddCancelPopBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PopAsync();
@@ -167,12 +116,21 @@ namespace IndoorNavigation
 
         private async void AddOKPopBtn_Clicked(object sender, EventArgs e)
         {
+            int index = app.FinishCount;
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (ItemPreSelect.Count > 0)
             {
                 foreach (DestinationItem o in ItemPreSelect)
                 {
-                    app.records.Add(new RgRecord
+                    /* app.records.Add(new RgRecord
+                     {
+                         _regionID = o._regionID,
+                         _waypointID = o._waypointID,
+                         _waypointName = o._waypointName,
+                         Key = "AddItem",
+                         DptName = o._waypointName
+                     });*/
+                    app.records.Insert(index++, new RgRecord
                     {
                         _regionID = o._regionID,
                         _waypointID = o._waypointID,
@@ -180,6 +138,7 @@ namespace IndoorNavigation
                         Key = "AddItem",
                         DptName = o._waypointName
                     });
+
                 }
                 await PopupNavigation.Instance.PopAsync();
             }

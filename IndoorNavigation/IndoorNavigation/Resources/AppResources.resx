@@ -519,4 +519,7 @@
   <data name="COMMEND_ORDER_STRING" xml:space="preserve">
     <value>Command Order</value>
   </data>
+  <data name="PICK_EXIT_STRING" xml:space="preserve">
+    <value>Please pick exit you want to leave.</value>
+  </data>
 </root>

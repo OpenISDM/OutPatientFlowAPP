@@ -16,7 +16,6 @@ using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Essentials;
-
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -29,7 +28,7 @@ namespace IndoorNavigation
         private XMLInformation _nameInformation;
         private bool HavePayment = false;
         //private int FinisihCount = 0;
-
+        Object tmp=null;
         App app = (App)Application.Current;
 
        // public ObservableCollection<DestinationItem> _destinationItems { get; set; }
@@ -41,7 +40,7 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
-          
+            app.FinishCount = 0; 
           
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
@@ -145,10 +144,44 @@ namespace IndoorNavigation
            
             //var test = ((ListView)sender).
         }
-
-        private void ShiftBtn_Clicked(object sender, EventArgs e)
+        private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
         {
+            if (tmp == null)
+            {
+                tmp = e.Item as RgRecord;
+            }
+            else
+            {
+                var o = e.Item as RgRecord;
 
+                int index1 = app.records.IndexOf(tmp as RgRecord);
+                int index2 = app.records.IndexOf(o as RgRecord);
+
+                app.records[index1] = o as RgRecord;
+                app.records[index2] = tmp as RgRecord;
+
+                RgListView.ItemTapped -= RgListViewShift_ItemTapped;
+                RgListView.ItemTapped += RgListView_ItemTapped;
+                tmp = null;
+                Buttonable();
+            }
+        }
+         private void ShiftBtn_Clicked(object sender, EventArgs e)
+        {
+            RgListView.ItemTapped -= RgListView_ItemTapped;
+
+            RgListView.ItemTapped += RgListViewShift_ItemTapped;
+
+            Buttonable();
+            
+        }
+
+        private void Buttonable()
+        {
+            ShiftBtn.IsEnabled = !ShiftBtn.IsEnabled;
+            ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
+            AddBtn.IsEnabled = !AddBtn.IsEnabled;
+            AddBtn.IsVisible = !AddBtn.IsVisible;
         }
 
         async private void SignInItem_Clicked(object sender, EventArgs e)
@@ -158,12 +191,12 @@ namespace IndoorNavigation
 
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
-            AddBtn.IsEnabled = false;
-            AddBtn.IsVisible = false;
+            /*  AddBtn.IsEnabled = false;
+              AddBtn.IsVisible = false;
 
-            ShiftBtn.IsVisible = false;
-            ShiftBtn.IsEnabled = false;
-
+              ShiftBtn.IsVisible = false;
+              ShiftBtn.IsEnabled = false;*/
+            Buttonable();
             app.records.Add(new RgRecord
             {
                 DptName="批價",
@@ -179,7 +212,6 @@ namespace IndoorNavigation
 
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
-            //await Navigation.PushAsync(new NewItemPage());
             await PopupNavigation.Instance.PushAsync(new AddPopupPage());
         }
 
@@ -209,7 +241,7 @@ namespace IndoorNavigation
 
             if (app.FinishCount == (app.records.Count)) //when all item is finished, enable pay/get medicine button
             {
-                if (HavePayment)
+                if (HavePayment && !PaymemtListBtn.IsEnabled)
                 {
                     HavePayment = false;
                     var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;

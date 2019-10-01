@@ -8,11 +8,14 @@ Microsoft.AppCenter.Crashes.Android.Bindings
 Microsoft.AppCenter.Crashes
 Microsoft.AppCenter
 Plugin.CurrentActivity
+Plugin.InputKit
 Plugin.Multilingual
 Plugin.Permissions
 Rg.Plugins.Popup.Droid
 Robotics.Mobile.Core.Droid
 SettingsView.Droid
+Syncfusion.Core.XForms.Android
+Syncfusion.SfListView.XForms.Android
 Xamarin.Android.Arch.Core.Common
 Xamarin.Android.Arch.Lifecycle.Common
 Xamarin.Android.Arch.Lifecycle.Runtime

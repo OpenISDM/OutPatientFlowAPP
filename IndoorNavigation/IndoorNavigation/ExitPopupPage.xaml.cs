@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Collections.ObjectModel;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
+using Plugin.Multilingual;
 
 namespace IndoorNavigation
 {
@@ -61,8 +62,17 @@ namespace IndoorNavigation
         {
             var o = ExitListView.SelectedItem as DestinationItem;
 
-            await Navigation.PushAsync(new TestPage(o, 0));
-            await PopupNavigation.Instance.PopAllAsync();
+
+            if (o != null)
+            {
+                await Navigation.PushAsync(new TestPage(o, 0));
+                await PopupNavigation.Instance.PopAllAsync();
+            }
+            else
+            {
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("PICK_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
+            }
         }
     }
 }
