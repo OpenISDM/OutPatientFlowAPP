@@ -62,7 +62,7 @@ namespace IndoorNavigation
 {
     public partial class App : Application
     {
-        public RgRecord AddRgRecord;
+        public RgRecord roundRecord=null;
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
         public App()

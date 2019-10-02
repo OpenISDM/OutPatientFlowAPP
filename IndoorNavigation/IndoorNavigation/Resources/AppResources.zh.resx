@@ -528,4 +528,13 @@
   <data name="REGISTERDAY_STRING" xml:space="preserve">
     <value>看病日期</value>
   </data>
+  <data name="SEQUENCE_STRING" xml:space="preserve">
+    <value>順序</value>
+  </data>
+  <data name="string1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NO_SHIFT_STRING" xml:space="preserve">
+    <value>已經沒有可以換位置的選項了。</value>
+  </data>
 </root>

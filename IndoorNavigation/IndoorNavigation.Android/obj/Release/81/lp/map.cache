@@ -14,8 +14,6 @@ Plugin.Permissions
 Rg.Plugins.Popup.Droid
 Robotics.Mobile.Core.Droid
 SettingsView.Droid
-Syncfusion.Core.XForms.Android
-Syncfusion.SfListView.XForms.Android
 Xamarin.Android.Arch.Core.Common
 Xamarin.Android.Arch.Lifecycle.Common
 Xamarin.Android.Arch.Lifecycle.Runtime

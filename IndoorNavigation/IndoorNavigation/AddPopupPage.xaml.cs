@@ -28,84 +28,47 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
-        ObservableCollection<DestinationItem> items;
-        ObservableCollection<DestinationItem> ItemPreSelect = new ObservableCollection<DestinationItem>();
+        ObservableCollection<RgRecord> items;
+        ObservableCollection<RgRecord> ItemPreSelect = new ObservableCollection<RgRecord>();
         public AddPopupPage()
         {
             InitializeComponent();
              items = LoadData();
             ItemPreSelect.Clear();
-         
-        }
-        private ObservableCollection<DestinationItem> LoadData() //to load test layout file
-        {
-            ObservableCollection<DestinationItem> items = new ObservableCollection<DestinationItem>();
-            items.Add(new DestinationItem
+            if (app.roundRecord == null)
             {
-                _waypointID=new Guid(),
-                _regionID=new Guid(),
-                _waypointName="內視鏡",
-                Key="examination"
+                RevisitCheckBox.IsEnabled = false;
+            }
+        }
+        private ObservableCollection<RgRecord> LoadData() //to load test layout file
+        {
+            ObservableCollection<RgRecord> items = new ObservableCollection<RgRecord>();
+            items.Add(new RgRecord
+            {
+                _waypointID = new Guid(),
+                _regionID = new Guid(),
+                _waypointName = "內視鏡",
+                DptName = "內視鏡",
+                Key = "examination"
             });
-            items.Add(new DestinationItem
+            items.Add(new RgRecord
             {
                 _waypointID = new Guid(),
                 _regionID = new Guid(),
                 _waypointName = "X光",
+                DptName = "X光",
+                Key = "examination"
+            });
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid(),
+                _waypointID = new Guid(),
+                _waypointName = "超音波",
+                DptName = "超音波",
                 Key = "examination"
             });
 
-         /*   StackLayout layot = new StackLayout();
 
-            CheckBox box = new CheckBox
-            {
-                Text = "Wtf",
-                Type = CheckBox.CheckType.Check,
-                TextFontSize = 24,
-                IsChecked = false
-            };
-
-            box.CheckChanged += Box_CheckChanged1;*/
-            /*
-
-            
-            CheckBoxStackLayout.Children.Add(new Plugin.InputKit.Shared.Controls.CheckBox
-            {
-                Text = "內視鏡",
-                Type = CheckBox.CheckType.Check,
-                IsChecked = false,
-                TextFontSize = 24
-            });
-
-            CheckBoxStackLayout.Children.Add(new Plugin.InputKit.Shared.Controls.CheckBox
-            {
-                Text = "X光",
-                Type = CheckBox.CheckType.Check,
-                IsChecked = false,
-                TextFontSize = 24
-            });
-            CheckBoxStackLayout.Children.Add(new Plugin.InputKit.Shared.Controls.CheckBox
-            {
-                Text = "超音波",
-                Type = CheckBox.CheckType.Check,
-                IsChecked = false,
-                TextFontSize = 24
-            });*/
-            items.Add(new DestinationItem
-            {
-                _regionID=new Guid(),
-                _waypointID=new Guid(),
-                _waypointName="超音波",
-                Key="examination"
-            });
-            items.Add(new DestinationItem
-            {
-                _regionID=new Guid(),
-                _waypointID=new Guid(),
-                _waypointName="回診",
-                Key= "Hosiptal round"
-            });
-            
             return items;
         }
 
@@ -116,30 +79,33 @@ namespace IndoorNavigation
 
         private async void AddOKPopBtn_Clicked(object sender, EventArgs e)
         {
-            int index = app.FinishCount;
+            int index =(app.roundRecord==null)?(app.records.Count):(app.records.IndexOf(app.roundRecord)+1);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (ItemPreSelect.Count > 0)
+            if (ItemPreSelect.Count > 0 || RevisitCheckBox.IsChecked)
             {
-                foreach (DestinationItem o in ItemPreSelect)
+                foreach (RgRecord o in ItemPreSelect)
                 {
-                    /* app.records.Add(new RgRecord
-                     {
-                         _regionID = o._regionID,
-                         _waypointID = o._waypointID,
-                         _waypointName = o._waypointName,
-                         Key = "AddItem",
-                         DptName = o._waypointName
-                     });*/
                     app.records.Insert(index++, new RgRecord
                     {
                         _regionID = o._regionID,
                         _waypointID = o._waypointID,
                         _waypointName = o._waypointName,
                         Key = "AddItem",
-                        DptName = o._waypointName
+                        DptName = o.DptName
                     });
 
                 }
+
+                if (RevisitCheckBox.IsChecked)
+                    app.records.Insert(index,new RgRecord
+                    {
+                        _regionID=app.roundRecord._regionID,
+                        _waypointID=app.roundRecord._waypointID,
+                        _waypointName=app.roundRecord._waypointName,
+                        Key="AddItem",
+                        DptName=string.Format("回診({0})",app.roundRecord.DptName)
+                    });
+
                 await PopupNavigation.Instance.PopAsync();
             }
             else
@@ -154,25 +120,48 @@ namespace IndoorNavigation
         {
             var o = (CheckBox)sender;
             string destinationName = o.Text;
-            if (!o.IsChecked)
+            AddRemovePreSelectItem(o.IsChecked, destinationName);
+        }
+        private void AddRemovePreSelectItem(bool isChecked, string destinationName)
+        {
+            
+         /*   if (destinationName.Equals("回診") || destinationName.Equals("revisit"))
             {
-              foreach(DestinationItem item in items)
+                string str = string.Format("回診({0})", app.roundRecord.DptName);
+                RgRecord record = new RgRecord
                 {
-                    if(item._waypointName.Equals(destinationName))
-                    {
-                        ItemPreSelect.Remove(item);
-                        break;
-                    }
+                    DptName=str,
+                    _regionID=app.roundRecord._regionID,
+                    _waypointID=app.roundRecord._waypointID,
+                    Key="AddItem",
+                    _waypointName=app.roundRecord._waypointName
+                };
+
+                if (isChecked)
+                {
+
+                    ItemPreSelect.Add(record);
                 }
-            }
-            else
-            {
-                foreach (DestinationItem item in items)
-                {
-                    if (item._waypointName.Equals(destinationName))
+                else
+                    foreach (RgRecord o in ItemPreSelect)
                     {
-                        ItemPreSelect.Add(item);
-                        break;
+                        if (o.DptName.Equals(str))
+                        {
+                            ItemPreSelect.Remove(o);
+                            break;
+                        }
+                    }
+            }
+            else*/
+            {
+                foreach (RgRecord item in items)
+                {
+                    if (item.DptName.Equals(destinationName))
+                    {
+                        if (isChecked)
+                            ItemPreSelect.Add(item);
+                        else
+                            ItemPreSelect.Remove(item);
                     }
                 }
             }

@@ -13,10 +13,10 @@ namespace IndoorNavigation
     {
         
         string GraphName;
-        public SignInPage(string graphName)
+        public SignInPage()
         {
             InitializeComponent();
-            GraphName = graphName;
+           // GraphName = graphName;
 
             IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING",string.Empty);
             PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING",string.Empty);

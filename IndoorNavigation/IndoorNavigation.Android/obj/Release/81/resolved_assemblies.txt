@@ -29,13 +29,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Robotics.Mobile.Core.Droid.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\SettingsView.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\SettingsView.Droid.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.Core.XForms.Android.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.Core.XForms.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.DataSource.Portable.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.GridCommon.Portable.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.Licensing.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.SfListView.XForms.Android.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Syncfusion.SfListView.XForms.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Core.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Numerics.dll
@@ -77,6 +70,5 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Net.Http.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Runtime.Serialization.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.ServiceModel.Internals.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Microsoft.CSharp.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Mono.Security.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\linksrc\zh\IndoorNavigation.resources.dll

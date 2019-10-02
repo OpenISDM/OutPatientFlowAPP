@@ -19,7 +19,7 @@
                  </pages:PopupPage.Resources>
 
                  <pages:PopupPage.Animation>
-                     <animations:ScaleAnimation PositionIn="Bottom" PositionOut="Center" ScaleIn="1" ScaleOut="0.7" DurationIn="700" EasingIn="BounceOut"/>
+                     <animations:ScaleAnimation PositionIn="Bottom" PositionOut="Center" ScaleIn="1" ScaleOut="0.7" DurationIn="70" EasingIn="BounceOut"/>
                  </pages:PopupPage.Animation>
 
                 <!-- <ScrollView HorizontalOptions="Center" VerticalOptions="Center"> -->
@@ -36,7 +36,7 @@
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="X光" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>-->
-                        <input:CheckBox Text="回診" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
+                        <input:CheckBox x:Name="RevisitCheckBox" Text="回診" Type="Check" IsChecked="False" TextFontSize="24"/> <!-- CheckChanged="CheckBox_CheckChanged"/> -->
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="X光" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>

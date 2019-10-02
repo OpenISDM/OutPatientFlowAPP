@@ -835,6 +835,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Navigation List 的當地語系化字串。
+        /// </summary>
+        internal static string NAVIGATION_LIST_STRING {
+            get {
+                return ResourceManager.GetString("NAVIGATION_LIST_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Do you need to register? 的當地語系化字串。
         /// </summary>
         internal static string NEED_REGISTER_STRING {
@@ -849,6 +858,15 @@ namespace IndoorNavigation.Resources {
         internal static string NO_SELECT_DESTINATION_STRING {
             get {
                 return ResourceManager.GetString("NO_SELECT_DESTINATION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 There is no item can be exchange. 的當地語系化字串。
+        /// </summary>
+        internal static string NO_SHIFT_STRING {
+            get {
+                return ResourceManager.GetString("NO_SHIFT_STRING", resourceCulture);
             }
         }
         
@@ -1083,6 +1101,15 @@ namespace IndoorNavigation.Resources {
         internal static string SELECT_LOCATION_STRING {
             get {
                 return ResourceManager.GetString("SELECT_LOCATION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Sequence 的當地語系化字串。
+        /// </summary>
+        internal static string SEQUENCE_STRING {
+            get {
+                return ResourceManager.GetString("SEQUENCE_STRING", resourceCulture);
             }
         }
         

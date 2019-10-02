@@ -77,11 +77,11 @@
            
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="+"
                     FontSize="Large" TextColor="White" WidthRequest="30" HeightRequest="30" CornerRadius="40" FontAttributes="Bold"
-                    Clicked="AddBtn_Clicked" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.95,0.85,60,60"/>
+                    Clicked="AddBtn_Clicked" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.9,60,60"/>
 
             <Button x:Name="ShiftBtn" Text="↑↓" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="30" FontAttributes="Bold"
                     HeightRequest="30" CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" 
-                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.95,0.7,60,60"/>
+                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.76,60,60"/>
 
             <Grid x:Name="RigistListGrid">
                 <Grid.RowDefinitions>

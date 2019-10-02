@@ -729,21 +729,21 @@ public final class R {
 		public static final int design_ic_visibility_off = 0x7f020068;
 		public static final int design_password_eye = 0x7f020069;
 		public static final int design_snackbar_background = 0x7f02006a;
-		public static final int navigation_empty_icon = 0x7f020145;
-		public static final int notification_action_background = 0x7f020146;
-		public static final int notification_bg = 0x7f020147;
-		public static final int notification_bg_low = 0x7f020148;
-		public static final int notification_bg_low_normal = 0x7f020149;
-		public static final int notification_bg_low_pressed = 0x7f02014a;
-		public static final int notification_bg_normal = 0x7f02014b;
-		public static final int notification_bg_normal_pressed = 0x7f02014c;
-		public static final int notification_icon_background = 0x7f02014d;
-		public static final int notification_template_icon_bg = 0x7f020165;
-		public static final int notification_template_icon_low_bg = 0x7f020166;
-		public static final int notification_tile_bg = 0x7f02014e;
-		public static final int notify_panel_notification_icon_bg = 0x7f02014f;
-		public static final int tooltip_frame_dark = 0x7f020160;
-		public static final int tooltip_frame_light = 0x7f020161;
+		public static final int navigation_empty_icon = 0x7f020143;
+		public static final int notification_action_background = 0x7f020144;
+		public static final int notification_bg = 0x7f020145;
+		public static final int notification_bg_low = 0x7f020146;
+		public static final int notification_bg_low_normal = 0x7f020147;
+		public static final int notification_bg_low_pressed = 0x7f020148;
+		public static final int notification_bg_normal = 0x7f020149;
+		public static final int notification_bg_normal_pressed = 0x7f02014a;
+		public static final int notification_icon_background = 0x7f02014b;
+		public static final int notification_template_icon_bg = 0x7f020163;
+		public static final int notification_template_icon_low_bg = 0x7f020164;
+		public static final int notification_tile_bg = 0x7f02014c;
+		public static final int notify_panel_notification_icon_bg = 0x7f02014d;
+		public static final int tooltip_frame_dark = 0x7f02015e;
+		public static final int tooltip_frame_light = 0x7f02015f;
 	}
 	public static final class id {
 		public static final int action0 = 0x7f0b00c6;

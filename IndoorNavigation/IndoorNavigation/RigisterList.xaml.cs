@@ -16,6 +16,7 @@ using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Essentials;
+using IndoorNavigation.ViewModels;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -27,24 +28,19 @@ namespace IndoorNavigation
         public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
         private bool HavePayment = false;
-        //private int FinisihCount = 0;
         Object tmp=null;
         App app = (App)Application.Current;
-
-       // public ObservableCollection<DestinationItem> _destinationItems { get; set; }
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
-       /* public ObservableCollection<RgRecord> rgRecords;
-        public ObservableCollection<ExaminationRoom> rooms;*/
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
-
+          //  _viewmodel = new RegisterListViewModel();
             app.FinishCount = 0; 
           
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
-
+            app.roundRecord = null;
 
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
             {
@@ -70,6 +66,7 @@ namespace IndoorNavigation
                 Shift = "50",
                 CareRoom = "0205",
                 DptTime = "8:30~10:00",
+                _waypointName="心臟內科",
                 DrName = "waston",
                 SeeSeq = "50",
                 Key = "QueryResult",
@@ -146,34 +143,42 @@ namespace IndoorNavigation
         }
         private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
         {
-            if (tmp == null)
+                if (tmp == null)
+                {
+                    tmp = e.Item as RgRecord;
+                }
+                else
+                {
+                    var o = e.Item as RgRecord;
+
+                    int index1 = app.records.IndexOf(tmp as RgRecord);
+                    int index2 = app.records.IndexOf(o as RgRecord);
+
+                    app.records[index1] = o as RgRecord;
+                    app.records[index2] = tmp as RgRecord;
+
+                    RgListView.ItemTapped -= RgListViewShift_ItemTapped;
+                    RgListView.ItemTapped += RgListView_ItemTapped;
+                    tmp = null;
+                    Buttonable();
+                }  
+        }
+         async private void ShiftBtn_Clicked(object sender, EventArgs e)
+        {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            if (app.FinishCount >= app.records.Count - 1)
             {
-                tmp = e.Item as RgRecord;
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
+                    _resourceManager.GetString("OK_STRING", currentLanguage));
             }
             else
             {
-                var o = e.Item as RgRecord;
+                RgListView.ItemTapped -= RgListView_ItemTapped;
 
-                int index1 = app.records.IndexOf(tmp as RgRecord);
-                int index2 = app.records.IndexOf(o as RgRecord);
+                RgListView.ItemTapped += RgListViewShift_ItemTapped;
 
-                app.records[index1] = o as RgRecord;
-                app.records[index2] = tmp as RgRecord;
-
-                RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-                RgListView.ItemTapped += RgListView_ItemTapped;
-                tmp = null;
                 Buttonable();
             }
-        }
-         private void ShiftBtn_Clicked(object sender, EventArgs e)
-        {
-            RgListView.ItemTapped -= RgListView_ItemTapped;
-
-            RgListView.ItemTapped += RgListViewShift_ItemTapped;
-
-            Buttonable();
-            
         }
 
         private void Buttonable()
@@ -186,16 +191,11 @@ namespace IndoorNavigation
 
         async private void SignInItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SignInPage("1"));
+            await Navigation.PushAsync(new SignInPage());
         }
 
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
-            /*  AddBtn.IsEnabled = false;
-              AddBtn.IsVisible = false;
-
-              ShiftBtn.IsVisible = false;
-              ShiftBtn.IsEnabled = false;*/
             Buttonable();
             app.records.Add(new RgRecord
             {
@@ -216,13 +216,16 @@ namespace IndoorNavigation
         }
 
         protected override void OnAppearing()
-        {
+        {      
             base.OnAppearing();
+         
             //to refresh listview template 
             RgListView.ItemsSource = null;      
-            RgListView.ItemsSource = app.records;
-            
-           
+            RgListView.ItemsSource = app.records;       
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
 
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -259,7 +262,7 @@ namespace IndoorNavigation
            
             
         }
-
+      
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();

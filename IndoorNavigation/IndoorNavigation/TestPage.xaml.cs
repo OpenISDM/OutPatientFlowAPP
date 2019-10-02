@@ -29,11 +29,14 @@ namespace IndoorNavigation
             TestString.Text = item._waypointName;
             item1 = item;
         }
-
+        public TestPage()
+        {
+            InitializeComponent();
+        }
         async private void ArrivalBtn_Clicked(object sender, EventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            TestString.Text = item1.Key;
+            TestString.Text = item1._waypointName;
             if (item1.Key.Equals("exit"))
             {
                 string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
@@ -41,9 +44,18 @@ namespace IndoorNavigation
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"),s, _resourceManager.GetString("OK_STRING",currentLanguage));
                    System.Environment.Exit(0);
             }
+            else if (item1.Key.Equals("register"))
+            {
+
+            }
             else
-            { 
-        // app.records[i].isAccept = true;
+            {
+                // app.records[i].isAccept = true;
+                RgRecord record = app.records[i];
+                if (app.records[i].Key.Equals("QueryResult"))
+                {
+                    app.roundRecord = record;
+                }
                 app.records[i].isComplete = true;
                 await Navigation.PopAsync();
             }

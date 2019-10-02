@@ -522,4 +522,13 @@
   <data name="PICK_EXIT_STRING" xml:space="preserve">
     <value>Please pick exit you want to leave.</value>
   </data>
+  <data name="NAVIGATION_LIST_STRING" xml:space="preserve">
+    <value>Navigation List</value>
+  </data>
+  <data name="SEQUENCE_STRING" xml:space="preserve">
+    <value>Sequence</value>
+  </data>
+  <data name="NO_SHIFT_STRING" xml:space="preserve">
+    <value>There is no item can be exchange.</value>
+  </data>
 </root>
