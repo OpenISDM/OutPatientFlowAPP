@@ -201,12 +201,12 @@ namespace IndoorNavigation
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
             Buttonable();
-            app.records.Add(new RgRecord
+            app.records.Insert(app.FinishCount, new RgRecord
             {
                 DptName="批價",
                 Key= "AddItem"
             });
-            app.records.Add(new RgRecord
+            app.records.Insert(app.FinishCount,new RgRecord
             {
                 DptName="領藥",
                 Key= "AddItem"
