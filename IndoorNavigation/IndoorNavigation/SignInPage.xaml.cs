@@ -12,11 +12,10 @@ namespace IndoorNavigation
     public partial class SignInPage : ContentPage
     {
         
-        string GraphName;
+        
         public SignInPage()
         {
             InitializeComponent();
-           // GraphName = graphName;
 
             IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING",string.Empty);
             PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING",string.Empty);
@@ -25,11 +24,16 @@ namespace IndoorNavigation
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            QueryResult result = new QueryResult();
+            //QueryResult result = new QueryResult();
             Preferences.Set("ID_NUMBER_STRING",IDNumEntry.Text);
             Preferences.Set("PATIENT_ID_STRING",PatientIDEntry.Text);
             Preferences.Set("BIRTHDAY_DATETIME",BirthDayPicker.Date);
             await Navigation.PopAsync();
+        }
+
+        async private void ConnectServer()
+        {
+            //await DisplayAlert("訊息","")
         }
     }
 }

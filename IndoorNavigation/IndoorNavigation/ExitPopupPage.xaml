@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
      xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
@@ -18,16 +19,28 @@
     </pages:PopupPage.Resources>
 
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="300">
+        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="250" WidthRequest="300">
             <StackLayout>
-                <ListView x:Name="ExitListView" >
+                <!--<ListView x:Name="ExitListView" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextCell  Text="{Binding _waypointName}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
-                <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Clicked="ExitPopup_Clicked" HorizontalOptions="End" VerticalOptions="End"/>
+                </ListView>-->
+                <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
+                    <StackLayout Spacing="12" Padding="10,0">
+                        <input:SelectionView SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
+                    </StackLayout>
+                    <!--/*
+                    <StackLayout>
+                        <input:RadioButtonGroupView x:Name="GroupView">
+
+                        </input:RadioButtonGroupView>
+                    </StackLayout>-->
+                </ScrollView>
+
+                <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
                 
             </StackLayout>
         </Frame> 

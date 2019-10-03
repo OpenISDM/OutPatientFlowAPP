@@ -54,7 +54,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\IndoorNavigation.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\AddPopupPage.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\ExitPopupPage.xaml.g.cs
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\NewItemPage.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\RigisterList.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\SignInPage.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\TestPage.xaml.g.cs

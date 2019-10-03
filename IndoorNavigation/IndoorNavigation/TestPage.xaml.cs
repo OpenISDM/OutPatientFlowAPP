@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
-
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -33,6 +33,12 @@ namespace IndoorNavigation
         {
             InitializeComponent();
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if(PopupNavigation.Instance.PopupStack.Count>0)
+                PopupNavigation.Instance.PopAllAsync();
+        }
         async private void ArrivalBtn_Clicked(object sender, EventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -46,7 +52,16 @@ namespace IndoorNavigation
             }
             else if (item1.Key.Equals("register"))
             {
+                bool isFinished=await DisplayAlert("message", "Have you finished register?", "Yes", "No");
 
+                if (isFinished)
+                {
+                    await Navigation.PopAsync();
+                }
+                else
+                {
+                    //to reset navigator page items, let user re-navigate.
+                }
             }
             else
             {

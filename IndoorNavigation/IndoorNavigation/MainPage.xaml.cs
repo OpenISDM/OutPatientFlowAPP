@@ -162,9 +162,15 @@ namespace IndoorNavigation
                                   _resourceManager.GetString("CANCEL_STRING", currentLanguage));
                             if (isRigister)
                             {
-                                await Navigation.PushAsync(new NavigatorPage(location.UserNaming, new Guid(), new Guid(""), "Registation Station", new XMLInformation(new System.Xml.XmlDocument())));
+                                await Navigation.PushAsync(new TestPage(new DestinationItem {
+                                    _waypointID =new Guid(),
+                                    _waypointName="Register station",
+                                    _regionID=new Guid(),
+                                    Key= "register"
+                                },0));
                             }
-                            if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty) || birthday.Equals(DateTime.Now))
+                            
+                            else if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))// || birthday.Equals(DateTime.Now))
                             {
                                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
                                     _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));

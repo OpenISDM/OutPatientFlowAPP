@@ -21,20 +21,20 @@
     <ContentPage.Content>
         <Grid Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
 
-            <Entry x:Name="IDNumEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Medium" Grid.Row="1"  MinimumHeightRequest="20" />
-            <Entry x:Name="PatientIDEntry" Placeholder="{i18n:Translate INPUT_PATIENT_ID_STRING}" Grid.Row="2" FontSize="Medium" MinimumHeightRequest="20"/>
+            <Entry x:Name="IDNumEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Medium" Grid.Row="1" />
+            <Entry x:Name="PatientIDEntry" Placeholder="{i18n:Translate INPUT_PATIENT_ID_STRING}" Grid.Row="2" FontSize="Medium" />
             <Label Text="{i18n:Translate BIRTHDAY_STRING}" Grid.Row="4" VerticalOptions="EndAndExpand" FontSize="Large"/>
             <DatePicker x:Name="BirthDayPicker" Grid.Row="5"/>
             <Label Text="{i18n:Translate REGISTERDAY_STRING}" Grid.Row="6" VerticalOptions="EndAndExpand" FontSize="Large"/>

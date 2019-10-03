@@ -22,7 +22,7 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : ContentPage
     {
-        
+        RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
         private NavigationGraph _navigationGraph;
         public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
@@ -30,6 +30,9 @@ namespace IndoorNavigation
         private bool HavePayment = false;
         Object tmp=null;
         App app = (App)Application.Current;
+
+        private bool HaveCheckRegister=false;
+
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
         public RigisterList(string navigationGraphName,QueryResult result)
@@ -50,6 +53,9 @@ namespace IndoorNavigation
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
             }
+
+            
+
             app.records = LoadData();
             RgListView.ItemsSource = app.records;
             
@@ -84,23 +90,12 @@ namespace IndoorNavigation
                 DrName="gary",
                 SeeSeq="2",
                 Key= "QueryResult",
+                
                 isAccept = false,
                 isComplete = false
             });
 
-            rgs.Add(new RgRecord
-            {
-                Date = "10-12",
-                DptName = "聯發科",
-                DptTime = "8:30~10:00",
-                Shift = "1",
-                DrName = "pp",
-                SeeSeq = "444",
-                isComplete = true,
-                Key= "QueryResult",
-                isAccept = false,
-                //isComplete = false
-            }); ;
+       
 
             rgs.Add(new RgRecord
             {
@@ -109,12 +104,21 @@ namespace IndoorNavigation
                 DptTime = "8:30~10:00",
                 Shift = "1",
                 DrName = "pp",
-                SeeSeq = "444",
+                CareRoom="202",
+                SeeSeq = "83",
                 Key= "QueryResult",
                 isComplete = true,
                 isAccept = false
             }) ;
+            rgs.Add(new RgRecord
+            {
+                Key = "NULL"
+            });
 
+            rgs.Add(new RgRecord
+            {
+                Key = "NULL"
+            });
             return rgs;
          }
 
@@ -166,7 +170,7 @@ namespace IndoorNavigation
          async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (app.FinishCount >= app.records.Count - 1)
+            if (app.FinishCount+2 >= app.records.Count - 1)
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING", currentLanguage));
@@ -218,7 +222,12 @@ namespace IndoorNavigation
         protected override void OnAppearing()
         {      
             base.OnAppearing();
-         
+
+            if (HaveCheckRegister)
+                _viewmodel = new RegisterListViewModel();
+            else
+                HaveCheckRegister = true;
+
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;       
@@ -242,7 +251,7 @@ namespace IndoorNavigation
                 RgListView.ItemsSource = app.records;
             }
 
-            if (app.FinishCount == (app.records.Count)) //when all item is finished, enable pay/get medicine button
+            if (app.FinishCount+2 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
             {
                 if (HavePayment && !PaymemtListBtn.IsEnabled)
                 {
@@ -262,7 +271,10 @@ namespace IndoorNavigation
            
             
         }
-      
+        async private void ToQureryData()
+        {
+            await DisplayAlert("訊息", "尚未製作", "OK");
+        }
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();

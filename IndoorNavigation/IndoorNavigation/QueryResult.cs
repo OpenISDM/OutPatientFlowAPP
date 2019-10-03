@@ -51,6 +51,8 @@ namespace IndoorNavigation
         public string _waypointName { get; set; }
         public string _floor { get; set; }
         public string Key { get; set; }
+        public override string ToString() => _waypointName;
+        
     }
 
 }

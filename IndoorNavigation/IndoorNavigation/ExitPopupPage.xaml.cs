@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Plugin.Multilingual;
-
+using Plugin.InputKit.Shared.Controls;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -24,15 +24,35 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
 
-        ObservableCollection<DestinationItem> exits;
+//        ObservableCollection<DestinationItem> exits;
+
+
+        ExitPopupViewModel _viewmodel;
 
         public ExitPopupPage()
         {
+            _viewmodel = new ExitPopupViewModel();
+            BindingContext = _viewmodel;
             InitializeComponent();
-            exits = LoadExitData();
-            ExitListView.ItemsSource = exits;
+          //  exits = LoadExitData();
+          //  AddRadioButton();
+          //  ExitListView.ItemsSource = exits;
         }
-
+        /*public void AddRadioButton()
+        {
+            RadioButtonGroupView groupView = new RadioButtonGroupView ();
+            foreach (DestinationItem item in exits)
+            {
+                RadioButton radio = new RadioButton
+                {
+                    BindingContext = item,
+                    Text = item.ToString(),
+                    TextColor = Color.Black
+                };
+                groupView.Children.Add(radio);
+            }
+            //GroupView = groupView;
+        }*/
         private ObservableCollection<DestinationItem> LoadExitData()
         {
             ObservableCollection<DestinationItem> data=new ObservableCollection<DestinationItem>();
@@ -60,8 +80,8 @@ namespace IndoorNavigation
 
         async private void ExitPopup_Clicked(object sender, EventArgs e)
         {
-            var o = ExitListView.SelectedItem as DestinationItem;
-
+            // var o = ExitListView.SelectedItem as DestinationItem;
+          /*  object o = new DestinationItem();
 
             if (o != null)
             {
@@ -72,7 +92,7 @@ namespace IndoorNavigation
             {
                 var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("PICK_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
-            }
+            }*/
         }
     }
 }
