@@ -59,7 +59,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         private object _bufferLock = new object();
         private readonly EventHandler _beaconScanEventHandler;
-       
+
         public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         private int rssiOption;
@@ -77,7 +77,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            
+
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
@@ -114,6 +114,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+                _beaconSignalBuffer.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
 
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
                 //beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
@@ -130,7 +131,7 @@ namespace IndoorNavigation.Modules.IPSClients
                                 Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
                                 waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
                                 beaconGuid);
-                                if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
+                                if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID] - rssiOption))
                                 {
                                     _event.OnEventCall(new WaypointSignalEventArgs
                                     {

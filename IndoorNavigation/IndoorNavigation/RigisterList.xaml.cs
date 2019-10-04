@@ -56,8 +56,8 @@ namespace IndoorNavigation
 
             
 
-            app.records = LoadData();
-            RgListView.ItemsSource = app.records;
+       /*     app.records = LoadData();
+            RgListView.ItemsSource = app.records;*/
             
         }
 

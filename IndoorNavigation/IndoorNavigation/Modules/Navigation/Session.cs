@@ -263,7 +263,7 @@ namespace IndoorNavigation.Modules
                 {
                     regionIPSType =
                    _navigationGraph.GetRegionIPSType(regionGuid);
-                    
+                    Console.WriteLine("Detect whether there is Lbeacon...");
                     if (IPSType.LBeacon == regionIPSType)
                     {
                         List<Guid> waypointIDsInWaypointClient =
@@ -294,13 +294,14 @@ namespace IndoorNavigation.Modules
                                 _BeaconThreshold = tempBeaconThresholdInWaypointClient
                             });
                         }
+                        Console.WriteLine("Detect LBeacon Finish");
                         haveLBeacon = true;
                     }
                     else if (IPSType.iBeacon == regionIPSType)
                     {
                         List<Guid> waypointIDsInIBeaconClient =
                         _navigationGraph.GetAllWaypointIDInOneRegion(regionGuid);
-
+                        Console.WriteLine("Detect whether there is iBeacon..");
                         foreach (Guid waypointID in waypointIDsInIBeaconClient)
                         {
                             RegionWaypointPoint tempRegionWaypointInInitialIBeaconClient = new RegionWaypointPoint();
@@ -326,6 +327,7 @@ namespace IndoorNavigation.Modules
                                 _BeaconThreshold = tempBeaconThresholdInIBeaconClient
                             });
                         }
+                        Console.WriteLine("Detect IBeacon Finish");
                         haveIBeacon = true;
                     }
                 }

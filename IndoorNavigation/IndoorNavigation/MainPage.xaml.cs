@@ -153,6 +153,20 @@ namespace IndoorNavigation
                         string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
                         string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
                         DateTime birthday = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
+
+                       XMLInformation _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
+
+                   /*     if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+                        {
+                            _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_en-US.xml");
+                        }
+                        else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+                        {
+                            _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
+                        }*/
+
+
+
                         if (answser)
                         {
                             await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
@@ -160,14 +174,13 @@ namespace IndoorNavigation
                                   _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
                                   _resourceManager.GetString("OK_STRING", currentLanguage),
                                   _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                            
                             if (isRigister)
                             {
-                                await Navigation.PushAsync(new TestPage(new DestinationItem {
-                                    _waypointID =new Guid(),
-                                    _waypointName="Register station",
-                                    _regionID=new Guid(),
-                                    Key= "register"
-                                },0));
+                                await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
+                                    new Guid("11111111-1111-1111-1111-111111111111"), 
+                                    new Guid("00000000-0000-0000-0000-000000000001"),
+                                    "前門出口", "register", 0, _nameInformation));
                             }
                             
                             else if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))// || birthday.Equals(DateTime.Now))

@@ -76,6 +76,33 @@ namespace IndoorNavigation.Views.Navigation
             Console.WriteLine("<< NavigatorPage constructor");
         }
 
+        public NavigatorPage(string navigationGraphName,
+                            Guid destinationRegionID,
+                            Guid destinationWaypointID,
+                            string destinationWaypointName,
+                            string destinationKey,
+                            int destinationIndex,
+                            XMLInformation informationXML)
+        {
+            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
+                              navigationGraphName,
+                              destinationRegionID,
+                              destinationWaypointID,
+                              destinationWaypointName);
+
+            InitializeComponent();
+
+       /*     _viewModel = new NavigatorPageViewModel(navigationGraphName,
+                                                    destinationRegionID,
+                                                    destinationWaypointID,
+                                                    destinationKey,
+                                                    destinationIndex,
+                                                    destinationWaypointName,
+                                                    informationXML);*/
+            BindingContext = _viewModel;
+
+            Console.WriteLine("<< NavigatorPage constructor");
+        }
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
@@ -83,6 +110,10 @@ namespace IndoorNavigation.Views.Navigation
 
             base.OnDisappearing();
         }
-
+        protected override bool OnBackButtonPressed()
+        {
+            //OnDisappearing();
+            return base.OnBackButtonPressed();
+        }
     }
 }
