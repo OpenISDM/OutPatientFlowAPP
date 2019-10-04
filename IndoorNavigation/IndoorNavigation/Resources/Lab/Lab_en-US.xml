@@ -1,13 +1,7 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
-<navigation_graph country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Lab'>
-  <regions>
-    <region id='11111111-1111-1111-1111-111111111111' name='1F'/>
-  </regions>
-  <waypoints>
-    <waypoint id='00000000-0000-0000-0000-000000000001' name='Exit'/>
-    <waypoint id='00000000-0000-0000-0000-000000000002' name='Information Desk'/>
-    <waypoint id='00000000-0000-0000-0000-000000000003' name='1F Stair'/>
-    <waypoint id='00000000-0000-0000-0000-000000000004' name='2F Stair'/>
-    <waypoint id='00000000-0000-0000-0000-000000000005' name='2F Stair'/>
-  </waypoints>
-</navigation_graph>
+﻿<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Lab'>
+    <waypoint id = "00000000-0000-0000-0000-000000000001" Landmark = "Door" RelatedDirection = "0" FaceOrBack = "1"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000002" Landmark = "Calender" RelatedDirection = "6" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000003" Landmark = "Scanner" RelatedDirection = "6" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000004" Landmark = "poster" RelatedDirection = "2" FaceOrBack = "0"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000005" Landmark = "windows" RelatedDirection = "4" FaceOrBack = "0"/>
+</first_direction_XML>

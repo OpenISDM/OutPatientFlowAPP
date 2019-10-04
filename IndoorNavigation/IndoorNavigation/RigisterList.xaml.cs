@@ -30,7 +30,7 @@ namespace IndoorNavigation
         private bool HavePayment = false;
         Object tmp=null;
         App app = (App)Application.Current;
-
+        
         private bool HaveCheckRegister=false;
 
         const string resourceId = "IndoorNavigation.Resources.AppResources";
@@ -39,8 +39,8 @@ namespace IndoorNavigation
         {
             InitializeComponent();
           //  _viewmodel = new RegisterListViewModel();
-            app.FinishCount = 0; 
-          
+            app.FinishCount = 0;
+            app.records = new ObservableCollection<RgRecord>();
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             app.roundRecord = null;
@@ -56,11 +56,11 @@ namespace IndoorNavigation
 
             
 
-       /*     app.records = LoadData();
-            RgListView.ItemsSource = app.records;*/
+           // app.records = LoadData();
+           // RgListView.ItemsSource = app.records;
             
         }
-
+        /*for fake data to test layout, the page whether is running normally.*/
         ObservableCollection<RgRecord> LoadData()   //for fake data
          {
             ObservableCollection<RgRecord> rgs = new ObservableCollection<RgRecord>();
@@ -123,7 +123,8 @@ namespace IndoorNavigation
          }
 
 
-        async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        /*this function is to push page to NavigatorPage */
+        async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
         {
            
             if (e.Item is DestinationItem destination)
@@ -131,13 +132,13 @@ namespace IndoorNavigation
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
                 var index = app.records.IndexOf(e.Item as RgRecord);
                
-                await Navigation.PushAsync(new TestPage(e.Item as DestinationItem, index));
-                /*await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+             //   await Navigation.PushAsync(new TestPage(e.Item as DestinationItem, index));
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                              destination._regionID,
                                                              destination._waypointID,
                                                              destination._waypointName,
-                                                             _nameInformation
-                                                             ));*/
+                                                             _nameInformation,destination.Key,index
+                                                             ));
             }
            
             //Deselect Item
@@ -145,6 +146,9 @@ namespace IndoorNavigation
            
             //var test = ((ListView)sender).
         }
+
+        /*this function is to implement a simply shift function.  
+          when shift button is clicked, the function will become the listview tapped event.*/
         private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
         {
                 if (tmp == null)
@@ -154,19 +158,21 @@ namespace IndoorNavigation
                 else
                 {
                     var o = e.Item as RgRecord;
-
+                   
                     int index1 = app.records.IndexOf(tmp as RgRecord);
                     int index2 = app.records.IndexOf(o as RgRecord);
-
+                    //swap
                     app.records[index1] = o as RgRecord;
                     app.records[index2] = tmp as RgRecord;
-
+                    // retrieve original function.
                     RgListView.ItemTapped -= RgListViewShift_ItemTapped;
                     RgListView.ItemTapped += RgListView_ItemTapped;
                     tmp = null;
                     Buttonable();
                 }  
         }
+
+        /* the function is a button event which is to change listview tapped event*/
          async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -185,6 +191,7 @@ namespace IndoorNavigation
             }
         }
 
+        /*the function is to disable those two float button to keep from triggering something wrong.*/
         private void Buttonable()
         {
             ShiftBtn.IsEnabled = !ShiftBtn.IsEnabled;
@@ -193,32 +200,42 @@ namespace IndoorNavigation
             AddBtn.IsVisible = !AddBtn.IsVisible;
         }
 
+        /*the function is a button event, which could push page to SignInPage*/
         async private void SignInItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SignInPage());
         }
 
+        /*the function is a button event to add payment and medicine recieving route to listview*/
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
             Buttonable();
             app.records.Insert(app.FinishCount, new RgRecord
             {
                 DptName="批價",
-                Key= "AddItem"
+                _waypointID=new Guid("00000000-0000-0000-0000-000000000003"),
+                _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointName= "批價櫃臺",
+                Key = "AddItem"
             });
             app.records.Insert(app.FinishCount,new RgRecord
             {
                 DptName="領藥",
-                Key= "AddItem"
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000003"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointName = "批價櫃臺",
+                Key = "AddItem"
             });
             PaymemtListBtn.IsEnabled = false;
         }
 
+        /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PushAsync(new AddPopupPage());
         }
-
+        
+        /*to refresh listview Template and check whether user have sign in or not.*/
         protected override void OnAppearing()
         {      
             base.OnAppearing();
@@ -232,11 +249,7 @@ namespace IndoorNavigation
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;       
         }
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-        }
-
+        /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
             var o = (Button)sender;
@@ -270,10 +283,6 @@ namespace IndoorNavigation
             }
            
             
-        }
-        async private void ToQureryData()
-        {
-            await DisplayAlert("訊息", "尚未製作", "OK");
         }
         protected override bool OnBackButtonPressed()
         {

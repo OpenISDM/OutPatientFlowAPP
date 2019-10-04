@@ -67,7 +67,21 @@ namespace IndoorNavigation
                 DptName = "超音波",
                 Key = "examination"
             });
-
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid(),
+                _waypointID = new Guid(),
+                _waypointName = "抽血處",
+                DptName = "抽血處",
+                Key = "examination"
+            });
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointName = "檢察室",
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                Key = "AddItem"
+            });
 
             return items;
         }

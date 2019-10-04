@@ -19,7 +19,7 @@
     </pages:PopupPage.Resources>
 
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="250" WidthRequest="300">
+        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="300">
             <StackLayout>
                 <!--<ListView x:Name="ExitListView" >
                     <ListView.ItemTemplate>

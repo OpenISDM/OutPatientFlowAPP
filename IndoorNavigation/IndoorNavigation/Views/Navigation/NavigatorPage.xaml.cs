@@ -80,9 +80,9 @@ namespace IndoorNavigation.Views.Navigation
                             Guid destinationRegionID,
                             Guid destinationWaypointID,
                             string destinationWaypointName,
+                            XMLInformation informationXML, 
                             string destinationKey,
-                            int destinationIndex,
-                            XMLInformation informationXML)
+                            int destinationIndex)
         {
             Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
                               navigationGraphName,
@@ -92,13 +92,13 @@ namespace IndoorNavigation.Views.Navigation
 
             InitializeComponent();
 
-       /*     _viewModel = new NavigatorPageViewModel(navigationGraphName,
+            _viewModel = new NavigatorPageViewModel(navigationGraphName,
                                                     destinationRegionID,
                                                     destinationWaypointID,
-                                                    destinationKey,
-                                                    destinationIndex,
                                                     destinationWaypointName,
-                                                    informationXML);*/
+                                                    informationXML, 
+                                                    destinationKey,
+                                                    destinationIndex);
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");

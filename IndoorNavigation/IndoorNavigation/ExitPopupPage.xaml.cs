@@ -22,77 +22,44 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         App app = (App)Application.Current;
-
-//        ObservableCollection<DestinationItem> exits;
-
 
         ExitPopupViewModel _viewmodel;
 
         public ExitPopupPage()
         {
+            InitializeComponent();
             _viewmodel = new ExitPopupViewModel();
             BindingContext = _viewmodel;
-            InitializeComponent();
-          //  exits = LoadExitData();
-          //  AddRadioButton();
-          //  ExitListView.ItemsSource = exits;
+            
         }
-        /*public void AddRadioButton()
-        {
-            RadioButtonGroupView groupView = new RadioButtonGroupView ();
-            foreach (DestinationItem item in exits)
-            {
-                RadioButton radio = new RadioButton
-                {
-                    BindingContext = item,
-                    Text = item.ToString(),
-                    TextColor = Color.Black
-                };
-                groupView.Children.Add(radio);
-            }
-            //GroupView = groupView;
-        }*/
+
         private ObservableCollection<DestinationItem> LoadExitData()
         {
-            ObservableCollection<DestinationItem> data=new ObservableCollection<DestinationItem>();
+            ObservableCollection<DestinationItem> data = new ObservableCollection<DestinationItem>();
 
             data.Add(new DestinationItem
             {
-                _waypointName="前門出口",
-                Key="exit"
+                _waypointName = "前門出口",
+                _waypointID=new Guid("00000000-0000-0000-0000-000000000001"),
+                _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
+                Key = "exit"
             });
 
             data.Add(new DestinationItem
             {
-                _waypointName="停車場",
-                Key="exit"
+                _waypointName = "停車場",
+                Key = "exit"
             });
 
             data.Add(new DestinationItem
             {
-                _waypointName="側門出口",
-                Key="exit"
+                _waypointName = "側門出口",
+                Key = "exit"
             });
 
             return data;
-        }
-
-        async private void ExitPopup_Clicked(object sender, EventArgs e)
-        {
-            // var o = ExitListView.SelectedItem as DestinationItem;
-          /*  object o = new DestinationItem();
-
-            if (o != null)
-            {
-                await Navigation.PushAsync(new TestPage(o, 0));
-                await PopupNavigation.Instance.PopAllAsync();
-            }
-            else
-            {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("PICK_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
-            }*/
         }
     }
 }

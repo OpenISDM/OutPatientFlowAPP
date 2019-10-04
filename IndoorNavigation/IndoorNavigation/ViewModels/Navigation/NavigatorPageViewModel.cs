@@ -90,6 +90,10 @@ namespace IndoorNavigation.ViewModels.Navigation
         private NavigationGraph _navigationGraph;
         private XMLInformation _xmlInformation;
 
+        private string _key;
+        private int _index;
+        private App app = (App)Application.Current;
+
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -125,6 +129,46 @@ namespace IndoorNavigation.ViewModels.Navigation
             _xmlInformation = informationXML;
         }
 
+        public NavigatorPageViewModel(string navigationGraphName,
+                                     Guid destinationRegionID,
+                                     Guid destinationWaypointID,
+                                     string destinationWaypointName,
+                                     XMLInformation informationXML,
+                                     string destinationKey,
+                                     int destinationIndex)
+
+        {
+            _firsrDirectionInstructionScaleVale = 1;
+            _destinationID = destinationWaypointID;
+            _destinationWaypointName = destinationWaypointName;
+            CurrentStepImage = "waittingscan.gif";
+
+            _key = destinationKey;
+            _index = destinationIndex;
+
+            _instructionLocation = _originalInstructionLocation;
+            _navigationModule = new NavigationModule(navigationGraphName,
+                                                     destinationRegionID,
+                                                     destinationWaypointID);
+            _navigationModule._event._eventHandler += GetNavigationResultEvent;
+            const string resourceId = "IndoorNavigation.Resources.AppResources";
+            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            {
+                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_en-US.xml");
+            }
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            {
+                _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(navigationGraphName + "_zh.xml");
+            }
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+            _xmlInformation = informationXML;
+        }
+
         public void Stop()
         {
 
@@ -135,7 +179,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         /// According to each navigation status displays the text and image instructions in UI.
         /// </summary>
         /// <param name="args">Arguments.</param>
-        private void DisplayInstructions(EventArgs args)
+        async private void DisplayInstructions(EventArgs args)
         {
 
             Console.WriteLine(">> DisplayInstructions");
@@ -188,6 +232,62 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+                    //------------------------------------------------------------------------------------------------------------------------------------
+                    // var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    //TestString.Text = item1._waypointName;
+                    Page NowPage;
+                    
+
+                   if (_key.Equals("exit"))
+                    {
+                        NowPage = Application.Current.MainPage;
+                        string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
+                            _resourceManager.GetString("HOPE_STRING", currentLanguage));
+                        await NowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                        System.Environment.Exit(0);
+                    }
+                    else if (_key.Equals("register"))
+                    {
+                         NowPage = Application.Current.MainPage;
+                      //   bool isFinished = await NowPage.DisplayAlert("message", "Have you finished register?", "Yes", "No");
+
+                      //  if (isFinished)
+                        {
+                            app.records.Add(new RgRecord { DptName= "心臟血管科",
+                            _waypointName= "心臟科",
+                            _regionID=new Guid( "11111111-1111-1111-1111-111111111111"),
+                            _waypointID=new Guid("00000000-0000-0000-0000-000000000005"),
+                                Shift = "50",
+                                CareRoom = "0205",
+                                DptTime = "8:30~10:00",
+                                SeeSeq = "50",
+                                Key = "QueryResult",
+                                isAccept = false,
+                                isComplete = false
+                            });
+
+                            app.records.Add(new RgRecord { Key = "NULL" });
+                            app.records.Add(new RgRecord { Key = "NULL" });
+
+                            await NowPage.Navigation.PopAsync();
+                        }
+                       
+                    }
+                    else
+                    {
+                        NowPage = Application.Current.MainPage;
+                        // app.records[i].isAccept = true;
+                        RgRecord record = app.records[_index];
+                        if (app.records[_index].Key.Equals("QueryResult"))
+                        {
+                            app.roundRecord = record;
+                        }
+                        app.records[_index].isComplete = true;
+                        await NowPage.Navigation.PopAsync();
+                    }
+                   // Page page = Application.Current.MainPage;
+                    await NowPage.Navigation.PopAsync();
+//--------------------------------------------------------------------------------------------------------------------------------------------------------
                     Stop();
                     break;
 

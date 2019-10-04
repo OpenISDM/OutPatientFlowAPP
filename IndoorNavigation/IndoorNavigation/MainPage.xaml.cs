@@ -177,10 +177,12 @@ namespace IndoorNavigation
                             
                             if (isRigister)
                             {
-                                await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
-                                    new Guid("11111111-1111-1111-1111-111111111111"), 
-                                    new Guid("00000000-0000-0000-0000-000000000001"),
-                                    "前門出口", "register", 0, _nameInformation));
+                                   await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
+                                       new Guid("11111111-1111-1111-1111-111111111111"), 
+                                       new Guid("00000000-0000-0000-0000-000000000003"),
+                                       "服務台",  _nameInformation,"register",0));
+
+                                //await Navigation.PushAsync(new TestPage(new DestinationItem { Key = "register" },0));
                             }
                             
                             else if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))// || birthday.Equals(DateTime.Now))

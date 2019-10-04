@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 namespace IndoorNavigation
 {
+    /*the class is to let Registerlist listview cell show various template*/
     class RegistrationDataTemplateSelect:DataTemplateSelector
     {
         public DataTemplate NotCompleteTemplate { get; set; }

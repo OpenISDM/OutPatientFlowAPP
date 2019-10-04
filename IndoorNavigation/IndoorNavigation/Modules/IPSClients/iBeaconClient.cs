@@ -74,7 +74,7 @@ namespace IndoorNavigation.Modules.IPSClients
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            
+            Console.WriteLine("Call SetWaypointList");
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
