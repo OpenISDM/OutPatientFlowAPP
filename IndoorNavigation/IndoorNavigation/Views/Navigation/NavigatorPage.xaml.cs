@@ -115,5 +115,10 @@ namespace IndoorNavigation.Views.Navigation
             //OnDisappearing();
             return base.OnBackButtonPressed();
         }
+
+        async private void FinishButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

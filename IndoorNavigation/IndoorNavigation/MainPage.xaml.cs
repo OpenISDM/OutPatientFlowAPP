@@ -56,6 +56,7 @@ using System.Reflection;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using Xamarin.Essentials;
+using System.Diagnostics;
 
 namespace IndoorNavigation
 {
@@ -153,7 +154,7 @@ namespace IndoorNavigation
                         string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
                         string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
                         DateTime birthday = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-
+                        Debug.WriteLine(string.Format("location name is :{0}", location.UserNaming));
                        XMLInformation _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
 
                    /*     if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")

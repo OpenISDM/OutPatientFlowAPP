@@ -45,41 +45,42 @@ namespace IndoorNavigation
             ObservableCollection<RgRecord> items = new ObservableCollection<RgRecord>();
             items.Add(new RgRecord
             {
-                _waypointID = new Guid(),
-                _regionID = new Guid(),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 _waypointName = "內視鏡",
                 DptName = "內視鏡",
-                Key = "examination"
-            });
-            items.Add(new RgRecord
-            {
-                _waypointID = new Guid(),
-                _regionID = new Guid(),
-                _waypointName = "X光",
-                DptName = "X光",
-                Key = "examination"
-            });
-            items.Add(new RgRecord
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "超音波",
-                DptName = "超音波",
-                Key = "examination"
-            });
-            items.Add(new RgRecord
-            {
-                _regionID = new Guid(),
-                _waypointID = new Guid(),
-                _waypointName = "抽血處",
-                DptName = "抽血處",
-                Key = "examination"
+                Key = "AddItem"
             });
             items.Add(new RgRecord
             {
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointName = "檢察室",
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                _waypointName = "X光",
+                DptName = "X光",
+                Key = "AddItem"
+            });
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                _waypointName = "超音波",
+                DptName = "超音波",
+                Key = "AddITem"
+            });
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                _waypointName = "抽血處",
+                DptName = "抽血處",
+                Key = "AddItem"
+            });
+            items.Add(new RgRecord
+            {
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                DptName="檢查室",
+                _waypointName = "檢察室",
                 Key = "AddItem"
             });
 
@@ -134,43 +135,15 @@ namespace IndoorNavigation
         {
             var o = (CheckBox)sender;
             string destinationName = o.Text;
-            AddRemovePreSelectItem(o.IsChecked, destinationName);
+            AddRemovePreSelectItem(o.IsChecked, o.Text);
         }
         private void AddRemovePreSelectItem(bool isChecked, string destinationName)
         {
             
-         /*   if (destinationName.Equals("回診") || destinationName.Equals("revisit"))
-            {
-                string str = string.Format("回診({0})", app.roundRecord.DptName);
-                RgRecord record = new RgRecord
-                {
-                    DptName=str,
-                    _regionID=app.roundRecord._regionID,
-                    _waypointID=app.roundRecord._waypointID,
-                    Key="AddItem",
-                    _waypointName=app.roundRecord._waypointName
-                };
-
-                if (isChecked)
-                {
-
-                    ItemPreSelect.Add(record);
-                }
-                else
-                    foreach (RgRecord o in ItemPreSelect)
-                    {
-                        if (o.DptName.Equals(str))
-                        {
-                            ItemPreSelect.Remove(o);
-                            break;
-                        }
-                    }
-            }
-            else*/
             {
                 foreach (RgRecord item in items)
                 {
-                    if (item.DptName.Equals(destinationName))
+                    if (destinationName.Equals(item.DptName))
                     {
                         if (isChecked)
                             ItemPreSelect.Add(item);

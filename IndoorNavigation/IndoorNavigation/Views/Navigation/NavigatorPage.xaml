@@ -16,7 +16,9 @@
     </ContentPage.Padding>
     
     <ContentPage.Content>
-        <!-- TODO: Add PAUSE button -->
+        <AbsoluteLayout>
+            
+            <!-- TODO: Add PAUSE button -->
         <Grid Padding="15, 15, 15, 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -65,6 +67,9 @@
                                 LabelShowIntValuesOnly="false" LabelStringFormat="{}{0:0.0} %"
                                 LabelFontSize="20" LabelPosition="AfterBar" />     
         </Grid>
+            <Button x:Name="FinishButton" Text="finish" IsEnabled="{Binding isFinished}" Clicked="FinishButton_Clicked" AbsoluteLayout.LayoutBounds="0.96,.9,80,50" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+            <!--  我是分隔線-->
+        </AbsoluteLayout>
     </ContentPage.Content>
     
 </ContentPage>

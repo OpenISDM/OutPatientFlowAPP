@@ -35,6 +35,9 @@ namespace IndoorNavigation
             
         }
 
+        
+
+
         private ObservableCollection<DestinationItem> LoadExitData()
         {
             ObservableCollection<DestinationItem> data = new ObservableCollection<DestinationItem>();
@@ -50,12 +53,16 @@ namespace IndoorNavigation
             data.Add(new DestinationItem
             {
                 _waypointName = "停車場",
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000001"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 Key = "exit"
             });
 
             data.Add(new DestinationItem
             {
                 _waypointName = "側門出口",
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000001"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 Key = "exit"
             });
 

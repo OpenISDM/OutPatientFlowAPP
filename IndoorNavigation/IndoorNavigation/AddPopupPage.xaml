@@ -40,6 +40,7 @@
                         <input:CheckBox Text="內視鏡" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="超音波" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                         <input:CheckBox Text="X光" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
+                        <input:CheckBox Text="檢查室" Type="Check" IsChecked="False" TextFontSize="24" CheckChanged="CheckBox_CheckChanged"/>
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="End">

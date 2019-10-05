@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Xamarin.Forms;
-using Plugin.Multilingual;
+using Xamarin.Forms.Xaml;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using IndoorNavigation.Views;
 using IndoorNavigation.Views.Navigation;
-using IndoorNavigation.Modules.Utilities;
+using Plugin.Multilingual;
 using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
+using Rg.Plugins.Popup;
+using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
+using IndoorNavigation.ViewModels;
+using System.ComponentModel;
+using System.Windows.Input;
+using System.Runtime.CompilerServices;
 
 namespace IndoorNavigation
 {
@@ -26,15 +33,18 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
 
+        private XMLInformation _nameInformation;
+        private string navigationGraphName { get; set; }
         async void ToNavigatorExit()
         {
             Page nowPage = Application.Current.MainPage;
             if (SelectItem != null)
             {
-                XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
+                //XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
                 var o = SelectItem as DestinationItem;
+                //await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
                 // await nowPage.Navigation.PushAsync(new TestPage(SelectItem, 0));
-                await nowPage.Navigation.PushAsync(new NavigatorPage("Lab", o._regionID, o._waypointID, o._waypointName, _nameInformation, "exit", 0));
+                await nowPage.Navigation.PushAsync(new NavigatorPage(navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation, "exit", 0));
             }
             else
             {
@@ -56,6 +66,18 @@ namespace IndoorNavigation
         public ExitPopupViewModel()
         {
             exits = new ObservableCollection<DestinationItem>();
+            navigationGraphName = "實驗室";
+
+            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+            }
+            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            {
+                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+            }
+
+
             ButtonCommand = new Command(ToNavigatorExit);
             LoadData();
         }

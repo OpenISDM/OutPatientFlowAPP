@@ -93,7 +93,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private string _key;
         private int _index;
         private App app = (App)Application.Current;
-
+        private bool _isfinished=false;
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -269,9 +269,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                             app.records.Add(new RgRecord { Key = "NULL" });
                             app.records.Add(new RgRecord { Key = "NULL" });
 
-                            await NowPage.Navigation.PopAsync();
+                           // await NowPage.Navigation.PopAsync();
                         }
-                       
+                        isFinished = true;
                     }
                     else
                     {
@@ -283,10 +283,11 @@ namespace IndoorNavigation.ViewModels.Navigation
                             app.roundRecord = record;
                         }
                         app.records[_index].isComplete = true;
-                        await NowPage.Navigation.PopAsync();
+                       // await NowPage.Navigation.PopAsync();
                     }
-                   // Page page = Application.Current.MainPage;
-                    await NowPage.Navigation.PopAsync();
+                    // Page page = Application.Current.MainPage;
+                    //await NowPage.Navigation.PopAsync();
+                    isFinished = true;
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
                     Stop();
                     break;
@@ -666,6 +667,13 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
 
         #region NavigatorPage Binding Args
+        //------------------------
+        public bool isFinished
+        {
+            get { return _isfinished; }
+            set { SetProperty(ref _isfinished, value); }
+        } 
+        //------------------------
 
         public void GoAdjustAvoidType()
         {
