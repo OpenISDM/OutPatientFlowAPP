@@ -252,6 +252,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                       //   bool isFinished = await NowPage.DisplayAlert("message", "Have you finished register?", "Yes", "No");
 
                       //  if (isFinished)
+                      if(app.records.Count==0)
                         {
                             app.records.Add(new RgRecord { DptName= "心臟血管科",
                             _waypointName= "心臟科",
@@ -267,7 +268,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             });
 
                             app.records.Add(new RgRecord { Key = "NULL" });
-                            app.records.Add(new RgRecord { Key = "NULL" });
+                           // app.records.Add(new RgRecord { Key = "NULL" });
 
                            // await NowPage.Navigation.PopAsync();
                         }

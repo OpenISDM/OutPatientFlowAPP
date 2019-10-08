@@ -55,8 +55,8 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NullCell">
-                <ViewCell IsEnabled="False" Height="50">
-                    <StackLayout BackgroundColor="White"/>
+                <ViewCell IsEnabled="False" Height="100" >
+                    <StackLayout/>
                 </ViewCell>
             </DataTemplate>
             

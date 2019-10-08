@@ -66,7 +66,7 @@ namespace IndoorNavigation
         public ExitPopupViewModel()
         {
             exits = new ObservableCollection<DestinationItem>();
-            navigationGraphName = "實驗室";
+            navigationGraphName = "員林基督教醫院";
 
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
             {
@@ -84,7 +84,7 @@ namespace IndoorNavigation
 
 
 
-        private void LoadData()
+        private void LoadData()  //fake data 
         {
 
             exits.Add(new DestinationItem

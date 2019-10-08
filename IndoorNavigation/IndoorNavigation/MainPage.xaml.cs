@@ -185,6 +185,7 @@ namespace IndoorNavigation
 
                                 //await Navigation.PushAsync(new TestPage(new DestinationItem { Key = "register" },0));
                             }
+
                             
                             else if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))// || birthday.Equals(DateTime.Now))
                             {
@@ -194,6 +195,24 @@ namespace IndoorNavigation
                             else
                             {
                                 //query server data to observablecollection
+                                App app = (App)Application.Current;
+
+                                app.records.Add(new RgRecord
+                                {
+                                    DptName = "心臟血管科",
+                                    _waypointName = "心臟科",
+                                    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                                    _waypointID = new Guid("00000000-0000-0000-0000-000000000005"),
+                                    Shift = "50",
+                                    CareRoom = "0205",
+                                    DptTime = "8:30~10:00",
+                                    SeeSeq = "50",
+                                    Key = "QueryResult",
+                                    isAccept = false,
+                                    isComplete = false
+                                });
+
+                                app.records.Add(new RgRecord { Key = "NULL" });
                             }
 
                         }

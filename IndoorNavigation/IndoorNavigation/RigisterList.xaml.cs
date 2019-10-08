@@ -176,7 +176,7 @@ namespace IndoorNavigation
          async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (app.FinishCount+2 >= app.records.Count - 1)
+            if (app.FinishCount+1 >= app.records.Count - 1)
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING", currentLanguage));
@@ -264,7 +264,7 @@ namespace IndoorNavigation
                 RgListView.ItemsSource = app.records;
             }
 
-            if (app.FinishCount+2 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
+            if (app.FinishCount+1 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
             {
                 if (HavePayment && !PaymemtListBtn.IsEnabled)
                 {

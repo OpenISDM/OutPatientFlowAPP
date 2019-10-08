@@ -45,12 +45,19 @@ using System;
 using Xamarin.Forms;
 using IndoorNavigation.ViewModels.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
-
+using Rg.Plugins.Popup.Services;
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorPage : ContentPage
     {
         private NavigatorPageViewModel _viewModel;
+        private string _waypointname;
+        private string _graphname;
+        private Guid _waypointID;
+        private Guid _regionID;
+        private XMLInformation _informationXml;
+        private string _key;
+        private int _index;
 
         public NavigatorPage(string navigationGraphName,
                              Guid destinationRegionID,
@@ -92,6 +99,14 @@ namespace IndoorNavigation.Views.Navigation
 
             InitializeComponent();
 
+            _waypointID = destinationWaypointID;
+            _graphname = navigationGraphName;
+            _regionID = destinationRegionID;
+            _informationXml = informationXML;
+            _key = destinationKey;
+            _index = destinationIndex;
+            _waypointname = destinationWaypointName;
+
             _viewModel = new NavigatorPageViewModel(navigationGraphName,
                                                     destinationRegionID,
                                                     destinationWaypointID,
@@ -116,9 +131,29 @@ namespace IndoorNavigation.Views.Navigation
             return base.OnBackButtonPressed();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (PopupNavigation.Instance.PopupStack.Count > 0)
+                PopupNavigation.Instance.PopAllAsync();
+
+        }
+
         async private void FinishButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+        async private void NotFinishButton_Clicked(object sender, EventArgs e)
+        {
+            _viewModel.Stop();
+            _viewModel.Dispose();
+            //OnDisappearing();
+
+            NavigatorPageViewModel _newviewModel=new NavigatorPageViewModel(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index);
+            BindingContext = _newviewModel;
+            //await Navigation.PopAsync();
+            //await Navigation.PushAsync(new NavigatorPage(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index));
         }
     }
 }

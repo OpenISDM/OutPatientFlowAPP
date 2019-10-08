@@ -68,6 +68,7 @@
                                 LabelFontSize="20" LabelPosition="AfterBar" />     
         </Grid>
             <Button x:Name="FinishButton" Text="finish" IsEnabled="{Binding isFinished}" Clicked="FinishButton_Clicked" AbsoluteLayout.LayoutBounds="0.96,.9,80,50" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+            <Button x:Name="NotFinishButton" Text="not finish" IsEnabled="{Binding isFinished}" Clicked="NotFinishButton_Clicked" AbsoluteLayout.LayoutBounds="0.6,.9,80,50" AbsoluteLayout.LayoutFlags="PositionProportional"/>
             <!--  我是分隔線-->
         </AbsoluteLayout>
     </ContentPage.Content>
