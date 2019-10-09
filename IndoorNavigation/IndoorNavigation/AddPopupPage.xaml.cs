@@ -94,42 +94,64 @@ namespace IndoorNavigation
 
         private async void AddOKPopBtn_Clicked(object sender, EventArgs e)
         {
-            int index =(app.roundRecord==null)?(app.records.Count):(app.records.IndexOf(app.roundRecord)+1);
+
+
+            int index =(app.roundRecord==null)?(app.records.Count-1):(app.records.IndexOf(app.roundRecord)+1);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (ItemPreSelect.Count > 0 || RevisitCheckBox.IsChecked)
             {
                 foreach (RgRecord o in ItemPreSelect)
                 {
-                    app.records.Insert(index++, new RgRecord
+                    RgRecord DumplicateCheck = new RgRecord
                     {
                         _regionID = o._regionID,
                         _waypointID = o._waypointID,
                         _waypointName = o._waypointName,
                         Key = "AddItem",
                         DptName = o.DptName
-                    });
-
+                    };
+                    /* if (!app.records.Contains(DumplicateCheck))
+                         app.records.Insert(index++, DumplicateCheck);*/
+                   // if (app.records.Any(p => p.DptName==( DumplicateCheck.DptName)==false))
+                        app.records.Insert(index++, DumplicateCheck);
                 }
 
                 if (RevisitCheckBox.IsChecked)
-                    app.records.Insert(index,new RgRecord
+                {
+                    RgRecord RevisitCheck = new RgRecord
                     {
-                        _regionID=app.roundRecord._regionID,
-                        _waypointID=app.roundRecord._waypointID,
-                        _waypointName=app.roundRecord._waypointName,
-                        Key="AddItem",
-                        DptName=string.Format("回診({0})",app.roundRecord.DptName)
-                    });
-
+                        _regionID = app.roundRecord._regionID,
+                        _waypointID = app.roundRecord._waypointID,
+                        _waypointName = app.roundRecord._waypointName,
+                        Key = "AddItem",
+                        DptName = string.Format("回診({0})", app.roundRecord.DptName)
+                    };
+                   // if (!app.records.Contains(RevisitChedck))
+                   //if(app.records.Any(p=>p.DptName.Equals(RevisitCheck.DptName) && p.Check)
+                        app.records.Insert(index++, RevisitCheck);                  
+                }
+                //  app.records.GroupBy(x => x.DptName).Select(x => x.First());
+                //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
+                //app.records = new ObservableCollection<RgRecord>(app.records.Distinct());
                 await PopupNavigation.Instance.PopAsync();
             }
             else
             {
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),
-                    _resourceManager.GetString("NO_SELECT_DESTINATION_STRING",currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+                    _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
             }
         }
+        private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
+        {
+            var list = new ObservableCollection<T>();
 
+            foreach(var item in source)
+            {
+                list.Add(item);
+            }
+
+            return list;
+        }
 
         private void CheckBox_CheckChanged(object sender, EventArgs e)
         {

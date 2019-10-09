@@ -245,9 +245,14 @@ namespace IndoorNavigation
             else
                 HaveCheckRegister = true;
 
+            //app.records = app.records.Distinct().ToList;
+           // app.records.GroupBy(x => x.DptName).Select(x => x.First());
+
             //to refresh listview template 
             RgListView.ItemsSource = null;      
-            RgListView.ItemsSource = app.records;       
+            RgListView.ItemsSource = app.records;
+
+            //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
         }
         /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -284,6 +289,19 @@ namespace IndoorNavigation
            
             
         }
+
+        private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
+        {
+            var list = new ObservableCollection<T>();
+
+            foreach (var item in source)
+            {
+                list.Add(item);
+            }
+
+            return list;
+        }
+
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();
