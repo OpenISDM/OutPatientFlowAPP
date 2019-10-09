@@ -68,5 +68,10 @@ namespace IndoorNavigation
 
             return data;
         }
+
+        async private void ExitPopup_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
     }
 }

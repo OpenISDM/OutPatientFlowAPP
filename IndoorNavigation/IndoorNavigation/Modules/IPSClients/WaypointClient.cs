@@ -57,7 +57,7 @@ namespace IndoorNavigation.Modules.IPSClients
     {
         private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
 
-        private object _bufferLock = new object();
+        private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
 
         public NavigationEvent _event { get; private set; }
@@ -72,7 +72,7 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility._lbeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
-
+            _bufferLock = new object();
         }
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
@@ -112,10 +112,13 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
+
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
-                _beaconSignalBuffer.Sort((x, y) => { return x.RSSI.CompareTo(y.RSSI); });
 
+                //Sort beacons through their RSSI, to let the stronger beacon can get in first
+                //_beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
+                _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
                 //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
                 //beaconSignalModel.UUID = new Guid("00000015-0000-2503-8380-000021564175");
                 //_beaconSignalBuffer.Add(beaconSignalModel);
@@ -164,6 +167,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
+            _bufferLock = new object();
             Utility._lbeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();

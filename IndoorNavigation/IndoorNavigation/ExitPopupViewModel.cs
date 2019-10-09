@@ -42,9 +42,10 @@ namespace IndoorNavigation
             {
                 //XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
                 var o = SelectItem as DestinationItem;
-                //await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
+              //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
                 // await nowPage.Navigation.PushAsync(new TestPage(SelectItem, 0));
                 await nowPage.Navigation.PushAsync(new NavigatorPage(navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation, "exit", 0));
+                
             }
             else
             {
@@ -90,19 +91,25 @@ namespace IndoorNavigation
             exits.Add(new DestinationItem
             {
                 _waypointName = "前門出口",
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000001"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 Key = "exit"
             });
 
             exits.Add(new DestinationItem
             {
                 _waypointName = "停車場",
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000001"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 Key = "exit"
             });
 
            exits.Add(new DestinationItem
             {
                 _waypointName = "側門出口",
-                Key = "exit"
+               _waypointID = new Guid("00000000-0000-0000-0000-000000000001"),
+               _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+               Key = "exit"
             });
         }
         public event PropertyChangedEventHandler PropertyChanged;

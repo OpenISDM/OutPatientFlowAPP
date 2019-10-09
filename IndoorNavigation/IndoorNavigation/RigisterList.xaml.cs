@@ -212,15 +212,15 @@ namespace IndoorNavigation
             Buttonable();
             app.records.Insert(app.FinishCount, new RgRecord
             {
-                DptName="批價",
+                DptName="領藥",
                 _waypointID=new Guid("00000000-0000-0000-0000-000000000003"),
                 _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointName= "批價櫃臺",
+                _waypointName= "領藥櫃臺",
                 Key = "AddItem"
             });
             app.records.Insert(app.FinishCount,new RgRecord
             {
-                DptName="領藥",
+                DptName="批價",
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000003"),
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointName = "批價櫃臺",

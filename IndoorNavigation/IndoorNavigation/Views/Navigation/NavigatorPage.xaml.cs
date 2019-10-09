@@ -96,6 +96,9 @@ namespace IndoorNavigation.Views.Navigation
                               destinationRegionID,
                               destinationWaypointID,
                               destinationWaypointName);
+           /* if (PopupNavigation.Instance.PopupStack.Count > 0)
+                PopupNavigation.Instance.PopAsync();*/
+
 
             InitializeComponent();
 
@@ -133,10 +136,15 @@ namespace IndoorNavigation.Views.Navigation
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-            if (PopupNavigation.Instance.PopupStack.Count > 0)
-                PopupNavigation.Instance.PopAllAsync();
 
+            base.OnAppearing();
+           /* if (PopupNavigation.Instance.PopupStack.Count > 0)
+            {
+                PopupNavigation.Instance.PopAllAsync();
+                NavigatorPageViewModel viewModel = new NavigatorPageViewModel(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index);
+                BindingContext = viewModel;
+            }
+            */
         }
 
         async private void FinishButton_Clicked(object sender, EventArgs e)

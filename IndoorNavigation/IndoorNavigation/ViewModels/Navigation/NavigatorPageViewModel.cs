@@ -244,7 +244,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
                             _resourceManager.GetString("HOPE_STRING", currentLanguage));
                         await NowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
-                        System.Environment.Exit(0);
+                        //System.Environment.Exit(0);
                     }
                     else if (_key.Equals("register"))
                     {

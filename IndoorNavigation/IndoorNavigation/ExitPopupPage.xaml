@@ -40,7 +40,7 @@
                     </StackLayout>-->
                 </ScrollView>
 
-                <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
+                <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End" Clicked="ExitPopup_Clicked"/>
                 
             </StackLayout>
         </Frame> 

@@ -1,137 +1,139 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <navigation_graph country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin'>
-    <regions>
-        <region id='11111111-1111-1111-1111-111111111111' name='B1'/>
-        <region id='22222222-2222-2222-2222-222222222222' name='2F'/>
-    </regions>
-    <waypoints>
-        <waypoint id = "00000000-0000-0000-0000-000000003206" name = "Conference Room N206"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003205" name = "Conference Room N205"/> 
+  <regions>
+    <region id='11111111-1111-1111-1111-111111111111' name='B1'/>
+    <region id='22222222-2222-2222-2222-222222222222' name='2F'/>
+  </regions>
+  <waypoints>
+    <waypoint id = "00000000-0000-0000-0000-000000003206" name = "Conference Room N206"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003205" name = "Conference Room N205"/>
 
-        <waypoint id = "00000000-0000-0000-0000-000000003203" name = "Conference Room N203"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003202" name = "Conference Room N202"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003201" name = "Conference Room N201"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003207" name = "Conference Room N207"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003208" name = "Conference Room N208"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003209" name = "Conference Room N209"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003210" name = "Conference Room N210"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003211" name = "Conference Room N211"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003212" name = "Conference Room N212"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003213" name = "Conference Room N213"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003214" name = "Conference Room N214"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003215" name = "Conference Room N214"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003216" name = "Conference Room S216"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003217" name = "Conference Room S217"/> 
-        <waypoint id = "00000000-0000-0000-0000-000000003218" name = "Conference Room S218"/> 
-        
-        <waypoint id = "00000000-0000-0000-0000-000000000301" name = "North Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Department"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000345" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000306" name = "Bathroom(Near Conference Room 204)"/>
-        
-        <waypoint id = "00000000-0000-0000-0000-100000000306" name = "Conference Room 204"/>
-        
-        <waypoint id = "00000000-0000-0000-0000-000000000307" name = "Corner"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000308" name = "Department of Social Welfare"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000309" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000310" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000311" name = "Corner"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000312" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-100000000312" name = "Bathroom(Near North Social Welfare Department)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000313" name = "Intersection Between Escalator and Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000314" name = "Intersection"/>  
-        <waypoint id = "00000000-0000-0000-0000-000000000315" name = "Elevator"/>  
-        <waypoint id = "00000000-0000-0000-0000-000000000316" name = "Intersection of Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000317" name = "Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000319" name = "Rest Area(North)"/>
-        <waypoint id = "00000000-0000-0000-0000-100000000319" name = "Stair"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000320" name = "Parent-child theater"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000321" name = "Stair"/>
-        <waypoint id = "00000000-0000-0000-0000-100000000321" name = "Rest Area(South)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000322" name = "Intersectionof Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000323" name = "Elevator"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000324" name = "Escalator(South)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000325" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-100000000325" name = "Department of Health"/>
-        <waypoint id = "00000000-0000-0000-0000-200000000325" name = "Bathroom(Near South Department of Health)"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000326" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000327" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000328" name = "Taipei City Construction Management Office"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000329" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000330" name = "Intersection"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000331" name = "Taipei City Construction Management Office Information room"/>
-        <waypoint id = "00000000-0000-0000-0000-000000323435" name = "Intersection"/>    
-        <waypoint id = "00000000-0000-0000-0000-000000000333" name = "Corner"/>
-        <waypoint id = "00000000-0000-0000-0000-000000000336" name = "South Elevator"/> 
-        
-        
-        <waypoint id='00000000-0000-0000-0000-000000000101' name='Entrance of Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000102' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000103' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000104' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000105' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000106' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000107' name='Entrance of Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000108' name='Corner'/>
-        <waypoint id='00000000-0000-0000-0000-000000000109' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000110' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000111' name='Entrance of North Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000112' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000113' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000114' name='Corner'/>
-                
-        <waypoint id='00000000-0000-0000-0000-000000000201' name='Entrance of Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000202' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000203' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000204' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000205' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000206' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000207' name='Entrance of Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000208' name='Corner'/>
-        <waypoint id='00000000-0000-0000-0000-000000000209' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000210' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000211' name='Entrance of South Garage'/>
-        <waypoint id='00000000-0000-0000-0000-000000000212' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000213' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000214' name='Corner'/>
-          
-        <waypoint id='00000000-0000-0000-0000-000000001102' name='Entrance of North Garage'/>
-        <waypoint id='00000000-0000-0000-0000-100000001102' name='Bathroom(Near Entrance of North Garage)'/>
+    <waypoint id = "00000000-0000-0000-0000-000000003203" name = "Conference Room N203"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003202" name = "Conference Room N202"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003201" name = "Conference Room N201"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003207" name = "Conference Room N207"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003208" name = "Conference Room N208"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003209" name = "Conference Room N209"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003210" name = "Conference Room N210"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003211" name = "Conference Room N211"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003212" name = "Conference Room N212"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003213" name = "Conference Room N213"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003214" name = "Conference Room N214"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003215" name = "Conference Room N214"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003216" name = "Conference Room S216"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003217" name = "Conference Room S217"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003218" name = "Conference Room S218"/>
 
-        <waypoint id='00000000-0000-0000-0000-000000000304' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000005' name='Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000607' name='Intersection of Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000809' name='North Stairs'/>
-        <waypoint id='00000000-0000-0000-0000-000000001011' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000001213' name='Police Officer'/>
-        <waypoint id='00000000-0000-0000-0000-000000001415' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000001617' name='Department of Land Administration'/>
-        <waypoint id='00000000-0000-0000-0000-000000001819' name='South Stair'/>
-        <waypoint id='00000000-0000-0000-0000-000000000020' name='Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000002122' name='Intersection of Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000023' name='Cargo Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000002425' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000002627' name='South Garage Entrance'/>
-        <waypoint id='00000000-0000-0000-0000-100000002627' name='Bathroom(Near South Garage Entrance)'/>
+    <waypoint id = "00000000-0000-0000-0000-000000000301" name = "North Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000302" name = "Economic Development Department"/>
+    <waypoint id = "00000000-0000-0000-0000-000000303304" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000305304" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000306" name = "Bathroom(Near Conference Room 204)"/>
 
-        <waypoint id='00000000-0000-0000-0000-000000000028' name='Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000029' name='Corner'/>
-        <waypoint id='00000000-0000-0000-0000-000000000030' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000031' name='Men Bathroom(Near Police Officer Bedroom)'/>
-        <waypoint id='00000000-0000-0000-0000-000000000032' name='Management Center'/>
-        <waypoint id='00000000-0000-0000-0000-000000000033' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000034' name='Hallway'/>
-        <waypoint id='00000000-0000-0000-0000-000000000035' name='Bank'/>
-        <waypoint id='00000000-0000-0000-0000-000000000036' name='Corner'/>
-        <waypoint id='00000000-0000-0000-0000-000000000037' name='Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000038' name='Environment Education Center'/>
-        <waypoint id='00000000-0000-0000-0000-000000000040' name='Intersection'/>
-        <waypoint id='00000000-0000-0000-0000-000000000041' name='Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000045' name='South Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000043' name='North Elevator'/>
-        <waypoint id='00000000-0000-0000-0000-000000000044' name='Intersection of Bathroom'/>
-        <waypoint id='00000000-0000-0000-0000-000000000042' name='Elevator'/> 
-        
-    </waypoints>
+    <waypoint id = "00000000-0000-0000-0000-100000000306" name = "Conference Room 204"/>
+
+    <waypoint id = "00000000-0000-0000-0000-000000000307" name = "Corner"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000308" name = "Department of Social Welfare"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000309" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000310" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000311" name = "Corner"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000312" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000312" name = "Bathroom(Near North Social Welfare Department)"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000313" name = "Intersection beside Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000314" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000315" name = "Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000316" name = "Intersection of Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000317" name = "Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000318" name = "Escalator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000319" name = "Rest Area(North)"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000319" name = "Stair"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000320" name = "Parent-child theater"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000321" name = "Stair"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000321" name = "Rest Area(South)"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000322" name = "Intersectionof Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000323" name = "Elevator"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000324" name = "Escalator(South)"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000325" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-100000000325" name = "Department of Health"/>
+    <waypoint id = "00000000-0000-0000-0000-200000000325" name = "Bathroom(Near South Department of Health)"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000326" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000327" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000328" name = "Taipei City Construction Management Office"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000329" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000330" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000331" name = "Taipei City Construction Management Office Information room"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003234" name = "Intersection"/>
+    <waypoint id = "00000000-0000-0000-0000-000000003235" name = "Kindergarten"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000333" name = "Corner"/>
+    <waypoint id = "00000000-0000-0000-0000-000000000336" name = "South Elevator"/>
+
+
+    <waypoint id='00000000-0000-0000-0000-000000000101' name='Entrance of Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000102' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000103' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000104' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000105' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000106' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000107' name='Entrance of Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000108' name='Corner'/>
+    <waypoint id='00000000-0000-0000-0000-000000000109' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000110' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000111' name='Entrance of North Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000112' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000113' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000114' name='Corner'/>
+
+    <waypoint id='00000000-0000-0000-0000-000000000201' name='Entrance of Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000202' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000203' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000204' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000205' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000206' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000207' name='Entrance of Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000208' name='Corner'/>
+    <waypoint id='00000000-0000-0000-0000-000000000209' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000210' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000211' name='Entrance of South Garage'/>
+    <waypoint id='00000000-0000-0000-0000-000000000212' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000213' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000214' name='Corner'/>
+
+    <waypoint id='00000000-0000-0000-0000-000000001102' name='Entrance of North Garage'/>
+    <waypoint id='00000000-0000-0000-0000-100000001102' name='Bathroom(Near Entrance of North Garage)'/>
+
+    <waypoint id='00000000-0000-0000-0000-000000000304' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000005' name='Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000607' name='Intersection of Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000809' name='North Stairs'/>
+    <waypoint id='00000000-0000-0000-0000-000000001011' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000001213' name='Police Officer'/>
+    <waypoint id='00000000-0000-0000-0000-000000001415' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000001617' name='Department of Land Administration'/>
+    <waypoint id='00000000-0000-0000-0000-000000001819' name='South Stair'/>
+    <waypoint id='00000000-0000-0000-0000-000000000020' name='Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000002122' name='Intersection of Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000023' name='Cargo Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000002425' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000002627' name='South Garage Entrance'/>
+    <waypoint id='00000000-0000-0000-0000-100000002627' name='Bathroom(Near South Garage Entrance)'/>
+
+    <waypoint id='00000000-0000-0000-0000-000000000028' name='Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000029' name='Corner'/>
+    <waypoint id='00000000-0000-0000-0000-000000000030' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000031' name='Men Bathroom(Near Police Officer Bedroom)'/>
+    <waypoint id='00000000-0000-0000-0000-000000000032' name='Management Center'/>
+    <waypoint id='00000000-0000-0000-0000-000000000033' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000034' name='The bedroom of police'/>
+    <waypoint id='00000000-0000-0000-0000-000000000035' name='Bank'/>
+    <waypoint id='00000000-0000-0000-0000-000000000036' name='Corner'/>
+    <waypoint id='00000000-0000-0000-0000-000000000037' name='Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000038' name='Environment Education Center'/>
+    <waypoint id='00000000-0000-0000-0000-000000000040' name='Intersection'/>
+    <waypoint id='00000000-0000-0000-0000-000000000041' name='Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000045' name='South Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000043' name='North Elevator'/>
+    <waypoint id='00000000-0000-0000-0000-000000000044' name='Intersection of Bathroom'/>
+    <waypoint id='00000000-0000-0000-0000-000000000042' name='Elevator'/>
+
+  </waypoints>
 </navigation_graph>
