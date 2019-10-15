@@ -46,6 +46,11 @@ using Xamarin.Forms;
 using IndoorNavigation.ViewModels.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
 using Rg.Plugins.Popup.Services;
+using IndoorNavigation.Resources.Helpers;
+using System.Resources;
+using System.Reflection;
+using Plugin.Multilingual;
+
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorPage : ContentPage
@@ -128,31 +133,25 @@ namespace IndoorNavigation.Views.Navigation
 
             base.OnDisappearing();
         }
-        protected override bool OnBackButtonPressed()
-        {
-            //OnDisappearing();
-            return base.OnBackButtonPressed();
-        }
-
-        protected override void OnAppearing()
-        {
-
-            base.OnAppearing();
-           /* if (PopupNavigation.Instance.PopupStack.Count > 0)
-            {
-                PopupNavigation.Instance.PopAllAsync();
-                NavigatorPageViewModel viewModel = new NavigatorPageViewModel(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index);
-                BindingContext = viewModel;
-            }
-            */
-        }
-
+      
         async private void FinishButton_Clicked(object sender, EventArgs e)
         {
+            const string _resourceId = "IndoorNavigation.Resources.AppResources";
+            ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            if (_key.Equals("exit"))
+            {
+                string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
+                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                //System.Environment.Exit(0);
+            }
+            else
             await Navigation.PopAsync();
         }
 
-        async private void NotFinishButton_Clicked(object sender, EventArgs e)
+        private void NotFinishButton_Clicked(object sender, EventArgs e)
         {
             _viewModel.Stop();
             _viewModel.Dispose();

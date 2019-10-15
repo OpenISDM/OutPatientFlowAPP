@@ -238,7 +238,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Page NowPage;
                     
 
-                   if (_key.Equals("exit"))
+                   /*if (_key.Equals("exit"))
                     {
                         NowPage = Application.Current.MainPage;
                         string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
@@ -246,7 +246,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         await NowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
                         //System.Environment.Exit(0);
                     }
-                    else if (_key.Equals("register"))
+                    else*/ if (_key.Equals("register"))
                     {
                          NowPage = Application.Current.MainPage;
                       //   bool isFinished = await NowPage.DisplayAlert("message", "Have you finished register?", "Yes", "No");

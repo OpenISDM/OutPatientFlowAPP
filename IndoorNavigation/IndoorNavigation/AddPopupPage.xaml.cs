@@ -29,7 +29,7 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
         ObservableCollection<RgRecord> items;
-        ObservableCollection<RgRecord> ItemPreSelect = new ObservableCollection<RgRecord>();
+        List<RgRecord> ItemPreSelect = new List<RgRecord>();
         public AddPopupPage()
         {
             InitializeComponent();
@@ -98,6 +98,7 @@ namespace IndoorNavigation
 
             int index =(app.roundRecord==null)?(app.records.Count-1):(app.records.IndexOf(app.roundRecord)+1);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+
             if (ItemPreSelect.Count > 0 || RevisitCheckBox.IsChecked)
             {
                 foreach (RgRecord o in ItemPreSelect)
@@ -112,7 +113,10 @@ namespace IndoorNavigation
                     };
                     /* if (!app.records.Contains(DumplicateCheck))
                          app.records.Insert(index++, DumplicateCheck);*/
-                   // if (app.records.Any(p => p.DptName==( DumplicateCheck.DptName)==false))
+                    // if (app.records.Any(p => p.DptName==( DumplicateCheck.DptName)==false))
+
+                    var duplicated = app.records;
+
                         app.records.Insert(index++, DumplicateCheck);
                 }
 
@@ -133,6 +137,9 @@ namespace IndoorNavigation
                 //  app.records.GroupBy(x => x.DptName).Select(x => x.First());
                 //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
                 //app.records = new ObservableCollection<RgRecord>(app.records.Distinct());
+
+                
+
                 await PopupNavigation.Instance.PopAsync();
             }
             else
@@ -141,6 +148,8 @@ namespace IndoorNavigation
                     _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
             }
         }
+        
+
         private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
         {
             var list = new ObservableCollection<T>();
@@ -157,17 +166,24 @@ namespace IndoorNavigation
         {
             var o = (CheckBox)sender;
             string destinationName = o.Text;
-            AddRemovePreSelectItem(o.IsChecked, o.Text);
+            AddRemovePreSelectItem(sender);
         }
-        private void AddRemovePreSelectItem(bool isChecked, string destinationName)
+        async private void AddRemovePreSelectItem(object sender)
         {
-            
+            var o = (CheckBox)sender;
             {
                 foreach (RgRecord item in items)
                 {
-                    if (destinationName.Equals(item.DptName))
+                    if (o.Text.Equals(item.DptName))
                     {
-                        if (isChecked)
+                        var isDuplicate = app.records.Any(p => p.DptName == item.DptName);
+                        if (isDuplicate)
+                        {
+                            o.IsChecked = false;
+                            await DisplayAlert("訊息", "你已經選取重複的檢查。", "確定");
+                        }
+                        else
+                        if (o.IsChecked)
                             ItemPreSelect.Add(item);
                         else
                             ItemPreSelect.Remove(item);
