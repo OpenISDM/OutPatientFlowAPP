@@ -343,37 +343,37 @@
     <value>Current Location : </value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-    <value>Face to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+    <value>&gt;Face to {0}{1}then {2}{3} And go straight about {4}m</value>
   </data>
   <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-    <value>Back to {0}{1}And {2}{3}to {4}{5}(About {6}m) </value>
+    <value>Back to {0}{1}then {2}{3} And go straight about {4}m</value>
   </data>
   <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-    <value>{0}{1}And Go to {2}{3}(About {4}公尺)</value>
+    <value>{0}{1}And Go Straight {2}(About {3}公尺</value>
   </data>
   <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-    <value>Go straight{0}about {1}m to{2}{3} </value>
+    <value>Continue to go straight</value>
   </data>
   <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>Go right front{0}about {1}m to{2}{3} </value>
+    <value>Turn right front{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-    <value>Go right{0}about {1}m to{2}{3} </value>
+    <value>Turn right {0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-    <value>Go right rear{0}about {1}m to{2}{3} </value>
+    <value>Turn right rear{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-    <value>Go rear{0}about {1}m to{2}{3} </value>
+    <value>Turn back{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-    <value>Go left rear{0}about {1}m to{2}{3} </value>
+    <value>Turn left rear{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-    <value>Go left{0}about {1}m to{2}{3} </value>
+    <value>Turn left{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>Go left front{0}about {1}m to{2}{3} </value>
+    <value>Turn left front{0} and go straight about{1}m</value>
   </data>
   <data name="DIRECTION_UP_STRING" xml:space="preserve">
     <value>Take {0} go upstairs to{1}{2} </value>
@@ -475,7 +475,7 @@
     <value>Finish</value>
   </data>
   <data name="GET_MEDICINE_STRING" xml:space="preserve">
-    <value>Get Medicine</value>
+    <value>Pharmacy</value>
   </data>
   <data name="HOPE_STRING" xml:space="preserve">
     <value>CCH hope all is well with you!</value>
@@ -499,10 +499,10 @@
     <value>Outpatient Time</value>
   </data>
   <data name="PAYMENT_MEDICINE_STRING" xml:space="preserve">
-    <value>Payment/Get Medicine</value>
+    <value>Cashier/Pharmacy</value>
   </data>
   <data name="PAYMENT_STRING" xml:space="preserve">
-    <value>Payment</value>
+    <value>Cashier</value>
   </data>
   <data name="REGISTERDAY_STRING" xml:space="preserve">
     <value>Register Day</value>
@@ -530,5 +530,14 @@
   </data>
   <data name="NO_SHIFT_STRING" xml:space="preserve">
     <value>There is no item can be exchange.</value>
+  </data>
+  <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+    <value>{0}{1}to destination</value>
+  </data>
+  <data name="NEVER_SHOW_STRING" xml:space="preserve">
+    <value>Never show this again</value>
+  </data>
+  <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
+    <value>Please pick two items that you want to change position, these two will exchange their position.</value>
   </data>
 </root>

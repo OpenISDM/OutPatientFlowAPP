@@ -403,6 +403,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 {0}{1}to destination 的當地語系化字串。
+        /// </summary>
+        internal static string DIRECTION_ARRIVED_VIRTUAL_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Take {0} go downstairs to{1}{2}  的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_DOWN_STRING {
@@ -412,7 +421,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Back to {0}{1}And {2}{3}to {4}{5}(About {6}m)  的當地語系化字串。
+        ///   查詢類似 Back to {0}{1}then {2}{3} And go straight about {4}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_INITIAIL_BACK_STRING {
             get {
@@ -421,7 +430,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 {0}{1}And Go to {2}{3}(About {4}公尺) 的當地語系化字串。
+        ///   查詢類似 {0}{1}And Go Straight {2}(About {3}公尺 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_INITIAIL_CROSS_REGION_STRING {
             get {
@@ -430,7 +439,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Face to {0}{1}And {2}{3}to {4}{5}(About {6}m)  的當地語系化字串。
+        ///   查詢類似 &gt;Face to {0}{1}then {2}{3} And go straight about {4}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_INITIAIL_FACE_STRING {
             get {
@@ -439,7 +448,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go left front{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn left front{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_LEFT_FRONT_STRING {
             get {
@@ -448,7 +457,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go left rear{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn left rear{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_LEFT_REAR_STRING {
             get {
@@ -457,7 +466,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go left{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn left{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_LEFT_STRING {
             get {
@@ -466,7 +475,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go rear{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn back{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_REAR_STRING {
             get {
@@ -475,7 +484,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go right front{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn right front{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_RIGHT_FRONT_STRING {
             get {
@@ -484,7 +493,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go right rear{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn right rear{0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_RIGHT_REAR_STRING {
             get {
@@ -493,7 +502,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go right{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Turn right {0} and go straight about{1}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_RIGHT_STRING {
             get {
@@ -502,7 +511,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Go straight{0}about {1}m to{2}{3}  的當地語系化字串。
+        ///   查詢類似 Continue to go straight 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_STRAIGHT_STRING {
             get {
@@ -664,7 +673,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Get Medicine 的當地語系化字串。
+        ///   查詢類似 Pharmacy 的當地語系化字串。
         /// </summary>
         internal static string GET_MEDICINE_STRING {
             get {
@@ -853,6 +862,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Never show this again 的當地語系化字串。
+        /// </summary>
+        internal static string NEVER_SHOW_STRING {
+            get {
+                return ResourceManager.GetString("NEVER_SHOW_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please select a destination at least 的當地語系化字串。
         /// </summary>
         internal static string NO_SELECT_DESTINATION_STRING {
@@ -934,7 +952,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Payment/Get Medicine 的當地語系化字串。
+        ///   查詢類似 Cashier/Pharmacy 的當地語系化字串。
         /// </summary>
         internal static string PAYMENT_MEDICINE_STRING {
             get {
@@ -943,7 +961,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Payment 的當地語系化字串。
+        ///   查詢類似 Cashier 的當地語系化字串。
         /// </summary>
         internal static string PAYMENT_STRING {
             get {
@@ -1119,6 +1137,15 @@ namespace IndoorNavigation.Resources {
         internal static string SETTING_STRING {
             get {
                 return ResourceManager.GetString("SETTING_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please pick two items that you want to change position, these two will exchange their position. 的當地語系化字串。
+        /// </summary>
+        internal static string SHIFT_DESCRIPTION_STRING {
+            get {
+                return ResourceManager.GetString("SHIFT_DESCRIPTION_STRING", resourceCulture);
             }
         }
         

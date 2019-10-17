@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.Navigation.ShiftAlertPopupPage"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="160" WidthRequest="280">
+            <StackLayout HorizontalOptions="CenterAndExpand">
+                <ScrollView>
+                    <StackLayout>
+                        <Label Text="{i18n:Translate SHIFT_DESCRIPTION_STRING}" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </ScrollView>
+                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+                    <input:CheckBox x:Name="CheckNeverShow" Text="{i18n:Translate NEVER_SHOW_STRING}" HorizontalOptions="Start"/>
+                    <Button x:Name="ShiftAlertButton" Text="{i18n:Translate OK_STRING}" Clicked="NeverShowButton_Clicked" CornerRadius="5"  HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

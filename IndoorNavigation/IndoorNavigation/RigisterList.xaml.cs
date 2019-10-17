@@ -175,20 +175,28 @@ namespace IndoorNavigation
         /* the function is a button event which is to change listview tapped event*/
          async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
+            bool isCheck = Preferences.Get("isCheckedNeverShow", false);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING", currentLanguage));
+
+                return;
             }
             else
             {
+                if (!isCheck)
+                {
+                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
+                }
                 RgListView.ItemTapped -= RgListView_ItemTapped;
 
                 RgListView.ItemTapped += RgListViewShift_ItemTapped;
 
                 Buttonable();
             }
+            
         }
 
         /*the function is to disable those two float button to keep from triggering something wrong.*/

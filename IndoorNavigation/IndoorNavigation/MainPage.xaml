@@ -47,7 +47,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Height="70">
+                        <ViewCell >
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
@@ -57,9 +57,9 @@
                                          Padding="20, 20, 20, 1">
                                 
                                 <!--<Label Text="ICON"/>-->
-                                <Image Source="location_icon.png"
+                           <!--     <Image Source="location_icon.png"
                                        Margin="1, 1, 1, 15"
-                                       VerticalOptions="Start"/>
+                                       VerticalOptions="Start"/>-->
                                 
                                 <Label Text="{Binding UserNaming}" 
                                        HorizontalOptions="Start" 

@@ -343,37 +343,37 @@
     <value>目前位置 : </value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-    <value>面向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+    <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
   </data>
   <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-    <value>背向{0}{1}然後{2}{3}前往{4}{5}(約{6}公尺)</value>
+    <value>背向{0}{1}然後直走{2}約{3}公尺</value>
   </data>
   <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
     <value>{0}{1}前往{2}{3}(約{4}公尺)</value>
   </data>
   <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
-    <value>向前走{0}約{1}公尺到{2}{3} </value>
+    <value>繼續向前走</value>
   </data>
   <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>向右前方走{0}約{1}公尺到{2}{3} </value>
+    <value>向右前方轉{0} 然後直走約{1}公尺</value>
   </data>
   <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-    <value>向右轉{0}約{1}公尺到{2}{3} </value>
+    <value>向右轉{0} 然後直走約{1}公尺 </value>
   </data>
   <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
     <value>向右後方走{0}約{1}公尺到{2}{3} </value>
   </data>
   <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-    <value>回頭走{0}約{1}公尺到{2}{3} </value>
+    <value>向後轉{0} 然後直走約{1}公尺</value>
   </data>
   <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-    <value>向左後方走{0}約{1}公尺到{2}{3} </value>
+    <value>向左後轉{0} 然後直走約{1}公尺</value>
   </data>
   <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-    <value>向左轉{0}約{1}公尺到{2}{3} </value>
+    <value>向左轉{0} 然後直走約{1}公尺</value>
   </data>
   <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>向左前方走{0}約{1}公尺到{2}{3} </value>
+    <value>向左前轉{0} 然後直走約{1}公尺</value>
   </data>
   <data name="DIRECTION_UP_STRING" xml:space="preserve">
     <value>{0}上樓前往{1}{2} </value>
@@ -418,7 +418,7 @@
     <value>請只打開一個選項 </value>
   </data>
   <data name="GO_STRAIGHT_STRING" xml:space="preserve">
-    <value>直走</value>
+    <value>向前走</value>
   </data>
   <data name="TURN_RIGHT_STRING" xml:space="preserve">
     <value>向右轉</value>
@@ -531,10 +531,16 @@
   <data name="SEQUENCE_STRING" xml:space="preserve">
     <value>順序</value>
   </data>
-  <data name="string1" xml:space="preserve">
-    <value />
+  <data name="DIRECTION_ARRIVED_VIRTUAL_STRING" xml:space="preserve">
+    <value>{0}{1}到達目的地</value>
   </data>
   <data name="NO_SHIFT_STRING" xml:space="preserve">
     <value>已經沒有可以換位置的選項了。</value>
+  </data>
+  <data name="NEVER_SHOW_STRING" xml:space="preserve">
+    <value>下次不要再顯示</value>
+  </data>
+  <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
+    <value>請點選兩個想要交換位置的項目，被選的項目位置將會交換。</value>
   </data>
 </root>
