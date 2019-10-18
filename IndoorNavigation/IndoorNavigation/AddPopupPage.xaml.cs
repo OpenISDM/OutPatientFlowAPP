@@ -24,25 +24,26 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddPopupPage : PopupPage
     {
+        App app = (App)Application.Current;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        App app = (App)Application.Current;
-        ObservableCollection<RgRecord> items;
-        List<RgRecord> ItemPreSelect = new List<RgRecord>();
+        List<RgRecord> AddItems;
+        List<RgRecord> PreSelect;
+        ObservableCollection<CheckBox> CheckBoxes;
+        CheckBox RevisitBox; //it need to be deal specially.
         public AddPopupPage()
         {
+            
             InitializeComponent();
-             items = LoadData();
-            ItemPreSelect.Clear();
-            if (app.roundRecord == null)
-            {
-                RevisitCheckBox.IsEnabled = false;
-            }
+           
+            PreSelect = new List<RgRecord>();
+            CheckBoxes = new ObservableCollection<CheckBox>();
         }
-        private ObservableCollection<RgRecord> LoadData() //to load test layout file
+
+        private List<RgRecord> LoadItems()
         {
-            ObservableCollection<RgRecord> items = new ObservableCollection<RgRecord>();
+            List<RgRecord> items = new List<RgRecord>();
             items.Add(new RgRecord
             {
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
@@ -65,7 +66,7 @@ namespace IndoorNavigation
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 _waypointName = "超音波",
                 DptName = "超音波",
-                Key = "AddITem"
+                Key = "AddItem"
             });
             items.Add(new RgRecord
             {
@@ -79,117 +80,245 @@ namespace IndoorNavigation
             {
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                DptName="檢查室",
+                DptName = "檢查室",
                 _waypointName = "檢察室",
                 Key = "AddItem"
             });
-
             return items;
         }
+        private void AddCheckBox(List<RgRecord> items)
+        {
+            RevisitBox = new CheckBox
+            {
+                Text = "回診",
+                IsChecked = false,
+                IsEnabled = (app.roundRecord == null) ? false : true,
+                TextFontSize = 26,
+                Type = CheckBox.CheckType.Check
+            };
+            CheckBoxStackLayout.Children.Add(RevisitBox);
 
-        async private void AddCancelPopBtn_Clicked(object sender, EventArgs e)
+            int i = 0;// for checkbox id
+            foreach(RgRecord item in items)
+            {
+                CheckBox box = new CheckBox
+                {
+                    Key = i++,
+                    Text = item.DptName,
+                    IsChecked=false,
+                    TextFontSize=24,
+                    Type=CheckBox.CheckType.Check
+                };
+                box.CheckChanged +=CheckBox_Changed;
+                CheckBoxStackLayout.Children.Add(box);
+                CheckBoxes.Add(box); //to get box group                                         
+            }
+
+        }
+        private void CheckBox_Changed(object sender, EventArgs e)
+        {
+            var o = (Plugin.InputKit.Shared.Controls.CheckBox)sender;
+            Console.WriteLine("item:{0} was tapped\n key={1}", o.Text, o.Key);
+        }
+
+        protected override void OnAppearing()
+        {
+            AddItems = LoadItems();
+            AddCheckBox(AddItems);
+            base.OnAppearing();
+        }
+
+        async private void AddItemCancelBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PopAsync();
         }
 
-        private async void AddOKPopBtn_Clicked(object sender, EventArgs e)
+        async private void AddItemOKBtn_Clicked(object sender, EventArgs e)
         {
-
-
-            int index =(app.roundRecord==null)?(app.records.Count-1):(app.records.IndexOf(app.roundRecord)+1);
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
-            if (ItemPreSelect.Count > 0 || RevisitCheckBox.IsChecked)
+            int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            foreach (CheckBox box in CheckBoxes)
             {
-                foreach (RgRecord o in ItemPreSelect)
-                {
-                    RgRecord DumplicateCheck = new RgRecord
-                    {
-                        _regionID = o._regionID,
-                        _waypointID = o._waypointID,
-                        _waypointName = o._waypointName,
-                        Key = "AddItem",
-                        DptName = o.DptName
-                    };
-                    /* if (!app.records.Contains(DumplicateCheck))
-                         app.records.Insert(index++, DumplicateCheck);*/
-                    // if (app.records.Any(p => p.DptName==( DumplicateCheck.DptName)==false))
+                if (!box.IsChecked) continue;
 
-                    var duplicated = app.records;
-
-                        app.records.Insert(index++, DumplicateCheck);
-                }
-
-                if (RevisitCheckBox.IsChecked)
-                {
-                    RgRecord RevisitCheck = new RgRecord
-                    {
-                        _regionID = app.roundRecord._regionID,
-                        _waypointID = app.roundRecord._waypointID,
-                        _waypointName = app.roundRecord._waypointName,
-                        Key = "AddItem",
-                        DptName = string.Format("回診({0})", app.roundRecord.DptName)
-                    };
-                   // if (!app.records.Contains(RevisitChedck))
-                   //if(app.records.Any(p=>p.DptName.Equals(RevisitCheck.DptName) && p.Check)
-                        app.records.Insert(index++, RevisitCheck);                  
-                }
-                //  app.records.GroupBy(x => x.DptName).Select(x => x.First());
-                //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
-                //app.records = new ObservableCollection<RgRecord>(app.records.Distinct());
+                var isDuplicate = app.records.Any(p => p.DptName == AddItems[box.Key].DptName);
+                if (isDuplicate) continue;
 
                 
+                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
-                await PopupNavigation.Instance.PopAsync();
+                app.records.Insert(index++,AddItems[box.Key]);
             }
-            else
-            {
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                    _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
-            }
-        }
-        
-
-        private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
-        {
-            var list = new ObservableCollection<T>();
-
-            foreach(var item in source)
-            {
-                list.Add(item);
-            }
-
-            return list;
-        }
-
-        private void CheckBox_CheckChanged(object sender, EventArgs e)
-        {
-            var o = (CheckBox)sender;
-            string destinationName = o.Text;
-            AddRemovePreSelectItem(sender);
-        }
-        async private void AddRemovePreSelectItem(object sender)
-        {
-            var o = (CheckBox)sender;
-            {
-                foreach (RgRecord item in items)
+            if (RevisitBox.IsChecked)
+            {       
+                app.records.Insert(index++,new RgRecord
                 {
-                    if (o.Text.Equals(item.DptName))
-                    {
-                        var isDuplicate = app.records.Any(p => p.DptName == item.DptName);
-                        if (isDuplicate)
-                        {
-                            o.IsChecked = false;
-                            await DisplayAlert("訊息", "你已經選取重複的檢查。", "確定");
-                        }
-                        else
-                        if (o.IsChecked)
-                            ItemPreSelect.Add(item);
-                        else
-                            ItemPreSelect.Remove(item);
-                    }
-                }
+                    DptName=string.Format("回診({0})",app.roundRecord.DptName),
+                    _regionID=app.roundRecord._regionID,
+                    _waypointID=app.roundRecord._waypointID,
+                    Key= "AddItem",
+                    _waypointName=app.roundRecord._waypointName
+                });
+                app.roundRecord = null;
             }
+
+            await PopupNavigation.Instance.PopAsync();
         }
+
+
+
+        //const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        //ResourceManager _resourceManager =
+        //    new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        //App app = (App)Application.Current;
+        //ObservableCollection<RgRecord> items;
+        //List<RgRecord> ItemPreSelect = new List<RgRecord>();
+        //public AddPopupPage()
+        //{
+        //    InitializeComponent();
+        //     items = LoadData();
+        //    ItemPreSelect.Clear();
+        //    if (app.roundRecord == null)
+        //    {
+        //        RevisitCheckBox.IsEnabled = false;
+        //    }
+        //}
+        //private ObservableCollection<RgRecord> LoadData() //to load test layout file
+        //{
+        //    ObservableCollection<RgRecord> items = new ObservableCollection<RgRecord>();
+        //    items.Add(new RgRecord
+        //    {
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _waypointName = "內視鏡",
+        //        DptName = "內視鏡",
+        //        Key = "AddItem"
+        //    });
+        //    items.Add(new RgRecord
+        //    {
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _waypointName = "X光",
+        //        DptName = "X光",
+        //        Key = "AddItem"
+        //    });
+        //    items.Add(new RgRecord
+        //    {
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _waypointName = "超音波",
+        //        DptName = "超音波",
+        //        Key = "AddITem"
+        //    });
+        //    items.Add(new RgRecord
+        //    {
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _waypointName = "抽血處",
+        //        DptName = "抽血處",
+        //        Key = "AddItem"
+        //    });
+        //    items.Add(new RgRecord
+        //    {
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        DptName="檢查室",
+        //        _waypointName = "檢察室",
+        //        Key = "AddItem"
+        //    });
+
+        //    return items;
+        //}
+
+        //async private void AddCancelPopBtn_Clicked(object sender, EventArgs e)
+        //{
+        //    await PopupNavigation.Instance.PopAsync();
+        //}
+
+        //private async void AddOKPopBtn_Clicked(object sender, EventArgs e)
+        //{
+
+
+        //    int index =(app.roundRecord==null)?(app.records.Count-1):(app.records.IndexOf(app.roundRecord)+1);
+        //    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+
+        //    if (ItemPreSelect.Count > 0 || RevisitCheckBox.IsChecked)
+        //    {
+        //        foreach (RgRecord o in ItemPreSelect)
+        //        {
+        //            RgRecord DumplicateCheck = new RgRecord
+        //            {
+        //                _regionID = o._regionID,
+        //                _waypointID = o._waypointID,
+        //                _waypointName = o._waypointName,
+        //                Key = "AddItem",
+        //                DptName = o.DptName
+        //            };
+       
+
+        //            var duplicated = app.records;
+
+        //                app.records.Insert(index++, DumplicateCheck);
+        //        }
+
+        //        if (RevisitCheckBox.IsChecked)
+        //        {
+        //            RgRecord RevisitCheck = new RgRecord
+        //            {
+        //                _regionID = app.roundRecord._regionID,
+        //                _waypointID = app.roundRecord._waypointID,
+        //                _waypointName = app.roundRecord._waypointName,
+        //                Key = "AddItem",
+        //                DptName = string.Format("回診({0})", app.roundRecord.DptName)
+        //            };
+        //           // if (!app.records.Contains(RevisitChedck))
+        //           //if(app.records.Any(p=>p.DptName.Equals(RevisitCheck.DptName) && p.Check)
+        //                app.records.Insert(index++, RevisitCheck);                  
+        //        }
+        //        //  app.records.GroupBy(x => x.DptName).Select(x => x.First());
+        //        //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
+        //        //app.records = new ObservableCollection<RgRecord>(app.records.Distinct());
+
+
+
+        //        await PopupNavigation.Instance.PopAsync();
+        //    }
+        //    else
+        //    {
+        //        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+        //            _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+        //    }
+        //}
+
+
+
+        //     private void CheckBox_CheckChanged(object sender, EventArgs e)
+        //     {
+        //         var o = (CheckBox)sender;
+        //         string destinationName = o.Text;
+        //         AddRemovePreSelectItem(sender);
+        //     }
+        ///     async private void AddRemovePreSelectItem(object sender)
+        //     {
+        //         var o = (CheckBox)sender;
+        //         {
+        //             foreach (RgRecord item in items)
+        //             {
+        //                 if (o.Text.Equals(item.DptName))
+        //                 {
+        //                     var isDuplicate = app.records.Any(p => p.DptName == item.DptName);
+        //                     if (isDuplicate)
+        //                     {
+        //                         o.IsChecked = false;
+        //                         await DisplayAlert("訊息", "你已經選取重複的檢查。", "確定");
+        //                     }
+        //                     else
+        //                     if (o.IsChecked)
+        //                         ItemPreSelect.Add(item);
+        //                     else
+        //                         ItemPreSelect.Remove(item);
+        //                 }
+        //             }
+        //         }
+        //     }
     }
 }
