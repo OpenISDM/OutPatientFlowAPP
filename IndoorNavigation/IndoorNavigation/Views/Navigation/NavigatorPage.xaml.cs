@@ -145,6 +145,7 @@ namespace IndoorNavigation.Views.Navigation
                 string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                await Navigation.PopAsync();
                 //System.Environment.Exit(0);
             }
             else
@@ -156,7 +157,7 @@ namespace IndoorNavigation.Views.Navigation
             _viewModel.Stop();
             _viewModel.Dispose();
             //OnDisappearing();
-
+            
             NavigatorPageViewModel _newviewModel=new NavigatorPageViewModel(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index);
             BindingContext = _newviewModel;
             //await Navigation.PopAsync();

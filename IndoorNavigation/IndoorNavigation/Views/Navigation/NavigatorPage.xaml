@@ -67,6 +67,9 @@
                    Source="{Binding FirstDirectionPicture}"
                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                    Scale="1.3" Margin="5,0,0,0 " />
+            <!--我是分隔線-->
+            <Button x:Name="FinishButton" Text="Finish" Clicked="FinishButton_Clicked" Grid.Row="6" Grid.Column="2" IsEnabled="{Binding isFinished}" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" HeightRequest="50" MinimumWidthRequest="70"/>
+            <!--我是分隔線-->
         </Grid>
     </ContentPage.Content>
 

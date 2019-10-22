@@ -61,7 +61,7 @@ namespace IndoorNavigation
             
         }
         /*for fake data to test layout, the page whether is running normally.*/
-        ObservableCollection<RgRecord> LoadData()   //for fake data
+       /* ObservableCollection<RgRecord> LoadData()   //for fake data
          {
             ObservableCollection<RgRecord> rgs = new ObservableCollection<RgRecord>();
 
@@ -120,7 +120,7 @@ namespace IndoorNavigation
                 Key = "NULL"
             });
             return rgs;
-         }
+         }*/
 
 
         /*this function is to push page to NavigatorPage */
@@ -313,6 +313,11 @@ namespace IndoorNavigation
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();
+        }
+
+        async private void InfoItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new NavigatorSettingPage());
         }
     }
 }

@@ -68,6 +68,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked">
         </ToolbarItem>
+        <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Padding>
