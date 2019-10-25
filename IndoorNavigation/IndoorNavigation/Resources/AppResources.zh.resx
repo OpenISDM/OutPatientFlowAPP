@@ -543,4 +543,10 @@
   <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
     <value>請點選兩個想要交換位置的項目，被選的項目位置將會交換。</value>
   </data>
+  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="VERSION_STRING" xml:space="preserve">
+    <value>版本</value>
+  </data>
 </root>

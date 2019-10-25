@@ -367,11 +367,20 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Current Location :  的當地語系化字串。
+        ///   查詢類似 Current :  的當地語系化字串。
         /// </summary>
         internal static string CURRENT_LOCATION_STRING {
             get {
                 return ResourceManager.GetString("CURRENT_LOCATION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 1.0 的當地語系化字串。
+        /// </summary>
+        internal static string CURRENT_VERSION_STRING {
+            get {
+                return ResourceManager.GetString("CURRENT_VERSION_STRING", resourceCulture);
             }
         }
         
@@ -385,7 +394,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Destination :  的當地語系化字串。
+        ///   查詢類似 Goal: 的當地語系化字串。
         /// </summary>
         internal static string DESTINATION_STRING {
             get {
@@ -430,7 +439,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 {0}{1}And Go Straight {2}(About {3}公尺 的當地語系化字串。
+        ///   查詢類似 {0}{1}And Go Straight {2}(About {3}m 的當地語系化字串。
         /// </summary>
         internal static string DIRECTION_INITIAIL_CROSS_REGION_STRING {
             get {
@@ -1272,6 +1281,15 @@ namespace IndoorNavigation.Resources {
         internal static string TURN_RIGHT_STRING {
             get {
                 return ResourceManager.GetString("TURN_RIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Version 的當地語系化字串。
+        /// </summary>
+        internal static string VERSION_STRING {
+            get {
+                return ResourceManager.GetString("VERSION_STRING", resourceCulture);
             }
         }
         

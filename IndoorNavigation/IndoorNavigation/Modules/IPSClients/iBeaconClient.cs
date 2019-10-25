@@ -60,7 +60,7 @@ namespace IndoorNavigation.Modules.IPSClients
         private const int _moreThanTwoIBeacon = 2;
         private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
         private int rssiOption;
-
+        private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
         public IBeaconClient()
         {
             Console.WriteLine("In Ibeacon Type");
@@ -72,6 +72,8 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
+
+            watch.Start();
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
@@ -98,6 +100,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void DetectWaypoints()
         {
+
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
 
@@ -116,6 +119,23 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 Dictionary<RegionWaypointPoint, List<BeaconSignal>> correctData = new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
+
+
+                Console.WriteLine("Time : " + watch.Elapsed.TotalMilliseconds);
+                if (watch.Elapsed.TotalMilliseconds >= 90000)
+                {
+                    watch.Stop();
+                    watch.Reset();
+                    watch.Start();
+                    Utility._ibeaconScan.StopScan();
+                    Utility._ibeaconScan.StartScan();
+
+                }
+                //if (_beaconSignalBuffer.Count() >= 25)
+                //{
+                //    _beaconSignalBuffer = new List<BeaconSignalModel>();
+                //    _bufferLock = new object();
+                //}
 
                 //In ibsclient, a waypoint has at least two beacon UUIDs,
                 //We put all waypoint we get in scannedData
@@ -186,6 +206,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     //If a waypoint has at least two beacon UUIDs,
                     //this waypoint might be our interested waypoint.
+
                     if (calculateData.Value.Count() >= _moreThanTwoIBeacon)
                     {
                         Dictionary<Guid, List<int>> saveEachBeacons = new Dictionary<Guid, List<int>>();
@@ -287,7 +308,6 @@ namespace IndoorNavigation.Modules.IPSClients
                 //Compare all data we have, and get the highest Rssi Waypoint as our interested waypoint
                 foreach (KeyValuePair<RegionWaypointPoint, int> calculateMax in signalAvgValue)
                 {
-                    Console.WriteLine("caculatemax : " + calculateMax.Value);
                     if (tempValue < calculateMax.Value)
                     {
                         possibleRegionWaypoint = new RegionWaypointPoint();
@@ -300,6 +320,9 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 if (haveThing == true)
                 {
+                    watch.Stop();
+                    watch.Reset();
+                    watch.Start();
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
                         _detectedRegionWaypoint = possibleRegionWaypoint
@@ -331,7 +354,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();
             Utility._ibeaconScan._event._eventHandler -= _beaconScanEventHandler;
-
+            watch.Stop();
         }
 
     }

@@ -88,44 +88,44 @@ namespace IndoorNavigation.Views.Navigation
             Console.WriteLine("<< NavigatorPage constructor");
         }
 
-        public NavigatorPage(string navigationGraphName,
-                            Guid destinationRegionID,
-                            Guid destinationWaypointID,
-                            string destinationWaypointName,
-                            XMLInformation informationXML, 
-                            string destinationKey,
-                            int destinationIndex)
-        {
-            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
-                              navigationGraphName,
-                              destinationRegionID,
-                              destinationWaypointID,
-                              destinationWaypointName);
-           /* if (PopupNavigation.Instance.PopupStack.Count > 0)
-                PopupNavigation.Instance.PopAsync();*/
+        //public NavigatorPage(string navigationGraphName,
+        //                    Guid destinationRegionID,
+        //                    Guid destinationWaypointID,
+        //                    string destinationWaypointName,
+        //                    XMLInformation informationXML, 
+        //                    string destinationKey,
+        //                    int destinationIndex)
+        //{
+        //    Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
+        //                      navigationGraphName,
+        //                      destinationRegionID,
+        //                      destinationWaypointID,
+        //                      destinationWaypointName);
+        //   /* if (PopupNavigation.Instance.PopupStack.Count > 0)
+        //        PopupNavigation.Instance.PopAsync();*/
 
 
-            InitializeComponent();
+        //    InitializeComponent();
 
-            _waypointID = destinationWaypointID;
-            _graphname = navigationGraphName;
-            _regionID = destinationRegionID;
-            _informationXml = informationXML;
-            _key = destinationKey;
-            _index = destinationIndex;
-            _waypointname = destinationWaypointName;
+        //    _waypointID = destinationWaypointID;
+        //    _graphname = navigationGraphName;
+        //    _regionID = destinationRegionID;
+        //    _informationXml = informationXML;
+        //    _key = destinationKey;
+        //    _index = destinationIndex;
+        //    _waypointname = destinationWaypointName;
 
-            _viewModel = new NavigatorPageViewModel(navigationGraphName,
-                                                    destinationRegionID,
-                                                    destinationWaypointID,
-                                                    destinationWaypointName,
-                                                    informationXML, 
-                                                    destinationKey,
-                                                    destinationIndex);
-            BindingContext = _viewModel;
+        //    _viewModel = new NavigatorPageViewModel(navigationGraphName,
+        //                                            destinationRegionID,
+        //                                            destinationWaypointID,
+        //                                            destinationWaypointName,
+        //                                            informationXML, 
+        //                                            destinationKey,
+        //                                            destinationIndex);
+        //    BindingContext = _viewModel;
 
-            Console.WriteLine("<< NavigatorPage constructor");
-        }
+        //    Console.WriteLine("<< NavigatorPage constructor");
+        //}
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
@@ -134,7 +134,7 @@ namespace IndoorNavigation.Views.Navigation
             base.OnDisappearing();
         }
       
-        async private void FinishButton_Clicked(object sender, EventArgs e)
+       /* async private void FinishButton_Clicked(object sender, EventArgs e)
         {
             const string _resourceId = "IndoorNavigation.Resources.AppResources";
             ResourceManager _resourceManager =
@@ -162,6 +162,6 @@ namespace IndoorNavigation.Views.Navigation
             BindingContext = _newviewModel;
             //await Navigation.PopAsync();
             //await Navigation.PushAsync(new NavigatorPage(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index));
-        }
+        }*/
     }
 }

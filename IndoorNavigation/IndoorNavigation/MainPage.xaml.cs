@@ -180,8 +180,8 @@ namespace IndoorNavigation
                             {
                                    await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
                                        new Guid("11111111-1111-1111-1111-111111111111"), 
-                                       new Guid("00000000-0000-0000-0000-000000000003"),
-                                       "服務台",  _nameInformation,"register",0));
+                                       new Guid("00000000-0000-0000-0000-000000000002"),
+                                       "服務台",  _nameInformation));
 
                                 //await Navigation.PushAsync(new TestPage(new DestinationItem { Key = "register" },0));
                             }
@@ -192,7 +192,7 @@ namespace IndoorNavigation
                                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
                                     _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
                             }
-                            else
+                           
                             {
                                 //query server data to observablecollection
                                 App app = (App)Application.Current;
@@ -202,7 +202,7 @@ namespace IndoorNavigation
                                     DptName = "心臟血管科",
                                     _waypointName = "心臟科",
                                     _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                                    _waypointID = new Guid("00000000-0000-0000-0000-000000000005"),
+                                    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                                     Shift = "50",
                                     CareRoom = "0205",
                                     DptTime = "8:30~10:00",

@@ -131,13 +131,14 @@ namespace IndoorNavigation
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
                 var index = app.records.IndexOf(e.Item as RgRecord);
-               
+                var o = e.Item as RgRecord;
+                o.isComplete = true;
              //   await Navigation.PushAsync(new TestPage(e.Item as DestinationItem, index));
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                              destination._regionID,
                                                              destination._waypointID,
                                                              destination._waypointName,
-                                                             _nameInformation,destination.Key,index
+                                                             _nameInformation
                                                              ));
             }
            
@@ -221,7 +222,7 @@ namespace IndoorNavigation
             app.records.Insert(app.FinishCount, new RgRecord
             {
                 DptName="領藥",
-                _waypointID=new Guid("00000000-0000-0000-0000-000000000003"),
+                _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
                 _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointName= "領藥櫃臺",
                 Key = "AddItem"
@@ -229,7 +230,7 @@ namespace IndoorNavigation
             app.records.Insert(app.FinishCount,new RgRecord
             {
                 DptName="批價",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000003"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointName = "批價櫃臺",
                 Key = "AddItem"

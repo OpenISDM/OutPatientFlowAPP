@@ -337,10 +337,10 @@
     <value>Unable to avoid all connection types</value>
   </data>
   <data name="DESTINATION_STRING" xml:space="preserve">
-    <value>Destination : </value>
+    <value>Goal:</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>Current Location : </value>
+    <value>Current : </value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>&gt;Face to {0}{1}then {2}{3} And go straight about {4}m</value>
@@ -349,7 +349,7 @@
     <value>Back to {0}{1}then {2}{3} And go straight about {4}m</value>
   </data>
   <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-    <value>{0}{1}And Go Straight {2}(About {3}公尺</value>
+    <value>{0}{1}And Go Straight {2}(About {3}m</value>
   </data>
   <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
     <value>Continue to go straight</value>
@@ -539,5 +539,11 @@
   </data>
   <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
     <value>Please pick two items that you want to change position, these two will exchange their position.</value>
+  </data>
+  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="VERSION_STRING" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>
