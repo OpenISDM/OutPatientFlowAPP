@@ -28,6 +28,7 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+      
         List<RgRecord> AddItems;
         List<RgRecord> PreSelect;
         ObservableCollection<CheckBox> CheckBoxes;
@@ -130,6 +131,7 @@ namespace IndoorNavigation
 
         async private void AddItemCancelBtn_Clicked(object sender, EventArgs e)
         {
+            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot", false);
             await PopupNavigation.Instance.PopAsync();
         }
 
@@ -160,11 +162,23 @@ namespace IndoorNavigation
                 });
                 app.roundRecord = null;
             }
-
+            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot", true);
             await PopupNavigation.Instance.PopAsync();
         }
 
+        protected override bool OnBackgroundClicked()
+        {
+            MessagingCenter.Send<RigisterList, bool>(this, "AddAnyOrNot", false);
+            PopupNavigation.Instance.PopAsync();
+            return base.OnBackgroundClicked();
+        }
 
+        protected override bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot",false);
+            PopupNavigation.Instance.PopAsync();
+            return base.OnBackButtonPressed();
+        }
 
         //const string _resourceId = "IndoorNavigation.Resources.AppResources";
         //ResourceManager _resourceManager =
@@ -253,7 +267,7 @@ namespace IndoorNavigation
         //                Key = "AddItem",
         //                DptName = o.DptName
         //            };
-       
+
 
         //            var duplicated = app.records;
 

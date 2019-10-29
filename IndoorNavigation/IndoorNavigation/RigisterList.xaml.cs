@@ -16,6 +16,7 @@ using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Essentials;
+using Rg.Plugins.Popup.Extensions;
 using IndoorNavigation.ViewModels;
 namespace IndoorNavigation
 {
@@ -241,7 +242,14 @@ namespace IndoorNavigation
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
+            PaymemtListBtn.IsEnabled = false;
             await PopupNavigation.Instance.PushAsync(new AddPopupPage());
+            //await Navigation.PushPopupAsync(new AddPopupPage());
+            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
+            {
+                bool Message = (bool)Messageargs;
+                PaymemtListBtn.IsEnabled = Message;
+            });
         }
         
         /*to refresh listview Template and check whether user have sign in or not.*/
@@ -261,13 +269,60 @@ namespace IndoorNavigation
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
 
+
             //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
         }
         /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             var o = (Button)sender;
             var index = o.CommandParameter as RgRecord;
+
+            if (index.Key.Equals("register"))
+            {
+                //query server data to collection
+                app.records.Add(new RgRecord
+                {
+                    DptName = "心臟血管科",
+                    _waypointName = "心臟科",
+                    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                    Shift = "50",
+                    CareRoom = "0205",
+                    DptTime = "8:30~10:00",
+                    SeeSeq = "50",
+                    Key = "QueryResult",
+                    isAccept = false,
+                    isComplete = false
+                });
+
+                app.records.Add(new RgRecord { Key = "NULL" });
+                index.isAccept = true;
+                index.isComplete = true;
+                app.FinishCount++;
+                RgListView.ItemsSource = null;
+                RgListView.ItemsSource = app.records;
+                return;
+            }
+            else if (index.Key.Equals("exit"))
+            {
+                //show msg to say goodbye
+
+                string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
+                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                await Navigation.PopAsync();
+                index.isAccept = true;
+                index.isComplete = true;
+                RgListView.ItemsSource = null;
+                RgListView.ItemsSource = app.records;
+                return;
+            }
+            else if(index.Key.Equals("QueryResult"))
+            {
+                app.roundRecord = index;
+            }
 
             if(index != null)   // click finish button , it will refresh certain cell template
             {
@@ -283,7 +338,7 @@ namespace IndoorNavigation
                 if (HavePayment && !PaymemtListBtn.IsEnabled)
                 {
                     HavePayment = false;
-                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
                     await PopupNavigation.Instance.PushAsync(new ExitPopupPage());
@@ -293,10 +348,7 @@ namespace IndoorNavigation
                     PaymemtListBtn.IsEnabled = true;
                     HavePayment = true;
                 }
-                
             }
-           
-            
         }
 
         private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
@@ -313,6 +365,7 @@ namespace IndoorNavigation
 
         protected override bool OnBackButtonPressed()
         {
+           
             return base.OnBackButtonPressed();
         }
 
@@ -320,5 +373,12 @@ namespace IndoorNavigation
         {
             await Navigation.PushAsync(new NavigatorSettingPage());
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            Console.WriteLine("The page is Disappear~~~~~");
+        }
+        
     }
 }

@@ -178,11 +178,18 @@ namespace IndoorNavigation
                             
                             if (isRigister)
                             {
-                                   await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
-                                       new Guid("11111111-1111-1111-1111-111111111111"), 
-                                       new Guid("00000000-0000-0000-0000-000000000002"),
-                                       "服務台",  _nameInformation));
-
+                                //await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
+                                //    new Guid("11111111-1111-1111-1111-111111111111"), 
+                                //    new Guid("00000000-0000-0000-0000-000000000002"),
+                                //    "服務台",  _nameInformation));
+                                App app = (App)Application.Current;
+                                app.records.Add(new RgRecord {
+                                    DptName ="掛號",
+                                    _regionID =new Guid("11111111-1111-1111-1111-111111111111"),
+                                    _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
+                                    _waypointName="服務台",
+                                    Key="register"
+                                });
                                 //await Navigation.PushAsync(new TestPage(new DestinationItem { Key = "register" },0));
                             }
 
@@ -192,7 +199,7 @@ namespace IndoorNavigation
                                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
                                     _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
                             }
-                           
+                            else
                             {
                                 //query server data to observablecollection
                                 App app = (App)Application.Current;

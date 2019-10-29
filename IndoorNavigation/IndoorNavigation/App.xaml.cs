@@ -65,6 +65,7 @@ namespace IndoorNavigation
         public RgRecord roundRecord=null;
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
+        public bool CheckNotAdd = false;
         public App()
         {
             InitializeComponent();

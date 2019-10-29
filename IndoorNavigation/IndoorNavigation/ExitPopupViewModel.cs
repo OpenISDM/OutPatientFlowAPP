@@ -42,9 +42,19 @@ namespace IndoorNavigation
             {
                 //XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
                 var o = SelectItem as DestinationItem;
-              //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
+                //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
                 // await nowPage.Navigation.PushAsync(new TestPage(SelectItem, 0));
                 await nowPage.Navigation.PushAsync(new NavigatorPage(navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
+                App app = (App)Application.Current;
+                app.records.Insert(app.FinishCount,new RgRecord
+                {
+                    _waypointName = o._waypointName,
+                    Key = "exit",
+                    _regionID = o._regionID,
+                    _waypointID = o._waypointID,
+                    isComplete=true,
+                   DptName=o._waypointName
+                });
                 
             }
             else

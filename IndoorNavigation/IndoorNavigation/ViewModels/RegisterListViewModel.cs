@@ -8,19 +8,23 @@ using System.Resources;
 using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-
+using Rg.Plugins.Popup.Events;
 namespace IndoorNavigation.ViewModels
 {
     class RegisterListViewModel:BaseViewModel
     {
+        Rg.Plugins.Popup.Contracts.IPopupNavigation navigation;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        
+
+        private int _popupStackCount;
+
         public RegisterListViewModel(bool isFirstTime)
         {
           //  CheckRegister(isFirstTime);
             CheckSignIn();
+           // navigation.PopupStack
         }
         public RegisterListViewModel()
         {
@@ -44,6 +48,19 @@ namespace IndoorNavigation.ViewModels
                 }
             }
         }
+        public int PopupStackCount
+        {
+            get { return _popupStackCount; }
+            set
+            {
+                if (_popupStackCount != value)
+                {
+                    _popupStackCount = value;
+                    OnPropertyChanged("SelectedItem");
+                    
+                }
+            }
+        }
         public async void CheckSignIn()
         {
             string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
@@ -63,7 +80,5 @@ namespace IndoorNavigation.ViewModels
                 await mainPage.Navigation.PushAsync(new SignInPage());
             }
         }
-
-        
     }
 }
