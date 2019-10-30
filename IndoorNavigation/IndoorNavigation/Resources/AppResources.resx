@@ -546,4 +546,7 @@
   <data name="VERSION_STRING" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="NO_REVISIT_RECORD_STRING" xml:space="preserve">
+    <value>There is no clinic have been completed, so revisit couldn't be add.</value>
+  </data>
 </root>

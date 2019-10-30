@@ -549,4 +549,7 @@
   <data name="VERSION_STRING" xml:space="preserve">
     <value>版本</value>
   </data>
+  <data name="NO_REVISIT_RECORD_STRING" xml:space="preserve">
+    <value>尚未完成門診，因此無法回診。</value>
+  </data>
 </root>

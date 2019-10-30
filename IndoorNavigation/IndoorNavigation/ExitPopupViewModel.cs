@@ -32,7 +32,7 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-
+        private bool isButtonPressed = false;
         private XMLInformation _nameInformation;
         private string navigationGraphName { get; set; }
         async void ToNavigatorExit()
@@ -40,6 +40,9 @@ namespace IndoorNavigation
             Page nowPage = Application.Current.MainPage;
             if (SelectItem != null)
             {
+                if (isButtonPressed) return;
+
+                isButtonPressed = true;
                 //XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
                 var o = SelectItem as DestinationItem;
                 //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");

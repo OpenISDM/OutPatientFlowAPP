@@ -880,6 +880,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 There is no clinic have been completed, so revisit couldn&apos;t be add. 的當地語系化字串。
+        /// </summary>
+        internal static string NO_REVISIT_RECORD_STRING {
+            get {
+                return ResourceManager.GetString("NO_REVISIT_RECORD_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please select a destination at least 的當地語系化字串。
         /// </summary>
         internal static string NO_SELECT_DESTINATION_STRING {

@@ -39,7 +39,7 @@ namespace IndoorNavigation
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
-          //  _viewmodel = new RegisterListViewModel();
+            //_viewmodel = new RegisterListViewModel();
             app.FinishCount = 0;
             app.records = new ObservableCollection<RgRecord>();
             _navigationGraphName = navigationGraphName;
@@ -54,7 +54,7 @@ namespace IndoorNavigation
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
             }
-
+            BindingContext = _viewmodel;
         }
         /*for fake data to test layout, the page whether is running normally.*/
        /* ObservableCollection<RgRecord> LoadData()   //for fake data
@@ -267,10 +267,10 @@ namespace IndoorNavigation
         {      
             base.OnAppearing();
 
-            if (HaveCheckRegister)
+            if (_viewmodel==null || !_viewmodel.isCheckRegister)
+            {
                 _viewmodel = new RegisterListViewModel();
-            else
-                HaveCheckRegister = true;
+            }
 
             //app.records = app.records.Distinct().ToList;
            // app.records.GroupBy(x => x.DptName).Select(x => x.First());
@@ -292,7 +292,7 @@ namespace IndoorNavigation
             if (index.Key.Equals("register"))
             {
                 //query server data to collection
-                app.records.Add(new RgRecord
+                app.records.Insert(app.records.Count-1,new RgRecord
                 {
                     DptName = "心臟血管科",
                     _waypointName = "心臟科",
@@ -307,7 +307,7 @@ namespace IndoorNavigation
                     isComplete = false
                 });
 
-                app.records.Add(new RgRecord { Key = "NULL" });
+                //app.records.Add(new RgRecord { Key = "NULL" });
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;

@@ -34,8 +34,7 @@ namespace IndoorNavigation
         ObservableCollection<CheckBox> CheckBoxes;
         CheckBox RevisitBox; //it need to be deal specially.
         public AddPopupPage()
-        {
-            
+        {   
             InitializeComponent();
            
             PreSelect = new List<RgRecord>();
@@ -93,10 +92,11 @@ namespace IndoorNavigation
             {
                 Text = "回診",
                 IsChecked = false,
-                IsEnabled = (app.roundRecord == null) ? false : true,
+                IsEnabled = true,
                 TextFontSize = 26,
                 Type = CheckBox.CheckType.Check
             };
+            RevisitBox.CheckChanged += RevisitBox_Changed;
             CheckBoxStackLayout.Children.Add(RevisitBox);
 
             int i = 0;// for checkbox id
@@ -116,6 +116,19 @@ namespace IndoorNavigation
             }
 
         }
+        async private void RevisitBox_Changed(object sender,EventArgs e)
+        {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            var o = (CheckBox)sender;
+            if (app.roundRecord == null)
+            {
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("NO_REVISIT_RECORD_STRING", currentLanguage)
+                    , _resourceManager.GetString("OK_STRING",currentLanguage));
+                o.IsEnabled = false;
+                o.IsChecked = false;
+            }
+        }
+
         private void CheckBox_Changed(object sender, EventArgs e)
         {
             var o = (Plugin.InputKit.Shared.Controls.CheckBox)sender;
@@ -129,7 +142,7 @@ namespace IndoorNavigation
             base.OnAppearing();
         }
 
-        async private void AddItemCancelBtn_Clicked(object sender, EventArgs e)
+        private void AddItemCancelBtn_Clicked(object sender, EventArgs e)
         {
             bool AllFinisihed;
 
@@ -138,9 +151,7 @@ namespace IndoorNavigation
             else
                 AllFinisihed = false;
 
-            MessagingCenter.Send(this, "AddAnyOrNot", AllFinisihed);
-            MessagingCenter.Send(this, "isBack", true);
-            await PopupNavigation.Instance.PopAsync();
+            GobackPage(AllFinisihed);
         }
 
         async private void AddItemOKBtn_Clicked(object sender, EventArgs e)
@@ -154,9 +165,6 @@ namespace IndoorNavigation
                 count++;
                 var isDuplicate = app.records.Any(p => p.DptName == AddItems[box.Key].DptName);
                 if (isDuplicate) continue;
-
-                
-                
 
                 app.records.Insert(index++,AddItems[box.Key]);
             }
@@ -181,10 +189,7 @@ namespace IndoorNavigation
 
                 return;
             }
-
-            MessagingCenter.Send(this, "AddAnyOrNot", false);
-            MessagingCenter.Send(this, "isBack", true);
-            await PopupNavigation.Instance.PopAsync();
+            GobackPage(false);
         }
 
         protected override bool OnBackgroundClicked()
@@ -195,9 +200,7 @@ namespace IndoorNavigation
                 AllFinisihed = true;
             else
                 AllFinisihed = false;
-            MessagingCenter.Send(this, "AddAnyOrNot", AllFinisihed);
-            MessagingCenter.Send(this, "isBack", true);
-            PopupNavigation.Instance.PopAsync();
+            GobackPage(AllFinisihed);
             return base.OnBackgroundClicked();
         }
 
@@ -210,10 +213,15 @@ namespace IndoorNavigation
             else
                 AllFinisihed = false;
 
-            MessagingCenter.Send(this, "AddAnyOrNot",AllFinisihed);
+            GobackPage(AllFinisihed);
+            return base.OnBackButtonPressed();
+        }
+
+        private void GobackPage(bool ConfirmOrCancel)
+        {
+            MessagingCenter.Send(this, "AddAnyOrNot", ConfirmOrCancel);
             MessagingCenter.Send(this, "isBack", true);
             PopupNavigation.Instance.PopAsync();
-            return base.OnBackButtonPressed();
         }
 
         //const string _resourceId = "IndoorNavigation.Resources.AppResources";
