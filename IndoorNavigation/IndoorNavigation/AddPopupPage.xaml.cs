@@ -131,27 +131,38 @@ namespace IndoorNavigation
 
         async private void AddItemCancelBtn_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot", false);
+            bool AllFinisihed;
+
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinisihed = true;
+            else
+                AllFinisihed = false;
+
+            MessagingCenter.Send(this, "AddAnyOrNot", AllFinisihed);
+            MessagingCenter.Send(this, "isBack", true);
             await PopupNavigation.Instance.PopAsync();
         }
 
         async private void AddItemOKBtn_Clicked(object sender, EventArgs e)
         {
             int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            int count = 0;
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             foreach (CheckBox box in CheckBoxes)
             {
                 if (!box.IsChecked) continue;
-
+                count++;
                 var isDuplicate = app.records.Any(p => p.DptName == AddItems[box.Key].DptName);
                 if (isDuplicate) continue;
 
                 
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                
 
                 app.records.Insert(index++,AddItems[box.Key]);
             }
             if (RevisitBox.IsChecked)
-            {       
+            {
+                count++;
                 app.records.Insert(index++,new RgRecord
                 {
                     DptName=string.Format("回診({0})",app.roundRecord.DptName),
@@ -162,20 +173,45 @@ namespace IndoorNavigation
                 });
                 app.roundRecord = null;
             }
-            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot", true);
+
+            if(count==0)
+            {
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
+                    ,_resourceManager.GetString("OK_STRING",currentLanguage));
+
+                return;
+            }
+
+            MessagingCenter.Send(this, "AddAnyOrNot", false);
+            MessagingCenter.Send(this, "isBack", true);
             await PopupNavigation.Instance.PopAsync();
         }
 
         protected override bool OnBackgroundClicked()
         {
-            MessagingCenter.Send<RigisterList, bool>(this, "AddAnyOrNot", false);
+            bool AllFinisihed;
+
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinisihed = true;
+            else
+                AllFinisihed = false;
+            MessagingCenter.Send(this, "AddAnyOrNot", AllFinisihed);
+            MessagingCenter.Send(this, "isBack", true);
             PopupNavigation.Instance.PopAsync();
             return base.OnBackgroundClicked();
         }
 
         protected override bool OnBackButtonPressed()
         {
-            MessagingCenter.Send<PopupPage, bool>(this, "AddAnyOrNot",false);
+            bool AllFinisihed;
+
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinisihed = true;
+            else
+                AllFinisihed = false;
+
+            MessagingCenter.Send(this, "AddAnyOrNot",AllFinisihed);
+            MessagingCenter.Send(this, "isBack", true);
             PopupNavigation.Instance.PopAsync();
             return base.OnBackButtonPressed();
         }

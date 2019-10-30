@@ -31,7 +31,7 @@ namespace IndoorNavigation
         private bool HavePayment = false;
         Object tmp=null;
         App app = (App)Application.Current;
-        
+        private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
         private bool HaveCheckRegister=false;
 
         const string resourceId = "IndoorNavigation.Resources.AppResources";
@@ -55,11 +55,6 @@ namespace IndoorNavigation
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
             }
 
-            
-
-           // app.records = LoadData();
-           // RgListView.ItemsSource = app.records;
-            
         }
         /*for fake data to test layout, the page whether is running normally.*/
        /* ObservableCollection<RgRecord> LoadData()   //for fake data
@@ -127,7 +122,10 @@ namespace IndoorNavigation
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
         {
-           
+            if (isButtonPressed) return;
+
+            isButtonPressed = true;
+
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
@@ -140,7 +138,7 @@ namespace IndoorNavigation
                                                              destination._waypointID,
                                                              destination._waypointName,
                                                              _nameInformation
-                                                             ));
+                                                            ));
             }
            
             //Deselect Item
@@ -213,6 +211,9 @@ namespace IndoorNavigation
         /*the function is a button event, which could push page to SignInPage*/
         async private void SignInItem_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+
+            isButtonPressed = true;
             await Navigation.PushAsync(new SignInPage());
         }
 
@@ -242,13 +243,22 @@ namespace IndoorNavigation
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+
+            isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             await PopupNavigation.Instance.PushAsync(new AddPopupPage());
             //await Navigation.PushPopupAsync(new AddPopupPage());
-            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
+            MessagingCenter.Subscribe<AddPopupPage,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
                 bool Message = (bool)Messageargs;
+                if (Message == false) HavePayment = false;
                 PaymemtListBtn.IsEnabled = Message;
+            });
+
+            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isBack", (MessageSender, MessageArgs) => 
+            {
+                isButtonPressed = false;
             });
         }
         
@@ -269,7 +279,7 @@ namespace IndoorNavigation
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
 
-
+            isButtonPressed = false;
             //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
         }
         /*this function is a button event, which is to check user whether have arrive at destination.*/
@@ -351,17 +361,6 @@ namespace IndoorNavigation
             }
         }
 
-        private ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> source)
-        {
-            var list = new ObservableCollection<T>();
-
-            foreach (var item in source)
-            {
-                list.Add(item);
-            }
-
-            return list;
-        }
 
         protected override bool OnBackButtonPressed()
         {
@@ -371,13 +370,10 @@ namespace IndoorNavigation
 
         async private void InfoItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NavigatorSettingPage());
-        }
+            if (isButtonPressed) return;
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            Console.WriteLine("The page is Disappear~~~~~");
+            isButtonPressed = true;
+            await Navigation.PushAsync(new NavigatorSettingPage());
         }
         
     }
