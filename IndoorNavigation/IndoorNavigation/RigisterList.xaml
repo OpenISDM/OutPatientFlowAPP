@@ -12,14 +12,14 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
-                <ViewCell >
-                    <StackLayout Margin="10,0,10,0">
-                        <StackLayout Orientation="Horizontal">
+                <ViewCell Tapped="ViewCell_Tapped">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
                             <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="Center" TextColor="Black"/>
                             <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Medium" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
                                     HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#ACB5F2" BorderWidth="1" TextColor="#ACB5F2" BackgroundColor="White"/>
                         </StackLayout>
-                        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="15,0,15,0">
+                        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
                             <StackLayout Orientation="Horizontal">
                                 <Label x:Name="OutpatientimeString" FontSize="Medium" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" TextColor="Black"/>
                                 <Label x:Name="PatientTime" FontSize="Medium" TextColor="Black"  
@@ -33,9 +33,9 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NotComplete"> <!--to show schedule that was added. this name got something wrong..-->
-                <ViewCell Height="50">
-                    <StackLayout Margin="10,0,10,0">
-                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                <ViewCell Height="50" Tapped="ViewCell_Tapped">
+                    <StackLayout >
+                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Margin="10,0,10,0">
                             <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black" />
                             <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Medium" IsEnabled="{Binding isComplete}"
@@ -55,7 +55,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NullCell">
-                <ViewCell IsEnabled="False" Height="100" >
+                <ViewCell IsEnabled="False" Height="200" >
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
@@ -91,20 +91,21 @@
             <Button x:Name="ShiftBtn" Text="↑↓" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" FontAttributes="Bold"
                     HeightRequest="25" CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.76,60,60"/>
-
+            <Button x:Name="PaymemtListBtn" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" IsEnabled="False" IsVisible="False" Clicked="PaymemtListBtn_Clicked"
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
+            
             <Grid x:Name="RigistListGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="17*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="19*"/>
+                    
                 </Grid.RowDefinitions>
                 <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
                    VerticalOptions="CenterAndExpand" FontSize="Medium" Grid.Row="0" Margin="5,0,5,0"/>
               <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
-                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"  ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
+                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
                 </ListView>
-
-                <Button x:Name="PaymemtListBtn" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" Grid.Row="2" IsEnabled="False" Clicked="PaymemtListBtn_Clicked"/>
             </Grid>
            
             

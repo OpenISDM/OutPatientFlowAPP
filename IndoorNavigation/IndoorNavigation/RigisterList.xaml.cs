@@ -33,7 +33,7 @@ namespace IndoorNavigation
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
         private bool HaveCheckRegister=false;
-
+        private ViewCell lastCell=null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
         public RigisterList(string navigationGraphName,QueryResult result)
@@ -118,7 +118,7 @@ namespace IndoorNavigation
             return rgs;
          }*/
 
-
+      
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
         {
@@ -126,6 +126,7 @@ namespace IndoorNavigation
 
             isButtonPressed = true;
 
+          
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
@@ -238,6 +239,7 @@ namespace IndoorNavigation
                 Key = "AddItem"
             });
             PaymemtListBtn.IsEnabled = false;
+            PaymemtListBtn.IsVisible = false;
         }
 
         /*to show popup page for add route to listview*/
@@ -247,6 +249,7 @@ namespace IndoorNavigation
 
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
+            PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new AddPopupPage());
             //await Navigation.PushPopupAsync(new AddPopupPage());
             MessagingCenter.Subscribe<AddPopupPage,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
@@ -254,6 +257,7 @@ namespace IndoorNavigation
                 bool Message = (bool)Messageargs;
                 if (Message == false) HavePayment = false;
                 PaymemtListBtn.IsEnabled = Message;
+                PaymemtListBtn.IsVisible = Message;
             });
 
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isBack", (MessageSender, MessageArgs) => 
@@ -355,6 +359,7 @@ namespace IndoorNavigation
                 }
                 else
                 {
+                    PaymemtListBtn.IsVisible = true;
                     PaymemtListBtn.IsEnabled = true;
                     HavePayment = true;
                 }
@@ -375,6 +380,29 @@ namespace IndoorNavigation
             isButtonPressed = true;
             await Navigation.PushAsync(new NavigatorSettingPage());
         }
-        
+
+        private void ViewCell_Tapped(object sender, EventArgs e)
+        {
+            if (lastCell != null)
+            {
+                lastCell.View.BackgroundColor = Color.Transparent;
+            }
+            var viewCell = (ViewCell)sender;
+            if (viewCell.View != null)
+            {
+                viewCell.View.BackgroundColor = Color.Yellow;
+            }
+        }
+
+        //private void RgListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //{
+        //    var o = (ViewCell)sender;
+
+        //    if (o != null)
+        //    {
+        //        o.View.BackgroundColor = Color.Yellow;
+        //    }
+
+        //}
     }
 }

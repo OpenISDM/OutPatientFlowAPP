@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj": {}
+    "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj": {}
   },
   "projects": {
-    "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj": {
+    "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
+        "projectUniqueName": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
         "projectName": "IndoorNavigation.Android",
-        "projectPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
-        "packagesPath": "C:\\Users\\janelab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\obj\\",
+        "projectPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
+        "packagesPath": "C:\\Users\\B10517024\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\janelab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\B10517024\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid81": {
             "projectReferences": {
-              "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
-                "projectPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj"
+              "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
+                "projectPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj"
               }
             }
           }
@@ -78,21 +78,21 @@
         }
       }
     },
-    "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
+    "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj",
+        "projectUniqueName": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj",
         "projectName": "IndoorNavigation",
-        "projectPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj",
-        "packagesPath": "C:\\Users\\janelab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\obj\\",
+        "projectPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj",
+        "packagesPath": "C:\\Users\\B10517024\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\janelab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\B10517024\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -197,10 +197,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
