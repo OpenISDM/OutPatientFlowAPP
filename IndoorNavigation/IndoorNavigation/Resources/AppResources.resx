@@ -549,4 +549,13 @@
   <data name="NO_REVISIT_RECORD_STRING" xml:space="preserve">
     <value>There is no clinic have been completed, so revisit couldn't be add.</value>
   </data>
+  <data name="EXCHANGE_STRING" xml:space="preserve">
+    <value>EXC</value>
+  </data>
+  <data name="NEW_STRING" xml:space="preserve">
+    <value>NEW</value>
+  </data>
+  <data name="REMOVE_STRING" xml:space="preserve">
+    <value>DEL</value>
+  </data>
 </root>

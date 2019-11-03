@@ -83,14 +83,16 @@
 
     <ContentPage.Content>
         <AbsoluteLayout>
-           
-            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="+"
-                    FontSize="Large" TextColor="White" WidthRequest="25" HeightRequest="25" CornerRadius="40" FontAttributes="Bold"
-                    Clicked="AddBtn_Clicked" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.9,60,60"/>
 
-            <Button x:Name="ShiftBtn" Text="↑↓" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" FontAttributes="Bold"
+            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
+                    FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25" CornerRadius="40" Clicked="AddBtn_Clicked" 
+                    AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.9,60,60" FontAttributes="Bold"/>
+            <Button x:Name="DeleteBtn" Text="{i18n:Translate REMOVE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25"
+                    CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.64,60,60"
+                    Clicked="DeleteBtn_Clicked" FontAttributes="Bold"/>
+            <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" FontAttributes="Bold"
                     HeightRequest="25" CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" 
-                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.76,60,60"/>
+                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,60,60"/>
             <Button x:Name="PaymemtListBtn" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" IsEnabled="False" IsVisible="False" Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
             
@@ -105,6 +107,7 @@
               <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
                 <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
                           ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+                    <ListView.GestureRecognizers/>
                 </ListView>
             </Grid>
            

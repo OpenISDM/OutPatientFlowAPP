@@ -552,4 +552,13 @@
   <data name="NO_REVISIT_RECORD_STRING" xml:space="preserve">
     <value>尚未完成門診，因此無法回診。</value>
   </data>
+  <data name="EXCHANGE_STRING" xml:space="preserve">
+    <value>交換</value>
+  </data>
+  <data name="NEW_STRING" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="REMOVE_STRING" xml:space="preserve">
+    <value>刪除</value>
+  </data>
 </root>

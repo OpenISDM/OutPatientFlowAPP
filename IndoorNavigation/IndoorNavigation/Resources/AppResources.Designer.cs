@@ -628,6 +628,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 EXC 的當地語系化字串。
+        /// </summary>
+        internal static string EXCHANGE_STRING {
+            get {
+                return ResourceManager.GetString("EXCHANGE_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Failed to download the map 的當地語系化字串。
         /// </summary>
         internal static string FAILED_DOWNLOAD_MAP_STRING {
@@ -880,6 +889,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 NEW 的當地語系化字串。
+        /// </summary>
+        internal static string NEW_STRING {
+            get {
+                return ResourceManager.GetString("NEW_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 There is no clinic have been completed, so revisit couldn&apos;t be add. 的當地語系化字串。
         /// </summary>
         internal static string NO_REVISIT_RECORD_STRING {
@@ -1101,6 +1119,15 @@ namespace IndoorNavigation.Resources {
         internal static string REGISTERDAY_STRING {
             get {
                 return ResourceManager.GetString("REGISTERDAY_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 DEL 的當地語系化字串。
+        /// </summary>
+        internal static string REMOVE_STRING {
+            get {
+                return ResourceManager.GetString("REMOVE_STRING", resourceCulture);
             }
         }
         

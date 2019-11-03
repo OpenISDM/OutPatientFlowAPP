@@ -156,14 +156,14 @@ namespace IndoorNavigation
 
         async private void AddItemOKBtn_Clicked(object sender, EventArgs e)
         {
-            int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            int index = (app.roundRecord == null && !RevisitBox.IsChecked) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
             int count = 0;
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             foreach (CheckBox box in CheckBoxes)
             {
                 if (!box.IsChecked) continue;
                 count++;
-                var isDuplicate = app.records.Any(p => p.DptName == AddItems[box.Key].DptName);
+                var isDuplicate = app.records.Any(p => p.DptName == AddItems[box.Key].DptName && p.isAccept==false);
                 if (isDuplicate) continue;
 
                 app.records.Insert(index++,AddItems[box.Key]);

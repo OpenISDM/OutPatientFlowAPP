@@ -49,10 +49,12 @@ namespace IndoorNavigation
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+                FontSizeSet(Device.GetNamedSize(NamedSize.Small,typeof(Button)));
             }
             else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
             {
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+                FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
             }
             BindingContext = _viewmodel;
         }
@@ -207,6 +209,9 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
             AddBtn.IsEnabled = !AddBtn.IsEnabled;
             AddBtn.IsVisible = !AddBtn.IsVisible;
+            DeleteBtn.IsEnabled = !DeleteBtn.IsEnabled;
+            DeleteBtn.IsVisible = !DeleteBtn.IsVisible;
+            return;
         }
 
         /*the function is a button event, which could push page to SignInPage*/
@@ -394,6 +399,32 @@ namespace IndoorNavigation
             }
         }
 
+        private void DeleteBtn_Clicked(object sender, EventArgs e)
+        {
+            RgListView.ItemTapped -= RgListView_ItemTapped;
+            RgListView.ItemTapped += DeletList_ItemTapped;
+            Buttonable();
+        }
+
+        private void DeletList_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var item = e.Item as RgRecord;
+
+            if (item != null)
+            {
+                app.records.Remove(item);
+            }
+            RgListView.ItemTapped -= DeletList_ItemTapped;
+            RgListView.ItemTapped += RgListView_ItemTapped;
+            Buttonable();
+            return;
+        }
+        private void FontSizeSet(double i)
+        {
+            DeleteBtn.FontSize = i;
+            ShiftBtn.FontSize = i;
+            AddBtn.FontSize = i;
+        }
         //private void RgListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         //{
         //    var o = (ViewCell)sender;
