@@ -68,6 +68,7 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        ViewCell lastCell=null;
 
         public MainPage()
         {
@@ -263,6 +264,19 @@ namespace IndoorNavigation
             {
                 NavigraphStorage.DeleteNavigationGraph(item.UserNaming);
                 _viewModel.LoadNavigationGraph();
+            }
+        }
+
+        private void ViewCell_Tapped(object sender, EventArgs e)
+        {
+            if (lastCell != null)
+            {
+                lastCell.View.BackgroundColor = Color.Transparent;
+            }
+            var viewCell = (ViewCell)sender;
+            if (viewCell.View != null)
+            {
+                viewCell.View.BackgroundColor = Color.Yellow;
             }
         }
     }

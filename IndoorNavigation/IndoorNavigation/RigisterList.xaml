@@ -20,14 +20,30 @@
                                     HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#ACB5F2" BorderWidth="1" TextColor="#ACB5F2" BackgroundColor="White"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
-                            <StackLayout Orientation="Horizontal">
+                            <!--<StackLayout Orientation="Horizontal">
                                 <Label x:Name="OutpatientimeString" FontSize="Medium" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" TextColor="Black"/>
                                 <Label x:Name="PatientTime" FontSize="Medium" TextColor="Black"  
                                Text="{Binding DptTime,StringFormat='{0}'}"/>
                             </StackLayout>
                             <Label x:Name="SeqAndRoom" FontSize="Medium"
-                               Text="{Binding SeqAndRoom, StringFormat='{0}'}" TextColor="Black"/>
+                               Text="{Binding SeqAndRoom, StringFormat='{0}'}" TextColor="Black"/>-->
                          <!--   <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
+                            <StackLayout Orientation="Horizontal">
+                                <Label x:Name="DptTimeText" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="DptTimeLabel" Text="{Binding DptTime,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label x:Name="CareRoomText" Text="{i18n:Translate CAREROOM_STRING}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="CareRoomLabel" Text="{Binding CareRoom,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label x:Name="DrNameText" Text="{i18n:Translate DRNAME_STRING}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="DrNameLabel" Text="{Binding DrName,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label x:Name="SeeSeqNumberText" Text="{i18n:Translate SEQUENCE_STRING}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="SeeSeqNumLabel" Text="{Binding SeeSeq,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                            </StackLayout>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>

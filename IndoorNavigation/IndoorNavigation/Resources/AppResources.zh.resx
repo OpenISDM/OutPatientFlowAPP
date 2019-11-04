@@ -561,4 +561,7 @@
   <data name="REMOVE_STRING" xml:space="preserve">
     <value>刪除</value>
   </data>
+  <data name="DRNAME_STRING" xml:space="preserve">
+    <value>醫師</value>
+  </data>
 </root>

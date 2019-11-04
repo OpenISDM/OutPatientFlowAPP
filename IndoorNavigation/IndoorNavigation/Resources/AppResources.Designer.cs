@@ -574,6 +574,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Doctor 的當地語系化字串。
+        /// </summary>
+        internal static string DRNAME_STRING {
+            get {
+                return ResourceManager.GetString("DRNAME_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Edit 的當地語系化字串。
         /// </summary>
         internal static string EDIT_STRING {

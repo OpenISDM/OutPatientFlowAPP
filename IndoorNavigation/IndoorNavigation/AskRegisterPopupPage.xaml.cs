@@ -30,10 +30,11 @@ namespace IndoorNavigation
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 Shift = "50",
-                CareRoom = "0205",
-                DptTime = "8:30~10:00",
-                SeeSeq = "50",
+                CareRoom = "205",
+                DptTime = "8:30~12:30",
+                SeeSeq = "21",
                 Key = "QueryResult",
+                DrName="曾有笑",
                 isAccept = false,
                 isComplete = false
             });
