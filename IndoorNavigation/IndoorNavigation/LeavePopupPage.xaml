@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+                 mc:Ignorable="d"
+                 x:Class="IndoorNavigation.LeavePopupPage">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="160" WidthRequest="280">
+            <StackLayout>
+                <Image x:Name="SmileIcon"/>
+                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="End">
+                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate OK_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1, 0, -1, -1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer />
+            </ContentView.GestureRecognizers>
+
+        </ContentView>
+    </StackLayout>
+</pages:PopupPage>

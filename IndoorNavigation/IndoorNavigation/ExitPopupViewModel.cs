@@ -58,12 +58,13 @@ namespace IndoorNavigation
                     isComplete=true,
                    DptName=o._waypointName
                 });
-                
+                await PopupNavigation.Instance.PopAllAsync();
             }
             else
             {
                 var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                 await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("PICK_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                return;
             }
           //  await nowPage.PopupNavigation.Instance.PopAllAsync();
         }

@@ -1015,6 +1015,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 You can go pharmacy only if you finish cashier. 的當地語系化字串。
+        /// </summary>
+        internal static string PHARMACY_ALERT_STRING {
+            get {
+                return ResourceManager.GetString("PHARMACY_ALERT_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Pick Destination  的當地語系化字串。
         /// </summary>
         internal static string PICK_DESTINATION_STRING {
@@ -1173,6 +1182,15 @@ namespace IndoorNavigation.Resources {
         internal static string SELECT_LOCATION_STRING {
             get {
                 return ResourceManager.GetString("SELECT_LOCATION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please select a exit you want to leave. 的當地語系化字串。
+        /// </summary>
+        internal static string SELET_EXIT_STRING {
+            get {
+                return ResourceManager.GetString("SELET_EXIT_STRING", resourceCulture);
             }
         }
         

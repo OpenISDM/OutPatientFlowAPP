@@ -17,7 +17,7 @@ namespace IndoorNavigation
             var o = item as RgRecord;
             if (o.isAccept) return CompleteTemplate;
             if (o.Key.Equals("QueryResult")) return YetNavigationTemplate;
-            if (o.Key.Equals("AddItem") || o.isComplete || o.Key.Equals("register") || o.Key.Equals("exit")) return NotCompleteTemplate;
+            if (o.Key.Equals("AddItem") || o.isComplete || o.Key.Equals("register") || o.Key.Equals("exit") || o.Key.Equals("Pharmacy") || o.Key.Equals("Cashier")) return NotCompleteTemplate;
             if (o.Key.Equals("NULL")) return NullTemplate;
             return CompleteTemplate;
         }

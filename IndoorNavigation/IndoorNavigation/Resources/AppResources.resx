@@ -561,4 +561,10 @@
   <data name="DRNAME_STRING" xml:space="preserve">
     <value>Doctor</value>
   </data>
+  <data name="PHARMACY_ALERT_STRING" xml:space="preserve">
+    <value>You can go pharmacy only if you finish cashier.</value>
+  </data>
+  <data name="SELET_EXIT_STRING" xml:space="preserve">
+    <value>Please select a exit you want to leave.</value>
+  </data>
 </root>

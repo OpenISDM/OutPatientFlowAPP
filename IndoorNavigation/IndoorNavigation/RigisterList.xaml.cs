@@ -34,6 +34,7 @@ namespace IndoorNavigation
         private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
         private bool HaveCheckRegister=false;
         private ViewCell lastCell=null;
+        private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
         public RigisterList(string navigationGraphName,QueryResult result)
@@ -57,96 +58,48 @@ namespace IndoorNavigation
                 FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
             }
             BindingContext = _viewmodel;
-        }
-        /*for fake data to test layout, the page whether is running normally.*/
-       /* ObservableCollection<RgRecord> LoadData()   //for fake data
-         {
-            ObservableCollection<RgRecord> rgs = new ObservableCollection<RgRecord>();
-
-            rgs.Add(new RgRecord
-            {
-                Date = "10-10",
-                DptName = "心臟內科",
-                Shift = "50",
-                CareRoom = "0205",
-                DptTime = "8:30~10:00",
-                _waypointName="心臟內科",
-                DrName = "waston",
-                SeeSeq = "50",
-                Key = "QueryResult",
-                isAccept = false,
-                isComplete=false
-            }); ;
-
-            rgs.Add(new RgRecord
-            {
-                Date="10-11",
-                DptName="復健醫學科",
-                DptTime = "8:30~10:00",
-                Shift ="55",
-                CareRoom="102",
-                DrName="gary",
-                SeeSeq="2",
-                Key= "QueryResult",
-                
-                isAccept = false,
-                isComplete = false
-            });
-
-       
-
-            rgs.Add(new RgRecord
-            {
-                Date = "10-12",
-                DptName = "婦產科",
-                DptTime = "8:30~10:00",
-                Shift = "1",
-                DrName = "pp",
-                CareRoom="202",
-                SeeSeq = "83",
-                Key= "QueryResult",
-                isComplete = true,
-                isAccept = false
-            }) ;
-            rgs.Add(new RgRecord
-            {
-                Key = "NULL"
-            });
-
-            rgs.Add(new RgRecord
-            {
-                Key = "NULL"
-            });
-            return rgs;
-         }*/
-
+        } 
       
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
         {
             if (isButtonPressed) return;
-
             isButtonPressed = true;
-
-          
+            
+            
+            
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
                 var index = app.records.IndexOf(e.Item as RgRecord);
                 var o = e.Item as RgRecord;
+
+                if(o.Key.Equals("Pharmacy") && !lastFinished.Key.Equals("Cashier"))
+                {
+                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage));
+                    ((ListView)sender).SelectedItem = null;
+                    RgListView.ItemsSource = null;
+                    RgListView.ItemsSource = app.records;
+                    isButtonPressed = false;
+                    return;
+                }
                 o.isComplete = true;
-             //   await Navigation.PushAsync(new TestPage(e.Item as DestinationItem, index));
+               
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                                                             destination._regionID,
-                                                             destination._waypointID,
-                                                             destination._waypointName,
-                                                             _nameInformation
-                                                            ));
+                                                            destination._regionID,
+                                                            destination._waypointID,
+                                                            destination._waypointName,
+                                                            _nameInformation
+                                                             ));
+                
+               
             }
-           
+
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
-           
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
             //var test = ((ListView)sender).
         }
 
@@ -233,7 +186,7 @@ namespace IndoorNavigation
                 _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
                 _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointName= "領藥櫃臺",
-                Key = "AddItem"
+                Key = "Pharmacy"
             });
             app.records.Insert(app.FinishCount,new RgRecord
             {
@@ -241,7 +194,7 @@ namespace IndoorNavigation
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointName = "批價櫃臺",
-                Key = "AddItem"
+                Key = "Cashier"
             });
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
@@ -370,6 +323,7 @@ namespace IndoorNavigation
                     HavePayment = true;
                 }
             }
+            lastFinished = index;
         }
 
 
@@ -396,7 +350,7 @@ namespace IndoorNavigation
             var viewCell = (ViewCell)sender;
             if (viewCell.View != null)
             {
-                viewCell.View.BackgroundColor = Color.Yellow;
+                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
             }
         }
 

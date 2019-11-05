@@ -564,4 +564,10 @@
   <data name="DRNAME_STRING" xml:space="preserve">
     <value>醫師</value>
   </data>
+  <data name="PHARMACY_ALERT_STRING" xml:space="preserve">
+    <value>請先做完批價，才能去領藥。</value>
+  </data>
+  <data name="SELET_EXIT_STRING" xml:space="preserve">
+    <value>請選擇要離開的出口。</value>
+  </data>
 </root>

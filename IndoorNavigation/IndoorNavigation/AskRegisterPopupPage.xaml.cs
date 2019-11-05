@@ -55,5 +55,46 @@ namespace IndoorNavigation
             app.records.Add(new RgRecord { Key = "NULL" });
             await PopupNavigation.Instance.PopAllAsync();
         }
+
+        protected override bool OnBackgroundClicked()
+        {
+            app.records.Add(new RgRecord
+            {
+                DptName = "心臟血管科",
+                _waypointName = "心臟科",
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                Shift = "50",
+                CareRoom = "205",
+                DptTime = "8:30~12:30",
+                SeeSeq = "21",
+                Key = "QueryResult",
+                DrName = "曾有笑",
+                isAccept = false,
+                isComplete = false
+            });
+            app.records.Add(new RgRecord { Key = "NULL" });
+            return base.OnBackgroundClicked();
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            app.records.Add(new RgRecord
+            {
+                DptName = "心臟血管科",
+                _waypointName = "心臟科",
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                Shift = "50",
+                CareRoom = "205",
+                DptTime = "8:30~12:30",
+                SeeSeq = "21",
+                Key = "QueryResult",
+                DrName = "曾有笑",
+                isAccept = false,
+                isComplete = false
+            });
+            app.records.Add(new RgRecord { Key = "NULL" });
+            return base.OnBackButtonPressed();
+        }
     }
 }

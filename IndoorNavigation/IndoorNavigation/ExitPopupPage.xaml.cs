@@ -69,9 +69,20 @@ namespace IndoorNavigation
             return data;
         }
 
-        async private void ExitPopup_Clicked(object sender, EventArgs e)
+         protected override bool OnBackButtonPressed()
         {
-            await PopupNavigation.Instance.PopAsync();
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("SELET_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
+            //return base.OnBackButtonPressed();
+            return true;
+        }
+
+         protected override bool OnBackgroundClicked()
+        {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELET_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+            //return base.OnBackgroundClicked();
+            return false;
         }
     }
 }

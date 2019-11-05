@@ -8,9 +8,9 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.AskRegisterPopupPage">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="160" WidthRequest="280">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="120" WidthRequest="250">
             <StackLayout>
-                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Margin="10,0,10,0"/>
                 <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="End">
                     <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate CANCEL_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"/>
                     <Button x:Name="RegisterOKBtn" Text="{i18n:Translate OK_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked"/>

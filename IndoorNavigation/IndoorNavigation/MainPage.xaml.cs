@@ -276,7 +276,7 @@ namespace IndoorNavigation
             var viewCell = (ViewCell)sender;
             if (viewCell.View != null)
             {
-                viewCell.View.BackgroundColor = Color.Yellow;
+                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
             }
         }
     }
