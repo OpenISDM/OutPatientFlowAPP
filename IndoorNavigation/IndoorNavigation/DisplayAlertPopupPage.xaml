@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns="http://xamarin.com/schemas/2014/forms"          
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"           
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"             
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+                 mc:Ignorable="d"
+                x:Class="IndoorNavigation.DisplayAlertPopupPage">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="110" WidthRequest="260">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="TempMessage" Text="0" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="0" TextColor="Black"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1">
+                    <Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="TempOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
+                </StackLayout>
+            </Grid>
+
+        </Frame>
+        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1, 0, -1, -1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer />
+            </ContentView.GestureRecognizers>
+
+        </ContentView>
+    </StackLayout>
+</pages:PopupPage>

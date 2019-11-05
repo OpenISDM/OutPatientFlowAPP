@@ -77,7 +77,8 @@ namespace IndoorNavigation
                 if(o.Key.Equals("Pharmacy") && !lastFinished.Key.Equals("Cashier"))
                 {
                     var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage));
+                    //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage));
+                    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
                     ((ListView)sender).SelectedItem = null;
                     RgListView.ItemsSource = null;
                     RgListView.ItemsSource = app.records;
@@ -135,9 +136,9 @@ namespace IndoorNavigation
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
-                    _resourceManager.GetString("OK_STRING", currentLanguage));
-
+                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
+                //    _resourceManager.GetString("OK_STRING", currentLanguage));
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
                 return;
             }
             else
@@ -162,8 +163,8 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
             AddBtn.IsEnabled = !AddBtn.IsEnabled;
             AddBtn.IsVisible = !AddBtn.IsVisible;
-            DeleteBtn.IsEnabled = !DeleteBtn.IsEnabled;
-            DeleteBtn.IsVisible = !DeleteBtn.IsVisible;
+            //DeleteBtn.IsEnabled = !DeleteBtn.IsEnabled;
+            //DeleteBtn.IsVisible = !DeleteBtn.IsVisible;
             return;
         }
 
@@ -284,7 +285,8 @@ namespace IndoorNavigation
 
                 string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s));
                 await Navigation.PopAsync();
                 index.isAccept = true;
                 index.isComplete = true;
@@ -311,9 +313,15 @@ namespace IndoorNavigation
                 if (HavePayment && !PaymemtListBtn.IsEnabled)
                 {
                     HavePayment = false;
-                    
+
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
+                    //Console.WriteLine("Stack count is:" + PopupNavigation.Instance.PopupStack.Count);
+                    //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage)));
+                    
+                    //Console.WriteLine("Stack count is:" + PopupNavigation.Instance.PopupStack.Count);
+                    //int i = PopupNavigation.Instance.PopupStack.Count;
+                    //while (i > 0) i = PopupNavigation.Instance.PopupStack.Count;
                     await PopupNavigation.Instance.PushAsync(new ExitPopupPage());
                 }
                 else
@@ -354,12 +362,12 @@ namespace IndoorNavigation
             }
         }
 
-        private void DeleteBtn_Clicked(object sender, EventArgs e)
-        {
-            RgListView.ItemTapped -= RgListView_ItemTapped;
-            RgListView.ItemTapped += DeletList_ItemTapped;
-            Buttonable();
-        }
+        //private void DeleteBtn_Clicked(object sender, EventArgs e)
+        //{
+        //    RgListView.ItemTapped -= RgListView_ItemTapped;
+        //    RgListView.ItemTapped += DeletList_ItemTapped;
+        //    Buttonable();
+        //}
 
         private void DeletList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -376,9 +384,19 @@ namespace IndoorNavigation
         }
         private void FontSizeSet(double i)
         {
-            DeleteBtn.FontSize = i;
+            //DeleteBtn.FontSize = i;
             ShiftBtn.FontSize = i;
             AddBtn.FontSize = i;
+        }
+
+        private void MenuItem_Clicked(object sender, EventArgs e)
+        {
+            var item = (RgRecord)((MenuItem)sender).CommandParameter;
+
+            if (item != null)
+            {
+                app.records.Remove(item);
+            }
         }
         //private void RgListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         //{

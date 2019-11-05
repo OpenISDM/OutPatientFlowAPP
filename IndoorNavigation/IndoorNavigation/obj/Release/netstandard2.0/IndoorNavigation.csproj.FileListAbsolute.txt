@@ -61,3 +61,4 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\zh\IndoorNavigation.resources.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\IndoorNavigation.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\LeavePopupPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\DisplayAlertPopupPage.xaml.g.cs

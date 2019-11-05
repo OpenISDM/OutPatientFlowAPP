@@ -24,7 +24,7 @@
 
                 <!-- <ScrollView HorizontalOptions="Center" VerticalOptions="Center"> -->
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="300" WidthRequest="400">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="300" WidthRequest="380">
             <StackLayout>
                 <ScrollView HorizontalOptions="Start" Padding="20,0,20,0" Margin="10" WidthRequest="200">
                     <StackLayout x:Name="CheckBoxStackLayout"> <!--   to test layout-->
@@ -32,8 +32,8 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="End">
-                    <Button x:Name="AddItemCancelBtn" Text="{i18n:Translate CANCEL_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="AddItemCancelBtn_Clicked"/>
-                    <Button x:Name="AddItemOKBtn" Text="{i18n:Translate OK_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="AddItemOKBtn_Clicked"/>
+                    <Button x:Name="AddItemCancelBtn" FontSize="Small" Text="{i18n:Translate CANCEL_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="AddItemCancelBtn_Clicked"/>
+                    <Button x:Name="AddItemOKBtn" FontSize="Small" Text="{i18n:Translate OK_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End"  Clicked="AddItemOKBtn_Clicked"/>
             </StackLayout>
     </StackLayout>
         </Frame>

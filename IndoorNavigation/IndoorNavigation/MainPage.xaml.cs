@@ -148,83 +148,9 @@ namespace IndoorNavigation
                 switch (navigationGraph.GetIndustryServer())
                 {
                     case "hospital":
-                        //var answser = await DisplayAlert(
-                        //    _resourceManager.GetString("GO_NAVIGATION_HOME_PAGE_STRING", currentLanguage),
-                        //    location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
-                        //    _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                        //string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-                        //string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
-                        //DateTime birthday = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-                        //Debug.WriteLine(string.Format("location name is :{0}", location.UserNaming));
+                        
                        XMLInformation _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
                         await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
-                   /*     if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-                        {
-                            _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_en-US.xml");
-                        }
-                        else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-                        {
-                            _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
-                        }*/
-
-
-
-                        //if (answser)
-                        //{
-                        //    await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
-                        //    //bool isRigister = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                        //    //      _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
-                        //    //      _resourceManager.GetString("OK_STRING", currentLanguage),
-                        //    //      _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                            
-                        //    //if (isRigister)
-                        //    //{
-                        //    //    //await Navigation.PushAsync(new  NavigatorPage(location.UserNaming,
-                        //    //    //    new Guid("11111111-1111-1111-1111-111111111111"), 
-                        //    //    //    new Guid("00000000-0000-0000-0000-000000000002"),
-                        //    //    //    "服務台",  _nameInformation));
-                        //    //    App app = (App)Application.Current;
-                        //    //    app.records.Add(new RgRecord {
-                        //    //        DptName ="掛號",
-                        //    //        _regionID =new Guid("11111111-1111-1111-1111-111111111111"),
-                        //    //        _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
-                        //    //        _waypointName="服務台",
-                        //    //        Key="register"
-                        //    //    });
-                        //    //    app.records.Add(new RgRecord { Key = "NULL" });
-                        //    //    //await Navigation.PushAsync(new TestPage(new DestinationItem { Key = "register" },0));
-                        //    //}
-
-                            
-                        //    //else if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))// || birthday.Equals(DateTime.Now))
-                        //    //{
-                        //    //    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                        //    //        _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
-                        //    //}
-                        //    //else
-                        //    //{
-                        //    //    //query server data to observablecollection
-                        //    //    App app = (App)Application.Current;
-
-                        //    //    app.records.Add(new RgRecord
-                        //    //    {
-                        //    //        DptName = "心臟血管科",
-                        //    //        _waypointName = "心臟科",
-                        //    //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                        //    //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                        //    //        Shift = "50",
-                        //    //        CareRoom = "0205",
-                        //    //        DptTime = "8:30~10:00",
-                        //    //        SeeSeq = "50",
-                        //    //        Key = "QueryResult",
-                        //    //        isAccept = false,
-                        //    //        isComplete = false
-                        //    //    });
-
-                        //    //    app.records.Add(new RgRecord { Key = "NULL" });
-                        //    //}
-
-                        //}
                         break;
 
                     case "city_hall":

@@ -13,6 +13,10 @@
         <ResourceDictionary>
             <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
                 <ViewCell Tapped="ViewCell_Tapped">
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
+                                   Text="Delete" IsDestructive="True" />
+                    </ViewCell.ContextActions>
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
                             <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" 
@@ -52,6 +56,10 @@
             </DataTemplate>
             <DataTemplate x:Key="NotComplete"> <!--to show schedule that was added. this name got something wrong..-->
                 <ViewCell Height="50" Tapped="ViewCell_Tapped">
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
+                                   Text="Delete" IsDestructive="True" />
+                    </ViewCell.ContextActions>
                     <StackLayout >
                         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Margin="10,0,10,0">
                             <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" 
@@ -105,9 +113,9 @@
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25" CornerRadius="40" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.9,60,60" FontAttributes="Bold"/>
-            <Button x:Name="DeleteBtn" Text="{i18n:Translate REMOVE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25"
+            <!--<Button x:Name="DeleteBtn" Text="{i18n:Translate REMOVE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25"
                     CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.64,60,60"
-                    Clicked="DeleteBtn_Clicked" FontAttributes="Bold"/>
+                    Clicked="DeleteBtn_Clicked" FontAttributes="Bold"/>-->
             <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" FontAttributes="Bold"
                     HeightRequest="25" CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,60,60"/>
@@ -125,7 +133,7 @@
               <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
                 <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
                           ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
-                    <ListView.ef/>
+                    
                 </ListView>
             </Grid>
            
