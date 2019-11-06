@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<QueryResult><PatientID>F227791213</PatientID>
+<RgRecords>
+<RgRecord>
+	<OpdDate>1080619</OpdDate>
+	<DptName>兒童牙科</DptName>
+	<Shift>上午</Shift>
+	<CareRoom>B41診</CareRoom>
+	<DrName>黃渝聖</DrName>
+	<SeeSeq>11</SeeSeq>
+</RgRecord>
+<RgRecord>
+	<OpdDate>1080708</OpdDate>
+	<DptName>資訊部</DptName>
+	<Shift>急診|不分診次</Shift>
+	<CareRoom>0診</CareRoom>
+	<DrName>掛號不調病</DrName>
+	<SeeSeq>25</SeeSeq>
+	</RgRecord>
+<RgRecord>
+	<OpdDate>1080708</OpdDate>
+	<DptName>婦產部</DptName>
+	<Shift>上午</Shift>
+	<CareRoom>503診</CareRoom>
+	<DrName>吳榮良</DrName>
+	<SeeSeq>115</SeeSeq>
+</RgRecord>
+</RgRecords>
+</QueryResult>

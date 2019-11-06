@@ -50,6 +50,8 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -64,6 +66,9 @@ namespace IndoorNavigation.Modules.Utilities
 
         internal static readonly string _informationFolder
              = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Information");
+
+        //internal static readonly string _patientFolder
+        //    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Patient");
 
         internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
 
@@ -141,6 +146,25 @@ namespace IndoorNavigation.Modules.Utilities
             return xmlInformation;
 
         }
+        //-----------------
+        //public static PatientXMLParse LoadPatientXML(string fileName)
+        //{
+        //    if (!Directory.Exists(NavigraphStorage._patientFolder))
+        //        Directory.CreateDirectory(
+        //            NavigraphStorage._patientFolder);
+
+        //    string path = Path.Combine(_patientFolder, fileName);
+        //    var xmlString = File.ReadAllText(path);
+        //    if (xmlString == "") DeleteFirstDirectionXML(fileName);
+
+        //    StringReader reader = new StringReader(xmlString);
+        //    XmlDocument document = new XmlDocument();
+        //    document.Load(path);
+        //    PatientXMLParse information = new PatientXMLParse(document);
+        //    return information;
+        //}
+
+        //------------------
 
         public static void DeleteNavigationGraph(string GraphName)
         {

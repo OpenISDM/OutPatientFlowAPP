@@ -43,10 +43,7 @@
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
-    <Folder Include="Resources\" />
-    <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
-    <Folder Include="Resources\Lab\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\NavigationStructure.cs" />
@@ -75,6 +72,7 @@
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PatientData.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_en-US.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_zh.xml" />

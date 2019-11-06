@@ -19,22 +19,8 @@ namespace IndoorNavigation
 
     public class RgRecord : DestinationItem
     {
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
-        public string SeqAndRoom
-        {
-            get
-            {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                return string.Format("{0}:{1}, {2}{3}", _resourceManager.GetString("SEQUENCE_STRING", currentLanguage),
-                    SeeSeq, CareRoom, _resourceManager.GetString("CAREROOM_STRING", currentLanguage));
-            }
-        }
-        public string Date { get; set; }
+        public string OpdDate { get; set; }
         public string DptName { get; set; }
-        public string DptTime { get; set; }
         public string Shift { get; set; }
         public string CareRoom { get; set; }
         public string DrName { get; set; }
@@ -42,7 +28,6 @@ namespace IndoorNavigation
         //date name shift careroom drname seq
         public bool isComplete { get; set; }
         public bool isAccept { get; set; }
-
     }
     public class DestinationItem
     {

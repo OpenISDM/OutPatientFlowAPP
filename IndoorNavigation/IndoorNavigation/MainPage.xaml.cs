@@ -73,7 +73,7 @@ namespace IndoorNavigation
         public MainPage()
         {
             InitializeComponent();
-
+            
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("HOME_STRING", currentLanguage));
             NavigationPage.SetHasBackButton(this, false);

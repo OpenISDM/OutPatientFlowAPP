@@ -67,37 +67,7 @@ namespace IndoorNavigation.ViewModels
             Page nowPage = Application.Current.MainPage;
             //var NeedtoRegister =await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
             await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());
-            //if (NeedtoRegister)
-            //{
-            //    app.records.Add(new RgRecord
-            //    {
-            //        DptName = "導航至掛號台",
-            //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-            //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-            //        _waypointName = "掛號台",
-            //        Key = "register"
-            //    });
-            //    app.records.Add(new RgRecord { Key = "NULL" });
-            //}
-            //else
-            //{
-            //    //load data from server
-            //    app.records.Add(new RgRecord
-            //    {
-            //        DptName = "心臟血管科",
-            //        _waypointName = "心臟科",
-            //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-            //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-            //        Shift = "50",
-            //        CareRoom = "0205",
-            //        DptTime = "8:30~10:00",
-            //        SeeSeq = "50",
-            //        Key = "QueryResult",
-            //        isAccept = false,
-            //        isComplete = false
-            //    });
-            //    app.records.Add(new RgRecord { Key = "NULL" });
-            //}
+            
         }
         
 

@@ -18,6 +18,11 @@ using Rg.Plugins.Popup.Services;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Extensions;
 using IndoorNavigation.ViewModels;
+using IndoorNavigation.Models;
+using System.IO;
+using System.Xml.Linq;
+using System.Xml;
+using System.Globalization;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -32,17 +37,25 @@ namespace IndoorNavigation
         Object tmp=null;
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
-        private bool HaveCheckRegister=false;
         private ViewCell lastCell=null;
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
+        //------to test date time----------
+        private TaiwanCalendar calendar;
+        private DateTime date;
+        //-----------------------------------
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
             //_viewmodel = new RegisterListViewModel();
+            calendar = new TaiwanCalendar();
+            date = new DateTime(2019, 7, 8);
+            //date=calendar.add
             app.FinishCount = 0;
             app.records = new ObservableCollection<RgRecord>();
+
+
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             app.roundRecord = null;
@@ -57,6 +70,7 @@ namespace IndoorNavigation
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
                 FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
             }
+            
             BindingContext = _viewmodel;
         } 
       
@@ -254,23 +268,7 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
-                //query server data to collection
-                app.records.Insert(app.records.Count-1,new RgRecord
-                {
-                    DptName = "心臟血管科",
-                    _waypointName = "心臟科",
-                    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                    Shift = "50",
-                    CareRoom = "205",
-                    DptTime = "8:30~12:30",
-                    SeeSeq = "21",
-                    DrName="曾有笑",
-                    Key = "QueryResult",
-                    isAccept = false,
-                    isComplete = false
-                });
-
+                ReadXml();
                 //app.records.Add(new RgRecord { Key = "NULL" });
                 index.isAccept = true;
                 index.isComplete = true;
@@ -398,15 +396,47 @@ namespace IndoorNavigation
                 app.records.Remove(item);
             }
         }
-        //private void RgListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        //{
-        //    var o = (ViewCell)sender;
 
-        //    if (o != null)
-        //    {
-        //        o.View.BackgroundColor = Color.Yellow;
-        //    }
+        private void ReadXml()
+        {
+            string filename = "PatientData.xml";
+            var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
+            bool isEmpty = (app.records.Count == 0);
 
-        //}
+            Stream stream=assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
+            using (var reader=new StreamReader(stream))
+            {
+                var xmlString = reader.ReadToEnd();
+                Console.WriteLine(xmlString);
+
+                XDocument xd = XDocument.Parse(xmlString);
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xmlString);
+
+                XmlNodeList records = doc.GetElementsByTagName("RgRecord");
+
+                for(int i=0;i<records.Count;i++)
+                {
+                    RgRecord record = new RgRecord();
+
+                    record.OpdDate = records[i].ChildNodes[0].InnerText;
+                    record.DptName = records[i].ChildNodes[1].InnerText;
+                    record.Shift = records[i].ChildNodes[2].InnerText;
+                    record.CareRoom = records[i].ChildNodes[3].InnerText;
+                    record.DrName=records[i].ChildNodes[4].InnerText;
+                    record.SeeSeq = records[i].ChildNodes[5].InnerText;
+                    record.Key = "QueryResult";
+                    record._waypointName = record.DptName;
+                    record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
+                    record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+                    if (isEmpty)
+                        app.records.Add(record);
+                    else
+                        app.records.Insert(app.records.Count - 1, record);
+                }
+
+               
+            }
+        }
     }
 }
