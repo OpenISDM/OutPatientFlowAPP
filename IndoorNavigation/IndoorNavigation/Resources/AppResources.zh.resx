@@ -460,7 +460,7 @@
     <value>圖片的方向</value>
   </data>
   <data name="NO_SIGNAL_STRING" xml:space="preserve">
-    <value>如果沒收到信號，請至任一路口</value>
+    <value>請至任一路口</value>
   </data>
   <data name="ADD_SCHEDULE_STRING" xml:space="preserve">
     <value>新增路線</value>
@@ -569,5 +569,8 @@
   </data>
   <data name="SELET_EXIT_STRING" xml:space="preserve">
     <value>請選擇要離開的出口。</value>
+  </data>
+  <data name="UPDATE_MAP_STRING" xml:space="preserve">
+    <value>按下確定來更新圖資</value>
   </data>
 </root>

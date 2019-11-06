@@ -68,7 +68,7 @@ namespace IndoorNavigation.Modules.Utilities
         internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
 
         private static object _fileLock = new object();
-        
+
         public static string[] GetAllNavigationGraphs()
         {
             // Check the folder of navigation graph if it is exist
@@ -88,7 +88,8 @@ namespace IndoorNavigation.Modules.Utilities
                 throw new FileNotFoundException();
 
             var xmlString = File.ReadAllText(filePath);
-            if (xmlString == "") { 
+            if (xmlString == "")
+            {
                 DeleteNavigationGraph(FileName);
             }
             StringReader stringReader = new StringReader(xmlString);
@@ -135,7 +136,7 @@ namespace IndoorNavigation.Modules.Utilities
             XmlDocument document = new XmlDocument();
             document.Load(filePath);
 
-            XMLInformation xmlInformation  = new XMLInformation(document);
+            XMLInformation xmlInformation = new XMLInformation(document);
 
             return xmlInformation;
 
@@ -164,7 +165,7 @@ namespace IndoorNavigation.Modules.Utilities
                 File.Delete(filePath_en);
                 File.Delete(filePath_zh);
             }
-                //File.Delete(filePath);
+            //File.Delete(filePath);
         }
 
         public static void DeleteInformationML(string fileName)
@@ -179,7 +180,7 @@ namespace IndoorNavigation.Modules.Utilities
                 File.Delete(filePath_en);
                 File.Delete(filePath_zh);
             }
-               // File.Delete(filePath);
+            // File.Delete(filePath);
         }
 
         public static void DeleteAllNavigationGraph()
@@ -190,7 +191,7 @@ namespace IndoorNavigation.Modules.Utilities
 
         public static void DeleteAllFirstDirectionXML()
         {
-            foreach(string place in GetAllNavigationGraphs())
+            foreach (string place in GetAllNavigationGraphs())
             {
                 DeleteFirstDirectionXML(place);
             }
@@ -206,22 +207,18 @@ namespace IndoorNavigation.Modules.Utilities
 
         public static void GenerateFileRoute(string fileName, string readingPath)
         {
-            string sourceNavigationData = Path.Combine(_embeddedResourceReoute  + readingPath + "."+ readingPath + ".xml");
-            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder, 
+            string sourceNavigationData = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + ".xml");
+            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder,
                                             fileName);
-            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "."+ readingPath + "_en-US.xml");
+            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_en-US.xml");
             string sourceFirstDirectionData_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_zh.xml");
-            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder , fileName + "_en-US.xml");
-            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder , fileName + "_zh.xml");
+            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
+            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
 
             string sourceInformation_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_en-US.xml");
             string sourceInformation_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_zh.xml");
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
-
-            Console.WriteLine("sourceInformation_en : " + sourceInformation_en);
-            Console.WriteLine("sinkInformation_en : " + sinkInformation_en);
-
 
             try
             {

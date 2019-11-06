@@ -934,7 +934,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 If you do not get the signal, please go to any intersection 的當地語系化字串。
+        ///   查詢類似 Please go to any intersection 的當地語系化字串。
         /// </summary>
         internal static string NO_SIGNAL_STRING {
             get {
@@ -1344,6 +1344,15 @@ namespace IndoorNavigation.Resources {
         internal static string TURN_RIGHT_STRING {
             get {
                 return ResourceManager.GetString("TURN_RIGHT_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Press OK to update Map 的當地語系化字串。
+        /// </summary>
+        internal static string UPDATE_MAP_STRING {
+            get {
+                return ResourceManager.GetString("UPDATE_MAP_STRING", resourceCulture);
             }
         }
         

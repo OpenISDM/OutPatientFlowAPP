@@ -460,7 +460,7 @@
     <value>Picture's Direction</value>
   </data>
   <data name="NO_SIGNAL_STRING" xml:space="preserve">
-    <value>If you do not get the signal, please go to any intersection</value>
+    <value>Please go to any intersection</value>
   </data>
   <data name="BIRTHDAY_STRING" xml:space="preserve">
     <value>Birthday</value>
@@ -566,5 +566,8 @@
   </data>
   <data name="SELET_EXIT_STRING" xml:space="preserve">
     <value>Please select a exit you want to leave.</value>
+  </data>
+  <data name="UPDATE_MAP_STRING" xml:space="preserve">
+    <value>Press OK to update Map</value>
   </data>
 </root>

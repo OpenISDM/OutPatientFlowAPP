@@ -54,7 +54,7 @@
       <string>bluetooth-peripheral</string>
     </array>
     <key>MinimumOSVersion</key>
-    <string>12.2</string>
+    <string>12.4</string>
     <key>NSContactsUsageDescription</key>
     <string>contactsDescription</string>
   </dict>
