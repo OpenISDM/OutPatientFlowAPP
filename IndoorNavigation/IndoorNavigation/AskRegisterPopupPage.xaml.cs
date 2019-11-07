@@ -60,6 +60,14 @@ namespace IndoorNavigation
         }
         private void ReadXml()
         {
+
+            if (app._TmpRecords.Count != 0)
+            {
+                foreach (RgRecord tmprecord in app._TmpRecords)
+                {
+                    if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
+                }
+            }
             string filename = "PatientData.xml";
             var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
 
@@ -74,7 +82,7 @@ namespace IndoorNavigation
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlString);
                 Console.WriteLine(doc.InnerText);
-
+                app._TmpRecords.Clear();
                 //XmlNodeList records = doc.SelectNodes("QueryResult/RgRecords/RgRecord/DptName");
                 XmlNodeList records = doc.GetElementsByTagName("RgRecord");
 
@@ -93,6 +101,7 @@ namespace IndoorNavigation
                     record._waypointName = record.DptName;
                     record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
                     record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+                    app._TmpRecords.Add(record);
                     app.records.Add(record);
                 }
             }

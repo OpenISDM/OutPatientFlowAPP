@@ -65,7 +65,8 @@ namespace IndoorNavigation
         public RgRecord roundRecord=null;
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
-        //public bool isButtonClick = false;
+        public string SelectDate = "";
+        public ObservableCollection<RgRecord> _TmpRecords; //to test select date 
         public App()
         {
             InitializeComponent();

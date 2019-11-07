@@ -38,7 +38,7 @@
             <Label Text="{i18n:Translate BIRTHDAY_STRING}" Grid.Row="4" VerticalOptions="EndAndExpand" FontSize="Large"/>
             <DatePicker x:Name="BirthDayPicker" Grid.Row="5"/>
             <Label Text="{i18n:Translate REGISTERDAY_STRING}" Grid.Row="6" VerticalOptions="EndAndExpand" FontSize="Large"/>
-            <DatePicker x:Name="RgDayPicker" Grid.Row="7"/>
+            <DatePicker x:Name="RgDayPicker" Grid.Row="7" DateSelected="RgDayPicker_DateSelected" MinimumDate="1/1/2019"/>
             <Button Text="{i18n:Translate OK_STRING}" Clicked="Button_Clicked" HorizontalOptions="CenterAndExpand" Grid.Row="8"/>
         </Grid>
             

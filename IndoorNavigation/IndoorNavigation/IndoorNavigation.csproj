@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
     <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.14.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
@@ -134,6 +135,11 @@
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

@@ -1,29 +1,62 @@
 <?xml version="1.0" ?>
-<QueryResult><PatientID>F227791213</PatientID>
-<RgRecords>
-<RgRecord>
-	<OpdDate>1080619</OpdDate>
-	<DptName>兒童牙科</DptName>
-	<Shift>上午</Shift>
-	<CareRoom>B41診</CareRoom>
-	<DrName>黃渝聖</DrName>
-	<SeeSeq>11</SeeSeq>
-</RgRecord>
-<RgRecord>
-	<OpdDate>1080708</OpdDate>
-	<DptName>資訊部</DptName>
-	<Shift>急診|不分診次</Shift>
-	<CareRoom>0診</CareRoom>
-	<DrName>掛號不調病</DrName>
-	<SeeSeq>25</SeeSeq>
-	</RgRecord>
-<RgRecord>
-	<OpdDate>1080708</OpdDate>
-	<DptName>婦產部</DptName>
-	<Shift>上午</Shift>
-	<CareRoom>503診</CareRoom>
-	<DrName>吳榮良</DrName>
-	<SeeSeq>115</SeeSeq>
-</RgRecord>
-</RgRecords>
+<QueryResult>
+  <PatientID>N124911977</PatientID>
+  <RgRecords>
+    <RgRecord>
+      <OpdDate>1080305</OpdDate>
+      <DptName>眼科部</DptName>
+      <Shift>上午</Shift>
+      <CareRoom>238診</CareRoom>
+      <DrName>黃雅琪</DrName>
+      <SeeSeq>66</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1080418</OpdDate>
+      <DptName>眼科部</DptName>
+      <Shift>下午</Shift>
+      <CareRoom>238診</CareRoom>
+      <DrName>黃雅琪</DrName>
+      <SeeSeq>62</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1080712</OpdDate>
+      <DptName>胃腸肝膽內科</DptName>
+      <Shift>下午</Shift>
+      <CareRoom>214診</CareRoom>
+      <DrName>宋文斌</DrName>
+      <SeeSeq>28</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1080906</OpdDate>
+      <DptName>胸腔內科</DptName>
+      <Shift>上午</Shift>
+      <CareRoom>210診</CareRoom>
+      <DrName>黃國揚</DrName>
+      <SeeSeq>60</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1080927</OpdDate>
+      <DptName>胃腸肝膽內科</DptName>
+      <Shift>下午</Shift>
+      <CareRoom>213診</CareRoom>
+      <DrName>黃詠峰</DrName>
+      <SeeSeq>25</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1080930</OpdDate>
+      <DptName>心臟血管內科</DptName>
+      <Shift>下午</Shift>
+      <CareRoom>208診</CareRoom>
+      <DrName>李卓翰</DrName>
+      <SeeSeq>94</SeeSeq>
+    </RgRecord>
+    <RgRecord>
+      <OpdDate>1081001</OpdDate>
+      <DptName>內分泌新陳代謝科</DptName>
+      <Shift>上午</Shift>
+      <CareRoom>250診</CareRoom>
+      <DrName>陳育正</DrName>
+      <SeeSeq>42</SeeSeq>
+    </RgRecord>
+  </RgRecords>
 </QueryResult>

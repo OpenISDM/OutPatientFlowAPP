@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
@@ -15,7 +16,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
-using Xamarin.Essentials;
+
 using Rg.Plugins.Popup.Extensions;
 using IndoorNavigation.ViewModels;
 using IndoorNavigation.Models;
@@ -23,6 +24,9 @@ using System.IO;
 using System.Xml.Linq;
 using System.Xml;
 using System.Globalization;
+using Android.Util;
+using Caliburn.Micro;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -41,20 +45,15 @@ namespace IndoorNavigation
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
 
-        //------to test date time----------
-        private TaiwanCalendar calendar;
-        private DateTime date;
-        //-----------------------------------
+     
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
             //_viewmodel = new RegisterListViewModel();
-            calendar = new TaiwanCalendar();
-            date = new DateTime(2019, 7, 8);
-            //date=calendar.add
+
             app.FinishCount = 0;
             app.records = new ObservableCollection<RgRecord>();
-
+            app._TmpRecords = new ObservableCollection<RgRecord>();
 
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
@@ -399,6 +398,15 @@ namespace IndoorNavigation
 
         private void ReadXml()
         {
+
+            if (app._TmpRecords.Count != 0)
+            {
+                foreach (RgRecord tmprecord in app._TmpRecords)
+                {
+                    if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
+                }
+            }
+
             string filename = "PatientData.xml";
             var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
             bool isEmpty = (app.records.Count == 0);
@@ -412,7 +420,7 @@ namespace IndoorNavigation
                 XDocument xd = XDocument.Parse(xmlString);
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlString);
-
+                app._TmpRecords.Clear();
                 XmlNodeList records = doc.GetElementsByTagName("RgRecord");
 
                 for(int i=0;i<records.Count;i++)
@@ -420,6 +428,8 @@ namespace IndoorNavigation
                     RgRecord record = new RgRecord();
 
                     record.OpdDate = records[i].ChildNodes[0].InnerText;
+
+                    //if (record.OpdDate != app.SelectDate) continue;
                     record.DptName = records[i].ChildNodes[1].InnerText;
                     record.Shift = records[i].ChildNodes[2].InnerText;
                     record.CareRoom = records[i].ChildNodes[3].InnerText;
@@ -429,6 +439,8 @@ namespace IndoorNavigation
                     record._waypointName = record.DptName;
                     record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
                     record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+
+                    app._TmpRecords.Add(record);
                     if (isEmpty)
                         app.records.Add(record);
                     else
