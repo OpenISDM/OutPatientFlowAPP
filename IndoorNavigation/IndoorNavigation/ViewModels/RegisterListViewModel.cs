@@ -73,6 +73,7 @@ namespace IndoorNavigation.ViewModels
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             Page nowPage = Application.Current.MainPage;
+           
             //var NeedtoRegister =await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
             await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());
             

@@ -56,6 +56,8 @@ using Microsoft.AppCenter.Crashes;
 using IndoorNavigation.Resources;
 using Plugin.Multilingual;
 using System.Collections.ObjectModel;
+using Xamarin.Essentials;
+using System;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -65,8 +67,12 @@ namespace IndoorNavigation
         public RgRecord roundRecord=null;
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
-        public string SelectDate = "";
+        public string SelectDate= Preferences.Get("PICKDate_String", string.Empty);
         public ObservableCollection<RgRecord> _TmpRecords; //to test select date 
+        public bool checkRegister = false;
+        public bool isRegister = false;
+
+        public DateTime time;
         public App()
         {
             InitializeComponent();

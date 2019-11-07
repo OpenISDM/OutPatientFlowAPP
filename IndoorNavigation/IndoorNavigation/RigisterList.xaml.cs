@@ -44,8 +44,8 @@ namespace IndoorNavigation
         private ViewCell lastCell=null;
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
+        
 
-     
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
@@ -54,7 +54,7 @@ namespace IndoorNavigation
             app.FinishCount = 0;
             app.records = new ObservableCollection<RgRecord>();
             app._TmpRecords = new ObservableCollection<RgRecord>();
-
+            app.time = Preferences.Get("RGDAY_DATETIME", DateTime.Now);
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             app.roundRecord = null;
@@ -267,6 +267,7 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
+                app.checkRegister = true;
                 ReadXml();
                 //app.records.Add(new RgRecord { Key = "NULL" });
                 index.isAccept = true;
@@ -274,6 +275,7 @@ namespace IndoorNavigation
                 app.FinishCount++;
                 RgListView.ItemsSource = null;
                 RgListView.ItemsSource = app.records;
+                
                 return;
             }
             else if (index.Key.Equals("exit"))
@@ -403,7 +405,9 @@ namespace IndoorNavigation
             {
                 foreach (RgRecord tmprecord in app._TmpRecords)
                 {
+                    //if(!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
                     if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
+                    
                 }
             }
 
@@ -429,7 +433,7 @@ namespace IndoorNavigation
 
                     record.OpdDate = records[i].ChildNodes[0].InnerText;
 
-                    //if (record.OpdDate != app.SelectDate) continue;
+                    if (record.OpdDate != app.SelectDate) continue;
                     record.DptName = records[i].ChildNodes[1].InnerText;
                     record.Shift = records[i].ChildNodes[2].InnerText;
                     record.CareRoom = records[i].ChildNodes[3].InnerText;

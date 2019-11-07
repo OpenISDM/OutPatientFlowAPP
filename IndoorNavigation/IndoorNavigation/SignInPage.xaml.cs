@@ -18,15 +18,25 @@ namespace IndoorNavigation
     {
 
         App app = (App)Application.Current;
+        
         public SignInPage()
         {
             InitializeComponent();
-
+            
             IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
             PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING", string.Empty);
             BirthDayPicker.Date = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-
             RgDayPicker.MaximumDate = DateTime.Now;
+            if ((app.isRegister && app.FinishCount >= 2) || (!app.isRegister && app.FinishCount >= 1))
+            {
+                RgDayPicker.IsEnabled = false;
+            //    return;
+            }
+            if (RgDayPicker.Date!=app.time)
+                RgDayPicker.Date = Preferences.Get("RGDAY_DATETIME",app.time);
+           
+
+            
         }
 
         async private void Button_Clicked(object sender, EventArgs e)
@@ -35,34 +45,35 @@ namespace IndoorNavigation
             Preferences.Set("ID_NUMBER_STRING", IDNumEntry.Text);
             Preferences.Set("PATIENT_ID_STRING", PatientIDEntry.Text);
             Preferences.Set("BIRTHDAY_DATETIME", BirthDayPicker.Date);
+            Preferences.Set("RGDAY_DATETIME",RgDayPicker.Date);
             await Navigation.PopAsync();
         }
-
+        
         private void RgDayPicker_DateSelected(object sender, DateChangedEventArgs e)
         {
             TaiwanCalendar calender = new TaiwanCalendar();
             var o = (DatePicker)sender;
             DateTime pickDate;
-            if (o != null)
+            if (o != null && app.time!=o.Date)
             {
                 pickDate = o.Date;
-
+                app.time = o.Date;
                 app.SelectDate = string.Format("{0}{1}", calender.GetYear(pickDate), pickDate.ToString("MMdd"));
-
-                Console.WriteLine("Pick Date is :" + app.SelectDate + "  99999999999999999999");
-
+                Preferences.Set("RGDAY_DATETIME", RgDayPicker.Date);
+                Preferences.Set("PICKDate_String", app.SelectDate);
                 ReadXML();
             }
         }
 
         private void ReadXML()
         {
-
+            if ((!app.checkRegister && app.isRegister) || (!app.isRegister && app.checkRegister) ) return;
             if (app._TmpRecords.Count != 0)
             {
                 foreach (RgRecord tmprecord in app._TmpRecords)
                 {
-                    if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
+                    //if (!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
+                    if (app.records.Contains(tmprecord) && !app.records[app.records.IndexOf(tmprecord)].isAccept) app.records.Remove(tmprecord);
                 }
             }
 

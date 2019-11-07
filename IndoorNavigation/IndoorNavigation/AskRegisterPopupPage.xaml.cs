@@ -34,6 +34,7 @@ namespace IndoorNavigation
 
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
         {
+            app.isRegister = true;
             app.records.Add(new RgRecord
             {
                 DptName = "導航至掛號台",
@@ -92,6 +93,7 @@ namespace IndoorNavigation
                     RgRecord record = new RgRecord();
 
                     record.OpdDate = records[i].ChildNodes[0].InnerText;
+                    if (record.OpdDate != app.SelectDate) continue;
                     record.DptName = records[i].ChildNodes[1].InnerText;
                     record.Shift = records[i].ChildNodes[2].InnerText;
                     record.CareRoom = records[i].ChildNodes[3].InnerText;
