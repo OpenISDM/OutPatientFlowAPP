@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:hs="http://tempuri.org/">
+  <soapenv:Body>
+    <hs:GetRGdata2 xmlns="http://tempuri.org/WSRgSRV">
+      <hs:MeterData>
+        <hs:Document>
+          <PatientID>B122276055</PatientID>
+          <SystemAccount>CCH</SystemAccount>
+          <SystemPassword>YUANLIN</SystemPassword>
+          <LOC>B</LOC>
+          <SDATE>1081015</SDATE>
+          <EDATE>1081101</EDATE>
+        </hs:Document>
+      </hs:MeterData>
+    </hs:GetRGdata2>
+  </soapenv:Body>
+</soapenv:Envelope>
+

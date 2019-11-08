@@ -73,5 +73,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Net.Http.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Runtime.Serialization.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.ServiceModel.Internals.dll
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\System.Web.Services.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\android\assets\Mono.Security.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\linksrc\zh\IndoorNavigation.resources.dll

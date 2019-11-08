@@ -5,51 +5,26 @@ using System.Xml;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.IO;
 
 namespace IndoorNavigation.Models
 {
     public class PatientXMLParse
     {
-        private ObservableCollection<RgRecord> _records;
-        private String _PatientID;
-        public PatientXMLParse(XmlDocument fileName)
+        private string content = "";
+
+
+        public void ReadXml()
         {
-            //var assembly = IntrospectionExtensions.GetTypeInfo(typeof(LoadResourceText)).Assembly;
-            //XmlDocument doc = new XmlDocument();
-            // doc.Load(fileName);
-            XmlNodeList xmlRecords = fileName.SelectNodes("QueryResult/RgRecords/RgRecord");
-            XmlNodeList patientID = fileName.SelectNodes("QueryResult/PatientID");
-            _records = new ObservableCollection<RgRecord>();
-           
-            foreach(XmlNode node in patientID)
+            var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
+
+            Stream stream = assembly.GetManifestResourceStream(string.Format("{0}.{1}", assembly.GetName().Name, "PatientData.xml"));
+
+            using (StreamReader reader = new StreamReader(stream))
             {
-                XmlElement patient = (XmlElement)node;
-                _PatientID = patient.GetAttribute("PatientID").ToString();
+                Console.WriteLine("Test~test:" + reader.ReadToEnd());
             }
 
-            foreach (XmlNode node in xmlRecords)
-            {
-                XmlElement element = (XmlElement)node;
-                RgRecord record = new RgRecord();
-
-                record.OpdDate = element.GetAttribute("OpdDate").ToString();
-                record.DptName = element.GetAttribute("DptName").ToString();
-                record.Shift = element.GetAttribute("Shift").ToString();
-                record.CareRoom = element.GetAttribute("CareRoom").ToString();
-                record.DrName = element.GetAttribute("DrName").ToString();
-                record.SeeSeq = element.GetAttribute("SeeSeq").ToString();
-
-                _records.Add(record);
-            }
-            Console.WriteLine("records count is :" + _records.Count+"11111111111111111111111");
-        }
-        public ObservableCollection<RgRecord> GetRecords()
-        {
-            return _records;
-        }
-        public String GetID()
-        {
-            return _PatientID;
         }
 
 
