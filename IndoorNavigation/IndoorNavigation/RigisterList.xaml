@@ -120,7 +120,7 @@
             <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Default" TextColor="White" FontAttributes="Bold"
                      CornerRadius="40" AbsoluteLayout.LayoutFlags="All" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.1"/>
-            <Button x:Name="PaymemtListBtn" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" IsEnabled="False" IsVisible="False" Clicked="PaymemtListBtn_Clicked"
+            <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" IsEnabled="False" IsVisible="False" Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
             
             <Grid x:Name="RigistListGrid">

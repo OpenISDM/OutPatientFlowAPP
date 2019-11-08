@@ -20,33 +20,22 @@ namespace IndoorNavigation.ViewModels
         App app = (App)Application.Current;
         private bool isSignIn = false;
         public bool isCheckRegister = false;
-        public double pixelwidth = Application.Current.MainPage.Width;
-        public double pixelheight = Application.Current.MainPage.Height;
-
-        public double layoutwidth { get; set; }
-        public double layoutheight { get; set; }
-
 
         public RegisterListViewModel()
         {
-            layoutheight = pixelheight / 6.1;
-            layoutwidth = layoutheight;
             string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
             string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
             if (!(IDnum.Equals(string.Empty) || patientID.Equals(string.Empty)))// || birthday.Equals(DateTime.Now))
             {
                 isSignIn = true;
             }
-
             if (!isSignIn)
                 CheckSignIn();
             else
             {
                 CheckRegister();
                 isCheckRegister = true;
-            }
-
-            
+            } 
         }
        
         public async void CheckRegister(bool isFirstTime)

@@ -535,7 +535,7 @@
     <value>{0}{1}到達目的地</value>
   </data>
   <data name="NO_SHIFT_STRING" xml:space="preserve">
-    <value>已經沒有可以換位置的選項了。</value>
+    <value>沒有可以換位置的選項。</value>
   </data>
   <data name="NEVER_SHOW_STRING" xml:space="preserve">
     <value>下次不要再顯示</value>
@@ -565,7 +565,7 @@
     <value>醫師</value>
   </data>
   <data name="PHARMACY_ALERT_STRING" xml:space="preserve">
-    <value>請先做完批價，才能去領藥。</value>
+    <value>請做完批價，才能領藥。</value>
   </data>
   <data name="SELET_EXIT_STRING" xml:space="preserve">
     <value>請選擇要離開的出口。</value>
