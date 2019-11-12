@@ -56,13 +56,6 @@ namespace IndoorNavigation.Views.Navigation
     public partial class NavigatorPage : ContentPage
     {
         private NavigatorPageViewModel _viewModel;
-        private string _waypointname;
-        private string _graphname;
-        private Guid _waypointID;
-        private Guid _regionID;
-        private XMLInformation _informationXml;
-        private string _key;
-        private int _index;
 
         public NavigatorPage(string navigationGraphName,
                              Guid destinationRegionID,

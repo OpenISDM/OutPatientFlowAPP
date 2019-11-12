@@ -18,16 +18,22 @@ namespace IndoorNavigation
     public partial class AskRegisterPopupPage : PopupPage
     {
         private App app = (App)Application.Current;
+        private HttpRequest request;
         public AskRegisterPopupPage()
         {
             InitializeComponent();
-
+            request = new HttpRequest();
 
         }
 
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
-            ReadXml();
+            //ReadXml();
+            request.GetXMLBody();
+            request.RequestData();
+            request.ResponseXmlParse();
+            foreach (RgRecord record in app._TmpRecords)
+                app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
             await PopupNavigation.Instance.PopAllAsync();
         }
@@ -48,65 +54,74 @@ namespace IndoorNavigation
         }
 
         protected override bool OnBackgroundClicked()
-        {    
-            ReadXml();
+        {
+            //ReadXml();
+            request.GetXMLBody();
+            request.RequestData();
+            request.ResponseXmlParse();
+            foreach (RgRecord record in app._TmpRecords)
+                app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
             return base.OnBackgroundClicked();
         }
         protected override bool OnBackButtonPressed()
-        {      
-            ReadXml();
+        {
+            //ReadXml();
+            request.GetXMLBody();
+            request.RequestData();
+            request.ResponseXmlParse(); foreach (RgRecord record in app._TmpRecords)
+                app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
             return base.OnBackButtonPressed();
         }
-        private void ReadXml()
-        {
+        //private void ReadXml()
+        //{
 
-            if (app._TmpRecords.Count != 0)
-            {
-                foreach (RgRecord tmprecord in app._TmpRecords)
-                {
-                    if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
-                }
-            }
-            string filename = "PatientData.xml";
-            var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
+        //    if (app._TmpRecords.Count != 0)
+        //    {
+        //        foreach (RgRecord tmprecord in app._TmpRecords)
+        //        {
+        //            if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
+        //        }
+        //    }
+        //    string filename = "PatientData.xml";
+        //    var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
 
 
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-            using (var reader = new StreamReader(stream))
-            {
-                var xmlString = reader.ReadToEnd();
-                Console.WriteLine(xmlString);
+        //    Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
+        //    using (var reader = new StreamReader(stream))
+        //    {
+        //        var xmlString = reader.ReadToEnd();
+        //        Console.WriteLine(xmlString);
 
-                XDocument xd = XDocument.Parse(xmlString);
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlString);
-                Console.WriteLine(doc.InnerText);
-                app._TmpRecords.Clear();
-                //XmlNodeList records = doc.SelectNodes("QueryResult/RgRecords/RgRecord/DptName");
-                XmlNodeList records = doc.GetElementsByTagName("RgRecord");
+        //        XDocument xd = XDocument.Parse(xmlString);
+        //        XmlDocument doc = new XmlDocument();
+        //        doc.LoadXml(xmlString);
+        //        Console.WriteLine(doc.InnerText);
+        //        app._TmpRecords.Clear();
+        //        //XmlNodeList records = doc.SelectNodes("QueryResult/RgRecords/RgRecord/DptName");
+        //        XmlNodeList records = doc.GetElementsByTagName("RgRecord");
 
-                for (int i = 0; i < records.Count; i++)
-                {
-                    //Console.WriteLine(records[i].ChildNodes[0].InnerText);
-                    RgRecord record = new RgRecord();
+        //        for (int i = 0; i < records.Count; i++)
+        //        {
+        //            //Console.WriteLine(records[i].ChildNodes[0].InnerText);
+        //            RgRecord record = new RgRecord();
 
-                    record.OpdDate = records[i].ChildNodes[0].InnerText;
-                    if (record.OpdDate != app.SelectDate) continue;
-                    record.DptName = records[i].ChildNodes[1].InnerText;
-                    record.Shift = records[i].ChildNodes[2].InnerText;
-                    record.CareRoom = records[i].ChildNodes[3].InnerText;
-                    record.DrName = records[i].ChildNodes[4].InnerText;
-                    record.SeeSeq = records[i].ChildNodes[5].InnerText;
-                    record.Key = "QueryResult";
-                    record._waypointName = record.DptName;
-                    record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-                    record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
-                    app._TmpRecords.Add(record);
-                    app.records.Add(record);
-                }
-            }
-        }
+        //            record.OpdDate = records[i].ChildNodes[0].InnerText;
+        //            if (record.OpdDate != app.SelectDate) continue;
+        //            record.DptName = records[i].ChildNodes[1].InnerText;
+        //            record.Shift = records[i].ChildNodes[2].InnerText;
+        //            record.CareRoom = records[i].ChildNodes[3].InnerText;
+        //            record.DrName = records[i].ChildNodes[4].InnerText;
+        //            record.SeeSeq = records[i].ChildNodes[5].InnerText;
+        //            record.Key = "QueryResult";
+        //            record._waypointName = record.DptName;
+        //            record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
+        //            record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+        //            app._TmpRecords.Add(record);
+        //            app.records.Add(record);
+        //        }
+        //    }
+        //}
     }
 }

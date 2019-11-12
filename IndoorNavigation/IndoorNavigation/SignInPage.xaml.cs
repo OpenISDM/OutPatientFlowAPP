@@ -61,62 +61,62 @@ namespace IndoorNavigation
                 app.SelectDate = string.Format("{0}{1}", calender.GetYear(pickDate), pickDate.ToString("MMdd"));
                 Preferences.Set("RGDAY_DATETIME", RgDayPicker.Date);
                 Preferences.Set("PICKDate_String", app.SelectDate);
-                ReadXML();
+                //ReadXML();
             }
         }
 
-        private void ReadXML()
-        {
-            if ((!app.checkRegister && app.isRegister) || (!app.isRegister && app.checkRegister) ) return;
-            if (app._TmpRecords.Count != 0)
-            {
-                foreach (RgRecord tmprecord in app._TmpRecords)
-                {
-                    //if (!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
-                    if (app.records.Contains(tmprecord) && !app.records[app.records.IndexOf(tmprecord)].isAccept) app.records.Remove(tmprecord);
-                }
-            }
+        //private void ReadXML()
+        //{
+        //    if ((!app.checkRegister && app.isRegister) || (!app.isRegister && app.checkRegister) ) return;
+        //    if (app._TmpRecords.Count != 0)
+        //    {
+        //        foreach (RgRecord tmprecord in app._TmpRecords)
+        //        {
+        //            //if (!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
+        //            if (app.records.Contains(tmprecord) && !app.records[app.records.IndexOf(tmprecord)].isAccept) app.records.Remove(tmprecord);
+        //        }
+        //    }
 
-            string filename = "PatientData.xml";
-            var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
-            bool isEmpty = (app.records.Count == 0);
+        //    string filename = "PatientData.xml";
+        //    var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
+        //    bool isEmpty = (app.records.Count == 0);
 
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-            using (var reader = new StreamReader(stream))
-            {
-                var xmlString = reader.ReadToEnd();
-                Console.WriteLine(xmlString);
+        //    Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
+        //    using (var reader = new StreamReader(stream))
+        //    {
+        //        var xmlString = reader.ReadToEnd();
+        //        Console.WriteLine(xmlString);
 
 
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlString);
+        //        XmlDocument doc = new XmlDocument();
+        //        doc.LoadXml(xmlString);
 
-                XmlNodeList records = doc.GetElementsByTagName("RgRecord");
-                app._TmpRecords.Clear();
-                for (int i = 0; i < records.Count; i++)
-                {
-                    RgRecord record = new RgRecord();
+        //        XmlNodeList records = doc.GetElementsByTagName("RgRecord");
+        //        app._TmpRecords.Clear();
+        //        for (int i = 0; i < records.Count; i++)
+        //        {
+        //            RgRecord record = new RgRecord();
 
-                    record.OpdDate = records[i].ChildNodes[0].InnerText;
+        //            record.OpdDate = records[i].ChildNodes[0].InnerText;
 
-                    if (record.OpdDate != app.SelectDate) continue;
-                    record.DptName = records[i].ChildNodes[1].InnerText;
-                    record.Shift = records[i].ChildNodes[2].InnerText;
-                    record.CareRoom = records[i].ChildNodes[3].InnerText;
-                    record.DrName = records[i].ChildNodes[4].InnerText;
-                    record.SeeSeq = records[i].ChildNodes[5].InnerText;
-                    record.Key = "QueryResult";
-                    record._waypointName = record.DptName;
-                    record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-                    record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+        //            if (record.OpdDate != app.SelectDate) continue;
+        //            record.DptName = records[i].ChildNodes[1].InnerText;
+        //            record.Shift = records[i].ChildNodes[2].InnerText;
+        //            record.CareRoom = records[i].ChildNodes[3].InnerText;
+        //            record.DrName = records[i].ChildNodes[4].InnerText;
+        //            record.SeeSeq = records[i].ChildNodes[5].InnerText;
+        //            record.Key = "QueryResult";
+        //            record._waypointName = record.DptName;
+        //            record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
+        //            record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
 
-                    app._TmpRecords.Add(record);
-                    if (isEmpty)
-                        app.records.Add(record);
-                    else
-                        app.records.Insert(app.records.Count - 1, record);
-                }
-            }
-        }
+        //            app._TmpRecords.Add(record);
+        //            if (isEmpty)
+        //                app.records.Add(record);
+        //            else
+        //                app.records.Insert(app.records.Count - 1, record);
+        //        }
+        //    }
+        //}
     }
 }

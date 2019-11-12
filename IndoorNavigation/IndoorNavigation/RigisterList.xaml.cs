@@ -44,7 +44,7 @@ namespace IndoorNavigation
         private ViewCell lastCell=null;
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
-        
+        private HttpRequest request;
 
         public RigisterList(string navigationGraphName,QueryResult result)
         {
@@ -58,6 +58,8 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             app.roundRecord = null;
+
+            request = new HttpRequest();
 
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
             {
@@ -400,8 +402,8 @@ namespace IndoorNavigation
 
         private void ReadXml()
         {
-
-            if (app._TmpRecords.Count != 0)
+            Console.WriteLine("Now Excution is::: ReadXml");
+            if (app._TmpRecords.Count > 0)
             {
                 foreach (RgRecord tmprecord in app._TmpRecords)
                 {
@@ -410,49 +412,20 @@ namespace IndoorNavigation
                     
                 }
             }
-
-            string filename = "PatientData.xml";
-            var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
-            bool isEmpty = (app.records.Count == 0);
-
-            Stream stream=assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-            using (var reader=new StreamReader(stream))
+            app._TmpRecords.Clear();
+            Console.WriteLine("Now Excution is::: Todo request to server");
+            request.GetXMLBody();
+            request.RequestData();
+            request.ResponseXmlParse();
+            Console.WriteLine("Now Excution is::: Get insert index");
+            int index = (app.records.Count == 0) ? 0 : app.records.Count - 1;
+            Console.WriteLine("Now Excution is::: GetParse And put data to listView");
+            foreach (RgRecord record in app._TmpRecords)
             {
-                var xmlString = reader.ReadToEnd();
-                Console.WriteLine(xmlString);
-
-                XDocument xd = XDocument.Parse(xmlString);
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlString);
-                app._TmpRecords.Clear();
-                XmlNodeList records = doc.GetElementsByTagName("RgRecord");
-
-                for(int i=0;i<records.Count;i++)
-                {
-                    RgRecord record = new RgRecord();
-
-                    record.OpdDate = records[i].ChildNodes[0].InnerText;
-
-                    if (record.OpdDate != app.SelectDate) continue;
-                    record.DptName = records[i].ChildNodes[1].InnerText;
-                    record.Shift = records[i].ChildNodes[2].InnerText;
-                    record.CareRoom = records[i].ChildNodes[3].InnerText;
-                    record.DrName=records[i].ChildNodes[4].InnerText;
-                    record.SeeSeq = records[i].ChildNodes[5].InnerText;
-                    record.Key = "QueryResult";
-                    record._waypointName = record.DptName;
-                    record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-                    record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
-
-                    app._TmpRecords.Add(record);
-                    if (isEmpty)
-                        app.records.Add(record);
-                    else
-                        app.records.Insert(app.records.Count - 1, record);
-                }
-
-               
+                app.records.Insert(index, record);
             }
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
         }
     }
 }
