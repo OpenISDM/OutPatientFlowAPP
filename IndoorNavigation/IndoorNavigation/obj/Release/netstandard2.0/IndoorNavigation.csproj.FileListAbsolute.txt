@@ -40,6 +40,7 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\IndoorNavigation.Resources.AppResources.zh.resources
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\IndoorNavigation.csproj.GenerateResource.cache
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\AddPopupPage.xaml.g.cs
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\AddPopupPage_v2.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\App.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\AskRegisterPopupPage.xaml.g.cs
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation\obj\Release\netstandard2.0\DisplayAlertPopupPage.xaml.g.cs

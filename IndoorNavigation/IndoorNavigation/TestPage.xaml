@@ -7,7 +7,7 @@
              x:Class="IndoorNavigation.TestPage">
     <ContentPage.Content>
         <StackLayout>
-            <Button x:Name="ArrivalBtn" Text="arrival!" Clicked="ArrivalBtn_Clicked"/>
+            <Button x:Name="ArrivalBtn" Text="arrival!"/>
             <Label x:Name="TestString"  FontSize="Large"/>
         </StackLayout>
     </ContentPage.Content>

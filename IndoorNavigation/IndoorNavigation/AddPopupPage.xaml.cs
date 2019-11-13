@@ -30,14 +30,11 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
       
         List<RgRecord> AddItems;
-        List<RgRecord> PreSelect;
         ObservableCollection<CheckBox> CheckBoxes;
         CheckBox RevisitBox; //it need to be deal specially.
         public AddPopupPage()
         {   
             InitializeComponent();
-           
-            PreSelect = new List<RgRecord>();
             CheckBoxes = new ObservableCollection<CheckBox>();
         }
 

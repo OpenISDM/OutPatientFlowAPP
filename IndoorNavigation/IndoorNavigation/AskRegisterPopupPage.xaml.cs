@@ -19,16 +19,24 @@ namespace IndoorNavigation
     {
         private App app = (App)Application.Current;
         private HttpRequest request;
+        private bool ButtonLock;
         public AskRegisterPopupPage()
         {
             InitializeComponent();
             request = new HttpRequest();
 
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
+            ButtonLock = false;
+        }
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
             //ReadXml();
+            if (ButtonLock) return;
+            ButtonLock = true;
             request.GetXMLBody();
             request.RequestData();
             request.ResponseXmlParse();
@@ -40,6 +48,8 @@ namespace IndoorNavigation
 
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
         {
+            if (ButtonLock) return;
+            ButtonLock = true;
             app.isRegister = true;
             app.records.Add(new RgRecord
             {

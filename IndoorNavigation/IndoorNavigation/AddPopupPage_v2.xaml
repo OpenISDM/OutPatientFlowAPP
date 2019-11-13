@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.AddPopupPage_v2">
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        <Frame BackgroundColor="White" VerticalOptions="Center" HeightRequest="300" WidthRequest="300" CornerRadius="8">
+            <StackLayout WidthRequest="380">
+                <ScrollView HorizontalOptions="Start" WidthRequest="300">
+                    <StackLayout x:Name="PictureCheckBoxStacklayout">
+
+                    </StackLayout>
+                </ScrollView>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Button Text="Cancel" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+                    <Button Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

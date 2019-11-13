@@ -299,10 +299,14 @@
   <ItemGroup>
     <BundleResource Include="Resources\cloud_computing.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddItem_1.png" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\Lab\" />
-    <Folder Include="Resources\NTUH_YunLin\" />
-    <Folder Include="Resources\Taipei_City_Hall\" />
+    <BundleResource Include="Resources\AddItem_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddItem_3.png" />
   </ItemGroup>
 </Project>

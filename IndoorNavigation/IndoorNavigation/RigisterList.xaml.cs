@@ -427,5 +427,10 @@ namespace IndoorNavigation
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }
+
+        async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2());
+        }
     }
 }
