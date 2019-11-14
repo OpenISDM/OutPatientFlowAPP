@@ -1121,3 +1121,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\stamp\_GenerateJavaStubs.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\res\drawable\additem_1.png
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\res\drawable\additem_2.png
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.Android\obj\Release\81\res\drawable\additem_3.png

@@ -11,6 +11,8 @@ using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.InputKit.Shared.Controls;
+using Plugin.Multilingual;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -21,96 +23,159 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
-        List<List<CheckBox>> checkBoxes;
-        List<List<DestinationItem>> AddItems;
+        Dictionary<string, List<CheckBox>> checkBoxes;
+        Dictionary<string,AddItems> _items;
+        List<String> examinationTypes;
+        CheckBox RevisitBox;
 
         public AddPopupPage_v2()
         {
             InitializeComponent();
-            checkBoxes = new List<List<CheckBox>>();
-            AddItems = new List<List<DestinationItem>>();
-
+            checkBoxes = new Dictionary<string, List<CheckBox>>();
+            _items = new Dictionary<string, AddItems>();
+            examinationTypes = new List<string>();
+            RevisitBox = new CheckBox();
+            LoadTypes();
             LoadItems();
             LoadBoxes();
         }
-
+        public void LoadTypes()
+        {
+            examinationTypes.Add("X光");
+            examinationTypes.Add("超音波");
+            examinationTypes.Add("抽血處");
+        }
         public void LoadItems()
         {
-            for(int i = 1; i < 4; i++)
+            foreach (String type in examinationTypes)
             {
-                List<DestinationItem> items=new List<DestinationItem>();
-                for(int j = 1; j < 5; j++)
-                {
-                    DestinationItem item = new DestinationItem
-                    {
-                        _waypointName = $"{i*j}樓",
-                        Key="AddItem"
-                    };
+                AddItems item = new AddItems();
+                item._examinationType = type;
 
-                    items.Add(item);
+                for (int i = 0; i < 5; i++)
+                {
+                    item._addItems.Add(new RgRecord
+                    {
+                        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                        _waypointName=$"{i+1}樓",
+                        DptName=$"{i+1}樓{type}",
+                        Key="AddItem"
+                    });
                 }
-                AddItems.Add(items);
+                _items.Add(type, item);
             }
         }
         public void LoadBoxes()
         {
             int j = 0;
-            foreach(List<DestinationItem> items in AddItems)
+            foreach(string type in examinationTypes)
             {
+                AddItems items = _items[type];
                 j++;
-                Console.WriteLine("1111111111111111");
+
                 StackLayout layout = new StackLayout
                 {
                     Orientation =StackOrientation.Horizontal
                 };
-                //layout.Children.Add(new BoxView {
-                //    WidthRequest =90,
-                //    Color=Color.Blue
-                //});
-                layout.Children.Add(new Image
+
+                StackLayout picturelayout = new StackLayout();
+
+                picturelayout.Children.Add(new Image
                 {
-                    Source=$"AddItem_{j}",
-                    HeightRequest=90,
-                    WidthRequest=90,
-                    Aspect=Aspect.AspectFit
+                    Source=$"AddItem_{j}", HeightRequest=90,
+                    WidthRequest=90, Aspect=Aspect.AspectFit
                 });
-                int i=0;
-                StackLayout CheckboxLayout = new StackLayout();
-                foreach(DestinationItem item in items)
+
+                picturelayout.Children.Add(new Label
                 {
-                    i++;
-                    Console.WriteLine("22222222");
+                    Text=type,FontSize=16,TextColor=Color.White,BackgroundColor=Color.Black,
+                    HorizontalTextAlignment =TextAlignment.Center,VerticalTextAlignment=TextAlignment.Center,
+                });
+                layout.Children.Add(picturelayout);
+                
+                StackLayout CheckboxLayout = new StackLayout();
+                List<CheckBox> boxes = new List<CheckBox>();
+
+                int i = 0;
+                foreach (RgRecord item in items._addItems)
+                {
+                    
                     CheckBox box = new CheckBox
                     {
-                        Text=item._waypointName,
-                        TextFontSize=16,
-                        Margin=new Thickness(8,0),
-                        Type=CheckBox.CheckType.Check,
-                        TextColor=Color.Black
+                        Text=item._waypointName,TextFontSize=16,Margin=new Thickness(8,0),
+                        Type=CheckBox.CheckType.Check,TextColor=Color.Black,Key=i
                     };
-                    CheckboxLayout.Children.Add(box);
 
+                    CheckboxLayout.Children.Add(box);
+                    boxes.Add(box);
+                    i++;
+
+                    item._waypointName = $"{item._waypointName}{type}";
+
+                    //let layout template
                     if (i % 3==0)
                     {
                         layout.Children.Add(CheckboxLayout);
                         CheckboxLayout = new StackLayout();
                     }
                 }
+
                 layout.Children.Add(CheckboxLayout);
+                checkBoxes.Add(items._examinationType, boxes);
                 PictureCheckBoxStacklayout.Children.Add(layout);
                 PictureCheckBoxStacklayout.Children.Add(new BoxView
                 {
-                    HeightRequest = 1,
-                    Color = Color.FromHex("3f51b5"),
-                    Margin=4
+                    HeightRequest = 1, Color = Color.FromHex("3f51b5"), Margin=4
                 });
             }
         }
-        protected override void OnAppearing()
+
+        async private void AddConfirmButton_Clicked(object sender, EventArgs e)
         {
-            base.OnAppearing();
+            int index = (app.roundRecord == null && !RevisitBox.IsChecked) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            int count = 0;
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            
+            foreach(String type in examinationTypes)
+            {
+                
+                List<CheckBox> boxes = checkBoxes[type];
+                foreach(CheckBox box in boxes)
+                {
+                    if (!box.IsChecked) continue;
+                    count++;
+                    var isDuplicate = app.records.Any(p => p.DptName == _items[type]._addItems[box.Key].DptName && !p.isAccept);
 
+                    if (isDuplicate) continue;
+                    app.records.Insert(index,_items[type]._addItems[box.Key]);
+                }
+            }
+            if (RevisitBox.IsChecked)
+            {
+                count++;
+                app.records.Insert(index++, new RgRecord
+                {
+                    DptName=$"回診{app.roundRecord.DptName}", _regionID = app.roundRecord._regionID,
+                    _waypointID = app.roundRecord._waypointID, Key = "AddItem",
+                    _waypointName = app.roundRecord._waypointName
 
+                });
+                app.roundRecord = null;
+            }
+            if (count == 0)
+            {
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
+                    , _resourceManager.GetString("OK_STRING", currentLanguage));
+            }
+
+            await PopupNavigation.Instance.PopAllAsync();
         }
+
+        async private void AddCancelButton_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+ 
     }
 }

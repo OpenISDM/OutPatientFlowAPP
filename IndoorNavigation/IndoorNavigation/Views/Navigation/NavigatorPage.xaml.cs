@@ -79,46 +79,7 @@ namespace IndoorNavigation.Views.Navigation
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");
-        }
-
-        //public NavigatorPage(string navigationGraphName,
-        //                    Guid destinationRegionID,
-        //                    Guid destinationWaypointID,
-        //                    string destinationWaypointName,
-        //                    XMLInformation informationXML, 
-        //                    string destinationKey,
-        //                    int destinationIndex)
-        //{
-        //    Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
-        //                      navigationGraphName,
-        //                      destinationRegionID,
-        //                      destinationWaypointID,
-        //                      destinationWaypointName);
-        //   /* if (PopupNavigation.Instance.PopupStack.Count > 0)
-        //        PopupNavigation.Instance.PopAsync();*/
-
-
-        //    InitializeComponent();
-
-        //    _waypointID = destinationWaypointID;
-        //    _graphname = navigationGraphName;
-        //    _regionID = destinationRegionID;
-        //    _informationXml = informationXML;
-        //    _key = destinationKey;
-        //    _index = destinationIndex;
-        //    _waypointname = destinationWaypointName;
-
-        //    _viewModel = new NavigatorPageViewModel(navigationGraphName,
-        //                                            destinationRegionID,
-        //                                            destinationWaypointID,
-        //                                            destinationWaypointName,
-        //                                            informationXML, 
-        //                                            destinationKey,
-        //                                            destinationIndex);
-        //    BindingContext = _viewModel;
-
-        //    Console.WriteLine("<< NavigatorPage constructor");
-        //}
+        } 
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
@@ -127,34 +88,6 @@ namespace IndoorNavigation.Views.Navigation
             base.OnDisappearing();
         }
       
-       /* async private void FinishButton_Clicked(object sender, EventArgs e)
-        {
-            const string _resourceId = "IndoorNavigation.Resources.AppResources";
-            ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (_key.Equals("exit"))
-            {
-                string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
-                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
-                await Navigation.PopAsync();
-                //System.Environment.Exit(0);
-            }
-            else
-            await Navigation.PopAsync();
-        }
-
-        private void NotFinishButton_Clicked(object sender, EventArgs e)
-        {
-            _viewModel.Stop();
-            _viewModel.Dispose();
-            //OnDisappearing();
-            
-            NavigatorPageViewModel _newviewModel=new NavigatorPageViewModel(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index);
-            BindingContext = _newviewModel;
-            //await Navigation.PopAsync();
-            //await Navigation.PushAsync(new NavigatorPage(_graphname, _regionID, _waypointID, _waypointname, _informationXml, _key, _index));
-        }*/
+       
     }
 }
