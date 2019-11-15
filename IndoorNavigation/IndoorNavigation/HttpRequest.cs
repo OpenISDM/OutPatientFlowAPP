@@ -110,9 +110,13 @@ namespace IndoorNavigation
         public void ResponseXmlParse()
         {
             Console.WriteLine("Now Excution is::: ResponseXmlParse");
-            string modifyString = "";
-            modifyString = responseString.Remove(0, responseString.IndexOf("&lt;?xml"));
-            modifyString = modifyString.Remove(modifyString.IndexOf("</GetRGdata2Result>"), modifyString.Length - modifyString.IndexOf("</GetRGdata2Result>"));
+            XmlDocument XmlfromRespone = new XmlDocument();
+            XmlfromRespone.LoadXml(responseString);
+            XmlNodeList ResponeList = XmlfromRespone.GetElementsByTagName("GetRGdata2Response");
+
+            string modifyString = ResponeList[0].InnerText;
+            /*modifyString = responseString.Remove(0, responseString.IndexOf("&lt;?xml"));
+            modifyString = modifyString.Remove(modifyString.IndexOf("</GetRGdata2Result>"), modifyString.Length - modifyString.IndexOf("</GetRGdata2Result>"));*/
             
             StringWriter writer = new StringWriter();
             HttpUtility.HtmlDecode(modifyString, writer);

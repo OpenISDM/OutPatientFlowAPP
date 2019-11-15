@@ -23,29 +23,29 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             
-            IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-            PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING", string.Empty);
-            BirthDayPicker.Date = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-            RgDayPicker.MaximumDate = DateTime.Now;
-            if ((app.isRegister && app.FinishCount >= 2) || (!app.isRegister && app.FinishCount >= 1))
-            {
-                RgDayPicker.IsEnabled = false;
-            //    return;
-            }
-            if (RgDayPicker.Date!=app.time)
-                RgDayPicker.Date = Preferences.Get("RGDAY_DATETIME",app.time);
-           
+            //IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+            //PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING", string.Empty);
+            //BirthDayPicker.Date = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
+            //RgDayPicker.MaximumDate = DateTime.Now;
+            //if ((app.isRegister && app.FinishCount >= 2) || (!app.isRegister && app.FinishCount >= 1))
+            //{
+            //    RgDayPicker.IsEnabled = false;
+            ////    return;
+            //}
+            //if (RgDayPicker.Date!=app.time)
+            //    RgDayPicker.Date = Preferences.Get("RGDAY_DATETIME",app.time);
 
-            
+
+            Console.WriteLine(CheckIDLegal("Q123456789")?"Correct":"Errorrrrrrrrrrrr");
         }
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            //QueryResult result = new QueryResult();
-            Preferences.Set("ID_NUMBER_STRING", IDNumEntry.Text);
-            Preferences.Set("PATIENT_ID_STRING", PatientIDEntry.Text);
-            Preferences.Set("BIRTHDAY_DATETIME", BirthDayPicker.Date);
-            Preferences.Set("RGDAY_DATETIME",RgDayPicker.Date);
+            ////QueryResult result = new QueryResult();
+            //Preferences.Set("ID_NUMBER_STRING", IDNumEntry.Text);
+            //Preferences.Set("PATIENT_ID_STRING", PatientIDEntry.Text);
+            //Preferences.Set("BIRTHDAY_DATETIME", BirthDayPicker.Date);
+            //Preferences.Set("RGDAY_DATETIME",RgDayPicker.Date);
             await Navigation.PopAsync();
         }
         
@@ -62,6 +62,43 @@ namespace IndoorNavigation
                 Preferences.Set("RGDAY_DATETIME", RgDayPicker.Date);
                 Preferences.Set("PICKDate_String", app.SelectDate);
                 //ReadXML();
+            }
+        }
+
+        public bool CheckIDLegal(string IDnum)
+        {
+            int[] priority = { 1, 8, 7, 6, 5, 4, 3, 2, 1, 1 };
+            int count = IDCharSw(IDnum[0]);
+
+            for (int i = 1; i < IDnum.Length; i++)
+                count += priority[i] * (IDnum[i] - '0');
+            Console.WriteLine("Count is::::" + count.ToString());
+            if(count%10==0)
+                return true;
+
+            return false;
+        }
+
+        private int IDCharSw(char ch)
+        {
+            switch (ch)
+            {
+                case 'A': return 1; case 'P': return 29; 
+                case 'B': return 10; case 'Q': return 38; 
+                case 'C': return 19; case 'R': return 47; 
+                case 'D': return 28; case 'S': return 56;
+                case 'E': return 37; case 'T': return 65; 
+                case 'F': return 46; case 'U': return 74; 
+                case 'G': return 55; case 'V': return 83; 
+                case 'H': return 64; case 'W': return 21;
+                case 'I': return 39; case 'X': return 3; 
+                case 'J': return 73; case 'Y': return 12; 
+                case 'K': return 82; case 'Z': return 30; 
+                case 'L': return 2; 
+                case 'M': return 11; 
+                case 'N': return 20; 
+                case 'O': return 48;
+                default: return 0;
             }
         }
 
