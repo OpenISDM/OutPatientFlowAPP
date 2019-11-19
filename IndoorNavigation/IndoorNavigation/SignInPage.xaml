@@ -48,14 +48,14 @@
         <StackLayout VerticalOptions="CenterAndExpand">
             <StackLayout Padding="20" Margin="30">
                 <Label Text="身分證字號" FontSize="Large" />
-                <Entry Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Large"/>
+                <Entry x:Name="IDnumEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Large" MaxLength="10"/>
             </StackLayout>
             
             <StackLayout Padding="20" Margin="30">
                 <Label Text="看病日期" FontSize="Large"/>
                 <DatePicker x:Name="RgDayPicker" DateSelected="RgDayPicker_DateSelected" MinimumDate="1/1/2019"/>
             </StackLayout>
-            <Button Text="確定" HorizontalOptions="CenterAndExpand"/>
+            <Button Text="確定" HorizontalOptions="CenterAndExpand" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

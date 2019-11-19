@@ -65,13 +65,13 @@ namespace IndoorNavigation
     public partial class App : Application
     {
         public RgRecord roundRecord=null;
+
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
-        public string SelectDate= Preferences.Get("PICKDate_String", string.Empty);
+        public bool isRigistered = false;
         public ObservableCollection<RgRecord> _TmpRecords; //to test select date 
-        public bool checkRegister = false;
-        public bool isRegister = false;
-
+        public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+        public DateTime RgDate = DateTime.Now;
         public DateTime time;
         public App()
         {

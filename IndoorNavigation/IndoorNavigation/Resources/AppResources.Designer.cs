@@ -763,6 +763,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 This ID number is illegal, please check again. 的當地語系化字串。
+        /// </summary>
+        internal static string IDNUM_TYPE_WRONG_STRING {
+            get {
+                return ResourceManager.GetString("IDNUM_TYPE_WRONG_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please input your ID number 的當地語系化字串。
         /// </summary>
         internal static string INPUT_ID_NUMBER_STRING {

@@ -37,6 +37,10 @@ namespace IndoorNavigation
             //ReadXml();
             if (ButtonLock) return;
             ButtonLock = true;
+
+            app.records.Clear();
+            app._TmpRecords.Clear();
+
             request.GetXMLBody();
             request.RequestData();
             request.ResponseXmlParse();
@@ -49,8 +53,10 @@ namespace IndoorNavigation
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
         {
             if (ButtonLock) return;
+            app.records.Clear();
+            app._TmpRecords.Clear();
+
             ButtonLock = true;
-            app.isRegister = true;
             app.records.Add(new RgRecord
             {
                 DptName = "導航至掛號台",
@@ -69,6 +75,9 @@ namespace IndoorNavigation
             request.GetXMLBody();
             request.RequestData();
             request.ResponseXmlParse();
+            app.records.Clear();
+            app._TmpRecords.Clear();
+
             foreach (RgRecord record in app._TmpRecords)
                 app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
@@ -79,7 +88,12 @@ namespace IndoorNavigation
             //ReadXml();
             request.GetXMLBody();
             request.RequestData();
-            request.ResponseXmlParse(); foreach (RgRecord record in app._TmpRecords)
+            request.ResponseXmlParse();
+
+            app.records.Clear();
+            app._TmpRecords.Clear();
+
+            foreach (RgRecord record in app._TmpRecords)
                 app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
             return base.OnBackButtonPressed();

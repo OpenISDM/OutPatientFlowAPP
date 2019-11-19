@@ -68,6 +68,31 @@ namespace IndoorNavigation
         }
         public void LoadBoxes()
         {
+            //------------------------------------------------------------------
+            StackLayout horizonlayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            StackLayout verticallayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand};
+
+            verticallayout.Children.Add(new Image { Source = "AddItem_0", HeightRequest=90, WidthRequest=90, Aspect=Aspect.AspectFit});
+            verticallayout.Children.Add(new Label {Text="回診", FontSize=16, VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
+                BackgroundColor =Color.Black, TextColor=Color.White});
+            horizonlayout.Children.Add(verticallayout);
+
+
+            CheckBox RevisitBox = new CheckBox
+            {
+                Text="回診",
+                TextFontSize=16,
+                Type=CheckBox.CheckType.Check,
+                Margin=new Thickness(8,0),
+                TextColor=Color.Black,
+                VerticalOptions=LayoutOptions.StartAndExpand
+            };
+
+            horizonlayout.Children.Add(RevisitBox);
+
+            PictureCheckBoxStacklayout.Children.Add(horizonlayout);
+            PictureCheckBoxStacklayout.Children.Add(new BoxView { HeightRequest = 1, Color = Color.FromHex("3f51b5") });
+            //--------------------------------------------------------------------
             int j = 0;
             foreach(string type in examinationTypes)
             {
@@ -79,7 +104,7 @@ namespace IndoorNavigation
                     Orientation =StackOrientation.Horizontal
                 };
 
-                StackLayout picturelayout = new StackLayout();
+                StackLayout picturelayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand };
 
                 picturelayout.Children.Add(new Image
                 {

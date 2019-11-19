@@ -18,44 +18,39 @@ namespace IndoorNavigation.ViewModels
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
-        private bool isSignIn = false;
-        public bool isCheckRegister = false;
 
         public RegisterListViewModel()
         {
-            string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-            string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
-            if (!(IDnum.Equals(string.Empty) || patientID.Equals(string.Empty)))// || birthday.Equals(DateTime.Now))
+            if (app.IDnumber.Equals(string.Empty))
             {
-                isSignIn = true;
-            }
-            if (!isSignIn)
                 CheckSignIn();
+            }
             else
             {
                 CheckRegister();
-                isCheckRegister = true;
-            } 
+                app.isRigistered = true;
+            }
+
         }
        
-        public async void CheckRegister(bool isFirstTime)
-        {
+        //public async void CheckRegister(bool isFirstTime)
+        //{
             
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        //    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
-            if (!isFirstTime)
-            {
-                var page = Application.Current.MainPage;
-                bool isRegister = await page.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                  _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
-                  _resourceManager.GetString("OK_STRING", currentLanguage),
-                  _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                if (isRegister)
-                {
-                    await page.Navigation.PushAsync(new TestPage());
-                }
-            }
-        }
+        //    if (!isFirstTime)
+        //    {
+        //        var page = Application.Current.MainPage;
+        //        bool isRegister = await page.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
+        //          _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
+        //          _resourceManager.GetString("OK_STRING", currentLanguage),
+        //          _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+        //        if (isRegister)
+        //        {
+        //            await page.Navigation.PushAsync(new TestPage());
+        //        }
+        //    }
+        //}
     
         
         async public  void CheckRegister()

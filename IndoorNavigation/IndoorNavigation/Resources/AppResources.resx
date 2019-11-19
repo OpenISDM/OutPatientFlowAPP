@@ -570,4 +570,7 @@
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>Press OK to update Map</value>
   </data>
+  <data name="IDNUM_TYPE_WRONG_STRING" xml:space="preserve">
+    <value>This ID number is illegal, please check again.</value>
+  </data>
 </root>

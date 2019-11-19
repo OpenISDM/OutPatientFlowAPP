@@ -10,75 +10,77 @@ using System.Globalization;
 using System.IO;
 using System.Xml;
 using System.Reflection;
+using Plugin.Multilingual;
+using IndoorNavigation.Resources.Helpers;
+using System.Resources;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SignInPage : ContentPage
     {
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         App app = (App)Application.Current;
         
         public SignInPage()
         {
             InitializeComponent();
-            
-            //IDNumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-            //PatientIDEntry.Text = Preferences.Get("PATIENT_ID_STRING", string.Empty);
-            //BirthDayPicker.Date = Preferences.Get("BIRTHDAY_DATETIME", DateTime.Now);
-            //RgDayPicker.MaximumDate = DateTime.Now;
-            //if ((app.isRegister && app.FinishCount >= 2) || (!app.isRegister && app.FinishCount >= 1))
-            //{
-            //    RgDayPicker.IsEnabled = false;
-            ////    return;
-            //}
-            //if (RgDayPicker.Date!=app.time)
-            //    RgDayPicker.Date = Preferences.Get("RGDAY_DATETIME",app.time);
-
-
-            Console.WriteLine(CheckIDLegal("Q123456789")?"Correct":"Errorrrrrrrrrrrr");
+            IDnumEntry.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeCharacter);
+            RgDayPicker.Date = app.RgDate;
+            IDnumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
         }
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            ////QueryResult result = new QueryResult();
-            //Preferences.Set("ID_NUMBER_STRING", IDNumEntry.Text);
-            //Preferences.Set("PATIENT_ID_STRING", PatientIDEntry.Text);
-            //Preferences.Set("BIRTHDAY_DATETIME", BirthDayPicker.Date);
-            //Preferences.Set("RGDAY_DATETIME",RgDayPicker.Date);
+
+            if(IDnumEntry.Text==null || !CheckIDLegal(IDnumEntry.Text))
+            {
+                await DisplayAlert(_resourceManager.GetString("ERROR_STRING",currentLanguage), _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING", currentLanguage)
+                    ,_resourceManager.GetString("OK_STRING",currentLanguage));
+                return;
+            }
+
+            Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
+            app.IDnumber = IDnumEntry.Text;
+            app.RgDate = RgDayPicker.Date;
+            app.isRigistered = false;
             await Navigation.PopAsync();
         }
         
         private void RgDayPicker_DateSelected(object sender, DateChangedEventArgs e)
         {
             TaiwanCalendar calender = new TaiwanCalendar();
-            var o = (DatePicker)sender;
-            DateTime pickDate;
-            if (o != null && app.time!=o.Date)
-            {
-                pickDate = o.Date;
-                app.time = o.Date;
-                app.SelectDate = string.Format("{0}{1}", calender.GetYear(pickDate), pickDate.ToString("MMdd"));
-                Preferences.Set("RGDAY_DATETIME", RgDayPicker.Date);
-                Preferences.Set("PICKDate_String", app.SelectDate);
-                //ReadXML();
-            }
+            var o = (DatePicker)sender;        
         }
 
         public bool CheckIDLegal(string IDnum)
         {
+            IDnum=IDnum.ToUpper();
+            if (IDnum.Length < 10)
+                return false;
+
             int[] priority = { 1, 8, 7, 6, 5, 4, 3, 2, 1, 1 };
             int count = IDCharSw(IDnum[0]);
 
             for (int i = 1; i < IDnum.Length; i++)
-                count += priority[i] * (IDnum[i] - '0');
+            {
+                int tmp = IDnum[i] - '0';
+                if (!(tmp >= 0 && tmp <= 9))
+                    return false;
+
+                count += priority[i] * (tmp);
+            }
             Console.WriteLine("Count is::::" + count.ToString());
             if(count%10==0)
                 return true;
 
             return false;
         }
-
+        //first char in identity number d
         private int IDCharSw(char ch)
         {
             switch (ch)
@@ -102,58 +104,6 @@ namespace IndoorNavigation
             }
         }
 
-        //private void ReadXML()
-        //{
-        //    if ((!app.checkRegister && app.isRegister) || (!app.isRegister && app.checkRegister) ) return;
-        //    if (app._TmpRecords.Count != 0)
-        //    {
-        //        foreach (RgRecord tmprecord in app._TmpRecords)
-        //        {
-        //            //if (!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
-        //            if (app.records.Contains(tmprecord) && !app.records[app.records.IndexOf(tmprecord)].isAccept) app.records.Remove(tmprecord);
-        //        }
-        //    }
-
-        //    string filename = "PatientData.xml";
-        //    var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
-        //    bool isEmpty = (app.records.Count == 0);
-
-        //    Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-        //    using (var reader = new StreamReader(stream))
-        //    {
-        //        var xmlString = reader.ReadToEnd();
-        //        Console.WriteLine(xmlString);
-
-
-        //        XmlDocument doc = new XmlDocument();
-        //        doc.LoadXml(xmlString);
-
-        //        XmlNodeList records = doc.GetElementsByTagName("RgRecord");
-        //        app._TmpRecords.Clear();
-        //        for (int i = 0; i < records.Count; i++)
-        //        {
-        //            RgRecord record = new RgRecord();
-
-        //            record.OpdDate = records[i].ChildNodes[0].InnerText;
-
-        //            if (record.OpdDate != app.SelectDate) continue;
-        //            record.DptName = records[i].ChildNodes[1].InnerText;
-        //            record.Shift = records[i].ChildNodes[2].InnerText;
-        //            record.CareRoom = records[i].ChildNodes[3].InnerText;
-        //            record.DrName = records[i].ChildNodes[4].InnerText;
-        //            record.SeeSeq = records[i].ChildNodes[5].InnerText;
-        //            record.Key = "QueryResult";
-        //            record._waypointName = record.DptName;
-        //            record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-        //            record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
-
-        //            app._TmpRecords.Add(record);
-        //            if (isEmpty)
-        //                app.records.Add(record);
-        //            else
-        //                app.records.Insert(app.records.Count - 1, record);
-        //        }
-        //    }
-        //}
+       
     }
 }

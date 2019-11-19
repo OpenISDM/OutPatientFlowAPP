@@ -573,4 +573,7 @@
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>按下確定來更新圖資</value>
   </data>
+  <data name="IDNUM_TYPE_WRONG_STRING" xml:space="preserve">
+    <value>此為無效的身分證字號，請檢查有無錯誤。</value>
+  </data>
 </root>

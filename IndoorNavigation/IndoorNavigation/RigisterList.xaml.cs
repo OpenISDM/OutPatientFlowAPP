@@ -54,7 +54,7 @@ namespace IndoorNavigation
             app.FinishCount = 0;
             app.records = new ObservableCollection<RgRecord>();
             app._TmpRecords = new ObservableCollection<RgRecord>();
-            app.time = Preferences.Get("RGDAY_DATETIME", DateTime.Now);
+            //app.time = Preferences.Get("RGDAY_DATETIME", DateTime.Now);
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
             app.roundRecord = null;
@@ -245,14 +245,10 @@ namespace IndoorNavigation
         {      
             base.OnAppearing();
 
-            if (_viewmodel==null || !_viewmodel.isCheckRegister)
+            if (_viewmodel==null || !app.isRigistered)
             {
                 _viewmodel = new RegisterListViewModel();
             }
-
-            //app.records = app.records.Distinct().ToList;
-           // app.records.GroupBy(x => x.DptName).Select(x => x.First());
-
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
@@ -269,7 +265,6 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
-                app.checkRegister = true;
                 ReadXml();
                 //app.records.Add(new RgRecord { Key = "NULL" });
                 index.isAccept = true;
@@ -333,13 +328,6 @@ namespace IndoorNavigation
                 }
             }
             lastFinished = index;
-        }
-
-
-        protected override bool OnBackButtonPressed()
-        {
-           
-            return base.OnBackButtonPressed();
         }
 
         async private void InfoItem_Clicked(object sender, EventArgs e)

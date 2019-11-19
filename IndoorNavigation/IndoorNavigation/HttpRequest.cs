@@ -39,9 +39,8 @@ namespace IndoorNavigation
             {
                 //to put into xml need taiwan year format
                 TaiwanCalendar calendar = new TaiwanCalendar();
-                DateTime date = DateTime.Now;
 
-                string nowaday = string.Format("{0}{1}", calendar.GetYear(date), date.ToString("MMdd"));
+                string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
 
 
                 bodyString = reader.ReadToEnd();
@@ -55,9 +54,9 @@ namespace IndoorNavigation
                 XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
                 XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
                 XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
-                //node_patient.InnerText = "aaaaaa";
-                node_edate.InnerText = "1081015";
-                node_sdate.InnerText = "1081015";
+                node_patient.InnerText = app.IDnumber;
+                node_edate.InnerText = selectedDay;
+                node_sdate.InnerText = selectedDay;
 
                 //parse xml to string
                 StringWriter stringWriter = new StringWriter();
@@ -115,9 +114,7 @@ namespace IndoorNavigation
             XmlNodeList ResponeList = XmlfromRespone.GetElementsByTagName("GetRGdata2Response");
 
             string modifyString = ResponeList[0].InnerText;
-            /*modifyString = responseString.Remove(0, responseString.IndexOf("&lt;?xml"));
-            modifyString = modifyString.Remove(modifyString.IndexOf("</GetRGdata2Result>"), modifyString.Length - modifyString.IndexOf("</GetRGdata2Result>"));*/
-            
+          
             StringWriter writer = new StringWriter();
             HttpUtility.HtmlDecode(modifyString, writer);
             responseString = writer.ToString();

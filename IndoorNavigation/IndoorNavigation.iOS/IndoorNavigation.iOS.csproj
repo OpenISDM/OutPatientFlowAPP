@@ -302,7 +302,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\AddItem_1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\AddItem_0.png" />
+  </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\AddItem_2.png" />
   </ItemGroup>
