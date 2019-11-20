@@ -54,6 +54,7 @@ namespace IndoorNavigation
                 XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
                 XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
                 XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
+                
                 node_patient.InnerText = app.IDnumber;
                 node_edate.InnerText = selectedDay;
                 node_sdate.InnerText = selectedDay;
@@ -64,7 +65,6 @@ namespace IndoorNavigation
 
                 doc.WriteContentTo(writer);
                 writer.Flush();
-
                 bodyString = stringWriter.ToString();
                 
             }

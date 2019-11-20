@@ -69,7 +69,6 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         ViewCell lastCell=null;
-
         public MainPage()
         {
             InitializeComponent();
@@ -77,6 +76,7 @@ namespace IndoorNavigation
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("HOME_STRING", currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
+
 
             switch (Device.RuntimePlatform)
             {

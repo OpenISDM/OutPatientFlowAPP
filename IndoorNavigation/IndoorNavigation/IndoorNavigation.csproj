@@ -73,6 +73,7 @@
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CareRoomMapp.xml" />
     <EmbeddedResource Include="PatientData.xml" />
     <EmbeddedResource Include="RequestBody.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
@@ -117,6 +118,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="CareRoomMapp.xml" />
     <None Remove="RequestBody.xml" />
     <None Remove="Resources\AppResources.English" />
     <None Remove="TestingXML.xml" />

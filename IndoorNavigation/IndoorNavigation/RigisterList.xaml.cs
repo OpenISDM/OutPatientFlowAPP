@@ -52,7 +52,7 @@ namespace IndoorNavigation
             //_viewmodel = new RegisterListViewModel();
 
             app.FinishCount = 0;
-            app.records = new ObservableCollection<RgRecord>();
+            //app.records = new ObservableCollection<RgRecord>();
             app._TmpRecords = new ObservableCollection<RgRecord>();
             //app.time = Preferences.Get("RGDAY_DATETIME", DateTime.Now);
             _navigationGraphName = navigationGraphName;

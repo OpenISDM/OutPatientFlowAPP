@@ -87,7 +87,8 @@ namespace IndoorNavigation
             {
                 Current.Properties["LanguagePicker"] = "English";
             }
-
+            records = new ObservableCollection<RgRecord>();
+            records.Clear();
             MainPage = new NavigationPage(new MainPage());
         }
 

@@ -47,7 +47,7 @@ namespace IndoorNavigation
             Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
             app.IDnumber = IDnumEntry.Text;
             app.RgDate = RgDayPicker.Date;
-            app.isRigistered = false;
+            //app.isRigistered = false;
             await Navigation.PopAsync();
         }
         

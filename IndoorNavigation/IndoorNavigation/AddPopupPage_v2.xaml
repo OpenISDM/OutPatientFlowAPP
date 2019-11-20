@@ -18,7 +18,7 @@
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button x:Name="AddCancelButton" Text="Cancel" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddCancelButton_Clicked"/>
-                    <Button x:Name="AddConfirmButton" Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddConfirmButton_Clicked"/>
+                    <Button x:Name="AddConfirmButton" Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddConfirmButton_Clicked_v2"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

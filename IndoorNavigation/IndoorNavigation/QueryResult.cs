@@ -28,6 +28,8 @@ namespace IndoorNavigation
         //date name shift careroom drname seq
         public bool isComplete { get; set; }
         public bool isAccept { get; set; }
+        public override string ToString() => _waypointName;
+       
     }
     public class DestinationItem
     {

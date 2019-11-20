@@ -10,9 +10,9 @@ using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Plugin.InputKit.Shared.Controls;
+//using Plugin.InputKit.Shared.Controls;
 using Plugin.Multilingual;
-
+using System.Globalization;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -22,22 +22,27 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
-        Dictionary<string, List<CheckBox>> checkBoxes;
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        //Dictionary<string, List<CheckBox>> checkBoxes;
+        Dictionary<string, SelectionView> _radioBoxes;
         Dictionary<string,AddItems> _items;
         List<String> examinationTypes;
-        CheckBox RevisitBox;
+        bool ButtonLock = false;
+       // CheckBox RevisitBox;
 
         public AddPopupPage_v2()
         {
             InitializeComponent();
-            checkBoxes = new Dictionary<string, List<CheckBox>>();
+           // checkBoxes = new Dictionary<string, List<CheckBox>>();
+            _radioBoxes = new Dictionary<string, SelectionView>();
             _items = new Dictionary<string, AddItems>();
             examinationTypes = new List<string>();
-            RevisitBox = new CheckBox();
+          //  RevisitBox = new CheckBox();
             LoadTypes();
             LoadItems();
-            LoadBoxes();
+            //LoadBoxes();
+            LoadRadioBoxes();
+            
         }
         public void LoadTypes()
         {
@@ -66,135 +71,178 @@ namespace IndoorNavigation
                 _items.Add(type, item);
             }
         }
-        public void LoadBoxes()
+        //public void LoadBoxes()
+        //{
+        //    //------------------------------------------------------------------
+        //    StackLayout horizonlayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+        //    StackLayout verticallayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand};
+
+        //    verticallayout.Children.Add(new Image { Source = "AddItem_0", HeightRequest=90, WidthRequest=90, Aspect=Aspect.AspectFit});
+        //    verticallayout.Children.Add(new Label {Text="回診", FontSize=16, VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
+        //        BackgroundColor =Color.Black, TextColor=Color.White});
+        //    horizonlayout.Children.Add(verticallayout);
+
+
+        //    CheckBox RevisitBox = new CheckBox
+        //    {
+        //        Text="回診",
+        //        TextFontSize=16,
+        //        Type=CheckBox.CheckType.Check,
+        //        Margin=new Thickness(8,0),
+        //        TextColor=Color.Black,
+        //        VerticalOptions=LayoutOptions.StartAndExpand
+        //    };
+
+        //    horizonlayout.Children.Add(RevisitBox);
+
+        //    PictureCheckBoxStacklayout.Children.Add(horizonlayout);
+        //    PictureCheckBoxStacklayout.Children.Add(new BoxView { HeightRequest = 1, Color = Color.FromHex("3f51b5") });
+        //    //--------------------------------------------------------------------
+        //    int j = 0;
+        //    foreach(string type in examinationTypes)
+        //    {
+        //        AddItems items = _items[type];
+        //        j++;
+
+        //        StackLayout layout = new StackLayout
+        //        {
+        //            Orientation =StackOrientation.Horizontal
+        //        };
+
+        //        StackLayout picturelayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand };
+
+        //        picturelayout.Children.Add(new Image
+        //        {
+        //            Source=$"AddItem_{j}", HeightRequest=90,
+        //            WidthRequest=90, Aspect=Aspect.AspectFit
+        //        });
+
+        //        picturelayout.Children.Add(new Label
+        //        {
+        //            Text=type,FontSize=16,TextColor=Color.White,BackgroundColor=Color.Black,
+        //            HorizontalTextAlignment =TextAlignment.Center,VerticalTextAlignment=TextAlignment.Center,
+        //        });
+        //        layout.Children.Add(picturelayout);
+                
+        //        StackLayout CheckboxLayout = new StackLayout();
+        //        List<CheckBox> boxes = new List<CheckBox>();
+
+        //        int i = 0;
+        //        foreach (RgRecord item in items._addItems)
+        //        {
+                    
+        //            CheckBox box = new CheckBox
+        //            {
+        //                Text=item._waypointName,TextFontSize=16,Margin=new Thickness(8,0),
+        //                Type=CheckBox.CheckType.Check,TextColor=Color.Black,Key=i
+        //            };
+
+        //            CheckboxLayout.Children.Add(box);
+        //            boxes.Add(box);
+        //            i++;
+
+        //            item._waypointName = $"{item._waypointName}{type}";
+
+        //            //let layout template
+        //            if (i % 3==0)
+        //            {
+        //                layout.Children.Add(CheckboxLayout);
+        //                CheckboxLayout = new StackLayout();
+        //            }
+        //        }
+
+        //        layout.Children.Add(CheckboxLayout);
+        //        checkBoxes.Add(items._examinationType, boxes);
+        //        PictureCheckBoxStacklayout.Children.Add(layout);
+        //        PictureCheckBoxStacklayout.Children.Add(new BoxView
+        //        {
+        //            HeightRequest = 1, Color = Color.FromHex("3f51b5"), Margin=4
+        //        });
+        //    }
+        //}
+
+        //To generate radio box with getting data
+        public void LoadRadioBoxes()
         {
-            //------------------------------------------------------------------
-            StackLayout horizonlayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-            StackLayout verticallayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand};
-
-            verticallayout.Children.Add(new Image { Source = "AddItem_0", HeightRequest=90, WidthRequest=90, Aspect=Aspect.AspectFit});
-            verticallayout.Children.Add(new Label {Text="回診", FontSize=16, VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
-                BackgroundColor =Color.Black, TextColor=Color.White});
-            horizonlayout.Children.Add(verticallayout);
-
-
-            CheckBox RevisitBox = new CheckBox
+           foreach(string ExaminationType in examinationTypes)
             {
-                Text="回診",
-                TextFontSize=16,
-                Type=CheckBox.CheckType.Check,
-                Margin=new Thickness(8,0),
-                TextColor=Color.Black,
-                VerticalOptions=LayoutOptions.StartAndExpand
-            };
+                AddItems items = _items[ExaminationType];
+                StackLayout Toplayout = new StackLayout { Orientation = StackOrientation.Horizontal };
 
-            horizonlayout.Children.Add(RevisitBox);
+                StackLayout IconLayout = new StackLayout { Children =
+                    {
+                        new Image{Source="AddItem_0", Aspect=Aspect.AspectFit, WidthRequest=90, HeightRequest=90},
+                        new Label{Text="X光", FontSize=16, BackgroundColor=Color.Black, TextColor=Color.White, VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center}
+                    }};
 
-            PictureCheckBoxStacklayout.Children.Add(horizonlayout);
-            PictureCheckBoxStacklayout.Children.Add(new BoxView { HeightRequest = 1, Color = Color.FromHex("3f51b5") });
-            //--------------------------------------------------------------------
-            int j = 0;
-            foreach(string type in examinationTypes)
-            {
-                AddItems items = _items[type];
-                j++;
-
-                StackLayout layout = new StackLayout
+                SelectionView radioView = new SelectionView
                 {
-                    Orientation =StackOrientation.Horizontal
+                    SelectionType=SelectionType.RadioButton, ColumnNumber=2, ItemsSource=items._addItems, ColumnSpacing=12, Padding=new Thickness(8,0)
                 };
 
-                StackLayout picturelayout = new StackLayout {VerticalOptions=LayoutOptions.CenterAndExpand };
+                _radioBoxes.Add(ExaminationType, radioView);
 
-                picturelayout.Children.Add(new Image
-                {
-                    Source=$"AddItem_{j}", HeightRequest=90,
-                    WidthRequest=90, Aspect=Aspect.AspectFit
-                });
-
-                picturelayout.Children.Add(new Label
-                {
-                    Text=type,FontSize=16,TextColor=Color.White,BackgroundColor=Color.Black,
-                    HorizontalTextAlignment =TextAlignment.Center,VerticalTextAlignment=TextAlignment.Center,
-                });
-                layout.Children.Add(picturelayout);
-                
-                StackLayout CheckboxLayout = new StackLayout();
-                List<CheckBox> boxes = new List<CheckBox>();
-
-                int i = 0;
-                foreach (RgRecord item in items._addItems)
-                {
-                    
-                    CheckBox box = new CheckBox
-                    {
-                        Text=item._waypointName,TextFontSize=16,Margin=new Thickness(8,0),
-                        Type=CheckBox.CheckType.Check,TextColor=Color.Black,Key=i
-                    };
-
-                    CheckboxLayout.Children.Add(box);
-                    boxes.Add(box);
-                    i++;
-
-                    item._waypointName = $"{item._waypointName}{type}";
-
-                    //let layout template
-                    if (i % 3==0)
-                    {
-                        layout.Children.Add(CheckboxLayout);
-                        CheckboxLayout = new StackLayout();
-                    }
-                }
-
-                layout.Children.Add(CheckboxLayout);
-                checkBoxes.Add(items._examinationType, boxes);
-                PictureCheckBoxStacklayout.Children.Add(layout);
-                PictureCheckBoxStacklayout.Children.Add(new BoxView
-                {
-                    HeightRequest = 1, Color = Color.FromHex("3f51b5"), Margin=4
-                });
+                Toplayout.Children.Add(IconLayout);
+                Toplayout.Children.Add(radioView);
+                PictureCheckBoxStacklayout.Children.Add(Toplayout);
             }
+        }
+        async private void AddConfirmButton_Clicked_v2(object sendser, EventArgs args)
+        {
+            if (ButtonLock) return;
+
+            ButtonLock = true;
+            foreach(string ExaminationType in examinationTypes)
+            {
+                var o = _radioBoxes[ExaminationType].SelectedItem as RgRecord;
+
+                if (o != null)
+                {
+                    app.records.Add(o);
+                }
+            }
+            await PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void AddConfirmButton_Clicked(object sender, EventArgs e)
         {
-            int index = (app.roundRecord == null && !RevisitBox.IsChecked) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
-            int count = 0;
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            //int index = (app.roundRecord == null && !RevisitBox.IsChecked) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            //int count = 0;
+            //var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             
-            foreach(String type in examinationTypes)
-            {
+            //foreach(String type in examinationTypes)
+            //{
                 
-                List<CheckBox> boxes = checkBoxes[type];
-                foreach(CheckBox box in boxes)
-                {
-                    if (!box.IsChecked) continue;
-                    count++;
-                    var isDuplicate = app.records.Any(p => p.DptName == _items[type]._addItems[box.Key].DptName && !p.isAccept);
+            //    List<CheckBox> boxes = checkBoxes[type];
+            //    foreach(CheckBox box in boxes)
+            //    {
+            //        if (!box.IsChecked) continue;
+            //        count++;
+            //        var isDuplicate = app.records.Any(p => p.DptName == _items[type]._addItems[box.Key].DptName && !p.isAccept);
 
-                    if (isDuplicate) continue;
-                    app.records.Insert(index,_items[type]._addItems[box.Key]);
-                }
-            }
-            if (RevisitBox.IsChecked)
-            {
-                count++;
-                app.records.Insert(index++, new RgRecord
-                {
-                    DptName=$"回診{app.roundRecord.DptName}", _regionID = app.roundRecord._regionID,
-                    _waypointID = app.roundRecord._waypointID, Key = "AddItem",
-                    _waypointName = app.roundRecord._waypointName
+            //        if (isDuplicate) continue;
+            //        app.records.Insert(index,_items[type]._addItems[box.Key]);
+            //    }
+            //}
+            //if (RevisitBox.IsChecked)
+            //{
+            //    count++;
+            //    app.records.Insert(index++, new RgRecord
+            //    {
+            //        DptName=$"回診{app.roundRecord.DptName}", _regionID = app.roundRecord._regionID,
+            //        _waypointID = app.roundRecord._waypointID, Key = "AddItem",
+            //        _waypointName = app.roundRecord._waypointName
 
-                });
-                app.roundRecord = null;
-            }
-            if (count == 0)
-            {
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
-                    , _resourceManager.GetString("OK_STRING", currentLanguage));
-            }
+            //    });
+            //    app.roundRecord = null;
+            //}
+            //if (count == 0)
+            //{
+            //    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
+            //        , _resourceManager.GetString("OK_STRING", currentLanguage));
+            //}
 
-            await PopupNavigation.Instance.PopAllAsync();
+           await PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void AddCancelButton_Clicked(object sender, EventArgs e)
