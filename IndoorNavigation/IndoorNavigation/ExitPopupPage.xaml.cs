@@ -34,10 +34,6 @@ namespace IndoorNavigation
             BindingContext = _viewmodel;
             
         }
-
-        
-
-
         private ObservableCollection<DestinationItem> LoadExitData()
         {
             ObservableCollection<DestinationItem> data = new ObservableCollection<DestinationItem>();

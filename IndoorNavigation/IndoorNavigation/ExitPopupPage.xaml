@@ -21,13 +21,6 @@
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
         <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="300">
             <StackLayout>
-                <!--<ListView x:Name="ExitListView" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell  Text="{Binding _waypointName}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>-->
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
                     <StackLayout Spacing="12" Padding="10,0">
                         <input:SelectionView SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />

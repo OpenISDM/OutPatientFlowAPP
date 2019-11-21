@@ -2,52 +2,54 @@
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin' version='1.0'>
 	<regions>
 		<region id='11111111-1111-1111-1111-111111111111' floor='1'>
-			<Destination id='00000000-0000-0000-0000-000000000001' name='批價' department='1' category='Cashier'/>
-			<Destination id='00000000-0000-0000-0000-000000000002' name='掛號' department='1' category='Register'/>
-			<Destination id='00000000-0000-0000-0000-000000000003' name='領藥' department='1' category='Pharmacy'/>
+			<Destination id='00000000-0000-0000-0000-000000000018' name='一樓批價'/>
+			<Destination id='00000000-0000-0000-0000-000000000018' name='掛號'/>
+			<Destination id='00000000-0000-0000-0000-000000000019' name='領藥'/>
 		</region>
 		<region id='11111111-1111-1111-1111-111111111112' floor='2'>
-			<Destination id='00000000-0000-0000-0000-000000000004' name='201診' department='皮膚科' category='CareRoom'/>
-			<Destination id='00000000-0000-0000-0000-000000000005' name='202診' department='照光室' category='ExaminationRoom'/>
-      <Destination id='' name='203診' category='行政業務'/>
-			<Destination id='00000000-0000-0000-0000-000000000006' name='204診' department='復健科' category='CareRoom'/>
-      <Destination id='' name='205診'/>
-      <Destination id='' name='206診'/>
-      <Destination id='' name='207診'/>
-      <Destination id='' name='208診'/>
-      <Destination id='' name='209診'/>
-      <Destination id='' name='210診'/>
-      <Destination id='' name='211診'/>
-      <Destination id='' name='212診'/>
-      <Destination id='' name='213診'/>
-      <Destination id='' name='214診'/>
-      <Destination id='' name='216診'/>
-      <Destination id='' name='217診'/>
-      <Destination id='' name='220診'/>
-      <Destination id='' name='221診'/>
-      <Destination id='' name='222診'/>
-      <Destination id='' name='223診'/>
-      <Destination id='' name='224診' category='ExaminationRoom'/>
-      <Destination id='' name='225診'/>
-      <Destination id='' name='226診'/>
-      <Destination id='' name='227診'/>
-      <Destination id='' name='228診'/>
-      <Destination id='' name='229診'/>
-      <Destination id='' name='230診'/>
-      <Destination id='' name='236診'/>
-      <Destination id='' name='238診'/>
-      <Destination id='' name='246診' category='衛教'/>
-      <Destination id='' name='247診'/>
-      <Destination id='' name='248診'/>
-      <Destination id='' name='249診'/>
-      <Destination id='' name='250診'/>
-      <Destination id='' name='251診'/>
-      <Destination id='' name='252診'/>
-      <Destination id='' name='258診'/>
-      <Destination id='' name='放射區'/>
-      <Destination id='' name='檢驗區'/>
+			<Destination id='00000000-0000-0000-0000-000000000022' name='201診' department='皮膚科' category='CareRoom'/>
+			<Destination id='00000000-0000-0000-0000-000000000022' name='202診' department='照光室' category='ExaminationRoom'/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='203診' category='行政業務'/>
+			<Destination id='00000000-0000-0000-0000-000000000022' name='204診' department='復健科' category='CareRoom'/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='205診'/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='206診'/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='207診' 新內科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='208診' 新內科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='209診' 胸內科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='210診' 胸內科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='211診' 感染科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='212診' 身心科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='213診' 腸胃科/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='214診' 腸胃科/>
+      <Destination id='?' name='216診' 神經內科/>
+      <Destination id='?' name='217診' 神經內科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='220診' 神經內科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='221診' 胸腔外科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='222診' 直腸外科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='223診' 門診衛教室/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='224診' 超音波 category='ExaminationRoom'/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='225診' 一般外科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='226診' 一般外科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='227診' 外科治療室/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='228診' 骨科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='229診' 骨科/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='230診' 心臟外科/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='236診' 眼科/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='238診'眼科/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='246診' category='衛教'/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='247診'/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='248診'/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='249診'/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='250診'/>
+      <Destination id='?' name='251診'/>
+      <Destination id='?' name='252診'/>
+      <Destination id='?' name='258診'/>
+      <Destination id='?' name='放射區'/>
+      <Destination id='?' name='檢驗區'/>
+      <Destination id='00000000-0000-0000-0000-000000000026'  name='2F批價櫃台'/>
+      <Destination id='00000000-0000-0000-0000-000000000026'  name='2F掛號櫃台'/>
     </region>
-		<region id='' floor='3'>
+		<!--<region id='' floor='3'>
       <Destination id='' name='301診'/>
 		</region>
 		<region id='' floor='5'>
@@ -56,28 +58,30 @@
       <Destination id='' name='503診'/>
       <Destination id='' name='504診'/>
       <Destination id='' name='506診' category='產前衛教'/>
-    </region>
+    </region>-->
 		<region id='' floor='B1'>
-      <Destination id='' name='B02診'/>
-      <Destination id='' name='B03診'/>
-      <Destination id='' name='B08診'/>
-      <Destination id='' name='B09診'/>
-      <Destination id='' name='B10診'/>
-      <Destination id='' name='B11診'/>
-      <Destination id='' name='B12診'/>
-      <Destination id='' name='B13診'/>
-      <Destination id='' name='B15診'/>
-      <Destination id='' name='B17診'/>
-      <Destination id='' name='B18診'/>
-      <Destination id='' name='B19診'/>
-      <Destination id='' name='B28診'/>
-      <Destination id='' name='B29診'/>
-      <Destination id='' name='B30診'/>
-      <Destination id='' name='B48診'/>
-      <Destination id='' name='B50診'/>
-      <Destination id='' name='B51診'/>
-      <Destination id='' name='B52診'/>
-      <Destination id='' name='B53診'/>
+      <Destination id='00000000-0000-0000-0000-000000000004' name='B1批價櫃台'/>
+      <Destination id='00000000-0000-0000-0000-000000000004' name='B1掛號櫃台'/>
+      <Destination id='00000000-0000-0000-0000-000000000010' name='B02診'/>
+      <Destination id='00000000-0000-0000-0000-000000000010' name='B03診'/>
+      <Destination id='?' name='B08診'/>
+      <Destination id='?' name='B09診'/>
+      <Destination id='?' name='B10診'/>
+      <Destination id='00000000-0000-0000-0000-000000000013' name='B11診'/>
+      <Destination id='00000000-0000-0000-0000-000000000013' name='B12診'/>
+      <Destination id='00000000-0000-0000-0000-000000000013' name='B13診'/>
+      <Destination id='?' name='B15診'/>
+      <Destination id='00000000-0000-0000-0000-000000000012' name='B17診'/>
+      <Destination id='00000000-0000-0000-0000-000000000012' name='B18診'/>
+      <Destination id='00000000-0000-0000-0000-000000000012' name='B19診'/>
+      <Destination id='00000000-0000-0000-0000-000000000009' name='B28診'/>
+      <Destination id='00000000-0000-0000-0000-000000000009' name='B29診'/>
+      <Destination id='00000000-0000-0000-0000-000000000009' name='B30診'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B48診'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B50診'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B51診'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B52診'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B53診'/>
     </region>
 	</regions>
 </navigation_graph>

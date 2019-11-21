@@ -12,6 +12,7 @@ namespace IndoorNavigation
     {
         private Dictionary<String, Guid> RegionGuidDict;
         private Dictionary<String, Guid> DestinationGuidDict;
+        private Dictionary<String, RoomInfo> RoomInfos;
 
         public DestinationXmlinfo()
         {
@@ -25,39 +26,58 @@ namespace IndoorNavigation
                 context = reader.ReadToEnd();
             }
 
-            Guid Dguid, Rguid;
+            Guid Dguid,Rguid;
             RegionGuidDict = new Dictionary<string, Guid>();
             DestinationGuidDict = new Dictionary<string, Guid>();
-
+            RoomInfos = new Dictionary<string, RoomInfo>();
             XmlDocument doc = new XmlDocument();
-            //doc.Load(DocumentPath);
+           
             doc.LoadXml(context);
 
             XmlNodeList destinationList = doc.SelectNodes("navigation_graph/regions/region/Destination");
-            XmlNodeList regionList = doc.SelectNodes("navigation_graph/regions/region");
 
-            foreach(XmlNode regionNode in regionList)
-            {
-                Rguid = new Guid(regionNode.Attributes["id"].Value);
-                RegionGuidDict.Add(regionNode.Attributes["floor"].Value, Rguid);
-                Console.WriteLine($"Dict add a new Region, ID={regionNode.Attributes["id"].Value}, Name={regionNode.Attributes["floor"].Value}");
-            }
-
-            foreach(XmlNode destinationNode in destinationList)
+            foreach (XmlNode destinationNode in destinationList)
             {
                 Dguid = new Guid(destinationNode.Attributes["id"].Value);
-                DestinationGuidDict.Add(destinationNode.Attributes["name"].Value, Dguid);
-                Console.WriteLine($"Dict add a new Destinaiton, ID={destinationNode.Attributes["id"].Value}, Name={destinationNode.Attributes["name"].Value}");
+                Rguid = new Guid(destinationNode.ParentNode.Attributes["id"].Value);
+
+                RoomInfos.Add(destinationNode.Attributes["name"].Value,new RoomInfo(Rguid,Dguid));
+
+                Console.WriteLine($"Dict add a new Destinaiton, ID={destinationNode.Attributes["id"].Value}, Name={destinationNode.Attributes["name"].Value}, Region id={Rguid.ToString()}");
+                //Console.WriteLine(destinationNode.ParentNode.Attributes["id"].Value+"   AAAAAAAAAAAAAAAAAA");
+                //DestinationGuidDict.Add(destinationNode.Attributes["name"].Value, Dguid);
+                //Console.WriteLine($"Dict add a new Destinaiton, ID={destinationNode.Attributes["id"].Value}, Name={destinationNode.Attributes["name"].Value}");
             }
         }
 
         public Guid GetRegionID(string key)
         {
-            return RegionGuidDict[key];
+            return RoomInfos[key]._region;
+            //return RegionGuidDict[key];
         }
         public Guid GetDestinationID(String key)
         {
-            return DestinationGuidDict[key];
+            return RoomInfos[key]._clinic;
+            //return DestinationGuidDict[key];
+        }
+
+        
+    }
+    class RoomInfo
+    {
+        public Guid _region;
+        public Guid _clinic;
+
+
+        public RoomInfo()
+        {
+            _region = new Guid();
+            _clinic = new Guid();
+        }
+        public RoomInfo(Guid region,Guid clinic)
+        {
+            _region = region;
+            _clinic = clinic;
         }
     }
 }

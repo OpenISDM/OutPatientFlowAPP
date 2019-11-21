@@ -110,7 +110,9 @@
 
     <ContentPage.Content>
         <AbsoluteLayout>
-
+            <Button BackgroundColor="#3f51b5" x:Name="NavigationPageButton" Text="{i18n:Translate NAVIGATION_STRING}"
+                    FontSize="Default" TextColor="White" CornerRadius="40" Clicked="NavigationPageButton_Clicked"
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.64,0.17,0.1" FontAttributes="Bold"/>
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Default" TextColor="White" CornerRadius="40" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.1" FontAttributes="Bold"
@@ -121,7 +123,7 @@
             <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Default" TextColor="White" FontAttributes="Bold"
                      CornerRadius="40" AbsoluteLayout.LayoutFlags="All" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.1"/>
-            <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" IsEnabled="False" IsVisible="False" Clicked="PaymemtListBtn_Clicked"
+            <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
             
             <Grid x:Name="RigistListGrid">

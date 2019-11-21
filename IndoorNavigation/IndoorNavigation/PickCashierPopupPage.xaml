@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="IndoorNavigation.PickCashierPopupPage"
+                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame BackgroundColor="White" HeightRequest="200" WidthRequest="300">
+            <StackLayout>
+                <ScrollView>
+                    <StackLayout x:Name="SelectionStack">
+                        <!--<input:SelectionView x:Name="PickCashierView" SelectionType="RadioButton" ColumnNumber="1" ItemsSource="{Binding CashierItem}" SelectedItem="{Binding SelectItem}" RowSpacing="20"/>-->
+                    </StackLayout>
+                </ScrollView>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <Button x:Name="CashierOKBtn" Text="{i18n:Translate OK_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="CashierOKBtn_Clicked"/>
+                    <Button x:Name="CashierCancelBtn" Text="{i18n:Translate CANCEL_STRING}" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="CashierCancelBtn_Clicked"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

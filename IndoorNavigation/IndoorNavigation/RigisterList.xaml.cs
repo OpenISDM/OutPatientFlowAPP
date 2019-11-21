@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,19 +10,9 @@ using IndoorNavigation.Views.Navigation;
 using Plugin.Multilingual;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
-using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
-
-using Rg.Plugins.Popup.Extensions;
 using IndoorNavigation.ViewModels;
-using IndoorNavigation.Models;
-using System.IO;
-using System.Xml.Linq;
-using System.Xml;
 using System.Globalization;
-using Android.Util;
-using Caliburn.Micro;
-
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -37,7 +23,7 @@ namespace IndoorNavigation
         private NavigationGraph _navigationGraph;
         public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
-        private bool HavePayment = false;
+        //private bool HavePayment = false;
         Object tmp=null;
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
@@ -45,19 +31,14 @@ namespace IndoorNavigation
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
         private HttpRequest request;
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
         public RigisterList(string navigationGraphName,QueryResult result)
         {
             InitializeComponent();
-            //_viewmodel = new RegisterListViewModel();
-
-            app.FinishCount = 0;
-            //app.records = new ObservableCollection<RgRecord>();
             app._TmpRecords = new ObservableCollection<RgRecord>();
-            //app.time = Preferences.Get("RGDAY_DATETIME", DateTime.Now);
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
-            app.roundRecord = null;
 
             request = new HttpRequest();
 
@@ -71,7 +52,8 @@ namespace IndoorNavigation
                 _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
                 FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
             }
-            
+            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
+            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             BindingContext = _viewmodel;
         } 
       
@@ -90,9 +72,7 @@ namespace IndoorNavigation
                 var o = e.Item as RgRecord;
 
                 if(o.Key.Equals("Pharmacy") && !lastFinished.Key.Equals("Cashier"))
-                {
-                    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                    //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage));
+                {    
                     await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
                     ((ListView)sender).SelectedItem = null;
                     RgListView.ItemsSource = null;
@@ -108,15 +88,12 @@ namespace IndoorNavigation
                                                             destination._waypointName,
                                                             _nameInformation
                                                              ));
-                
-               
             }
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
-            //var test = ((ListView)sender).
         }
 
         /*this function is to implement a simply shift function.  
@@ -147,12 +124,9 @@ namespace IndoorNavigation
         /* the function is a button event which is to change listview tapped event*/
          async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
-            bool isCheck = Preferences.Get("isCheckedNeverShow", false);
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
-                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SHIFT_STRING", currentLanguage),
-                //    _resourceManager.GetString("OK_STRING", currentLanguage));
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
                 return;
             }
@@ -178,8 +152,8 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
             AddBtn.IsEnabled = !AddBtn.IsEnabled;
             AddBtn.IsVisible = !AddBtn.IsVisible;
-            //DeleteBtn.IsEnabled = !DeleteBtn.IsEnabled;
-            //DeleteBtn.IsVisible = !DeleteBtn.IsVisible;
+            NavigationPageButton.IsEnabled = !NavigationPageButton.IsEnabled;
+            NavigationPageButton.IsVisible = !NavigationPageButton.IsVisible;
             return;
         }
 
@@ -229,7 +203,7 @@ namespace IndoorNavigation
             MessagingCenter.Subscribe<AddPopupPage,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
                 bool Message = (bool)Messageargs;
-                if (Message == false) HavePayment = false;
+                if (Message == false) app.HaveCashier = false;
                 PaymemtListBtn.IsEnabled = Message;
                 PaymemtListBtn.IsVisible = Message;
             });
@@ -245,7 +219,7 @@ namespace IndoorNavigation
         {      
             base.OnAppearing();
 
-            if (_viewmodel==null || !app.isRigistered)
+            if (_viewmodel==null && !app.isRigistered)
             {
                 _viewmodel = new RegisterListViewModel();
             }
@@ -266,7 +240,6 @@ namespace IndoorNavigation
             if (index.Key.Equals("register"))
             {
                 ReadXml();
-                //app.records.Add(new RgRecord { Key = "NULL" });
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;
@@ -281,7 +254,6 @@ namespace IndoorNavigation
 
                 string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING"), s, _resourceManager.GetString("OK_STRING", currentLanguage));
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s));
                 await Navigation.PopAsync();
                 index.isAccept = true;
@@ -306,25 +278,20 @@ namespace IndoorNavigation
 
             if (app.FinishCount+1 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
             {
-                if (HavePayment && !PaymemtListBtn.IsEnabled)
+                if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 {
-                    HavePayment = false;
+                    app.HaveCashier = false;
 
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
-                    //Console.WriteLine("Stack count is:" + PopupNavigation.Instance.PopupStack.Count);
-                    //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage)));
-                    
-                    //Console.WriteLine("Stack count is:" + PopupNavigation.Instance.PopupStack.Count);
-                    //int i = PopupNavigation.Instance.PopupStack.Count;
-                    //while (i > 0) i = PopupNavigation.Instance.PopupStack.Count;
+                   
                     await PopupNavigation.Instance.PushAsync(new ExitPopupPage());
                 }
                 else
                 {
                     PaymemtListBtn.IsVisible = true;
                     PaymemtListBtn.IsEnabled = true;
-                    HavePayment = true;
+                    app.HaveCashier = true;
                 }
             }
             lastFinished = index;
@@ -351,31 +318,12 @@ namespace IndoorNavigation
             }
         }
 
-        //private void DeleteBtn_Clicked(object sender, EventArgs e)
-        //{
-        //    RgListView.ItemTapped -= RgListView_ItemTapped;
-        //    RgListView.ItemTapped += DeletList_ItemTapped;
-        //    Buttonable();
-        //}
-
-        private void DeletList_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            var item = e.Item as RgRecord;
-
-            if (item != null)
-            {
-                app.records.Remove(item);
-            }
-            RgListView.ItemTapped -= DeletList_ItemTapped;
-            RgListView.ItemTapped += RgListView_ItemTapped;
-            Buttonable();
-            return;
-        }
         private void FontSizeSet(double i)
         {
             //DeleteBtn.FontSize = i;
             ShiftBtn.FontSize = i;
             AddBtn.FontSize = i;
+            NavigationPageButton.FontSize = i;
         }
 
         private void MenuItem_Clicked(object sender, EventArgs e)
@@ -418,7 +366,12 @@ namespace IndoorNavigation
 
         async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2());
+            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+        }
+
+        async private void NavigationPageButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
     }
 }

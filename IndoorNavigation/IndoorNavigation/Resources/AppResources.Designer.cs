@@ -889,6 +889,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Navigation 的當地語系化字串。
+        /// </summary>
+        internal static string NAVIGATION_STRING {
+            get {
+                return ResourceManager.GetString("NAVIGATION_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Do you need to register? 的當地語系化字串。
         /// </summary>
         internal static string NEED_REGISTER_STRING {
