@@ -35,6 +35,7 @@ namespace IndoorNavigation
         public AddPopupPage()
         {   
             InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             CheckBoxes = new ObservableCollection<CheckBox>();
         }
 

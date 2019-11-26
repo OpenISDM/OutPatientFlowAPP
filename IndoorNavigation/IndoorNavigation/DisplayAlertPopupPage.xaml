@@ -8,15 +8,15 @@
                  mc:Ignorable="d"
                 x:Class="IndoorNavigation.DisplayAlertPopupPage">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="110" WidthRequest="260">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="140" WidthRequest="280" CornerRadius="8">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="TempMessage" Text="0" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1">
-                    <Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="TempOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
+                <Label x:Name="TempMessage" Text="0" FontSize="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center"/>
+                <StackLayout HorizontalOptions="End" Grid.Row="1">
+                    <Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End" VerticalOptions="EndAndExpand"  Clicked="TempOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
                 </StackLayout>
             </Grid>
 

@@ -17,6 +17,7 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage()
         {
             InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
         }
 
         async private void NeverShowButton_Clicked(object sender, EventArgs e)

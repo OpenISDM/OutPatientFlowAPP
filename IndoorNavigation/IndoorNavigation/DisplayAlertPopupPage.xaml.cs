@@ -16,7 +16,7 @@ namespace IndoorNavigation
         public DisplayAlertPopupPage(string msg)
         {
             InitializeComponent();
-
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             TempMessage.Text = msg;
         }
 

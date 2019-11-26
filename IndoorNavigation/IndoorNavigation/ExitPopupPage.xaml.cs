@@ -30,6 +30,7 @@ namespace IndoorNavigation
         public ExitPopupPage()
         {
             InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _viewmodel = new ExitPopupViewModel();
             BindingContext = _viewmodel;
             

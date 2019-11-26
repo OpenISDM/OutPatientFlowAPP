@@ -239,7 +239,9 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
-                ReadXml();
+                ReadXml(1);
+                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
+                await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage());
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;
@@ -252,9 +254,9 @@ namespace IndoorNavigation
             {
                 //show msg to say goodbye
 
-                string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
-                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s));
+                //string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
+                //    _resourceManager.GetString("HOPE_STRING", currentLanguage));
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING",currentLanguage)));
                 await Navigation.PopAsync();
                 index.isAccept = true;
                 index.isComplete = true;
@@ -336,6 +338,43 @@ namespace IndoorNavigation
             }
         }
 
+        private void ReadXml(int i)
+        {
+            int index = app.records.Count - 1;
+            RgRecord record1 = new RgRecord
+            {
+                DptName = "耳鼻喉科",
+                DrName = "李曉華",
+                _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                Key = "QueryResult",
+                Shift = "上午",
+                CareRoom = "243診",
+                SeeSeq = "17",
+                _waypointName = "243診"
+            };
+            RgRecord record2 = new RgRecord
+            {
+                DptName = "家庭醫學科",
+                DrName = "張曉明",
+                _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
+                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+                Key = "QueryResult",
+                Shift = "上午",
+                CareRoom = "203診",
+                SeeSeq = "6",
+                _waypointName = "203診"
+            };
+            app.records.Insert(index++, record2);
+            app.records.Insert(index, record1);
+
+            app._TmpRecords.Add(record2);
+            app._TmpRecords.Add(record1);
+            
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
+        }
+
         private void ReadXml()
         {
             Console.WriteLine("Now Excution is::: ReadXml");
@@ -366,7 +405,8 @@ namespace IndoorNavigation
 
         async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+            //await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+            await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage());
         }
 
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)

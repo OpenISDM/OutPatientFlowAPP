@@ -19,6 +19,7 @@ namespace IndoorNavigation
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
         {
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             InitializeComponent();
             items = new ObservableCollection<DestinationItem>();
 

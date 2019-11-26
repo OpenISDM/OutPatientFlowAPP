@@ -23,6 +23,7 @@ namespace IndoorNavigation
         public AskRegisterPopupPage()
         {
             InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             request = new HttpRequest();
 
         }
@@ -97,6 +98,11 @@ namespace IndoorNavigation
                 app.records.Add(record);
             app.records.Add(new RgRecord { Key = "NULL" });
             return base.OnBackButtonPressed();
+        }
+
+        private void LoadData()
+        {
+
         }
         //private void ReadXml()
         //{

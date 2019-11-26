@@ -96,7 +96,7 @@
     <EmbeddedResource Update="AddPopupPage_v2.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="CashierPopupPage.xaml">
+    <EmbeddedResource Update="AskOrderPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="DisplayAlertPopupPage.xaml">
@@ -162,6 +162,9 @@
     </Compile>
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>
+    </Compile>
+    <Compile Update=".xaml.cs">
+      <DependentUpon>.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

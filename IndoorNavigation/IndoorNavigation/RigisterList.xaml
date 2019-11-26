@@ -71,7 +71,8 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="Complete" > <!--to show finished schedule-->
+            <DataTemplate x:Key="Complete" >
+                <!--to show finished schedule-->
                 <ViewCell IsEnabled="False" Height="50">
                     <StackLayout BackgroundColor="#e0e0e0">
                         <Label Text="{Binding DptName}" FontSize="Large" TextColor="#c0c0c0" Margin="10,0,10,0" VerticalOptions="CenterAndExpand"/>
@@ -79,15 +80,12 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-
             <DataTemplate x:Key="NullCell">
                 <ViewCell IsEnabled="False" Height="200" >
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
-            
             <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter" NullTemplate="{StaticResource NullCell}"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
-            
         </ResourceDictionary>
     </ContentPage.Resources>
 

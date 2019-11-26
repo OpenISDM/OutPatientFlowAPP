@@ -7,8 +7,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.AddPopupPage_v2">
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+             x:Class="IndoorNavigation.AddPopupPage_v2"
+                  BackgroundColor="#FFF5F5">
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="#FFE3E3">
         <Frame BackgroundColor="White" VerticalOptions="Center" HeightRequest="300" WidthRequest="300" CornerRadius="8">
             <StackLayout WidthRequest="380">
                 <ScrollView HorizontalOptions="Start" WidthRequest="300">
