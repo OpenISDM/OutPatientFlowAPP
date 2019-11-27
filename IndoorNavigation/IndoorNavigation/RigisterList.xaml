@@ -21,9 +21,9 @@
                         <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
                             <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" 
                                    TextColor="Black"/>
-                            <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Medium" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
-                                    HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#ACB5F2" BorderWidth="1" 
-                                    TextColor="#ACB5F2" BackgroundColor="White"/>
+                            <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Large" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
+                                    HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#3F51B5" BorderWidth="1" 
+                                    TextColor="White" BackgroundColor="#3f51b5" FontAttributes="Bold"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
                             <!--<StackLayout Orientation="Horizontal">
@@ -64,8 +64,8 @@
                         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Margin="10,0,10,0">
                             <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black" />
-                            <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Medium" IsEnabled="{Binding isComplete}"
-                                    IsVisible="{Binding isComplete}" Clicked="YetFinishBtn_Clicked" CommandParameter="{Binding .}" TextColor="#ACB5F2" BackgroundColor="White" BorderColor="#ACB5F2" BorderWidth="1"/>
+                            <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Large" IsEnabled="{Binding isComplete}"
+                                    IsVisible="{Binding isComplete}" Clicked="YetFinishBtn_Clicked" CommandParameter="{Binding .}" TextColor="White" BackgroundColor="#3f51b5" BorderColor="#3f51b5" BorderWidth="1"/>
                         </StackLayout>
                         <!--<BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
                     </StackLayout>
@@ -108,9 +108,9 @@
 
     <ContentPage.Content>
         <AbsoluteLayout>
-            <Button BackgroundColor="#3f51b5" x:Name="NavigationPageButton" Text="{i18n:Translate NAVIGATION_STRING}"
+            <!--<Button BackgroundColor="#3f51b5" x:Name="NavigationPageButton" Text="{i18n:Translate NAVIGATION_STRING}"
                     FontSize="Default" TextColor="White" CornerRadius="40" Clicked="NavigationPageButton_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.64,0.17,0.1" FontAttributes="Bold"/>
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.64,0.17,0.1" FontAttributes="Bold"/>-->
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Default" TextColor="White" CornerRadius="40" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.1" FontAttributes="Bold"

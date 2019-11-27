@@ -74,28 +74,18 @@ namespace IndoorNavigation
                 DptName = "抽血處",
                 Key = "AddItem"
             });
-            items.Add(new RgRecord
-            {
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                DptName = "檢查室",
-                _waypointName = "檢察室",
-                Key = "AddItem"
-            });
+            //items.Add(new RgRecord
+            //{
+            //    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+            //    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+            //    DptName = "檢查室",
+            //    _waypointName = "檢察室",
+            //    Key = "AddItem"
+            //});
             return items;
         }
         private void AddCheckBox(List<RgRecord> items)
         {
-            RevisitBox = new CheckBox
-            {
-                Text = "回診",
-                IsChecked = false,
-                IsEnabled = true,
-                TextFontSize = 26,
-                Type = CheckBox.CheckType.Check
-            };
-            RevisitBox.CheckChanged += RevisitBox_Changed;
-            CheckBoxStackLayout.Children.Add(RevisitBox);
 
             int i = 0;// for checkbox id
             foreach(RgRecord item in items)
@@ -106,12 +96,25 @@ namespace IndoorNavigation
                     Text = item.DptName,
                     IsChecked=false,
                     TextFontSize=24,
-                    Type=CheckBox.CheckType.Check
+                    Type=CheckBox.CheckType.Check,
+                    TextColor=Color.Black
                 };
                 box.CheckChanged +=CheckBox_Changed;
                 CheckBoxStackLayout.Children.Add(box);
                 CheckBoxes.Add(box); //to get box group                                         
             }
+
+            RevisitBox = new CheckBox
+            {
+                Text = "回診",
+                IsChecked = false,
+                IsEnabled = true,
+                TextFontSize = 26,
+                Type = CheckBox.CheckType.Check,
+                TextColor = Color.Black
+            };
+            RevisitBox.CheckChanged += RevisitBox_Changed;
+            CheckBoxStackLayout.Children.Add(RevisitBox);
 
         }
         async private void RevisitBox_Changed(object sender,EventArgs e)

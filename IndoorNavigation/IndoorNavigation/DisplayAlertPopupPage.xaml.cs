@@ -20,6 +20,20 @@ namespace IndoorNavigation
             TempMessage.Text = msg;
         }
 
+        public DisplayAlertPopupPage(string msg,bool needButton)
+        {
+            InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            TempMessage.Text = msg;
+
+            AlertFrame.WidthRequest = 280;
+            AlertFrame.HeightRequest = 110;
+
+            TempOKBtn.IsEnabled = needButton;
+            TempOKBtn.IsVisible = needButton;
+            
+        }
+
         private void TempOKBtn_Clicked(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync();

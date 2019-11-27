@@ -79,6 +79,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 agree 的當地語系化字串。
+        /// </summary>
+        internal static string AGREE_STRING {
+            get {
+                return ResourceManager.GetString("AGREE_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please login in top right button first. 的當地語系化字串。
         /// </summary>
         internal static string ALERT_LOGIN_STRING {
@@ -547,6 +556,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
+        internal static string DISAGREE_STRING {
+            get {
+                return ResourceManager.GetString("DISAGREE_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Download Map 的當地語系化字串。
         /// </summary>
         internal static string DOWNLOAD_MAP_STRING {
@@ -889,7 +907,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Navigation 的當地語系化字串。
+        ///   查詢類似 WPIN 的當地語系化字串。
         /// </summary>
         internal static string NAVIGATION_STRING {
             get {
@@ -993,6 +1011,15 @@ namespace IndoorNavigation.Resources {
         internal static string OK_STRING {
             get {
                 return ResourceManager.GetString("OK_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OPFM 的當地語系化字串。
+        /// </summary>
+        internal static string OPFM_STRING {
+            get {
+                return ResourceManager.GetString("OPFM_STRING", resourceCulture);
             }
         }
         

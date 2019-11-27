@@ -57,6 +57,7 @@ using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using Xamarin.Essentials;
 using System.Diagnostics;
+using Rg.Plugins.Popup.Services;
 
 namespace IndoorNavigation
 {
@@ -151,7 +152,13 @@ namespace IndoorNavigation
                     case "hospital":
                         
                        XMLInformation _nameInformation = NavigraphStorage.LoadInformationML(location.UserNaming + "_info_zh.xml");
-                        await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
+                        //await Navigation.PushAsync(new RigisterList(location.UserNaming, new QueryResult()));
+                        await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(location.UserNaming));
+                        var o = (ListView)sender;
+                        //o.SelectedItem = null;
+                        ((ListView)sender).SelectedItem = null;
+                        //((ListView)sender).ItemsSource = null;
+                        //((ListView)sender).ItemsSource=
                         break;
 
                     case "city_hall":
@@ -204,6 +211,7 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
+                //viewCell.View.BackgroundColor = Color.Transparent;
             }
         }
     }

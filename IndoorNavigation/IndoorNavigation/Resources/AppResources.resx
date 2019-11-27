@@ -574,6 +574,15 @@
     <value>This ID number is illegal, please check again.</value>
   </data>
   <data name="NAVIGATION_STRING" xml:space="preserve">
-    <value>Navigation</value>
+    <value>WPIN</value>
+  </data>
+  <data name="AGREE_STRING" xml:space="preserve">
+    <value>agree</value>
+  </data>
+  <data name="DISAGREE_STRING" xml:space="preserve">
+    <value />
+  </data>
+  <data name="OPFM_STRING" xml:space="preserve">
+    <value>OPFM</value>
   </data>
 </root>

@@ -442,7 +442,7 @@
     <value>向左後方轉</value>
   </data>
   <data name="LAB_STRING" xml:space="preserve">
-    <value>員林基督教醫院</value>
+    <value>台大醫院台北總院</value>
   </data>
   <data name="ELEVATOR_STRING" xml:space="preserve">
     <value>搭電梯</value>
@@ -481,7 +481,7 @@
     <value>領藥</value>
   </data>
   <data name="HOPE_STRING" xml:space="preserve">
-    <value>員基祝您身體健康、平安順心!</value>
+    <value>祝您身體健康、平安順心!</value>
   </data>
   <data name="INPUT_ID_NUMBER_STRING" xml:space="preserve">
     <value>請輸入你的身份證字號</value>
@@ -578,5 +578,11 @@
   </data>
   <data name="NAVIGATION_STRING" xml:space="preserve">
     <value>導航</value>
+  </data>
+  <data name="AGREE_STRING" xml:space="preserve">
+    <value>同意</value>
+  </data>
+  <data name="OPFM_STRING" xml:space="preserve">
+    <value>門診小幫手</value>
   </data>
 </root>

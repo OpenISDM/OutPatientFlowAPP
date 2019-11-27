@@ -81,7 +81,7 @@ namespace IndoorNavigation
         public ExitPopupViewModel()
         {
             exits = new ObservableCollection<DestinationItem>();
-            navigationGraphName = "員林基督教醫院";
+            navigationGraphName = "台大醫院台北總院";
 
             if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
             {

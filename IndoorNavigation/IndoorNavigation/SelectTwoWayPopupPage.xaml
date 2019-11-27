@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.SelectTwoWayPopupPage">
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        <Frame x:Name="frame" WidthRequest="320" HeightRequest="155" BackgroundColor="White">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="{i18n:Translate NAVIGATION_STRING}" x:Name="toNavigationBtn" FontSize="32" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToNavigationBtn_Clicked"/>
+                <Button Text="{i18n:Translate OPFM_STRING}" x:Name="toOPFM" FontSize="26" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="1" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToOPFM_Clicked"/>
+            </Grid>
+            
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

@@ -33,7 +33,7 @@ namespace IndoorNavigation
         private HttpRequest request;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
-        public RigisterList(string navigationGraphName,QueryResult result)
+        public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
             app._TmpRecords = new ObservableCollection<RgRecord>();
@@ -152,8 +152,8 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
             AddBtn.IsEnabled = !AddBtn.IsEnabled;
             AddBtn.IsVisible = !AddBtn.IsVisible;
-            NavigationPageButton.IsEnabled = !NavigationPageButton.IsEnabled;
-            NavigationPageButton.IsVisible = !NavigationPageButton.IsVisible;
+            //NavigationPageButton.IsEnabled = !NavigationPageButton.IsEnabled;
+            //NavigationPageButton.IsVisible = !NavigationPageButton.IsVisible;
             return;
         }
 
@@ -241,7 +241,7 @@ namespace IndoorNavigation
             {
                 ReadXml(1);
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
-                await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage());
+                await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;
@@ -254,9 +254,10 @@ namespace IndoorNavigation
             {
                 //show msg to say goodbye
 
-                //string s = string.Format("{0}\n{1}", _resourceManager.GetString("THANK_COMING_STRING", currentLanguage),
-                //    _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING",currentLanguage)));
+                string s = string.Format("{0}\n{1}", _resourceManager.GetString("LAB_STRING", currentLanguage),
+                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
+                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING", currentLanguage),false)) ;
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
                 await Navigation.PopAsync();
                 index.isAccept = true;
                 index.isComplete = true;
@@ -325,7 +326,7 @@ namespace IndoorNavigation
             //DeleteBtn.FontSize = i;
             ShiftBtn.FontSize = i;
             AddBtn.FontSize = i;
-            NavigationPageButton.FontSize = i;
+            //NavigationPageButton.FontSize = i;
         }
 
         private void MenuItem_Clicked(object sender, EventArgs e)
@@ -405,8 +406,7 @@ namespace IndoorNavigation
 
         async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
         {
-            //await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
-            await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage());
+            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
         }
 
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)

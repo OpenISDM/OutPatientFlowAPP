@@ -17,7 +17,7 @@
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
 
-                <Label x:Name="TodayYouHaveRgLabel" Text="您今日掛號以下兩個門診" Grid.Row="0" FontSize="Large" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="Black"/>
+                <Label x:Name="TodayYouHaveRgLabel" Text="{Binding count,StringFormat='您今日掛號以下{0}個門診'}" Grid.Row="0" FontSize="Large" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="Black"/>
                 <ListView x:Name="QueryResultListview" Grid.Row="1" ItemsSource="{Binding colleciton}" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -50,11 +50,11 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label x:Name="SuggestLabel" Text="建議先看家醫科 張曉明醫師" Grid.Row="2" FontSize="Large" VerticalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
+                <Label x:Name="SuggestLabel" Text="{Binding DptDrName,StringFormat='建議先看{0}醫師'}" Grid.Row="2" FontSize="Large" VerticalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
             
                 <StackLayout Orientation="Horizontal" Grid.Row="3" HorizontalOptions="End">
-                    <Button x:Name="AskOrderConfirmBtn" Text="{i18n:Translate OK_STRING}" Clicked="AskOrderConfirmBtn_Clicked" FontSize="Large"/>
-                    <Button x:Name="AskOrderCancelBtn" Text="{i18n:Translate CANCEL_STRING}" Clicked="AskOrderCancelBtn_Clicked" FontSize="Large"/>
+                    <Button x:Name="AskOrderConfirmBtn" Text="同意" Clicked="AskOrderConfirmBtn_Clicked" FontSize="Large"/>
+                    <Button x:Name="AskOrderCancelBtn" Text="不同意" Clicked="AskOrderCancelBtn_Clicked" FontSize="Large"/>
                 </StackLayout>
             </Grid>
         </Frame>
