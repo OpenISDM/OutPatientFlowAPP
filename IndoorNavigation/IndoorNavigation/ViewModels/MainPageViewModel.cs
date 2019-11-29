@@ -53,6 +53,7 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using System;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -76,6 +77,17 @@ namespace IndoorNavigation.ViewModels
         public async void LoadNavigationGraph()
         {
             _locations = new ObservableRangeCollection<Location>();
+
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+
+            if (!Application.Current.Properties.ContainsKey("FirstUse"))
+            {
+                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
+                NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
+                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", "Yuanlin_Christian_Hospital");
+                Application.Current.Properties["FirstUse"] = false;
+            }
+         
 
             foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
             {

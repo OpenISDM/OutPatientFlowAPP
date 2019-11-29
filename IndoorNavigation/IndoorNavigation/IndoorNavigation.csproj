@@ -19,10 +19,13 @@
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="FAB.Forms" Version="2.1.1" />
     <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.14.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="SuaveControls.FloatingActionButton" Version="2018.1.5" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.12" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
@@ -81,6 +84,7 @@
     <EmbeddedResource Include="Resources\Lab\Lab_zh.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_info_zh.xml" />
+    <EmbeddedResource Include="Resources\NTUH_YunLin\.DS_Store" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_en-US.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_zh.xml" />
     <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin.xml" />
@@ -130,6 +134,7 @@
     <None Remove="CareRoomMapp.xml" />
     <None Remove="RequestBody.xml" />
     <None Remove="Resources\AppResources.English" />
+    <None Remove="Resources\NTUH_YunLin\.DS_Store" />
     <None Remove="TestingXML.xml" />
     <None Remove="Resources\Lab\Lab.xml" />
     <None Remove="Resources\Lab\Lab_en-US.xml" />

@@ -13,6 +13,8 @@ using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup.Services;
 using IndoorNavigation.ViewModels;
 using System.Globalization;
+
+using SuaveControls.Views;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -39,6 +41,8 @@ namespace IndoorNavigation
             app._TmpRecords = new ObservableCollection<RgRecord>();
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
+
+            
 
             request = new HttpRequest();
 

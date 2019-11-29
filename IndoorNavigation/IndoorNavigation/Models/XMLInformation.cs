@@ -1,4 +1,40 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 201911123
+ * 
+ * File Name:
+ *
+ *      XMLInformation.cs
+ *
+ * Abstract:
+ *
+ *      This file used to read the XML information, includes, the building name
+ *      the waypoint name and the region name. Because we have several languages, therefore,
+ *      we need this file to help to read all kinds of languages
+ *      
+ * Authors:
+ *
+ *      Eric Lee, ericlee@iis.sinica.edu.tw
+ *     
+ *
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using Xamarin.Forms;
@@ -9,8 +45,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
     {
         private Dictionary<Guid, string> returnWaypointName;
         private Dictionary<Guid, string> returnRegionName;
+        private string _buildingName;
         public XMLInformation(XmlDocument fileName)
         {
+            XmlNode buildingName =fileName.SelectSingleNode("navigation_graph");
+            XmlElement buildingElement = (XmlElement)buildingName;
+            _buildingName = buildingElement.GetAttribute("building_name");
+
             XmlNodeList xmlRegion = fileName.SelectNodes("navigation_graph/regions/region");
             XmlNodeList xmlWaypoint = fileName.SelectNodes("navigation_graph/waypoints/waypoint");
             returnWaypointName = new Dictionary<Guid, string>();
@@ -44,6 +85,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string GiveWaypointName(Guid guid)
         {
             return returnWaypointName[guid];
+        }
+        public string GiveGraphName()
+        {
+            return _buildingName;
         }
     }
 }

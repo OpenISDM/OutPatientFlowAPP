@@ -736,5 +736,35 @@ namespace IndoorNavigation.Resources {
                 return ResourceManager.GetString("NO_SIGNAL_STRING", resourceCulture);
             }
         }
+        
+        internal static string DIRECTION_ARRIVED_VIRTUAL_STRING {
+            get {
+                return ResourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string VERSION_STRING {
+            get {
+                return ResourceManager.GetString("VERSION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string CURRENT_VERSION_STRING {
+            get {
+                return ResourceManager.GetString("CURRENT_VERSION_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string UPDATE_MAP_STRING {
+            get {
+                return ResourceManager.GetString("UPDATE_MAP_STRING", resourceCulture);
+            }
+        }
+        
+        internal static string YUANLIN_CHRISTIAN_HOSPITAL_STRING {
+            get {
+                return ResourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", resourceCulture);
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>Full</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
@@ -58,6 +58,7 @@
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -69,6 +70,7 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution: Chun Yu Lai (9K6K5L2N6F)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -200,6 +202,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.Estimote.iOS">
+      <Version>4.26.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
     <PackageReference Include="Xamarin.CustomControls.ProgressBarView">
       <Version>1.0.2</Version>
@@ -268,7 +273,7 @@
     <BundleResource Include="Resources\Elevator_up.png" />
     <BundleResource Include="Resources\Escalator_down.png" />
     <BundleResource Include="Resources\Escalator_up.png" />
-    <BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
+    <!--<BundleResource Include="Resources\NTUH_YunLin\NTUH_YunLin11100001.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11101011.png" />
@@ -288,7 +293,7 @@
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100103.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100102.png" />
     <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100109.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />
+    <BundleResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall11100108.png" />-->
     <BundleResource Include="Resources\Arrow_down.png" />
     <BundleResource Include="Resources\Arrow_left.png" />
     <BundleResource Include="Resources\Arrow_right.png" />
@@ -310,5 +315,47 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\AddItem_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100102.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100103.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100108.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100109.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100114.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100202.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100203.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100205.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11100206.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11101011.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Taipei_City_Hall11101415.png" />
   </ItemGroup>
 </Project>

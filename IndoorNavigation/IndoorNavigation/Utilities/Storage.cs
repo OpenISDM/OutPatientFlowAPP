@@ -50,8 +50,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation;
-using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -67,13 +65,10 @@ namespace IndoorNavigation.Modules.Utilities
         internal static readonly string _informationFolder
              = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Information");
 
-        //internal static readonly string _patientFolder
-        //    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Patient");
-
         internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
-
+        private static PhoneInformation _phoneInformation = new PhoneInformation();
         private static object _fileLock = new object();
-
+        
         public static string[] GetAllNavigationGraphs()
         {
             // Check the folder of navigation graph if it is exist
@@ -81,20 +76,38 @@ namespace IndoorNavigation.Modules.Utilities
                 Directory.CreateDirectory(_navigraphFolder);
             if (!Directory.Exists(_firstDirectionInstuctionFolder))
                 Directory.CreateDirectory(_firstDirectionInstuctionFolder);
-            return Directory.GetFiles(_navigraphFolder)
+            if (!Directory.Exists(_informationFolder))
+                Directory.CreateDirectory(_informationFolder);
+            PhoneInformation phoneInformation = new PhoneInformation();
+          
+
+            string[] existNavigraphname = Directory.GetFiles(_navigraphFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file).ToArray();
+            string[] returnGraphName = new string[existNavigraphname.Count()];
+            for (int i = 0;i< existNavigraphname.Count();i++)
+            {
+                XMLInformation information;
+                information = NavigraphStorage.LoadInformationML(existNavigraphname[i].ToString() + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+                returnGraphName[i] = information.GiveGraphName();
+            }
+
+            //return Directory.GetFiles(_navigraphFolder)
+            //    .Select(path => Path.GetFileName(path))
+            //    .OrderBy(file => file).ToArray();
+            return returnGraphName;
         }
 
         public static NavigationGraph LoadNavigationGraphXML(string FileName)
         {
+            Console.WriteLine("FileName : " + FileName);
             string filePath = Path.Combine(_navigraphFolder, FileName);
+            Console.WriteLine("Reading File Name : " + filePath);
             if (!File.Exists(filePath))
                 throw new FileNotFoundException();
 
             var xmlString = File.ReadAllText(filePath);
-            if (xmlString == "")
-            {
+            if (xmlString == "") { 
                 DeleteNavigationGraph(FileName);
             }
             StringReader stringReader = new StringReader(xmlString);
@@ -130,6 +143,7 @@ namespace IndoorNavigation.Modules.Utilities
         public static XMLInformation LoadInformationML(string FileName)
         {
             string filePath = Path.Combine(_informationFolder, FileName);
+         
 
             var xmlString = File.ReadAllText(filePath);
             if (xmlString == "")
@@ -141,30 +155,11 @@ namespace IndoorNavigation.Modules.Utilities
             XmlDocument document = new XmlDocument();
             document.Load(filePath);
 
-            XMLInformation xmlInformation = new XMLInformation(document);
+            XMLInformation xmlInformation  = new XMLInformation(document);
 
             return xmlInformation;
 
         }
-        //-----------------
-        //public static PatientXMLParse LoadPatientXML(string fileName)
-        //{
-        //    if (!Directory.Exists(NavigraphStorage._patientFolder))
-        //        Directory.CreateDirectory(
-        //            NavigraphStorage._patientFolder);
-
-        //    string path = Path.Combine(_patientFolder, fileName);
-        //    var xmlString = File.ReadAllText(path);
-        //    if (xmlString == "") DeleteFirstDirectionXML(fileName);
-
-        //    StringReader reader = new StringReader(xmlString);
-        //    XmlDocument document = new XmlDocument();
-        //    document.Load(path);
-        //    PatientXMLParse information = new PatientXMLParse(document);
-        //    return information;
-        //}
-
-        //------------------
 
         public static void DeleteNavigationGraph(string GraphName)
         {
@@ -189,7 +184,7 @@ namespace IndoorNavigation.Modules.Utilities
                 File.Delete(filePath_en);
                 File.Delete(filePath_zh);
             }
-            //File.Delete(filePath);
+                //File.Delete(filePath);
         }
 
         public static void DeleteInformationML(string fileName)
@@ -204,20 +199,25 @@ namespace IndoorNavigation.Modules.Utilities
                 File.Delete(filePath_en);
                 File.Delete(filePath_zh);
             }
-            // File.Delete(filePath);
+               // File.Delete(filePath);
         }
 
         public static void DeleteAllNavigationGraph()
         {
             foreach (string place in GetAllNavigationGraphs())
-                DeleteNavigationGraph(place);
+            {
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteNavigationGraph(map);
+            }
+                
         }
 
         public static void DeleteAllFirstDirectionXML()
         {
-            foreach (string place in GetAllNavigationGraphs())
+            foreach(string place in GetAllNavigationGraphs())
             {
-                DeleteFirstDirectionXML(place);
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteFirstDirectionXML(map);
             }
         }
 
@@ -225,24 +225,27 @@ namespace IndoorNavigation.Modules.Utilities
         {
             foreach (string place in GetAllNavigationGraphs())
             {
-                DeleteInformationML(place);
+                string map = _phoneInformation.GiveCurrentMapName(place);
+                DeleteInformationML(map);
             }
         }
 
         public static void GenerateFileRoute(string fileName, string readingPath)
         {
-            string sourceNavigationData = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + ".xml");
-            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder,
+            string sourceNavigationData = Path.Combine(_embeddedResourceReoute  + readingPath + "."+ readingPath + ".xml");
+            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder, 
                                             fileName);
-            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_en-US.xml");
+            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "."+ readingPath + "_en-US.xml");
             string sourceFirstDirectionData_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_zh.xml");
-            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
-            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
+            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder , fileName + "_en-US.xml");
+            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder , fileName + "_zh.xml");
 
             string sourceInformation_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_en-US.xml");
             string sourceInformation_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_zh.xml");
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
+
+            Console.WriteLine("SinkNavigationData : " + sinkNavigationData);
 
             try
             {

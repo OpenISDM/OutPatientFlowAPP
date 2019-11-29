@@ -71,7 +71,8 @@ namespace IndoorNavigation.iOS
 
             AiForms.Renderers.iOS.SettingsViewInit.Init();
             AiForms.Effects.iOS.Effects.Init();
-       
+
+            
             Plugin.InputKit.Platforms.iOS.Config.Init();
 
             LoadApplication(new App());

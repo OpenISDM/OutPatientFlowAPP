@@ -45,11 +45,6 @@ using System;
 using Xamarin.Forms;
 using IndoorNavigation.ViewModels.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
-using Rg.Plugins.Popup.Services;
-using IndoorNavigation.Resources.Helpers;
-using System.Resources;
-using System.Reflection;
-using Plugin.Multilingual;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -79,7 +74,8 @@ namespace IndoorNavigation.Views.Navigation
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");
-        } 
+        }
+
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
@@ -87,7 +83,6 @@ namespace IndoorNavigation.Views.Navigation
 
             base.OnDisappearing();
         }
-      
-       
+
     }
 }

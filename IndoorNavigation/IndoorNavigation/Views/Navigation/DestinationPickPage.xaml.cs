@@ -79,17 +79,10 @@ namespace IndoorNavigation.Views.Navigation
             _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
-            
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
-            }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
-            }
-
+            PhoneInformation phoneInformation = new PhoneInformation();
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));
+            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
+           
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
 
             foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())

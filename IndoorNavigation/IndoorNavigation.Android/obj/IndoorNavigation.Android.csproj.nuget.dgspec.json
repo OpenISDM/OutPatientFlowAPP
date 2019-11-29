@@ -129,6 +129,14 @@
               "target": "Package",
               "version": "[3.2.0, )"
             },
+            "DLToolkit.Forms.Controls.FlowListView": {
+              "target": "Package",
+              "version": "[2.0.11, )"
+            },
+            "FAB.Forms": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
             "GeoCoordinate.NetCore": {
               "target": "Package",
               "version": "[1.0.0.1, )"
@@ -170,6 +178,10 @@
             "Rg.Plugins.Popup": {
               "target": "Package",
               "version": "[1.2.0.223, )"
+            },
+            "SuaveControls.FloatingActionButton": {
+              "target": "Package",
+              "version": "[2018.1.5, )"
             },
             "Xamarin.CustomControls.ProgressBarView": {
               "target": "Package",

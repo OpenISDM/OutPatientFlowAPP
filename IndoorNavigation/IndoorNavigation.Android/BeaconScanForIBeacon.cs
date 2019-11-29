@@ -122,7 +122,7 @@ namespace IndoorNavigation.Droid
         private void UpdatedState(object sender, EventArgs args)
         {
         }
-
+       
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
             string[] parse = stringAdvertisementSpecificData.Split("-");

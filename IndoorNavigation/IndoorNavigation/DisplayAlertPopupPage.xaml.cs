@@ -25,7 +25,7 @@ namespace IndoorNavigation
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             TempMessage.Text = msg;
-
+            
             AlertFrame.WidthRequest = 280;
             AlertFrame.HeightRequest = 110;
 
@@ -33,7 +33,7 @@ namespace IndoorNavigation
             TempOKBtn.IsVisible = needButton;
             
         }
-
+        
         private void TempOKBtn_Clicked(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync();

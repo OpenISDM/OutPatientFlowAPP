@@ -5,7 +5,7 @@
              x:Class="IndoorNavigation.Views.Settings.SettingTableViewPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              Title="{i18n:Translate SETTING_STRING}">
-
+    
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->
         <ResourceDictionary>
@@ -41,11 +41,11 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-
+    
     <ContentPage.Content>
-
+        
         <sv:SettingsView HasUnevenRows="true">
-
+    
             <sv:Section Title="{i18n:Translate SETTING_STRING}">
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
                                 Title="{i18n:Translate BEDITECH_STRING}" Description=""/>
@@ -62,21 +62,21 @@
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate LICENSE_AND_PRIVACY_STRING}">
-                <sv:CommandCell x:Name="LicenseButton" Title="{i18n:Translate LICENSE_STRING}" Tapped="LicenseBtn_Tapped"/>
-                <sv:CommandCell Title="{i18n:Translate PRIVACY_STRING}"/>
+                    <sv:CommandCell x:Name="LicenseButton" Title="{i18n:Translate LICENSE_STRING}" Tapped="LicenseBtn_Tapped"/>
+                    <sv:CommandCell Title="{i18n:Translate PRIVACY_STRING}"/>
             </sv:Section>
-
+                
             <sv:Section Title="{i18n:Translate OTHERS_STRING}">
-                <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
-                <sv:CommandCell Title="{i18n:Translate ABOUT_BEDI_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate ABOUT_BEDI_STRING}"/>
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate VERSION_STRING}">
-                <sv:CommandCell Title="{i18n:Translate CURRENT_VERSION_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate CURRENT_VERSION_STRING}"/>
             </sv:Section>
 
         </sv:SettingsView>
-
+        
     </ContentPage.Content>
-
+    
 </ContentPage>
