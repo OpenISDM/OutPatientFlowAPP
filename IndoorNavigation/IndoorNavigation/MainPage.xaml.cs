@@ -58,7 +58,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
-
+using Rg.Plugins.Popup.Services;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -146,7 +146,7 @@ namespace IndoorNavigation
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
-                
+                Console.WriteLine("222222222222222");
 
                 // UpdateMap(location.UserNaming, navigationGraph);
                 var ci = CrossMultilingual.Current.CurrentCultureInfo;
@@ -154,22 +154,30 @@ namespace IndoorNavigation
                 //string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
                // string loadFileName="";
                 string map = _phoneInformation.GiveCurrentMapName(location.UserNaming);
-                
+                Console.WriteLine("333333333333333333");
                 NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(map);
-
+                Console.WriteLine("4444444444444444");
                 XmlDocument xmlDocument = new XmlDocument();
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_versionRoute))
                 {
+                    Console.WriteLine("9999999999999999999");
+       
                     StreamReader tr = new StreamReader(stream);
-                    string fileContents = tr.ReadToEnd();
-                    xmlDocument.LoadXml(fileContents);
-                }
 
+                    Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAA");
+                    string fileContents = tr.ReadToEnd();
+                    Console.WriteLine("77777777777777");
+                    xmlDocument.LoadXml(fileContents);
+                    Console.WriteLine("888888888888888888");
+                }
+                Console.WriteLine("555555555555555555");
 
                 ReadVersion readVersion = new ReadVersion(xmlDocument);
                 double newVersion = readVersion.ReturnVersion(navigationGraph.GetBuildingName());
+                Console.WriteLine("66666666666666666666");
                 if (navigationGraph.GetVersion() != newVersion)
                 {
+                    
                     //var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
                     var answser = await DisplayAlert(
                                 _resourceManager.GetString("UPDATE_MAP_STRING", currentLanguage),
@@ -201,8 +209,8 @@ namespace IndoorNavigation
                     switch (navigationGraph.GetIndustryServer())
                     {
                         case "hospital":
-                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
-   
+                            //await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+                            await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(location.UserNaming));
                             break;
 
                         case "city_hall":
