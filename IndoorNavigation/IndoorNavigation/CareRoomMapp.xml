@@ -50,16 +50,16 @@
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F掛號櫃台'/>
     </region>
-		<!--<region id='' floor='3'>
-      <Destination id='' name='301診'/>
+		<region id='' floor='3'>
+      <Destination id='' name='301診' category='到電梯'/>
 		</region>
 		<region id='' floor='5'>
-      <Destination id='' name='501診'/>
-      <Destination id='' name='502診'/>
-      <Destination id='' name='503診'/>
-      <Destination id='' name='504診'/>
+      <Destination id='' name='501診' category='到電梯'/>
+      <Destination id='' name='502診' category='到電梯'/>
+      <Destination id='' name='503診' category='到電梯'/>
+      <Destination id='' name='504診' category='到電梯'/>
       <Destination id='' name='506診' category='產前衛教'/>
-    </region>-->
+    </region>
 		<region id='' floor='B1'>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1掛號櫃台'/>

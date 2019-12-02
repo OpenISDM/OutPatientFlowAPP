@@ -38,7 +38,7 @@ namespace IndoorNavigation
             //ReadXml();
             if (ButtonLock) return;
             ButtonLock = true;
-
+            app.FinishCount = 0;
             app.records.Clear();
             app._TmpRecords.Clear();
 
@@ -56,7 +56,7 @@ namespace IndoorNavigation
             if (ButtonLock) return;
             app.records.Clear();
             app._TmpRecords.Clear();
-
+            app.FinishCount = 0;
             ButtonLock = true;
             app.records.Add(new RgRecord
             {

@@ -172,27 +172,45 @@ namespace IndoorNavigation
         }
 
         /*the function is a button event to add payment and medicine recieving route to listview*/
-        private void PaymemtListBtn_Clicked(object sender, EventArgs e)
+        async private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
             Buttonable();
-            app.records.Insert(app.FinishCount, new RgRecord
-            {
-                DptName="領藥",
-                _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointName= "領藥櫃臺",
-                Key = "Pharmacy"
-            });
-            app.records.Insert(app.FinishCount,new RgRecord
-            {
-                DptName="批價",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointName = "批價櫃臺",
-                Key = "Cashier"
-            });
+            //app.records.Insert(app.FinishCount, new RgRecord
+            //{
+            //    DptName="領藥",
+            //    _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
+            //    _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
+            //    _waypointName= "領藥櫃臺",
+            //    Key = "Pharmacy"
+            //});
+            //app.records.Insert(app.FinishCount,new RgRecord
+            //{
+            //    DptName="批價",
+            //    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+            //    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+            //    _waypointName = "批價櫃臺",
+            //    Key = "Cashier"
+            //});
+            //PaymemtListBtn.IsEnabled = false;
+            //PaymemtListBtn.IsVisible = false;
+
+            if (isButtonPressed) return;
+            isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
+            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+
+            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
+            {
+                Console.WriteLine("Subscribe recive message!");
+                bool Message = (bool)Messageargs;
+                if (Message) Buttonable();
+                PaymemtListBtn.IsEnabled = Message;
+                PaymemtListBtn.IsVisible = Message;
+                isButtonPressed = false;
+            });
+            //MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
+          
         }
 
         /*to show popup page for add route to listview*/
@@ -348,6 +366,7 @@ namespace IndoorNavigation
         private void ReadXml(int i)
         {
             int index = app.records.Count - 1;
+            app.FinishCount = 0;
             RgRecord record1 = new RgRecord
             {
                 DptName = "耳鼻喉科",

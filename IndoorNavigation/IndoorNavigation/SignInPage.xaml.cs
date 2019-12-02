@@ -43,11 +43,11 @@ namespace IndoorNavigation
                     ,_resourceManager.GetString("OK_STRING",currentLanguage));
                 return;
             }
-
+            
             Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
             app.IDnumber = IDnumEntry.Text;
             app.RgDate = RgDayPicker.Date;
-            //app.isRigistered = false;
+            app.isRigistered = false;
             await Navigation.PopAsync();
         }
         
@@ -74,13 +74,12 @@ namespace IndoorNavigation
 
                 count += priority[i] * (tmp);
             }
-            Console.WriteLine("Count is::::" + count.ToString());
             if(count%10==0)
                 return true;
 
             return false;
         }
-        //first char in identity number d
+        //first char in identity number 
         private int IDCharSw(char ch)
         {
             switch (ch)

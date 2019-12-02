@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin' version='1.0'>
+  <regions>
+    <region id='11111111-1111-1111-1111-111111111111' floor='1'>
+
+    </region>
+    <region id='' floor=''>
+      
+    </region>
+    <region id='' floor='2'>
+      <Destination name='' id=''/>
+    </region>
+  </regions>
+</navigation_graph>
+

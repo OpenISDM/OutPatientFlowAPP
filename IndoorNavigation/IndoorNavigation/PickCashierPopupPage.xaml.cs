@@ -9,72 +9,98 @@ using Xamarin.Forms.Xaml;
 using IndoorNavigation.Models;
 using Rg.Plugins.Popup.Services;
 using System.Collections.ObjectModel;
+using System.Reflection;
+using System.Xml;
+using System.IO;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PickCashierPopupPage : PopupPage
     {
-        ObservableCollection<DestinationItem> items;
-        SelectionView sv;
+        ObservableCollection<DestinationItem> Cashieritems;
+        ObservableCollection<DestinationItem> Pharmacyitems;
+
+        SelectionView sv,Pharmacysv;
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
         {
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             InitializeComponent();
-            items = new ObservableCollection<DestinationItem>();
-
+            Cashieritems = new ObservableCollection<DestinationItem>();
+            Pharmacyitems = new ObservableCollection<DestinationItem>();
             LoadData();
 
             sv = new SelectionView
-            { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center, ItemsSource=items,
+            { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center, ItemsSource=Cashieritems,
               ColumnNumber=1, SelectionType=SelectionType.RadioButton, RowSpacing=7
             };
-            
+            Pharmacysv = new SelectionView
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                ItemsSource = Pharmacyitems,
+                ColumnNumber = 1,
+                SelectionType = SelectionType.RadioButton,
+                RowSpacing = 7
+            };
             SelectionStack.Children.Add(sv);
+            SelectionStack.Children.Add(Pharmacysv);
         }
 
         public void LoadData()
         {
-            items.Add(new DestinationItem
-            {
-                _waypointName = "前門出口",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+            string filename = "CashierStation.xml";
+            var assembly = typeof(PickCashierPopupPage).GetTypeInfo().Assembly;
+            String ContentString = "";
+            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
 
-            items.Add(new DestinationItem
+            using (var reader = new StreamReader(stream))
             {
-                _waypointName = "b門出口",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+                ContentString = reader.ReadToEnd();
+            }
+            stream.Close();
 
-            items.Add(new DestinationItem
+            XmlDocument doc = new XmlDocument();
+
+            doc.LoadXml(ContentString);
+            XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
+
+            foreach(XmlNode node in nodeList)
             {
-                _waypointName = "a門出口",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+                Cashieritems.Add(item); 
+            }
+            XmlNodeList pharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            foreach(XmlNode node in pharmacyNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+                Pharmacyitems.Add(item);
+            }
         }
 
         async private void CashierOKBtn_Clicked(object sender, EventArgs e)
         {
             var o = sv.SelectedItem as DestinationItem;
-            if (o != null)
+            if (o != null )
             {
                 ((App)Application.Current).records.Add(new RgRecord
                 {
                     _waypointID=o._waypointID,
-                    Key="exit",
+                    Key= "Cashier",
                     _regionID=o._regionID,
                     _waypointName=o._waypointName,
                     DptName=o._waypointName
                 });
-                await DisplayAlert("bb", sv.SelectedItem.ToString(), "ok");
-                //await PopupNavigation.Instance.PopAsync();
+                //await DisplayAlert("bb",$"waypoint={o._waypointID.ToString()}, region={o._regionID.ToString()}", "ok");
+                await PopupNavigation.Instance.PopAsync();
 
             }
             return;
@@ -82,7 +108,24 @@ namespace IndoorNavigation
 
         private void CashierCancelBtn_Clicked(object sender, EventArgs e)
         {
-
+            GobackPage(true);
+            PopupNavigation.Instance.PopAllAsync();
+        }
+        private void GobackPage(bool ConfirmOrCancel)
+        {
+            MessagingCenter.Send(this, "GetCashierorNot", ConfirmOrCancel);
+            MessagingCenter.Send(this, "isBack", true);
+            PopupNavigation.Instance.PopAsync();
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            GobackPage(true);
+            return base.OnBackButtonPressed();
+        }
+        protected override bool OnBackgroundClicked()
+        {
+            GobackPage(true); 
+            return base.OnBackgroundClicked();
         }
     }
 }
