@@ -19,7 +19,7 @@ namespace IndoorNavigation
     {
         ObservableCollection<DestinationItem> Cashieritems;
         ObservableCollection<DestinationItem> Pharmacyitems;
-
+        App app = (App)Application.Current;
         SelectionView sv,Pharmacysv;
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
@@ -91,7 +91,7 @@ namespace IndoorNavigation
             var o = sv.SelectedItem as DestinationItem;
             if (o != null )
             {
-                ((App)Application.Current).records.Add(new RgRecord
+                app.records.Insert(app.records.Count-1 ,new RgRecord
                 {
                     _waypointID=o._waypointID,
                     Key= "Cashier",
@@ -101,7 +101,7 @@ namespace IndoorNavigation
                 });
                 //await DisplayAlert("bb",$"waypoint={o._waypointID.ToString()}, region={o._regionID.ToString()}", "ok");
                 await PopupNavigation.Instance.PopAsync();
-
+                MessagingCenter.Send(this, "isBack", true);
             }
             return;
         }

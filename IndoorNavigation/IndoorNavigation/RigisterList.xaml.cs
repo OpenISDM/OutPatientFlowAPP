@@ -208,6 +208,14 @@ namespace IndoorNavigation
                 PaymemtListBtn.IsEnabled = Message;
                 PaymemtListBtn.IsVisible = Message;
                 isButtonPressed = false;
+
+                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
+            });
+            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "isBack", (sender, args) => 
+            {
+                Console.WriteLine("isBack recieve the message~");
+                isButtonPressed = false;
+                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "isBack");
             });
             //MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
           
