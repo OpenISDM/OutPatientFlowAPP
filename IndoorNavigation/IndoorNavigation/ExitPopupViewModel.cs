@@ -34,7 +34,8 @@ namespace IndoorNavigation
 
         private bool isButtonPressed = false;
         private XMLInformation _nameInformation;
-        private string navigationGraphName { get; set; }
+        private PhoneInformation phoneInformation;
+        private string _navigationGraphName { get; set; }
         async void ToNavigatorExit()
         {
             Page nowPage = Application.Current.MainPage;
@@ -47,7 +48,9 @@ namespace IndoorNavigation
                 var o = SelectItem as DestinationItem;
                 //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
                 // await nowPage.Navigation.PushAsync(new TestPage(SelectItem, 0));
-                await nowPage.Navigation.PushAsync(new NavigatorPage(navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
+                Console.WriteLine("qqqqqqqqq");
+                await nowPage.Navigation.PushAsync(new NavigatorPage(_navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
+                Console.WriteLine("eeeeeeeeeeeeeeeeeeeeee");
                 App app = (App)Application.Current;
                 app.records.Insert(app.FinishCount,new RgRecord
                 {
@@ -78,20 +81,21 @@ namespace IndoorNavigation
                 OnPropertyChanged();
             }
         }
-        public ExitPopupViewModel()
+        public ExitPopupViewModel(string navigationGraphName)
         {
             exits = new ObservableCollection<DestinationItem>();
-            navigationGraphName = "台大醫院台北總院";
+            _navigationGraphName = navigationGraphName;
+            phoneInformation = new PhoneInformation();
 
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
-            }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
-            }
-
+            //if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            //{
+            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+            //}
+            //else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            //{
+            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+            //}
+            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             ButtonCommand = new Command(ToNavigatorExit);
             LoadData();

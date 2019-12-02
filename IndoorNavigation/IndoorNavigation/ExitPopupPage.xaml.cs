@@ -24,47 +24,48 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
         App app = (App)Application.Current;
-
+        string _navigationGraphName;
         ExitPopupViewModel _viewmodel;
 
-        public ExitPopupPage()
+        public ExitPopupPage(string navigationGraphName)
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            _viewmodel = new ExitPopupViewModel();
+            _navigationGraphName = navigationGraphName;
+            _viewmodel = new ExitPopupViewModel(_navigationGraphName);
             BindingContext = _viewmodel;
             
         }
-        private ObservableCollection<DestinationItem> LoadExitData()
-        {
-            ObservableCollection<DestinationItem> data = new ObservableCollection<DestinationItem>();
+        //private ObservableCollection<DestinationItem> LoadExitData()
+        //{
+        //    ObservableCollection<DestinationItem> data = new ObservableCollection<DestinationItem>();
 
-            data.Add(new DestinationItem
-            {
-                _waypointName = "前門出口",
-                _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+        //    data.Add(new DestinationItem
+        //    {
+        //        _waypointName = "前門出口",
+        //        _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "exit"
+        //    });
 
-            data.Add(new DestinationItem
-            {
-                _waypointName = "停車場",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+        //    data.Add(new DestinationItem
+        //    {
+        //        _waypointName = "停車場",
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "exit"
+        //    });
 
-            data.Add(new DestinationItem
-            {
-                _waypointName = "側門出口",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+        //    data.Add(new DestinationItem
+        //    {
+        //        _waypointName = "側門出口",
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "exit"
+        //    });
 
-            return data;
-        }
+        //    return data;
+        //}
 
          protected override bool OnBackButtonPressed()
         {

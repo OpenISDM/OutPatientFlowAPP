@@ -69,6 +69,7 @@ namespace IndoorNavigation
         public ObservableCollection<RgRecord> records;
         public int FinishCount = 0;
         public bool isRigistered = false;
+        public bool HaveAsked = false;
         public ObservableCollection<RgRecord> _TmpRecords; //to test select date 
         public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
         public bool HaveCashier = false;

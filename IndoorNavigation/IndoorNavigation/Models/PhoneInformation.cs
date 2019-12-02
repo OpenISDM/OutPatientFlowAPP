@@ -138,6 +138,33 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             return loadFileName;
         }
+        //----------------------------
+        public String GetBuildingName(string naviGraphName)
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
+            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
+            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
+            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+
+            if (naviGraphName == NTUH_YunLin)
+            {
+                return NTUH_YunLin;
+            }
+            else if (naviGraphName == Taipei_City_Hall)
+            {
+                return Taipei_City_Hall;
+            }
+            else if (naviGraphName == Lab)
+            {
+                return Lab;
+            }
+            else if (naviGraphName == Yuanlin_Christian_Hospital)
+            {
+                return Yuanlin_Christian_Hospital;
+            }
+            return null;
+        }
     }
 }
 

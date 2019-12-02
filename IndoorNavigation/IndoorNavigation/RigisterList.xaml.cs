@@ -34,28 +34,29 @@ namespace IndoorNavigation
         const string resourceId = "IndoorNavigation.Resources.AppResources";
         private HttpRequest request;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        PhoneInformation phoneInformation;
 
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
             app._TmpRecords = new ObservableCollection<RgRecord>();
+            phoneInformation = new PhoneInformation();
             _navigationGraphName = navigationGraphName;
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(navigationGraphName);
-
-            
-
+            Console.WriteLine("wwwwwwwwww");
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));                       
             request = new HttpRequest();
-
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
-                FontSizeSet(Device.GetNamedSize(NamedSize.Small,typeof(Button)));
-            }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            {
-                _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
-                FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
-            }
+            Console.WriteLine("ttttttttttttt");
+            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            //if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
+            //{
+            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
+            //    FontSizeSet(Device.GetNamedSize(NamedSize.Small,typeof(Button)));
+            //}
+            //else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
+            //{
+            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
+            //    FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
+            //}
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             BindingContext = _viewmodel;
@@ -223,7 +224,8 @@ namespace IndoorNavigation
         {      
             base.OnAppearing();
 
-            if (_viewmodel==null && !app.isRigistered)
+            //if (_viewmodel==null && !app.isRigistered)
+            if(!app.isRigistered)
             {
                 _viewmodel = new RegisterListViewModel();
             }
@@ -258,7 +260,7 @@ namespace IndoorNavigation
             {
                 //show msg to say goodbye
 
-                string s = string.Format("{0}\n{1}", _resourceManager.GetString("LAB_STRING", currentLanguage),
+                string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING", currentLanguage),false)) ;
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
@@ -292,7 +294,7 @@ namespace IndoorNavigation
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
                    
-                    await PopupNavigation.Instance.PushAsync(new ExitPopupPage());
+                    await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
                 }
                 else
                 {

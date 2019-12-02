@@ -32,27 +32,7 @@ namespace IndoorNavigation.ViewModels
             }
 
         }
-       
-        //public async void CheckRegister(bool isFirstTime)
-        //{
-            
-        //    var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
-        //    if (!isFirstTime)
-        //    {
-        //        var page = Application.Current.MainPage;
-        //        bool isRegister = await page.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-        //          _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage),
-        //          _resourceManager.GetString("OK_STRING", currentLanguage),
-        //          _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-        //        if (isRegister)
-        //        {
-        //            await page.Navigation.PushAsync(new TestPage());
-        //        }
-        //    }
-        //}
-    
-        
+ 
         async public  void CheckRegister()
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
