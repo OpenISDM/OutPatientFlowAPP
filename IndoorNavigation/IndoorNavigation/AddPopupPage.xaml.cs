@@ -95,6 +95,7 @@ namespace IndoorNavigation
                     Key = i++,
                     Text = item.DptName,
                     IsChecked=false,
+                    IsEnabled=true,
                     TextFontSize=24,
                     Type=CheckBox.CheckType.Check,
                     TextColor=Color.Black
@@ -125,8 +126,8 @@ namespace IndoorNavigation
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("NO_REVISIT_RECORD_STRING", currentLanguage)
                     , _resourceManager.GetString("OK_STRING",currentLanguage));
-                o.IsEnabled = false;
-                o.IsChecked = false;
+                
+                o.IsChecked = true;
             }
         }
 

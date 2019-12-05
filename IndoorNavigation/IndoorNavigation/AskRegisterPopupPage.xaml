@@ -17,8 +17,8 @@
 
                 <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="StartAndExpand" TextColor="Black" VerticalOptions="CenterAndExpand" Grid.Row="0"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1">
-                    <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate CANCEL_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"  HeightRequest="45"/>
-                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
+                    <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate NO_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"  HeightRequest="45"/>
+                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate YES_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
                 </StackLayout>
             </Grid>
             
