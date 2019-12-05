@@ -7,7 +7,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
-            
+                xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.RigisterList">
@@ -107,24 +107,35 @@
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
-
+    <aiforms:Floating.Content>
+        <aiforms:FloatingLayout>
+            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-50">
+                <Button x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"  CornerRadius="40" Clicked="AddBtn_Clicked" 
+                    FontSize="Large" TextColor="White" FontAttributes="Bold" BackgroundColor="#3f51b5"/>
+            </aiforms:FloatingView>
+            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-135">
+                <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Large" TextColor="White" FontAttributes="Bold"
+                     CornerRadius="40" Clicked="ShiftBtn_Clicked"/>
+            </aiforms:FloatingView>
+            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="Fill">
+                <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"/>
+            </aiforms:FloatingView>
+            <!--<aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-25" OffsetY="-100">
+                <Button Text="Large" x:Name="ForTestFloating_2" TextColor="#3f51b5" CornerRadius="60" FontSize="Medium" FontAttributes="Bold" WidthRequest="{Binding }" HeightRequest="{Binding }"/>
+            </aiforms:FloatingView>-->
+        </aiforms:FloatingLayout>
+    </aiforms:Floating.Content>
     <ContentPage.Content>
-        <AbsoluteLayout>
-            <!--<Button BackgroundColor="#3f51b5" x:Name="NavigationPageButton" Text="{i18n:Translate NAVIGATION_STRING}"
-                    FontSize="Default" TextColor="White" CornerRadius="40" Clicked="NavigationPageButton_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.64,0.17,0.1" FontAttributes="Bold"/>-->
-            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
+        <StackLayout>
+            <!--<Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Default" TextColor="White" CornerRadius="40" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.1" FontAttributes="Bold"
                     />
-            <!--<Button x:Name="DeleteBtn" Text="{i18n:Translate REMOVE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" WidthRequest="25" HeightRequest="25"
-                    CornerRadius="40" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.64,60,60"
-                    Clicked="DeleteBtn_Clicked" FontAttributes="Bold"/>-->
             <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Default" TextColor="White" FontAttributes="Bold"
                      CornerRadius="40" AbsoluteLayout.LayoutFlags="All" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.1"/>
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>-->
             <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
             <Grid x:Name="RigistListGrid">
                 <Grid.RowDefinitions>
@@ -142,6 +153,6 @@
             </Grid>
            
             
-        </AbsoluteLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -40,25 +40,23 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             app._TmpRecords = new ObservableCollection<RgRecord>();
+            
+            //get graph info
             phoneInformation = new PhoneInformation();
             _navigationGraphName = navigationGraphName;
-            Console.WriteLine("wwwwwwwwww");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));                       
-            request = new HttpRequest();
-            Console.WriteLine("ttttttttttttt");
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-            //if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            //{
-            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
-            //    FontSizeSet(Device.GetNamedSize(NamedSize.Small,typeof(Button)));
-            //}
-            //else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            //{
-            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
-            //    FontSizeSet(Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
-            //}
+
+            request = new HttpRequest();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            //to test auto size button
+            //var height = App.DisplayHeight/;
+            var width =  App.DisplayWidth/5;
+            AddBtn.WidthRequest = width;
+            AddBtn.HeightRequest = width;
+            ShiftBtn.WidthRequest = width;
+            ShiftBtn.HeightRequest = width;
             BindingContext = _viewmodel;
         } 
       
@@ -211,7 +209,7 @@ namespace IndoorNavigation
 
                 MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
             });
-            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "isBack", (sender, args) => 
+            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "isBack", (messagesender, args) => 
             {
                 Console.WriteLine("isBack recieve the message~");
                 isButtonPressed = false;
@@ -445,6 +443,11 @@ namespace IndoorNavigation
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
+        }
+
+        private void ForTestFloating_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

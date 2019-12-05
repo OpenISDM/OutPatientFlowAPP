@@ -74,12 +74,23 @@ namespace IndoorNavigation.iOS
 
             
             Plugin.InputKit.Platforms.iOS.Config.Init();
-
+            SetScreenWidthAndHeight();
             LoadApplication(new App());
             app.StatusBarStyle = UIStatusBarStyle.LightContent;
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             return base.FinishedLaunching(app, options);
         }
+
+        private void SetScreenWidthAndHeight()
+        { 
+            App.DisplayHeight =(int)(UIScreen.MainScreen.Bounds.Height);
+            App.DisplayWidth =(int)(UIScreen.MainScreen.Bounds.Width);
+        }
+        private int ConvertPixelToDp()
+        {
+            return 1;
+        }
+       
     }
 }

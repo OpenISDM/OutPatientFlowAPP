@@ -74,6 +74,10 @@ namespace IndoorNavigation
         public bool HaveCashier = false;
         public DateTime RgDate = new DateTime(2019,10,15);
         public DateTime time;
+
+        public static int DisplayWidth { get; set; }
+        public static int DisplayHeight { get; set; }
+
         public App()
         {
             InitializeComponent();

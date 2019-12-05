@@ -73,10 +73,13 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private bool updateMapOrNot;
         private static PhoneInformation _phoneInformation = new PhoneInformation();
+
+        App app = (App)Application.Current;
         public MainPage()
         {
             InitializeComponent();
-
+            
+            
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("HOME_STRING", currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
@@ -90,6 +93,7 @@ namespace IndoorNavigation
                 default:
                     break;
             }
+           
         }
 
         protected override void OnAppearing()
@@ -144,37 +148,24 @@ namespace IndoorNavigation
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+  
             if (e.Item is Location location)
             {
-                Console.WriteLine("222222222222222");
-
-                // UpdateMap(location.UserNaming, navigationGraph);
                 var ci = CrossMultilingual.Current.CurrentCultureInfo;
-                //string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-                //string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-               // string loadFileName="";
+               
                 string map = _phoneInformation.GiveCurrentMapName(location.UserNaming);
-                Console.WriteLine("333333333333333333");
                 NavigationGraph navigationGraph = NavigraphStorage.LoadNavigationGraphXML(map);
-                Console.WriteLine("4444444444444444");
                 XmlDocument xmlDocument = new XmlDocument();
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(_versionRoute))
-                {
-                    Console.WriteLine("9999999999999999999");
-       
+                { 
                     StreamReader tr = new StreamReader(stream);
 
-                    Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAA");
                     string fileContents = tr.ReadToEnd();
-                    Console.WriteLine("77777777777777");
                     xmlDocument.LoadXml(fileContents);
-                    Console.WriteLine("888888888888888888");
                 }
-                Console.WriteLine("555555555555555555");
 
                 ReadVersion readVersion = new ReadVersion(xmlDocument);
                 double newVersion = readVersion.ReturnVersion(navigationGraph.GetBuildingName());
-                Console.WriteLine("66666666666666666666");
                 if (navigationGraph.GetVersion() != newVersion)
                 {
                     
@@ -183,11 +174,9 @@ namespace IndoorNavigation
                                 _resourceManager.GetString("UPDATE_MAP_STRING", currentLanguage),
                                 location.UserNaming, _resourceManager.GetString("OK_STRING", currentLanguage),
                                 _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                    
-                    
+  
                     if (answser)
                     {
-
                         List<string> generateName = _phoneInformation.GiveGenerateMapName(location.UserNaming);
 
                         NavigraphStorage.GenerateFileRoute(generateName[0], generateName[1]);
@@ -195,7 +184,6 @@ namespace IndoorNavigation
                     }
                     else
                     {
-
                         updateMapOrNot = false;
                     }
                 }
