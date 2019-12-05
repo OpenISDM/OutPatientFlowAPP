@@ -64,20 +64,17 @@ namespace IndoorNavigation
 {
     public partial class App : Application
     {
-        public RgRecord roundRecord=null;
-
-        public ObservableCollection<RgRecord> records;
+        public ObservableCollection<RgRecord> records=new ObservableCollection<RgRecord>();
         public int FinishCount = 0;
         public bool isRigistered = false;
         public ObservableCollection<RgRecord> _TmpRecords; //to test select date 
         public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
         public bool HaveCashier = false;
-        public DateTime RgDate = new DateTime(2019,10,15);
+        public DateTime RgDate = new DateTime(2019, 10, 15);
         public DateTime time;
-
+        public RgRecord roundRecord = null;
         public static int DisplayWidth { get; set; }
         public static int DisplayHeight { get; set; }
-
         public App()
         {
             InitializeComponent();
@@ -92,8 +89,7 @@ namespace IndoorNavigation
             {
                 Current.Properties["LanguagePicker"] = "English";
             }
-            records = new ObservableCollection<RgRecord>();
-            records.Clear();
+
             MainPage = new NavigationPage(new MainPage());
         }
 

@@ -138,7 +138,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             return loadFileName;
         }
-        //----------------------------
         public String GetBuildingName(string naviGraphName)
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;

@@ -6,7 +6,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
                 xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
@@ -15,6 +14,11 @@
         <ResourceDictionary>
             <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
                 <ViewCell Tapped="ViewCell_Tapped">
+                    <ViewCell.Height>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="iOS" Value="150"/>
+                        </OnPlatform>
+                    </ViewCell.Height>
                     <ViewCell.ContextActions>
                         <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
@@ -28,14 +32,6 @@
                                     TextColor="White" BackgroundColor="#3f51b5" FontAttributes="Bold"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
-                            <!--<StackLayout Orientation="Horizontal">
-                                <Label x:Name="OutpatientimeString" FontSize="Medium" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" TextColor="Black"/>
-                                <Label x:Name="PatientTime" FontSize="Medium" TextColor="Black"  
-                               Text="{Binding DptTime,StringFormat='{0}'}"/>
-                            </StackLayout>
-                            <Label x:Name="SeqAndRoom" FontSize="Medium"
-                               Text="{Binding SeqAndRoom, StringFormat='{0}'}" TextColor="Black"/>-->
-                         <!--   <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
                             <StackLayout Orientation="Horizontal">
                                 <Label x:Name="DptTimeText" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" FontSize="Medium" TextColor="Black"/>
                                 <Label x:Name="DptTimeLabel" Text="{Binding Shift,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
@@ -101,7 +97,7 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 0, 0, 25" />
+                <On Platform="iOS" Value="0, 20, 0, 0" />
                 <On Platform="Android" Value="0, 0, 0, 0" />
                 <On Platform="UWP" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
@@ -111,19 +107,25 @@
         <aiforms:FloatingLayout>
             <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-50">
                 <Button x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"  CornerRadius="40" Clicked="AddBtn_Clicked" 
-                    FontSize="Large" TextColor="White" FontAttributes="Bold" BackgroundColor="#3f51b5"/>
+                    FontSize="Large" TextColor="White" FontAttributes="Bold" BackgroundColor="#3f51b5" IsEnabled="True" IsVisible="True"/>
             </aiforms:FloatingView>
             <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-135">
                 <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Large" TextColor="White" FontAttributes="Bold"
-                     CornerRadius="40" Clicked="ShiftBtn_Clicked"/>
+                     CornerRadius="40" Clicked="ShiftBtn_Clicked" IsEnabled="True" IsVisible="True"/>
             </aiforms:FloatingView>
             <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="Fill">
-                <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"/>
+                <Button x:Name="PaymemtListBtn" BorderColor="#3f51b5" BackgroundColor="#3f51b5" TextColor="White" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked" FontAttributes="Bold"/>
             </aiforms:FloatingView>
-            <!--<aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-25" OffsetY="-100">
-                <Button Text="Large" x:Name="ForTestFloating_2" TextColor="#3f51b5" CornerRadius="60" FontSize="Medium" FontAttributes="Bold" WidthRequest="{Binding }" HeightRequest="{Binding }"/>
-            </aiforms:FloatingView>-->
         </aiforms:FloatingLayout>
+        <!--<aiforms:FloatingLayout>
+            <aiforms:FloatingView VerticalLayoutAlignment="End">
+                <StackLayout>
+                    <Button Text="test" x:Name="PaymemtListBtn" HorizontalOptions="EndAndExpand"/>
+                    <Button Text="test2" x:Name="ShiftBtn" HorizontalOptions="EndAndExpand"/>
+                    <Button Text="test3" x:Name="AddBtn" HorizontalOptions="Fill"/>
+                </StackLayout>
+            </aiforms:FloatingView>
+        </aiforms:FloatingLayout>-->
     </aiforms:Floating.Content>
     <ContentPage.Content>
         <StackLayout>

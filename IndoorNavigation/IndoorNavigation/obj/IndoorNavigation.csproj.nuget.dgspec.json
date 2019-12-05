@@ -45,23 +45,11 @@
           "dependencies": {
             "AiForms.Effects": {
               "target": "Package",
-              "version": "[1.5.1, )"
+              "version": "[1.5.5, )"
             },
             "AiForms.SettingsView": {
               "target": "Package",
               "version": "[0.4.15, )"
-            },
-            "Caliburn.Micro": {
-              "target": "Package",
-              "version": "[3.2.0, )"
-            },
-            "DLToolkit.Forms.Controls.FlowListView": {
-              "target": "Package",
-              "version": "[2.0.11, )"
-            },
-            "FAB.Forms": {
-              "target": "Package",
-              "version": "[2.1.1, )"
             },
             "GeoCoordinate.NetCore": {
               "target": "Package",
@@ -105,10 +93,6 @@
               "target": "Package",
               "version": "[1.2.0.223, )"
             },
-            "SuaveControls.FloatingActionButton": {
-              "target": "Package",
-              "version": "[2018.1.5, )"
-            },
             "Xamarin.CustomControls.ProgressBarView": {
               "target": "Package",
               "version": "[1.0.2, )"
@@ -123,7 +107,7 @@
             },
             "Xamarin.Forms.InputKit": {
               "target": "Package",
-              "version": "[3.0.12, )"
+              "version": "[3.0.15, )"
             },
             "Xamarin.Forms.Visual.Material": {
               "target": "Package",

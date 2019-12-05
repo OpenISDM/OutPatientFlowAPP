@@ -91,7 +91,7 @@ namespace IndoorNavigation.iOS
             {
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataServiceData");
-
+               
                 if (tempUUID != null)
                 {
                     string bufferUUID = tempUUID.ToString();
@@ -138,7 +138,7 @@ namespace IndoorNavigation.iOS
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            if (stringAdvertisementSpecificData.Length == 35 || stringAdvertisementSpecificData.Length == 56)
+            if(stringAdvertisementSpecificData.Length==35||stringAdvertisementSpecificData.Length==56)
             {
                 string[] parse = stringAdvertisementSpecificData.Split(" ");
                 Console.WriteLine("In IBeacon Parser");
@@ -150,7 +150,7 @@ namespace IndoorNavigation.iOS
                 {
                     return stringAdvertisementSpecificData;
                 }
-                else if (parse[6].Substring(1, 6) == "length")
+                else if(parse[6].Substring(1, 6) == "length")
                 {
                     var parser = "00000000" + "-" +
                                  "0402" + "-" + parse[4] + "-" +
@@ -174,7 +174,7 @@ namespace IndoorNavigation.iOS
             {
                 return "";
             }
-
+            
         }
 
     }

@@ -8,7 +8,6 @@ using System.Resources;
 using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using Rg.Plugins.Popup.Events;
 using Rg.Plugins.Popup.Services;
 namespace IndoorNavigation.ViewModels
 {

@@ -114,16 +114,16 @@ namespace IndoorNavigation.iOS
             {
                 Console.WriteLine("Check UUID : " + (args as CBDiscoveredPeripheralEventArgs).AdvertisementData);
                 //var data = Data(bytes: manufacturerData.bytes, count: Int(manufacturerData.length))
-
+         
                 var tempUUID = (args as CBDiscoveredPeripheralEventArgs).AdvertisementData
                                .ValueForKey((NSString)"kCBAdvDataManufacturerData");
+           
+          
+                
 
 
 
-
-
-
-
+                
 
 
                 if (tempUUID != null)
@@ -132,11 +132,11 @@ namespace IndoorNavigation.iOS
                     byte[] result = new byte[arr.Length];
                     Marshal.Copy(arr.Bytes, result, 0, (int)arr.Length);
                     var token = BitConverter.ToString(result).Replace("-", "");
-
+                    
                     string bufferUUID = token.ToString();
                     string identifierUUID = ExtractBeaconUUID(bufferUUID);
-
-                    if (identifierUUID.Length == 36 && Guid.TryParse(identifierUUID, out Guid guid) == true)
+                    
+                    if (identifierUUID.Length == 36&&Guid.TryParse(identifierUUID,out Guid guid)==true)
                     {
                         List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
@@ -162,7 +162,7 @@ namespace IndoorNavigation.iOS
 
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            if (stringAdvertisementSpecificData.Length == 50)
+            if(stringAdvertisementSpecificData.Length==50)
             {
                 var parser = stringAdvertisementSpecificData.Substring(8, 8) + "-" +
                     stringAdvertisementSpecificData.Substring(16, 4) + "-" +

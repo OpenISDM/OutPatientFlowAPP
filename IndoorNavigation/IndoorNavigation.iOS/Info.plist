@@ -53,8 +53,8 @@
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
 	</array>
-  <key>MinimumOSVersion</key>
-  <string>12.2</string>
+	<key>MinimumOSVersion</key>
+	<string>12.2</string>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDescription</string>
 </dict>

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "AiForms.Effects/1.5.1": {
+      "AiForms.Effects/1.5.5": {
         "type": "package",
         "dependencies": {
           "Xamarin.Forms": "3.6.0.293080"
@@ -24,52 +24,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/SettingsView.dll": {}
-        }
-      },
-      "Caliburn.Micro/3.2.0": {
-        "type": "package",
-        "dependencies": {
-          "Caliburn.Micro.Core": "[3.2.0]"
-        },
-        "compile": {
-          "lib/net45/Caliburn.Micro.Platform.Core.dll": {},
-          "lib/net45/Caliburn.Micro.Platform.dll": {},
-          "lib/net45/System.Windows.Interactivity.dll": {}
-        },
-        "runtime": {
-          "lib/net45/Caliburn.Micro.Platform.Core.dll": {},
-          "lib/net45/Caliburn.Micro.Platform.dll": {},
-          "lib/net45/System.Windows.Interactivity.dll": {}
-        }
-      },
-      "Caliburn.Micro.Core/3.2.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/Caliburn.Micro.dll": {}
-        },
-        "runtime": {
-          "lib/net45/Caliburn.Micro.dll": {}
-        }
-      },
-      "DLToolkit.Forms.Controls.FlowListView/2.0.11": {
-        "type": "package",
-        "dependencies": {
-          "Xamarin.Forms": "2.0.0.6482"
-        },
-        "compile": {
-          "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0/DLToolkit.Forms.Controls.FlowListView.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0/DLToolkit.Forms.Controls.FlowListView.dll": {}
-        }
-      },
-      "FAB.Forms/2.1.1": {
-        "type": "package",
-        "compile": {
-          "lib/portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.dll": {}
-        },
-        "runtime": {
-          "lib/portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.dll": {}
         }
       },
       "GeoCoordinate.NetCore/1.0.0.1": {
@@ -230,15 +184,6 @@
           "lib/netstandard1.0/Rg.Plugins.Popup.dll": {}
         }
       },
-      "SuaveControls.FloatingActionButton/2018.1.5": {
-        "type": "package",
-        "compile": {
-          "lib/portable45-net45+win8+wpa81/SuaveControls.FloatingActionButton.dll": {}
-        },
-        "runtime": {
-          "lib/portable45-net45+win8+wpa81/SuaveControls.FloatingActionButton.dll": {}
-        }
-      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -289,7 +234,7 @@
           "build/Xamarin.Forms.targets": {}
         }
       },
-      "Xamarin.Forms.InputKit/3.0.12": {
+      "Xamarin.Forms.InputKit/3.0.15": {
         "type": "package",
         "dependencies": {
           "Xamarin.Forms": "3.2.0.839982"
@@ -342,14 +287,14 @@
     }
   },
   "libraries": {
-    "AiForms.Effects/1.5.1": {
-      "sha512": "GRdrMRZuPuUmdOv4p3Rp5xnxr6JnwvkR892Y5s/sZaX5wJai3Yf49zwmKa4u/8gryhP0P9BB7j23CvxI+YZTDg==",
+    "AiForms.Effects/1.5.5": {
+      "sha512": "2DnXb7/PcI63vNqJoyDQG4j4x8yNI51QwWTbyt8aHe6uUgx8ifaedhZr53VuM4Y9LcNxVAdX/l21eTTKUXSQ4Q==",
       "type": "package",
-      "path": "aiforms.effects/1.5.1",
+      "path": "aiforms.effects/1.5.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "aiforms.effects.1.5.1.nupkg.sha512",
+        "aiforms.effects.1.5.5.nupkg.sha512",
         "aiforms.effects.nuspec",
         "lib/MonoAndroid/AiForms.Effects.Droid.dll",
         "lib/MonoAndroid/AiForms.Effects.Droid.xml",
@@ -394,130 +339,6 @@
         "lib/netstandard2.0/SettingsView.xml",
         "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/SettingsView.dll",
         "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/SettingsView.xml"
-      ]
-    },
-    "Caliburn.Micro/3.2.0": {
-      "sha512": "GILmeguZra44K77M0QFcLR+Xjp/3Vl6IkWs5aOQOYmxoqiO9YuGyK7/2Aha6jKR6LtR03yv3TVg8rkqeBDNZAA==",
-      "type": "package",
-      "path": "caliburn.micro/3.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "caliburn.micro.3.2.0.nupkg.sha512",
-        "caliburn.micro.nuspec",
-        "lib/MonoAndroid10/Caliburn.Micro.Platform.Core.dll",
-        "lib/MonoAndroid10/Caliburn.Micro.Platform.Core.xml",
-        "lib/MonoAndroid10/Caliburn.Micro.Platform.dll",
-        "lib/MonoAndroid10/Caliburn.Micro.Platform.xml",
-        "lib/MonoTouch10/Caliburn.Micro.Platform.Core.dll",
-        "lib/MonoTouch10/Caliburn.Micro.Platform.Core.dll.mdb",
-        "lib/MonoTouch10/Caliburn.Micro.Platform.Core.xml",
-        "lib/MonoTouch10/Caliburn.Micro.Platform.dll",
-        "lib/MonoTouch10/Caliburn.Micro.Platform.xml",
-        "lib/MonoTouch10/Caliburn.Micro.dll.mdb",
-        "lib/Xamarin.iOS10/Caliburn.Micro.Platform.Core.dll",
-        "lib/Xamarin.iOS10/Caliburn.Micro.Platform.Core.dll.mdb",
-        "lib/Xamarin.iOS10/Caliburn.Micro.Platform.Core.xml",
-        "lib/Xamarin.iOS10/Caliburn.Micro.Platform.dll",
-        "lib/Xamarin.iOS10/Caliburn.Micro.Platform.xml",
-        "lib/Xamarin.iOS10/Caliburn.Micro.dll.mdb",
-        "lib/net40/Caliburn.Micro.Platform.dll",
-        "lib/net40/Caliburn.Micro.Platform.xml",
-        "lib/net40/System.Windows.Interactivity.dll",
-        "lib/net40/System.Windows.Interactivity.xml",
-        "lib/net45/Caliburn.Micro.Platform.Core.dll",
-        "lib/net45/Caliburn.Micro.Platform.Core.xml",
-        "lib/net45/Caliburn.Micro.Platform.dll",
-        "lib/net45/Caliburn.Micro.Platform.xml",
-        "lib/net45/System.Windows.Interactivity.dll",
-        "lib/sl5/Caliburn.Micro.Platform.dll",
-        "lib/sl5/Caliburn.Micro.Platform.xml",
-        "lib/sl5/System.Windows.Interactivity.dll",
-        "lib/uap10.0/Caliburn.Micro.Platform.Core.dll",
-        "lib/uap10.0/Caliburn.Micro.Platform.Core.xml",
-        "lib/uap10.0/Caliburn.Micro.Platform.UWP.XML",
-        "lib/uap10.0/Caliburn.Micro.Platform.UWP.dll",
-        "lib/uap10.0/Caliburn.Micro.Platform.UWP.pri",
-        "lib/uap10.0/Caliburn.Micro.Platform.UWP/Properties/Caliburn.Micro.Platform.UWP.rd.xml",
-        "lib/win81/Caliburn.Micro.Platform.Core.dll",
-        "lib/win81/Caliburn.Micro.Platform.Core.xml",
-        "lib/win81/Caliburn.Micro.Platform.XML",
-        "lib/win81/Caliburn.Micro.Platform.dll",
-        "lib/win81/Caliburn.Micro.Platform.pri",
-        "lib/win81/Microsoft.Xaml.Interactions.dll",
-        "lib/win81/Microsoft.Xaml.Interactivity.dll",
-        "lib/wp8/Caliburn.Micro.Platform.Core.dll",
-        "lib/wp8/Caliburn.Micro.Platform.Core.xml",
-        "lib/wp8/Caliburn.Micro.Platform.dll",
-        "lib/wp8/Caliburn.Micro.Platform.xml",
-        "lib/wp8/System.Windows.Interactivity.dll",
-        "lib/wpa81/Caliburn.Micro.Platform.Core.dll",
-        "lib/wpa81/Caliburn.Micro.Platform.Core.xml",
-        "lib/wpa81/Caliburn.Micro.Platform.dll",
-        "lib/wpa81/Caliburn.Micro.Platform.pri",
-        "lib/wpa81/Caliburn.Micro.Platform.xml",
-        "lib/wpa81/Microsoft.Xaml.Interactions.dll",
-        "lib/wpa81/Microsoft.Xaml.Interactivity.dll"
-      ]
-    },
-    "Caliburn.Micro.Core/3.2.0": {
-      "sha512": "jmpC4OSvejrrIlcSmlzFjtyOmHQBrKgqJ9hy/LeWGoytct0e2b+TVgzWHTtvkzBF6TWWYlWCNErF10O6hNoL0g==",
-      "type": "package",
-      "path": "caliburn.micro.core/3.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "caliburn.micro.core.3.2.0.nupkg.sha512",
-        "caliburn.micro.core.nuspec",
-        "lib/net40/Caliburn.Micro.XML",
-        "lib/net40/Caliburn.Micro.dll",
-        "lib/net45/Caliburn.Micro.dll",
-        "lib/net45/Caliburn.Micro.xml",
-        "lib/portable-net45+win8+wp8+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10+uap10.0/Caliburn.Micro.XML",
-        "lib/portable-net45+win8+wp8+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10+uap10.0/Caliburn.Micro.dll",
-        "lib/portable-net45+win8+wp8+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10+uap10.0/Caliburn.Micro.dll.mdb",
-        "lib/sl5/Caliburn.Micro.XML",
-        "lib/sl5/Caliburn.Micro.dll"
-      ]
-    },
-    "DLToolkit.Forms.Controls.FlowListView/2.0.11": {
-      "sha512": "n/TIbW3a7q/h5wA5vt8VfkN3eecJN8nMlPVu3NS7hvFODg0YqFHXDgbX1O/a9agcuk5Km6DZqJqpxpcYRS9sOQ==",
-      "type": "package",
-      "path": "dltoolkit.forms.controls.flowlistview/2.0.11",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "dltoolkit.forms.controls.flowlistview.2.0.11.nupkg.sha512",
-        "dltoolkit.forms.controls.flowlistview.nuspec",
-        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0/DLToolkit.Forms.Controls.FlowListView.dll",
-        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0/DLToolkit.Forms.Controls.FlowListView.xml"
-      ]
-    },
-    "FAB.Forms/2.1.1": {
-      "sha512": "B8TPxUhNVBfqTbkuD28QYFKaLr++S1/OEhkCF4fhbS3bSAtg1EdfDIFCqok/mKMSMyXNCa6BcfVq36xvC58BAQ==",
-      "type": "package",
-      "path": "fab.forms/2.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "fab.forms.2.1.1.nupkg.sha512",
-        "fab.forms.nuspec",
-        "lib/MonoAndroid10/FAB.Droid.dll",
-        "lib/MonoAndroid10/FAB.Droid.xml",
-        "lib/MonoAndroid10/FAB.Forms.dll",
-        "lib/MonoAndroid10/FAB.Forms.xml",
-        "lib/MonoTouch10/FAB.Forms.dll",
-        "lib/MonoTouch10/FAB.Forms.xml",
-        "lib/MonoTouch10/FAB.iOS.dll",
-        "lib/MonoTouch10/FAB.iOS.xml",
-        "lib/Xamarin.iOS10/FAB.Forms.dll",
-        "lib/Xamarin.iOS10/FAB.Forms.xml",
-        "lib/Xamarin.iOS10/FAB.iOS.dll",
-        "lib/Xamarin.iOS10/FAB.iOS.xml",
-        "lib/portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.dll",
-        "lib/portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.xml",
-        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.dll",
-        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/FAB.Forms.xml"
       ]
     },
     "GeoCoordinate.NetCore/1.0.0.1": {
@@ -800,10 +621,12 @@
         "content/net45/Helpers/TranslateExtension.txt.pp",
         "content/netstandard1.0/Helpers/TranslateExtension.txt.pp",
         "lib/MonoAndroid10/Plugin.Multilingual.Abstractions.dll",
+        "lib/MonoAndroid10/Plugin.Multilingual.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.Multilingual.Abstractions.pdb",
         "lib/MonoAndroid10/Plugin.Multilingual.Abstractions.xml",
         "lib/MonoAndroid10/Plugin.Multilingual.XML",
         "lib/MonoAndroid10/Plugin.Multilingual.dll",
+        "lib/MonoAndroid10/Plugin.Multilingual.dll.mdb",
         "lib/MonoAndroid10/Plugin.Multilingual.pdb",
         "lib/UAP10/Plugin.Multilingual.Abstractions.dll",
         "lib/UAP10/Plugin.Multilingual.Abstractions.pdb",
@@ -885,6 +708,7 @@
         "lib/netstandard1.0/Prism.pdb",
         "lib/netstandard1.0/Prism.xml",
         "lib/netstandard2.0/Prism.dll",
+        "lib/netstandard2.0/Prism.dll.mdb",
         "lib/netstandard2.0/Prism.pdb",
         "lib/netstandard2.0/Prism.xml",
         "lib/uap10.0.15063/Prism.dll",
@@ -939,6 +763,7 @@
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll.mdb",
         "lib/MonoAndroid/Rg.Plugins.Popup.Droid.pdb",
         "lib/MonoAndroid/Rg.Plugins.Popup.dll",
         "lib/MonoAndroid/Rg.Plugins.Popup.pdb",
@@ -947,6 +772,7 @@
         "lib/MonoTouch/Rg.Plugins.Popup.dll",
         "lib/MonoTouch/Rg.Plugins.Popup.pdb",
         "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll.mdb",
         "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.pdb",
         "lib/Xamarin.IOS/Rg.Plugins.Popup.dll",
         "lib/Xamarin.IOS/Rg.Plugins.Popup.pdb",
@@ -959,22 +785,6 @@
         "readme.txt",
         "rg.plugins.popup.1.2.0.223.nupkg.sha512",
         "rg.plugins.popup.nuspec"
-      ]
-    },
-    "SuaveControls.FloatingActionButton/2018.1.5": {
-      "sha512": "sgnBqhD3nXNT/yEO0DzS+WfaHYnhnf8K3g9FMD9o5CMpdG7NOuJme8AmbmOyEBHw0NeLMDX+FHmErVBCMq36BA==",
-      "type": "package",
-      "path": "suavecontrols.floatingactionbutton/2018.1.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/monoandroid80/SuaveControls.FloatingActionButton.Droid.dll",
-        "lib/monoandroid80/SuaveControls.FloatingActionButton.dll",
-        "lib/portable45-net45+win8+wpa81/SuaveControls.FloatingActionButton.dll",
-        "lib/xamarinios10/SuaveControls.FloatingActionButton.dll",
-        "lib/xamarinios10/SuaveControls.FloatingActionButton.iOS.dll",
-        "suavecontrols.floatingactionbutton.2018.1.5.nupkg.sha512",
-        "suavecontrols.floatingactionbutton.nuspec"
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
@@ -1056,9 +866,11 @@
         "lib/monoandroid80/Xamarin.Essentials.pdb",
         "lib/monoandroid80/Xamarin.Essentials.xml",
         "lib/monoandroid81/Xamarin.Essentials.dll",
+        "lib/monoandroid81/Xamarin.Essentials.dll.mdb",
         "lib/monoandroid81/Xamarin.Essentials.pdb",
         "lib/monoandroid81/Xamarin.Essentials.xml",
         "lib/monoandroid90/Xamarin.Essentials.dll",
+        "lib/monoandroid90/Xamarin.Essentials.dll.mdb",
         "lib/monoandroid90/Xamarin.Essentials.pdb",
         "lib/monoandroid90/Xamarin.Essentials.xml",
         "lib/netstandard1.0/Xamarin.Essentials.dll",
@@ -1244,15 +1056,13 @@
         "xamarin.forms.nuspec"
       ]
     },
-    "Xamarin.Forms.InputKit/3.0.12": {
-      "sha512": "fcfRUEUn+C6cEWA5iBYIZFn7G13WaYY5GgIEMNBk2H/pw9i94ouDtzvjFZ2JpXeZ/QjAHKLUVEz5ZOnFndlExQ==",
+    "Xamarin.Forms.InputKit/3.0.15": {
+      "sha512": "ea0ahzN2XwqswS3jvc1KMIcm7c+B+BEnyJdFptgd5Ml73015A7OKMzsnf3gzAodzVNZtrK/AGctJSbz5fkK6og==",
       "type": "package",
-      "path": "xamarin.forms.inputkit/3.0.12",
+      "path": "xamarin.forms.inputkit/3.0.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/monoandroid81/Plugin.InputKit.dll",
-        "lib/monoandroid81/Plugin.InputKit.xml",
         "lib/monoandroid90/Plugin.InputKit.dll",
         "lib/monoandroid90/Plugin.InputKit.xml",
         "lib/netstandard1.0/Plugin.InputKit.dll",
@@ -1262,7 +1072,7 @@
         "lib/xamarin.ios10/Plugin.InputKit.dll",
         "lib/xamarin.ios10/Plugin.InputKit.xml",
         "readme.txt",
-        "xamarin.forms.inputkit.3.0.12.nupkg.sha512",
+        "xamarin.forms.inputkit.3.0.15.nupkg.sha512",
         "xamarin.forms.inputkit.nuspec"
       ]
     },
@@ -1332,11 +1142,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "AiForms.Effects >= 1.5.1",
+      "AiForms.Effects >= 1.5.5",
       "AiForms.SettingsView >= 0.4.15",
-      "Caliburn.Micro >= 3.2.0",
-      "DLToolkit.Forms.Controls.FlowListView >= 2.0.11",
-      "FAB.Forms >= 2.1.1",
       "GeoCoordinate.NetCore >= 1.0.0.1",
       "Microsoft.AppCenter.Analytics >= 1.14.0",
       "Microsoft.AppCenter.Crashes >= 1.14.0",
@@ -1347,11 +1154,10 @@
       "Prism.Forms >= 7.1.0.431",
       "Refractored.MvvmHelpers >= 1.3.0",
       "Rg.Plugins.Popup >= 1.2.0.223",
-      "SuaveControls.FloatingActionButton >= 2018.1.5",
       "Xamarin.CustomControls.ProgressBarView >= 1.0.2",
       "Xamarin.Essentials >= 1.1.0",
       "Xamarin.Forms >= 3.6.0.344457",
-      "Xamarin.Forms.InputKit >= 3.0.12",
+      "Xamarin.Forms.InputKit >= 3.0.15",
       "Xamarin.Forms.Visual.Material >= 3.6.0.344457",
       "ZXing.Net.Mobile >= 2.4.1",
       "ZXing.Net.Mobile.Forms >= 2.4.1"
@@ -1403,23 +1209,11 @@
         "dependencies": {
           "AiForms.Effects": {
             "target": "Package",
-            "version": "[1.5.1, )"
+            "version": "[1.5.5, )"
           },
           "AiForms.SettingsView": {
             "target": "Package",
             "version": "[0.4.15, )"
-          },
-          "Caliburn.Micro": {
-            "target": "Package",
-            "version": "[3.2.0, )"
-          },
-          "DLToolkit.Forms.Controls.FlowListView": {
-            "target": "Package",
-            "version": "[2.0.11, )"
-          },
-          "FAB.Forms": {
-            "target": "Package",
-            "version": "[2.1.1, )"
           },
           "GeoCoordinate.NetCore": {
             "target": "Package",
@@ -1463,10 +1257,6 @@
             "target": "Package",
             "version": "[1.2.0.223, )"
           },
-          "SuaveControls.FloatingActionButton": {
-            "target": "Package",
-            "version": "[2018.1.5, )"
-          },
           "Xamarin.CustomControls.ProgressBarView": {
             "target": "Package",
             "version": "[1.0.2, )"
@@ -1481,7 +1271,7 @@
           },
           "Xamarin.Forms.InputKit": {
             "target": "Package",
-            "version": "[3.0.12, )"
+            "version": "[3.0.15, )"
           },
           "Xamarin.Forms.Visual.Material": {
             "target": "Package",
@@ -1503,47 +1293,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1' 而非專案目標架構 '.NETStandard,Version=v2.0' 還原了套件 'Caliburn.Micro 3.2.0'。此套件與您的專案並非完全相容。",
-      "libraryId": "Caliburn.Micro",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1' 而非專案目標架構 '.NETStandard,Version=v2.0' 還原了套件 'Caliburn.Micro.Core 3.2.0'。此套件與您的專案並非完全相容。",
-      "libraryId": "Caliburn.Micro.Core",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1' 而非專案目標架構 '.NETStandard,Version=v2.0' 還原了套件 'FAB.Forms 2.1.1'。此套件與您的專案並非完全相容。",
-      "libraryId": "FAB.Forms",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "已使用 '.NETFramework,Version=v4.6.1' 而非專案目標架構 '.NETStandard,Version=v2.0' 還原了套件 'SuaveControls.FloatingActionButton 2018.1.5'。此套件與您的專案並非完全相容。",
-      "libraryId": "SuaveControls.FloatingActionButton",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    }
-  ]
+  }
 }

@@ -14,7 +14,6 @@ using Rg.Plugins.Popup.Services;
 using IndoorNavigation.ViewModels;
 using System.Globalization;
 
-using SuaveControls.Views;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -40,16 +39,18 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             app._TmpRecords = new ObservableCollection<RgRecord>();
-            
+            Console.WriteLine("initialize register list");
             //get graph info
+            Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
             _navigationGraphName = navigationGraphName;
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));                       
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-
+            Console.WriteLine("initialize http request");
             request = new HttpRequest();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            //Console.WriteLine("rrrrrrrrrrrrrrrr");
             //to test auto size button
             //var height = App.DisplayHeight/;
             var width =  App.DisplayWidth/5;
@@ -57,7 +58,13 @@ namespace IndoorNavigation
             AddBtn.HeightRequest = width;
             ShiftBtn.WidthRequest = width;
             ShiftBtn.HeightRequest = width;
+            AddBtn.IsEnabled = true;
+            AddBtn.IsVisible = true;
+            ShiftBtn.IsVisible = true;
+            ShiftBtn.IsEnabled = true;
+            //Console.WriteLine("pppppppppppppppp");
             BindingContext = _viewmodel;
+            Console.WriteLine("Page has finished init");
         } 
       
         /*this function is to push page to NavigatorPage */
