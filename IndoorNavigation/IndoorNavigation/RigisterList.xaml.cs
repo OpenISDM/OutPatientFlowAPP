@@ -50,17 +50,17 @@ namespace IndoorNavigation
             request = new HttpRequest();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-       
-            var width =  App.DisplayWidth/5;
-            AddBtn.WidthRequest = width;
-            AddBtn.HeightRequest = width;
-            ShiftBtn.WidthRequest = width;
-            ShiftBtn.HeightRequest = width;
-            AddBtn.IsEnabled = true;
-            AddBtn.IsVisible = true;
-            ShiftBtn.IsVisible = true;
-            ShiftBtn.IsEnabled = true;
 
+            //var width =  App.DisplayWidth/5;
+            //AddBtn.WidthRequest = width;
+            //AddBtn.HeightRequest = width;
+            //AddBtn.CornerRadius = width / 2;
+            //ShiftBtn.WidthRequest = width;
+            //ShiftBtn.HeightRequest = width;
+            //ShiftBtn.CornerRadius = width / 2;
+            //ShiftBtn.he
+            
+            Console.WriteLine($"ShiftBtn Height is: {ShiftBtn.Height}\n AddBtn Height is:{AddBtn.Height}\n");
             BindingContext = _viewmodel;
             Console.WriteLine("Page has finished init");
         } 
@@ -261,7 +261,9 @@ namespace IndoorNavigation
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
-
+            ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
+            AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
+            Console.WriteLine($"OnAppearing: ShiftBtn Height is: {ShiftBtn.Height}\n AddBtn Height is:{AddBtn.Height}\n ");
             isButtonPressed = false;
             //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
         }
@@ -442,7 +444,7 @@ namespace IndoorNavigation
 
         async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2("1"));
         }
 
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)

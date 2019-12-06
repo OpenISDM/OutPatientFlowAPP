@@ -14,6 +14,7 @@ namespace IndoorNavigation
     public partial class SelectTwoWayPopupPage : PopupPage
     {
         String _locationName;
+        bool isButtonPressed = false;
         public SelectTwoWayPopupPage(string BuildingName)
         {
             InitializeComponent();
@@ -24,6 +25,8 @@ namespace IndoorNavigation
 
         async private void ToNavigationBtn_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
             //await Navigation.PushAsync(new RigisterList(_locationName));
             await Navigation.PushAsync(new NavigationHomePage(_locationName));
             await PopupNavigation.Instance.PopAllAsync();
@@ -31,6 +34,8 @@ namespace IndoorNavigation
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
             PopupNavigation.Instance.PopAsync();
             await Navigation.PushAsync(new RigisterList(_locationName));
             //await PopupNavigation.Instance.PopAllAsync();

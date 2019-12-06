@@ -53,8 +53,8 @@
                 <Label x:Name="SuggestLabel" Text="{Binding DptDrName,StringFormat='建議先看{0}醫師'}" Grid.Row="2" FontSize="Large" VerticalTextAlignment="Center" VerticalOptions="Center" TextColor="Black"/>
             
                 <StackLayout Orientation="Horizontal" Grid.Row="3" HorizontalOptions="End">
-                    <Button x:Name="AskOrderConfirmBtn" Text="同意" Clicked="AskOrderConfirmBtn_Clicked" FontSize="Large"/>
-                    <Button x:Name="AskOrderCancelBtn" Text="不同意" Clicked="AskOrderCancelBtn_Clicked" FontSize="Large"/>
+                    <Button x:Name="AskOrderConfirmBtn" Text="{i18n:Translate }" Clicked="AskOrderConfirmBtn_Clicked" FontSize="Large"/>
+                    <Button x:Name="AskOrderCancelBtn" Text="{i18n:Translate }" Clicked="AskOrderCancelBtn_Clicked" FontSize="Large"/>
                 </StackLayout>
             </Grid>
         </Frame>

@@ -80,6 +80,7 @@
   <ItemGroup>
     <EmbeddedResource Include="CashierStation.xml" />
     <EmbeddedResource Include="ExaminationRoomMap.xml" />
+    <EmbeddedResource Include="ExitMap.xml" />
     <EmbeddedResource Include="RequestBody.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_en-US.xml" />
@@ -120,6 +121,7 @@
     <None Remove="CareRoomMapp.xml" />
     <None Remove="CashierStation.xml" />
     <None Remove="ExaminationRoomMap.xml" />
+    <None Remove="ExitMap.xml" />
     <None Remove="RequestBody.xml" />
     <None Remove="Resources\AppResources.English" />
     <None Remove="TestingXML.xml" />

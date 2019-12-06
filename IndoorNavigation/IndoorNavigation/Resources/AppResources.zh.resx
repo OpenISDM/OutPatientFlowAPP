@@ -307,7 +307,12 @@
     <value>電梯</value>
   </data>
   <data name="CATEGORY_PARKING_STRING" xml:space="preserve">
-    <value>停車場</value>
+    <value>
+    
+
+
+
+場</value>
   </data>
   <data name="CATEGORY_OFFICE_STRING" xml:space="preserve">
     <value>各局處</value>

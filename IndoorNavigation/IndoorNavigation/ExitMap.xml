@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin' version='1.0'>
-  <regions>
-    <region id='11111111-1111-1111-1111-111111111111' floor='1'>
-      
-    </region>
-  </regions>
+<navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>
+  <exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000018' name='前門出口' floor='1'/>
+  <exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000014' name='側門出口' floor='1'/>
+  <exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000014' name='停車場' floor=''/><!--this is fake-->
 </navigation_graph>

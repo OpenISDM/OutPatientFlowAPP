@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='NTUH_YunLin' version='1.0'>
-	<regions>
-		<region id='11111111-1111-1111-1111-111111111111' floor='1'>
+<navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>	<regions>
+		<region id='22222222-2222-2222-2222-222222222222' floor='1'>
 			<Destination id='00000000-0000-0000-0000-000000000018' name='一樓批價'/>
 			<Destination id='00000000-0000-0000-0000-000000000018' name='掛號'/>
 			<Destination id='00000000-0000-0000-0000-000000000019' name='領藥'/>
 		</region>
-		<region id='11111111-1111-1111-1111-111111111112' floor='2'>
+		<region id='33333333-3333-3333-3333-333333333333' floor='2'>
 			<Destination id='00000000-0000-0000-0000-000000000022' name='201診'/>
-			<Destination id='00000000-0000-0000-0000-000000000022' name='202診' category='examination'/>
-      <Destination id='00000000-0000-0000-0000-000000000022' name='203診' category='行政業務'/>
+			<Destination id='00000000-0000-0000-0000-000000000022' name='202診' type='門診檢查' category='examination'/>
+      <Destination id='00000000-0000-0000-0000-000000000022' name='203診' type='行政業務' category='administrative'/>
 			<Destination id='00000000-0000-0000-0000-000000000022' name='204診'/>
       <Destination id='00000000-0000-0000-0000-000000000022' name='205診'/>
       <Destination id='00000000-0000-0000-0000-000000000022' name='206診'/>
@@ -27,7 +26,7 @@
       <Destination id='00000000-0000-0000-0000-000000000025' name='221診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='222診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='223診'/>
-      <Destination id='00000000-0000-0000-0000-000000000025' name='224診' type='超音波' category='ExaminationRoom'/>
+      <Destination id='00000000-0000-0000-0000-000000000025' name='224診' type='超音波' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='225診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='226診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='227診'/>
@@ -36,17 +35,17 @@
       <Destination id='00000000-0000-0000-0000-000000000025' name='230診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='236診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='238診'/>
-      <Destination id='00000000-0000-0000-0000-000000000027' name='246診' category='衛教'/>
+      <Destination id='00000000-0000-0000-0000-000000000027' name='246診' type='衛教' category='healtheducation'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='247診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='248診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='249診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='250診'/>
       <Destination id='?' name='251診'/>
-      <Destination id='?' name='252診'/>
-      <Destination id='?' name='258診'/>
+      <Destination id='?' name='252診' type='超音波' category='examination'/>
+      <Destination id='?' name='258診' type='衛教' category='healtheducation'/>
       <Destination id='?' name='放射區' type='放射業務' category='examination'/>
       <Destination id='?' name='檢驗區' type='心電圖' category='examination'/>
-      <Destination id='?' name='檢驗區' trype='抽血'  category='examinaiton'/>
+      <Destination id='?' name='檢驗區' type='抽血'  category='examinaiton'/>
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F掛號櫃台'/>
     </region>
@@ -58,16 +57,19 @@
       <Destination id='' name='502診' category='到電梯'/>
       <Destination id='' name='503診' category='到電梯'/>
       <Destination id='' name='504診' category='到電梯'/>
-      <Destination id='' name='506診' category='產前衛教'/>
+      <Destination id='' name='506診' type='衛教' category='到電梯'/>
     </region>
-		<region id='' floor='B1'>
+		<region id='11111111-1111-1111-1111-111111111111' floor='B1'>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1掛號櫃台'/>
+      <Destination id='' name=''/>
+      <Destination id=''/>
+      <Destination id=''/>
       <Destination id='00000000-0000-0000-0000-000000000010' name='B02診'/>
       <Destination id='00000000-0000-0000-0000-000000000010' name='B03診'/>
       <Destination id='?' name='B08診'/>
-      <Destination id='?' name='B09診' type='衛教'/>
-      <Destination id='?' name='B10診' type='兒科處置及注射' />
+      <Destination id='?' name='B09診' type='衛教' category='healtheducation'/>
+      <Destination id='?' name='B10診' type='兒科處置及注射' category=''/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B11診'/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B12診'/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B13診'/>
@@ -77,10 +79,10 @@
       <Destination id='00000000-0000-0000-0000-000000000012' name='B19診'/>
       <Destination id='00000000-0000-0000-0000-000000000009' name='B28診'/>
       <Destination id='00000000-0000-0000-0000-000000000009' name='B29診'/>
-      <Destination id='00000000-0000-0000-0000-000000000009' name='B30診' type='乳房超音波' category='examination'/>
+      <Destination id='00000000-0000-0000-0000-000000000009' name='B30診' type='超音波' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B48診'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B50診'/>
-      <Destination id='00000000-0000-0000-0000-000000000002' name='B51診' type='泌尿系統超音波' category='examination'/>
+      <Destination id='00000000-0000-0000-0000-000000000002' name='B51診' type='超音波' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B52診' type='尿動力檢查' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B53診'/>
     </region>

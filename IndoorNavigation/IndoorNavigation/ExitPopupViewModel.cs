@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
@@ -13,13 +9,12 @@ using IndoorNavigation.Views.Navigation;
 using Plugin.Multilingual;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
-using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
-using Xamarin.Essentials;
-using IndoorNavigation.ViewModels;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
+using System.IO;
+using System.Xml;
 
 namespace IndoorNavigation
 {
@@ -44,13 +39,10 @@ namespace IndoorNavigation
                 if (isButtonPressed) return;
 
                 isButtonPressed = true;
-                //XMLInformation _nameInformation = NavigraphStorage.LoadInformationML("Lab" + "_info_zh.xml");
+
                 var o = SelectItem as DestinationItem;
-                //  await nowPage.DisplayAlert("test", string.Format("waypoint id={0}\n,regionid={1}\n,name={2}\n",o._waypointID.ToString(),o._regionID.ToString(),o._waypointName), "OK");
-                // await nowPage.Navigation.PushAsync(new TestPage(SelectItem, 0));
-                Console.WriteLine("qqqqqqqqq");
+
                 await nowPage.Navigation.PushAsync(new NavigatorPage(_navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
-                Console.WriteLine("eeeeeeeeeeeeeeeeeeeeee");
                 App app = (App)Application.Current;
                 app.records.Insert(app.FinishCount,new RgRecord
                 {
@@ -87,14 +79,6 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;
             phoneInformation = new PhoneInformation();
 
-            //if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "en-US")
-            //{
-            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_en-US.xml");
-            //}
-            //else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh" || CrossMultilingual.Current.CurrentCultureInfo.ToString() == "zh-TW")
-            //{
-            //    _nameInformation = NavigraphStorage.LoadInformationML(navigationGraphName + "_info_zh.xml");
-            //}
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             ButtonCommand = new Command(ToNavigatorExit);
@@ -102,34 +86,64 @@ namespace IndoorNavigation
         }
 
 
-
-        private void LoadData()  //fake data 
+        private void LoadData()
         {
+            string fileName = "ExitMap.xml";
+            var assembly = typeof(ExitPopupViewModel).GetTypeInfo().Assembly;
+            string content = "";
+            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{fileName}");
 
-            exits.Add(new DestinationItem
+            using (var reader = new StreamReader(stream))
             {
-                _waypointName = "前門出口",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+                content = reader.ReadToEnd();        
+            }
+            stream.Close();
 
-            exits.Add(new DestinationItem
-            {
-                _waypointName = "停車場",
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "exit"
-            });
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(content);
 
-           exits.Add(new DestinationItem
+            XmlNodeList exitNodes = doc.GetElementsByTagName("exit");
+
+            foreach (XmlNode node in exitNodes)
             {
-                _waypointName = "側門出口",
-               _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-               _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-               Key = "exit"
-            });
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._waypointName = node.Attributes["name"].Value;
+                item._floor = node.Attributes["floor"].Value;
+                item.Key = "exit";
+
+                exits.Add(item);
+            }
+            return;
         }
+        //private void LoadData()  //fake data 
+        //{
+
+        //    exits.Add(new DestinationItem
+        //    {
+        //        _waypointName = "前門出口",
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "exit"
+        //    });
+
+        //    exits.Add(new DestinationItem
+        //    {
+        //        _waypointName = "停車場",
+        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "exit"
+        //    });
+
+        //   exits.Add(new DestinationItem
+        //    {
+        //        _waypointName = "側門出口",
+        //       _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+        //       _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //       Key = "exit"
+        //    });
+        //}
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string propName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }

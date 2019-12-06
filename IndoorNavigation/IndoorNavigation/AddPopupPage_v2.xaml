@@ -8,18 +8,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.AddPopupPage_v2"
-                  BackgroundColor="#FFF5F5">
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="#FFE3E3">
+                >
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
         <Frame BackgroundColor="White" VerticalOptions="Center" HeightRequest="300" WidthRequest="300" CornerRadius="8">
             <StackLayout WidthRequest="380">
                 <ScrollView HorizontalOptions="Start" WidthRequest="300">
                     <StackLayout x:Name="PictureCheckBoxStacklayout">
-
+                        <Label Text="a"/>
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                     <Button x:Name="AddCancelButton" Text="Cancel" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddCancelButton_Clicked"/>
-                    <Button x:Name="AddConfirmButton" Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddConfirmButton_Clicked_v2"/>
+                    <Button x:Name="AddConfirmButton" Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddConfirmButton_Clicked"/>
                 </StackLayout>
             </StackLayout>
         </Frame>
