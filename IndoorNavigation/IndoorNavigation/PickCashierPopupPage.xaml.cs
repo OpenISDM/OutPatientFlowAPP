@@ -12,6 +12,11 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Xml;
 using System.IO;
+using IndoorNavigation.Resources.Helpers;
+using System.Resources;
+using System.Globalization;
+using Plugin.Multilingual;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -19,7 +24,13 @@ namespace IndoorNavigation
     {
         ObservableCollection<DestinationItem> Cashieritems;
         ObservableCollection<DestinationItem> Pharmacyitems;
+
+        CultureInfo currentLanguage= CrossMultilingual.Current.CurrentCultureInfo;
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
+           
         SelectionView sv,Pharmacysv;
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
@@ -43,7 +54,15 @@ namespace IndoorNavigation
                 SelectionType = SelectionType.RadioButton,
                 RowSpacing = 7
             };
+            SelectionStack.Children.Add(new Label {
+                Text =_resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage), FontSize=Device.GetNamedSize(NamedSize.Large,typeof(Label)), VerticalTextAlignment=TextAlignment.Center,
+                HorizontalTextAlignment=TextAlignment.Center, HorizontalOptions=LayoutOptions.Start
+            });
             SelectionStack.Children.Add(sv);
+            SelectionStack.Children.Add(new Label {
+                Text=_resourceManager.GetString("CATEGORY_PHARMACY_STRING", currentLanguage), FontSize=Device.GetNamedSize(NamedSize.Large,typeof(Label)), VerticalTextAlignment=TextAlignment.Center,
+                HorizontalTextAlignment=TextAlignment.Center, HorizontalOptions=LayoutOptions.Start
+            });
             SelectionStack.Children.Add(Pharmacysv);
         }
 
@@ -87,17 +106,32 @@ namespace IndoorNavigation
         }
 
         async private void CashierOKBtn_Clicked(object sender, EventArgs e)
-        {
-            var o = sv.SelectedItem as DestinationItem;
-            if (o != null )
+        {            
+            var cashier_item = sv.SelectedItem as DestinationItem;
+            var pharmacy_item = Pharmacysv.SelectedItem as DestinationItem;
+            if(cashier_item==null || pharmacy_item == null)
+            {
+                string alertmeg ="批價與領藥都要選擇一個";
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(alertmeg));
+                return;
+            }
+            if (cashier_item != null )
             {
                 app.records.Insert(app.records.Count-1 ,new RgRecord
                 {
-                    _waypointID=o._waypointID,
+                    _waypointID=cashier_item._waypointID,
                     Key= "Cashier",
-                    _regionID=o._regionID,
-                    _waypointName=o._waypointName,
-                    DptName=o._waypointName
+                    _regionID=cashier_item._regionID,
+                    _waypointName=cashier_item._waypointName,
+                    DptName=cashier_item._waypointName
+                });
+                app.records.Insert(app.records.Count - 1, new RgRecord
+                {
+                    _waypointID=pharmacy_item._waypointID,
+                    Key="Pharmacy",
+                    _regionID=pharmacy_item._waypointID,
+                    _waypointName=pharmacy_item._waypointName,
+                    DptName=pharmacy_item._waypointName
                 });
                 //await DisplayAlert("bb",$"waypoint={o._waypointID.ToString()}, region={o._regionID.ToString()}", "ok");
                 await PopupNavigation.Instance.PopAsync();

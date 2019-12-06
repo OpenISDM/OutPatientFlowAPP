@@ -605,16 +605,16 @@
           "build/Xamarin.Forms.targets": {}
         }
       },
-      "Xamarin.Forms.InputKit/3.0.15": {
+      "Xamarin.Forms.InputKit/3.0.11": {
         "type": "package",
         "dependencies": {
           "Xamarin.Forms": "3.2.0.839982"
         },
         "compile": {
-          "lib/netstandard2.0/Plugin.InputKit.dll": {}
+          "lib/monoandroid81/Plugin.InputKit.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Plugin.InputKit.dll": {}
+          "lib/monoandroid81/Plugin.InputKit.dll": {}
         }
       },
       "Xamarin.Forms.Visual.Material/3.6.0.344457": {
@@ -682,7 +682,7 @@
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
           "Xamarin.Forms": "3.6.0.344457",
-          "Xamarin.Forms.InputKit": "3.0.15",
+          "Xamarin.Forms.InputKit": "3.0.11",
           "Xamarin.Forms.Visual.Material": "3.6.0.344457",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
@@ -1811,13 +1811,15 @@
         "xamarin.forms.nuspec"
       ]
     },
-    "Xamarin.Forms.InputKit/3.0.15": {
-      "sha512": "ea0ahzN2XwqswS3jvc1KMIcm7c+B+BEnyJdFptgd5Ml73015A7OKMzsnf3gzAodzVNZtrK/AGctJSbz5fkK6og==",
+    "Xamarin.Forms.InputKit/3.0.11": {
+      "sha512": "8bVDIc1wjqiFz73vWUZe3VK5mjBU5QJ+vtUqbMaolbdiZg0AHVuLbGrGO7fU6Xk03d7/K1CNValZKAVa4+1H7Q==",
       "type": "package",
-      "path": "xamarin.forms.inputkit/3.0.15",
+      "path": "xamarin.forms.inputkit/3.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "lib/monoandroid81/Plugin.InputKit.dll",
+        "lib/monoandroid81/Plugin.InputKit.xml",
         "lib/monoandroid90/Plugin.InputKit.dll",
         "lib/monoandroid90/Plugin.InputKit.xml",
         "lib/netstandard1.0/Plugin.InputKit.dll",
@@ -1827,7 +1829,7 @@
         "lib/xamarin.ios10/Plugin.InputKit.dll",
         "lib/xamarin.ios10/Plugin.InputKit.xml",
         "readme.txt",
-        "xamarin.forms.inputkit.3.0.15.nupkg.sha512",
+        "xamarin.forms.inputkit.3.0.11.nupkg.sha512",
         "xamarin.forms.inputkit.nuspec"
       ]
     },

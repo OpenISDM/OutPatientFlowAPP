@@ -103,7 +103,7 @@
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
-    <aiforms:Floating.Content>
+    <!--<aiforms:Floating.Content>
         <aiforms:FloatingLayout>
             <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-50">
                 <Button x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"  CornerRadius="40" Clicked="AddBtn_Clicked" 
@@ -117,19 +117,26 @@
                 <Button x:Name="PaymemtListBtn" BorderColor="#3f51b5" BackgroundColor="#3f51b5" TextColor="White" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked" FontAttributes="Bold"/>
             </aiforms:FloatingView>
         </aiforms:FloatingLayout>
-        <!--<aiforms:FloatingLayout>
-            <aiforms:FloatingView VerticalLayoutAlignment="End">
-                <StackLayout>
-                    <Button Text="test" x:Name="PaymemtListBtn" HorizontalOptions="EndAndExpand"/>
-                    <Button Text="test2" x:Name="ShiftBtn" HorizontalOptions="EndAndExpand"/>
-                    <Button Text="test3" x:Name="AddBtn" HorizontalOptions="Fill"/>
-                </StackLayout>
-            </aiforms:FloatingView>
-        </aiforms:FloatingLayout>-->
-    </aiforms:Floating.Content>
+    </aiforms:Floating.Content>-->
     <ContentPage.Content>
-        <StackLayout>
-            <!--<Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
+        <AbsoluteLayout>
+            <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
+            <Grid x:Name="RigistListGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="19*"/>
+
+                </Grid.RowDefinitions>
+                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
+                   VerticalOptions="CenterAndExpand" FontSize="Medium" Grid.Row="0" Margin="5,0,5,0"/>
+                <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
+                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
+                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+
+                </ListView>
+            </Grid>
+
+            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Default" TextColor="White" CornerRadius="40" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.1" FontAttributes="Bold"
                     />
@@ -137,24 +144,7 @@
                      CornerRadius="40" AbsoluteLayout.LayoutFlags="All" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.1"/>
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>-->
-            <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
-            <Grid x:Name="RigistListGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="19*"/>
-                    
-                </Grid.RowDefinitions>
-                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
-                   VerticalOptions="CenterAndExpand" FontSize="Medium" Grid.Row="0" Margin="5,0,5,0"/>
-              <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
-                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
-                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
-                    
-                </ListView>
-            </Grid>
-           
-            
-        </StackLayout>
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1"/>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

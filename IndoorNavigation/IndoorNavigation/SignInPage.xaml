@@ -55,7 +55,7 @@
                 <Label Text="{i18n:Translate REGISTERDAY_STRING}" FontSize="Large"/>
                 <DatePicker x:Name="RgDayPicker" DateSelected="RgDayPicker_DateSelected" MinimumDate="1/1/2019" IsEnabled="False"/>
             </StackLayout>
-            <Button Text="OK_STRING" HorizontalOptions="CenterAndExpand" Clicked="Button_Clicked"/>
+            <Button Text="{i18n:Translate OK_STRING}" HorizontalOptions="CenterAndExpand" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

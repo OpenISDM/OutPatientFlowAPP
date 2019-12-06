@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
-    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.15" />
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.11" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
@@ -160,6 +160,8 @@
     </Compile>
     <Compile Update="Resources\AppResources.Designer.cs">
       <DependentUpon>AppResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>

@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using IndoorNavigation.Resources.Helpers;
-using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
-using IndoorNavigation.Views.Navigation;
-using MvvmHelpers;
-using Plugin.InputKit;
 using Plugin.InputKit.Shared.Controls;
-using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 using Plugin.Multilingual;
-
+using IndoorNavigation.Models.NavigaionLayer;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -28,17 +21,30 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-      
+        string _graphName;
+
         List<RgRecord> AddItems;
         ObservableCollection<CheckBox> CheckBoxes;
         CheckBox RevisitBox; //it need to be deal specially.
+        PhoneInformation _phoneInformation;
+        
         public AddPopupPage()
         {   
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             CheckBoxes = new ObservableCollection<CheckBox>();
         }
+        public AddPopupPage(String graphName)
+        {
+            InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            CheckBoxes = new ObservableCollection<CheckBox>();
 
+            _phoneInformation = new PhoneInformation();
+            _graphName = graphName;
+            
+            
+        }
         private List<RgRecord> LoadItems()
         {
             List<RgRecord> items = new List<RgRecord>();
@@ -98,6 +104,7 @@ namespace IndoorNavigation
                     IsEnabled=true,
                     TextFontSize=24,
                     Type=CheckBox.CheckType.Check,
+                    Color=Color.Black,
                     TextColor=Color.Black
                 };
                 box.CheckChanged +=CheckBox_Changed;
@@ -112,6 +119,7 @@ namespace IndoorNavigation
                 IsEnabled = true,
                 TextFontSize = 26,
                 Type = CheckBox.CheckType.Check,
+                Color=Color.Black,
                 TextColor = Color.Black
             };
             RevisitBox.CheckChanged += RevisitBox_Changed;

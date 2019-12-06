@@ -27,7 +27,7 @@ namespace IndoorNavigation
         //private bool HavePayment = false;
         Object tmp=null;
         App app = (App)Application.Current;
-        private bool isButtonPressed = false; //to prevent button multi-tap from causing some error
+        private bool isButtonPressed = false; //to prevent button multi-tap from causing error
         private ViewCell lastCell=null;
         private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
@@ -50,9 +50,7 @@ namespace IndoorNavigation
             request = new HttpRequest();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-            //Console.WriteLine("rrrrrrrrrrrrrrrr");
-            //to test auto size button
-            //var height = App.DisplayHeight/;
+       
             var width =  App.DisplayWidth/5;
             AddBtn.WidthRequest = width;
             AddBtn.HeightRequest = width;
@@ -62,7 +60,7 @@ namespace IndoorNavigation
             AddBtn.IsVisible = true;
             ShiftBtn.IsVisible = true;
             ShiftBtn.IsEnabled = true;
-            //Console.WriteLine("pppppppppppppppp");
+
             BindingContext = _viewmodel;
             Console.WriteLine("Page has finished init");
         } 
