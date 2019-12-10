@@ -556,7 +556,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似  的當地語系化字串。
+        ///   查詢類似 Disagree 的當地語系化字串。
         /// </summary>
         internal static string DISAGREE_STRING {
             get {

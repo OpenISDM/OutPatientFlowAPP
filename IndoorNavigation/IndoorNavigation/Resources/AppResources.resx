@@ -511,7 +511,7 @@
     <value>agree</value>
   </data>
   <data name="DISAGREE_STRING" xml:space="preserve">
-    <value />
+    <value>Disagree</value>
   </data>
   <data name="OPFM_STRING" xml:space="preserve">
     <value>OPFM</value>

@@ -12,7 +12,7 @@ using System.Xml;
 using Plugin.Multilingual;
 using System.Globalization;
 using System.IO;
-
+using Plugin.InputKit.Shared.Controls;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -26,16 +26,19 @@ namespace IndoorNavigation
         bool isButtonPressed = false;
         string _graphName;
 
-        Dictionary<string, SelectionView> BoxesDict;
+        Dictionary<string, List<CheckBox>> BoxesDict;
+        //Dictionary<string, SelectionView> BoxesDict;
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
         List<string> DepartmentList;
         public AddPopupPage_v2(string graphName)
         {
+            InitializeComponent();
             _graphName = graphName;
-            BoxesDict = new Dictionary<string, SelectionView>();
+            BoxesDict = new Dictionary<string, List<CheckBox>>();
             DepartmentList = new List<string>();
             _examinationItemDict = new Dictionary<string, List<AddExaminationItem>>();
             LoadData();
+            LoadBox();
         }
 
         private void LoadData()
@@ -71,25 +74,78 @@ namespace IndoorNavigation
                     //item._floor = room.Attributes[""].Value;
                     item.Key = "AddItem";
                     item._waypointName = room.Attributes["name"].Value;
-                    //Console.WriteLine(room.Attributes["name"].Value + room.Attributes["displayname"].Value);
+
                     items.Add(item);
                 }
                 _examinationItemDict.Add(departName,items);
             }
         }
 
+        private void LoadBox()
+        {
+            mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
+            foreach (string dptName in DepartmentList)
+            {
+                Grid outSideGrid = getGridLayout();
+
+                Image image = new Image { Source = "Arrived.png", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
+                    VerticalOptions=LayoutOptions.Center, HorizontalOptions=LayoutOptions.Center
+                };
+                Label DptNameLabel = new Label { Text = dptName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
+                };
+
+                StackLayout BoxLayout = new StackLayout();
+
+                foreach(AddExaminationItem item in _examinationItemDict[dptName])
+                {
+                    CheckBox box = new CheckBox { Text = item.DisplayName, TextFontSize = Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                         Margin = new Thickness(0, -3) 
+                    };
+                    BoxLayout.Children.Add(box);
+                }
+                
+                outSideGrid.Children.Add(image, 0, 2, 0, 4);
+                outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
+                outSideGrid.Children.Add(/*new ScrollView {Content=BoxLayout}*/BoxLayout, 2,5,0,5);
+
+                mainStackLayout.Children.Add(outSideGrid);
+                mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest=1});
+            }
+        }
+        private Grid getGridLayout()
+        {
+            Grid tmp = new Grid();
+
+            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+
+            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.5, GridUnitType.Star) });            
+            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            return tmp;
+        }
         private void AddCancelButton_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;
             isButtonPressed = true;
-
             
+            foreach(string dptName in DepartmentList)
+            {
+
+            }
 
             PopupNavigation.Instance.PopAsync();
         }
 
         private void AddConfirmButton_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
             PopupNavigation.Instance.PopAsync();
         }
 

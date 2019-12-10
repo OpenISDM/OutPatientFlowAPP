@@ -3,11 +3,9 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-     xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-                 
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.ExitPopupPage">
     <pages:PopupPage.Resources>
@@ -20,20 +18,14 @@
     </pages:PopupPage.Resources>
 
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="300">
+        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="220" WidthRequest="300">
             <StackLayout>
+                <Label x:Name="AskSelectExit" Text="請選擇一個出口" FontSize="Large" TextColor="Black" HorizontalOptions="Start" Margin="0,5"/>
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
                     <StackLayout Spacing="12" Padding="10,0">
                         <input:SelectionView SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
                     </StackLayout>
-                    <!--/*
-                    <StackLayout>
-                        <input:RadioButtonGroupView x:Name="GroupView">
-
-                        </input:RadioButtonGroupView>
-                    </StackLayout>-->
                 </ScrollView>
-
                 <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
                 
             </StackLayout>
