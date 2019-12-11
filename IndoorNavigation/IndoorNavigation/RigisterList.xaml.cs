@@ -206,9 +206,9 @@ namespace IndoorNavigation
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
-            await PopupNavigation.Instance.PushAsync(new AddPopupPage());
+            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2(_navigationGraphName));
             //await Navigation.PushPopupAsync(new AddPopupPage());
-            MessagingCenter.Subscribe<AddPopupPage,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
+            MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
                 bool Message = (bool)Messageargs;
                 if (Message == false) app.HaveCashier = false;
@@ -218,7 +218,7 @@ namespace IndoorNavigation
                 MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "AddAnyOrNot");
             });
 
-            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isBack", (MessageSender, MessageArgs) => 
+            MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isBack", (MessageSender, MessageArgs) => 
             {
                 isButtonPressed = false;
                 MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "isBack");

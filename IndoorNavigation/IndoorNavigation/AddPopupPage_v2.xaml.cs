@@ -25,7 +25,7 @@ namespace IndoorNavigation
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         bool isButtonPressed = false;
         string _graphName;
-
+        bool AllFinished;
         Dictionary<string, List<CheckBox>> BoxesDict;
         //Dictionary<string, SelectionView> BoxesDict;
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
@@ -84,21 +84,26 @@ namespace IndoorNavigation
         private void LoadBox()
         {
             List<CheckBox> boxList;
+            StackLayout BoxLayout;
+            Label DptNameLabel;
+            Grid outSideGrid;
+            Image image;
+            int key = 0; 
             mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
             foreach (string dptName in DepartmentList)
             {
-                Grid outSideGrid = getGridLayout();
+                outSideGrid = getGridLayout();
 
-                Image image = new Image { Source = "Arrived.png", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
+                image = new Image { Source = "Arrived.png", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
                     VerticalOptions=LayoutOptions.Center, HorizontalOptions=LayoutOptions.Center
                 };
-                Label DptNameLabel = new Label { Text = dptName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                DptNameLabel = new Label { Text = dptName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                     VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
                 };
 
-                StackLayout BoxLayout = new StackLayout();
+                BoxLayout = new StackLayout();
                 boxList = new List<CheckBox>();
-                int key = 0;
+                key = 0;
                 foreach(AddExaminationItem item in _examinationItemDict[dptName])
                 {
                     CheckBox box = new CheckBox { Text = item.DisplayName, TextFontSize = Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
@@ -116,6 +121,48 @@ namespace IndoorNavigation
                 mainStackLayout.Children.Add(outSideGrid);
                 mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest=1});
             }
+
+            boxList = new List<CheckBox>();
+            outSideGrid = getGridLayout();
+            BoxLayout = new StackLayout();
+            
+            key = 0;
+            DptNameLabel = new Label
+            {
+                Text = "回診",
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+            };
+
+            image = new Image
+            {
+                Source = "Arrived.png",
+                Aspect = Aspect.AspectFit,
+                WidthRequest = 80,
+                HeightRequest = 80,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center
+            };
+            foreach (RgRecord record in app._TmpRecords)
+            {
+                CheckBox box = new CheckBox
+                {
+                    Text = record.DptName,
+                    TextFontSize = Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                    Margin = new Thickness(0, -3),
+                    Key = key++,
+                    Type = CheckBox.CheckType.Check
+                };
+                boxList.Add(box);
+                BoxLayout.Children.Add(box);
+            }
+            outSideGrid.Children.Add(image, 0, 2, 0, 4);
+            outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
+            outSideGrid.Children.Add(new ScrollView {Content=BoxLayout}, 2, 5, 0, 5);
+            BoxesDict.Add("revisit", boxList);
+            mainStackLayout.Children.Add(outSideGrid);
+            mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
         }
 
         private void CheckBox_Changed(object sender, EventArgs args)
@@ -141,8 +188,14 @@ namespace IndoorNavigation
         private void AddCancelButton_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;
-            isButtonPressed = true;          
-            PopupNavigation.Instance.PopAsync();
+            isButtonPressed = true;
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinished = true;
+            else
+                AllFinished = false;
+
+            GobackPage(AllFinished);
+            //PopupNavigation.Instance.PopAsync();
         }
 
         async private void AddConfirmButton_Clicked(object sender, EventArgs e)
@@ -150,6 +203,7 @@ namespace IndoorNavigation
             //if (isButtonPressed) return;
             //isButtonPressed = true;
             int count = 0;
+            int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
 
             foreach (string dptName in DepartmentList)
             {
@@ -165,12 +219,12 @@ namespace IndoorNavigation
                     Console.WriteLine($"item id is {items[box.Key]._waypointName} and {items[box.Key].Key}");
                     if (!box.IsChecked) continue;
 
-                    var isDuplicate = app.records.Any(p => p.DptName==items[box.Key].DisplayName && p.isAccept == false);
+                    var isDuplicate = app.records.Any(p => (p.DptName==dptName+"-"+items[box.Key].DisplayName) && p.isAccept == false);
                     //Console.WriteLine($"isDuplicate is {isDuplicate}");
                     if (isDuplicate)
                         continue;
 
-                    app.records.Add(new RgRecord {
+                    app.records.Insert(index++, new RgRecord {
                         _waypointID=items[box.Key]._waypointID,
                         _regionID=items[box.Key]._regionID,
                         _waypointName=items[box.Key]._waypointName,
@@ -180,6 +234,23 @@ namespace IndoorNavigation
                     count++;
                 }
             }
+
+            foreach(CheckBox box in BoxesDict["revisit"])
+            {
+
+                if (box.IsChecked == false) continue;
+                var isDumplicate = app.records.Any(a =>a.DptName==("回診-"+app.records[box.Key].DptName) && !a.isAccept);
+                if (isDumplicate) continue;
+                app.records.Insert(index++, new RgRecord {
+                    Key="AddItem",
+                    _waypointID=app._TmpRecords[box.Key]._waypointID,
+                    _regionID = app._TmpRecords[box.Key]._regionID,
+                    _waypointName=app._TmpRecords[box.Key]._waypointName,
+                    DptName="回診-"+app._TmpRecords[box.Key].DptName
+                });
+                count++;
+            }
+
             if (count == 0)
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
@@ -187,7 +258,8 @@ namespace IndoorNavigation
 
                 return;
             }
-            PopupNavigation.Instance.PopAsync();
+            //PopupNavigation.Instance.PopAsync();
+            GobackPage(false);
         }
 
         private class AddExaminationItem: DestinationItem
@@ -196,7 +268,32 @@ namespace IndoorNavigation
             public override string ToString() => DisplayName;
            
         };
+        protected override bool OnBackButtonPressed()
+        {      
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinished = true;
+            else
+                AllFinished = false;
 
+            GobackPage(AllFinished);
+            return base.OnBackButtonPressed();
+        }
+        protected override bool OnBackgroundClicked()
+        {
+            if (app.FinishCount + 1 == app.records.Count)
+                AllFinished = true;
+            else
+                AllFinished = false;
+            GobackPage(AllFinished);
+            return base.OnBackgroundClicked();
+        }
+
+        private void GobackPage(bool ConfirmOrCancel)
+        {
+            MessagingCenter.Send(this, "AddAnyOrNot", ConfirmOrCancel);
+            MessagingCenter.Send(this, "isBack", true);
+            PopupNavigation.Instance.PopAsync();
+        }
         // Dictionary<string, SelectionView> _radioBoxes;
         // Dictionary<string,AddItems> _items;
         // List<String> examinationTypes;

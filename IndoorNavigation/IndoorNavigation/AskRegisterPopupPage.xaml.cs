@@ -59,6 +59,7 @@ namespace IndoorNavigation
             app.records.Clear();
             app._TmpRecords.Clear();
             app.HaveCashier = false;
+            app.roundRecord = null;
             app.FinishCount = 0;
             ButtonLock = true;
             app.getRigistered = true;
@@ -121,7 +122,7 @@ namespace IndoorNavigation
             app._TmpRecords.Clear();
             app.HaveCashier = false;
             app.FinishCount = 0;
-
+            app.roundRecord = null;
             request.GetXMLBody();
             request.RequestData();
             MessagingCenter.Send(this, "isReset", true);
