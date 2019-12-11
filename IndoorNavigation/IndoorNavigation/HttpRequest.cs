@@ -10,6 +10,7 @@ using System.Web;
 using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using Rg.Plugins.Popup.Services;
 namespace IndoorNavigation
 {
     class HttpRequest
@@ -74,6 +75,23 @@ namespace IndoorNavigation
 
         public void RequestData()
         {
+            //var currentNetWorkState = Connectivity.NetworkAccess;
+            //var page = Application.Current.MainPage;
+            //Console.WriteLine("Now Excution is::: Check network connection.");
+            //while(currentNetWorkState==NetworkAccess.Unknown || currentNetWorkState == NetworkAccess.None)
+            //{
+            //    await page.DisplayAlert("info", "目前無網路連線，請檢查網路連線", "ok");
+            //    //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("無網路",true));
+            //    currentNetWorkState = Connectivity.NetworkAccess;
+
+            //    if(currentNetWorkState==NetworkAccess.Internet)
+            //    {
+            //        RequestData();
+            //        return;
+            //    }
+                
+            //}
+
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://bc.cch.org.tw:8080/WSRgSRV/Service.asmx");
@@ -104,7 +122,18 @@ namespace IndoorNavigation
                 contentString = content;
                 responseString = content;
                
-            }   
+            }
+            ResponseXmlParse();
+
+            int index = (app.getRigistered) ?app.records.Count-1:app.records.Count;
+
+            foreach(RgRecord record in app._TmpRecords)
+            {
+                app.records.Insert(index++, record);
+                //app.records.Add(record);
+            }
+            if(!app.getRigistered)
+                app.records.Add(new RgRecord { Key = "NULL" });
         }
         public void ResponseXmlParse()
         {
@@ -125,6 +154,7 @@ namespace IndoorNavigation
           
             XmlNodeList records = doc.GetElementsByTagName("RgRecord");
             Console.WriteLine(responseString);
+            DestinationXmlinfo infos = new DestinationXmlinfo();
             for (int i = 0; i < records.Count; i++)
             {
                 RgRecord record = new RgRecord();
@@ -137,9 +167,11 @@ namespace IndoorNavigation
                 record.SeeSeq = records[i].ChildNodes[5].InnerText;
                 record.Key = "QueryResult";
                 record._waypointName = record.DptName;
-                record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-                record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
+                record._regionID = infos.GetRegionID(record.CareRoom); //new Guid("11111111-1111-1111-1111-111111111111");
+                record._waypointID = infos.GetDestinationID(record.CareRoom); //new Guid("00000000-0000-0000-0000-000000000002");
                 app._TmpRecords.Add(record);
+
+                Console.WriteLine($"HttpRequest region id={record._regionID}, waypoint id={record._waypointID}");
             }
 
             Console.WriteLine(app._TmpRecords.Count);

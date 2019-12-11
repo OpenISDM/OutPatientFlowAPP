@@ -20,8 +20,6 @@
       <Destination id='00000000-0000-0000-0000-000000000022' name='212診'/>
       <Destination id='00000000-0000-0000-0000-000000000022' name='213診'/>
       <Destination id='00000000-0000-0000-0000-000000000022' name='214診'/>
-      <Destination id='?' name='216診'/>
-      <Destination id='?' name='217診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='220診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='221診'/>
       <Destination id='00000000-0000-0000-0000-000000000025' name='222診'/>
@@ -40,40 +38,17 @@
       <Destination id='00000000-0000-0000-0000-000000000027' name='248診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='249診'/>
       <Destination id='00000000-0000-0000-0000-000000000027' name='250診'/>
-      <Destination id='?' name='251診'/>
-      <Destination id='?' name='252診' type='超音波' category='examination'/>
-      <Destination id='?' name='258診' type='衛教' category='healtheducation'/>
-      <Destination id='?' name='放射區' type='放射業務' category='examination'/>
-      <Destination id='?' name='檢驗區' type='心電圖' category='examination'/>
-      <Destination id='?' name='檢驗區' type='抽血'  category='examinaiton'/>
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000026'  name='2F掛號櫃台'/>
-    </region>
-		<region id='' floor='3'>
-      <Destination id='' name='301診' category='到電梯'/>
-		</region>
-		<region id='' floor='5'>
-      <Destination id='' name='501診' category='到電梯'/>
-      <Destination id='' name='502診' category='到電梯'/>
-      <Destination id='' name='503診' category='到電梯'/>
-      <Destination id='' name='504診' category='到電梯'/>
-      <Destination id='' name='506診' type='衛教' category='到電梯'/>
     </region>
 		<region id='11111111-1111-1111-1111-111111111111' floor='B1'>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1批價櫃台'/>
       <Destination id='00000000-0000-0000-0000-000000000004' name='B1掛號櫃台'/>
-      <Destination id='' name=''/>
-      <Destination id=''/>
-      <Destination id=''/>
       <Destination id='00000000-0000-0000-0000-000000000010' name='B02診'/>
       <Destination id='00000000-0000-0000-0000-000000000010' name='B03診'/>
-      <Destination id='?' name='B08診'/>
-      <Destination id='?' name='B09診' type='衛教' category='healtheducation'/>
-      <Destination id='?' name='B10診' type='兒科處置及注射' category=''/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B11診'/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B12診'/>
       <Destination id='00000000-0000-0000-0000-000000000013' name='B13診'/>
-      <Destination id='?' name='B15診'/>
       <Destination id='00000000-0000-0000-0000-000000000012' name='B17診'/>
       <Destination id='00000000-0000-0000-0000-000000000012' name='B18診'/>
       <Destination id='00000000-0000-0000-0000-000000000012' name='B19診'/>

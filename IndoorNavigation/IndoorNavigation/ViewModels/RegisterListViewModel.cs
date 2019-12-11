@@ -9,6 +9,8 @@ using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using Rg.Plugins.Popup.Services;
+using System.Windows.Input;
+
 namespace IndoorNavigation.ViewModels
 {
     class RegisterListViewModel:BaseViewModel
@@ -17,9 +19,13 @@ namespace IndoorNavigation.ViewModels
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
-
+        int _recordsNumber;
+        bool _cashierAndpharmacy;
+        
+        //bool 
         public RegisterListViewModel()
         {
+
             if (app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();
@@ -29,10 +35,14 @@ namespace IndoorNavigation.ViewModels
                 CheckRegister();
                 app.isRigistered = true;
             }
-
+            FinishClickCommand = new Command(()=>{
+                RecordCount = app.records.Count;
+            });
         }
- 
-        async public  void CheckRegister()
+        
+        
+
+        async public void CheckRegister()
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             Page nowPage = Application.Current.MainPage;
@@ -62,5 +72,30 @@ namespace IndoorNavigation.ViewModels
                 await mainPage.Navigation.PushAsync(new SignInPage());
             }
         }
+        #region 
+        public int RecordCount
+        {
+            get { return _recordsNumber; }
+            set { if (_recordsNumber != value)
+                {
+                    _recordsNumber = value;
+                    OnPropertyChanged();
+                    CashierAndPharmacy = (_recordsNumber+1 == app.records.Count);
+                }
+            }
+        }
+        public ICommand FinishClickCommand { private set; get; }
+        public bool CashierAndPharmacy
+        {
+            get { return _cashierAndpharmacy; }
+            set {
+                if (_cashierAndpharmacy != value)
+                {
+                    _cashierAndpharmacy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        #endregion
     }
 }

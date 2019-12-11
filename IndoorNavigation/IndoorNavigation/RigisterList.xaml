@@ -144,7 +144,9 @@
                      AbsoluteLayout.LayoutFlags="All" 
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" TextColor="White"/>
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
+                    TextColor="White"/>
+            <!--IsEnabled="{Binding CashierAndPharmacy}" IsVisible="{Binding CashierAndPharmacy}"-->
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -12,10 +12,19 @@
   <Department name='內分泌科'>
     <Destination name='252診' displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
   </Department>
+  <Department name='放射科'>
+    <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
+  </Department>
+
+  <Department name='檢驗科'>
+    <Destination name='檢驗區' displayname='抽血、心電圖' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
+  </Department>
+  
   <Department name='兒科'>
     <Destination name='B09診' displayname='衛教' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013' isfake='true'/>
     <Destination name='B10診' displayname='處置及注射' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013' isfake='true'/>
   </Department>
+  
   <Department name='乳房外科'>
     <Destination name='B30診' displayname='超音波' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000009'/>
   </Department>

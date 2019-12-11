@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Plugin.Multilingual;
-using Plugin.InputKit.Shared.Controls;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -27,19 +26,22 @@ namespace IndoorNavigation
         string _navigationGraphName;
         ExitPopupViewModel _viewmodel;
 
+        SelectionView sv;
+
         public ExitPopupPage(string navigationGraphName)
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _navigationGraphName = navigationGraphName;
-            _viewmodel = new ExitPopupViewModel(_navigationGraphName);
-            BindingContext = _viewmodel;
-            
+            _viewmodel = new ExitPopupViewModel(_navigationGraphName);                        
+
+            BindingContext = _viewmodel;            
         }
+
          protected override bool OnBackButtonPressed()
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("SELET_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
+            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
             //return base.OnBackButtonPressed();
             return true;
         }
@@ -47,7 +49,7 @@ namespace IndoorNavigation
          protected override bool OnBackgroundClicked()
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELET_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
             //return base.OnBackgroundClicked();
             return false;
         }

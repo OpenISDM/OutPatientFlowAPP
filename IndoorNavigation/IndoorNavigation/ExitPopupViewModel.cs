@@ -116,34 +116,7 @@ namespace IndoorNavigation
                 exits.Add(item);
             }
             return;
-        }
-        //private void LoadData()  //fake data 
-        //{
-
-        //    exits.Add(new DestinationItem
-        //    {
-        //        _waypointName = "前門出口",
-        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        Key = "exit"
-        //    });
-
-        //    exits.Add(new DestinationItem
-        //    {
-        //        _waypointName = "停車場",
-        //        _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        Key = "exit"
-        //    });
-
-        //   exits.Add(new DestinationItem
-        //    {
-        //        _waypointName = "側門出口",
-        //       _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-        //       _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //       Key = "exit"
-        //    });
-        //}
+        }       
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string propName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }

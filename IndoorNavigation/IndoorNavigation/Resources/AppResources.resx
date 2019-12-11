@@ -498,8 +498,8 @@
   <data name="PHARMACY_ALERT_STRING" xml:space="preserve">
     <value>You can go pharmacy only if you finish cashier.</value>
   </data>
-  <data name="SELET_EXIT_STRING" xml:space="preserve">
-    <value>Please select a exit you want to leave.</value>
+  <data name="SELECT_EXIT_STRING" xml:space="preserve">
+    <value>Please select a exit.</value>
   </data>
   <data name="IDNUM_TYPE_WRONG_STRING" xml:space="preserve">
     <value>This ID number is illegal, please check again.</value>

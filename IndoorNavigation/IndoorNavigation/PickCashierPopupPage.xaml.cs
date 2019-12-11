@@ -58,12 +58,17 @@ namespace IndoorNavigation
                 Text =_resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage), FontSize=Device.GetNamedSize(NamedSize.Large,typeof(Label)), VerticalTextAlignment=TextAlignment.Center,
                 HorizontalTextAlignment=TextAlignment.Center, HorizontalOptions=LayoutOptions.Start
             });
-            SelectionStack.Children.Add(sv);
+            SelectionStack.Children.Add(sv);            
             SelectionStack.Children.Add(new Label {
                 Text=_resourceManager.GetString("CATEGORY_PHARMACY_STRING", currentLanguage), FontSize=Device.GetNamedSize(NamedSize.Large,typeof(Label)), VerticalTextAlignment=TextAlignment.Center,
                 HorizontalTextAlignment=TextAlignment.Center, HorizontalOptions=LayoutOptions.Start
             });
             SelectionStack.Children.Add(Pharmacysv);
+
+            if (Pharmacyitems.Count <= 1)
+                Pharmacysv.SelectedItem = Pharmacyitems[0];
+            if (Cashieritems.Count <= 1)
+                sv.SelectedItem = Cashieritems[0];
         }
 
         public void LoadData()

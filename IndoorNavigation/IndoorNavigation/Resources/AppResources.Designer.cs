@@ -1222,6 +1222,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Please select a exit. 的當地語系化字串。
+        /// </summary>
+        internal static string SELECT_EXIT_STRING {
+            get {
+                return ResourceManager.GetString("SELECT_EXIT_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Select Language 的當地語系化字串。
         /// </summary>
         internal static string SELECT_LANGUAGE_STRING {
@@ -1236,15 +1245,6 @@ namespace IndoorNavigation.Resources {
         internal static string SELECT_LOCATION_STRING {
             get {
                 return ResourceManager.GetString("SELECT_LOCATION_STRING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類似 Please select a exit you want to leave. 的當地語系化字串。
-        /// </summary>
-        internal static string SELET_EXIT_STRING {
-            get {
-                return ResourceManager.GetString("SELET_EXIT_STRING", resourceCulture);
             }
         }
         

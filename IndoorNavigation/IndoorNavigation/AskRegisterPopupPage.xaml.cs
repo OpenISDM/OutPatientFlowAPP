@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using Xamarin.Essentials;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -20,6 +12,8 @@ namespace IndoorNavigation
         private App app = (App)Application.Current;
         private HttpRequest request;
         private bool ButtonLock;
+
+        NetworkAccess networkState = Connectivity.NetworkAccess;
         public AskRegisterPopupPage()
         {
             InitializeComponent();
@@ -35,19 +29,27 @@ namespace IndoorNavigation
         }
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
+            networkState=Connectivity.NetworkAccess;
+            if(networkState==NetworkAccess.Internet)
+                CancelorClickBack();
+            else
+            {
+                await DisplayAlert("info", "沒有網路~", "Ok");
+                return;
+            }
             //ReadXml();
-            if (ButtonLock) return;
-            ButtonLock = true;
-            app.FinishCount = 0;
-            app.records.Clear();
-            app._TmpRecords.Clear();
+            //if (ButtonLock) return;
+            //ButtonLock = true;
+            //app.FinishCount = 0;
+            //app.records.Clear();
+            //app._TmpRecords.Clear();
 
-            request.GetXMLBody();
-            request.RequestData();
-            request.ResponseXmlParse();
-            foreach (RgRecord record in app._TmpRecords)
-                app.records.Add(record);
-            app.records.Add(new RgRecord { Key = "NULL" });
+            //request.GetXMLBody();
+            //request.RequestData();
+            ////request.ResponseXmlParse();
+            //foreach (RgRecord record in app._TmpRecords)
+            //    app.records.Add(record);
+            //app.records.Add(new RgRecord { Key = "NULL" });
             await PopupNavigation.Instance.PopAllAsync();
         }
 
@@ -58,6 +60,7 @@ namespace IndoorNavigation
             app._TmpRecords.Clear();
             app.FinishCount = 0;
             ButtonLock = true;
+            app.getRigistered = true;
             app.records.Add(new RgRecord
             {
                 DptName = "導航至掛號台",
@@ -72,51 +75,57 @@ namespace IndoorNavigation
 
         protected override bool OnBackgroundClicked()
         {
-            //ReadXml();
-            request.GetXMLBody();
-            request.RequestData();
-            request.ResponseXmlParse();
-            app.records.Clear();
-            app._TmpRecords.Clear();
-
-            foreach (RgRecord record in app._TmpRecords)
-                app.records.Add(record);
-            app.records.Add(new RgRecord { Key = "NULL" });
+            networkState = Connectivity.NetworkAccess;
+            if (networkState == NetworkAccess.Internet)
+            {
+                CancelorClickBack();
+            }
+            else
+            {
+                DisplayAlert("info", "沒有網路~", "Ok");
+                return false;
+            }
             return base.OnBackgroundClicked();
         }
         protected override bool OnBackButtonPressed()
         {
+            networkState = Connectivity.NetworkAccess;
+            if (networkState != NetworkAccess.Internet)
+            {
+                DisplayAlert("info", "沒有網路~", "Ok");
+                return true;
+            }
+
+            CancelorClickBack();
+            #region
             //ReadXml();
-            request.GetXMLBody();
-            request.RequestData();
-            request.ResponseXmlParse();
+            //app.records.Clear();
+            //app._TmpRecords.Clear();
 
-            app.records.Clear();
-            app._TmpRecords.Clear();
-
-            foreach (RgRecord record in app._TmpRecords)
-                app.records.Add(record);
-            app.records.Add(new RgRecord { Key = "NULL" });
+            //request.GetXMLBody();
+            //request.RequestData();
+            ////request.ResponseXmlParse();
+            //foreach (RgRecord record in app._TmpRecords)
+            //    app.records.Add(record);
+            //app.records.Add(new RgRecord { Key = "NULL" });
+            #endregion
             return base.OnBackButtonPressed();
         }
 
-        private void LoadData()
+        private void CancelorClickBack()
         {
+            app.getRigistered = false;
+            app.records.Clear();
+            app._TmpRecords.Clear();
+
+            app.FinishCount = 0;
+
+            request.GetXMLBody();
+            request.RequestData();
 
         }
-        //private void ReadXml()
-        //{
-
-        //    if (app._TmpRecords.Count != 0)
-        //    {
-        //        foreach (RgRecord tmprecord in app._TmpRecords)
-        //        {
-        //            if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
-        //        }
-        //    }
-        //    string filename = "PatientData.xml";
-        //    var assembly = typeof(RigisterList).GetTypeInfo().Assembly;
-
+      
+        
 
         //    Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
         //    using (var reader = new StreamReader(stream))

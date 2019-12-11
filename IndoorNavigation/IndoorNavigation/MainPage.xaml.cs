@@ -73,6 +73,8 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private bool updateMapOrNot;
         private static PhoneInformation _phoneInformation = new PhoneInformation();
+
+        ViewCell lastCell;
         public MainPage()
         {
             InitializeComponent();
@@ -262,6 +264,18 @@ namespace IndoorNavigation
                 _viewModel.LoadNavigationGraph();
             }
         }
-        
+
+        private void ViewCell_Tapped(object sender, EventArgs e)
+        {
+            if (lastCell != null)
+            {
+                lastCell.View.BackgroundColor = Color.Transparent;
+            }
+            var viewCell = (ViewCell)sender;
+            if (viewCell.View != null)
+            {
+                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
+            }
+        }
     }
 }

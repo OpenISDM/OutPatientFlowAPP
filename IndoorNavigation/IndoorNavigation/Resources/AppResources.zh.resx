@@ -582,7 +582,7 @@
   <data name="YES_STRING" xml:space="preserve">
     <value>好</value>
   </data>
-  <data name="string_1" xml:space="preserve">
-    <value />
+  <data name="SELECT_EXIT_STRING" xml:space="preserve">
+    <value>請選擇要離開的出口</value>
   </data>
 </root>

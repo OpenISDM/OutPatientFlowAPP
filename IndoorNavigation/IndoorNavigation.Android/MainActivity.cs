@@ -44,22 +44,13 @@ namespace IndoorNavigation.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
-            SetScreenSize();
+            
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
         }
-        private void SetScreenSize()
-        {
-            var metrix = Resources.DisplayMetrics;
-            App.DisplayHeight =GetPixel(metrix.HeightPixels);
-            App.DisplayWidth=GetPixel(metrix.WidthPixels);
-        }
-        private int GetPixel(float length)
-        {
-            return (int)(length / Resources.DisplayMetrics.Density);
-        }
+        
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);

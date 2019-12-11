@@ -21,10 +21,10 @@ namespace IndoorNavigation
     {
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
-        private NavigationGraph _navigationGraph;
+
         public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
-        //private bool HavePayment = false;
+
         Object tmp=null;
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
@@ -43,26 +43,16 @@ namespace IndoorNavigation
             //get graph info
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));                       
+            _navigationGraphName = navigationGraphName;           
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             Console.WriteLine("initialize http request");
             request = new HttpRequest();
+
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
 
-            //var width =  App.DisplayWidth/5;
-            //AddBtn.WidthRequest = width;
-            //AddBtn.HeightRequest = width;
-            //AddBtn.CornerRadius = width / 2;
-            //ShiftBtn.WidthRequest = width;
-            //ShiftBtn.HeightRequest = width;
-            //ShiftBtn.CornerRadius = width / 2;
-            //ShiftBtn.he
-            
-            Console.WriteLine($"ShiftBtn Height is: {ShiftBtn.Height}\n AddBtn Height is:{AddBtn.Height}\n");
             BindingContext = _viewmodel;
-            Console.WriteLine("Page has finished init");
+
         } 
       
         /*this function is to push page to NavigatorPage */
@@ -160,8 +150,6 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
             AddBtn.IsEnabled = !AddBtn.IsEnabled;
             AddBtn.IsVisible = !AddBtn.IsVisible;
-            //NavigationPageButton.IsEnabled = !NavigationPageButton.IsEnabled;
-            //NavigationPageButton.IsVisible = !NavigationPageButton.IsVisible;
             return;
         }
 
@@ -177,29 +165,10 @@ namespace IndoorNavigation
         /*the function is a button event to add payment and medicine recieving route to listview*/
         async private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
-            Buttonable();
-            //app.records.Insert(app.FinishCount, new RgRecord
-            //{
-            //    DptName="領藥",
-            //    _waypointID=new Guid("00000000-0000-0000-0000-000000000002"),
-            //    _regionID=new Guid("11111111-1111-1111-1111-111111111111"),
-            //    _waypointName= "領藥櫃臺",
-            //    Key = "Pharmacy"
-            //});
-            //app.records.Insert(app.FinishCount,new RgRecord
-            //{
-            //    DptName="批價",
-            //    _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-            //    _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-            //    _waypointName = "批價櫃臺",
-            //    Key = "Cashier"
-            //});
-            //PaymemtListBtn.IsEnabled = false;
-            //PaymemtListBtn.IsVisible = false;
-
+            Buttonable();    
             if (isButtonPressed) return;
             isButtonPressed = true;
-            PaymemtListBtn.IsEnabled = false;
+                PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
 
@@ -240,11 +209,14 @@ namespace IndoorNavigation
                 if (Message == false) app.HaveCashier = false;
                 PaymemtListBtn.IsEnabled = Message;
                 PaymemtListBtn.IsVisible = Message;
+
+                MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "AddAnyOrNot");
             });
 
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isBack", (MessageSender, MessageArgs) => 
             {
                 isButtonPressed = false;
+                MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "isBack");
             });
         }
         
@@ -263,7 +235,9 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
             ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
             AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
-            Console.WriteLine($"OnAppearing: ShiftBtn Height is: {ShiftBtn.Height}\n AddBtn Height is:{AddBtn.Height}\n ");
+
+            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
+            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
             //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
         }
@@ -276,9 +250,9 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
-                ReadXml(1);
+                ReadXml();
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
-                await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
+                //await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;
@@ -290,7 +264,6 @@ namespace IndoorNavigation
             else if (index.Key.Equals("exit"))
             {
                 //show msg to say goodbye
-
                 string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING", currentLanguage),false)) ;
@@ -375,7 +348,7 @@ namespace IndoorNavigation
                 app.records.Remove(item);
             }
         }
-
+        //to load test data
         private void ReadXml(int i)
         {
             int index = app.records.Count - 1;
@@ -430,14 +403,7 @@ namespace IndoorNavigation
             Console.WriteLine("Now Excution is::: Todo request to server");
             request.GetXMLBody();
             request.RequestData();
-            request.ResponseXmlParse();
-            Console.WriteLine("Now Excution is::: Get insert index");
-            int index = (app.records.Count == 0) ? 0 : app.records.Count - 1;
-            Console.WriteLine("Now Excution is::: GetParse And put data to listView");
-            foreach (RgRecord record in app._TmpRecords)
-            {
-                app.records.Insert(index, record);
-            }
+            
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }

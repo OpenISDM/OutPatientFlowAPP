@@ -20,10 +20,10 @@
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
         <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="220" WidthRequest="300">
             <StackLayout>
-                <Label x:Name="AskSelectExit" Text="請選擇一個出口" FontSize="Large" TextColor="Black" HorizontalOptions="Start" Margin="0,5"/>
+                <Label x:Name="AskSelectExit" Text="{i18n:Translate SELECT_EXIT_STRING}" FontSize="Large" HorizontalOptions="Start" Margin="0,5"/>
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
                     <StackLayout Spacing="12" Padding="10,0">
-                        <input:SelectionView SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
+                        <input:SelectionView x:Name="selectionView" Color="Black" SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
                     </StackLayout>
                 </ScrollView>
                 <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
