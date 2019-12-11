@@ -134,8 +134,8 @@ namespace IndoorNavigation
             {
                 await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("NO_REVISIT_RECORD_STRING", currentLanguage)
                     , _resourceManager.GetString("OK_STRING",currentLanguage));
-                
-                o.IsChecked = true;
+                o.IsChecked = false;
+                //o.IsChecked = true;
             }
         }
 

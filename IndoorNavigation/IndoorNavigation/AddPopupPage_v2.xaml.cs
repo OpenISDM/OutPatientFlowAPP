@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
@@ -71,18 +71,19 @@ namespace IndoorNavigation
                     item.DisplayName = room.Attributes["displayname"].Value;
                     item._regionID=new Guid (room.Attributes["region_id"].Value);
                     item._waypointID =new Guid (room.Attributes["waypoint_id"].Value);
-                    //item._floor = room.Attributes[""].Value;
                     item.Key = "AddItem";
                     item._waypointName = room.Attributes["name"].Value;
 
                     items.Add(item);
                 }
                 _examinationItemDict.Add(departName,items);
+                Console.WriteLine($"departname={departName}");
             }
         }
 
         private void LoadBox()
         {
+            List<CheckBox> boxList;
             mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
             foreach (string dptName in DepartmentList)
             {
@@ -96,23 +97,32 @@ namespace IndoorNavigation
                 };
 
                 StackLayout BoxLayout = new StackLayout();
-
+                boxList = new List<CheckBox>();
+                int key = 0;
                 foreach(AddExaminationItem item in _examinationItemDict[dptName])
                 {
                     CheckBox box = new CheckBox { Text = item.DisplayName, TextFontSize = Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
-                         Margin = new Thickness(0, -3) 
+                         Margin = new Thickness(0, -3), Key=key++, Type=CheckBox.CheckType.Check
                     };
+                    box.CheckChanged += CheckBox_Changed;
                     BoxLayout.Children.Add(box);
+                    boxList.Add(box);
                 }
                 
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(/*new ScrollView {Content=BoxLayout}*/BoxLayout, 2,5,0,5);
-
+                BoxesDict.Add(dptName, boxList);
                 mainStackLayout.Children.Add(outSideGrid);
                 mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest=1});
             }
         }
+
+        private void CheckBox_Changed(object sender, EventArgs args)
+        {
+            Console.WriteLine($"CheckBox name is {((CheckBox)sender).Text}, Box key is{((CheckBox)sender).Key} ");
+        }
+
         private Grid getGridLayout()
         {
             Grid tmp = new Grid();
@@ -131,21 +141,52 @@ namespace IndoorNavigation
         private void AddCancelButton_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;
-            isButtonPressed = true;
-            
-            foreach(string dptName in DepartmentList)
-            {
-
-            }
-
+            isButtonPressed = true;          
             PopupNavigation.Instance.PopAsync();
         }
 
-        private void AddConfirmButton_Clicked(object sender, EventArgs e)
+        async private void AddConfirmButton_Clicked(object sender, EventArgs e)
         {
-            if (isButtonPressed) return;
-            isButtonPressed = true;
+            //if (isButtonPressed) return;
+            //isButtonPressed = true;
+            int count = 0;
 
+            foreach (string dptName in DepartmentList)
+            {
+                List<AddExaminationItem> items = _examinationItemDict[dptName];
+                List<CheckBox> Boxes = BoxesDict[dptName];
+                Console.WriteLine($"dptName is {dptName}");
+
+                foreach(CheckBox box in Boxes)
+                {
+                    Console.WriteLine($"Box name is{box.Text}, key is{box.Key}");
+                    Console.WriteLine($"item in box key is {items[box.Key]}");
+                    Console.WriteLine($"item id is {items[box.Key]._waypointID} and {items[box.Key]._regionID}");
+                    Console.WriteLine($"item id is {items[box.Key]._waypointName} and {items[box.Key].Key}");
+                    if (!box.IsChecked) continue;
+
+                    var isDuplicate = app.records.Any(p => p.DptName==items[box.Key].DisplayName && p.isAccept == false);
+                    //Console.WriteLine($"isDuplicate is {isDuplicate}");
+                    if (isDuplicate)
+                        continue;
+
+                    app.records.Add(new RgRecord {
+                        _waypointID=items[box.Key]._waypointID,
+                        _regionID=items[box.Key]._regionID,
+                        _waypointName=items[box.Key]._waypointName,
+                        Key="AddItem",
+                        DptName=dptName+"-"+items[box.Key].DisplayName
+                    });
+                    count++;
+                }
+            }
+            if (count == 0)
+            {
+                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
+                , _resourceManager.GetString("OK_STRING", currentLanguage));
+
+                return;
+            }
             PopupNavigation.Instance.PopAsync();
         }
 
