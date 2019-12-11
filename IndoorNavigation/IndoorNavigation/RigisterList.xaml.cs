@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Xamarin.Essentials;
-using System.Resources;
+﻿using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
+using IndoorNavigation.ViewModels;
 using IndoorNavigation.Views.Navigation;
 using Plugin.Multilingual;
-using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup.Services;
-using IndoorNavigation.ViewModels;
+using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Reflection;
+using System.Resources;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation
 {
@@ -160,6 +160,11 @@ namespace IndoorNavigation
 
             isButtonPressed = true;
             await Navigation.PushAsync(new SignInPage());
+            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>(this, "isReset", (msgSender, msgArgs) =>
+            {
+                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
+                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            });
         }
 
         /*the function is a button event to add payment and medicine recieving route to listview*/
@@ -331,14 +336,6 @@ namespace IndoorNavigation
             }
         }
 
-        private void FontSizeSet(double i)
-        {
-            //DeleteBtn.FontSize = i;
-            ShiftBtn.FontSize = i;
-            AddBtn.FontSize = i;
-            //NavigationPageButton.FontSize = i;
-        }
-
         private void MenuItem_Clicked(object sender, EventArgs e)
         {
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
@@ -418,9 +415,5 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
 
-        private void ForTestFloating_Clicked(object sender, EventArgs e)
-        {
-
-        }
     }
 }

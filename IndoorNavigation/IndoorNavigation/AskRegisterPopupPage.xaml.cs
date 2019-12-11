@@ -58,6 +58,7 @@ namespace IndoorNavigation
             if (ButtonLock) return;
             app.records.Clear();
             app._TmpRecords.Clear();
+            app.HaveCashier = false;
             app.FinishCount = 0;
             ButtonLock = true;
             app.getRigistered = true;
@@ -70,6 +71,7 @@ namespace IndoorNavigation
                 Key = "register"
             });
             app.records.Add(new RgRecord { Key = "NULL" });
+            MessagingCenter.Send(this, "isReset", true);
             await PopupNavigation.Instance.PopAllAsync();
         }
 
@@ -117,12 +119,12 @@ namespace IndoorNavigation
             app.getRigistered = false;
             app.records.Clear();
             app._TmpRecords.Clear();
-
+            app.HaveCashier = false;
             app.FinishCount = 0;
 
             request.GetXMLBody();
             request.RequestData();
-
+            MessagingCenter.Send(this, "isReset", true);
         }
       
         

@@ -74,7 +74,7 @@ namespace IndoorNavigation
         private bool updateMapOrNot;
         private static PhoneInformation _phoneInformation = new PhoneInformation();
 
-        ViewCell lastCell;
+        ViewCell lastCell=null;
         public MainPage()
         {
             InitializeComponent();
