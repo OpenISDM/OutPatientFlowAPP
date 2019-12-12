@@ -58,7 +58,7 @@ namespace IndoorNavigation.Droid
             }
             else
             {
-                base.OnBackPressed();
+               // base.OnBackPressed();
             }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

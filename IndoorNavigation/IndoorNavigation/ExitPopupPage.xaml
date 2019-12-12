@@ -23,7 +23,7 @@
                 <Label x:Name="AskSelectExit" Text="{i18n:Translate SELECT_EXIT_STRING}" FontSize="Large" HorizontalOptions="Start" Margin="0,5"/>
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
                     <StackLayout Spacing="12" Padding="10,0">
-                        <input:SelectionView x:Name="selectionView" Color="Black" SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
+                        <input:SelectionView x:Name="selectionView" SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
                     </StackLayout>
                 </ScrollView>
                 <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
