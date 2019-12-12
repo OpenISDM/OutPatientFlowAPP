@@ -43,7 +43,7 @@ namespace IndoorNavigation
 
             sv = new SelectionView
             { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center, ItemsSource=Cashieritems,
-              ColumnNumber=1, SelectionType=SelectionType.RadioButton, RowSpacing=7
+              ColumnNumber=1, SelectionType=SelectionType.RadioButton, RowSpacing=10
             };
             Pharmacysv = new SelectionView
             {
@@ -52,7 +52,7 @@ namespace IndoorNavigation
                 ItemsSource = Pharmacyitems,
                 ColumnNumber = 1,
                 SelectionType = SelectionType.RadioButton,
-                RowSpacing = 7
+                RowSpacing = 10
             };
             SelectionStack.Children.Add(new Label {
                 Text =_resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage), FontSize=Device.GetNamedSize(NamedSize.Large,typeof(Label)), VerticalTextAlignment=TextAlignment.Center,

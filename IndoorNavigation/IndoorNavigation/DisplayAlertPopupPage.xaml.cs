@@ -31,6 +31,18 @@ namespace IndoorNavigation
 
             TempOKBtn.IsEnabled = needButton;
             TempOKBtn.IsVisible = needButton;
+
+            if (!needButton)
+                Device.StartTimer(TimeSpan.FromSeconds(2.2), () => {
+
+                    if (PopupNavigation.Instance.PopupStack.Count > 0)
+                    {
+                        PopupNavigation.Instance.PopAllAsync();
+                        Console.WriteLine("Close the popup page by timer.");
+                    }
+                    Console.WriteLine("Close the popup page by user.");
+                    return false;
+                });
             
         }
         

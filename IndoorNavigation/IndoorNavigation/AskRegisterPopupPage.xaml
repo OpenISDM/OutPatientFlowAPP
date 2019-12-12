@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.AskRegisterPopupPage">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="100" WidthRequest="290">
+        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="100" WidthRequest="290" CornerRadius="8">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

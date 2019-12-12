@@ -105,25 +105,15 @@ namespace IndoorNavigation
         protected override bool OnBackButtonPressed()
         {
             networkState = Connectivity.NetworkAccess;
-            if (networkState != NetworkAccess.Internet)
+            if (networkState == NetworkAccess.Internet)
+            {
+                CancelorClickBack();
+            }
+            else
             {
                 PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return true;
             }
-
-            CancelorClickBack();
-            #region
-            //ReadXml();
-            //app.records.Clear();
-            //app._TmpRecords.Clear();
-
-            //request.GetXMLBody();
-            //request.RequestData();
-            ////request.ResponseXmlParse();
-            //foreach (RgRecord record in app._TmpRecords)
-            //    app.records.Add(record);
-            //app.records.Add(new RgRecord { Key = "NULL" });
-            #endregion
             return base.OnBackButtonPressed();
         }
 

@@ -59,6 +59,8 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
+using System.Threading;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -73,8 +75,9 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private bool updateMapOrNot;
         private static PhoneInformation _phoneInformation = new PhoneInformation();
-
+//-------------------------------------
         ViewCell lastCell=null;
+        bool isButtonPressed = false; //to prevent multi-click
         public MainPage()
         {
             InitializeComponent();
@@ -103,7 +106,7 @@ namespace IndoorNavigation
 
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
-
+            isButtonPressed = false;
             // This will remove all the pages in the navigation stack excluding the Main Page
             // and another one page
             //Console.WriteLine("NavigationStack : " +Navigation.NavigationStack.Count);
@@ -200,6 +203,9 @@ namespace IndoorNavigation
 
                 if(updateMapOrNot == true)
                 {
+                    if (isButtonPressed) return;
+                    isButtonPressed = true;
+
                     switch (navigationGraph.GetIndustryServer())
                     {
                         case "hospital":
@@ -216,6 +222,8 @@ namespace IndoorNavigation
                             Console.WriteLine("Unknown _industryService");
                             break;
                     }
+                    isButtonPressed = false;
+                    ((ListView)sender).SelectedItem = null;
                 }
                 
             }
@@ -229,7 +237,7 @@ namespace IndoorNavigation
 
         void LocationListView_Refreshing(object sender, EventArgs e)
         {
-            LocationListView.EndRefresh();
+            LocationListView.EndRefresh();            
         }
 
         void Item_Delete(object sender, EventArgs e)
@@ -275,6 +283,11 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
+                Device.StartTimer(TimeSpan.FromSeconds(1),()=> {
+                    viewCell.View.BackgroundColor = Color.Transparent;
+                    return false;
+                });
+                //viewCell.View.BackgroundColor = Color.;
             }
         }
     }

@@ -72,6 +72,7 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\zh-HK\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\zh-Hans\Xamarin.Forms.Platform.iOS.resources.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\zh-Hant\Xamarin.Forms.Platform.iOS.resources.dll
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\Plugin.InputKit.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\Xamarin.Forms.Material.dll
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\Xamarin.Forms.Material.pdb
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\MaterialComponents.dll
@@ -232,6 +233,7 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Xamarin.Forms.Xaml.dll.ReferenceCopyLocalPaths.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Xamarin.Forms.Xaml.pdb.ReferenceCopyLocalPaths.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Xamarin.Forms.Platform.iOS.resources.dll.ReferenceCopyLocalPaths.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Plugin.InputKit.dll.ReferenceCopyLocalPaths.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Xamarin.Forms.Material.dll.ReferenceCopyLocalPaths.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Xamarin.Forms.Material.pdb.ReferenceCopyLocalPaths.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\MaterialComponents.dll.ReferenceCopyLocalPaths.stamp
@@ -254,5 +256,3 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Entitlements.plist.NoneOutput.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Info.plist.NoneOutput.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\TranslateExtension.txt.NoneOutput.stamp
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\bin\iPhone\Debug\Plugin.InputKit.dll
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Plugin.InputKit.dll.ReferenceCopyLocalPaths.stamp

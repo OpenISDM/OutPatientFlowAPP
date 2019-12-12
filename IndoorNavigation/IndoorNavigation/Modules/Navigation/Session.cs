@@ -1046,6 +1046,12 @@ namespace IndoorNavigation.Modules
             public NavigationInstruction _nextInstruction { get; set; }
 
         }
+
+        //------------------------------
+        public Guid GetCurrentWaypoint()
+        {
+            return _currentWaypointID;
+        }
     }
 
 }

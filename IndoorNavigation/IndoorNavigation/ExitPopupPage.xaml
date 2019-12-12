@@ -18,7 +18,7 @@
     </pages:PopupPage.Resources>
 
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="220" WidthRequest="300">
+        <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="220" WidthRequest="300" CornerRadius="8">
             <StackLayout>
                 <Label x:Name="AskSelectExit" Text="{i18n:Translate SELECT_EXIT_STRING}" FontSize="Large" HorizontalOptions="Start" Margin="0,5"/>
                 <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">

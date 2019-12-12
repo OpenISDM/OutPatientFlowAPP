@@ -22,7 +22,8 @@ namespace IndoorNavigation
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
 
-        public ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        public ResourceManager _resourceManager = new ResourceManager
+            (resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
 
         Object tmp=null;
@@ -38,7 +39,7 @@ namespace IndoorNavigation
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
-            app._TmpRecords = new ObservableCollection<RgRecord>();
+            //app._TmpRecords = new ObservableCollection<RgRecord>();
             Console.WriteLine("initialize register list");
             //get graph info
             Console.WriteLine("initalize graph info");
@@ -60,9 +61,6 @@ namespace IndoorNavigation
         {
             if (isButtonPressed) return;
             isButtonPressed = true;
-            
-            
-            
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
@@ -240,6 +238,7 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
             ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
             AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
+            Console.WriteLine($"now Radius is {AddBtn.CornerRadius}");
 
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);

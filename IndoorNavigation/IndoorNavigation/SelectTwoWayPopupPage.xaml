@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.SelectTwoWayPopupPage">
     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <Frame x:Name="frame" WidthRequest="320" HeightRequest="155" BackgroundColor="White">
+        <Frame x:Name="frame" WidthRequest="320" HeightRequest="155" BackgroundColor="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

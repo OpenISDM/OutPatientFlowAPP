@@ -19,7 +19,7 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            frame.BackgroundColor = Color.FromRgba(240, 240, 240, 200);
+            //frame.BackgroundColor = Color.FromRgba(240, 240, 240, 200);
             _locationName = BuildingName;
         }
 

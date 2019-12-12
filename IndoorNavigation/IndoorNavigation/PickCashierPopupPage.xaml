@@ -10,7 +10,7 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  >
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame BackgroundColor="White" HeightRequest="200" WidthRequest="300">
+        <Frame BackgroundColor="White" HeightRequest="200" WidthRequest="300" CornerRadius="8">
             <StackLayout>
                 <ScrollView>
                     <StackLayout x:Name="SelectionStack">

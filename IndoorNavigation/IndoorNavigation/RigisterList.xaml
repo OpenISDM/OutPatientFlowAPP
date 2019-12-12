@@ -91,7 +91,6 @@
         <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked">
         </ToolbarItem>
         <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
-        <!--<ToolbarItem x:Name="PreViewLayoutItem" Text="Preview" Order="Secondary" Clicked="PreViewLayoutItem_Clicked"/>-->
     </ContentPage.ToolbarItems>
     
     <ContentPage.Padding>
@@ -125,9 +124,10 @@
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Medium" TextColor="White" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" FontAttributes="Bold"
+                    CornerRadius="30"
                     />
             <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
-                     AbsoluteLayout.LayoutFlags="All" 
+                     AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 

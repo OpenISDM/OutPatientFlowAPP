@@ -10,7 +10,7 @@
                  x:Class="IndoorNavigation.AddPopupPage_v2"
                 >
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame BackgroundColor="White" WidthRequest="300" HeightRequest="400">
+        <Frame BackgroundColor="White" WidthRequest="300" HeightRequest="400" CornerRadius="8">
             <StackLayout  VerticalOptions="Start" HorizontalOptions="Start">
                 <ScrollView>
                     <StackLayout x:Name="mainStackLayout">
