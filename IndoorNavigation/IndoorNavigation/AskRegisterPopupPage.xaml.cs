@@ -4,6 +4,12 @@ using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using Plugin.Multilingual;
+using System.Globalization;
+using System.Reflection;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -12,6 +18,11 @@ namespace IndoorNavigation
         private App app = (App)Application.Current;
         private HttpRequest request;
         private bool ButtonLock;
+
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
         NetworkAccess networkState = Connectivity.NetworkAccess;
         public AskRegisterPopupPage()
@@ -34,7 +45,8 @@ namespace IndoorNavigation
                 CancelorClickBack();
             else
             {
-                await DisplayAlert("info", "沒有網路~", "Ok");
+                //await DisplayAlert("info", "沒有網路~", "Ok");
+                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return;
             }
             //ReadXml();
@@ -65,7 +77,7 @@ namespace IndoorNavigation
             app.getRigistered = true;
             app.records.Add(new RgRecord
             {
-                DptName = "導航至掛號台",
+                DptName =_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", currentLanguage),
                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
                 _waypointName = "掛號台",
@@ -85,7 +97,7 @@ namespace IndoorNavigation
             }
             else
             {
-                DisplayAlert("info", "沒有網路~", "Ok");
+                PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return false;
             }
             return base.OnBackgroundClicked();
@@ -95,7 +107,7 @@ namespace IndoorNavigation
             networkState = Connectivity.NetworkAccess;
             if (networkState != NetworkAccess.Internet)
             {
-                DisplayAlert("info", "沒有網路~", "Ok");
+                PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return true;
             }
 
@@ -147,7 +159,7 @@ namespace IndoorNavigation
         //        for (int i = 0; i < records.Count; i++)
         //        {
         //            //Console.WriteLine(records[i].ChildNodes[0].InnerText);
-        //            RgRecord record = new RgRecord();
+        //            RgRecord record = new RgRecord();掛號
 
         //            record.OpdDate = records[i].ChildNodes[0].InnerText;
         //            if (record.OpdDate != app.SelectDate) continue;

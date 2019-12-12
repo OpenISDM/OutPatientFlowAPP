@@ -907,6 +907,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Navigate to register station 的當地語系化字串。
+        /// </summary>
+        internal static string NAVIGATE_TO_REGISTER_STRING {
+            get {
+                return ResourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Navigation List 的當地語系化字串。
         /// </summary>
         internal static string NAVIGATION_LIST_STRING {
@@ -948,6 +957,15 @@ namespace IndoorNavigation.Resources {
         internal static string NEW_STRING {
             get {
                 return ResourceManager.GetString("NEW_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 There is no network, please check it and try again 的當地語系化字串。
+        /// </summary>
+        internal static string NO_NETWORK_STRING {
+            get {
+                return ResourceManager.GetString("NO_NETWORK_STRING", resourceCulture);
             }
         }
         

@@ -255,6 +255,14 @@ namespace IndoorNavigation
 
             if (index.Key.Equals("register"))
             {
+                var NetworkState = Connectivity.NetworkAccess;
+
+                if (NetworkState != NetworkAccess.Internet)
+                {
+                    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
+                    return;
+                }
+
                 ReadXml();
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
                 //await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
@@ -384,9 +392,13 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
         }
 
+        
+
         private void ReadXml()
         {
             Console.WriteLine("Now Excution is::: ReadXml");
+            
+
             if (app._TmpRecords.Count > 0)
             {
                 foreach (RgRecord tmprecord in app._TmpRecords)

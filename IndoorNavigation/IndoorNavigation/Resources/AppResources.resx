@@ -594,4 +594,10 @@
   <data name="YES_STRING" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="NAVIGATE_TO_REGISTER_STRING" xml:space="preserve">
+    <value>Navigate to register station</value>
+  </data>
+  <data name="NO_NETWORK_STRING" xml:space="preserve">
+    <value>There is no network, please check it and try again</value>
+  </data>
 </root>

@@ -249,7 +249,7 @@
   <data name="FAILED_DOWNLOAD_MAP_STRING" xml:space="preserve">
     <value>地圖下載失敗</value>
   </data>
-  <data name="&#xD;&#xA;          TIFY_STRING" xml:space="preserve">
+  <data name="NOTIFY_STRING" xml:space="preserve">
     <value>通知</value>
   </data>
   <data name="SURE_TO_OPEN_WEBSITE_STRING" xml:space="preserve">
@@ -584,5 +584,11 @@
   </data>
   <data name="SELECT_EXIT_STRING" xml:space="preserve">
     <value>請選擇要離開的出口</value>
+  </data>
+  <data name="NO_NETWORK_STRING" xml:space="preserve">
+    <value>請檢查是否有無網路，請再嘗試一次。</value>
+  </data>
+  <data name="NAVIGATE_TO_REGISTER_STRING" xml:space="preserve">
+    <value>導航至掛號台</value>
   </data>
 </root>

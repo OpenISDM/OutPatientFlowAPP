@@ -91,7 +91,7 @@
         <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked">
         </ToolbarItem>
         <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
-        <ToolbarItem x:Name="PreViewLayoutItem" Text="Preview" Order="Secondary" Clicked="PreViewLayoutItem_Clicked"/>
+        <!--<ToolbarItem x:Name="PreViewLayoutItem" Text="Preview" Order="Secondary" Clicked="PreViewLayoutItem_Clicked"/>-->
     </ContentPage.ToolbarItems>
     
     <ContentPage.Padding>
@@ -103,21 +103,7 @@
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
-    <!--<aiforms:Floating.Content>
-        <aiforms:FloatingLayout>
-            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-50">
-                <Button x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"  CornerRadius="40" Clicked="AddBtn_Clicked" 
-                    FontSize="Large" TextColor="White" FontAttributes="Bold" BackgroundColor="#3f51b5" IsEnabled="True" IsVisible="True"/>
-            </aiforms:FloatingView>
-            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="End" OffsetX="-20" OffsetY="-135">
-                <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Large" TextColor="White" FontAttributes="Bold"
-                     CornerRadius="40" Clicked="ShiftBtn_Clicked" IsEnabled="True" IsVisible="True"/>
-            </aiforms:FloatingView>
-            <aiforms:FloatingView VerticalLayoutAlignment="End" HorizontalLayoutAlignment="Fill">
-                <Button x:Name="PaymemtListBtn" BorderColor="#3f51b5" BackgroundColor="#3f51b5" TextColor="White" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked" FontAttributes="Bold"/>
-            </aiforms:FloatingView>
-        </aiforms:FloatingLayout>
-    </aiforms:Floating.Content>-->
+    
     <ContentPage.Content>
         <AbsoluteLayout>
             <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
