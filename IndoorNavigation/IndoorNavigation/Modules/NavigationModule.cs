@@ -49,6 +49,7 @@ using Xamarin.Forms;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models;
+using System.Threading;
 
 namespace IndoorNavigation.Modules
 {
@@ -64,7 +65,7 @@ namespace IndoorNavigation.Modules
         private EventHandler _navigationResultEventHandler;
         private PhoneInformation _phoneInfomation;
         public NavigationEvent _event { get; private set; }
-
+      
         public NavigationModule(string navigationGraphName,
                                 Guid destinationRegionID,
                                 Guid destinationWaypointID)
@@ -113,7 +114,15 @@ namespace IndoorNavigation.Modules
                     
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
-
+            
+        }
+        public RegionWaypointPoint GetShortestPath()
+        {
+            List<RegionWaypointPoint> list = new List<RegionWaypointPoint>();
+            list.Add(new RegionWaypointPoint { _regionID = new Guid("11111111-1111-1111-1111-111111111111"), _waypointID = new Guid("00000000-0000-0000-0000-000000000001") });
+            list.Add(new RegionWaypointPoint { _regionID = new Guid("11111111-1111-1111-1111-111111111111"), _waypointID = new Guid("00000000-0000-0000-0000-000000000004") });
+            list.Add(new RegionWaypointPoint { _regionID = new Guid("11111111-1111-1111-1111-111111111111"), _waypointID = new Guid("00000000-0000-0000-0000-000000000005") });
+            return _session.GenerateLowestPath(list);
         }
 
         /// <summary>

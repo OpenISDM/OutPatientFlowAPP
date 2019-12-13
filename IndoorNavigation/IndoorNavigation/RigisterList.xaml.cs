@@ -262,7 +262,7 @@ namespace IndoorNavigation
                     return;
                 }
 
-                ReadXml();
+                ReadXml(1);
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
                 //await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
                 index.isAccept = true;
@@ -418,7 +418,7 @@ namespace IndoorNavigation
 
         async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2("1"));
+            await Navigation.PushAsync(new TestPage(_navigationGraphName));
         }
 
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)

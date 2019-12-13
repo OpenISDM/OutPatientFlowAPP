@@ -116,18 +116,21 @@ namespace IndoorNavigation.Modules
             RegionWaypointPoint checkWrongRegionWaypoint = new RegionWaypointPoint();
             checkWrongRegionWaypoint._regionID = _currentRegionID;
             checkWrongRegionWaypoint._waypointID = _currentWaypointID;
-
+            Console.WriteLine($"the current region id is{_currentRegionID}");
+            Console.WriteLine($"the current waypoint id is{_currentRegionID}");
             NavigateToNextWaypoint(_currentRegionID, _nextWaypointStep);
 
             while (true == _isKeepDetection &&
                    !(_currentRegionID.Equals(_destinationRegionID) &&
                      _currentWaypointID.Equals(_destinationWaypointID)))
             {
-
+                
                 Console.WriteLine("Continue to navigate to next step, current location {0}/{1}",
                                   _currentRegionID, _currentWaypointID);
 
                 _nextWaypointEvent.Wait();
+
+                //如果到達目的地 則跳出迴圈
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))
                 {
@@ -139,11 +142,11 @@ namespace IndoorNavigation.Modules
                     _iPSModules.Close();
                     break;
                 }
-
+                //當Step=-1時，代表剛開始起步，將會開始算路徑。
                 if (_nextWaypointStep == -1)
                 {
                     Console.WriteLine("Detected start waypoint: " + _currentWaypointID);
-                    // Detection of starting waypoing:
+                    // Detection of starting waypoint:
                     // Detected the waypoint most closed to user.
                     GenerateRoute(_currentRegionID,
                                   _currentWaypointID,
@@ -154,6 +157,8 @@ namespace IndoorNavigation.Modules
                     Guid _nextRegionID = _waypointsOnRoute[_nextWaypointStep]._regionID;
                     NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
+
+                //若現在位置在上個位置的下個點，則更新現在位置及下個位置
                 else if (_currentRegionID.Equals(
                          _waypointsOnRoute[_nextWaypointStep]._regionID) &&
                          _currentWaypointID.Equals(
@@ -167,6 +172,7 @@ namespace IndoorNavigation.Modules
 
                     NavigateToNextWaypoint(_nextRegionID, _nextWaypointStep);
                 }
+                //位置或程式錯誤，重新計算路徑
                 else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(checkWrongRegionWaypoint) == true)
                 {
                     
@@ -241,16 +247,14 @@ namespace IndoorNavigation.Modules
                                                 new List<WaypointBeaconsMapping>();
             List<WaypointBeaconsMapping> monitorWaypointListInIBeaconClient =
                                         new List<WaypointBeaconsMapping>();
+            //如果是剛起步的時候
             if (nextStep == -1)
             {
-
+                Console.WriteLine("NavigateProgram : first step");
                 List<Guid> allRegionIDs = new List<Guid>();
                 allRegionIDs = _navigationGraph.GetAllRegionIDs();
 
                 _iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
-
-               
-
             }
             else
             {
@@ -266,7 +270,7 @@ namespace IndoorNavigation.Modules
 
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
                 {
-                    
+                    //J三小
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID == _currentRegionID)
                     {
                         _iPSModules.AddNextNextWaypointInterestedGuid(_waypointsOnRoute[_nextWaypointStep + 1]._regionID, _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
@@ -316,12 +320,14 @@ namespace IndoorNavigation.Modules
             uint region1Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(sourceRegionID))
                               .Select(node => node.Key).First();
+            
             uint region2Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(destinationRegionID))
                               .Select(node => node.Key).First();
-
+            Console.WriteLine($"region1Key={region1Key}, region2Key={region2Key}");
             var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
 
+            //沒有路徑的時候，需要跟使用者表示需要換個路徑
             if (0 == pathRegions.Count())
             {
                 Console.WriteLine("No path. Need to change avoid connection type");
@@ -1052,6 +1058,31 @@ namespace IndoorNavigation.Modules
         {
             return _currentWaypointID;
         }
+
+        public RegionWaypointPoint GenerateLowestPath(List<RegionWaypointPoint> destinations)
+        {
+            List<int> path_length = new List<int>();
+            int minimum = int.MaxValue;
+            foreach(RegionWaypointPoint item in destinations)
+            {
+                uint region1Key = _graphRegionGraph
+                              .Where(node => node.Item.Equals(_currentRegionID))
+                              .Select(node => node.Key).First();
+
+                uint region2Key = _graphRegionGraph
+                                  .Where(node => node.Item.Equals(item._regionID))
+                                  .Select(node => node.Key).First();
+                Console.WriteLine($"region1Key={region1Key}, region2Key={region2Key}");
+                var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
+
+                if (minimum > pathRegions.Count())
+                    minimum = pathRegions.Count();
+                path_length.Add(pathRegions.Count());
+            }
+            return destinations[path_length.IndexOf(minimum)];
+        }
+
+        
     }
 
 }

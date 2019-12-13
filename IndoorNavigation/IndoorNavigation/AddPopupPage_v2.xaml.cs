@@ -97,8 +97,8 @@ namespace IndoorNavigation
                 image = new Image { Source = "Arrived.png", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
                     VerticalOptions=LayoutOptions.Center, HorizontalOptions=LayoutOptions.Center
                 };
-                DptNameLabel = new Label { Text = dptName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                    VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center,
+                DptNameLabel = new Label { Text = dptName, FontSize =dptName.Length<=5?Device.GetNamedSize(NamedSize.Medium, typeof(Label)):Device.GetNamedSize(NamedSize.Small,typeof(Label)),
+                    VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center
                 };
 
                 BoxLayout = new StackLayout();
