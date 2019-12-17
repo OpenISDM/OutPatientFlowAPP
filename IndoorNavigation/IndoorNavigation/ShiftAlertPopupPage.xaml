@@ -9,16 +9,21 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="160" WidthRequest="280">
+        <Frame HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="280" CornerRadius="8">
             <StackLayout HorizontalOptions="CenterAndExpand">
-                <ScrollView>
+                <ScrollView MinimumHeightRequest="90">
                     <StackLayout>
-                        <Label Text="{i18n:Translate SHIFT_DESCRIPTION_STRING}" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+                        <Label x:Name="ShiftAlertLabel" Text="" FontSize="24" HorizontalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </ScrollView>
-                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
+                <!--<StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                     <input:CheckBox x:Name="CheckNeverShow" Text="{i18n:Translate NEVER_SHOW_STRING}" HorizontalOptions="Start"/>
                     <Button x:Name="ShiftAlertButton" Text="{i18n:Translate OK_STRING}" Clicked="NeverShowButton_Clicked" CornerRadius="5"  HorizontalOptions="EndAndExpand"/>
+                </StackLayout>-->
+                <StackLayout VerticalOptions="EndAndExpand">
+                    <input:CheckBox x:Name="CheckNeverShow" TextFontSize="20" Type="Check" Text="{i18n:Translate NEVER_SHOW_STRING}" HorizontalOptions="Start" VerticalOptions="End"/>
+                    <StackLayout x:Name="BtnLayout" Orientation="Horizontal" HorizontalOptions="End">
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </Frame>

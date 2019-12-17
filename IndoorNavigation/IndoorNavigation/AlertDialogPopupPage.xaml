@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.AlertDialogPopupPage">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame x:Name="AlertFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="140" WidthRequest="280" CornerRadius="8" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="TempMessage" Text="0" FontSize="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center"/>
+                <StackLayout x:Name="buttonLayout" Orientation="Horizontal" Grid.Row="1" HorizontalOptions="End">
+                    <!--<Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End" VerticalOptions="EndAndExpand"  Clicked="TempOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>-->
+                </StackLayout>
+            </Grid>
+
+        </Frame>
+        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1, 0, -1, -1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer />
+            </ContentView.GestureRecognizers>
+
+        </ContentView>
+    </StackLayout>
+</pages:PopupPage>

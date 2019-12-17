@@ -20,12 +20,73 @@ namespace IndoorNavigation.Views.Navigation
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
         }
 
-        async private void NeverShowButton_Clicked(object sender, EventArgs e)
+        public ShiftAlertPopupPage(string AlertContext, string cancel,string prefs)
         {
-            if (CheckNeverShow.IsChecked)
-                Preferences.Set("isCheckedNeverShow", true);
+            InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            ShiftAlertLabel.Text = AlertContext;
+            Button CancelBtn = new Button
+            {
+                Text = cancel,
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+                TextColor = Color.FromHex("#3f51b5"),
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                BackgroundColor = Color.Transparent
+            };
 
-            await PopupNavigation.Instance.PopAllAsync();
+            CancelBtn.Clicked +=async (sender, args) => {
+                isCheck(prefs);
+                await PopupNavigation.Instance.PopAllAsync();
+            };
+            BtnLayout.Children.Add(CancelBtn);
         }
+
+        public ShiftAlertPopupPage(string AlertContext,string confirm,string cancel,string prefs)
+        {
+            InitializeComponent();
+            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            ShiftAlertLabel.Text = AlertContext;
+            Button CancelBtn = new Button
+            {
+                Text = cancel,
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+                TextColor = Color.FromHex("#3f51b5"),
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                BackgroundColor = Color.Transparent
+            };
+            Button ConfirmBtn = new Button
+            {
+                Text = confirm,
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+                TextColor = Color.FromHex("#3f51b5"),
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                BackgroundColor = Color.Transparent
+            };
+
+            ConfirmBtn.Clicked += async (sender, args) =>
+             {
+                 isCheck(prefs);
+                 MessagingCenter.Send(this, "AlertValuePass", true);
+                 await PopupNavigation.Instance.PopAsync();
+             };
+            CancelBtn.Clicked += async (sender, args) =>
+            {
+                isCheck(prefs);
+                MessagingCenter.Send(this, "AlertValuePass", false) ;
+                await PopupNavigation.Instance.PopAsync();
+            };
+            BtnLayout.Children.Add(ConfirmBtn);
+            BtnLayout.Children.Add(CancelBtn);
+        }
+        private void isCheck(string prefs)
+        {
+            Console.WriteLine("aaaaaaaaaa");
+            if (CheckNeverShow.IsChecked)
+                Preferences.Set(prefs, true);
+        }
+       
     }
 }

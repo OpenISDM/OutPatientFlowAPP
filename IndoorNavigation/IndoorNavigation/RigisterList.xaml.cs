@@ -130,7 +130,9 @@ namespace IndoorNavigation
             {
                 if (!isCheck)
                 {
-                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
+                    //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
+                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("SHIFT_DESCRIPTION_STRING",currentLanguage),
+                        _resourceManager.GetString("OK_STRING",currentLanguage), "isCheckedNeverShow"));
                 }
                 RgListView.ItemTapped -= RgListView_ItemTapped;
 
@@ -243,7 +245,7 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
-            //app.records = ToObservableCollection<RgRecord>(app.records.Distinct());
+           
         }
         /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -416,15 +418,14 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
         }
 
-        async private void PreViewLayoutItem_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TestPage(_navigationGraphName));
-        }
-
         async private void NavigationPageButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
 
+        async private void Preview_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("this is a msg", "yes", "no"));
+        }
     }
 }
