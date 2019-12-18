@@ -59,6 +59,8 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
+using System.Threading.Tasks;
+using Xamarin.Forms.PlatformConfiguration;
 using System.Threading;
 
 namespace IndoorNavigation
@@ -276,6 +278,30 @@ namespace IndoorNavigation
             }
         }
 
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    BackButtonPressed();
+        //    return true;//base.OnBackButtonPressed();
+        //}
+
+        //public async Task BackButtonPressed()
+        //{
+        //    var wantDiscard = await DisplayAlert("離開", "確定要離開這個APP嗎?", "確定", "取消");
+        //    if (wantDiscard) { base.OnBackButtonPressed(); }
+        //}
+        protected override bool OnBackButtonPressed()
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var result = await DisplayAlert("", "Would you like to exit from application?", "Yes", "No");
+                if (result)
+                {
+                    var CloseService = DependencyService.Get<ICloseApplication>();
+                    CloseService.closeApplication();
+                }
+            });
+            return true;
+        }
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
             if (lastCell != null)

@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
+    <Compile Include="CloseApplication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

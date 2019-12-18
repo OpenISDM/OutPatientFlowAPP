@@ -101,6 +101,7 @@ namespace IndoorNavigation.Modules.IPSClients
  
             Console.WriteLine(">> In DetectWaypoints");
             //Utility._beaconScan.StartScan();
+
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
             new List<BeaconSignalModel>();
@@ -131,6 +132,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 //beaconSignalModel.UUID = new Guid("00000015-0000-2503-7431-000021564508");
                 
                 //_beaconSignalBuffer.Add(beaconSignalModel);
+
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {

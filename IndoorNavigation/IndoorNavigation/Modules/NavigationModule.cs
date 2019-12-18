@@ -114,7 +114,7 @@ namespace IndoorNavigation.Modules
                     
             _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
-            
+            GetShortestPath();
         }
         public RegionWaypointPoint GetShortestPath()
         {

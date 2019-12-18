@@ -106,6 +106,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
+    <Compile Include="CloseApplication.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -295,10 +296,10 @@
     <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Folder Include="Resources\Lab\" />
     <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

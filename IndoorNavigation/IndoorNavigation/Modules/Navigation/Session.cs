@@ -308,6 +308,7 @@ namespace IndoorNavigation.Modules
             {
                 Thread.Sleep(500);
                 _iPSModules.OpenBeconScanning();
+                Console.Write($"current Waypoint is {_currentWaypointID.ToString()}+uuuuuuuuuuuu");
             }
         }
 
@@ -449,7 +450,7 @@ namespace IndoorNavigation.Modules
                                         .Where(node => node.Item
                                                .Equals(nextCheckPoint._waypointID))
                                         .Select(node => node.Key).First();
-
+                    //用dijkstra得到路徑
                     var pathWaypoints =
                         _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key).GetPath();
 
@@ -466,7 +467,7 @@ namespace IndoorNavigation.Modules
                     }
                 }
             }
-
+            //顯示出已經計算完的完整路徑
             // display the resulted full path of region/waypoint between source and destination
             foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
             {
@@ -1010,6 +1011,7 @@ namespace IndoorNavigation.Modules
             _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
         }
 
+        //to return navigator result
         public enum NavigationResult
         {
             Run = 0,
@@ -1066,7 +1068,7 @@ namespace IndoorNavigation.Modules
             foreach(RegionWaypointPoint item in destinations)
             {
                 uint region1Key = _graphRegionGraph
-                              .Where(node => node.Item.Equals(_currentRegionID))
+                              .Where(node => node.Item.Equals(new Guid ("11111111-1111-1111-1111-111111111111")))
                               .Select(node => node.Key).First();
 
                 uint region2Key = _graphRegionGraph
@@ -1079,6 +1081,7 @@ namespace IndoorNavigation.Modules
                     minimum = pathRegions.Count();
                 path_length.Add(pathRegions.Count());
             }
+            Console.WriteLine($"minimum is {minimum}, destinations waypoint id is{destinations[path_length.IndexOf(minimum)]._waypointID}");
             return destinations[path_length.IndexOf(minimum)];
         }
 
