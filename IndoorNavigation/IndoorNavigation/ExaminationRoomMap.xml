@@ -2,11 +2,11 @@
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>
   <Department name='糞便及尿液接收'>
     <Destination name='B1接收櫃台' displayname='B1接收櫃台' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000004'/>
-    <Destination name='2F接收櫃台' displayname='2F接收櫃台' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000026'/>
+    <Destination name='2F接收櫃台' displayname='2F接收櫃台' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021'/>
   </Department>
   <Department name='衛教中心'>
     <Destination name='246診' displayname='第一衛教中心' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000027'/>
-    <Destination name='258診' displayname='第二衛教中心' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000027' isfake='true'/>
+    <Destination name='258診' displayname='第二衛教中心' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000023' isfake='true'/>
   </Department>
   
   <Department name='整形外科'>
@@ -14,14 +14,14 @@
   </Department>
   
   <Department name='內分泌科'>
-    <Destination name='252診' displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
+    <Destination name='252診' displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
   </Department>
   <Department name='放射科'>
-    <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
+    <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000020' isfake='true'/>
   </Department>
 
   <Department name='檢驗科'>
-    <Destination name='檢驗區' displayname='抽血、心電圖' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025' isfake='true'/>
+    <Destination name='檢驗區' displayname='抽血、心電圖' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021' isfake='true'/>
   </Department>
   
   <Department name='兒科'>

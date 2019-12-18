@@ -9,7 +9,7 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="200" WidthRequest="280" CornerRadius="8">
+        <Frame HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="240" WidthRequest="280" CornerRadius="8">
             <StackLayout HorizontalOptions="CenterAndExpand">
                 <ScrollView MinimumHeightRequest="90">
                     <StackLayout>

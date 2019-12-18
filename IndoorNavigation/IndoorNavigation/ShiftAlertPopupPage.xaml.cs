@@ -69,13 +69,13 @@ namespace IndoorNavigation.Views.Navigation
             ConfirmBtn.Clicked += async (sender, args) =>
              {
                  isCheck(prefs);
-                 MessagingCenter.Send(this, "AlertValuePass", true);
+                 MessagingCenter.Send(this, prefs, true);
                  await PopupNavigation.Instance.PopAsync();
              };
             CancelBtn.Clicked += async (sender, args) =>
             {
                 isCheck(prefs);
-                MessagingCenter.Send(this, "AlertValuePass", false) ;
+                MessagingCenter.Send(this, prefs, false) ;
                 await PopupNavigation.Instance.PopAsync();
             };
             BtnLayout.Children.Add(ConfirmBtn);
