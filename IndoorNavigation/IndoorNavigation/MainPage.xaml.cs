@@ -209,8 +209,11 @@ namespace IndoorNavigation
                     switch (navigationGraph.GetIndustryServer())
                     {
                         case "hospital":
-                            //await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
-                            await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(location.UserNaming));
+                            if (location.UserNaming.Equals(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", currentLanguage)))
+                                await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(location.UserNaming));
+                            else
+                                await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+
                             break;
 
                         case "city_hall":

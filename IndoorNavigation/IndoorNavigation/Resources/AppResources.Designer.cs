@@ -88,6 +88,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 This service will need network to recieve data. If you don&apos;t have cellular network or WiFi, please press &quot;No&quot; button to use Navigator service 的當地語系化字串。
+        /// </summary>
+        internal static string ALERT_IF_YOU_HAVE_NETWORK_STRING {
+            get {
+                return ResourceManager.GetString("ALERT_IF_YOU_HAVE_NETWORK_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Please login in top right button first. 的當地語系化字串。
         /// </summary>
         internal static string ALERT_LOGIN_STRING {

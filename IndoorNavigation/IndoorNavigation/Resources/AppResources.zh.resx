@@ -577,10 +577,10 @@
     <value>身分證字號</value>
   </data>
   <data name="NO_STRING" xml:space="preserve">
-    <value>不用</value>
+    <value>否</value>
   </data>
   <data name="YES_STRING" xml:space="preserve">
-    <value>好</value>
+    <value>是</value>
   </data>
   <data name="SELECT_EXIT_STRING" xml:space="preserve">
     <value>請選擇要離開的出口</value>
@@ -590,5 +590,8 @@
   </data>
   <data name="NAVIGATE_TO_REGISTER_STRING" xml:space="preserve">
     <value>導航至掛號台</value>
+  </data>
+  <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
+    <value>這項服務將會需要使用到網路服務，若您沒有行動網路或是WiFi連線，請按"否"改用導航服務</value>
   </data>
 </root>

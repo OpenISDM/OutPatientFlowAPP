@@ -45,34 +45,18 @@ namespace IndoorNavigation
                 CancelorClickBack();
             else
             {
-                //await DisplayAlert("info", "沒有網路~", "Ok");
+
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return;
             }
-            //ReadXml();
-            //if (ButtonLock) return;
-            //ButtonLock = true;
-            //app.FinishCount = 0;
-            //app.records.Clear();
-            //app._TmpRecords.Clear();
 
-            //request.GetXMLBody();
-            //request.RequestData();
-            ////request.ResponseXmlParse();
-            //foreach (RgRecord record in app._TmpRecords)
-            //    app.records.Add(record);
-            //app.records.Add(new RgRecord { Key = "NULL" });
             await PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
         {
             if (ButtonLock) return;
-            app.records.Clear();
-            app._TmpRecords.Clear();
-            app.HaveCashier = false;
-            app.roundRecord = null;
-            app.FinishCount = 0;
+            ResetAllState();
             ButtonLock = true;
             app.getRigistered = true;
             app.records.Add(new RgRecord
@@ -92,9 +76,7 @@ namespace IndoorNavigation
         {
             networkState = Connectivity.NetworkAccess;
             if (networkState == NetworkAccess.Internet)
-            {
                 CancelorClickBack();
-            }
             else
             {
                 PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
@@ -106,9 +88,7 @@ namespace IndoorNavigation
         {
             networkState = Connectivity.NetworkAccess;
             if (networkState == NetworkAccess.Internet)
-            {
                 CancelorClickBack();
-            }
             else
             {
                 PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
@@ -119,53 +99,23 @@ namespace IndoorNavigation
 
         private void CancelorClickBack()
         {
+            ResetAllState();
             app.getRigistered = false;
+
+            request.GetXMLBody();
+            request.RequestData();
+
+            MessagingCenter.Send(this, "isReset", true);
+        }
+        
+        private void ResetAllState()
+        {
             app.records.Clear();
             app._TmpRecords.Clear();
             app.HaveCashier = false;
             app.FinishCount = 0;
             app.roundRecord = null;
-            request.GetXMLBody();
-            request.RequestData();
-            MessagingCenter.Send(this, "isReset", true);
+            app.lastFinished = null;
         }
-      
-        
-
-        //    Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-        //    using (var reader = new StreamReader(stream))
-        //    {
-        //        var xmlString = reader.ReadToEnd();
-        //        Console.WriteLine(xmlString);
-
-        //        XDocument xd = XDocument.Parse(xmlString);
-        //        XmlDocument doc = new XmlDocument();
-        //        doc.LoadXml(xmlString);
-        //        Console.WriteLine(doc.InnerText);
-        //        app._TmpRecords.Clear();
-        //        //XmlNodeList records = doc.SelectNodes("QueryResult/RgRecords/RgRecord/DptName");
-        //        XmlNodeList records = doc.GetElementsByTagName("RgRecord");
-
-        //        for (int i = 0; i < records.Count; i++)
-        //        {
-        //            //Console.WriteLine(records[i].ChildNodes[0].InnerText);
-        //            RgRecord record = new RgRecord();掛號
-
-        //            record.OpdDate = records[i].ChildNodes[0].InnerText;
-        //            if (record.OpdDate != app.SelectDate) continue;
-        //            record.DptName = records[i].ChildNodes[1].InnerText;
-        //            record.Shift = records[i].ChildNodes[2].InnerText;
-        //            record.CareRoom = records[i].ChildNodes[3].InnerText;
-        //            record.DrName = records[i].ChildNodes[4].InnerText;
-        //            record.SeeSeq = records[i].ChildNodes[5].InnerText;
-        //            record.Key = "QueryResult";
-        //            record._waypointName = record.DptName;
-        //            record._regionID = new Guid("11111111-1111-1111-1111-111111111111");
-        //            record._waypointID = new Guid("00000000-0000-0000-0000-000000000002");
-        //            app._TmpRecords.Add(record);
-        //            app.records.Add(record);
-        //        }
-        //    }
-        //}
     }
 }

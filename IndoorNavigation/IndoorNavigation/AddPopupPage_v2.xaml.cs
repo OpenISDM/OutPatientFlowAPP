@@ -154,6 +154,7 @@ namespace IndoorNavigation
                     Key = key++,
                     Type = CheckBox.CheckType.Check
                 };
+                box.CheckChanged += CheckBox_Changed;
                 boxList.Add(box);
                 BoxLayout.Children.Add(box);
             }
@@ -204,7 +205,7 @@ namespace IndoorNavigation
             //isButtonPressed = true;
             int count = 0;
             int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
-
+            int dumplicateCount = 0;
             foreach (string dptName in DepartmentList)
             {
                 List<AddExaminationItem> items = _examinationItemDict[dptName];
@@ -213,12 +214,8 @@ namespace IndoorNavigation
 
                 foreach(CheckBox box in Boxes)
                 {
-                    Console.WriteLine($"Box name is{box.Text}, key is{box.Key}");
-                    Console.WriteLine($"item in box key is {items[box.Key]}");
-                    Console.WriteLine($"item id is {items[box.Key]._waypointID} and {items[box.Key]._regionID}");
-                    Console.WriteLine($"item id is {items[box.Key]._waypointName} and {items[box.Key].Key}");
                     if (!box.IsChecked) continue;
-
+                    dumplicateCount++;
                     var isDuplicate = app.records.Any(p => (p.DptName==dptName+"-"+items[box.Key].DisplayName) && p.isAccept == false);
                     //Console.WriteLine($"isDuplicate is {isDuplicate}");
                     if (isDuplicate)
@@ -237,10 +234,14 @@ namespace IndoorNavigation
 
             foreach(CheckBox box in BoxesDict["revisit"])
             {
-
+                
                 if (box.IsChecked == false) continue;
-                var isDumplicate = app.records.Any(a =>a.DptName==("回診-"+app.records[box.Key].DptName) && !a.isAccept);
+                Console.WriteLine($"now deal is {box.Text} key is {box.Key}");
+                var isDumplicate = app.records.Any(a =>a.DptName==("回診-"+app._TmpRecords[box.Key].DptName) && !a.isAccept);
+                //var isDumplicate=app.records.Any(p=>p.CareRoom==)
+                dumplicateCount++;
                 if (isDumplicate) continue;
+                Console.WriteLine($"it's not dumplicate:{box.Text} key is {box.Key}");
                 app.records.Insert(index++, new RgRecord {
                     Key="AddItem",
                     _waypointID=app._TmpRecords[box.Key]._waypointID,
@@ -253,9 +254,10 @@ namespace IndoorNavigation
 
             if (count == 0)
             {
-                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
-                , _resourceManager.GetString("OK_STRING", currentLanguage));
-
+                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
+                //, _resourceManager.GetString("OK_STRING", currentLanguage));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)+(dumplicateCount-count).ToString(),
+                    _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
             //PopupNavigation.Instance.PopAsync();

@@ -30,7 +30,6 @@ namespace IndoorNavigation
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
         private ViewCell lastCell=null;
-        private RgRecord lastFinished = null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
         private HttpRequest request;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -67,7 +66,7 @@ namespace IndoorNavigation
                 var index = app.records.IndexOf(e.Item as RgRecord);
                 var o = e.Item as RgRecord;
 
-                if(o.Key.Equals("Pharmacy") && !lastFinished.Key.Equals("Cashier"))
+                if(o.Key.Equals("Pharmacy") && !app.lastFinished.Key.Equals("Cashier"))
                 {    
                     await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
                     ((ListView)sender).SelectedItem = null;
@@ -113,7 +112,7 @@ namespace IndoorNavigation
                     RgListView.ItemTapped -= RgListViewShift_ItemTapped;
                     RgListView.ItemTapped += RgListView_ItemTapped;
                     tmp = null;
-                    Buttonable();
+                    Buttonable(true);
                 }  
         }
 
@@ -138,18 +137,18 @@ namespace IndoorNavigation
 
                 RgListView.ItemTapped += RgListViewShift_ItemTapped;
 
-                Buttonable();
+                Buttonable(false);
             }
             
         }
 
         /*the function is to disable those two float button to keep from triggering something wrong.*/
-        private void Buttonable()
+        private void Buttonable(bool enable)
         {
-            ShiftBtn.IsEnabled = !ShiftBtn.IsEnabled;
-            ShiftBtn.IsVisible = !ShiftBtn.IsVisible;
-            AddBtn.IsEnabled = !AddBtn.IsEnabled;
-            AddBtn.IsVisible = !AddBtn.IsVisible;
+            ShiftBtn.IsEnabled = enable;
+            ShiftBtn.IsVisible = enable;
+            AddBtn.IsEnabled = enable;
+            AddBtn.IsVisible = enable;
             return;
         }
 
@@ -164,13 +163,16 @@ namespace IndoorNavigation
             {
                 PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
                 PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+
+                Buttonable(true);
+                MessagingCenter.Unsubscribe<AskRegisterPopupPage,bool>(this, "isRest");
             });
         }
 
         /*the function is a button event to add payment and medicine recieving route to listview*/
         async private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
-            Buttonable();    
+            Buttonable(false);    
             if (isButtonPressed) return;
             isButtonPressed = true;
                 PaymemtListBtn.IsEnabled = false;
@@ -181,7 +183,7 @@ namespace IndoorNavigation
             {
                 Console.WriteLine("Subscribe recive message!");
                 bool Message = (bool)Messageargs;
-                if (Message) Buttonable();
+                if (Message) Buttonable(Message);
                 PaymemtListBtn.IsEnabled = Message;
                 PaymemtListBtn.IsVisible = Message;
                 isButtonPressed = false;
@@ -215,13 +217,13 @@ namespace IndoorNavigation
                 PaymemtListBtn.IsEnabled = Message;
                 PaymemtListBtn.IsVisible = Message;
 
-                MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "AddAnyOrNot");
+                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "AddAnyOrNot");
             });
 
             MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isBack", (MessageSender, MessageArgs) => 
             {
                 isButtonPressed = false;
-                MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "isBack");
+                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "isBack");
             });
         }
         
@@ -241,7 +243,7 @@ namespace IndoorNavigation
             ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
             AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
             Console.WriteLine($"now Radius is {AddBtn.CornerRadius}");
-
+            if (app.HaveCashier) Buttonable(false);
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
@@ -282,7 +284,7 @@ namespace IndoorNavigation
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
                 //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING", currentLanguage),false)) ;
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
-                await Navigation.PopAsync();
+                await Navigation    .PopAsync();
                 index.isAccept = true;
                 index.isComplete = true;
                 RgListView.ItemsSource = null;
@@ -307,7 +309,7 @@ namespace IndoorNavigation
             {
                 if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 {
-                    app.HaveCashier = false;
+                    //app.HaveCashier = false;
 
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
@@ -321,7 +323,7 @@ namespace IndoorNavigation
                     app.HaveCashier = true;
                 }
             }
-            lastFinished = index;
+            app.lastFinished = index;
         }
 
         async private void InfoItem_Clicked(object sender, EventArgs e)

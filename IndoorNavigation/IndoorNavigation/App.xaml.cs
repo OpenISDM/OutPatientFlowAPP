@@ -71,8 +71,10 @@ namespace IndoorNavigation
         public ObservableCollection<RgRecord> _TmpRecords=new ObservableCollection<RgRecord>(); //to test select date 
         public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
         public bool HaveCashier = false;
+        public bool getCashier = false;
         public DateTime RgDate = new DateTime(2019, 10, 22);
         public RgRecord roundRecord = null;
+        public RgRecord lastFinished = null;
         
         public App()
         {

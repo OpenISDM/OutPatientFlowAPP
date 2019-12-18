@@ -600,4 +600,7 @@
   <data name="NO_NETWORK_STRING" xml:space="preserve">
     <value>There is no network, please check it and try again</value>
   </data>
+  <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
+    <value>This service will need network to recieve data. If you don't have cellular network or WiFi, please press "No" button to use Navigator service</value>
+  </data>
 </root>

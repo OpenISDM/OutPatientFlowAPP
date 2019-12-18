@@ -12,6 +12,10 @@
              x:Class="IndoorNavigation.RigisterList">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="22"/>
+            </Style>
             <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
                 <ViewCell Tapped="ViewCell_Tapped">
                     <ViewCell.Height>
@@ -25,7 +29,7 @@
                     </ViewCell.ContextActions>
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
-                            <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" 
+                            <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="26" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" 
                                    TextColor="Black"/>
                             <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Large" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
                                     HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#3F51B5" BorderWidth="1" 
@@ -33,20 +37,20 @@
                         </StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
                             <StackLayout Orientation="Horizontal">
-                                <Label x:Name="DptTimeText" Text="{i18n:Translate OUTPATIENT_TIME_STRING}" FontSize="Medium" TextColor="Black"/>
-                                <Label x:Name="DptTimeLabel" Text="{Binding Shift,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="DptTimeText" Text="{i18n:Translate OUTPATIENT_TIME_STRING}"/>
+                                <Label x:Name="DptTimeLabel" Text="{Binding Shift,StringFormat='{0}'}"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label x:Name="CareRoomText" Text="{i18n:Translate CAREROOM_STRING}" FontSize="Medium" TextColor="Black"/>
-                                <Label x:Name="CareRoomLabel" Text="{Binding CareRoom,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="CareRoomText" Text="{i18n:Translate CAREROOM_STRING}"/>
+                                <Label x:Name="CareRoomLabel" Text="{Binding CareRoom,StringFormat='{0}'}"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label x:Name="DrNameText" Text="{i18n:Translate DRNAME_STRING}" FontSize="Medium" TextColor="Black"/>
-                                <Label x:Name="DrNameLabel" Text="{Binding DrName,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="DrNameText" Text="{i18n:Translate DRNAME_STRING}"/>
+                                <Label x:Name="DrNameLabel" Text="{Binding DrName,StringFormat='{0}'}"/>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label x:Name="SeeSeqNumberText" Text="{i18n:Translate SEQUENCE_STRING}" FontSize="Medium" TextColor="Black"/>
-                                <Label x:Name="SeeSeqNumLabel" Text="{Binding SeeSeq,StringFormat='{0}'}" FontSize="Medium" TextColor="Black"/>
+                                <Label x:Name="SeeSeqNumberText" Text="{i18n:Translate SEQUENCE_STRING}" />
+                                <Label x:Name="SeeSeqNumLabel" Text="{Binding SeeSeq,StringFormat='{0}'}"/>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
@@ -60,12 +64,11 @@
                     </ViewCell.ContextActions>
                     <StackLayout >
                         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Margin="10,0,10,0">
-                            <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="Large" 
+                            <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="26" 
                                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black" />
                             <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Large" IsEnabled="{Binding isComplete}"
                                     IsVisible="{Binding isComplete}" Clicked="YetFinishBtn_Clicked" CommandParameter="{Binding .}" TextColor="White" BackgroundColor="#3f51b5" BorderColor="#3f51b5" BorderWidth="1"/>
                         </StackLayout>
-                        <!--<BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
@@ -73,13 +76,13 @@
                 <!--to show finished schedule-->
                 <ViewCell IsEnabled="False" Height="50">
                     <StackLayout BackgroundColor="#e0e0e0">
-                        <Label Text="{Binding DptName}" FontSize="Large" TextColor="#c0c0c0" Margin="10,0,10,0" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="{Binding DptName}" FontSize="26" TextColor="#c0c0c0" Margin="10,0,10,0" VerticalOptions="CenterAndExpand"/>
                         <!--<BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NullCell">
-                <ViewCell IsEnabled="False" Height="200" >
+                <ViewCell IsEnabled="False" Height="250" >
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
@@ -88,22 +91,19 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked">
-        </ToolbarItem>
+        <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked"/>
         <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
         <ToolbarItem x:Name="Preview" Text="preview" Order="Secondary" Clicked="Preview_Clicked"/>
     </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
                 <On Platform="iOS" Value="0, 20, 0, 0" />
                 <On Platform="Android" Value="0, 0, 0, 0" />
-                <On Platform="UWP" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
-    
     <ContentPage.Content>
         <AbsoluteLayout>
             <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
@@ -114,14 +114,14 @@
 
                 </Grid.RowDefinitions>
                 <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
-                   VerticalOptions="CenterAndExpand" FontSize="Medium" Grid.Row="0" Margin="5,0,5,0"/>
+                   VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Margin="5,0,5,0"/>
+
                 <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
                 <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
                           ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
                 </ListView>
             </Grid>
-
             <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
                     FontSize="Medium" TextColor="White" Clicked="AddBtn_Clicked" 
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" FontAttributes="Bold"
