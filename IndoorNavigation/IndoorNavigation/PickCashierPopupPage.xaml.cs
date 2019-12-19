@@ -73,7 +73,7 @@ namespace IndoorNavigation
 
         public void LoadData()
         {
-            string filename = "CashierStation.xml";
+            string filename = "Yuanlin_OPFM.CashierStation.xml";
             var assembly = typeof(PickCashierPopupPage).GetTypeInfo().Assembly;
             String ContentString = "";
             Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");

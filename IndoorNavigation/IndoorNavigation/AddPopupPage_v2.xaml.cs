@@ -43,7 +43,7 @@ namespace IndoorNavigation
 
         private void LoadData()
         {
-            string fileName = "ExaminationRoomMap.xml";        
+            string fileName = "Yuanlin_OPFM.ExaminationRoomMap.xml";        
             var assembly = typeof(ExitPopupViewModel).GetTypeInfo().Assembly;
             string content = "";
             Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{fileName}");
@@ -238,7 +238,7 @@ namespace IndoorNavigation
                 if (box.IsChecked == false) continue;
                 Console.WriteLine($"now deal is {box.Text} key is {box.Key}");
                 var isDumplicate = app.records.Any(a =>a.DptName==("回診-"+app._TmpRecords[box.Key].DptName) && !a.isAccept);
-                //var isDumplicate=app.records.Any(p=>p.CareRoom==)
+
                 dumplicateCount++;
                 if (isDumplicate) continue;
                 Console.WriteLine($"it's not dumplicate:{box.Text} key is {box.Key}");
@@ -253,14 +253,11 @@ namespace IndoorNavigation
             }
 
             if (count == 0)
-            {
-                //await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)
-                //, _resourceManager.GetString("OK_STRING", currentLanguage));
+            {                
                 await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)+(dumplicateCount-count).ToString(),
                     _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
-            //PopupNavigation.Instance.PopAsync();
             GobackPage(false);
         }
 

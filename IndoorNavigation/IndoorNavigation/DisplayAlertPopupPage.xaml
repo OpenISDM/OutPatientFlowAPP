@@ -14,7 +14,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="TempMessage" Text="0" FontSize="24" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center"/>
+                <Label x:Name="TempMessage" Text="0" FontSize="24" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center" MaxLines="3"/>
                 <StackLayout HorizontalOptions="End" Grid.Row="1">
                     <Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End" VerticalOptions="EndAndExpand"  Clicked="TempOKBtn_Clicked"/>
                 </StackLayout>

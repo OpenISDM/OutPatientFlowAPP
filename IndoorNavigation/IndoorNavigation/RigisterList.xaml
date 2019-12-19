@@ -57,7 +57,7 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NotComplete"> <!--to show schedule that was added. this name got something wrong..-->
-                <ViewCell Height="50" Tapped="ViewCell_Tapped">
+                <ViewCell Tapped="ViewCell_Tapped" Height="60">
                     <ViewCell.ContextActions>
                         <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
@@ -72,17 +72,15 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="Complete" >
-                <!--to show finished schedule-->
-                <ViewCell IsEnabled="False" Height="50">
+            <DataTemplate x:Key="Complete">
+                <ViewCell IsEnabled="False" Height="60">
                     <StackLayout BackgroundColor="#e0e0e0">
                         <Label Text="{Binding DptName}" FontSize="26" TextColor="#c0c0c0" Margin="10,0,10,0" VerticalOptions="CenterAndExpand"/>
-                        <!--<BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="EndAndExpand"/>-->
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NullCell">
-                <ViewCell IsEnabled="False" Height="250" >
+                <ViewCell IsEnabled="False" Height="250">
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
@@ -93,7 +91,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked"/>
         <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
-        <ToolbarItem x:Name="Preview" Text="preview" Order="Secondary" Clicked="Preview_Clicked"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Padding>

@@ -21,7 +21,7 @@
   </Department>
 
   <Department name='檢驗科'>
-    <Destination name='檢驗區' displayname='抽血、心電圖' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021' isfake='true'/>
+    <Destination name='檢驗區' displayname='檢驗區' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021' isfake='true'/>
   </Department>
   
   <Department name='兒科'>

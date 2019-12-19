@@ -25,8 +25,8 @@ namespace IndoorNavigation
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             TempMessage.Text = msg;
-            
-            AlertFrame.WidthRequest = 280;
+            TempMessage.LineBreakMode = LineBreakMode.WordWrap;
+            //AlertFrame.WidthRequest = 280;
             AlertFrame.HeightRequest = 110;
 
             TempOKBtn.IsEnabled = needButton;

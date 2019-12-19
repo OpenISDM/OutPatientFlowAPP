@@ -243,7 +243,7 @@ namespace IndoorNavigation
             ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
             AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
             Console.WriteLine($"now Radius is {AddBtn.CornerRadius}");
-            if (app.HaveCashier) Buttonable(false);
+            if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
@@ -266,15 +266,13 @@ namespace IndoorNavigation
                     return;
                 }
 
-                ReadXml(1);
-                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("您今日掛號了兩個門診，包含家醫科跟耳鼻喉科。建議先看家醫科 張曉明醫師"));
-                //await PopupNavigation.Instance.PushAsync(new AskOrderPopupPage(_navigationGraphName));
+                ReadXml();
+                
                 index.isAccept = true;
                 index.isComplete = true;
                 app.FinishCount++;
                 RgListView.ItemsSource = null;
-                RgListView.ItemsSource = app.records;
-                
+                RgListView.ItemsSource = app.records;       
                 return;
             }
             else if (index.Key.Equals("exit"))
@@ -282,7 +280,6 @@ namespace IndoorNavigation
                 //show msg to say goodbye
                 string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("HOPE_STRING", currentLanguage),false)) ;
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
                 await Navigation    .PopAsync();
                 index.isAccept = true;
@@ -309,8 +306,6 @@ namespace IndoorNavigation
             {
                 if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 {
-                    //app.HaveCashier = false;
-
                     await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING", currentLanguage));
                    
@@ -357,45 +352,43 @@ namespace IndoorNavigation
             }
         }
         //to load test data
-        private void ReadXml(int i)
-        {
-            int index = app.records.Count - 1;
-            app.FinishCount = 0;
-            RgRecord record1 = new RgRecord
-            {
-                DptName = "耳鼻喉科",
-                DrName = "李曉華",
-                _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "QueryResult",
-                Shift = "上午",
-                CareRoom = "243診",
-                SeeSeq = "17",
-                _waypointName = "243診"
-            };
-            RgRecord record2 = new RgRecord
-            {
-                DptName = "家庭醫學科",
-                DrName = "張曉明",
-                _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                Key = "QueryResult",
-                Shift = "上午",
-                CareRoom = "203診",
-                SeeSeq = "6",
-                _waypointName = "203診"
-            };
-            app.records.Insert(index++, record2);
-            app.records.Insert(index, record1);
+        //private void ReadXml(int i)
+        //{
+        //    int index = app.records.Count - 1;
+        //    app.FinishCount = 0;
+        //    RgRecord record1 = new RgRecord
+        //    {
+        //        DptName = "耳鼻喉科",
+        //        DrName = "李曉華",
+        //        _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "QueryResult",
+        //        Shift = "上午",
+        //        CareRoom = "243診",
+        //        SeeSeq = "17",
+        //        _waypointName = "243診"
+        //    };
+        //    RgRecord record2 = new RgRecord
+        //    {
+        //        DptName = "家庭醫學科",
+        //        DrName = "張曉明",
+        //        _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
+        //        Key = "QueryResult",
+        //        Shift = "上午",
+        //        CareRoom = "203診",
+        //        SeeSeq = "6",
+        //        _waypointName = "203診"
+        //    };
+        //    app.records.Insert(index++, record2);
+        //    app.records.Insert(index, record1);
 
-            app._TmpRecords.Add(record2);
-            app._TmpRecords.Add(record1);
+        //    app._TmpRecords.Add(record2);
+        //    app._TmpRecords.Add(record1);
             
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
-        }
-
-        
+        //    RgListView.ItemsSource = null;
+        //    RgListView.ItemsSource = app.records;
+        //}
 
         private void ReadXml()
         {
@@ -425,9 +418,6 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
 
-        async private void Preview_Clicked(object sender, EventArgs e)
-        {
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("this is a msg", "yes", "no"));
-        }
+        
     }
 }

@@ -12,8 +12,9 @@
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Frame BackgroundColor="White" HeightRequest="200" WidthRequest="300" CornerRadius="8">
             <StackLayout>
-                <ScrollView>
-                    <StackLayout x:Name="SelectionStack">
+                <!--<Label x:Name="TitleLabel" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" FontSize="Large"/>-->
+                <ScrollView> 
+                    <StackLayout x:Name="SelectionStack" Margin="5,0">
                         <!--<input:SelectionView x:Name="PickCashierView" SelectionType="RadioButton" ColumnNumber="1" ItemsSource="{Binding CashierItem}" SelectedItem="{Binding SelectItem}" RowSpacing="20"/>-->
                     </StackLayout>
                 </ScrollView>

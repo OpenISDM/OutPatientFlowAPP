@@ -17,12 +17,10 @@ namespace IndoorNavigation
     {
         private string bodyString = "";
         private string responseString = "";
-        private ObservableCollection<RgRecord> nowadayRecords;
         private App app;
 
         public HttpRequest()
         {
-            nowadayRecords = new ObservableCollection<RgRecord>();
             app = (App)Application.Current;     
         }
 
@@ -31,7 +29,7 @@ namespace IndoorNavigation
             Console.WriteLine("Now Excution is::: GetXMLBody");
             bodyString = "";
             
-            string filename = "RequestBody.xml";
+            string filename = "Yuanlin_OPFM.RequestBody.xml";
             var assembly = typeof(HttpRequest).GetTypeInfo().Assembly;
 
             Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
@@ -51,7 +49,6 @@ namespace IndoorNavigation
                 XmlDocument doc2 = doc;
                 XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
-                //get tht node that we have to edit
                 XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
                 XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
                 XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
@@ -75,23 +72,6 @@ namespace IndoorNavigation
 
         public void RequestData()
         {
-            //var currentNetWorkState = Connectivity.NetworkAccess;
-            //var page = Application.Current.MainPage;
-            //Console.WriteLine("Now Excution is::: Check network connection.");
-            //while(currentNetWorkState==NetworkAccess.Unknown || currentNetWorkState == NetworkAccess.None)
-            //{
-            //    await page.DisplayAlert("info", "目前無網路連線，請檢查網路連線", "ok");
-            //    //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("無網路",true));
-            //    currentNetWorkState = Connectivity.NetworkAccess;
-
-            //    if(currentNetWorkState==NetworkAccess.Internet)
-            //    {
-            //        RequestData();
-            //        return;
-            //    }
-                
-            //}
-
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://bc.cch.org.tw:8080/WSRgSRV/Service.asmx");
@@ -166,7 +146,7 @@ namespace IndoorNavigation
                 record.DrName = records[i].ChildNodes[4].InnerText;
                 record.SeeSeq = records[i].ChildNodes[5].InnerText;
                 record.Key = "QueryResult";
-                record._waypointName = record.DptName;
+                record._waypointName = record.CareRoom;
                 record._regionID = infos.GetRegionID(record.CareRoom); //new Guid("11111111-1111-1111-1111-111111111111");
                 record._waypointID = infos.GetDestinationID(record.CareRoom); //new Guid("00000000-0000-0000-0000-000000000002");
                 app._TmpRecords.Add(record);

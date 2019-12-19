@@ -17,7 +17,7 @@ namespace IndoorNavigation
         public DestinationXmlinfo()
         {
             var assembly = typeof(DestinationXmlinfo).GetTypeInfo().Assembly;
-            var fileName = "CareRoomMapp.xml";
+            var fileName = "Yuanlin_OPFM.CareRoomMapp.xml";
             var DocumentPath = $"{assembly.GetName().Name}.{fileName}";
             string context = "";
             Stream stream = assembly.GetManifestResourceStream(DocumentPath);
@@ -58,7 +58,6 @@ namespace IndoorNavigation
         public Guid GetDestinationID(String key)
         {
             return RoomInfos[key]._clinic;
-            //return DestinationGuidDict[key];
         }
 
         

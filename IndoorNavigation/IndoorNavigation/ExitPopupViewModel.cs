@@ -88,7 +88,7 @@ namespace IndoorNavigation
 
         private void LoadData()
         {
-            string fileName = "ExitMap.xml";
+            string fileName = "Yuanlin_OPFM.ExitMap.xml";
             var assembly = typeof(ExitPopupViewModel).GetTypeInfo().Assembly;
             string content = "";
             Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{fileName}");
