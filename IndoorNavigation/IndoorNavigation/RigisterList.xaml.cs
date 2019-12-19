@@ -40,6 +40,8 @@ namespace IndoorNavigation
             InitializeComponent();
             //app._TmpRecords = new ObservableCollection<RgRecord>();
             Console.WriteLine("initialize register list");
+
+            Console.WriteLine("");
             //get graph info
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
@@ -418,6 +420,9 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
 
-        
+        async private void testItem_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new TestPopupPage());
+        }
     }
 }

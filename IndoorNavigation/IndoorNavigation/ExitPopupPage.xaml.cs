@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Plugin.Multilingual;
+using System.Globalization;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -25,7 +26,7 @@ namespace IndoorNavigation
         App app = (App)Application.Current;
         string _navigationGraphName;
         ExitPopupViewModel _viewmodel;
-
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         SelectionView sv;
 
         public ExitPopupPage(string navigationGraphName)
@@ -40,7 +41,6 @@ namespace IndoorNavigation
 
          protected override bool OnBackButtonPressed()
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
             //return base.OnBackButtonPressed();
             return true;
@@ -48,10 +48,12 @@ namespace IndoorNavigation
 
          protected override bool OnBackgroundClicked()
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            
             DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
             //return base.OnBackgroundClicked();
             return false;
         }
+
+        
     }
 }

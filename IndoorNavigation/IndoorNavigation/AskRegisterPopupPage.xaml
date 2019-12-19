@@ -23,9 +23,9 @@
             </Grid>
             
         </Frame>
-        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1, 0, -1, -1">
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <ContentView.GestureRecognizers>
-                <TapGestureRecognizer />
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </ContentView.GestureRecognizers>
 
         </ContentView>

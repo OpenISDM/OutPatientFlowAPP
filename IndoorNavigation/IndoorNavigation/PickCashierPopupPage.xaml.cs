@@ -161,6 +161,13 @@ namespace IndoorNavigation
             GobackPage(true);
             return base.OnBackButtonPressed();
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            GobackPage(true);
+            PopupNavigation.Instance.PopAsync();
+        }
+
         protected override bool OnBackgroundClicked()
         {
             GobackPage(true); 

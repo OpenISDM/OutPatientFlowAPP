@@ -14,6 +14,8 @@ namespace IndoorNavigation.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShiftAlertPopupPage : PopupPage
     {
+        private string _prefs;
+        int kind = 0;
         public ShiftAlertPopupPage()
         {
             InitializeComponent();
@@ -23,8 +25,10 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage(string AlertContext, string cancel,string prefs)
         {
             InitializeComponent();
+            kind = 1;
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
+            _prefs = prefs;
             Button CancelBtn = new Button
             {
                 Text = cancel,
@@ -45,8 +49,10 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage(string AlertContext,string confirm,string cancel,string prefs)
         {
             InitializeComponent();
+            kind = 2;
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
+            _prefs = prefs;
             Button CancelBtn = new Button
             {
                 Text = cancel,
@@ -87,6 +93,12 @@ namespace IndoorNavigation.Views.Navigation
             if (CheckNeverShow.IsChecked)
                 Preferences.Set(prefs, true);
         }
-       
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            isCheck(_prefs);
+            MessagingCenter.Send(this, _prefs, true);
+            PopupNavigation.Instance.PopAsync();
+        }
     }
 }

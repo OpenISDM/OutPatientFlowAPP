@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.TestPopupPage">
+    <StackLayout>
+        <AbsoluteLayout>
+            <Frame BackgroundColor="White" AbsoluteLayout.LayoutBounds="0.5,0.5,0.7,0.7" AbsoluteLayout.LayoutFlags="All">
+            
+            </Frame>
+        </AbsoluteLayout>
+    </StackLayout>
+</pages:PopupPage>

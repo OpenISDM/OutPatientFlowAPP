@@ -7,25 +7,25 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  mc:Ignorable="d"
                 x:Class="IndoorNavigation.DisplayAlertPopupPage">
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame x:Name="AlertFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="140" WidthRequest="280" CornerRadius="8" >
+    <AbsoluteLayout>
+        <Frame x:Name="AlertFrame" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.3" CornerRadius="8" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="TempMessage" Text="0" FontSize="24" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center" MaxLines="3"/>
+                <Label x:Name="TempMessage" Text="0" FontSize="26" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black"  HorizontalTextAlignment="Start"  VerticalTextAlignment="Center" MaxLines="3"/>
                 <StackLayout HorizontalOptions="End" Grid.Row="1">
                     <Button x:Name="TempOKBtn" Text="{i18n:Translate OK_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End" VerticalOptions="EndAndExpand"  Clicked="TempOKBtn_Clicked"/>
                 </StackLayout>
             </Grid>
 
         </Frame>
-        <ContentView AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1, 0, -1, -1">
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <ContentView.GestureRecognizers>
-                <TapGestureRecognizer />
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </ContentView.GestureRecognizers>
 
         </ContentView>
-    </StackLayout>
+    </AbsoluteLayout>
 </pages:PopupPage>

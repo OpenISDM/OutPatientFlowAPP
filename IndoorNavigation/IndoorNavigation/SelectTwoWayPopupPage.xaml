@@ -7,8 +7,8 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.SelectTwoWayPopupPage">
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <Frame x:Name="frame" WidthRequest="320" HeightRequest="155" BackgroundColor="Transparent">
+    <AbsoluteLayout>
+        <Frame x:Name="frame" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.95,0.3" BackgroundColor="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -17,7 +17,11 @@
                 <Button Text="{i18n:Translate NAVIGATION_STRING}" x:Name="toNavigationBtn" FontSize="32" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToNavigationBtn_Clicked"/>
                 <Button Text="{i18n:Translate OPFM_STRING}" x:Name="toOPFM" FontSize="26" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="1" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToOPFM_Clicked"/>
             </Grid>
-            
         </Frame>
-    </StackLayout>
+        <ContentView AbsoluteLayout.LayoutFlags="All" BackgroundColor="Transparent" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
+    </AbsoluteLayout>
 </pages:PopupPage>

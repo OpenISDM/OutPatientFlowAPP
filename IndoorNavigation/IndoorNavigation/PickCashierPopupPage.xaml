@@ -9,8 +9,8 @@
                  xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  >
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame BackgroundColor="White" HeightRequest="200" WidthRequest="300" CornerRadius="8">
+    <AbsoluteLayout>
+        <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.45"  CornerRadius="8">
             <StackLayout>
                 <!--<Label x:Name="TitleLabel" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" FontSize="Large"/>-->
                 <ScrollView> 
@@ -24,5 +24,10 @@
                 </StackLayout>
             </StackLayout>
         </Frame>
-    </StackLayout>
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
+    </AbsoluteLayout>
 </pages:PopupPage>

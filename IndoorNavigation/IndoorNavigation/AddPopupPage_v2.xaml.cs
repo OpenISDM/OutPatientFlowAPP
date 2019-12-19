@@ -254,7 +254,7 @@ namespace IndoorNavigation
 
             if (count == 0)
             {                
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage)+(dumplicateCount-count).ToString(),
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
@@ -292,6 +292,11 @@ namespace IndoorNavigation
             MessagingCenter.Send(this, "AddAnyOrNot", ConfirmOrCancel);
             MessagingCenter.Send(this, "isBack", true);
             PopupNavigation.Instance.PopAsync();
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            OnBackgroundClicked();
         }
         // Dictionary<string, SelectionView> _radioBoxes;
         // Dictionary<string,AddItems> _items;

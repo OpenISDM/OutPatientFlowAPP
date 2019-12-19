@@ -71,5 +71,10 @@ namespace IndoorNavigation
                 await Navigation.PushAsync(new RigisterList(_locationName));
             }
         }
+ 
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
     }
 }

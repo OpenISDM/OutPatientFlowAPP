@@ -117,5 +117,10 @@ namespace IndoorNavigation
             app.roundRecord = null;
             app.lastFinished = null;
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            OnBackButtonPressed();
+        }
     }
 }

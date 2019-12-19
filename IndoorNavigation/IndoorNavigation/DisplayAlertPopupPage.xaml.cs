@@ -50,5 +50,10 @@ namespace IndoorNavigation
         {
             PopupNavigation.Instance.PopAsync();
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
     }
 }

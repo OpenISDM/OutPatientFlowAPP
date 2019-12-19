@@ -12,15 +12,18 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AlertDialogPopupPage : PopupPage
     {
+        int kind=0;
         public AlertDialogPopupPage() { InitializeComponent(); }
         public AlertDialogPopupPage(string cotext)
         {
             InitializeComponent();
+            kind = 1;
         }
 
         public AlertDialogPopupPage(string context,string confirm,string cancel)
         {
             InitializeComponent();
+            kind = 3;
             TempMessage.Text = context;
             Button ConfirmBtn = new Button {
                 Text = confirm, FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
@@ -45,6 +48,7 @@ namespace IndoorNavigation
         public AlertDialogPopupPage(string context,string cancel)
         {
             InitializeComponent();
+            kind=2;
             TempMessage.Text = context;
             Button CancelBtn = new Button {
                 Text=cancel,
@@ -73,6 +77,12 @@ namespace IndoorNavigation
             MessagingCenter.Send(this, "PopupPageMsg", true);
             PopupNavigation.Instance.PopAsync();
         }
-       
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync();
+            if (kind == 3)
+                MessagingCenter.Send(this, "PopipPageMsg", false);
+        }
     }
 }
