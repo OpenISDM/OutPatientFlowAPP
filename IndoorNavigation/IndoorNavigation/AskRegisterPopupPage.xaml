@@ -7,8 +7,14 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.AskRegisterPopupPage">
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="100" WidthRequest="290" CornerRadius="8">
+    <AbsoluteLayout>
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+
+        </ContentView>
+        <Frame x:Name="AddFrame" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.85,0.3" CornerRadius="8">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -17,18 +23,13 @@
 
                 <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="StartAndExpand" TextColor="Black" VerticalOptions="CenterAndExpand" Grid.Row="0"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1">
-                    <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate NO_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"  HeightRequest="45"/>
-                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate YES_STRING}" FontSize="Small" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
+                    <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate NO_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"  HeightRequest="45"/>
+                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate YES_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
                 </StackLayout>
             </Grid>
             
         </Frame>
-        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
-
-        </ContentView>
-    </StackLayout>
+        
+    </AbsoluteLayout>
 
 </pages:PopupPage>

@@ -1916,24 +1916,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\B10517024\\.nuget\\packages\\": {},
+    "C:\\Users\\janelab\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
+      "projectUniqueName": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
       "projectName": "IndoorNavigation.Android",
-      "projectPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
-      "packagesPath": "C:\\Users\\B10517024\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\obj\\",
+      "projectPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\IndoorNavigation.Android.csproj",
+      "packagesPath": "C:\\Users\\janelab\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\B10517024\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\janelab\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -1947,8 +1947,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
-              "projectPath": "C:\\Users\\B10517024\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj"
+            "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj": {
+              "projectPath": "C:\\Users\\janelab\\Documents\\GitHub\\OutPatientFlowAPP\\IndoorNavigation\\IndoorNavigation\\IndoorNavigation.csproj"
             }
           }
         }

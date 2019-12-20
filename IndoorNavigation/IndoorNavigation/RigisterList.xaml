@@ -20,7 +20,7 @@
                 <ViewCell Tapped="ViewCell_Tapped">
                     <ViewCell.Height>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS" Value="150"/>
+                            <On Platform="iOS" Value="170"/>
                         </OnPlatform>
                     </ViewCell.Height>
                     <ViewCell.ContextActions>
@@ -91,7 +91,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked"/>
         <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
-        <ToolbarItem x:Name="testItem" Text="Test Popup" Order="Secondary" Clicked="testItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Padding>

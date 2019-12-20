@@ -10,6 +10,11 @@
                  x:Class="IndoorNavigation.AddPopupPage_v2"
                 >
     <AbsoluteLayout>
+        <ContentView BackgroundColor="Transparent" x:Name="overlay" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
         <Frame BackgroundColor="White" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.7" AbsoluteLayout.LayoutFlags="All" CornerRadius="8">
             <StackLayout  VerticalOptions="Start" HorizontalOptions="Start">
                 <ScrollView>
@@ -23,11 +28,7 @@
                 </StackLayout>
             </StackLayout>
         </Frame>
-        <ContentView BackgroundColor="Transparent" x:Name="overlay" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
-        </ContentView>
+        
     </AbsoluteLayout>
     <!--<StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
         <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="300" WidthRequest="380">

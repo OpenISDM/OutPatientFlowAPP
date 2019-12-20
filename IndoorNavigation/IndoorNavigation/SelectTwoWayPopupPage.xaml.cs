@@ -40,8 +40,8 @@ namespace IndoorNavigation
         {
             if (isButtonPressed) return;
             isButtonPressed = true;            
+            PopupNavigation.Instance.PopAllAsync();
             await Navigation.PushAsync(new NavigationHomePage(_locationName));
-            await PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
@@ -64,7 +64,12 @@ namespace IndoorNavigation
                       Page page = Application.Current.MainPage;
                       if (msg) await page.Navigation.PushAsync(new RigisterList(_locationName));
                       else await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
-                  });                
+                  });
+                MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "AlertBack", (msgsender, msgargs) => 
+                {
+                    MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
+                    MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "AlertBack");
+                });
             }
             else
             {

@@ -94,10 +94,12 @@ namespace IndoorNavigation.Views.Navigation
                 Preferences.Set(prefs, true);
         }
 
+
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             isCheck(_prefs);
-            MessagingCenter.Send(this, _prefs, true);
+            //MessagingCenter.Send(this, _prefs, true);
+            MessagingCenter.Send(this, "AlertBack", true);
             PopupNavigation.Instance.PopAsync();
         }
     }

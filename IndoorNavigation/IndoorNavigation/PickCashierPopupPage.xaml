@@ -10,6 +10,11 @@
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  >
     <AbsoluteLayout>
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
         <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.45"  CornerRadius="8">
             <StackLayout>
                 <!--<Label x:Name="TitleLabel" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" FontSize="Large"/>-->
@@ -24,10 +29,6 @@
                 </StackLayout>
             </StackLayout>
         </Frame>
-        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
-        </ContentView>
+        
     </AbsoluteLayout>
 </pages:PopupPage>

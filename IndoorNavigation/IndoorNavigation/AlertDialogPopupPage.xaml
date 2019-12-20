@@ -8,6 +8,12 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.AlertDialogPopupPage">
     <AbsoluteLayout>
+        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped"/>
+            </ContentView.GestureRecognizers>
+
+        </ContentView>
         <Frame x:Name="AlertFrame" BackgroundColor="White" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.3" AbsoluteLayout.LayoutFlags="All" CornerRadius="8" >
             <Grid>
                 <Grid.RowDefinitions>
@@ -21,11 +27,6 @@
             </Grid>
 
         </Frame>
-        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
-
-        </ContentView>
+        
     </AbsoluteLayout>
 </pages:PopupPage>
