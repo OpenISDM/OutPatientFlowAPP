@@ -52,11 +52,15 @@ namespace IndoorNavigation
 
         public Guid GetRegionID(string key)
         {
+            if (!RoomInfos.ContainsKey(key))
+                return new Guid("22222222-2222-2222-2222-222222222222");
             return RoomInfos[key]._region;
             //return RegionGuidDict[key];
         }
         public Guid GetDestinationID(String key)
         {
+            if (!RoomInfos.ContainsKey(key))
+                return new Guid("00000000-0000-0000-0000-000000000002");
             return RoomInfos[key]._clinic;
         }
 

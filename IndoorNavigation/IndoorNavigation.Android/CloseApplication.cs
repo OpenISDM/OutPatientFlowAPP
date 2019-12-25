@@ -18,8 +18,9 @@ namespace IndoorNavigation.Droid
         public void closeApplication()
         {
             //Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-            var activity = (Activity)Forms.Context;
-            activity.FinishAffinity();
+            //var activity = (Activity)Forms.Context;
+            //activity.FinishAffinity();
+           
         }
     }
 }

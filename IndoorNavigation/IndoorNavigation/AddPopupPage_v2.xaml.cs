@@ -204,7 +204,7 @@ namespace IndoorNavigation
             //if (isButtonPressed) return;
             //isButtonPressed = true;
             int count = 0;
-            int index = (app.roundRecord == null) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            int index = (app.roundRecord == null || !app.lastFinished.Key.Equals("QueryResult")) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
             foreach (string dptName in DepartmentList)
             {

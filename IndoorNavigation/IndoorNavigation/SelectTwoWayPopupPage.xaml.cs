@@ -23,6 +23,7 @@ namespace IndoorNavigation
         String _locationName;
         bool isButtonPressed = false;
         bool msg = false;
+        Page page = Application.Current.MainPage;
 
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
@@ -40,8 +41,8 @@ namespace IndoorNavigation
         {
             if (isButtonPressed) return;
             isButtonPressed = true;            
-            PopupNavigation.Instance.PopAllAsync();
-            await Navigation.PushAsync(new NavigationHomePage(_locationName));
+            await PopupNavigation.Instance.PopAllAsync();
+            await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
         }
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
@@ -51,10 +52,10 @@ namespace IndoorNavigation
 
             bool getNotShowAgain = Preferences.Get("NotShowAgain_ToOPFM", false);
 
-            PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.PopAsync();
             if (!getNotShowAgain)
             {
-                PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("ALERT_IF_YOU_HAVE_NETWORK_STRING",currentLanguage), _resourceManager.GetString("YES_STRING",currentLanguage)
+                await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("ALERT_IF_YOU_HAVE_NETWORK_STRING",currentLanguage), _resourceManager.GetString("YES_STRING",currentLanguage)
                     , _resourceManager.GetString("NO_STRING",currentLanguage), "NotShowAgain_ToOPFM"));
                 MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM",async (msgsender, msgargs) =>
                   {
@@ -73,7 +74,8 @@ namespace IndoorNavigation
             }
             else
             {
-                await Navigation.PushAsync(new RigisterList(_locationName));
+                
+                await page.Navigation.PushAsync(new RigisterList(_locationName));
             }
         }
  

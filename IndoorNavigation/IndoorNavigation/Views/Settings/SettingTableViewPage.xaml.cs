@@ -396,7 +396,7 @@ namespace IndoorNavigation.Views.Settings
             _chooseMap.Add(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci));
         }
 
-        private async void HandleChooseMap()
+        private void HandleChooseMap()
         {
             List<string> generateName = _phoneInformation.GiveGenerateMapName(OptionPicker.SelectedItem.ToString().Trim());
 

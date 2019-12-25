@@ -30,6 +30,7 @@
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignProvision>WPIN_OPFM</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -41,8 +42,9 @@
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <LangVersion>7.1</LangVersion>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
-    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,8 +68,17 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements>
+    </CodesignEntitlements>
+    <CodesignProvision>
+    </CodesignProvision>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <OptimizePNGs>true</OptimizePNGs>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <BuildIpa>false</BuildIpa>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -117,6 +128,8 @@
     <None Include="Helpers\TranslateExtension.txt" />
     <Compile Include="TextToSpeech.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
+    <None Include="WPIN_OPFM %281%29.mobileprovision" />
+    <None Include="WPIN_OPFM.mobileprovision" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

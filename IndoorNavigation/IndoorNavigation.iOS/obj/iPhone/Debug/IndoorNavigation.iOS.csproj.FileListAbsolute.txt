@@ -188,7 +188,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\optimized\Taipei_City_Hall11100105.png
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\optimized\Taipei_City_Hall11100106.png
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\optimized\
-C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\IndoorNavigation.iOS.csprojAssemblyReference.cache
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\IndoorNavigation.iOS.exe.config
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\IndoorNavigation.iOS.csproj.CoreCompileInputs.cache
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\XamlC.stamp
@@ -256,3 +255,6 @@ C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavig
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Entitlements.plist.NoneOutput.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\Info.plist.NoneOutput.stamp
 C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\TranslateExtension.txt.NoneOutput.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\WPIN_OPFM (1).mobileprovision.NoneOutput.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\CopyFilesToMac\WPIN_OPFM.mobileprovision.NoneOutput.stamp
+C:\Users\janelab\Documents\GitHub\OutPatientFlowAPP\IndoorNavigation\IndoorNavigation.iOS\obj\iPhone\Debug\IndoorNavigation.iOS.csprojAssemblyReference.cache
