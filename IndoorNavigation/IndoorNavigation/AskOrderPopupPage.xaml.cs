@@ -26,7 +26,7 @@ namespace IndoorNavigation
             TodayYouHaveRgLabel.Text = $"您今日掛號以下{colleciton.Count.ToString()}個門診";
         }
 
-        async private void AskOrderConfirmBtn_Clicked(object sender, EventArgs e)
+        private void AskOrderConfirmBtn_Clicked(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new NavigatorPage());
             PopupNavigation.Instance.PopAllAsync();

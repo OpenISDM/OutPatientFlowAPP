@@ -77,7 +77,7 @@ namespace IndoorNavigation
                     isButtonPressed = false;
                     return;
                 }
-                o.isComplete = true;
+                
                
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                                                             destination._regionID,
@@ -85,6 +85,7 @@ namespace IndoorNavigation
                                                             destination._waypointName,
                                                             _nameInformation
                                                              ));
+                o.isComplete = true;
             }
 
             //Deselect Item

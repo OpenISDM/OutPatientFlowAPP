@@ -114,7 +114,7 @@ namespace IndoorNavigation.Views.Navigation
             
         }
 
-        private async void HandleChangeRssi()
+        private void HandleChangeRssi()
         {
             switch (OptionPicker.SelectedItem.ToString().Trim())
             {

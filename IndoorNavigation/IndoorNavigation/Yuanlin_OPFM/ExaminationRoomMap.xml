@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>
-  <Department name='糞便及尿液接收'>
+  <Department name='血液、糞便及尿液接收'>
     <Destination name='B1接收櫃台' displayname='B1接收櫃台' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000004'/>
     <Destination name='2F接收櫃台' displayname='2F接收櫃台' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021'/>
   </Department>

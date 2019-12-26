@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>WPIN</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.OpenISDM.OPFM</string>
+	<string>com.OpenISDM</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleName</key>

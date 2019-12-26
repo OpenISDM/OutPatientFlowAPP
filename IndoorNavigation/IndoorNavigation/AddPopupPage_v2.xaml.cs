@@ -88,13 +88,14 @@ namespace IndoorNavigation
             Label DptNameLabel;
             Grid outSideGrid;
             Image image;
-            int key = 0; 
+            int key = 0;
+            int PictureCount = 1;
             mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
             foreach (string dptName in DepartmentList)
             {
                 outSideGrid = getGridLayout();
 
-                image = new Image { Source = "Arrived.png", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
+                image = new Image { Source = $"Add_Item{PictureCount++}", Aspect = Aspect.AspectFit, WidthRequest=80, HeightRequest=80,
                     VerticalOptions=LayoutOptions.Center, HorizontalOptions=LayoutOptions.Center
                 };
                 DptNameLabel = new Label { Text = dptName, FontSize =dptName.Length<=5?Device.GetNamedSize(NamedSize.Medium, typeof(Label)):Device.GetNamedSize(NamedSize.Small,typeof(Label)),
@@ -137,7 +138,7 @@ namespace IndoorNavigation
 
             image = new Image
             {
-                Source = "Arrived.png",
+                Source = $"Add_Item{PictureCount++}",
                 Aspect = Aspect.AspectFit,
                 WidthRequest = 80,
                 HeightRequest = 80,
@@ -253,9 +254,13 @@ namespace IndoorNavigation
             }
 
             if (count == 0)
-            {                
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage),
-                    _resourceManager.GetString("OK_STRING",currentLanguage)));
+            {
+                if (dumplicateCount == 0)
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SELECT_DESTINATION_STRING", currentLanguage),
+                        _resourceManager.GetString("OK_STRING", currentLanguage)));
+                else if (dumplicateCount >= 1)
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("SELECT_DUPLICATE_EXAM_STRING",currentLanguage), 
+                        _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
             GobackPage(false);

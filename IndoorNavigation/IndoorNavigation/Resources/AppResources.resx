@@ -603,4 +603,7 @@
   <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
     <value>This service will need network to recieve data. If you don't have cellular network or WiFi, please press "No" button to use Navigator service</value>
   </data>
+  <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
+    <value>You select some duplicate examination room.</value>
+  </data>
 </root>

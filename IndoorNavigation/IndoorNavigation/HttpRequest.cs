@@ -80,40 +80,48 @@ namespace IndoorNavigation
             //request.Headers.Set(HttpRequestHeader.ContentType, "text/xml");
             request.ContentType = "text/xml";
             request.Headers.Set("SOAPAction", "http://tempuri.org/GetRGdata2");
-
+            request.Timeout = 20000;
             //set POST action
             request.Method = "POST";
 
             //set POST Body
             byte[] bytes = Encoding.UTF8.GetBytes(bodyString);
             request.ContentLength = bytes.Length;
+            try
+            {
+                //do post
+                using (Stream postStream = request.GetRequestStream())
+                {
+                    postStream.Write(bytes, 0, bytes.Length);
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            try
+            {
+                //get response 
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string content = reader.ReadToEnd();
 
-            //do post
-            using (Stream postStream = request.GetRequestStream())
+                    contentString = content;
+                    responseString = content;
+
+                }
+            }catch(Exception e)
             {
-                postStream.Write(bytes, 0, bytes.Length);
+                Console.WriteLine(e.Message);
             }
-            //get response 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            finally
             {
-                string content = reader.ReadToEnd();
-              
-                contentString = content;
-                responseString = content;
-               
+                request.Abort();
             }
+
             ResponseXmlParse();
 
-            int index = (app.getRigistered) ?app.records.Count-1:app.records.Count;
-
-            foreach(RgRecord record in app._TmpRecords)
-            {
-                app.records.Insert(index++, record);
-                //app.records.Add(record);
-            }
-            if(!app.getRigistered)
-                app.records.Add(new RgRecord { Key = "NULL" });
+            
         }
         public void ResponseXmlParse()
         {
@@ -135,6 +143,9 @@ namespace IndoorNavigation
             XmlNodeList records = doc.GetElementsByTagName("RgRecord");
             Console.WriteLine(responseString);
             DestinationXmlinfo infos = new DestinationXmlinfo();
+
+            int index = (app.getRigistered) ? app.records.Count - 1 : app.records.Count;
+
             for (int i = 0; i < records.Count; i++)
             {
                 RgRecord record = new RgRecord();
@@ -149,11 +160,24 @@ namespace IndoorNavigation
                 record._waypointName = record.CareRoom;
                 record._regionID = infos.GetRegionID(record.CareRoom); //new Guid("11111111-1111-1111-1111-111111111111");
                 record._waypointID = infos.GetDestinationID(record.CareRoom); //new Guid("00000000-0000-0000-0000-000000000002");
+                                 
+                if (record._regionID.Equals(new Guid("00000000-0000-0000-0000-000000000000")) && record._waypointID.Equals(new Guid("00000000-0000-0000-0000-000000000000")))
+                {
+                    record.isAccept = true;
+                    record.isComplete = true;
+                    record.DptName = record.DptName + "(無效的航點)";
+                    app.FinishCount++;
+                    app.records.Insert(index++,record);
+                    continue;
+                }
+                app.records.Insert(index++,record);
                 app._TmpRecords.Add(record);
 
+               
                 Console.WriteLine($"HttpRequest region id={record._regionID}, waypoint id={record._waypointID}");
             }
-
+            if (!app.getRigistered)
+                app.records.Add(new RgRecord { Key = "NULL" });
             Console.WriteLine(app._TmpRecords.Count);
         }
     }

@@ -594,4 +594,7 @@
   <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
     <value>這項服務將會需要使用到網路服務，若您沒有行動網路或是WiFi連線，請按"否"改用導航服務</value>
   </data>
+  <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
+    <value>您選取了重複的檢查內容。</value>
+  </data>
 </root>
