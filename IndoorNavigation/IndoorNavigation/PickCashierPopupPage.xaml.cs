@@ -16,6 +16,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Resources;
 using System.Globalization;
 using Plugin.Multilingual;
+using Plugin.InputKit.Shared.Controls;
 
 namespace IndoorNavigation
 {
@@ -31,7 +32,7 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
            
-        SelectionView sv,Pharmacysv;
+        Plugin.InputKit.Shared.Controls.SelectionView sv,Pharmacysv;
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
         {
@@ -41,17 +42,22 @@ namespace IndoorNavigation
             Pharmacyitems = new ObservableCollection<DestinationItem>();
             LoadData();
 
-            sv = new SelectionView
-            { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Center, ItemsSource=Cashieritems,
-              ColumnNumber=1, SelectionType=SelectionType.RadioButton, RowSpacing=10
+            sv = new Plugin.InputKit.Shared.Controls.SelectionView
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                ItemsSource = Cashieritems,
+                ColumnNumber = 1,
+                SelectionType = Plugin.InputKit.Shared.Controls.SelectionType.RadioButton,
+                RowSpacing = 10
             };
-            Pharmacysv = new SelectionView
+            Pharmacysv = new Plugin.InputKit.Shared.Controls.SelectionView
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
                 ItemsSource = Pharmacyitems,
                 ColumnNumber = 1,
-                SelectionType = SelectionType.RadioButton,
+                SelectionType = Plugin.InputKit.Shared.Controls.SelectionType.RadioButton,
                 RowSpacing = 10
             };
             SelectionStack.Children.Add(new Label {

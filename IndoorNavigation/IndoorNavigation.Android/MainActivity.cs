@@ -38,7 +38,7 @@ namespace IndoorNavigation.Droid
             {
                 ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.WriteExternalStorage }, 0);
             }
-
+            Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
@@ -49,6 +49,17 @@ namespace IndoorNavigation.Droid
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
+        }
+        public override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                // Rg.Plugins.Popup.Popup.SendBackPressed();
+            }
+            else
+            {
+                // base.OnBackPressed();
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

@@ -27,7 +27,7 @@ namespace IndoorNavigation
         string _navigationGraphName;
         ExitPopupViewModel _viewmodel;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        SelectionView sv;
+        
 
         public ExitPopupPage(string navigationGraphName)
         {

@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
-    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.9" />
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.11" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
@@ -99,6 +99,11 @@
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\CareRoomMapp.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\CashierStation.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\ExaminationRoomMap.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\ExitMap.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
@@ -143,6 +148,11 @@
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
+    <None Remove="Yuanlin_OPFM\CareRoomMapp.xml" />
+    <None Remove="Yuanlin_OPFM\CashierStation.xml" />
+    <None Remove="Yuanlin_OPFM\ExaminationRoomMap.xml" />
+    <None Remove="Yuanlin_OPFM\ExitMap.xml" />
+    <None Remove="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">
@@ -150,6 +160,8 @@
     </Compile>
     <Compile Update="Resources\AppResources.Designer.cs">
       <DependentUpon>AppResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>

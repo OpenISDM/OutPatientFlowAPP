@@ -58,7 +58,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
-
+using Rg.Plugins.Popup.Services;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -73,6 +73,10 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private bool updateMapOrNot;
         private static PhoneInformation _phoneInformation = new PhoneInformation();
+        //-------------------------------------
+        ViewCell lastCell = null;
+        bool isButtonPressed = false; //to prevent multi-click
+        //-------------------------------
         public MainPage()
         {
             InitializeComponent();
@@ -198,11 +202,19 @@ namespace IndoorNavigation
 
                 if(updateMapOrNot == true)
                 {
+                    if (isButtonPressed) return;
+                    isButtonPressed = true;
+
                     switch (navigationGraph.GetIndustryServer())
                     {
+
                         case "hospital":
-                            await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
-   
+                            if (location.UserNaming.Equals(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", currentLanguage)))
+                                await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(location.UserNaming));
+                            else
+                                await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
+
+                            //await Navigation.PushAsync(new NavigationHomePage(location.UserNaming));
                             break;
 
                         case "city_hall":
@@ -214,6 +226,8 @@ namespace IndoorNavigation
                             Console.WriteLine("Unknown _industryService");
                             break;
                     }
+                    isButtonPressed = false;
+                    ((ListView)sender).SelectedItem = null;
                 }
                 
             }
@@ -262,6 +276,22 @@ namespace IndoorNavigation
                 _viewModel.LoadNavigationGraph();
             }
         }
-        
+        private void ViewCell_Tapped(object sender, EventArgs e)
+        {
+            if (lastCell != null)
+            {
+                lastCell.View.BackgroundColor = Color.Transparent;
+            }
+            var viewCell = (ViewCell)sender;
+            if (viewCell.View != null)
+            {
+                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
+                Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
+                    viewCell.View.BackgroundColor = Color.Transparent;
+                    return false;
+                });
+                //viewCell.View.BackgroundColor = Color.;
+            }
+        }
     }
 }

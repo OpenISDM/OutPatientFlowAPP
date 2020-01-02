@@ -47,7 +47,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell Tapped="ViewCell_Tapped">
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />

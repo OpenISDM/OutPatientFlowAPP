@@ -74,7 +74,7 @@ namespace IndoorNavigation.iOS
 
             LoadApplication(new App());
             app.StatusBarStyle = UIStatusBarStyle.LightContent;
-
+            Plugin.InputKit.Platforms.iOS.Config.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             return base.FinishedLaunching(app, options);
         }
