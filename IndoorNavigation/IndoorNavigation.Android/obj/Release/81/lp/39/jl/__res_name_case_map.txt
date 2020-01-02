@@ -1,1 +1,2 @@
-values/Strings.xml;values/strings.xml
+layout/zxingscanneractivitylayout.axml;layout/zxingscanneractivitylayout.xml
+layout/zxingscannerfragmentlayout.axml;layout/zxingscannerfragmentlayout.xml

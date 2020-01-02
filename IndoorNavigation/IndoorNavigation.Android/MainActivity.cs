@@ -44,25 +44,13 @@ namespace IndoorNavigation.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
-            
+
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
         }
-        public override void OnBackPressed()
-        {
-            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
-            {
-               // Rg.Plugins.Popup.Popup.SendBackPressed();
-            }
-            else
-            {
-               // base.OnBackPressed();
-            }
-            
-            
-        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);

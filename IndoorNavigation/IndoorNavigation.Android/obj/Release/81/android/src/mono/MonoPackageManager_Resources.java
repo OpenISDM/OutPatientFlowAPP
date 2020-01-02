@@ -18,7 +18,6 @@ public class MonoPackageManager_Resources {
 		"MvvmHelpers.dll",
 		"Newtonsoft.Json.dll",
 		"Plugin.CurrentActivity.dll",
-		"Plugin.InputKit.dll",
 		"Plugin.Multilingual.Abstractions.dll",
 		"Plugin.Multilingual.dll",
 		"Plugin.Permissions.dll",

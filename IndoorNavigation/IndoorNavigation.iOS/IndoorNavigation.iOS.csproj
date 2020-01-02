@@ -30,7 +30,6 @@
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>7.1</LangVersion>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
-    <CodesignProvision>WPIN_OPFM</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -42,9 +41,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <LangVersion>7.1</LangVersion>
-    <CodesignProvision>
-    </CodesignProvision>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,17 +66,8 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <CodesignEntitlements>
-    </CodesignEntitlements>
-    <CodesignProvision>
-    </CodesignProvision>
-    <MtouchLink>SdkOnly</MtouchLink>
-    <OptimizePNGs>true</OptimizePNGs>
-    <MtouchUseLlvm>true</MtouchUseLlvm>
-    <BuildIpa>false</BuildIpa>
-    <CodesignExtraArgs />
-    <CodesignResourceRules />
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -117,7 +106,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
-    <Compile Include="CloseApplication.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -128,8 +116,6 @@
     <None Include="Helpers\TranslateExtension.txt" />
     <Compile Include="TextToSpeech.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
-    <None Include="WPIN_OPFM %281%29.mobileprovision" />
-    <None Include="WPIN_OPFM.mobileprovision" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -309,10 +295,10 @@
     <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Folder Include="Resources\Lab\" />
     <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
   </ItemGroup>
-  <ItemGroup />
 </Project>

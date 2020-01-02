@@ -10,7 +10,7 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 20, 0, 0" />
+                <On Platform="iOS" Value="0, 0, 0, 25" />
                 <On Platform="Android" Value="0, 0, 0, 0" />
                 <On Platform="UWP" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
@@ -47,7 +47,7 @@
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Tapped="ViewCell_Tapped">
+                        <ViewCell>
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />

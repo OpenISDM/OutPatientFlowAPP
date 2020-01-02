@@ -11,7 +11,6 @@ public class MainActivity
 	static {
 		__md_methods = 
 			"n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler\n" +
-			"n_onBackPressed:()V:GetOnBackPressedHandler\n" +
 			"n_onRequestPermissionsResult:(I[Ljava/lang/String;[I)V:GetOnRequestPermissionsResult_IarrayLjava_lang_String_arrayIHandler\n" +
 			"";
 		mono.android.Runtime.register ("IndoorNavigation.Droid.MainActivity, IndoorNavigation.Android", MainActivity.class, __md_methods);
@@ -32,14 +31,6 @@ public class MainActivity
 	}
 
 	private native void n_onCreate (android.os.Bundle p0);
-
-
-	public void onBackPressed ()
-	{
-		n_onBackPressed ();
-	}
-
-	private native void n_onBackPressed ();
 
 
 	public void onRequestPermissionsResult (int p0, java.lang.String[] p1, int[] p2)

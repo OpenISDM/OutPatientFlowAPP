@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "fcafaa179da08d2b4bc850d9f867e86712b29aaf"
+    "signature": "17af8fc1d585e3712d0e739cf7a671570976ac73"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,7 +9,7 @@
     ".NETStandard,Version=v2.0/": {
       "IndoorNavigation/1.0.0": {
         "dependencies": {
-          "AiForms.Effects": "1.5.5",
+          "AiForms.Effects": "1.5.1",
           "AiForms.SettingsView": "0.4.15",
           "GeoCoordinate.NetCore": "1.0.0.1",
           "Microsoft.AppCenter.Analytics": "1.14.0",
@@ -20,11 +20,10 @@
           "Plugin.Permissions": "3.0.0.12",
           "Prism.Forms": "7.1.0.431",
           "Refractored.MvvmHelpers": "1.3.0",
-          "Rg.Plugins.Popup": "1.2.0.223",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
           "Xamarin.Forms": "3.6.0.344457",
-          "Xamarin.Forms.InputKit": "3.0.11",
           "Xamarin.Forms.Visual.Material": "3.6.0.344457",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
@@ -38,7 +37,7 @@
           }
         }
       },
-      "AiForms.Effects/1.5.5": {
+      "AiForms.Effects/1.5.1": {
         "dependencies": {
           "Xamarin.Forms": "3.6.0.344457"
         },
@@ -166,14 +165,14 @@
           }
         }
       },
-      "Rg.Plugins.Popup/1.2.0.223": {
+      "Rg.Plugins.Popup/1.1.5.188": {
         "dependencies": {
           "Xamarin.Forms": "3.6.0.344457"
         },
         "runtime": {
           "lib/netstandard1.0/Rg.Plugins.Popup.dll": {
-            "assemblyVersion": "1.2.0.223",
-            "fileVersion": "1.2.0.223"
+            "assemblyVersion": "1.1.5.188",
+            "fileVersion": "1.1.5.188"
           }
         }
       },
@@ -223,17 +222,6 @@
           }
         }
       },
-      "Xamarin.Forms.InputKit/3.0.11": {
-        "dependencies": {
-          "Xamarin.Forms": "3.6.0.344457"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Plugin.InputKit.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "Xamarin.Forms.Visual.Material/3.6.0.344457": {
         "dependencies": {
           "Xamarin.Forms": "3.6.0.344457"
@@ -275,12 +263,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AiForms.Effects/1.5.5": {
+    "AiForms.Effects/1.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2DnXb7/PcI63vNqJoyDQG4j4x8yNI51QwWTbyt8aHe6uUgx8ifaedhZr53VuM4Y9LcNxVAdX/l21eTTKUXSQ4Q==",
-      "path": "aiforms.effects/1.5.5",
-      "hashPath": "aiforms.effects.1.5.5.nupkg.sha512"
+      "sha512": "sha512-GRdrMRZuPuUmdOv4p3Rp5xnxr6JnwvkR892Y5s/sZaX5wJai3Yf49zwmKa4u/8gryhP0P9BB7j23CvxI+YZTDg==",
+      "path": "aiforms.effects/1.5.1",
+      "hashPath": "aiforms.effects.1.5.1.nupkg.sha512"
     },
     "AiForms.SettingsView/0.4.15": {
       "type": "package",
@@ -373,12 +361,12 @@
       "path": "refractored.mvvmhelpers/1.3.0",
       "hashPath": "refractored.mvvmhelpers.1.3.0.nupkg.sha512"
     },
-    "Rg.Plugins.Popup/1.2.0.223": {
+    "Rg.Plugins.Popup/1.1.5.188": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0ruzj7EedYRUhhsk327z7ymaHzf9E/n6Slg2ZJfOYqtZ14tX1dtWbyNRSmGEnWxLyN1qSq4Od4U6vYupHRpdtw==",
-      "path": "rg.plugins.popup/1.2.0.223",
-      "hashPath": "rg.plugins.popup.1.2.0.223.nupkg.sha512"
+      "sha512": "sha512-PE7uHJ/LuI5pSO1HpgjJ+v2KhNfftzqt/L1AoGH/5mX0fP7pcW6lG4FbUHuCFKolrzJfLLotuuET+hfN50Whpg==",
+      "path": "rg.plugins.popup/1.1.5.188",
+      "hashPath": "rg.plugins.popup.1.1.5.188.nupkg.sha512"
     },
     "System.Numerics.Vectors/4.5.0": {
       "type": "package",
@@ -407,13 +395,6 @@
       "sha512": "sha512-7IffIKgL0fmgbfCLKzXaFKJ7uOueKiz/BIgmAG1Z5WMn+vMKeALe5GgRs3Uddo670VzllIHWkNEZD3lG+e02bw==",
       "path": "xamarin.forms/3.6.0.344457",
       "hashPath": "xamarin.forms.3.6.0.344457.nupkg.sha512"
-    },
-    "Xamarin.Forms.InputKit/3.0.11": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-8bVDIc1wjqiFz73vWUZe3VK5mjBU5QJ+vtUqbMaolbdiZg0AHVuLbGrGO7fU6Xk03d7/K1CNValZKAVa4+1H7Q==",
-      "path": "xamarin.forms.inputkit/3.0.11",
-      "hashPath": "xamarin.forms.inputkit.3.0.11.nupkg.sha512"
     },
     "Xamarin.Forms.Visual.Material/3.6.0.344457": {
       "type": "package",
