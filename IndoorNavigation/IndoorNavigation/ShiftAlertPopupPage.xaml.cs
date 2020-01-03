@@ -88,12 +88,16 @@ namespace IndoorNavigation.Views.Navigation
             BtnLayout.Children.Add(CancelBtn);
         }
         private void isCheck(string prefs)
-        {
-            Console.WriteLine("aaaaaaaaaa");
+        {            
             if (CheckNeverShow.IsChecked)
                 Preferences.Set(prefs, true);
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send(this, "AlertBack", false);
+            return base.OnBackButtonPressed();
+        }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {

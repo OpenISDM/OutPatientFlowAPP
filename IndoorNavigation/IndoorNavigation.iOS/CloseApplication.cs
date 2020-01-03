@@ -10,8 +10,13 @@ using System.Threading;
 
 namespace IndoorNavigation.iOS
 {
-    class CloseApplication
+    class CloseApplication:ICloseApplication
     {
         //Thread.CurrentThread.Abort();
+        public void closeApplication()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+        }
+       
     }
 }

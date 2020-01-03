@@ -233,6 +233,22 @@ namespace IndoorNavigation
             }
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Device.BeginInvokeOnMainThread(async ()=>
+            {
+                bool isAgree = await DisplayAlert("info", "do you want to leave the app?", "y","n");
+
+                if (isAgree)
+                {                    
+                    ICloseApplication service = DependencyService.Get<ICloseApplication>();
+                    Console.WriteLine("IcloseApplication was called");
+                    service.closeApplication();
+                }                                    
+            });
+            return true;
+        }
+
         void LocationListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             // disable it

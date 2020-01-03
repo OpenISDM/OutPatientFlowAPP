@@ -421,9 +421,9 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
         }
 
-        async private void testItem_Clicked(object sender, EventArgs e)
-        {
-            await PopupNavigation.Instance.PushAsync(new TestPopupPage());
-        }
+        //async private void testItem_Clicked(object sender, EventArgs e)
+        //{
+        //    await PopupNavigation.Instance.PushAsync(new TestPopupPage());
+        //}
     }
 }

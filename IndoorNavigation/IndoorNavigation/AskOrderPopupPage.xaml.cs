@@ -21,7 +21,7 @@ namespace IndoorNavigation
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ObservableCollection<RgRecord> colleciton = ((App)Application.Current)._TmpRecords;
             QueryResultListview.ItemsSource = colleciton;
-
+            _locationName = locationName;
             SuggestLabel.Text= $"建議先看{colleciton[0].DptName} {colleciton[0].DrName}醫師";
             TodayYouHaveRgLabel.Text = $"您今日掛號以下{colleciton.Count.ToString()}個門診";
         }

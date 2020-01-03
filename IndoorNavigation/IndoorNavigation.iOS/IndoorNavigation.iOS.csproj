@@ -106,6 +106,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
+    <Compile Include="CloseApplication.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -295,10 +296,42 @@
     <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
     <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item1.png" />
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Lab\" />
     <Folder Include="Resources\NTUH_YunLin\" />
     <Folder Include="Resources\Taipei_City_Hall\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Add_Item11.png" />
   </ItemGroup>
 </Project>
