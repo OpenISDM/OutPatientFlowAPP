@@ -284,7 +284,7 @@ namespace IndoorNavigation
                 string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
                     _resourceManager.GetString("HOPE_STRING", currentLanguage));
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
-                await Navigation    .PopAsync();
+                await Navigation.PopAsync();
                 index.isAccept = true;
                 index.isComplete = true;
                 RgListView.ItemsSource = null;

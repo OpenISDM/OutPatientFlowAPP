@@ -12,11 +12,6 @@ using System.Runtime.CompilerServices;
 
 namespace IndoorNavigation
 {
-    public class QueryResult
-    {
-        //public ObservableCollection<RgRecord> RgRecords=null;
-    }
-
     public class RgRecord : DestinationItem
     {
         public string OpdDate { get; set; }
@@ -39,7 +34,6 @@ namespace IndoorNavigation
         public string _floor { get; set; }
         public string Key { get; set; }
         public override string ToString() => _waypointName;
-        
     }
 
 }
