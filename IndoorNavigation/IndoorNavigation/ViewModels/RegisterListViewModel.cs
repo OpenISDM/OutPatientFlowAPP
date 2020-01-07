@@ -64,12 +64,17 @@ namespace IndoorNavigation.ViewModels
 
                 Page mainPage = Application.Current.MainPage;
 
-                await mainPage.DisplayAlert(
+                var  wantContinue=await mainPage.DisplayAlert(
                   _resourceManager.GetString("MESSAGE_STRING", currentLanguage),
                                         _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage),
-                                        _resourceManager.GetString("OK_STRING", currentLanguage));
-
-                await mainPage.Navigation.PushAsync(new SignInPage());
+                                        _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
+                if (wantContinue)
+                    await mainPage.Navigation.PushAsync(new SignInPage());
+                else
+                {
+                    //await PopupNavigation.Instance.PopAsync();
+                    await mainPage.Navigation.PopAsync() ;
+                }
             }
         }
         #region 

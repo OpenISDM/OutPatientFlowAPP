@@ -59,6 +59,7 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
+using System.Globalization;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -76,6 +77,7 @@ namespace IndoorNavigation
         //-------------------------------------
         ViewCell lastCell = null;
         bool isButtonPressed = false; //to prevent multi-click
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         //-------------------------------
         public MainPage()
         {
@@ -237,14 +239,12 @@ namespace IndoorNavigation
         {
             Device.BeginInvokeOnMainThread(async ()=>
             {
-                bool isAgree = await DisplayAlert("info", "do you want to leave the app?", "y","n");
+                bool isAgree = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), "do you want to leave the app?", _resourceManager.GetString("OK_STRING",currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
 
                 if (isAgree)
                 {                    
-                    ICloseApplication service = DependencyService.Get<ICloseApplication>();
-                    Console.WriteLine("IcloseApplication was called");
-                    service.closeApplication();
-                }                                    
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
             });
             return true;
         }

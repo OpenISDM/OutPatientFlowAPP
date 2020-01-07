@@ -49,6 +49,8 @@ namespace IndoorNavigation.Droid
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
+
+            //Finish();
         }
         public override void OnBackPressed()
         {
@@ -60,6 +62,7 @@ namespace IndoorNavigation.Droid
             {
                 // base.OnBackPressed();
             }
+            
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

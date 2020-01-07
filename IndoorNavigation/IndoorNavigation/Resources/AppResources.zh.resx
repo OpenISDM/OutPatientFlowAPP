@@ -597,4 +597,7 @@
   <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
     <value>您選取了重複的檢查內容。</value>
   </data>
+  <data name="LEAVE_APP_STRING" xml:space="preserve">
+    <value>確定要離開APP嗎?</value>
+  </data>
 </root>
