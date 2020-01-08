@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,7 +19,7 @@ using Xamarin.Forms.Xaml;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RigisterList : ContentPage
+    public partial class RigisterList : CustomToolbarContentPage
     {
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
@@ -34,7 +36,52 @@ namespace IndoorNavigation
         private HttpRequest request;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         PhoneInformation phoneInformation;
+        //----------delegate test part codes-----------------------
+        delegate void LoadFiles(string buildingName);
+        delegate void FinishItem(string buildingName);
 
+        LoadFiles _loadFiles;
+        FinishItem _finishItem;
+
+        private void Init()
+        {
+            switch (_navigationGraphName)
+            {
+                case "員林基督教醫院":
+                case "Yuanlin Christian Hospital":
+                    _loadFiles = CCH_loadFiles;
+                    _finishItem = CCH_FinishItem;
+                    break;
+                case "NTUH Yunlin Branch":
+                case "台大醫院雲林分院":
+                    _loadFiles = NTUH_Yunlin_loadFiles;
+                    _finishItem = NTUH_Yunlin_FinishItem;
+                    break;
+                default:
+                    throw new Exception();
+                    
+            }
+               
+        }
+        //CCH part
+        private void CCH_loadFiles(string buildingname)
+        {
+            Console.WriteLine("it's calling cch load files function....");            
+        } 
+        private void CCH_FinishItem(string buildingname)
+        {
+            Console.WriteLine("it's calling cch finishitem function....");
+        }
+        //NTUH part
+        private void NTUH_Yunlin_loadFiles(string buildingname)
+        {
+            Console.WriteLine("it's calling NTUH_Yunlin load files function");
+        }
+        private void NTUH_Yunlin_FinishItem(string buildingname)
+        {
+            Console.WriteLine("it's calling NTUH_Yunlin Finish item function");
+        }
+        //---------------------------------
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
@@ -45,7 +92,8 @@ namespace IndoorNavigation
             //get graph info
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;           
+            _navigationGraphName = navigationGraphName;
+            Init();
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             Console.WriteLine("initialize http request");
             request = new HttpRequest();
@@ -250,7 +298,7 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
-           
+            RefreshToolbarOptions();
         }
         /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -396,7 +444,7 @@ namespace IndoorNavigation
         private void ReadXml()
         {
             Console.WriteLine("Now Excution is::: ReadXml");
-            
+            //_loadFiles(_navigationGraphName);
 
             if (app._TmpRecords.Count > 0)
             {
@@ -425,5 +473,67 @@ namespace IndoorNavigation
         //{
         //    await PopupNavigation.Instance.PushAsync(new TestPopupPage());
         //}
+        //---------for secondary item list--------------------
+
+        private ToolbarItem _item1;
+        public override event EventHandler ToolbarItemAdded;
+        public ICommand Item1Command { get; set; }
+        private void RefreshToolbarOptions()
+        {
+            //var viewModel = BindingContext as RegisterListViewModel;
+
+            Item1Command = new Command(async () => await Item1CommandMethod());
+
+            ToolbarItems.Clear();
+
+            if (_viewmodel != null)
+            {
+                ToolbarItem item = new ToolbarItem { Text = "item2", Command = Item1Command, Order = ToolbarItemOrder.Secondary };
+                _item1 = new ToolbarItem
+                {
+                    Text = "Item 1",
+                    Command = Item1Command,
+                    Order = ToolbarItemOrder.Secondary
+                };
+                ToolbarItems.Add(item);
+                ToolbarItems.Add(_item1);
+                OnToolbarItemAdded();
+            }
+        }
+        private async Task Item1CommandMethod()
+        {
+            Console.WriteLine("Item click");
+            await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
+            if (BindingContext is RegisterListViewModel viewModel && viewModel.Item1Command.CanExecute(null))
+            {
+                viewModel.Item1Command.Execute(null);
+            }
+
+            await Task.CompletedTask;
+        }
+        protected void OnToolbarItemAdded()
+        {
+            Console.WriteLine("call onToolbarItemAdded");
+            var e = ToolbarItemAdded;
+            e?.Invoke(this, new EventArgs());
+        }
+        public override Color CellBackgroundColor => Color.White;
+
+        public override Color CellTextColor => Color.Black;
+
+        public override Color MenuBackgroundColor => Color.White;
+
+        public override float RowHeight => 56;
+
+        public override Color ShadowColor => Color.Black;
+
+        public override float ShadowOpacity => 0.3f;
+
+        public override float ShadowRadius => 5.0f;
+
+        public override float ShadowOffsetDimension => 5.0f;
+
+        public override float TableWidth => 250;
+        //------------------------------
     }
 }

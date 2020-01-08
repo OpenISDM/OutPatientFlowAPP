@@ -106,7 +106,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
-    <Compile Include="CloseApplication.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -115,6 +114,8 @@
     <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Renderers\CustomContentPageRenderer.cs" />
     <None Include="Helpers\TranslateExtension.txt" />
+    <Compile Include="Renderers\RightToolbarMenuCustomRenderer.cs" />
+    <Compile Include="Services\TableSource.cs" />
     <Compile Include="TextToSpeech.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
   </ItemGroup>
@@ -333,5 +334,14 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Add_Item11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\more.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\more%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\more%403x.png" />
   </ItemGroup>
 </Project>

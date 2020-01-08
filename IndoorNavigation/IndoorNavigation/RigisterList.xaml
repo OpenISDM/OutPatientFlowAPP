@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<shared:CustomToolbarContentPage 
              xmlns:local="clr-namespace:IndoorNavigation"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
@@ -7,6 +7,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+            xmlns:shared="clr-namespace:IndoorNavigation"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.RigisterList">
@@ -132,4 +133,4 @@
                     TextColor="White"/>
         </AbsoluteLayout>
     </ContentPage.Content>
-</ContentPage>
+</shared:CustomToolbarContentPage>
