@@ -302,7 +302,7 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
-                Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
+                Device.StartTimer(TimeSpan.FromSeconds(1.5), () => {
                     viewCell.View.BackgroundColor = Color.Transparent;
                     return false;
                 });

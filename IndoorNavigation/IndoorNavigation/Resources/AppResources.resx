@@ -606,4 +606,7 @@
   <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
     <value>You select some duplicate examination room.</value>
   </data>
+  <data name="LEAVE_APP_STRING" xml:space="preserve">
+    <value>Do you want to leave the app?</value>
+  </data>
 </root>

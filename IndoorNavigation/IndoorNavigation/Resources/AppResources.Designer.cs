@@ -844,6 +844,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Do you want to leave the app? 的當地語系化字串。
+        /// </summary>
+        internal static string LEAVE_APP_STRING {
+            get {
+                return ResourceManager.GetString("LEAVE_APP_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 License and Privacy 的當地語系化字串。
         /// </summary>
         internal static string LICENSE_AND_PRIVACY_STRING {
