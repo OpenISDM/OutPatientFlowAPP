@@ -25,7 +25,7 @@ namespace IndoorNavigation.ViewModels
         //bool 
         public RegisterListViewModel()
         {
-
+            Item1Command = new Command(() => Item1Method());
             if (app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();

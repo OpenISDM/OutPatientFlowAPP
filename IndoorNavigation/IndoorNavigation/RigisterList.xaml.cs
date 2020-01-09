@@ -477,40 +477,53 @@ namespace IndoorNavigation
 
         private ToolbarItem _item1;
         public override event EventHandler ToolbarItemAdded;
-        public ICommand Item1Command { get; set; }
+        //public ICommand Item1Command { get; set; }
+        public ICommand SignInCommand { get; set; }
+        public ICommand InfoItemCommand { get; set; }
         private void RefreshToolbarOptions()
         {
             //var viewModel = BindingContext as RegisterListViewModel;
 
-            Item1Command = new Command(async () => await Item1CommandMethod());
-
+            //Item1Command = new Command(async () => await Item1CommandMethod());
+            SignInCommand = new Command(async () => await SignInItemMethod());
+            InfoItemCommand = new Command(async () => await InfoItemMethod());
             ToolbarItems.Clear();
 
             if (_viewmodel != null)
             {
-                ToolbarItem item = new ToolbarItem { Text = "item2", Command = Item1Command, Order = ToolbarItemOrder.Secondary };
-                _item1 = new ToolbarItem
-                {
-                    Text = "Item 1",
-                    Command = Item1Command,
-                    Order = ToolbarItemOrder.Secondary
-                };
-                ToolbarItems.Add(item);
-                ToolbarItems.Add(_item1);
+                ToolbarItem SignInItem = new ToolbarItem { Text = _resourceManager.GetString("ACCOUNT_STRING", currentLanguage), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
+                ToolbarItem InfoItem = new ToolbarItem { Text = _resourceManager.GetString("PREFERENCES_STRING", currentLanguage), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
+                ToolbarItems.Add(SignInItem);
+                ToolbarItems.Add(InfoItem);
                 OnToolbarItemAdded();
             }
         }
         private async Task Item1CommandMethod()
         {
             Console.WriteLine("Item click");
-            await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
-            if (BindingContext is RegisterListViewModel viewModel && viewModel.Item1Command.CanExecute(null))
+            //await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
+            if (BindingContext is RegisterListViewModel && _viewmodel.Item1Command.CanExecute(null))
             {
-                viewModel.Item1Command.Execute(null);
+                Console.WriteLine("meet the if-else statement");
+                _viewmodel.Item1Command.Execute(null);
             }
 
             await Task.CompletedTask;
         }
+
+        private async Task SignInItemMethod()
+        {
+            Console.WriteLine("Sign In Item click");
+            await Navigation.PushAsync(new SignInPage());
+            await Task.CompletedTask;
+        }
+        private async Task InfoItemMethod()
+        {
+            Console.WriteLine("Preference item click");
+            await Navigation.PushAsync(new NavigatorSettingPage());
+            await Task.CompletedTask;
+        }
+
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");

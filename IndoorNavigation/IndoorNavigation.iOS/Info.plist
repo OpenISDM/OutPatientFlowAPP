@@ -55,5 +55,7 @@
 	</array>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDescription</string>
+	<key>MinimumOSVersion</key>
+	<string>12.2</string>
 </dict>
 </plist>
