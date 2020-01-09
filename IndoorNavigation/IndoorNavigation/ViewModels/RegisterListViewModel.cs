@@ -25,7 +25,6 @@ namespace IndoorNavigation.ViewModels
         //bool 
         public RegisterListViewModel()
         {
-            Item1Command = new Command(() => Item1Method());
             if (app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();
@@ -103,12 +102,7 @@ namespace IndoorNavigation.ViewModels
         }
         #endregion
 
-        //---------------test secondary list----
-        public ICommand Item1Command { get; internal set; }
-        async private void Item1Method()
-        {
-            Page mainPage = Application.Current.MainPage;
-            await mainPage.DisplayAlert("a", "b", "c");
+        
         }
     }
 }

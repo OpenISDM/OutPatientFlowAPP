@@ -95,7 +95,10 @@ namespace IndoorNavigation.Models
         float ShadowOffsetDimension { get; }
         float TableWidth { get; }
     }
-
+    public interface INetworkSetting
+    {
+        void OpenSettingPage();
+    }
     #endregion
 
     #region Interface for IPS Client

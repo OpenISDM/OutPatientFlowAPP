@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using IndoorNavigation.Models;
 
 [assembly: Xamarin.Forms.Dependency(typeof(NetworkSetting))]
 namespace IndoorNavigation.Droid

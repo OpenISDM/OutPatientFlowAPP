@@ -1,4 +1,5 @@
-﻿using IndoorNavigation.Models.NavigaionLayer;
+﻿using IndoorNavigation.Models;
+using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.ViewModels;
@@ -498,22 +499,11 @@ namespace IndoorNavigation
                 ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItems.Add(SignInItem);
                 ToolbarItems.Add(InfoItem);
-                ToolbarItems.Add(TestItem);
+                //ToolbarItems.Add(TestItem);
                 OnToolbarItemAdded();
             }
         }
-        //private async Task Item1CommandMethod()
-        //{
-        //    Console.WriteLine("Item click");
-        //    //await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
-        //    if (BindingContext is RegisterListViewModel && _viewmodel.Item1Command.CanExecute(null))
-        //    {
-        //        Console.WriteLine("meet the if-else statement");
-        //        _viewmodel.Item1Command.Execute(null);
-        //    }
-
-        //    await Task.CompletedTask;
-        //}
+        
         private async Task TestItemMethod()
         {
             Console.WriteLine("Test Item click");
