@@ -480,6 +480,7 @@ namespace IndoorNavigation
         //public ICommand Item1Command { get; set; }
         public ICommand SignInCommand { get; set; }
         public ICommand InfoItemCommand { get; set; }
+        public ICommand TestItemCommand { get; set; }
         private void RefreshToolbarOptions()
         {
             //var viewModel = BindingContext as RegisterListViewModel;
@@ -487,30 +488,42 @@ namespace IndoorNavigation
             //Item1Command = new Command(async () => await Item1CommandMethod());
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
+            TestItemCommand = new Command(async () => await TestItemMethod());
             ToolbarItems.Clear();
 
             if (_viewmodel != null)
             {
                 ToolbarItem SignInItem = new ToolbarItem { Text = _resourceManager.GetString("ACCOUNT_STRING", currentLanguage), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItem InfoItem = new ToolbarItem { Text = _resourceManager.GetString("PREFERENCES_STRING", currentLanguage), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
+                ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItems.Add(SignInItem);
                 ToolbarItems.Add(InfoItem);
+                ToolbarItems.Add(TestItem);
                 OnToolbarItemAdded();
             }
         }
-        private async Task Item1CommandMethod()
-        {
-            Console.WriteLine("Item click");
-            //await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
-            if (BindingContext is RegisterListViewModel && _viewmodel.Item1Command.CanExecute(null))
-            {
-                Console.WriteLine("meet the if-else statement");
-                _viewmodel.Item1Command.Execute(null);
-            }
+        //private async Task Item1CommandMethod()
+        //{
+        //    Console.WriteLine("Item click");
+        //    //await DisplayAlert("Menubar Item", "Toolbar Item Clicked!", "OK");
+        //    if (BindingContext is RegisterListViewModel && _viewmodel.Item1Command.CanExecute(null))
+        //    {
+        //        Console.WriteLine("meet the if-else statement");
+        //        _viewmodel.Item1Command.Execute(null);
+        //    }
 
+        //    await Task.CompletedTask;
+        //}
+        private async Task TestItemMethod()
+        {
+            Console.WriteLine("Test Item click");
+
+            INetworkSetting setting = DependencyService.Get<INetworkSetting>();
+            Console.WriteLine("Setting is ready");
+            setting.OpenSettingPage();
+            Console.WriteLine("Finish call setting");
             await Task.CompletedTask;
         }
-
         private async Task SignInItemMethod()
         {
             Console.WriteLine("Sign In Item click");

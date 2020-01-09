@@ -39,9 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utilities\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\Navigation\" />
-    <Folder Include="Views\Settings\" />
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
@@ -104,7 +102,7 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="CustomToolbarContentPage.xaml">
+    <EmbeddedResource Update="Views\Settings\CustomToolbarContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">

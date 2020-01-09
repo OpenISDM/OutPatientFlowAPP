@@ -175,29 +175,25 @@ namespace IndoorNavigation
         private Grid getGridLayout()
         {
             Grid tmp = new Grid();
-
-            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-
-            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.5, GridUnitType.Star) });            
-            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            for (int i = 0; i < 4; i++)
+            {
+                tmp.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                tmp.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
             return tmp;
         }
         private void AddCancelButton_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;
             isButtonPressed = true;
+
             if (app.FinishCount + 1 == app.records.Count)
                 AllFinished = true;
             else
                 AllFinished = false;
 
             GobackPage(AllFinished);
-            //PopupNavigation.Instance.PopAsync();
+
         }
 
         async private void AddConfirmButton_Clicked(object sender, EventArgs e)
@@ -302,102 +298,6 @@ namespace IndoorNavigation
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             OnBackgroundClicked();
-        }
-        // Dictionary<string, SelectionView> _radioBoxes;
-        // Dictionary<string,AddItems> _items;
-        // List<String> examinationTypes;
-        // bool ButtonLock = false;
-        //// CheckBox RevisitBox;
-
-        // public AddPopupPage_v2(string graphName)
-        // {
-        //     InitializeComponent();
-        //     //checkBoxes = new Dictionary<string, List<CheckBox>>();
-        //     //_radioBoxes = new Dictionary<string, SelectionView>();
-        //     //_items = new Dictionary<string, AddItems>();
-        //     //examinationTypes = new List<string>();
-        //     //RevisitBox = new CheckBox();
-        //     //LoadTypes();
-        //     //LoadItems();
-        //     //LoadBoxes();
-        //     //LoadRadioBoxes();
-
-        // }
-        // public void LoadTypes()
-        // {
-        //     examinationTypes.Add("X光");
-        //     examinationTypes.Add("超音波");
-        //     examinationTypes.Add("抽血處");
-        // }
-        // public void LoadItems()
-        // {
-        //     foreach (String type in examinationTypes)
-        //     {
-        //         AddItems item = new AddItems();
-        //         item._examinationType = type;
-
-        //         for (int i = 0; i < 5; i++)
-        //         {
-        //             item._addItems.Add(new RgRecord
-        //             {
-        //                 _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //                 _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
-        //                 _waypointName=$"{i+1}樓",
-        //                 DptName=$"{i+1}樓{type}",
-        //                 Key="AddItem"
-        //             });
-        //         }
-        //         _items.Add(type, item);
-        //     }
-        // }
-
-        // //To generate radio box with getting data
-        // public void LoadRadioBoxes()
-        // {
-        //    foreach(string ExaminationType in examinationTypes)
-        //     {
-        //         AddItems items = _items[ExaminationType];
-        //         StackLayout Toplayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        //         StackLayout IconLayout = new StackLayout { Children =
-        //             {
-        //                 new Image{Source="AddItem_0", Aspect=Aspect.AspectFit, WidthRequest=90, HeightRequest=90},
-        //                 new Label{Text="X光", FontSize=16, BackgroundColor=Color.Black, TextColor=Color.White, VerticalTextAlignment=TextAlignment.Center, HorizontalTextAlignment=TextAlignment.Center}
-        //             }};
-
-        //         SelectionView radioView = new SelectionView
-        //         {
-        //             SelectionType=SelectionType.RadioButton, ColumnNumber=2, ItemsSource=items._addItems, ColumnSpacing=12, Padding=new Thickness(8,0)
-        //         };
-
-        //         _radioBoxes.Add(ExaminationType, radioView);
-
-        //         Toplayout.Children.Add(IconLayout);
-        //         Toplayout.Children.Add(radioView);
-        //         PictureCheckBoxStacklayout.Children.Add(Toplayout);
-        //     }
-        // }
-        // async private void AddConfirmButton_Clicked_v2(object sendser, EventArgs args)
-        // {
-        //     if (ButtonLock) return;
-
-        //     ButtonLock = true;
-        //     foreach(string ExaminationType in examinationTypes)
-        //     {
-        //         var o = _radioBoxes[ExaminationType].SelectedItem as RgRecord;
-
-        //         if (o != null)
-        //         {
-        //             app.records.Add(o);
-        //         }
-        //     }
-        //     await PopupNavigation.Instance.PopAllAsync();
-        // }
-
-        // async private void AddCancelButton_Clicked(object sender, EventArgs e)
-        // {
-        //     await PopupNavigation.Instance.PopAsync();
-        // }
-
+        }       
     }
 }
