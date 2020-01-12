@@ -17,7 +17,7 @@ namespace IndoorNavigation.Droid
     public class NetworkSetting:INetworkSetting
     {
         public NetworkSetting() { }
-        void INetworkSetting.OpenSettingPage()
+        public void OpenSettingPage()
         {
             Console.WriteLine("Enter openSettingPage function");
             Intent intent = new Intent(Android.Provider.Settings.ActionNetworkOperatorSettings);//(Android.Provider.Settings.ActionWirelessSettings);

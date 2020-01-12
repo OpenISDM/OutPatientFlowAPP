@@ -104,5 +104,5 @@ namespace IndoorNavigation.ViewModels
 
         
         }
-    }
+    
 }

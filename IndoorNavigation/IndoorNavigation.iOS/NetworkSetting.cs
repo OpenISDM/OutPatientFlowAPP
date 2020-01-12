@@ -6,12 +6,14 @@ using IndoorNavigation.iOS;
 using IndoorNavigation;
 using Foundation;
 using UIKit;
+using IndoorNavigation.Models;
 [assembly:Xamarin.Forms.Dependency(typeof(NetworkSetting))]
 namespace IndoorNavigation.iOS
 {
     class NetworkSetting:INetworkSetting
     {
-        void INetworkSetting.OpenSettingPage()
+        public NetworkSetting() { }
+        public void OpenSettingPage()
         {
             var url = new NSUrl("App-prefs:root=Bluetooth");
             if (UIApplication.SharedApplication.CanOpenUrl(url))
