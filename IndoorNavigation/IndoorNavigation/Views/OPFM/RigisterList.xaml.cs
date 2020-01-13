@@ -37,6 +37,8 @@ namespace IndoorNavigation
         private HttpRequest request;
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         PhoneInformation phoneInformation;
+        //-----------for network check----------------------------
+        INetworkSetting NetworkSettings;
         //----------delegate test part codes-----------------------
         delegate void LoadFiles(string buildingName);
         delegate void FinishItem(string buildingName);
@@ -86,10 +88,7 @@ namespace IndoorNavigation
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
-            //app._TmpRecords = new ObservableCollection<RgRecord>();
-            Console.WriteLine("initialize register list");
-
-            Console.WriteLine("");
+            //app._TmpRecords = new ObservableCollection<RgRecord>();            
             //get graph info
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
@@ -98,7 +97,7 @@ namespace IndoorNavigation
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             Console.WriteLine("initialize http request");
             request = new HttpRequest();
-
+            NetworkSettings = DependencyService.Get<INetworkSetting>();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
 
@@ -285,10 +284,11 @@ namespace IndoorNavigation
             base.OnAppearing();
 
             //if (_viewmodel==null && !app.isRigistered)
-            if(!app.isRigistered)
-            {
-                _viewmodel = new RegisterListViewModel();
-            }
+            //if(!app.isRigistered)
+            //{
+            //    _viewmodel = new RegisterListViewModel();
+            //}
+            _viewmodel = new RegisterListViewModel();
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
@@ -304,19 +304,43 @@ namespace IndoorNavigation
         /*this function is a button event, which is to check user whether have arrive at destination.*/
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             var o = (Button)sender;
             var index = o.CommandParameter as RgRecord;
 
             if (index.Key.Equals("register"))
             {
-                var NetworkState = Connectivity.NetworkAccess;
+                var NetworkConnect = NetworkSettings.CheckInternetConnect();
 
-                if (NetworkState != NetworkAccess.Internet)
+                if (NetworkConnect)
                 {
-                    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-                    return;
+                    _viewmodel.Isbusy = true;
+                    ReadXml();
+                    _viewmodel.Isbusy = false;
                 }
+                else
+                {
+                    //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("you have a bad network now or you don't turn on the network. would you want to go to setting page?","yes","))
+                    var BadNetworkChecked=await DisplayAlert("info","You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
+                    if (BadNetworkChecked)
+                    {   
+                        NetworkSettings.OpenSettingPage();
+                        return;
+                    }
+                    else
+                    {
+                        await Navigation.PopToRootAsync();
+                        return;
+                    }
+                    
+                }
+
+                //var NetworkState = Connectivity.NetworkAccess;
+
+                //if (NetworkState != NetworkAccess.Internet)
+                //{
+                //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
+                //    return;
+                //}
 
                 ReadXml();
                 
@@ -465,10 +489,10 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
         }
 
-        async private void NavigationPageButton_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
-        }
+        //async private void NavigationPageButton_Clicked(object sender, EventArgs e)
+        //{
+        //    await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
+        //}
 
         //async private void testItem_Clicked(object sender, EventArgs e)
         //{
@@ -476,7 +500,6 @@ namespace IndoorNavigation
         //}
         //---------for secondary item list--------------------
 
-        private ToolbarItem _item1;
         public override event EventHandler ToolbarItemAdded;
         //public ICommand Item1Command { get; set; }
         public ICommand SignInCommand { get; set; }
@@ -492,14 +515,14 @@ namespace IndoorNavigation
             TestItemCommand = new Command(async () => await TestItemMethod());
             ToolbarItems.Clear();
 
-            if (_viewmodel != null)
+            //if (_viewmodel != null)
             {
                 ToolbarItem SignInItem = new ToolbarItem { Text = _resourceManager.GetString("ACCOUNT_STRING", currentLanguage), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItem InfoItem = new ToolbarItem { Text = _resourceManager.GetString("PREFERENCES_STRING", currentLanguage), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItems.Add(SignInItem);
                 ToolbarItems.Add(InfoItem);
-                //ToolbarItems.Add(TestItem);
+                ToolbarItems.Add(TestItem);
                 OnToolbarItemAdded();
             }
         }
@@ -510,8 +533,18 @@ namespace IndoorNavigation
 
             INetworkSetting setting = DependencyService.Get<INetworkSetting>();
             Console.WriteLine("Setting is ready");
-            setting.OpenSettingPage();
+            //setting.OpenSettingPage();
             Console.WriteLine("Finish call setting");
+            //setting.CheckInternetConnect();
+            //Console.WriteLine($"Finish call check internet connect, result is {setting.CheckInternetConnect()}");
+
+            ActivityIndicator indicator = new ActivityIndicator();
+            indicator.Color = Color.FromHex("#3f51b5");
+
+            RigisterListAbsoluteLayout.Children.Add(indicator);
+            
+            indicator.IsRunning = true;
+            
             await Task.CompletedTask;
         }
         private async Task SignInItemMethod()

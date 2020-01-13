@@ -21,7 +21,7 @@ namespace IndoorNavigation.ViewModels
         App app = (App)Application.Current;
         int _recordsNumber;
         bool _cashierAndpharmacy;
-        
+        bool _isBusy = false;
         //bool 
         public RegisterListViewModel()
         {
@@ -29,7 +29,7 @@ namespace IndoorNavigation.ViewModels
             {
                 CheckSignIn();
             }
-            else
+            else if(!app.isRigistered)
             {
                 CheckRegister();
                 app.isRigistered = true;
@@ -77,6 +77,20 @@ namespace IndoorNavigation.ViewModels
             }
         }
         #region 
+
+        public bool Isbusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public int RecordCount
         {
             get { return _recordsNumber; }

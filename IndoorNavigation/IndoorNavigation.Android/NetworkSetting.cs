@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using IndoorNavigation.Models;
+using System.Net;
+using Rg.Plugins.Popup.Services;
 
 [assembly: Xamarin.Forms.Dependency(typeof(NetworkSetting))]
 namespace IndoorNavigation.Droid
@@ -24,6 +26,27 @@ namespace IndoorNavigation.Droid
             Console.WriteLine("Construct setting page");
             Android.App.Application.Context.StartActivity(intent);
             Console.WriteLine("StarActivity");
+        }
+
+        public bool CheckInternetConnect()
+        {
+            try
+            {
+                string CheckUrl = "https://www.google.com/";
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
+
+                iNetRequest.Timeout = 2000;
+                WebResponse iNetResponse = iNetRequest.GetResponse();
+
+                iNetResponse.Close();
+                //Console.WriteLine("The network is all fine.");
+                //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("the network is work fine now."));
+                return true;
+            }
+            catch
+            {                
+                return false;
+            }
         }
     }
 }
