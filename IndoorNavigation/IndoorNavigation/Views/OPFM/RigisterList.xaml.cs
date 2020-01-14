@@ -16,6 +16,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel;
 
 namespace IndoorNavigation
 {
@@ -29,7 +30,7 @@ namespace IndoorNavigation
             (resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
 
-        Object tmp=null;
+        Object ShifitTmp=null;
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
         private ViewCell lastCell=null;
@@ -39,7 +40,9 @@ namespace IndoorNavigation
         PhoneInformation phoneInformation;
         //-----------for network check----------------------------
         INetworkSetting NetworkSettings;
-        //----------delegate test part codes-----------------------
+        delegate void MulitItemFinish(RgRecord FinishRecord);
+        MulitItemFinish _multiItemFinish;
+        #region part of delegate implement
         delegate void LoadFiles(string buildingName);
         delegate void FinishItem(string buildingName);
 
@@ -84,17 +87,15 @@ namespace IndoorNavigation
         {
             Console.WriteLine("it's calling NTUH_Yunlin Finish item function");
         }
-        //---------------------------------
+        #endregion
         public RigisterList(string navigationGraphName)
         {
-            InitializeComponent();
-            //app._TmpRecords = new ObservableCollection<RgRecord>();            
-            //get graph info
+            InitializeComponent();          
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;
-            Init();
+            _navigationGraphName = navigationGraphName;      
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+
             Console.WriteLine("initialize http request");
             request = new HttpRequest();
             NetworkSettings = DependencyService.Get<INetworkSetting>();
@@ -110,33 +111,18 @@ namespace IndoorNavigation
         {
             if (isButtonPressed) return;
             isButtonPressed = true;
-            if (e.Item is DestinationItem destination)
-            {
-                Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
-                var index = app.records.IndexOf(e.Item as RgRecord);
-                var o = e.Item as RgRecord;
-
-                if(o.Key.Equals("Pharmacy") && !app.lastFinished.Key.Equals("Cashier"))
+            if (e.Item is RgRecord record)
+            {       
+                if(record.Key.Equals("Pharmacy") && !app.lastFinished.Key.Equals("Cashier"))
                 {    
                     await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
                     ((ListView)sender).SelectedItem = null;
-                    RgListView.ItemsSource = null;
-                    RgListView.ItemsSource = app.records;
                     isButtonPressed = false;
                     return;
-                }
-                
-               
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                                                            destination._regionID,
-                                                            destination._waypointID,
-                                                            destination._waypointName,
-                                                            _nameInformation
-                                                             ));
-                o.isComplete = true;
+                }                               
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, record._regionID, record._waypointID, record._waypointName, _nameInformation));
+                record.isComplete = true;
             }
-
-            //Deselect Item
             ((ListView)sender).SelectedItem = null;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
@@ -146,23 +132,23 @@ namespace IndoorNavigation
           when shift button is clicked, the function will become the listview tapped event.*/
         private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
         {
-                if (tmp == null)
+                if (ShifitTmp == null)
                 {
-                    tmp = e.Item as RgRecord;
+                    ShifitTmp = e.Item as RgRecord;
                 }
                 else
                 {
                     var o = e.Item as RgRecord;
                    
-                    int index1 = app.records.IndexOf(tmp as RgRecord);
+                    int index1 = app.records.IndexOf(ShifitTmp as RgRecord);
                     int index2 = app.records.IndexOf(o as RgRecord);
                     //swap
                     app.records[index1] = o as RgRecord;
-                    app.records[index2] = tmp as RgRecord;
+                    app.records[index2] = ShifitTmp as RgRecord;
                     // retrieve original function.
                     RgListView.ItemTapped -= RgListViewShift_ItemTapped;
                     RgListView.ItemTapped += RgListView_ItemTapped;
-                    tmp = null;
+                    ShifitTmp = null;
                     Buttonable(true);
                 }  
         }
@@ -229,10 +215,8 @@ namespace IndoorNavigation
                 PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
-
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
             {
-                Console.WriteLine("Subscribe recive message!");
                 bool Message = (bool)Messageargs;
                 if (Message) Buttonable(Message);
                 PaymemtListBtn.IsEnabled = Message;
@@ -246,9 +230,7 @@ namespace IndoorNavigation
                 Console.WriteLine("isBack recieve the message~");
                 isButtonPressed = false;
                 MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "isBack");
-            });
-            //MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
-          
+            });          
         }
 
         /*to show popup page for add route to listview*/
@@ -282,20 +264,16 @@ namespace IndoorNavigation
         protected override void OnAppearing()
         {      
             base.OnAppearing();
-
-            //if (_viewmodel==null && !app.isRigistered)
-            //if(!app.isRigistered)
-            //{
-            //    _viewmodel = new RegisterListViewModel();
-            //}
+           
             _viewmodel = new RegisterListViewModel();
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
             ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
             AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
-            Console.WriteLine($"now Radius is {AddBtn.CornerRadius}");
+
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
+
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
             isButtonPressed = false;
@@ -305,104 +283,136 @@ namespace IndoorNavigation
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
             var o = (Button)sender;
-            var index = o.CommandParameter as RgRecord;
-
-            if (index.Key.Equals("register"))
+            var FinishBtnClickItem= o.CommandParameter as RgRecord;
+            if (FinishBtnClickItem != null)
             {
-                var NetworkConnect = NetworkSettings.CheckInternetConnect();
-
-                if (NetworkConnect)
+                switch (FinishBtnClickItem.Key)
                 {
-                    _viewmodel.Isbusy = true;
-                    ReadXml();
-                    _viewmodel.Isbusy = false;
+                    case "register":
+                        _multiItemFinish = RegisterFinish;
+                        break;
+                    case "exit":
+                        _multiItemFinish = ExitFinish;
+                        break;
+                    case "QueryResult":
+                        _multiItemFinish = QueryResultFinish;
+                        break;
+                    default:
+                        break;
                 }
-                else
+
+                _multiItemFinish(FinishBtnClickItem);
+
+
+                if (app.FinishCount + 1 == app.records.Count)
                 {
-                    //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("you have a bad network now or you don't turn on the network. would you want to go to setting page?","yes","))
-                    var BadNetworkChecked=await DisplayAlert("info","You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
-                    if (BadNetworkChecked)
-                    {   
-                        NetworkSettings.OpenSettingPage();
-                        return;
-                    }
-                    else
+                    if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
-                        await Navigation.PopToRootAsync();
-                        return;
+                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("FINISH_SCHEDULE_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                        await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
+                    }else if (!app.HaveCashier)
+                    {
+                        PaymemtListBtn.IsEnabled = true;
+                        PaymemtListBtn.IsVisible = true;
+                        app.HaveCashier = true;
                     }
-                    
-                }
-
-                //var NetworkState = Connectivity.NetworkAccess;
-
-                //if (NetworkState != NetworkAccess.Internet)
-                //{
-                //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-                //    return;
-                //}
-
-                ReadXml();
-                
-                index.isAccept = true;
-                index.isComplete = true;
-                app.FinishCount++;
-                RgListView.ItemsSource = null;
-                RgListView.ItemsSource = app.records;       
-                return;
-            }
-            else if (index.Key.Equals("exit"))
-            {
-                //show msg to say goodbye
-                string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
-                    _resourceManager.GetString("HOPE_STRING", currentLanguage));
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
-                await Navigation.PopAsync();
-                index.isAccept = true;
-                index.isComplete = true;
-                RgListView.ItemsSource = null;
-                RgListView.ItemsSource = app.records;
-                return;
-            }
-            else if(index.Key.Equals("QueryResult"))
-            {
-                app.roundRecord = index;
-            }
-
-            if(index != null)   // click finish button , it will refresh certain cell template
-            {
-                index.isComplete = true;
-                index.isAccept = true;
-                app.FinishCount++;
-                RgListView.ItemsSource = null;
-                RgListView.ItemsSource = app.records;
-            }
-
-            if (app.FinishCount+1 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
-            {
-                if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
-                {
-                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
-                        _resourceManager.GetString("OK_STRING", currentLanguage));
-                   
-                    await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
-                }
-                else
-                {
-                    PaymemtListBtn.IsVisible = true;
-                    PaymemtListBtn.IsEnabled = true;
-                    app.HaveCashier = true;
                 }
             }
-            app.lastFinished = index;
+            #region temporary
+            //if (index.Key.Equals("register"))
+            //{
+            //    var NetworkConnect = NetworkSettings.CheckInternetConnect();
+
+            //    if (NetworkConnect)
+            //    {
+            //        _viewmodel.Isbusy = true;
+            //        ReadXml();
+            //        _viewmodel.Isbusy = false;
+            //    }
+            //    else
+            //    {
+            //        //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("you have a bad network now or you don't turn on the network. would you want to go to setting page?","yes","))
+            //        var BadNetworkChecked=await DisplayAlert("info","You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
+            //        if (BadNetworkChecked)
+            //        {   
+            //            NetworkSettings.OpenSettingPage();
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            await Navigation.PopToRootAsync();
+            //            return;
+            //        }
+
+            //    }            
+
+            //    ReadXml();
+
+            //    index.isAccept = true;
+            //    index.isComplete = true;
+            //    app.FinishCount++;
+            //    RgListView.ItemsSource = null;
+            //    RgListView.ItemsSource = app.records;       
+            //    return;
+            //}
+            //else if (index.Key.Equals("exit"))
+            //{
+            //    //show msg to say goodbye
+            //    string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
+            //        _resourceManager.GetString("HOPE_STRING", currentLanguage));
+            //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
+            //    await Navigation.PopAsync();
+            //    index.isAccept = true;
+            //    index.isComplete = true;
+            //    RgListView.ItemsSource = null;
+            //    RgListView.ItemsSource = app.records;
+            //    return;
+            //}
+            //else if(index.Key.Equals("QueryResult"))
+            //{
+            //    app.roundRecord = index;
+            //}
+
+            //if(index != null)   // click finish button , it will refresh certain cell template
+            //{
+            //    index.isComplete = true;
+            //    index.isAccept = true;
+            //    app.FinishCount++;
+            //    RgListView.ItemsSource = null;
+            //    RgListView.ItemsSource = app.records;
+            //}
+
+            //if (app.FinishCount+1 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
+            //{
+            //    if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
+            //    {
+            //        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
+            //            _resourceManager.GetString("OK_STRING", currentLanguage));
+
+            //        await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
+            //    }
+            //    else
+            //    {
+            //        PaymemtListBtn.IsVisible = true;
+            //        PaymemtListBtn.IsEnabled = true;
+            //        app.HaveCashier = true;
+            //    }
+            //}
+            //app.lastFinished = index;
+            #endregion
         }
 
-        async private void InfoItem_Clicked(object sender, EventArgs e)
+        private void ItemFinishFunction(RgRecord record)
         {
-            if (isButtonPressed) return;
+            record.isAccept = true;
+            record.isComplete = true;
+           
+            app.FinishCount++;
+            app.lastFinished = record;
 
-            isButtonPressed = true;
-            await Navigation.PushAsync(new NavigatorSettingPage());
+            //to refresh listview to make sure template is work.
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
         }
 
         private void ViewCell_Tapped(object sender, EventArgs e)
@@ -421,11 +431,10 @@ namespace IndoorNavigation
         private void MenuItem_Clicked(object sender, EventArgs e)
         {
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
-
             if (item != null)
-            {
                 app.records.Remove(item);
-            }
+            
+
         }
         //to load test data
         //private void ReadXml(int i)
@@ -470,17 +479,6 @@ namespace IndoorNavigation
         {
             Console.WriteLine("Now Excution is::: ReadXml");
             //_loadFiles(_navigationGraphName);
-
-            if (app._TmpRecords.Count > 0)
-            {
-                foreach (RgRecord tmprecord in app._TmpRecords)
-                {
-                    //if(!app.records[app.records.IndexOf(tmprecord)].isAccept) return;
-                    if (app.records.Contains(tmprecord)) app.records.Remove(tmprecord);
-                    
-                }
-            }
-            app._TmpRecords.Clear();
             Console.WriteLine("Now Excution is::: Todo request to server");
             request.GetXMLBody();
             request.RequestData();
@@ -489,17 +487,47 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
         }
 
-        //async private void NavigationPageButton_Clicked(object sender, EventArgs e)
-        //{
-        //    await Navigation.PushAsync(new NavigationHomePage(_navigationGraphName));
-        //}
+        async private void RegisterFinish(RgRecord record)
+        {
+            //this part might happend bugs
+            bool NetworkConnectAbility = NetworkSettings.CheckInternetConnect();
 
-        //async private void testItem_Clicked(object sender, EventArgs e)
-        //{
-        //    await PopupNavigation.Instance.PushAsync(new TestPopupPage());
-        //}
-        //---------for secondary item list--------------------
-
+            if (NetworkConnectAbility)
+            {
+                _viewmodel.Isbusy = true;
+                ReadXml();
+                _viewmodel.Isbusy = false;
+                ItemFinishFunction(record);
+            }
+            else
+            {
+                var CheckWantToSetting = await DisplayAlert("info", "You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
+                if (CheckWantToSetting)
+                {
+                    NetworkSettings.OpenSettingPage();
+                    return;
+                }
+                else
+                {
+                    await Navigation.PopToRootAsync();
+                    return;
+                }
+            }
+        }
+        async private void ExitFinish(RgRecord record)
+        {
+            string HopeString = string.Format($"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}");
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
+            await Navigation.PopAsync();
+            app.FinishCount--;
+            ItemFinishFunction(record);
+        }
+        private void QueryResultFinish(RgRecord record)
+        {
+            app.roundRecord = record;
+            ItemFinishFunction(record);
+        }
+        #region iOS secondary toolbaritem implement
         public override event EventHandler ToolbarItemAdded;
         //public ICommand Item1Command { get; set; }
         public ICommand SignInCommand { get; set; }
@@ -549,8 +577,17 @@ namespace IndoorNavigation
         }
         private async Task SignInItemMethod()
         {
-            Console.WriteLine("Sign In Item click");
             await Navigation.PushAsync(new SignInPage());
+
+            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>(this, "isReset", (msgSender, msgArgs) =>
+            {
+                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
+                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+
+                Buttonable(true);
+                MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>(this, "isRest");
+            });
+
             await Task.CompletedTask;
         }
         private async Task InfoItemMethod()
@@ -559,7 +596,6 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigatorSettingPage());
             await Task.CompletedTask;
         }
-
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");
@@ -567,22 +603,14 @@ namespace IndoorNavigation
             e?.Invoke(this, new EventArgs());
         }
         public override Color CellBackgroundColor => Color.White;
-
         public override Color CellTextColor => Color.Black;
-
         public override Color MenuBackgroundColor => Color.White;
-
         public override float RowHeight => 56;
-
         public override Color ShadowColor => Color.Black;
-
         public override float ShadowOpacity => 0.3f;
-
         public override float ShadowRadius => 5.0f;
-
         public override float ShadowOffsetDimension => 5.0f;
-
         public override float TableWidth => 250;
-        //------------------------------
+        #endregion
     }
 }
