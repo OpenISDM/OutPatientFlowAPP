@@ -305,6 +305,7 @@ namespace IndoorNavigation
                         _multiItemFinish = QueryResultFinish;
                         break;
                     default:
+                        _multiItemFinish = DefaultFinish;
                         break;
                 }
                 _multiItemFinish(FinishBtnClickItem);
@@ -423,6 +424,10 @@ namespace IndoorNavigation
         private void QueryResultFinish(RgRecord record)
         {
             app.roundRecord = record;
+            ItemFinishFunction(record);
+        }
+        private void DefaultFinish(RgRecord record)
+        {
             ItemFinishFunction(record);
         }
 #endregion

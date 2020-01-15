@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>WPIN</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.OpenISDM</string>
+	<string>com.OpenISDM.OPFM</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleName</key>
@@ -57,5 +57,7 @@
 	<string>contactsDescription</string>
 	<key>MinimumOSVersion</key>
 	<string>12.2</string>
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>This app need to access bluetooth to get beacon signal always.</string>
 </dict>
 </plist>
