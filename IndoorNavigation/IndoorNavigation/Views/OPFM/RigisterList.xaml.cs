@@ -30,9 +30,10 @@ namespace IndoorNavigation
             (resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
 
-        Object ShifitTmp=null;
+        Object ShiftTmp=null;
         App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
+        private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
         const string resourceId = "IndoorNavigation.Resources.AppResources";
         private HttpRequest request;
@@ -132,23 +133,24 @@ namespace IndoorNavigation
           when shift button is clicked, the function will become the listview tapped event.*/
         private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
         {
-                if (ShifitTmp == null)
+                if (ShiftTmp == null)
                 {
-                    ShifitTmp = e.Item as RgRecord;
+                    ShiftTmp = e.Item as RgRecord;
                 }
                 else
                 {
                     var o = e.Item as RgRecord;
                    
-                    int index1 = app.records.IndexOf(ShifitTmp as RgRecord);
+                    int index1 = app.records.IndexOf(ShiftTmp as RgRecord);
                     int index2 = app.records.IndexOf(o as RgRecord);
                     //swap
                     app.records[index1] = o as RgRecord;
-                    app.records[index2] = ShifitTmp as RgRecord;
+                    app.records[index2] = ShiftTmp as RgRecord;
                     // retrieve original function.
                     RgListView.ItemTapped -= RgListViewShift_ItemTapped;
                     RgListView.ItemTapped += RgListView_ItemTapped;
-                    ShifitTmp = null;
+                    ShiftTmp = null;
+                    ShiftButtonPressed = false;
                     Buttonable(true);
                 }  
         }
@@ -171,9 +173,8 @@ namespace IndoorNavigation
                         _resourceManager.GetString("OK_STRING",currentLanguage), "isCheckedNeverShow"));
                 }
                 RgListView.ItemTapped -= RgListView_ItemTapped;
-
                 RgListView.ItemTapped += RgListViewShift_ItemTapped;
-
+                ShiftButtonPressed = true;
                 Buttonable(false);
             }
             
@@ -212,7 +213,7 @@ namespace IndoorNavigation
             Buttonable(false);    
             if (isButtonPressed) return;
             isButtonPressed = true;
-                PaymemtListBtn.IsEnabled = false;
+            PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
@@ -245,10 +246,16 @@ namespace IndoorNavigation
             //await Navigation.PushPopupAsync(new AddPopupPage());
             MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
-                bool Message = (bool)Messageargs;
-                if (Message == false) app.HaveCashier = false;
-                PaymemtListBtn.IsEnabled = Message;
-                PaymemtListBtn.IsVisible = Message;
+                //bool Message = (bool)Messageargs;
+                //if (Message == false) app.HaveCashier = false;
+                //PaymemtListBtn.IsEnabled = Message;
+                //PaymemtListBtn.IsVisible = Message;
+                //app.HaveCashier = !(app.FinishCount + 1 == app.records.Count);
+                var somethingchange = PaymemtListBtn.IsEnabled && PaymemtListBtn.IsVisible;
+                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
+                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+
+                app.HaveCashier =! (somethingchange == (PaymemtListBtn.IsVisible && PaymemtListBtn.IsEnabled));
 
                 MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "AddAnyOrNot");
             });
@@ -274,8 +281,8 @@ namespace IndoorNavigation
 
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
@@ -300,9 +307,7 @@ namespace IndoorNavigation
                     default:
                         break;
                 }
-
                 _multiItemFinish(FinishBtnClickItem);
-
 
                 if (app.FinishCount + 1 == app.records.Count)
                 {
@@ -317,102 +322,20 @@ namespace IndoorNavigation
                         app.HaveCashier = true;
                     }
                 }
-            }
-            #region temporary
-            //if (index.Key.Equals("register"))
-            //{
-            //    var NetworkConnect = NetworkSettings.CheckInternetConnect();
-
-            //    if (NetworkConnect)
-            //    {
-            //        _viewmodel.Isbusy = true;
-            //        ReadXml();
-            //        _viewmodel.Isbusy = false;
-            //    }
-            //    else
-            //    {
-            //        //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("you have a bad network now or you don't turn on the network. would you want to go to setting page?","yes","))
-            //        var BadNetworkChecked=await DisplayAlert("info","You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
-            //        if (BadNetworkChecked)
-            //        {   
-            //            NetworkSettings.OpenSettingPage();
-            //            return;
-            //        }
-            //        else
-            //        {
-            //            await Navigation.PopToRootAsync();
-            //            return;
-            //        }
-
-            //    }            
-
-            //    ReadXml();
-
-            //    index.isAccept = true;
-            //    index.isComplete = true;
-            //    app.FinishCount++;
-            //    RgListView.ItemsSource = null;
-            //    RgListView.ItemsSource = app.records;       
-            //    return;
-            //}
-            //else if (index.Key.Equals("exit"))
-            //{
-            //    //show msg to say goodbye
-            //    string s = string.Format("{0}\n{1}", phoneInformation.GetBuildingName(_navigationGraphName),
-            //        _resourceManager.GetString("HOPE_STRING", currentLanguage));
-            //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(s,false));
-            //    await Navigation.PopAsync();
-            //    index.isAccept = true;
-            //    index.isComplete = true;
-            //    RgListView.ItemsSource = null;
-            //    RgListView.ItemsSource = app.records;
-            //    return;
-            //}
-            //else if(index.Key.Equals("QueryResult"))
-            //{
-            //    app.roundRecord = index;
-            //}
-
-            //if(index != null)   // click finish button , it will refresh certain cell template
-            //{
-            //    index.isComplete = true;
-            //    index.isAccept = true;
-            //    app.FinishCount++;
-            //    RgListView.ItemsSource = null;
-            //    RgListView.ItemsSource = app.records;
-            //}
-
-            //if (app.FinishCount+1 == (app.records.Count)) //when all item is finished, enable pay/get medicine button
-            //{
-            //    if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
-            //    {
-            //        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage),_resourceManager.GetString("FINISH_SCHEDULE_STRING",currentLanguage),
-            //            _resourceManager.GetString("OK_STRING", currentLanguage));
-
-            //        await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
-            //    }
-            //    else
-            //    {
-            //        PaymemtListBtn.IsVisible = true;
-            //        PaymemtListBtn.IsEnabled = true;
-            //        app.HaveCashier = true;
-            //    }
-            //}
-            //app.lastFinished = index;
-            #endregion
+            }            
         }
 
-        private void ItemFinishFunction(RgRecord record)
+        protected override void OnDisappearing()
         {
-            record.isAccept = true;
-            record.isComplete = true;
-           
-            app.FinishCount++;
-            app.lastFinished = record;
+            base.OnDisappearing();
 
-            //to refresh listview to make sure template is work.
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
+            if (ShiftButtonPressed)
+            {
+                ShiftTmp = null;
+                RgListView.ItemTapped -= RgListViewShift_ItemTapped;
+                RgListView.ItemTapped += RgListView_ItemTapped;
+                Buttonable(true);
+            }
         }
 
         private void ViewCell_Tapped(object sender, EventArgs e)
@@ -435,45 +358,7 @@ namespace IndoorNavigation
                 app.records.Remove(item);
             
 
-        }
-        //to load test data
-        //private void ReadXml(int i)
-        //{
-        //    int index = app.records.Count - 1;
-        //    app.FinishCount = 0;
-        //    RgRecord record1 = new RgRecord
-        //    {
-        //        DptName = "耳鼻喉科",
-        //        DrName = "李曉華",
-        //        _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        Key = "QueryResult",
-        //        Shift = "上午",
-        //        CareRoom = "243診",
-        //        SeeSeq = "17",
-        //        _waypointName = "243診"
-        //    };
-        //    RgRecord record2 = new RgRecord
-        //    {
-        //        DptName = "家庭醫學科",
-        //        DrName = "張曉明",
-        //        _waypointID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-        //        Key = "QueryResult",
-        //        Shift = "上午",
-        //        CareRoom = "203診",
-        //        SeeSeq = "6",
-        //        _waypointName = "203診"
-        //    };
-        //    app.records.Insert(index++, record2);
-        //    app.records.Insert(index, record1);
-
-        //    app._TmpRecords.Add(record2);
-        //    app._TmpRecords.Add(record1);
-            
-        //    RgListView.ItemsSource = null;
-        //    RgListView.ItemsSource = app.records;
-        //}
+        }    
 
         private void ReadXml()
         {
@@ -483,6 +368,19 @@ namespace IndoorNavigation
             request.GetXMLBody();
             request.RequestData();
             
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
+        }
+        #region Item Finished delegate fuctions
+        private void ItemFinishFunction(RgRecord record)
+        {
+            record.isAccept = true;
+            record.isComplete = true;
+
+            app.FinishCount++;
+            app.lastFinished = record;
+
+            //to refresh listview to make sure template is work.
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }
@@ -516,7 +414,7 @@ namespace IndoorNavigation
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString = string.Format($"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}");
+            string HopeString = $"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
@@ -527,6 +425,7 @@ namespace IndoorNavigation
             app.roundRecord = record;
             ItemFinishFunction(record);
         }
+#endregion
         #region iOS secondary toolbaritem implement
         public override event EventHandler ToolbarItemAdded;
         //public ICommand Item1Command { get; set; }
@@ -565,7 +464,7 @@ namespace IndoorNavigation
             Console.WriteLine("Finish call setting");
             //setting.CheckInternetConnect();
             //Console.WriteLine($"Finish call check internet connect, result is {setting.CheckInternetConnect()}");
-
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("Test", "test1", "test2"));
             ActivityIndicator indicator = new ActivityIndicator();
             indicator.Color = Color.FromHex("#3f51b5");
 

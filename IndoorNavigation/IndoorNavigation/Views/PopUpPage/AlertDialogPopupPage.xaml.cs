@@ -14,13 +14,25 @@ namespace IndoorNavigation
     {
         delegate void Background_BackButtonClickEvent();
         Background_BackButtonClickEvent _backClick;
-//-----------------no button-------------------------------------------        
-        public AlertDialogPopupPage(string cotext)
+
+        Style ButtonStyle = new Style(typeof(Button))
+        {
+            Setters={
+                new Setter{Property=Button.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large,typeof(Button))},
+                new Setter{Property=Button.TextColorProperty,Value=Color.FromHex("#3f51b5")},
+                new Setter{Property=Button.HorizontalOptionsProperty,Value=LayoutOptions.End},
+                new Setter{Property=Button.VerticalOptionsProperty,Value=LayoutOptions.EndAndExpand},
+                new Setter{Property=Button.BackgroundColorProperty,Value=Color.Transparent}
+            }
+        };
+
+        #region for no button view that it will close itself   
+        public AlertDialogPopupPage(string context)
         {
             InitializeComponent();
 
             _backClick = NoButton_Back;
-
+            TempMessage.Text = context;
             Device.StartTimer(TimeSpan.FromSeconds(2.2), () =>
             {
                 //to prevent from crash issue that user have close the popup page then popup stack is empty.
@@ -37,27 +49,17 @@ namespace IndoorNavigation
         {
             await PopupNavigation.Instance.PopAsync();
         }
-//---------------------two buttons------------------------------------------------
+        #endregion
+
+        #region for view with two button that are cancel and confirm.
+        //---------------------two buttons------------------------------------------------
         public AlertDialogPopupPage(string context,string confirm,string cancel)
         {
             InitializeComponent();           
             TempMessage.Text = context;
             _backClick = TwoButton_Back;
-            Button ConfirmBtn = new Button {
-                Text = confirm, FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Color.Transparent
-            };
-            Button CancelBtn = new Button {
-                Text = cancel,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.End,
-                BackgroundColor = Color.Transparent
-            };
+            Button ConfirmBtn = new Button { Style = ButtonStyle, Text = confirm };
+            Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel };
             CancelBtn.Clicked += CancelPageClicked;
             ConfirmBtn.Clicked += ConfirmPageClicked;
             buttonLayout.Children.Add(ConfirmBtn);
@@ -77,7 +79,10 @@ namespace IndoorNavigation
             MessagingCenter.Send(this, "PopupPageMsg", true);
             PopupNavigation.Instance.PopAsync();
         }
-        //----------------------one button------------------------------------------------------
+
+        #endregion
+
+        #region for view with only one button that is cancel.
         public AlertDialogPopupPage(string context,string cancel)
         {
             InitializeComponent();            
@@ -85,28 +90,24 @@ namespace IndoorNavigation
 
             _backClick = NoButton_Back;
 
-            Button CancelBtn = new Button {
-                Text=cancel,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.EndAndExpand,
-                BackgroundColor = Color.Transparent
-            };
+            Button CancelBtn =new Button {Style=ButtonStyle,Text=cancel };
+
             CancelBtn.Clicked += CancelPageClicked ;             
             buttonLayout.Children.Add(CancelBtn);
-        }       
-//----------------------Common code------------------------------------------------
+        }
+        #endregion
+
+        #region common code
         protected override bool OnBackButtonPressed() //待測試，可能會錯
         {
             _backClick();
             return false;
-            //return base.OnBackButtonPressed();
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             _backClick();
         }
+        #endregion
     }
 }

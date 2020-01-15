@@ -270,20 +270,19 @@ namespace IndoorNavigation
         };
         protected override bool OnBackButtonPressed()
         {      
-            if (app.FinishCount + 1 == app.records.Count)
-                AllFinished = true;
-            else
-                AllFinished = false;
-
+            //if (app.FinishCount + 1 == app.records.Count)
+            //    AllFinished = true;
+            //else
+            //    AllFinished = false;
             GobackPage(AllFinished);
             return base.OnBackButtonPressed();
         }
         protected override bool OnBackgroundClicked()
         {
-            if (app.FinishCount + 1 == app.records.Count)
-                AllFinished = true;
-            else
-                AllFinished = false;
+            //if (app.FinishCount + 1 == app.records.Count)
+            //    AllFinished = true;
+            //else
+            //    AllFinished = false;
             GobackPage(AllFinished);
             return base.OnBackgroundClicked();
         }

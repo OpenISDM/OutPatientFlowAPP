@@ -42,15 +42,13 @@ namespace IndoorNavigation
          protected override bool OnBackButtonPressed()
         {
             DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage),_resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage),_resourceManager.GetString("OK_STRING",currentLanguage));
-            //return base.OnBackButtonPressed();
             return true;
         }
 
          protected override bool OnBackgroundClicked()
         {
             
-            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
-            //return base.OnBackgroundClicked();
+            DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));         
             return false;
         }
 
