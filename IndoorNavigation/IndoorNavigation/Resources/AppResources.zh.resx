@@ -600,4 +600,7 @@
   <data name="LEAVE_APP_STRING" xml:space="preserve">
     <value>確定要離開APP嗎?</value>
   </data>
+  <data name="ASK_LEAVE_APP_STRING" xml:space="preserve">
+    <value>確定要離開App嗎?</value>
+  </data>
 </root>

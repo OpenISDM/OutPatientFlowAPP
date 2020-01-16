@@ -187,7 +187,6 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = enable;
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
-            return;
         }
 
         /*the function is a button event, which could push page to SignInPage*/
@@ -218,10 +217,14 @@ namespace IndoorNavigation
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
             {
-                bool Message = (bool)Messageargs;
-                if (Message) Buttonable(Message);
-                PaymemtListBtn.IsEnabled = Message;
-                PaymemtListBtn.IsVisible = Message;
+                //bool Message = (bool)Messageargs;
+                //if (Message) Buttonable(Message);
+                //PaymemtListBtn.IsEnabled = Message;
+                //PaymemtListBtn.IsVisible = Message;
+                //isButtonPressed = false;
+                PaymemtListBtn.IsEnabled = (app.FinishCount+1==app.records.Count);
+                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+                Buttonable(app.FinishCount+1 == app.records.Count);
                 isButtonPressed = false;
 
                 MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
@@ -246,11 +249,7 @@ namespace IndoorNavigation
             //await Navigation.PushPopupAsync(new AddPopupPage());
             MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
-                //bool Message = (bool)Messageargs;
-                //if (Message == false) app.HaveCashier = false;
-                //PaymemtListBtn.IsEnabled = Message;
-                //PaymemtListBtn.IsVisible = Message;
-                //app.HaveCashier = !(app.FinishCount + 1 == app.records.Count);
+                
                 var somethingchange = PaymemtListBtn.IsEnabled && PaymemtListBtn.IsVisible;
                 PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
                 PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);

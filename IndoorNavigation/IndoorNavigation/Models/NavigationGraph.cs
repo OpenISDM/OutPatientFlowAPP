@@ -381,7 +381,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     }
                 }                
             }
-
+            #region read navigraph block of BuildingName.xml
             // Read all <navigraph> blocks within <navigraphs>
             Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>");
             XmlNodeList xmlNavigraph =
@@ -452,7 +452,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                     navigraph._waypoints.Add(waypoint._id, waypoint);
                 }
-
+                #endregion
+                #region read edges block
                 // Read all <edge> block within <navigraph>
                 Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" +
                                   "<navigraph>/<edge>");
@@ -528,10 +529,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         }
                     }
                 }
-
+                #endregion
                 // Read all <beacon> block within <navigraph/beacons>
                 Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" + 
                                   "<navigraph>/<beacons>/<beacon>");
+                #region read beacons
                 XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
                 foreach (XmlNode beaconNode in xmlBeacon)
                 {
@@ -553,6 +555,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             List<Guid> tempBeaconsList = new List<Guid>();
                             tempBeaconsList.Add(beaconGuid);
                             navigraph._beacons.Add(Guid.Parse(arrayWaypointIDs[i]), tempBeaconsList);
+                            Console.WriteLine($"beacon handle wayponit id:{waypointID.ToString()}");
                         }
                         else
                         {
@@ -566,7 +569,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 _navigraphs.Add(navigraph._regionID, navigraph);
             }
-
+            #endregion
             Console.WriteLine("<< NavigationGraph");
         }
 

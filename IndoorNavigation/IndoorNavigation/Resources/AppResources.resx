@@ -609,4 +609,7 @@
   <data name="LEAVE_APP_STRING" xml:space="preserve">
     <value>Do you want to leave the app?</value>
   </data>
+  <data name="ASK_LEAVE_APP_STRING" xml:space="preserve">
+    <value>Do you want to leave app?</value>
+  </data>
 </root>

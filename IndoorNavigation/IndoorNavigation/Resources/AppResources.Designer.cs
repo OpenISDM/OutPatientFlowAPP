@@ -133,6 +133,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Do you want to leave app? 的當地語系化字串。
+        /// </summary>
+        internal static string ASK_LEAVE_APP_STRING {
+            get {
+                return ResourceManager.GetString("ASK_LEAVE_APP_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Unable to avoid all connection types 的當地語系化字串。
         /// </summary>
         internal static string AVOID_ALL_CONNECTION_TYPE_STRING {

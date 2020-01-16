@@ -17,7 +17,7 @@
     <Destination name='252診' displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
   </Department>
   <Department name='放射科'>
-    <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000020' isfake='true'/>
+    <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000029' isfake='true'/>
   </Department>
 
   <Department name='檢驗科'>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>	<regions>
 		<region id='22222222-2222-2222-2222-222222222222' floor='1'>
-			<Destination id='00000000-0000-0000-0000-000000000018' name='一樓批價'/>
-			<Destination id='00000000-0000-0000-0000-000000000018' name='掛號'/>
+			<Destination id='00000000-0000-0000-0000-000000000016' name='一樓批價'/>
+			<Destination id='00000000-0000-0000-0000-000000000016' name='掛號'/>
 			<Destination id='00000000-0000-0000-0000-000000000019' name='領藥'/>
 		</region>
 		<region id='33333333-3333-3333-3333-333333333333' floor='2'>

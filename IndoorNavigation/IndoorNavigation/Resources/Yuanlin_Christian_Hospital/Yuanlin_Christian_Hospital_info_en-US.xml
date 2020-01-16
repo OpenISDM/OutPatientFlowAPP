@@ -33,6 +33,7 @@
 		<waypoint id='00000000-0000-0000-0000-000000000025' name='Surgery'/>
 		<waypoint id='00000000-0000-0000-0000-000000000026' name='2F Cashier/Registration'/>
 		<waypoint id='00000000-0000-0000-0000-000000000027' name='Ophthalmology'/>
-        <waypoint id='00000000-0000-0000-0000-000000000028' name='Family Mart'/>
+    <waypoint id='00000000-0000-0000-0000-000000000028' name='Family Mart'/>
+    <waypoint id='00000000-0000-0000-0000-000000000029' name='Radiology'/>
     </waypoints>
 </navigation_graph>

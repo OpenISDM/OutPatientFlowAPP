@@ -22,7 +22,6 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         App app = (App)Application.Current;
         
@@ -42,8 +41,7 @@ namespace IndoorNavigation
                 await DisplayAlert(_resourceManager.GetString("ERROR_STRING",currentLanguage), _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING", currentLanguage)
                     ,_resourceManager.GetString("OK_STRING",currentLanguage));
                 return;
-            }
-            
+            }            
             Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
             app.IDnumber = IDnumEntry.Text;
             app.RgDate = RgDayPicker.Date;

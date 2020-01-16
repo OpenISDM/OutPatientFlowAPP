@@ -26,7 +26,17 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
            
-        Plugin.InputKit.Shared.Controls.SelectionView CashierSV,PharmacySV;        
+        Plugin.InputKit.Shared.Controls.SelectionView CashierSV,PharmacySV;
+
+        Style LabelStyle = new Style(typeof(Label))
+        {
+            Setters ={
+                new Setter{Property=Label.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large,typeof(Label))},
+                new Setter{Property=Label.VerticalTextAlignmentProperty,Value=TextAlignment.Center},
+                new Setter{Property=Label.HorizontalTextAlignmentProperty,Value=TextAlignment.Center},
+                new Setter{Property=Label.HorizontalOptionsProperty,Value=LayoutOptions.Start}
+            }
+        };
 
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
@@ -67,26 +77,14 @@ namespace IndoorNavigation
             CashierSV.ItemsSource = Cashieritems;
             PharmacySV.ItemsSource = Pharmacyitems;
 
-            SelectionStack.Children.Add(new Label
-            {
-                Text = _resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage),
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
-                HorizontalOptions = LayoutOptions.Start
-            });
+            SelectionStack.Children.Add(new Label{Text=_resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage),Style=LabelStyle});
             SelectionStack.Children.Add(CashierSV);
-            SelectionStack.Children.Add(new Label
-            {
-                Text = _resourceManager.GetString("CATEGORY_PHARMACY_STRING", currentLanguage),
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
-                HorizontalOptions = LayoutOptions.Start
-            });
+            SelectionStack.Children.Add(new Label {Text=_resourceManager.GetString("CATEGORY_PHARMACY_STRING", currentLanguage),Style=LabelStyle});
             SelectionStack.Children.Add(PharmacySV);
 
         }
+
+        
         public void LoadData()
         {
             string filename = "Yuanlin_OPFM.CashierStation.xml";
