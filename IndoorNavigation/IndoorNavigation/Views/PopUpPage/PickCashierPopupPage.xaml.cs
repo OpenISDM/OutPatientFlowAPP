@@ -25,19 +25,7 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         App app = (App)Application.Current;
-           
-        Plugin.InputKit.Shared.Controls.SelectionView CashierSV,PharmacySV;
-
-        Style LabelStyle = new Style(typeof(Label))
-        {
-            Setters ={
-                new Setter{Property=Label.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large,typeof(Label))},
-                new Setter{Property=Label.VerticalTextAlignmentProperty,Value=TextAlignment.Center},
-                new Setter{Property=Label.HorizontalTextAlignmentProperty,Value=TextAlignment.Center},
-                new Setter{Property=Label.HorizontalOptionsProperty,Value=LayoutOptions.Start}
-            }
-        };
-
+ 
         //PickCahsierPopPageViewModel _viewmodel;
         public PickCashierPopupPage()
         {
@@ -47,43 +35,15 @@ namespace IndoorNavigation
             Pharmacyitems = new ObservableCollection<DestinationItem>();
             LoadData();
 
-            SetViewOfPage();
+            CashierSelectionView.ItemsSource = Cashieritems;
+            PharmacySelectionView.ItemsSource = Pharmacyitems;
+            //SetViewOfPage();
 
             if (Pharmacyitems.Count <= 1)
-                PharmacySV.SelectedItem = Pharmacyitems[0];
+                PharmacySelectionView.SelectedItem = Pharmacyitems[0];
             if (Cashieritems.Count <= 1)
-                CashierSV.SelectedItem = Cashieritems[0];
-        }
-        private void SetViewOfPage()
-        {
-            CashierSV = new Plugin.InputKit.Shared.Controls.SelectionView
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                ColumnNumber = 1,
-                SelectionType = Plugin.InputKit.Shared.Controls.SelectionType.RadioButton,
-                RowSpacing = 10
-            };
-
-            PharmacySV = new Plugin.InputKit.Shared.Controls.SelectionView
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                ColumnNumber = 1,
-                SelectionType = Plugin.InputKit.Shared.Controls.SelectionType.RadioButton,
-                RowSpacing = 10
-            };
-
-            CashierSV.ItemsSource = Cashieritems;
-            PharmacySV.ItemsSource = Pharmacyitems;
-
-            SelectionStack.Children.Add(new Label{Text=_resourceManager.GetString("CATEGORY_CASHIER_STRING", currentLanguage),Style=LabelStyle});
-            SelectionStack.Children.Add(CashierSV);
-            SelectionStack.Children.Add(new Label {Text=_resourceManager.GetString("CATEGORY_PHARMACY_STRING", currentLanguage),Style=LabelStyle});
-            SelectionStack.Children.Add(PharmacySV);
-
-        }
-
+                CashierSelectionView.SelectedItem = Cashieritems[0];
+        }        
         
         public void LoadData()
         {
@@ -126,8 +86,8 @@ namespace IndoorNavigation
 
         async private void CashierOKBtn_Clicked(object sender, EventArgs e)
         {            
-            var cashier_item = CashierSV.SelectedItem as DestinationItem;
-            var pharmacy_item = PharmacySV.SelectedItem as DestinationItem;
+            var cashier_item = CashierSelectionView.SelectedItem as DestinationItem;
+            var pharmacy_item = PharmacySelectionView.SelectedItem as DestinationItem;
             if(cashier_item==null || pharmacy_item == null)
             {
                 string alertmeg ="批價與領藥都要選擇一個";

@@ -275,8 +275,8 @@ namespace IndoorNavigation
             //to refresh listview template 
             RgListView.ItemsSource = null;      
             RgListView.ItemsSource = app.records;
-            ShiftBtn.CornerRadius = (int)(ShiftBtn.Height / 2);
-            AddBtn.CornerRadius = (int)(AddBtn.Height / 2);
+            ShiftBtn.CornerRadius = (int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
+            AddBtn.CornerRadius = (int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
 
@@ -348,6 +348,12 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
+
+                Device.StartTimer(TimeSpan.FromSeconds(1.5), () => 
+                {
+                    viewCell.View.BackgroundColor = Color.Transparent;
+                    return false;
+                });
             }
         }
 
@@ -356,8 +362,6 @@ namespace IndoorNavigation
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
             if (item != null)
                 app.records.Remove(item);
-            
-
         }    
 
         private void ReadXml()

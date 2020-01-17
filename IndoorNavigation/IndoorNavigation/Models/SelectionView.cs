@@ -29,7 +29,7 @@ namespace IndoorNavigation
             BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue,
             BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
             CornerRadius = 20,
-            FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+            FontSize = 30,
             Size = -1,
             TextColor = (Color)Button.TextColorProperty.DefaultValue,
             LabelPosition = LabelPosition.After
