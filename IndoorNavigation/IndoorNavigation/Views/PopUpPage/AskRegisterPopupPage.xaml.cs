@@ -8,6 +8,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using Plugin.Multilingual;
 using System.Globalization;
+using IndoorNavigation.Models;
 using System.Reflection;
 
 namespace IndoorNavigation
@@ -23,7 +24,7 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
+        INetworkSetting networkSettings;
         NetworkAccess networkState = Connectivity.NetworkAccess;
         public AskRegisterPopupPage()
         {
@@ -40,12 +41,12 @@ namespace IndoorNavigation
         }
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
-            networkState=Connectivity.NetworkAccess;
-            if(networkState==NetworkAccess.Internet)
+            networkSettings = DependencyService.Get<INetworkSetting>();
+            bool network_ability = networkSettings.CheckInternetConnect();
+            if(network_ability)
                 CancelorClickBack();
             else
             {
-
                 await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
                 return;
             }
@@ -62,8 +63,8 @@ namespace IndoorNavigation
             app.records.Add(new RgRecord
             {
                 DptName =_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", currentLanguage),
-                _regionID = new Guid("11111111-1111-1111-1111-111111111111"),
-                _waypointID = new Guid("00000000-0000-0000-0000-000000000002"),
+                _regionID = new Guid("22222222-2222-2222-2222-222222222222"),
+                _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
                 _waypointName = "掛號台",
                 Key = "register"
             });

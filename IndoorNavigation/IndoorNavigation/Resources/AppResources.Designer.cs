@@ -97,7 +97,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Please login in top right button first. 的當地語系化字串。
+        ///   查詢類似 Please press &quot;OK&quot; button to go to login page. 的當地語系化字串。
         /// </summary>
         internal static string ALERT_LOGIN_STRING {
             get {

@@ -80,6 +80,7 @@ namespace IndoorNavigation
                 item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
                 item._floor = node.Attributes["floor"].Value;
                 item._waypointName = node.Attributes["name"].Value;
+                Console.WriteLine($"region id is{item._waypointID}, {item._regionID}");
                 Pharmacyitems.Add(item);
             }
         }
@@ -108,7 +109,7 @@ namespace IndoorNavigation
                 {
                     _waypointID=pharmacy_item._waypointID,
                     Key="Pharmacy",
-                    _regionID=pharmacy_item._waypointID,
+                    _regionID=pharmacy_item._regionID,
                     _waypointName=pharmacy_item._waypointName,
                     DptName=pharmacy_item._waypointName
                 });

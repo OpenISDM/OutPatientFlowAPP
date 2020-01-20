@@ -568,7 +568,7 @@
     <value>Account</value>
   </data>
   <data name="ALERT_LOGIN_STRING" xml:space="preserve">
-    <value>Please login in top right button first.</value>
+    <value>Please press "OK" button to go to login page.</value>
   </data>
   <data name="COMMEND_ORDER_STRING" xml:space="preserve">
     <value>Command Order</value>

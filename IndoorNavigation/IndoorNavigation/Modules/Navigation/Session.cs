@@ -316,6 +316,7 @@ namespace IndoorNavigation.Modules
             uint region1Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(sourceRegionID))
                               .Select(node => node.Key).First();
+            Console.WriteLine($"destination id is{destinationRegionID}");
             uint region2Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(destinationRegionID))
                               .Select(node => node.Key).First();

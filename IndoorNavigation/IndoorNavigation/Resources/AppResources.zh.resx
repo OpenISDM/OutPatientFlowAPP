@@ -487,7 +487,7 @@
     <value>同意</value>
   </data>
   <data name="ALERT_LOGIN_STRING" xml:space="preserve">
-    <value>請先至右上帳戶內輸入身分證字號及病歷號碼</value>
+    <value>請按確定跳轉至登入畫面。</value>
   </data>
   <data name="CAREROOM_STRING" xml:space="preserve">
     <value>診間</value>

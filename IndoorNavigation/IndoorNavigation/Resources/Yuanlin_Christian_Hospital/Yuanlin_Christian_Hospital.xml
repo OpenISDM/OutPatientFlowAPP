@@ -59,6 +59,7 @@
 			<edge node1='00000000-0000-0000-0000-000000000006' node2='00000000-0000-0000-0000-000000000009' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000008' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+      <edge node1='00000000-0000-0000-0000-000000000004' node2='00000000-0000-0000-0000-000000000007' bi_direction='2' source = '' direction='4'  connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000011' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000009' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000009' node2='00000000-0000-0000-0000-000000000013' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
@@ -117,6 +118,7 @@
       <waypoint id='00000000-0000-0000-0000-000000000029' name='放射區' type='terminal' lat='23.9629125' lon='120.5674171944' category='ExaminationRoom' />
 			<edge node1='00000000-0000-0000-0000-000000000020' node2='00000000-0000-0000-0000-000000000021' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000020' node2='00000000-0000-0000-0000-000000000023' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
+      <edge node1='00000000-0000-0000-0000-000000000020' node2='00000000-0000-0000-0000-000000000029' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
       <edge node1='00000000-0000-0000-0000-000000000029' node2='00000000-0000-0000-0000-000000000021' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
       <edge node1='00000000-0000-0000-0000-000000000029' node2='00000000-0000-0000-0000-000000000023' bi_direction='2' source = '' direction='4' connection_type='NormalHallway' />
 			<edge node1='00000000-0000-0000-0000-000000000021' node2='00000000-0000-0000-0000-000000000022' bi_direction='2' source = '' direction='2' connection_type='NormalHallway' />
@@ -141,3 +143,9 @@
 		</navigraph>
     </navigraphs>
 </navigation_graph>
+
+<!--note
+    bi_direction value "2" means that the edge is two way(bidirectionary) 
+    "1" means that edge is single way, the source attribute needs to add where you want to start.
+    direction attribute is counterclockwise start at north-> north-east->...-> north-west. from 1 to 8
+-->
