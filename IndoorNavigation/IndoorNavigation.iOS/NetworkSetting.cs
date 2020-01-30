@@ -9,6 +9,7 @@ using UIKit;
 using System.Net;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 using IndoorNavigation.Models;
 [assembly:Xamarin.Forms.Dependency(typeof(NetworkSetting))]
 namespace IndoorNavigation.iOS
@@ -29,7 +30,7 @@ namespace IndoorNavigation.iOS
             }
         }
 
-        public bool CheckInternetConnect()
+        public Task<bool> CheckInternetConnect()
         {
             try
             {
@@ -42,11 +43,11 @@ namespace IndoorNavigation.iOS
                 CheckConnectResponse.Close();
                 //Console.WriteLine("The network is all fine.");                
                 //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("the network is work fine now."));
-                return true;
+                return Task.FromResult(true);
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
     }

@@ -56,6 +56,8 @@ using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
+using Rg.Plugins.Popup.Services;
+using System.Globalization;
 
 
 namespace IndoorNavigation.ViewModels.Navigation
@@ -117,7 +119,40 @@ namespace IndoorNavigation.ViewModels.Navigation
             _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage()+".xml");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
             _xmlInformation = informationXML;
-        }     
+
+            //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請搭電梯至第五樓", _resourceManager.GetString("OK_STRING", currentLanguage)));
+        }
+
+        public NavigatorPageViewModel(string navigationGraphName,
+                                     string floor,
+                                     Guid destinationRegionID,
+                                     Guid destinationWaypointID,
+                                     string destinationWaypointName,
+                                     XMLInformation informationXML)
+
+        {
+            _firsrDirectionInstructionScaleVale = 1;
+            _destinationID = destinationWaypointID;
+            _destinationWaypointName = destinationWaypointName;
+            CurrentStepImage = "waittingscan.gif";
+            _progressBar = "0/0";
+            _instructionLocation = _originalInstructionLocation;
+            _navigationModule = new NavigationModule(navigationGraphName,
+                                                     destinationRegionID,
+                                                     destinationWaypointID);
+            _navigationModule._event._eventHandler += GetNavigationResultEvent;
+            const string resourceId = "IndoorNavigation.Resources.AppResources";
+            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            PhoneInformation phoneInformation = new PhoneInformation();
+            CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
+            _xmlInformation = informationXML;
+            if(!string.IsNullOrEmpty(floor) &&(floor!="2" && floor !="1" && floor !="-1"))
+               PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage($"目的地樓層是{floor}", _resourceManager.GetString("OK_STRING", currentLanguage)));
+        }
 
         public void Stop() {
 
@@ -213,6 +248,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
 
+                    //Page nowPage = Application.Current.MainPage;
+                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請搭電梯至第五樓",_resourceManager.GetString("OK_STRING",currentLanguage)));                  
                     Stop();
                     break;
 
@@ -543,7 +580,9 @@ namespace IndoorNavigation.ViewModels.Navigation
 		private void GetNavigationResultEvent(object sender, EventArgs args)
 		{
 			Console.WriteLine("recevied event raised from NavigationModule");
-			DisplayInstructions(args);
+            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            
+            DisplayInstructions(args);
 		}
 
         #region NavigatorPage Binding Args

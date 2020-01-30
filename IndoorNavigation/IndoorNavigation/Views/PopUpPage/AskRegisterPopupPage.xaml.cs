@@ -42,7 +42,7 @@ namespace IndoorNavigation
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
             networkSettings = DependencyService.Get<INetworkSetting>();
-            bool network_ability = networkSettings.CheckInternetConnect();
+            bool network_ability =await networkSettings.CheckInternetConnect();
             if(network_ability)
                 CancelorClickBack();
             else
@@ -65,6 +65,7 @@ namespace IndoorNavigation
                 DptName =_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", currentLanguage),
                 _regionID = new Guid("22222222-2222-2222-2222-222222222222"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
+                
                 _waypointName = "掛號台",
                 Key = "register"
             });
@@ -72,7 +73,7 @@ namespace IndoorNavigation
             MessagingCenter.Send(this, "isReset", true);
             await PopupNavigation.Instance.PopAllAsync();
         }
-
+         
         protected override bool OnBackgroundClicked()
         {
             networkState = Connectivity.NetworkAccess;

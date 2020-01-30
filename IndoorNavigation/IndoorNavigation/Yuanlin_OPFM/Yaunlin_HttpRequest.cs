@@ -11,6 +11,8 @@ using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Services;
+using System.Threading.Tasks;
+
 namespace IndoorNavigation
 {
     class HttpRequest
@@ -70,7 +72,7 @@ namespace IndoorNavigation
            
         }
 
-        public void RequestData()
+        async public Task RequestData()
         {
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
@@ -90,7 +92,7 @@ namespace IndoorNavigation
             try
             {
                 //do post
-                using (Stream postStream = request.GetRequestStream())
+                using (Stream postStream = await request.GetRequestStreamAsync())
                 {
                     postStream.Write(bytes, 0, bytes.Length);
                 }
@@ -101,7 +103,7 @@ namespace IndoorNavigation
             try
             {
                 //get response 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     string content = reader.ReadToEnd();

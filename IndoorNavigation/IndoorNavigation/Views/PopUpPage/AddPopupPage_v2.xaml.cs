@@ -62,6 +62,7 @@ namespace IndoorNavigation
             {                
                 XmlNodeList examinationRooms = department.ChildNodes;
                 string departName = department.Attributes["name"].Value;
+                string departmentFloor = department.Attributes["floor"].Value;
                 DepartmentList.Add(departName);
                 
                 List<AddExaminationItem> items=new List<AddExaminationItem>();
@@ -71,6 +72,7 @@ namespace IndoorNavigation
                     item.DisplayName = room.Attributes["displayname"].Value;
                     item._regionID=new Guid (room.Attributes["region_id"].Value);
                     item._waypointID =new Guid (room.Attributes["waypoint_id"].Value);
+                    item._floor = departmentFloor;
                     item.Key = "AddItem";
                     item._waypointName = room.Attributes["name"].Value;
 
@@ -222,6 +224,7 @@ namespace IndoorNavigation
                         _waypointID=items[box.Key]._waypointID,
                         _regionID=items[box.Key]._regionID,
                         _waypointName=items[box.Key]._waypointName,
+                        _floor=items[box.Key]._floor,
                         Key="AddItem",
                         DptName=dptName+"-"+items[box.Key].DisplayName
                     });

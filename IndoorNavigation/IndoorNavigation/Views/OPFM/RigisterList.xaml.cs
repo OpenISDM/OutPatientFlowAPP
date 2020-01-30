@@ -17,7 +17,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
-
+using System.Threading;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -105,8 +105,8 @@ namespace IndoorNavigation
 
             BindingContext = _viewmodel;
 
-        } 
-      
+        }
+        #region ListView Tapped event
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
         {
@@ -114,16 +114,21 @@ namespace IndoorNavigation
             isButtonPressed = true;
             if (e.Item is RgRecord record)
             {       
-                if(record.Key.Equals("Pharmacy") && !app.lastFinished.Key.Equals("Cashier"))
+                if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
                 {    
                     await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
-                    ((ListView)sender).SelectedItem = null;
+                    DeselectListView(sender);
                     isButtonPressed = false;
                     return;
                 }                               
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, record._regionID, record._waypointID, record._waypointName, _nameInformation));
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._floor, record._regionID, record._waypointID, record._waypointName, _nameInformation));
                 record.isComplete = true;
-            }
+            }            
+            DeselectListView(sender);
+        }
+
+        private void DeselectListView(object sender)
+        {
             ((ListView)sender).SelectedItem = null;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
@@ -154,9 +159,9 @@ namespace IndoorNavigation
                     Buttonable(true);
                 }  
         }
-
+        #endregion
         /* the function is a button event which is to change listview tapped event*/
-         async private void ShiftBtn_Clicked(object sender, EventArgs e)
+        async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
             if (app.FinishCount+1 >= app.records.Count - 1)
@@ -364,17 +369,25 @@ namespace IndoorNavigation
                 app.records.Remove(item);
         }    
 
-        private void ReadXml()
-        {
+         async private Task ReadXml()
+         {
             Console.WriteLine("Now Excution is::: ReadXml");
             //_loadFiles(_navigationGraphName);
             Console.WriteLine("Now Excution is::: Todo request to server");
+            //BusyIndicatorShow(true);
             request.GetXMLBody();
-            request.RequestData();
-            
+            await request.RequestData();           
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
+         }
+
+        private void BusyIndicatorShow(bool isBusy)
+        {
+            BusyIndicator.IsEnabled = isBusy;
+            BusyIndicator.IsRunning = isBusy;
+            BusyIndicator.IsVisible = isBusy;
         }
+
         #region Item Finished delegate fuctions
         private void ItemFinishFunction(RgRecord record)
         {
@@ -392,13 +405,20 @@ namespace IndoorNavigation
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
-            bool NetworkConnectAbility = NetworkSettings.CheckInternetConnect();
+           
+            BusyIndicatorShow(true);
 
+            bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                _viewmodel.Isbusy = true;
-                ReadXml();
-                _viewmodel.Isbusy = false;
+                //await ReadXml();
+                //Device.BeginInvokeOnMainThread(() =>
+                //{
+                //    ReadXml();
+                //});
+                //ReadXml();
+                await ReadXml();
+                //await Task.Delay(5000);
                 ItemFinishFunction(record);
             }
             else
@@ -415,6 +435,9 @@ namespace IndoorNavigation
                     return;
                 }
             }
+
+            Thread.Sleep(2000);
+            BusyIndicatorShow(false);
         }
         async private void ExitFinish(RgRecord record)
         {

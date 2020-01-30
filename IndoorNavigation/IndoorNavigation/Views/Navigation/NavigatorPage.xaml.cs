@@ -76,6 +76,32 @@ namespace IndoorNavigation.Views.Navigation
             Console.WriteLine("<< NavigatorPage constructor");
         }
 
+        public NavigatorPage(string navigationGraphName,
+                             string destinationFloor,
+                             Guid destinationRegionID,
+                             Guid destinationWaypointID,
+                             string destinationWaypointName,
+                             XMLInformation informationXML)
+        {
+            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
+                              navigationGraphName,
+                              destinationRegionID,
+                              destinationWaypointID,
+                              destinationWaypointName);
+
+            InitializeComponent();
+
+            _viewModel = new NavigatorPageViewModel(navigationGraphName,
+                                                    destinationFloor,
+                                                    destinationRegionID,
+                                                    destinationWaypointID,
+                                                    destinationWaypointName,
+                                                    informationXML);
+            BindingContext = _viewModel;
+
+            Console.WriteLine("<< NavigatorPage constructor");
+        }
+
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
