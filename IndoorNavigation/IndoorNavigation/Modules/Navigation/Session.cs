@@ -186,8 +186,11 @@ namespace IndoorNavigation.Modules
 
                     // Add this function can avoid that when users go to the worong waypoint,
                     // the instuction will jump to fast.
-                    
+                    _waypointDetectionThread.Abort();
                     SpinWait.SpinUntil(()=>false,5000);
+                    _waypointDetectionThread = new Thread(() => InvokeIPSWork());
+                    _waypointDetectionThread.Start();
+
                     RegionWaypointPoint regionWaypointPoint = new RegionWaypointPoint();
                     regionWaypointPoint._regionID = _currentRegionID;
                     regionWaypointPoint._waypointID = _currentWaypointID;

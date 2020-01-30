@@ -469,7 +469,7 @@
     <value>Version</value>
   </data>
   <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>1.0</value>
+    <value>1.1</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>Press OK to update Map</value>
