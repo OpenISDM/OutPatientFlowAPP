@@ -61,7 +61,7 @@ namespace IndoorNavigation.Modules
         private NavigationGraph _navigationGraph;
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
-        
+
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
 
@@ -71,7 +71,7 @@ namespace IndoorNavigation.Modules
         private bool _isKeepDetection;
         private Guid _currentRegionID = new Guid();
         private Guid _currentWaypointID = new Guid();
-        
+
         private ConnectionType[] _avoidConnectionTypes;
 
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
@@ -87,7 +87,7 @@ namespace IndoorNavigation.Modules
                        ConnectionType[] avoidConnectionTypes)
         {
             _event = new NavigationEvent();
-           
+
             _navigationGraph = navigationGraph;
 
             _destinationRegionID = destinationRegionID;
@@ -169,7 +169,7 @@ namespace IndoorNavigation.Modules
                 }
                 else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(checkWrongRegionWaypoint) == true)
                 {
-                    
+
                     Console.WriteLine("In Program Wrong, going to Re-calculate the route");
                     _nextWaypointStep = 0;
 
@@ -186,11 +186,8 @@ namespace IndoorNavigation.Modules
 
                     // Add this function can avoid that when users go to the worong waypoint,
                     // the instuction will jump to fast.
-                    _waypointDetectionThread.Abort();
-                    SpinWait.SpinUntil(()=>false,5000);
-                    _waypointDetectionThread = new Thread(() => InvokeIPSWork());
-                    _waypointDetectionThread.Start();
 
+                    SpinWait.SpinUntil(() => false, 5000);
                     RegionWaypointPoint regionWaypointPoint = new RegionWaypointPoint();
                     regionWaypointPoint._regionID = _currentRegionID;
                     regionWaypointPoint._waypointID = _currentWaypointID;
@@ -222,10 +219,10 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._turnDirectionDistance = _navigationGraph.GetDistanceOfLongHallway(regionWaypointPoint, 1, _waypointsOnRoute, _avoidConnectionTypes);
                     _event.OnEventCall(new NavigationEventArgs
                     {
-                      
+
                         _result = NavigationResult.Run,
                         _nextInstruction = navigationInstruction
-               
+
                     });
                     _accumulateStraightDistance = _accumulateStraightDistance + navigationInstruction._information._distance;
                     _nextWaypointStep++;
@@ -252,7 +249,7 @@ namespace IndoorNavigation.Modules
 
                 _iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
 
-               
+
 
             }
             else
@@ -261,27 +258,27 @@ namespace IndoorNavigation.Modules
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
                 _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, checkPoint._regionID, _nextWaypointStep);
-               
 
-                _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID,checkPoint._waypointID);
 
-              
+                _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID, checkPoint._waypointID);
+
+
 
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
                 {
-                    
+
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID == _currentRegionID)
                     {
                         _iPSModules.AddNextNextWaypointInterestedGuid(_waypointsOnRoute[_nextWaypointStep + 1]._regionID, _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
 
-                       
+
                     }
                 }
 
-           
+
                 if (_nextWaypointStep >= 1)
                 {
-                    
+
 
 
                     if (_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]] != null)
@@ -290,14 +287,14 @@ namespace IndoorNavigation.Modules
                         foreach (RegionWaypointPoint items in _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]])
                         {
 
-                            _iPSModules.AddWrongWaypointInterestedGuid(items._regionID,items._waypointID);
+                            _iPSModules.AddWrongWaypointInterestedGuid(items._regionID, items._waypointID);
                         }
                     }
                 }
-          
+
                 _iPSModules.SetMonitorBeaconList();
             }
-            
+
         }
 
         private void InvokeIPSWork()
@@ -319,7 +316,6 @@ namespace IndoorNavigation.Modules
             uint region1Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(sourceRegionID))
                               .Select(node => node.Key).First();
-            Console.WriteLine($"destination id is{destinationRegionID}");
             uint region2Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(destinationRegionID))
                               .Select(node => node.Key).First();
@@ -424,7 +420,7 @@ namespace IndoorNavigation.Modules
                                   checkPoint._waypointID);
             }
 
-            
+
 
             // fill in all the path between waypoints in the same region / navigraph
             for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
@@ -583,7 +579,7 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("\n");
             }
 
-            
+
         }
 
         public void AddPortalWrongWaypoint(Region tempRegion, RegionWaypointPoint locationRegionWaypoint, int nextStep, RegionWaypointPoint tempRegionWaypoint, Guid guid)
@@ -616,7 +612,7 @@ namespace IndoorNavigation.Modules
             }
         }
 
-        public void AddWrongWaypoint(Guid waypointID,Guid regionID, RegionWaypointPoint locationRegionWaypoint, RegionWaypointPoint tempRegionWaypoint)
+        public void AddWrongWaypoint(Guid waypointID, Guid regionID, RegionWaypointPoint locationRegionWaypoint, RegionWaypointPoint tempRegionWaypoint)
         {
             if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
             {
@@ -629,9 +625,9 @@ namespace IndoorNavigation.Modules
             {
                 tempRegionWaypoint = new RegionWaypointPoint();
                 tempRegionWaypoint._regionID = regionID;
-                tempRegionWaypoint._waypointID = waypointID;     
+                tempRegionWaypoint._waypointID = waypointID;
                 _waypointsOnWrongWay[locationRegionWaypoint].Add(tempRegionWaypoint);
-                
+
             }
         }
 
@@ -762,7 +758,7 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._progressBar = tempProgress + " / " + tempProgress;
                     Console.WriteLine("---- [case: arrived destination] .... ");
                     _accumulateStraightDistance = 0;
-            
+
                     _event.OnEventCall(new NavigationEventArgs
                     {
                         _result = NavigationResult.Arrival,
@@ -812,11 +808,11 @@ namespace IndoorNavigation.Modules
                             _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
                             _avoidConnectionTypes);
                     navigationInstruction._currentWaypointGuid = _currentWaypointID;
-                    navigationInstruction._nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep+1]._waypointID;
+                    navigationInstruction._nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep + 1]._waypointID;
                     navigationInstruction._currentRegionGuid = _currentRegionID;
                     navigationInstruction._nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
 
-                    navigationInstruction._turnDirectionDistance = _navigationGraph.GetDistanceOfLongHallway((args as WaypointSignalEventArgs)._detectedRegionWaypoint,_nextWaypointStep+1, _waypointsOnRoute, _avoidConnectionTypes);
+                    navigationInstruction._turnDirectionDistance = _navigationGraph.GetDistanceOfLongHallway((args as WaypointSignalEventArgs)._detectedRegionWaypoint, _nextWaypointStep + 1, _waypointsOnRoute, _avoidConnectionTypes);
                     Console.WriteLine("navigation_turn : " + navigationInstruction._turnDirectionDistance);
                     //Get the progress
                     Console.WriteLine("calculate progress: {0}/{1}",
@@ -827,7 +823,7 @@ namespace IndoorNavigation.Modules
                         (double)Math.Round(100 * ((decimal)_nextWaypointStep /
                                            (_waypointsOnRoute.Count - 1)), 3);
                     int tempStep = _nextWaypointStep;
-                    if(tempStep == -1)
+                    if (tempStep == -1)
                     {
                         tempStep = 0;
                     }
@@ -836,7 +832,7 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._previousRegionGuid = previousRegionID;
                     // Raise event to notify the UI/main thread with the result
                     //if()
-                    if(navigationInstruction._information._connectionType==ConnectionType.VirtualHallway)
+                    if (navigationInstruction._information._connectionType == ConnectionType.VirtualHallway)
                     {
                         _accumulateStraightDistance = 0;
                         navigationInstruction._progressBar = tempProgress + " / " + tempProgress;
@@ -848,7 +844,7 @@ namespace IndoorNavigation.Modules
                     }
                     else
                     {
-                        if (navigationInstruction._information._turnDirection==TurnDirection.Forward&&_nextWaypointStep!=-1&&_accumulateStraightDistance>=_remindDistance)
+                        if (navigationInstruction._information._turnDirection == TurnDirection.Forward && _nextWaypointStep != -1 && _accumulateStraightDistance >= _remindDistance)
                         {
                             _accumulateStraightDistance = _accumulateStraightDistance + navigationInstruction._information._distance;
                             _event.OnEventCall(new NavigationEventArgs
@@ -859,7 +855,7 @@ namespace IndoorNavigation.Modules
                         }
                         else
                         {
-          
+
                             _accumulateStraightDistance = 0;
                             _accumulateStraightDistance = _accumulateStraightDistance + navigationInstruction._information._distance;
                             _event.OnEventCall(new NavigationEventArgs
@@ -868,7 +864,7 @@ namespace IndoorNavigation.Modules
                                 _nextInstruction = navigationInstruction
                             });
                         }
-                       
+
                     }
                 }
                 else if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
@@ -939,7 +935,7 @@ namespace IndoorNavigation.Modules
                         }
                         else
                         {
-                            if (navigationInstruction._information._turnDirection == TurnDirection.Forward && _nextWaypointStep != -1&&_accumulateStraightDistance>=_remindDistance)
+                            if (navigationInstruction._information._turnDirection == TurnDirection.Forward && _nextWaypointStep != -1 && _accumulateStraightDistance >= _remindDistance)
                             {
                                 _accumulateStraightDistance = _accumulateStraightDistance + navigationInstruction._information._distance;
                                 _event.OnEventCall(new NavigationEventArgs
@@ -984,9 +980,9 @@ namespace IndoorNavigation.Modules
                         _result = NavigationResult.AdjustRoute
                     });
                     Console.WriteLine("Adjust Route");
-                    
+
                 }
-                
+
 
                 _nextWaypointEvent.Set();
             }

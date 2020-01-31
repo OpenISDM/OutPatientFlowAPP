@@ -612,4 +612,7 @@
   <data name="ASK_LEAVE_APP_STRING" xml:space="preserve">
     <value>Do you want to leave app?</value>
   </data>
+  <data name="BAD_NETWORK_STRING" xml:space="preserve">
+    <value>App can't connect the network. would you want to go to the setting page?</value>
+  </data>
 </root>

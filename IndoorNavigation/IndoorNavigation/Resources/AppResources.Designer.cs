@@ -187,6 +187,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 App can&apos;t connect the network. would you want to go to the setting page? 的當地語系化字串。
+        /// </summary>
+        internal static string BAD_NETWORK_STRING {
+            get {
+                return ResourceManager.GetString("BAD_NETWORK_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 BeDITech Indoor Navigator 的當地語系化字串。
         /// </summary>
         internal static string BEDITECH_STRING {
@@ -403,7 +412,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 1.0 的當地語系化字串。
+        ///   查詢類似 1.1 的當地語系化字串。
         /// </summary>
         internal static string CURRENT_VERSION_STRING {
             get {

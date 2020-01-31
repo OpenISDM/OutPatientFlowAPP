@@ -411,19 +411,15 @@ namespace IndoorNavigation
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                //await ReadXml();
-                //Device.BeginInvokeOnMainThread(() =>
-                //{
-                //    ReadXml();
-                //});
-                //ReadXml();
+   
                 await ReadXml();
-                //await Task.Delay(5000);
                 ItemFinishFunction(record);
             }
             else
             {
-                var CheckWantToSetting = await DisplayAlert("info", "You have a bad network or you don't turn on the network. would you want to go to setting page?", "yes", "no");
+                var CheckWantToSetting = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)
+                    , _resourceManager.GetString("OK_STRING",currentLanguage), _resourceManager.GetString("NO_STRING",currentLanguage));
+                BusyIndicatorShow(false);
                 if (CheckWantToSetting)
                 {
                     NetworkSettings.OpenSettingPage();
@@ -436,7 +432,7 @@ namespace IndoorNavigation
                 }
             }
 
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             BusyIndicatorShow(false);
         }
         async private void ExitFinish(RgRecord record)
@@ -490,18 +486,10 @@ namespace IndoorNavigation
             Console.WriteLine("Test Item click");
 
             INetworkSetting setting = DependencyService.Get<INetworkSetting>();
-            Console.WriteLine("Setting is ready");
-            //setting.OpenSettingPage();
-            Console.WriteLine("Finish call setting");
-            //setting.CheckInternetConnect();
-            //Console.WriteLine($"Finish call check internet connect, result is {setting.CheckInternetConnect()}");
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("Test", "test1", "test2"));
-            ActivityIndicator indicator = new ActivityIndicator();
-            indicator.Color = Color.FromHex("#3f51b5");
-
-            RigisterListAbsoluteLayout.Children.Add(indicator);
             
-            indicator.IsRunning = true;
+            await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
+    
+            Console.WriteLine("Finish call setting");
             
             await Task.CompletedTask;
         }

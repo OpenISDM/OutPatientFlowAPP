@@ -603,4 +603,7 @@
   <data name="ASK_LEAVE_APP_STRING" xml:space="preserve">
     <value>確定要離開App嗎?</value>
   </data>
+  <data name="BAD_NETWORK_STRING" xml:space="preserve">
+    <value>現在無法取得網路連線，請問要不要前往設定頁面?</value>
+  </data>
 </root>
