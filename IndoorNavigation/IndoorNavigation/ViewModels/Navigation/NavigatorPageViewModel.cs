@@ -55,6 +55,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using IndoorNavigation.Modules.Utilities;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
@@ -93,6 +94,10 @@ namespace IndoorNavigation.ViewModels.Navigation
         private NavigationGraph _navigationGraph;
         private XMLInformation _xmlInformation;
 
+        PhoneInformation phoneInformation = new PhoneInformation();
+        private string _floor;
+        private string _buildingName;
+
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -112,15 +117,16 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
             const string resourceId = "IndoorNavigation.Resources.AppResources";
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-            PhoneInformation phoneInformation = new PhoneInformation();
+            
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage()+".xml");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
             _xmlInformation = informationXML;
-
+            _buildingName = navigationGraphName;
             //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請搭電梯至第五樓", _resourceManager.GetString("OK_STRING", currentLanguage)));
+            Console.WriteLine($"the graphName is{_buildingName} in NavigatorPageViewModel");
         }
 
         public NavigatorPageViewModel(string navigationGraphName,
@@ -143,15 +149,18 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
             const string resourceId = "IndoorNavigation.Resources.AppResources";
             _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-            PhoneInformation phoneInformation = new PhoneInformation();
+            //PhoneInformation phoneInformation = new PhoneInformation();
             CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
             _xmlInformation = informationXML;
-            if(!string.IsNullOrEmpty(floor) &&(floor!="2" && floor !="1" && floor !="-1"))
-               PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage($"目的地樓層是{floor}", _resourceManager.GetString("OK_STRING", currentLanguage)));
+            //if(!string.IsNullOrEmpty(floor) &&(floor!="2" && floor !="1" && floor !="-1"))
+            //   PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage($"目的地樓層是{floor}", _resourceManager.GetString("OK_STRING", currentLanguage)));
+            _floor = floor;
+            _buildingName = navigationGraphName;
+            Console.WriteLine($"the graphName is{_buildingName} in NavigatorPageViewModel");
         }
 
         public void Stop() {
@@ -176,6 +185,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
             int instructionScale = _originalInstructionScale;
+            Vibration.Vibrate(500);
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
@@ -222,6 +232,23 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+
+                    
+                    string tmpBuildingName = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", currentLanguage);
+                    //string tmpBuildingName = _resourceManager.GetString("LAB_STRING", currentLanguage);
+
+                    Console.WriteLine($"tmpBuildingName={tmpBuildingName} in NavigatorPageViewModel");
+
+                    if (_buildingName == tmpBuildingName && !string.IsNullOrEmpty(_floor) && (_floor != "2" && _floor != "1" && _floor != "-1"))
+                    {
+                        //do show msg
+                        Console.WriteLine($"enter the arrival popup pages in NavigatorPageViewModel.");
+                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
+                    }
+                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("please go to 5 floor via elevator","OK"));
+
+
+
                     Stop();
 					break;
 
