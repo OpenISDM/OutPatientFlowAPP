@@ -75,6 +75,8 @@ namespace IndoorNavigation
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;
+        //---------------
+        public string LastWaypointName = "";
         public App()
         {
             InitializeComponent();

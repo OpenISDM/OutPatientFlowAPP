@@ -22,13 +22,15 @@ namespace IndoorNavigation
         private ResourceManager _resourceManager = new ResourceManager(_resourceid, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private Random rand = new Random(Guid.NewGuid().GetHashCode());
 
-        
+        private string _destinationName;
+        private App app = (App)Application.Current;
         FakeNavigatorPageViewModel _viewmodel;
 
         public FakeNavigatorPage(string destinationName)
         {
             InitializeComponent();
-           // _instructions = new List<NavigateInstruction>();
+            // _instructions = new List<NavigateInstruction>();
+            _destinationName = destinationName;
             _viewmodel = new FakeNavigatorPageViewModel(destinationName);
             BindingContext = _viewmodel;
         }
@@ -37,6 +39,11 @@ namespace IndoorNavigation
         {
             base.OnAppearing();
         }
-                    
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            app.LastWaypointName = _viewmodel.CurrentWaypointName;//_destinationName;
+        }
     }
 }

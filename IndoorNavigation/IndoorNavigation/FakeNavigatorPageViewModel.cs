@@ -8,6 +8,10 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System.Globalization;
 using Plugin.Multilingual;
+using Xamarin.Forms;
+using System.Threading.Tasks;
+using System.Threading;
+
 namespace IndoorNavigation
 {
     class FakeNavigatorPageViewModel:BaseViewModel
@@ -24,6 +28,7 @@ namespace IndoorNavigation
         private List<NavigateStep> _steps;
         private string _destinationName;
         private int StepsCount;
+        private App app = (App)Application.Current;
         //private List<>
         public FakeNavigatorPageViewModel(string destinationName)
         {
@@ -33,10 +38,24 @@ namespace IndoorNavigation
             _waypointNames = new List<string>();
             _steps = new List<NavigateStep>();
 
-            StepsCount = rand.Next(4, 7);
+            if (string.IsNullOrEmpty(app.LastWaypointName))
+            {
+                app.LastWaypointName = "前門大廳";
+                //CurrentWaypointName = "前門大廳";
+            }
+            CurrentWaypointName = app.LastWaypointName;
+            StepsCount = rand.Next(4, 12);
 
             LoadSteps();
             LoadFirstDirection();
+            LoadWaypointNames();
+
+            RandomGeneratePath();
+
+            Thread thread = new Thread(() => 
+            {
+
+            });
         }
 
         //public enum Direction
