@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="IndoorNavigation.Views.Navigation.NavigatorPage"
+             x:Class="IndoorNavigation.FakeNavigatorPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView">
 
@@ -40,7 +40,7 @@
 
             <Label x:Name="CurrentInstructionLabel" 
                    Text="{Binding CurrentStepText}"
-                   Grid.Row="2" Grid.RowSpan="{Binding InstructionScaleValue}" Grid.Column="1" Grid.ColumnSpan="3" 
+                   Grid.Row="2" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" 
                    Margin="0, 5, 5, 5"
                    FontSize="30" LineBreakMode="WordWrap"
                    VerticalTextAlignment="Center"
@@ -50,16 +50,16 @@
 
             <Image x:Name="CurrentInstructionImage" 
                    Source="{Binding CurrentStepImage}"
-                   Grid.Row="2" Grid.Column="0" Grid.RowSpan="{Binding InstructionScaleValue}" VerticalOptions="StartAndExpand"
+                   Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" VerticalOptions="StartAndExpand"
                    Margin="0,5, 5, 5" Scale="1"/>
 
 
             <BoxView Grid.Row="7" Grid.ColumnSpan="4" Color="#dcdcdc" VerticalOptions="EndAndExpand" />
             <pb:ProgressBarView Grid.Row="7" Grid.ColumnSpan="4"
-                                Color="Red" Progress="{Binding NavigationProgress}"
+                                Color="Red" Progress="{Binding NavigatorProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat=""
                                 LabelFontSize="20" LabelPosition="AfterBar" VerticalOptions="FillAndExpand" />
-            <Label Text="{Binding ProgressBar}" Grid.Row="7" Grid.ColumnSpan="4" HorizontalTextAlignment="End" FontSize="25"/>
+            <Label Text="{Binding CurrentProgress}" Grid.Row="7" Grid.ColumnSpan="4" HorizontalTextAlignment="End" FontSize="25"/>
             <Image x:Name="FirstDirectionPicture"
                    Source="{Binding FirstDirectionPicture}"
                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"

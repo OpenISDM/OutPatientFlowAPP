@@ -243,8 +243,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         //do show msg
                         Console.WriteLine($"enter the arrival popup pages in NavigatorPageViewModel.");
-                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
-                    }
+                        string msg = string.Format(_resourceManager.GetString("ELEVATOR_TO_FLOOR_STRING", currentLanguage), _floor);
+                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(msg, _resourceManager.GetString("OK_STRING",currentLanguage)));                    }
                     //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("please go to 5 floor via elevator","OK"));
 
 

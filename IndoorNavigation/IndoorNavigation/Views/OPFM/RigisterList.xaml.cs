@@ -192,24 +192,7 @@ namespace IndoorNavigation
             ShiftBtn.IsVisible = enable;
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
-        }
-
-        /*the function is a button event, which could push page to SignInPage*/
-        async private void SignInItem_Clicked(object sender, EventArgs e)
-        {
-            if (isButtonPressed) return;
-
-            isButtonPressed = true;
-            await Navigation.PushAsync(new SignInPage());
-            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>(this, "isReset", (msgSender, msgArgs) =>
-            {
-                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-
-                Buttonable(true);
-                MessagingCenter.Unsubscribe<AskRegisterPopupPage,bool>(this, "isRest");
-            });
-        }
+        }    
 
         /*the function is a button event to add payment and medicine recieving route to listview*/
         async private void PaymemtListBtn_Clicked(object sender, EventArgs e)

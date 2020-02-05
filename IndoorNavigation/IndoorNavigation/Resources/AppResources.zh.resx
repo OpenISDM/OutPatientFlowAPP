@@ -606,4 +606,7 @@
   <data name="BAD_NETWORK_STRING" xml:space="preserve">
     <value>現在無法取得網路連線，請問要不要前往設定頁面?</value>
   </data>
+  <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
+    <value>搭電梯前往{0}樓</value>
+  </data>
 </root>

@@ -17,7 +17,8 @@
                 <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="FontSize" Value="22"/>
             </Style>
-            <DataTemplate x:Key="YetNavigation"> <!--to show haven't started schedule view cell-->
+            <DataTemplate x:Key="YetNavigation">
+                <!--to show haven't started schedule view cell-->
                 <ViewCell Tapped="ViewCell_Tapped">
                     <ViewCell.Height>
                         <OnPlatform x:TypeArguments="x:Double">
@@ -57,7 +58,8 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="NotComplete"> <!--to show schedule that was added. this name got something wrong..-->
+            <DataTemplate x:Key="NotComplete">
+                <!--to show schedule that was added. this name got something wrong..-->
                 <ViewCell Tapped="ViewCell_Tapped" Height="60">
                     <ViewCell.ContextActions>
                         <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
@@ -88,11 +90,6 @@
             <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter" NullTemplate="{StaticResource NullCell}"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="SignInItem" Text="{i18n:Translate ACCOUNT_STRING}" Order="Secondary" Clicked="SignInItem_Clicked"/>
-        <ToolbarItem x:Name="InfoItem" Text="{i18n:Translate PREFERENCES_STRING}" Order="Secondary" Clicked="InfoItem_Clicked"/>
-    </ContentPage.ToolbarItems>-->
 
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">

@@ -10,7 +10,7 @@ using Plugin.Multilingual;
 using System.Globalization;
 using IndoorNavigation.Models;
 using System.Reflection;
-
+using System.Threading.Tasks;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -39,19 +39,28 @@ namespace IndoorNavigation
 
             ButtonLock = false;
         }
+
+        private void BusyShow(bool isBusy)
+        {
+            BusyIndicator.IsRunning = isBusy;
+            BusyIndicator.IsVisible = isBusy;
+            BusyIndicator.IsEnabled = isBusy;
+        }
+
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
+            BusyShow(true);
             networkSettings = DependencyService.Get<INetworkSetting>();
             bool network_ability =await networkSettings.CheckInternetConnect();
             if(network_ability)
-                CancelorClickBack();
+                await CancelorClickBack();
             else
             {
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)));
                 return;
             }
 
-            await PopupNavigation.Instance.PopAllAsync();
+           PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
@@ -76,38 +85,40 @@ namespace IndoorNavigation
          
         protected override bool OnBackgroundClicked()
         {
-            networkState = Connectivity.NetworkAccess;
-            if (networkState == NetworkAccess.Internet)
-                CancelorClickBack();
-            else
-            {
-                PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-                return false;
-            }
-            return base.OnBackgroundClicked();
+            return false;
+            //networkState = Connectivity.NetworkAccess;
+            //if (networkState == NetworkAccess.Internet)
+            //    CancelorClickBack();
+            //else
+            //{
+            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
+            //    return false;
+            //}
+            //return base.OnBackgroundClicked();
         }
         protected override bool OnBackButtonPressed()
         {
-            networkState = Connectivity.NetworkAccess;
-            if (networkState == NetworkAccess.Internet)
-                CancelorClickBack();
-            else
-            {
-                PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-                return true;
-            }
-            return base.OnBackButtonPressed();
+            return true;
+            //networkState = Connectivity.NetworkAccess;
+            //if (networkState == NetworkAccess.Internet)
+            //    CancelorClickBack();
+            //else
+            //{
+            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
+            //    return true;
+            //}
+            //return base.OnBackButtonPressed();
         }
 
-        private void CancelorClickBack()
+        async private Task CancelorClickBack()
         {
             ResetAllState();
             app.getRigistered = false;
 
             request.GetXMLBody();
-            request.RequestData();
+            await request.RequestData();
 
-            MessagingCenter.Send(this, "isReset", true);
+            MessagingCenter.Send(this, "isReset", true);            
         }
         
         private void ResetAllState()
