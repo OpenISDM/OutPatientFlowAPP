@@ -500,7 +500,7 @@ namespace IndoorNavigation
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");
-            var e = ToolbarItemAdded;
+            EventHandler e = ToolbarItemAdded;
             e?.Invoke(this, new EventArgs());
         }
         public override Color CellBackgroundColor => Color.White;

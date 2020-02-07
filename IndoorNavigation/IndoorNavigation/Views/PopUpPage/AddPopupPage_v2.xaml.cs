@@ -13,6 +13,8 @@ using Plugin.Multilingual;
 using System.Globalization;
 using System.IO;
 using Plugin.InputKit.Shared.Controls;
+using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

@@ -79,7 +79,7 @@ namespace IndoorNavigation.Modules
         public NavigationEvent _event { get; private set; }
         private Dictionary<Guid, Region> _regiongraphs = new Dictionary<Guid, Region>();
         private IPSModules _iPSModules;
-        private int _tooCLoseDistance = 10;
+        private const int _tooCLoseDistance = 10;
 
         public Session(NavigationGraph navigationGraph,
                        Guid destinationRegionID,
@@ -248,9 +248,6 @@ namespace IndoorNavigation.Modules
                 allRegionIDs = _navigationGraph.GetAllRegionIDs();
 
                 _iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
-
-
-
             }
             else
             {

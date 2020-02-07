@@ -646,6 +646,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Take Elevator to {0} floor. 的當地語系化字串。
+        /// </summary>
+        internal static string ELEVATOR_TO_FLOOR_STRING {
+            get {
+                return ResourceManager.GetString("ELEVATOR_TO_FLOOR_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 English 的當地語系化字串。
         /// </summary>
         internal static string ENGLISH_STRING {

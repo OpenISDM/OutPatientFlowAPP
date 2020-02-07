@@ -14,13 +14,9 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FakeNavigatorPage : ContentPage
     {
-        //List<NavigateInstruction> _instructions;
-
-        
-        private const int _timeSpan=5;
+      
         private const string _resourceid = "IndoorNavigation.Resources.AppResources";
         private ResourceManager _resourceManager = new ResourceManager(_resourceid, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        private Random rand = new Random(Guid.NewGuid().GetHashCode());
 
         private string _destinationName;
         private App app = (App)Application.Current;
@@ -29,7 +25,7 @@ namespace IndoorNavigation
         public FakeNavigatorPage(string destinationName)
         {
             InitializeComponent();
-            // _instructions = new List<NavigateInstruction>();
+
             _destinationName = destinationName;
             _viewmodel = new FakeNavigatorPageViewModel(destinationName);
             BindingContext = _viewmodel;

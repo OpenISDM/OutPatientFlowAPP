@@ -109,6 +109,11 @@ namespace IndoorNavigation.Views.Navigation
 
             base.OnDisappearing();
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //CurrentInstructionImage.Source = "waittingscan.gif";
+            //_viewModel.CurrentStepImage = "waittingscan.gif";
+        }
     }
 }

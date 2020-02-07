@@ -103,7 +103,7 @@
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[3.6.0.344457, )"
+              "version": "[4.4.0.991537, )"
             },
             "Xamarin.Forms.InputKit": {
               "target": "Package",

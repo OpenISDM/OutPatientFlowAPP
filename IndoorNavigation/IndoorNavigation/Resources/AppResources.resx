@@ -615,4 +615,7 @@
   <data name="BAD_NETWORK_STRING" xml:space="preserve">
     <value>App can't connect the network. would you want to go to the setting page?</value>
   </data>
+  <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
+    <value>Take Elevator to {0} floor.</value>
+  </data>
 </root>

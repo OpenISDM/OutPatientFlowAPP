@@ -125,8 +125,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
             _xmlInformation = informationXML;
             _buildingName = navigationGraphName;
-            //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請搭電梯至第五樓", _resourceManager.GetString("OK_STRING", currentLanguage)));
-            Console.WriteLine($"the graphName is{_buildingName} in NavigatorPageViewModel");
+           
         }
 
         public NavigatorPageViewModel(string navigationGraphName,
@@ -156,8 +155,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
             _xmlInformation = informationXML;
-            //if(!string.IsNullOrEmpty(floor) &&(floor!="2" && floor !="1" && floor !="-1"))
-            //   PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage($"目的地樓層是{floor}", _resourceManager.GetString("OK_STRING", currentLanguage)));
+            
             _floor = floor;
             _buildingName = navigationGraphName;
             Console.WriteLine($"the graphName is{_buildingName} in NavigatorPageViewModel");
@@ -180,7 +178,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
-            //string currentWaypointName;
+
             string firstDirectionPicture = null;
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
@@ -244,11 +242,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                         //do show msg
                         Console.WriteLine($"enter the arrival popup pages in NavigatorPageViewModel.");
                         string msg = string.Format(_resourceManager.GetString("ELEVATOR_TO_FLOOR_STRING", currentLanguage), _floor);
-                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(msg, _resourceManager.GetString("OK_STRING",currentLanguage)));                    }
+                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(msg, _resourceManager.GetString("OK_STRING",currentLanguage)));
+                    }
                     //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("please go to 5 floor via elevator","OK"));
-
-
-
                     Stop();
 					break;
 
@@ -260,10 +256,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                 case NavigationResult.ArriveVirtualPoint:
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
                     //CurrentStepLabel = currentStepLabel;
-                    CurrentStepLabel = string.Format(_resourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", currentLanguage),
-                                                        currentStepLabel,
-                                                        Environment.NewLine
-                                                        );
+                    CurrentStepLabel = string.Format(_resourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", currentLanguage), currentStepLabel, Environment.NewLine);
                     CurrentStepImage = "Arrived";
                     NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
@@ -650,7 +643,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 		{
 			get
 			{
-                return string.Format("{0}.png", _currentStepImageName);
+                return string.Format("{0}", _currentStepImageName);
             }
 			set
 			{
