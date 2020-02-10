@@ -77,6 +77,11 @@ namespace IndoorNavigation
         public RgRecord lastFinished = null;
         //---------------
         public string LastWaypointName = "";
+
+        #region 
+        public Guid _tmpCurrentRegionID;
+        public Guid _tmpCurrentWaypointID;
+        #endregion
         public App()
         {
             InitializeComponent();

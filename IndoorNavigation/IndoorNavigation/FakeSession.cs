@@ -12,6 +12,10 @@ using System.Linq;
 using static IndoorNavigation.Modules.Session;
 using Dijkstra.NET.Extensions;
 
+using Xamarin.Forms;
+using Xamarin.Essentials;
+using NavigationEventArgs = IndoorNavigation.Modules.Session.NavigationEventArgs;
+
 namespace IndoorNavigation
 {
     class FakeSession
@@ -29,20 +33,46 @@ namespace IndoorNavigation
         private ManualResetEventSlim _nextWaypointEvent = new ManualResetEventSlim(false);
         private Graph<Guid, string> _graphRegionGraph;
 
-        //private const int _tooCLoseDistance = 10;
+        private App app;
+        private const int _tooCLoseDistance = 10;
 
         public NavigationEvent _event { get; private set; }
 
         public FakeSession(NavigationGraph navigationGraph, Guid destinationRegionID, Guid destinationWaypointID, ConnectionType[] avoidConnectionTypes)
         {
+            app = (App)Application.Current;
+
             _navigationGraph = navigationGraph;
             _avoidConnectionTypes = avoidConnectionTypes;
 
-
-
             _waypointsOnRoute = new List<RegionWaypointPoint>();
             _graphRegionGraph = new Graph<Guid, string>();
+
+            if(app._tmpCurrentRegionID==null && app._tmpCurrentWaypointID == null)
+            {
+                app._tmpCurrentRegionID = new Guid("22222222-2222-2222-2222-222222222222");
+                app._tmpCurrentWaypointID = new Guid("00000000-0000-0000-0000-000000000016");
+            }
+
+            GenerateRoute(app._tmpCurrentRegionID, app._tmpCurrentWaypointID, _destinationRegionID, _destinationWaypointID);
         }
+        public List<RegionWaypointPoint> GetRoute()
+        {
+            return _waypointsOnRoute;
+        }
+
+        private void NavigatorProgram()
+        {
+            _nextWaypointStep = -1;
+            _currentRegionID = app._tmpCurrentRegionID;
+            _currentWaypointID = app._tmpCurrentWaypointID;
+
+            while(_currentWaypointID.Equals(_destinationRegionID)&& _currentRegionID.Equals(_currentRegionID))
+            {
+
+            }
+        }
+
         private void GenerateRoute(Guid sourceRegionID,
                                  Guid sourceWaypointID,
                                  Guid destinationRegionID,
@@ -320,10 +350,10 @@ namespace IndoorNavigation
 
         }
 
-        class RegionWaypointPoint
-        {
-            public Guid _regionID { get; set; }
-            public Guid _waypointID { get; set; }
-        }
+        //public class RegionWaypointPoint
+        //{
+        //    public Guid _regionID { get; set; }
+        //    public Guid _waypointID { get; set; }
+        //}
     }
 }

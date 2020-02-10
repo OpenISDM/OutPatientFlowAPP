@@ -97,7 +97,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         PhoneInformation phoneInformation = new PhoneInformation();
         private string _floor;
         private string _buildingName;
-
+        private bool _isplaying;
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -140,6 +140,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _destinationID = destinationWaypointID;
             _destinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
+            isPlaying = true;
             _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
             _navigationModule = new NavigationModule(navigationGraphName,
@@ -178,7 +179,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
-
+            
             string firstDirectionPicture = null;
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
@@ -189,11 +190,12 @@ namespace IndoorNavigation.ViewModels.Navigation
 				case NavigationResult.Run:
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
 					CurrentStepLabel = currentStepLabel;
-					CurrentStepImage = currentStepImage;
-                    FirstDirectionPicture = firstDirectionPicture;
+					CurrentStepImage = currentStepImage+".png";
+                    FirstDirectionPicture = firstDirectionPicture+".png";
                     InstructionLocationValue = locationValue;
                     RotationValue = rotationValue;
                     InstructionScaleValue = instructionScale;
+                    isPlaying = false;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
@@ -206,14 +208,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
                     NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
+                    isPlaying = false;
                     break;
 
                 case NavigationResult.AdjustRoute:
                     Console.WriteLine("Wrong");
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
-					CurrentStepImage = "Waiting";
-
+					CurrentStepImage = "Waiting.gif";
+                    isPlaying = true;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
                         _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
@@ -223,9 +226,10 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentWaypointName = _xmlInformation.GiveWaypointName(_destinationID);
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
-					CurrentStepImage = "Arrived";
+					CurrentStepImage = "Arrived.png";
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
+                    isPlaying = false;
                     //_progressBar = _i
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
@@ -257,19 +261,17 @@ namespace IndoorNavigation.ViewModels.Navigation
                     SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
                     //CurrentStepLabel = currentStepLabel;
                     CurrentStepLabel = string.Format(_resourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", currentLanguage), currentStepLabel, Environment.NewLine);
-                    CurrentStepImage = "Arrived";
+                    CurrentStepImage = "Arrived.png";
                     NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
                     FirstDirectionPicture = firstDirectionPicture;
                     InstructionLocationValue = locationValue;
+                    isPlaying = false;
                     RotationValue = rotationValue;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-
-                    //Page nowPage = Application.Current.MainPage;
-                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請搭電梯至第五樓",_resourceManager.GetString("OK_STRING",currentLanguage)));                  
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));                                     
                     Stop();
                     break;
 
@@ -744,6 +746,12 @@ namespace IndoorNavigation.ViewModels.Navigation
             {
                 SetProperty(ref _progressBar, value);
             }
+        }
+
+        public bool isPlaying
+        {
+            get { return _isplaying; }
+            set { SetProperty(ref _isplaying, value); }
         }
 
 		public double NavigationProgress

@@ -255,10 +255,7 @@ namespace IndoorNavigation.Modules
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
                 _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, checkPoint._regionID, _nextWaypointStep);
-
-
                 _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID, checkPoint._waypointID);
-
 
 
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
@@ -267,17 +264,12 @@ namespace IndoorNavigation.Modules
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID == _currentRegionID)
                     {
                         _iPSModules.AddNextNextWaypointInterestedGuid(_waypointsOnRoute[_nextWaypointStep + 1]._regionID, _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
-
-
                     }
                 }
 
 
                 if (_nextWaypointStep >= 1)
                 {
-
-
-
                     if (_waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]] != null)
                     {
 
@@ -288,7 +280,6 @@ namespace IndoorNavigation.Modules
                         }
                     }
                 }
-
                 _iPSModules.SetMonitorBeaconList();
             }
 
@@ -1000,7 +991,7 @@ namespace IndoorNavigation.Modules
             _waypointsOnRoute = new List<RegionWaypointPoint>();
             _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
         }
-
+        #region define class and enum
         public enum NavigationResult
         {
             Run = 0,
@@ -1043,6 +1034,7 @@ namespace IndoorNavigation.Modules
             public NavigationInstruction _nextInstruction { get; set; }
 
         }
+        #endregion
     }
 
 }
