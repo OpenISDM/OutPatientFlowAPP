@@ -109,6 +109,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _destinationID = destinationWaypointID;
             _destinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
+            isPlaying = true;
             _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
             _navigationModule = new NavigationModule(navigationGraphName,
@@ -198,6 +199,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     isPlaying = false;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
+                    FirstDirectionPicture = null;
                     ProgressBar = instruction._progressBar;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
@@ -208,6 +210,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
                     NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
+                    FirstDirectionPicture = null;
                     isPlaying = false;
                     break;
 
@@ -227,6 +230,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
 					CurrentStepImage = "Arrived.png";
+                    FirstDirectionPicture = null;
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     isPlaying = false;
