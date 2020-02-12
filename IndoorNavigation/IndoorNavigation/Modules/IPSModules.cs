@@ -254,9 +254,11 @@ namespace IndoorNavigation.Modules
             if (!nextIPSType.Equals(currentIPSType)||firstStep==_firstStep)
             {               
                 HaveBeaconAllFalse();
+                CloseStartAllExistClient();
                 //_IPSClient.Stop();
                 //_IPSClient._event._eventHandler -= new EventHandler(PassMatchedWaypointAndRegionToSession);
                 OpenCurrentIPSClient(currentIPSType);
+                OpenCurrentIPSClient(nextIPSType);
             }
             Console.WriteLine($">>IPSModules CompareToCurrentAndNextIPSType, currentType={currentIPSType}, nextType={nextIPSType}");
         }
