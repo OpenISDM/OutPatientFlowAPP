@@ -26,7 +26,7 @@
                         </OnPlatform>
                     </ViewCell.Height>
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
+                        <MenuItem Clicked="RemoveItem_Clicked" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
                     </ViewCell.ContextActions>
                     <StackLayout>
@@ -62,7 +62,7 @@
                 <!--to show schedule that was added. this name got something wrong..-->
                 <ViewCell Tapped="ViewCell_Tapped" Height="60">
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}"
+                        <MenuItem Clicked="RemoveItem_Clicked" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
                     </ViewCell.ContextActions>
                     <StackLayout >

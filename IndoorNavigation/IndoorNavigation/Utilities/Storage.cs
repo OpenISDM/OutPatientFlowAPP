@@ -50,6 +50,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using IndoorNavigation.Models.NavigaionLayer;
+using System.Runtime.CompilerServices;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -283,6 +284,23 @@ namespace IndoorNavigation.Modules.Utilities
             }
         }
 
+        public static XmlDocument XmlReader(string FileName)
+        {
+            var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
+            string xmlContent = "";
 
+            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
+
+            using(StreamReader reader =new StreamReader(stream))
+            {
+                xmlContent = reader.ReadToEnd();
+            }
+            stream.Close();
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(xmlContent);
+
+            return xmlDocument;
+        }
     }
 }

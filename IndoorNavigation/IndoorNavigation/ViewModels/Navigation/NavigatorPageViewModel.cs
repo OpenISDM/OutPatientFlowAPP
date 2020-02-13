@@ -192,14 +192,14 @@ namespace IndoorNavigation.ViewModels.Navigation
 					SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage+".png";
-                    FirstDirectionPicture = firstDirectionPicture+".png";
+                    FirstDirectionPicture = firstDirectionPicture;
                     InstructionLocationValue = locationValue;
                     RotationValue = rotationValue;
                     InstructionScaleValue = instructionScale;
                     isPlaying = false;
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
-                    FirstDirectionPicture = null;
+                    //FirstDirectionPicture = null;
                     ProgressBar = instruction._progressBar;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
@@ -210,7 +210,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
                     NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
-                    FirstDirectionPicture = null;
+                    //FirstDirectionPicture = null;
                     isPlaying = false;
                     break;
 
@@ -230,7 +230,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					CurrentStepLabel =
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
 					CurrentStepImage = "Arrived.png";
-                    FirstDirectionPicture = null;
+                    //FirstDirectionPicture = null;
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     isPlaying = false;
@@ -702,6 +702,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             get
             {
                 return string.Format("{0}.png", _firstDirectionPicture);
+                //return _firstDirectiionPicture;
             }
 
             set

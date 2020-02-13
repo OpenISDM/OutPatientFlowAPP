@@ -26,6 +26,7 @@ namespace IndoorNavigation
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private const string fileName = "Yuanlin_OPFM.ExitMap.xml";
 
         private bool isButtonPressed = false;
         private XMLInformation _nameInformation;
@@ -89,22 +90,8 @@ namespace IndoorNavigation
 
         private void LoadData()
         {
-            string fileName = "Yuanlin_OPFM.ExitMap.xml";
-            var assembly = typeof(ExitPopupViewModel).GetTypeInfo().Assembly;
-            string content = "";
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{fileName}");
-
-            using (var reader = new StreamReader(stream))
-            {
-                content = reader.ReadToEnd();        
-            }
-            stream.Close();
-
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(content);
-
+            XmlDocument doc = NavigraphStorage.XmlReader(fileName);
             XmlNodeList exitNodes = doc.GetElementsByTagName("exit");
-
             foreach (XmlNode node in exitNodes)
             {
                 DestinationItem item = new DestinationItem();
@@ -113,12 +100,11 @@ namespace IndoorNavigation
                 item._waypointName = node.Attributes["name"].Value;
                 item._floor = node.Attributes["floor"].Value;
                 item.Key = "exit";
-
                 exits.Add(item);
             }
             return;
         }       
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string propName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        public void OnPropertyChanged([CallerMemberName]string propName=null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

@@ -30,8 +30,8 @@ namespace IndoorNavigation
             (resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private XMLInformation _nameInformation;
 
-        Object ShiftTmp=null;
-        App app = (App)Application.Current;
+        private Object ShiftTmp=null;
+        private App app = (App)Application.Current;
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
         private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
@@ -40,10 +40,10 @@ namespace IndoorNavigation
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         PhoneInformation phoneInformation;
         //-----------for network check----------------------------
-        INetworkSetting NetworkSettings;
+        private INetworkSetting NetworkSettings;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
-        #region part of delegate implement
+        #region part of branch delegate implement, but it is not start to use.
         delegate void LoadFiles(string buildingName);
         delegate void FinishItem(string buildingName);
 
@@ -130,8 +130,7 @@ namespace IndoorNavigation
         private void DeselectListView(object sender)
         {
             ((ListView)sender).SelectedItem = null;
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
+            RefreshListView();
         }
 
         /*this function is to implement a simply shift function.  
@@ -204,12 +203,7 @@ namespace IndoorNavigation
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
-            {
-                //bool Message = (bool)Messageargs;
-                //if (Message) Buttonable(Message);
-                //PaymemtListBtn.IsEnabled = Message;
-                //PaymemtListBtn.IsVisible = Message;
-                //isButtonPressed = false;
+            {                
                 PaymemtListBtn.IsEnabled = (app.FinishCount+1==app.records.Count);
                 PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
                 Buttonable(app.FinishCount+1 == app.records.Count);
@@ -260,9 +254,7 @@ namespace IndoorNavigation
             base.OnAppearing();
            
             _viewmodel = new RegisterListViewModel();
-            //to refresh listview template 
-            RgListView.ItemsSource = null;      
-            RgListView.ItemsSource = app.records;
+            RefreshListView();
             ShiftBtn.CornerRadius = (int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
             AddBtn.CornerRadius = (int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
@@ -326,6 +318,31 @@ namespace IndoorNavigation
             }
         }
 
+        public enum RecordType
+        {
+            Register=0,
+            Queryresult,
+            AddItem,
+            Pharmacy,
+            Cashier,
+            Exit
+        }
+
+        private void RemoveItem_Clicked(object sender, EventArgs e)
+        {
+            var item = (RgRecord)((MenuItem)sender).CommandParameter;
+            if (item != null)
+                app.records.Remove(item);
+        }    
+
+         async private Task ReadXml()
+         {           
+            request.GetXMLBody();
+            await request.RequestData();
+            RefreshListView();
+         }
+
+        #region UI View Control
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
             if (lastCell != null)
@@ -337,39 +354,25 @@ namespace IndoorNavigation
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
 
-                Device.StartTimer(TimeSpan.FromSeconds(1.5), () => 
+                Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
                 {
                     viewCell.View.BackgroundColor = Color.Transparent;
                     return false;
                 });
             }
         }
-
-        private void MenuItem_Clicked(object sender, EventArgs e)
-        {
-            var item = (RgRecord)((MenuItem)sender).CommandParameter;
-            if (item != null)
-                app.records.Remove(item);
-        }    
-
-         async private Task ReadXml()
-         {
-            Console.WriteLine("Now Excution is::: ReadXml");
-            //_loadFiles(_navigationGraphName);
-            Console.WriteLine("Now Excution is::: Todo request to server");
-            //BusyIndicatorShow(true);
-            request.GetXMLBody();
-            await request.RequestData();           
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
-         }
-
         private void BusyIndicatorShow(bool isBusy)
         {
             BusyIndicator.IsEnabled = isBusy;
             BusyIndicator.IsRunning = isBusy;
             BusyIndicator.IsVisible = isBusy;
         }
+        private void RefreshListView()
+        {
+            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = app.records;
+        }
+        #endregion
 
         #region Item Finished delegate fuctions
         private void ItemFinishFunction(RgRecord record)
@@ -394,7 +397,6 @@ namespace IndoorNavigation
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-   
                 await ReadXml();
                 ItemFinishFunction(record);
             }
