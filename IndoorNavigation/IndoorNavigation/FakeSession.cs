@@ -46,15 +46,9 @@ namespace IndoorNavigation
             _avoidConnectionTypes = avoidConnectionTypes;
 
             _waypointsOnRoute = new List<RegionWaypointPoint>();
-            _graphRegionGraph = new Graph<Guid, string>();
-
-            if(app._tmpCurrentRegionID==null && app._tmpCurrentWaypointID == null)
-            {
-                app._tmpCurrentRegionID = new Guid("22222222-2222-2222-2222-222222222222");
-                app._tmpCurrentWaypointID = new Guid("00000000-0000-0000-0000-000000000016");
-            }
-
-            GenerateRoute(app._tmpCurrentRegionID, app._tmpCurrentWaypointID, _destinationRegionID, _destinationWaypointID);
+            //_graphRegionGraph = new Graph<Guid, string>();
+            _graphRegionGraph = _navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
+                       
         }
         public List<RegionWaypointPoint> GetRoute()
         {
@@ -79,17 +73,18 @@ namespace IndoorNavigation
                                  Guid destinationWaypointID)
         {
             // generate path between regions (from sourceRegionID to destnationRegionID)
-
+            Console.WriteLine("start to generate route");
             #region Generate path
             uint region1Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(sourceRegionID))
                               .Select(node => node.Key).First();
+            Console.WriteLine("aaaaaaa");
             uint region2Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(destinationRegionID))
                               .Select(node => node.Key).First();
-
+            Console.WriteLine("BBBBBBB");
             var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
-
+            Console.WriteLine("CCCCCCCCC");
             if (0 == pathRegions.Count())
             {
                 Console.WriteLine("No path. Need to change avoid connection type");
@@ -99,7 +94,7 @@ namespace IndoorNavigation
                 });
                 return;
             }
-
+            
             // store the generate Dijkstra path across regions
             List<Guid> regionsOnRoute = new List<Guid>();
             for (int i = 0; i < pathRegions.Count(); i++)

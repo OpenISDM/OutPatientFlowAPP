@@ -76,7 +76,7 @@ namespace IndoorNavigation
             rand = new Random(Guid.NewGuid().GetHashCode());
 
             ConstructSession();
-            _waypointOnRoute = _session.GetRoute();           
+              
         }
 
         //public void NavigatorProgram()

@@ -303,7 +303,9 @@ namespace IndoorNavigation.ViewModels.Navigation
             nextRegionName = _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
             switch (instruction._information._turnDirection)
 			{
-				case TurnDirection.FirstDirection:
+                
+                case TurnDirection.FirstDirection:
+                    #region first direction part
                     string firstDirection_Landmark = _firstDirectionInstruction.returnLandmark(instruction._currentWaypointGuid);
                     CardinalDirection firstDirection_Direction = _firstDirectionInstruction.returnDirection(instruction._currentWaypointGuid);
                     int faceDirection = (int)firstDirection_Direction;
@@ -448,8 +450,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                         stepImage = stepImageString;
                         break;
                     }
-
-				case TurnDirection.Forward:
+                #endregion
+                case TurnDirection.Forward:
 					stepLabel = string.Format(
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING",currentLanguage));

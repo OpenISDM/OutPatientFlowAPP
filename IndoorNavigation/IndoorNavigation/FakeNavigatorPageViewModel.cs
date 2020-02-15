@@ -11,7 +11,9 @@ using Plugin.Multilingual;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Threading;
-
+using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules;
+using IndoorNavigation.Modules.Utilities;
 namespace IndoorNavigation
 {
     class FakeNavigatorPageViewModel:BaseViewModel
@@ -21,6 +23,8 @@ namespace IndoorNavigation
         private ResourceManager _resourceManager = new ResourceManager(_resourceid, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private Random rand = new Random(Guid.NewGuid().GetHashCode());
         private CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        private PhoneInformation info = new PhoneInformation();
+
 
         private List<StepInstruction> _insructions;
         private List<string> _waypointNames;
@@ -50,9 +54,7 @@ namespace IndoorNavigation
             Console.WriteLine("Start to load files");
             LoadWaypointNames();
             LoadSteps();
-            LoadFirstDirection();
-            
-
+            LoadFirstDirection();            
             RandomGeneratePath();
 
             Thread thread = new Thread(() => NavigatorProgram());

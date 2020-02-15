@@ -104,6 +104,9 @@
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
     <Compile Include="Main.cs" />
@@ -344,5 +347,26 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100005.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100006.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Lab11100008.png" />
   </ItemGroup>
 </Project>

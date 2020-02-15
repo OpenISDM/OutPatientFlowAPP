@@ -798,8 +798,7 @@ namespace IndoorNavigation.Modules
                     navigationInstruction._currentWaypointGuid = _currentWaypointID;
                     navigationInstruction._nextWaypointGuid = _waypointsOnRoute[_nextWaypointStep + 1]._waypointID;
                     navigationInstruction._currentRegionGuid = _currentRegionID;
-                    navigationInstruction._nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
-
+                    navigationInstruction._nextRegionGuid = _waypointsOnRoute[_nextWaypointStep + 1]._regionID;                  
                     navigationInstruction._turnDirectionDistance = _navigationGraph.GetDistanceOfLongHallway((args as WaypointSignalEventArgs)._detectedRegionWaypoint, _nextWaypointStep + 1, _waypointsOnRoute, _avoidConnectionTypes);
                     Console.WriteLine("navigation_turn : " + navigationInstruction._turnDirectionDistance);
                     //Get the progress
@@ -945,37 +944,31 @@ namespace IndoorNavigation.Modules
                         }
 
                     }
-                    else if (_nextWaypointStep >= 1 &&
-                    _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(detectWrongWay) == true)
+                    else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(detectWrongWay) == true)
                     {
-                        _accumulateStraightDistance = 0;
-                        Console.WriteLine("---- [case: wrong waypoint] .... ");
-                        _event.OnEventCall(new NavigationEventArgs
-                        {
-                            _result = NavigationResult.AdjustRoute
-                        });
-                        Console.WriteLine("Adjust Route");
-
+                        HandleWrongWay();
                     }
                 }
-                else if (_nextWaypointStep >= 1 &&
-                    _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(detectWrongWay) == true)
+                else if (_nextWaypointStep >= 1 && _waypointsOnWrongWay[_waypointsOnRoute[_nextWaypointStep - 1]].Contains(detectWrongWay) == true)
                 {
-                    _accumulateStraightDistance = 0;
-                    Console.WriteLine("---- [case: wrong waypoint] .... ");
-                    _event.OnEventCall(new NavigationEventArgs
-                    {
-                        _result = NavigationResult.AdjustRoute
-                    });
-                    Console.WriteLine("Adjust Route");
-
+                    HandleWrongWay();
                 }
-
 
                 _nextWaypointEvent.Set();
             }
 
             Console.WriteLine("<< CheckArrivedWaypoint ");
+        }
+
+        public void HandleWrongWay()
+        {
+            _accumulateStraightDistance = 0;
+            Console.WriteLine("---- [case: wrong waypoint] .... ");
+            _event.OnEventCall(new NavigationEventArgs
+            {
+                _result = NavigationResult.AdjustRoute
+            });
+            Console.WriteLine("Adjust Route");
         }
 
         public void CloseSession()

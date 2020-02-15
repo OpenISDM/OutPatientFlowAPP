@@ -975,6 +975,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     // currentWaypoint and nextWaypoint are across regions
                     // but on the same floor 
+
+                    //When step==0, it means that the turn direction is first direction.
                     if (0 == currentNavigationStep)
                     {
                         // currentWaypoint is the first waypoing from the beginning
