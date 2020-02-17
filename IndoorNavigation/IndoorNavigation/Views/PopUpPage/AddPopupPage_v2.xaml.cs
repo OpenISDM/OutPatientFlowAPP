@@ -229,7 +229,8 @@ namespace IndoorNavigation
                 
                 if (box.IsChecked == false) continue;
                 Console.WriteLine($"now deal is {box.Text} key is {box.Key}");
-                var isDumplicate = app.records.Any(a =>a.DptName==("回診-"+app._TmpRecords[box.Key].DptName) && !a.isAccept);
+                var isDumplicate = app.records.Any(a =>a.DptName==(_resourceManager.GetString("REVISIT_STRING", currentLanguage)+ 
+                "-"+app._TmpRecords[box.Key].DptName) && !a.isAccept);
 
                 dumplicateCount++;
                 if (isDumplicate) continue;
@@ -239,7 +240,7 @@ namespace IndoorNavigation
                     _waypointID=app._TmpRecords[box.Key]._waypointID,
                     _regionID = app._TmpRecords[box.Key]._regionID,
                     _waypointName=app._TmpRecords[box.Key]._waypointName,
-                    DptName="回診-"+app._TmpRecords[box.Key].DptName
+                    DptName=_resourceManager.GetString("REVISIT_STRING",currentLanguage)+"-"+app._TmpRecords[box.Key].DptName
                 });
                 count++;
             }

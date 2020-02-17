@@ -618,4 +618,7 @@
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>Take Elevator to {0} floor.</value>
   </data>
+  <data name="REVISIT_STRING" xml:space="preserve">
+    <value>Revisit</value>
+  </data>
 </root>

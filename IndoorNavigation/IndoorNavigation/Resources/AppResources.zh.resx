@@ -609,4 +609,7 @@
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>搭電梯前往{0}樓</value>
   </data>
+  <data name="REVISIT_STRING" xml:space="preserve">
+    <value>回診</value>
+  </data>
 </root>
