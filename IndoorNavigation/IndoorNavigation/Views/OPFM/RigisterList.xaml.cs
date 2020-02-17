@@ -26,8 +26,12 @@ namespace IndoorNavigation
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
 
-        public ResourceManager _resourceManager = new ResourceManager
-            (resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        #region for language change
+        private const string resourceId = "IndoorNavigation.Resources.AppResources";
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        private ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        #endregion
+
         private XMLInformation _nameInformation;
 
         private Object ShiftTmp=null;
@@ -35,59 +39,60 @@ namespace IndoorNavigation
         private bool isButtonPressed = false; //to prevent button multi-tap from causing error
         private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
-        const string resourceId = "IndoorNavigation.Resources.AppResources";
+
         private HttpRequest request;
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        PhoneInformation phoneInformation;
-        //-----------for network check----------------------------
         private INetworkSetting NetworkSettings;
+
+        PhoneInformation phoneInformation;        
+
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
+
         #region part of branch delegate implement, but it is not start to use.
-        delegate void LoadFiles(string buildingName);
-        delegate void FinishItem(string buildingName);
+        //delegate void LoadFiles(string buildingName);
+        //delegate void FinishItem(string buildingName);
 
-        LoadFiles _loadFiles;
-        FinishItem _finishItem;
+        //LoadFiles _loadFiles;
+        //FinishItem _finishItem;
 
-        private void Init()
-        {
-            switch (_navigationGraphName)
-            {
-                case "員林基督教醫院":
-                case "Yuanlin Christian Hospital":
-                    _loadFiles = CCH_loadFiles;
-                    _finishItem = CCH_FinishItem;
-                    break;
-                case "NTUH Yunlin Branch":
-                case "台大醫院雲林分院":
-                    _loadFiles = NTUH_Yunlin_loadFiles;
-                    _finishItem = NTUH_Yunlin_FinishItem;
-                    break;
-                default:
-                    throw new Exception();
+        //private void Init()
+        //{
+        //    switch (_navigationGraphName)
+        //    {
+        //        case "員林基督教醫院":
+        //        case "Yuanlin Christian Hospital":
+        //            _loadFiles = CCH_loadFiles;
+        //            _finishItem = CCH_FinishItem;
+        //            break;
+        //        case "NTUH Yunlin Branch":
+        //        case "台大醫院雲林分院":
+        //            _loadFiles = NTUH_Yunlin_loadFiles;
+        //            _finishItem = NTUH_Yunlin_FinishItem;
+        //            break;
+        //        default:
+        //            throw new Exception();
                     
-            }
+        //    }
                
-        }
-        //CCH part
-        private void CCH_loadFiles(string buildingname)
-        {
-            Console.WriteLine("it's calling cch load files function....");            
-        } 
-        private void CCH_FinishItem(string buildingname)
-        {
-            Console.WriteLine("it's calling cch finishitem function....");
-        }
-        //NTUH part
-        private void NTUH_Yunlin_loadFiles(string buildingname)
-        {
-            Console.WriteLine("it's calling NTUH_Yunlin load files function");
-        }
-        private void NTUH_Yunlin_FinishItem(string buildingname)
-        {
-            Console.WriteLine("it's calling NTUH_Yunlin Finish item function");
-        }
+        //}
+        ////CCH part
+        //private void CCH_loadFiles(string buildingname)
+        //{
+        //    Console.WriteLine("it's calling cch load files function....");            
+        //} 
+        //private void CCH_FinishItem(string buildingname)
+        //{
+        //    Console.WriteLine("it's calling cch finishitem function....");
+        //}
+        ////NTUH part
+        //private void NTUH_Yunlin_loadFiles(string buildingname)
+        //{
+        //    Console.WriteLine("it's calling NTUH_Yunlin load files function");
+        //}
+        //private void NTUH_Yunlin_FinishItem(string buildingname)
+        //{
+        //    Console.WriteLine("it's calling NTUH_Yunlin Finish item function");
+        //}
         #endregion
         public RigisterList(string navigationGraphName)
         {
@@ -114,24 +119,22 @@ namespace IndoorNavigation
             isButtonPressed = true;
             if (e.Item is RgRecord record)
             {       
-                if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
+                //if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
+                if(record.type.Equals(RecordType.Pharmacy) && (app.lastFinished==null || !app.lastFinished.type.Equals(RecordType.Cashier)))
                 {    
                     await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
-                    DeselectListView(sender);
+                    RefreshListView();
+                    ((ListView)sender).SelectedItem = null;
                     isButtonPressed = false;
                     return;
                 }                               
                 await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._floor, record._regionID, record._waypointID, record._waypointName, _nameInformation));
                 record.isComplete = true;
-            }            
-            DeselectListView(sender);
-        }
-
-        private void DeselectListView(object sender)
-        {
-            ((ListView)sender).SelectedItem = null;
+            }
             RefreshListView();
+            ((ListView)sender).SelectedItem = null;
         }
+       
 
         /*this function is to implement a simply shift function.  
           when shift button is clicked, the function will become the listview tapped event.*/
@@ -272,15 +275,15 @@ namespace IndoorNavigation
             var FinishBtnClickItem= o.CommandParameter as RgRecord;
             if (FinishBtnClickItem != null)
             {
-                switch (FinishBtnClickItem.Key)
+                switch (FinishBtnClickItem.type)
                 {
-                    case "register":
+                    case RecordType.Register:
                         _multiItemFinish = RegisterFinish;
                         break;
-                    case "exit":
+                    case RecordType.Exit:
                         _multiItemFinish = ExitFinish;
                         break;
-                    case "QueryResult":
+                    case RecordType.Queryresult:
                         _multiItemFinish = QueryResultFinish;
                         break;
                     default:
@@ -316,17 +319,7 @@ namespace IndoorNavigation
                 RgListView.ItemTapped += RgListView_ItemTapped;
                 Buttonable(true);
             }
-        }
-
-        public enum RecordType
-        {
-            Register=0,
-            Queryresult,
-            AddItem,
-            Pharmacy,
-            Cashier,
-            Exit
-        }
+        }       
 
         private void RemoveItem_Clicked(object sender, EventArgs e)
         {
@@ -437,8 +430,11 @@ namespace IndoorNavigation
         {
             ItemFinishFunction(record);
         }
-#endregion
+        #endregion
+
+
         #region iOS secondary toolbaritem implement
+
         public override event EventHandler ToolbarItemAdded;
         //public ICommand Item1Command { get; set; }
         public ICommand SignInCommand { get; set; }
@@ -471,8 +467,9 @@ namespace IndoorNavigation
             Console.WriteLine("Test Item click");
 
             INetworkSetting setting = DependencyService.Get<INetworkSetting>();
-            
-            await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
+
+            await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
+            //await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
     
             Console.WriteLine("Finish call setting");
             
@@ -514,6 +511,7 @@ namespace IndoorNavigation
         public override float ShadowRadius => 5.0f;
         public override float ShadowOffsetDimension => 5.0f;
         public override float TableWidth => 250;
+
         #endregion
     }
 }

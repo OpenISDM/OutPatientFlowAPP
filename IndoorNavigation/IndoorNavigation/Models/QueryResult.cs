@@ -32,8 +32,19 @@ namespace IndoorNavigation
         public Guid _waypointID { get; set; }
         public string _waypointName { get; set; }
         public string _floor { get; set; }
-        public string Key { get; set; }
+        public RecordType type { get; set; }
         public override string ToString() => _waypointName;
     }
 
+    public enum RecordType
+    {
+        Register = 0,
+        Queryresult,
+        AddItem,
+        Pharmacy,
+        Cashier,
+        Exit,
+        NULL,
+        Invalid
+    }
 }

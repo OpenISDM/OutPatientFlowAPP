@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using System.Xml;
 using Plugin.Multilingual;
 using System.Globalization;
+using IndoorNavigation.Modules.Utilities;
 using System.IO;
 using Plugin.InputKit.Shared.Controls;
 using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
@@ -39,25 +40,13 @@ namespace IndoorNavigation
             BoxesDict = new Dictionary<string, List<CheckBox>>();
             DepartmentList = new List<string>();
             _examinationItemDict = new Dictionary<string, List<AddExaminationItem>>();
+
             LoadData();
-            LoadBox();
         }
 
         private void LoadData()
         {
-            string fileName = "Yuanlin_OPFM.ExaminationRoomMap.xml";        
-            var assembly = typeof(ExitPopupViewModel).GetTypeInfo().Assembly;
-            string content = "";
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{fileName}");
-
-            using(var reader=new StreamReader(stream))
-            {
-                content = reader.ReadToEnd();
-            }
-
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(content);
-
+            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.ExaminationRoomMap.xml");
             XmlNodeList DepartmentLists = doc.GetElementsByTagName("Department");
 
             foreach(XmlNode department in DepartmentLists)
@@ -75,7 +64,7 @@ namespace IndoorNavigation
                     item._regionID=new Guid (room.Attributes["region_id"].Value);
                     item._waypointID =new Guid (room.Attributes["waypoint_id"].Value);
                     item._floor = departmentFloor;
-                    item.Key = "AddItem";
+                    item.type=RecordType.AddItem;
                     item._waypointName = room.Attributes["name"].Value;
 
                     items.Add(item);
@@ -83,6 +72,7 @@ namespace IndoorNavigation
                 _examinationItemDict.Add(departName,items);
                 Console.WriteLine($"departname={departName}");
             }
+            LoadBox();
         }
 
         private void LoadBox()
@@ -95,6 +85,8 @@ namespace IndoorNavigation
             int key = 0;
             int PictureCount = 1;
             mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
+
+            #region part of Examination Room
             foreach (string dptName in DepartmentList)
             {
                 outSideGrid = getGridLayout();
@@ -114,7 +106,6 @@ namespace IndoorNavigation
                     CheckBox box = new CheckBox { Text = item.DisplayName, TextFontSize = Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
                          Margin = new Thickness(0, -3), Key=key++, Type=CheckBox.CheckType.Check
                     };
-                    box.CheckChanged += CheckBox_Changed;
                     BoxLayout.Children.Add(box);
                     boxList.Add(box);
                 }
@@ -126,7 +117,9 @@ namespace IndoorNavigation
                 mainStackLayout.Children.Add(outSideGrid);
                 mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest=1});
             }
+            #endregion
 
+            #region part of Revisit checkbox
             boxList = new List<CheckBox>();
             outSideGrid = getGridLayout();
             BoxLayout = new StackLayout();
@@ -159,7 +152,6 @@ namespace IndoorNavigation
                     Key = key++,
                     Type = CheckBox.CheckType.Check
                 };
-                box.CheckChanged += CheckBox_Changed;
                 boxList.Add(box);
                 BoxLayout.Children.Add(box);
             }
@@ -167,14 +159,13 @@ namespace IndoorNavigation
             outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
             outSideGrid.Children.Add(new ScrollView {Content=BoxLayout}, 2, 5, 0, 5);
             BoxesDict.Add("revisit", boxList);
+            #endregion
+
             mainStackLayout.Children.Add(outSideGrid);
             mainStackLayout.Children.Add(new BoxView { BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 });
         }
 
-        private void CheckBox_Changed(object sender, EventArgs args)
-        {
-            Console.WriteLine($"CheckBox name is {((CheckBox)sender).Text}, Box key is{((CheckBox)sender).Key} ");
-        }
+      
 
         private Grid getGridLayout()
         {
@@ -202,10 +193,9 @@ namespace IndoorNavigation
 
         async private void AddConfirmButton_Clicked(object sender, EventArgs e)
         {
-            //if (isButtonPressed) return;
-            //isButtonPressed = true;
+           
             int count = 0;
-            int index = (app.roundRecord == null || !app.lastFinished.Key.Equals("QueryResult")) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
+            int index = (app.roundRecord == null || !app.lastFinished.type.Equals(RecordType.Queryresult)) ? (app.records.Count - 1) : (app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
             foreach (string dptName in DepartmentList)
             {
@@ -227,7 +217,7 @@ namespace IndoorNavigation
                         _regionID=items[box.Key]._regionID,
                         _waypointName=items[box.Key]._waypointName,
                         _floor=items[box.Key]._floor,
-                        Key="AddItem",
+                        type=RecordType.AddItem,
                         DptName=dptName+"-"+items[box.Key].DisplayName
                     });
                     count++;
@@ -245,7 +235,7 @@ namespace IndoorNavigation
                 if (isDumplicate) continue;
                 Console.WriteLine($"it's not dumplicate:{box.Text} key is {box.Key}");
                 app.records.Insert(index++, new RgRecord {
-                    Key="AddItem",
+                    type=RecordType.AddItem,
                     _waypointID=app._TmpRecords[box.Key]._waypointID,
                     _regionID = app._TmpRecords[box.Key]._regionID,
                     _waypointName=app._TmpRecords[box.Key]._waypointName,

@@ -76,9 +76,9 @@ namespace IndoorNavigation
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
                 
                 _waypointName = "掛號台",
-                Key = "register"
+                type=RecordType.Register
             });
-            app.records.Add(new RgRecord { Key = "NULL" });
+            app.records.Add(new RgRecord {type=RecordType.NULL});
             MessagingCenter.Send(this, "isReset", true);
             await PopupNavigation.Instance.PopAllAsync();
         }

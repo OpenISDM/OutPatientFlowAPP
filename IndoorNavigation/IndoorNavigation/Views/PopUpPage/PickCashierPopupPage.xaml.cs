@@ -100,7 +100,7 @@ namespace IndoorNavigation
                 app.records.Insert(app.records.Count-1 ,new RgRecord
                 {
                     _waypointID=cashier_item._waypointID,
-                    Key= "Cashier",
+                    type=RecordType.Cashier,
                     _regionID=cashier_item._regionID,
                     _waypointName=cashier_item._waypointName,
                     DptName=cashier_item._waypointName
@@ -108,7 +108,7 @@ namespace IndoorNavigation
                 app.records.Insert(app.records.Count - 1, new RgRecord
                 {
                     _waypointID=pharmacy_item._waypointID,
-                    Key="Pharmacy",
+                    type=RecordType.Pharmacy,
                     _regionID=pharmacy_item._regionID,
                     _waypointName=pharmacy_item._waypointName,
                     DptName=pharmacy_item._waypointName

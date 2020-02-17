@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation
 {
@@ -20,15 +21,15 @@ namespace IndoorNavigation
 
         private string _destinationName;
         private App app = (App)Application.Current;
-        FakeNavigatorPageViewModel _viewmodel;
+        //FakeNavigatorPageViewModel _viewmodel;
 
-        public FakeNavigatorPage(string destinationName)
+        public FakeNavigatorPage(string navigationGraphName, Guid destinationRegionID, Guid destinationWaypointID, string destinationWaypointName, XMLInformation informationXML)
         {
             InitializeComponent();
 
-            _destinationName = destinationName;
-            _viewmodel = new FakeNavigatorPageViewModel(destinationName);
-            BindingContext = _viewmodel;
+            _destinationName = destinationWaypointName;
+           // _viewmodel = new FakeNavigatorPageViewModel(navigationGraphName, destinationRegionID, destinationWaypointID, destinationWaypointName, informationXML);
+           // BindingContext = _viewmodel;
         }
 
         protected override void OnAppearing()
@@ -39,7 +40,7 @@ namespace IndoorNavigation
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            app.LastWaypointName = _viewmodel.CurrentWaypointName;//_destinationName;
+           // app.LastWaypointName = _viewmodel.CurrentWaypointName;//_destinationName;
         }
     }
 }

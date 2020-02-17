@@ -31,7 +31,7 @@ namespace IndoorNavigation
         private bool isButtonPressed = false;
         private XMLInformation _nameInformation;
         private PhoneInformation phoneInformation;
-        private string _navigationGraphName { get; set; }
+        private string _navigationGraphName;
         async void ToNavigatorExit()
         {
             Page nowPage = Application.Current.MainPage;
@@ -48,7 +48,7 @@ namespace IndoorNavigation
                 app.records.Insert(app.FinishCount,new RgRecord
                 {
                     _waypointName = o._waypointName,
-                    Key = "exit",
+                    type=RecordType.Exit,
                     _regionID = o._regionID,
                     _waypointID = o._waypointID,
                     _floor=o._floor,
@@ -99,7 +99,7 @@ namespace IndoorNavigation
                 item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
                 item._waypointName = node.Attributes["name"].Value;
                 item._floor = node.Attributes["floor"].Value;
-                item.Key = "exit";
+                item.type = RecordType.Exit;
                 exits.Add(item);
             }
             return;

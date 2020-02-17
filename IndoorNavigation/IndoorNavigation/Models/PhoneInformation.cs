@@ -48,7 +48,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private string _en = "en";
         private string _returnEnglish = "en-US";
         private string _returnChinese = "zh";
-        private string _zhTW = "zh-TW"; const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        private string _zhTW = "zh-TW";
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
         new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         public PhoneInformation()

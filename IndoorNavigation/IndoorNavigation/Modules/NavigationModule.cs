@@ -121,7 +121,7 @@ namespace IndoorNavigation.Modules
         /// raise event to notify the NavigatorPageViewModel.
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
-        {
+        {            
             _event.OnEventCall(args);
         }
 

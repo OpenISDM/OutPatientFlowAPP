@@ -15,10 +15,11 @@ namespace IndoorNavigation
         protected override DataTemplate OnSelectTemplate(Object item,BindableObject container)
         {
             var o = item as RgRecord;
-            if (o.isAccept) return CompleteTemplate;
-            if (o.Key.Equals("QueryResult")) return YetNavigationTemplate;
-            if (o.Key.Equals("AddItem") || o.isComplete || o.Key.Equals("register") || o.Key.Equals("exit") || o.Key.Equals("Pharmacy") || o.Key.Equals("Cashier")) return NotCompleteTemplate;
-            if (o.Key.Equals("NULL")) return NullTemplate;
+            if (o.isAccept || o.type.Equals(RecordType.Invalid)) return CompleteTemplate;
+            if (o.type.Equals(RecordType.Queryresult)) return YetNavigationTemplate;
+            if (o.type.Equals(RecordType.AddItem) || o.type.Equals(RecordType.Register) || o.type.Equals(RecordType.Exit) || o.type.Equals(RecordType.Pharmacy) || o.type.Equals(RecordType.Cashier))
+                return NotCompleteTemplate;
+            if (o.type.Equals(RecordType.NULL)) return NullTemplate;
             return CompleteTemplate;
         }
     }

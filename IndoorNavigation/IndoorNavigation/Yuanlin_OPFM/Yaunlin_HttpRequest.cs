@@ -12,7 +12,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Services;
 using System.Threading.Tasks;
-
+using IndoorNavigation.Modules.Utilities;
 namespace IndoorNavigation
 {
     class HttpRequest
@@ -29,47 +29,30 @@ namespace IndoorNavigation
         public void GetXMLBody()
         {
             Console.WriteLine("Now Excution is::: GetXMLBody");
-            bodyString = "";
-            
-            string filename = "Yuanlin_OPFM.RequestBody.xml";
-            var assembly = typeof(HttpRequest).GetTypeInfo().Assembly;
+           
+            //to put into xml need taiwan year format
+            TaiwanCalendar calendar = new TaiwanCalendar();
+            string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
 
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-            
-            using (var reader = new StreamReader(stream))
-            {
-                //to put into xml need taiwan year format
-                TaiwanCalendar calendar = new TaiwanCalendar();
+            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+            XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
-                string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
+            XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
 
-
-                bodyString = reader.ReadToEnd();
-
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(bodyString);
-                XmlDocument doc2 = doc;
-                XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
-
-                XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
-                XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
-                XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
+            XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
+            XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
                 
-                node_patient.InnerText = app.IDnumber;
-                node_edate.InnerText = selectedDay;
-                node_sdate.InnerText = selectedDay;
+            node_patient.InnerText = app.IDnumber;
+            node_edate.InnerText = selectedDay;
+            node_sdate.InnerText = selectedDay;
 
                 //parse xml to string
-                StringWriter stringWriter = new StringWriter();
-                XmlWriter writer = XmlWriter.Create(stringWriter);
+            StringWriter stringWriter = new StringWriter();
+            XmlWriter writer = XmlWriter.Create(stringWriter);
 
-                doc.WriteContentTo(writer);
-                writer.Flush();
-                bodyString = stringWriter.ToString();
-                
-            }
-            stream.Close();
-           
+            doc.WriteContentTo(writer);
+            writer.Flush();
+            bodyString = stringWriter.ToString();
         }
 
         async public Task RequestData()
@@ -158,12 +141,12 @@ namespace IndoorNavigation
                 record.CareRoom = records[i].ChildNodes[3].InnerText;
                 record.DrName = records[i].ChildNodes[4].InnerText;
                 record.SeeSeq = records[i].ChildNodes[5].InnerText;
-                record.Key = "QueryResult";
+                record.type = RecordType.Queryresult;
                 record._waypointName = record.CareRoom;
-                record._regionID = infos.GetRegionID(record.CareRoom); //new Guid("11111111-1111-1111-1111-111111111111");
-                record._waypointID = infos.GetDestinationID(record.CareRoom); //new Guid("00000000-0000-0000-0000-000000000002");
+                record._regionID = infos.GetRegionID(record.CareRoom); 
+                record._waypointID = infos.GetDestinationID(record.CareRoom);
                                  
-                if (record._regionID.Equals(new Guid("00000000-0000-0000-0000-000000000000")) && record._waypointID.Equals(new Guid("00000000-0000-0000-0000-000000000000")))
+                if (record._regionID.Equals(Guid.Empty) && record._waypointID.Equals(Guid.Empty))
                 {
                     record.isAccept = true;
                     record.isComplete = true;
@@ -179,7 +162,7 @@ namespace IndoorNavigation
                 Console.WriteLine($"HttpRequest region id={record._regionID}, waypoint id={record._waypointID}");
             }
             if (!app.getRigistered)
-                app.records.Add(new RgRecord { Key = "NULL" });
+                app.records.Add(new RgRecord { type=RecordType.NULL });
             Console.WriteLine(app._TmpRecords.Count);
         }
     }
