@@ -17,7 +17,7 @@ namespace IndoorNavigation
 
         Style ButtonStyle = new Style(typeof(Button))
         {
-            Setters={
+            Setters ={
                 new Setter{Property=Button.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large,typeof(Button))},
                 new Setter{Property=Button.TextColorProperty,Value=Color.FromHex("#3f51b5")},
                 new Setter{Property=Button.HorizontalOptionsProperty,Value=LayoutOptions.End},
@@ -51,13 +51,16 @@ namespace IndoorNavigation
         }
         #endregion
 
-        #region for view with two button that are cancel and confirm.
+        #region for the view have both of cancel and confirm.
         //---------------------two buttons------------------------------------------------
-        public AlertDialogPopupPage(string context,string confirm,string cancel)
+        string _message;
+        public AlertDialogPopupPage(string context, string confirm, string cancel, string message)
         {
-            InitializeComponent();           
+            InitializeComponent();
             TempMessage.Text = context;
+            _message = message;
             _backClick = TwoButton_Back;
+
             Button ConfirmBtn = new Button { Style = ButtonStyle, Text = confirm };
             Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel };
             CancelBtn.Clicked += CancelPageClicked;
@@ -67,37 +70,40 @@ namespace IndoorNavigation
         }
         private void TwoButton_Back()
         {
-            MessagingCenter.Send(this, "PopupPageMsg", false);
-            PopupNavigation.Instance.PopAsync();
-        }
-        private void CancelPageClicked(Object sender, EventArgs args)
-        {
-            _backClick();
-        }
-        private void ConfirmPageClicked(Object sender, EventArgs args)
-        {
-            MessagingCenter.Send(this, "PopupPageMsg", true);
+            MessagingCenter.Send(this, _message, false);
             PopupNavigation.Instance.PopAsync();
         }
 
         #endregion
 
         #region for view with only one button that is cancel.
-        public AlertDialogPopupPage(string context,string cancel)
+        public AlertDialogPopupPage(string context, string cancel)
         {
-            InitializeComponent();            
+            InitializeComponent();
             TempMessage.Text = context;
 
             _backClick = NoButton_Back;
 
-            Button CancelBtn =new Button {Style=ButtonStyle,Text=cancel };
+            Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel };
 
-            CancelBtn.Clicked += CancelPageClicked ;             
+            CancelBtn.Clicked += CancelPageClicked;
             buttonLayout.Children.Add(CancelBtn);
         }
         #endregion
 
         #region common code
+
+        private void CancelPageClicked(Object sender, EventArgs args)
+        {
+            _backClick();
+        }
+
+        private void ConfirmPageClicked(Object sender, EventArgs args)
+        {
+            MessagingCenter.Send(this, _message, true);
+            PopupNavigation.Instance.PopAsync();
+        } 
+
         protected override bool OnBackButtonPressed() //待測試，可能會錯
         {
             _backClick();

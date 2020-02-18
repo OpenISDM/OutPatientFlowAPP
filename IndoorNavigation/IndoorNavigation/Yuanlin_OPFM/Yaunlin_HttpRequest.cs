@@ -17,16 +17,16 @@ namespace IndoorNavigation
 {
     class HttpRequest
     {
-        private string bodyString = "";
-        private string responseString = "";
-        private App app;
+        private static string bodyString = "";
+        private static string responseString = "";
+        private static App app;
 
         public HttpRequest()
         {
             app = (App)Application.Current;     
         }
 
-        public void GetXMLBody()
+        public static void GetXMLBody()
         {
             Console.WriteLine("Now Excution is::: GetXMLBody");
            
@@ -55,7 +55,7 @@ namespace IndoorNavigation
             bodyString = stringWriter.ToString();
         }
 
-        async public Task RequestData()
+        async public static Task RequestData()
         {
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
@@ -108,7 +108,7 @@ namespace IndoorNavigation
 
             
         }
-        public void ResponseXmlParse()
+        public static void ResponseXmlParse()
         {
             Console.WriteLine("Now Excution is::: ResponseXmlParse");
             XmlDocument XmlfromRespone = new XmlDocument();

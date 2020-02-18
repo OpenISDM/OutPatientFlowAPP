@@ -40,7 +40,6 @@ namespace IndoorNavigation
         private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
 
-        private HttpRequest request;
         private INetworkSetting NetworkSettings;
 
         PhoneInformation phoneInformation;        
@@ -102,8 +101,7 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;      
             _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
-            Console.WriteLine("initialize http request");
-            request = new HttpRequest();
+
             NetworkSettings = DependencyService.Get<INetworkSetting>();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
@@ -118,11 +116,9 @@ namespace IndoorNavigation
             if (isButtonPressed) return;
             isButtonPressed = true;
             if (e.Item is RgRecord record)
-            {       
-                //if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
+            {                       
                 if(record.type.Equals(RecordType.Pharmacy) && (app.lastFinished==null || !app.lastFinished.type.Equals(RecordType.Cashier)))
                 {
-                    //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
                     await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage),
                         _resourceManager.GetString("OK_STRING",currentLanguage)));
                     RefreshListView();
@@ -170,7 +166,6 @@ namespace IndoorNavigation
             bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
-                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
                 await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
@@ -178,7 +173,6 @@ namespace IndoorNavigation
             {
                 if (!isCheck)
                 {
-                    //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
                     await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("SHIFT_DESCRIPTION_STRING",currentLanguage),
                         _resourceManager.GetString("OK_STRING",currentLanguage), "isCheckedNeverShow"));
                 }
@@ -189,7 +183,6 @@ namespace IndoorNavigation
             }
             
         }
-
         /*the function is to disable those two float button to keep from triggering something wrong.*/
         private void Buttonable(bool enable)
         {
@@ -288,7 +281,7 @@ namespace IndoorNavigation
                         break;
                 }
                 _multiItemFinish(FinishBtnClickItem);
-                ItemFinishFunction(FinishBtnClickItem);
+
                 if (app.FinishCount + 1 == app.records.Count && app.lastFinished.type!= RecordType.Register)
                 {
                     if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
@@ -326,9 +319,9 @@ namespace IndoorNavigation
         }    
 
          async private Task ReadXml()
-         {           
-            request.GetXMLBody();
-            await request.RequestData();
+         {
+            HttpRequest.GetXMLBody();
+            await HttpRequest.RequestData();          
             RefreshListView();
          }
 
@@ -351,7 +344,7 @@ namespace IndoorNavigation
                 });
             }
         }
-        private void BusyIndicatorShow(bool isBusy)
+        public void BusyIndicatorShow(bool isBusy)
         {
             BusyIndicator.IsEnabled = isBusy;
             BusyIndicator.IsRunning = isBusy;
@@ -386,7 +379,8 @@ namespace IndoorNavigation
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                await ReadXml();               
+                await ReadXml();
+                ItemFinishFunction(record);
             }
             else
             {
@@ -413,12 +407,18 @@ namespace IndoorNavigation
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
+
+            ItemFinishFunction(record);
         }
         private void QueryResultFinish(RgRecord record)
         {
             app.roundRecord = record;
+            ItemFinishFunction(record);
         }
-        private void DefaultFinish(RgRecord record){}
+        private void DefaultFinish(RgRecord record)
+        {
+            ItemFinishFunction(record);
+        }
         #endregion
 
 

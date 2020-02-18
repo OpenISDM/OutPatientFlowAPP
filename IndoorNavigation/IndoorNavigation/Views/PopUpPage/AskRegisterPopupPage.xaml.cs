@@ -17,7 +17,6 @@ namespace IndoorNavigation
     public partial class AskRegisterPopupPage : PopupPage
     {
         private App app = (App)Application.Current;
-        private HttpRequest request;
         private bool ButtonLock;
 
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
@@ -30,8 +29,6 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            request = new HttpRequest();
-
         }
         protected override void OnAppearing()
         {
@@ -103,8 +100,8 @@ namespace IndoorNavigation
             ResetAllState();
             app.getRigistered = false;
 
-            request.GetXMLBody();
-            await request.RequestData();
+            HttpRequest.GetXMLBody();
+            await HttpRequest.RequestData();
 
             MessagingCenter.Send(this, "isReset", true);            
         }

@@ -30,19 +30,5 @@
         </Frame>
         
     </AbsoluteLayout>
-    <!--<StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20">
-        <Frame x:Name="AddFrame" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="300" WidthRequest="380">
-            <StackLayout>
-                <ScrollView HorizontalOptions="Start">
-                    <StackLayout x:Name="PictureCheckBoxStacklayout">
-                        <Label Text="a"/>
-                    </StackLayout>
-                </ScrollView>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                    <Button x:Name="AddCancelButton" Text="Cancel" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddCancelButton_Clicked"/>
-                    <Button x:Name="AddConfirmButton" Text="OK" VerticalOptions="EndAndExpand" HorizontalOptions="End" Clicked="AddConfirmButton_Clicked"/>
-                </StackLayout>
-            </StackLayout>
-        </Frame>
-    </StackLayout>-->
+    
 </pages:PopupPage>
