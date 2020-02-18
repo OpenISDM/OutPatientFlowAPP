@@ -121,8 +121,10 @@ namespace IndoorNavigation
             {       
                 //if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
                 if(record.type.Equals(RecordType.Pharmacy) && (app.lastFinished==null || !app.lastFinished.type.Equals(RecordType.Cashier)))
-                {    
-                    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
+                {
+                    //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage),
+                        _resourceManager.GetString("OK_STRING",currentLanguage)));
                     RefreshListView();
                     ((ListView)sender).SelectedItem = null;
                     isButtonPressed = false;
@@ -168,7 +170,8 @@ namespace IndoorNavigation
             bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
+                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
             else
@@ -207,19 +210,13 @@ namespace IndoorNavigation
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
             {                
-                PaymemtListBtn.IsEnabled = (app.FinishCount+1==app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-                Buttonable(app.FinishCount+1 == app.records.Count);
-                isButtonPressed = false;
+                PaymemtListBtn.IsEnabled = !(bool)Messageargs;
+                PaymemtListBtn.IsVisible = !(bool)Messageargs;
+                Buttonable(!(bool)Messageargs);
 
-                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
-            });
-            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "isBack", (messagesender, args) => 
-            {
-                Console.WriteLine("isBack recieve the message~");
                 isButtonPressed = false;
-                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "isBack");
-            });          
+                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
+            });              
         }
 
         /*to show popup page for add route to listview*/
@@ -231,7 +228,7 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2(_navigationGraphName));
-            //await Navigation.PushPopupAsync(new AddPopupPage());
+ 
             MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
             {
                 

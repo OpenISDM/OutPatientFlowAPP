@@ -15,7 +15,18 @@ namespace IndoorNavigation.Views.Navigation
     public partial class ShiftAlertPopupPage : PopupPage
     {
         private string _prefs;
-        int kind = 0;
+        private Style ButtonStyle = new Style(typeof(Button))
+        {
+            Setters =
+            {
+                new Setter{ Property=Button.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large, typeof(Button))},
+                new Setter{ Property=Button.TextColorProperty, Value=Color.FromHex("#3f51b5") },
+                new Setter{ Property=Button.HorizontalOptionsProperty, Value=LayoutOptions.End},
+                new Setter{Property=Button.VerticalOptionsProperty, Value=LayoutOptions.EndAndExpand},
+                new Setter{Property=Button.BackgroundColorProperty, Value=Color.Transparent}
+            }
+        };
+
         public ShiftAlertPopupPage()
         {
             InitializeComponent();
@@ -25,19 +36,10 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage(string AlertContext, string cancel,string prefs)
         {
             InitializeComponent();
-            kind = 1;
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
-            Button CancelBtn = new Button
-            {
-                Text = cancel,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.EndAndExpand,
-                BackgroundColor = Color.Transparent
-            };
+            Button CancelBtn = new Button{ Text = cancel, Style=ButtonStyle };
 
             CancelBtn.Clicked +=async (sender, args) => {
                 isCheck(prefs);
@@ -48,29 +50,12 @@ namespace IndoorNavigation.Views.Navigation
 
         public ShiftAlertPopupPage(string AlertContext,string confirm,string cancel,string prefs)
         {
-            InitializeComponent();
-            kind = 2;
+            InitializeComponent();    
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
-            Button CancelBtn = new Button
-            {
-                Text = cancel,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.EndAndExpand,
-                BackgroundColor = Color.Transparent
-            };
-            Button ConfirmBtn = new Button
-            {
-                Text = confirm,
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                TextColor = Color.FromHex("#3f51b5"),
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.EndAndExpand,
-                BackgroundColor = Color.Transparent
-            };
+            Button CancelBtn = new Button{ Text = cancel , Style=ButtonStyle };
+            Button ConfirmBtn = new Button{Text = confirm, Style=ButtonStyle };
 
             ConfirmBtn.Clicked += async (sender, args) =>
              {
@@ -93,18 +78,17 @@ namespace IndoorNavigation.Views.Navigation
                 Preferences.Set(prefs, true);
         }
 
-        protected override bool OnBackButtonPressed()
-        {
-            MessagingCenter.Send(this, "AlertBack", false);
-            return base.OnBackButtonPressed();
-        }
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    MessagingCenter.Send(this, _prefs, false);
+        //    return base.OnBackButtonPressed();
+        //}
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            isCheck(_prefs);
-            //MessagingCenter.Send(this, _prefs, true);
-            MessagingCenter.Send(this, "AlertBack", true);
-            PopupNavigation.Instance.PopAsync();
-        }
+        //private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        //{
+        //    isCheck(_prefs);
+        //    MessagingCenter.Send(this, "AlertBack", true);
+        //    PopupNavigation.Instance.PopAsync();
+        //}
     }
 }

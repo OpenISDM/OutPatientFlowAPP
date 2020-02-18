@@ -612,4 +612,7 @@
   <data name="REVISIT_STRING" xml:space="preserve">
     <value>回診</value>
   </data>
+  <data name="CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
+    <value>批價與領藥都要選擇一個</value>
+  </data>
 </root>

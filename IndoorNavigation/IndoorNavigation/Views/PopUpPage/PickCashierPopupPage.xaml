@@ -27,9 +27,9 @@
     </pages:PopupPage.Resources>
     <AbsoluteLayout>
         <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ContentView.GestureRecognizers>
+            <!--<ContentView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
+            </ContentView.GestureRecognizers>-->
         </ContentView>
         <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.89,0.43"  CornerRadius="8">
             <StackLayout>

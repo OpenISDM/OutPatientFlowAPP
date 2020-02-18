@@ -10,9 +10,9 @@
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit">
     <AbsoluteLayout>
         <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ContentView.GestureRecognizers>
+            <!--<ContentView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
+            </ContentView.GestureRecognizers>-->
         </ContentView>
         <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.85,0.4"  CornerRadius="8">
             <StackLayout HorizontalOptions="CenterAndExpand">
@@ -21,14 +21,9 @@
                         <Label x:Name="ShiftAlertLabel" Text="" FontSize="24" HorizontalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </ScrollView>
-                <!--<StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
-                    <input:CheckBox x:Name="CheckNeverShow" Text="{i18n:Translate NEVER_SHOW_STRING}" HorizontalOptions="Start"/>
-                    <Button x:Name="ShiftAlertButton" Text="{i18n:Translate OK_STRING}" Clicked="NeverShowButton_Clicked" CornerRadius="5"  HorizontalOptions="EndAndExpand"/>
-                </StackLayout>-->
                 <StackLayout VerticalOptions="EndAndExpand">
                     <input:CheckBox x:Name="CheckNeverShow" TextFontSize="20" Type="Check" Text="{i18n:Translate NEVER_SHOW_STRING}" HorizontalOptions="Start" VerticalOptions="End"/>
-                    <StackLayout x:Name="BtnLayout" Orientation="Horizontal" HorizontalOptions="End">
-                    </StackLayout>
+                    <StackLayout x:Name="BtnLayout" Orientation="Horizontal" HorizontalOptions="End"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

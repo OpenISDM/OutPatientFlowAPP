@@ -85,29 +85,11 @@ namespace IndoorNavigation
          
         protected override bool OnBackgroundClicked()
         {
-            return false;
-            //networkState = Connectivity.NetworkAccess;
-            //if (networkState == NetworkAccess.Internet)
-            //    CancelorClickBack();
-            //else
-            //{
-            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-            //    return false;
-            //}
-            //return base.OnBackgroundClicked();
+            return false;            
         }
         protected override bool OnBackButtonPressed()
         {
-            return true;
-            //networkState = Connectivity.NetworkAccess;
-            //if (networkState == NetworkAccess.Internet)
-            //    CancelorClickBack();
-            //else
-            //{
-            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-            //    return true;
-            //}
-            //return base.OnBackButtonPressed();
+            return true;           
         }
 
         async private Task CancelorClickBack()

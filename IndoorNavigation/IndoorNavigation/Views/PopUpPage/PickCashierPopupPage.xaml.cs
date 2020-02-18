@@ -91,11 +91,12 @@ namespace IndoorNavigation
             var pharmacy_item = PharmacySelectionView.SelectedItem as DestinationItem;
             if(cashier_item==null || pharmacy_item == null)
             {
-                string alertmeg ="批價與領藥都要選擇一個";
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(alertmeg));
+                //string alertmeg =_resourceManager.GetString("CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING",currentLanguage);
+                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(alertmeg));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
                 return;
             }
-            if (cashier_item != null )
+            if (cashier_item != null && pharmacy_item!=null )
             {
                 app.records.Insert(app.records.Count-1 ,new RgRecord
                 {
@@ -113,40 +114,22 @@ namespace IndoorNavigation
                     _waypointName=pharmacy_item._waypointName,
                     DptName=pharmacy_item._waypointName
                 });
-                //await DisplayAlert("bb",$"waypoint={o._waypointID.ToString()}, region={o._regionID.ToString()}", "ok");
                 await PopupNavigation.Instance.PopAsync();
-                MessagingCenter.Send(this, "isBack", true);
+                MessagingCenter.Send(this, "GetCashierorNot", true);
             }
             return;
         }
 
         private void CashierCancelBtn_Clicked(object sender, EventArgs e)
-        {
-            GobackPage(true);
+        {            
+            MessagingCenter.Send(this, "GetCashierorNot", false);
             PopupNavigation.Instance.PopAllAsync();
-        }
-        private void GobackPage(bool ConfirmOrCancel)
-        {
-            MessagingCenter.Send(this, "GetCashierorNot", ConfirmOrCancel);
-            MessagingCenter.Send(this, "isBack", true);
-            PopupNavigation.Instance.PopAsync();
         }
         protected override bool OnBackButtonPressed()
         {
-            GobackPage(true);
+            MessagingCenter.Send(this, "GetCashierorNot", false);
             return base.OnBackButtonPressed();
         }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            GobackPage(true);
-            PopupNavigation.Instance.PopAsync();
-        }
-
-        protected override bool OnBackgroundClicked()
-        {
-            GobackPage(true); 
-            return base.OnBackgroundClicked();
-        }
+        
     }
 }

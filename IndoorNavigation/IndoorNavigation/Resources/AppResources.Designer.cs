@@ -412,7 +412,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 1.1 的當地語系化字串。
+        ///   查詢類似 2.0.170 的當地語系化字串。
         /// </summary>
         internal static string CURRENT_VERSION_STRING {
             get {
@@ -1263,6 +1263,15 @@ namespace IndoorNavigation.Resources {
         internal static string REGISTERDAY_STRING {
             get {
                 return ResourceManager.GetString("REGISTERDAY_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Revisit 的當地語系化字串。
+        /// </summary>
+        internal static string REVISIT_STRING {
+            get {
+                return ResourceManager.GetString("REVISIT_STRING", resourceCulture);
             }
         }
         
