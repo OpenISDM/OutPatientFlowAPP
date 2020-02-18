@@ -9,6 +9,7 @@ using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using Rg.Plugins.Popup.Services;
+using System.Globalization;
 using System.Windows.Input;
 
 namespace IndoorNavigation.ViewModels
@@ -18,7 +19,10 @@ namespace IndoorNavigation.ViewModels
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        App app = (App)Application.Current;
+
+        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        private Page mainPage = Application.Current.MainPage;
+        private App app = (App)Application.Current;
         int _recordsNumber;
         bool _cashierAndpharmacy;
         bool _isBusy = false;
@@ -33,22 +37,15 @@ namespace IndoorNavigation.ViewModels
             {
                 CheckRegister();
                 app.isRigistered = true;
-            }
-            FinishClickCommand = new Command(()=>{
-                RecordCount = app.records.Count;
-            });
+            }            
         }
         
         
 
         async public void CheckRegister()
-        {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            Page nowPage = Application.Current.MainPage;
-           
-            //var NeedtoRegister =await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
-            await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());
-            
+        {          
+            Page nowPage = Application.Current.MainPage;                       
+            await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());            
         }
         
 
@@ -58,65 +55,21 @@ namespace IndoorNavigation.ViewModels
             string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
 
             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
-            {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
+            {               
                 Page mainPage = Application.Current.MainPage;
 
-                var  wantContinue=await mainPage.DisplayAlert(
+                var  wantSignIn=await mainPage.DisplayAlert(
                   _resourceManager.GetString("MESSAGE_STRING", currentLanguage),
                                         _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage),
                                         _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
-                if (wantContinue)
+                if (wantSignIn)
                     await mainPage.Navigation.PushAsync(new SignInPage());
                 else
                 {
-                    //await PopupNavigation.Instance.PopAsync();
                     await mainPage.Navigation.PopAsync() ;
                 }
             }
-        }
-        #region 
-
-        public bool Isbusy
-        {
-            get { return _isBusy; }
-            set
-            {
-                if (_isBusy != value)
-                {
-                    _isBusy = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int RecordCount
-        {
-            get { return _recordsNumber; }
-            set { if (_recordsNumber != value)
-                {
-                    _recordsNumber = value;
-                    OnPropertyChanged();
-                    CashierAndPharmacy = (_recordsNumber+1 == app.records.Count);
-                }
-            }
-        }
-        public ICommand FinishClickCommand { private set; get; }
-        public bool CashierAndPharmacy
-        {
-            get { return _cashierAndpharmacy; }
-            set {
-                if (_cashierAndpharmacy != value)
-                {
-                    _cashierAndpharmacy = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        
-        }
+        }               
+    }
     
 }

@@ -26,7 +26,7 @@
             </StackLayout>
             <StackLayout Padding="20" Margin="30">
                 <Label Text="{i18n:Translate REGISTERDAY_STRING}" FontSize="Large"/>
-                <DatePicker x:Name="RgDayPicker" DateSelected="RgDayPicker_DateSelected" MinimumDate="1/1/2019" IsEnabled="True"/>
+                <DatePicker x:Name="RgDayPicker" MinimumDate="1/1/2019" IsEnabled="True"/>
             </StackLayout>
             <Button Text="{i18n:Translate OK_STRING}" HorizontalOptions="CenterAndExpand" Clicked="Button_Clicked"/>
         </StackLayout>

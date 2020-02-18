@@ -25,7 +25,7 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         INetworkSetting networkSettings;
-        NetworkAccess networkState = Connectivity.NetworkAccess;
+
         public AskRegisterPopupPage()
         {
             InitializeComponent();
@@ -49,7 +49,11 @@ namespace IndoorNavigation
 
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
+            if (ButtonLock) return;
+            ButtonLock = true;
+
             BusyShow(true);
+
             networkSettings = DependencyService.Get<INetworkSetting>();
             bool network_ability =await networkSettings.CheckInternetConnect();
             if(network_ability)
@@ -57,9 +61,10 @@ namespace IndoorNavigation
             else
             {
                 await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)));
+                ButtonLock = false;
                 return;
             }
-
+            BusyShow(false);
            PopupNavigation.Instance.PopAllAsync();
         }
 
@@ -80,6 +85,7 @@ namespace IndoorNavigation
             });
             app.records.Add(new RgRecord {type=RecordType.NULL});
             MessagingCenter.Send(this, "isReset", true);
+            ButtonLock = true;
             await PopupNavigation.Instance.PopAllAsync();
         }
          

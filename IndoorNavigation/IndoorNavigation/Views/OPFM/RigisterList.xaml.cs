@@ -288,8 +288,8 @@ namespace IndoorNavigation
                         break;
                 }
                 _multiItemFinish(FinishBtnClickItem);
-
-                if (app.FinishCount + 1 == app.records.Count)
+                ItemFinishFunction(FinishBtnClickItem);
+                if (app.FinishCount + 1 == app.records.Count && app.lastFinished.type!= RecordType.Register)
                 {
                     if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
@@ -374,8 +374,7 @@ namespace IndoorNavigation
             app.lastFinished = record;
 
             //to refresh listview to make sure template is work.
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
+            RefreshListView();
         }
 
         async private void RegisterFinish(RgRecord record)
@@ -387,8 +386,7 @@ namespace IndoorNavigation
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                await ReadXml();
-                ItemFinishFunction(record);
+                await ReadXml();               
             }
             else
             {
@@ -407,7 +405,6 @@ namespace IndoorNavigation
                 }
             }
 
-            //Thread.Sleep(2000);
             BusyIndicatorShow(false);
         }
         async private void ExitFinish(RgRecord record)
@@ -416,32 +413,21 @@ namespace IndoorNavigation
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
-            ItemFinishFunction(record);
         }
         private void QueryResultFinish(RgRecord record)
         {
             app.roundRecord = record;
-            ItemFinishFunction(record);
         }
-        private void DefaultFinish(RgRecord record)
-        {
-            ItemFinishFunction(record);
-        }
+        private void DefaultFinish(RgRecord record){}
         #endregion
 
 
         #region iOS secondary toolbaritem implement
 
         public override event EventHandler ToolbarItemAdded;
-        //public ICommand Item1Command { get; set; }
-        public ICommand SignInCommand { get; set; }
-        public ICommand InfoItemCommand { get; set; }
-        public ICommand TestItemCommand { get; set; }
+       
         private void RefreshToolbarOptions()
-        {
-            //var viewModel = BindingContext as RegisterListViewModel;
-
-            //Item1Command = new Command(async () => await Item1CommandMethod());
+        {       
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
             TestItemCommand = new Command(async () => await TestItemMethod());
@@ -499,6 +485,13 @@ namespace IndoorNavigation
             EventHandler e = ToolbarItemAdded;
             e?.Invoke(this, new EventArgs());
         }
+
+        #region ToolBarItemAttributes and Commands
+
+        public ICommand SignInCommand { get; set; }
+        public ICommand InfoItemCommand { get; set; }
+        public ICommand TestItemCommand { get; set; }
+
         public override Color CellBackgroundColor => Color.White;
         public override Color CellTextColor => Color.Black;
         public override Color MenuBackgroundColor => Color.White;
@@ -508,6 +501,7 @@ namespace IndoorNavigation
         public override float ShadowRadius => 5.0f;
         public override float ShadowOffsetDimension => 5.0f;
         public override float TableWidth => 250;
+        #endregion
 
         #endregion
     }

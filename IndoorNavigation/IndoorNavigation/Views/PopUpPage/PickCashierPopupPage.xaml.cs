@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using IndoorNavigation.Resources.Helpers;
+using IndoorNavigation.Modules.Utilities;
 using System.Resources;
 using System.Globalization;
 using Plugin.Multilingual;
@@ -46,21 +47,8 @@ namespace IndoorNavigation
         }        
         
         public void LoadData()
-        {
-            string filename = "Yuanlin_OPFM.CashierStation.xml";
-            var assembly = typeof(PickCashierPopupPage).GetTypeInfo().Assembly;
-            String ContentString = "";
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{filename}");
-
-            using (var reader = new StreamReader(stream))
-            {
-                ContentString = reader.ReadToEnd();
-            }
-            stream.Close();
-
-            XmlDocument doc = new XmlDocument();
-
-            doc.LoadXml(ContentString);
+        {          
+            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
             XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
 
             foreach(XmlNode node in nodeList)

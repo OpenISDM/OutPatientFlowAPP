@@ -19,9 +19,8 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SignInPage : ContentPage
     {
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
         App app = (App)Application.Current;
         
@@ -35,7 +34,7 @@ namespace IndoorNavigation
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-
+            IDnumEntry.Text = IDnumEntry.Text.ToUpper();
             if(IDnumEntry.Text==null || !CheckIDLegal(IDnumEntry.Text))
             {
                 await DisplayAlert(_resourceManager.GetString("ERROR_STRING",currentLanguage), _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING", currentLanguage)
@@ -47,38 +46,29 @@ namespace IndoorNavigation
             app.RgDate = RgDayPicker.Date;
             app.isRigistered = false;
             await Navigation.PopAsync();
-        }
-        
-        private void RgDayPicker_DateSelected(object sender, DateChangedEventArgs e)
-        {
-            TaiwanCalendar calender = new TaiwanCalendar();
-            var o = (DatePicker)sender;        
-        }
+        }                
 
+        //to check the ID number is a legal one or not.
         public bool CheckIDLegal(string IDnum)
         {
-            IDnum=IDnum.ToUpper();
             if (IDnum.Length < 10)
                 return false;
-
             int[] priority = { 1, 8, 7, 6, 5, 4, 3, 2, 1, 1 };
-            int count = IDCharSw(IDnum[0]);
+            int count = FirstCharacterNumber(IDnum[0]);
 
             for (int i = 1; i < IDnum.Length; i++)
             {
                 int tmp = IDnum[i] - '0';
                 if (!(tmp >= 0 && tmp <= 9))
                     return false;
-
                 count += priority[i] * (tmp);
             }
             if(count%10==0)
                 return true;
-
             return false;
         }
         //first char in identity number 
-        private int IDCharSw(char ch)
+        private int FirstCharacterNumber(char ch)
         {
             switch (ch)
             {
