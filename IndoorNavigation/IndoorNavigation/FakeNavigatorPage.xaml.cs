@@ -21,15 +21,15 @@ namespace IndoorNavigation
 
         private string _destinationName;
         private App app = (App)Application.Current;
-        //FakeNavigatorPageViewModel _viewmodel;
+        FakeNavigatorPageViewModel _viewmodel;
 
         public FakeNavigatorPage(string navigationGraphName, Guid destinationRegionID, Guid destinationWaypointID, string destinationWaypointName, XMLInformation informationXML)
         {
             InitializeComponent();
 
             _destinationName = destinationWaypointName;
-           // _viewmodel = new FakeNavigatorPageViewModel(navigationGraphName, destinationRegionID, destinationWaypointID, destinationWaypointName, informationXML);
-           // BindingContext = _viewmodel;
+            _viewmodel = new FakeNavigatorPageViewModel(navigationGraphName, destinationRegionID, destinationWaypointID, destinationWaypointName, informationXML);
+            BindingContext = _viewmodel;
         }
 
         protected override void OnAppearing()

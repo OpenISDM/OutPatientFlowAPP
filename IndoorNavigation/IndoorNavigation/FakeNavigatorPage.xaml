@@ -39,7 +39,7 @@
                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" FontSize="Large" LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand"/>
 
             <Label x:Name="CurrentInstructionLabel" 
-                   Text="{Binding CurrentStepText}"
+                   Text="{Binding CurrentStepLabel}"
                    Grid.Row="2" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="3" 
                    Margin="0, 5, 5, 5"
                    FontSize="30" LineBreakMode="WordWrap"
@@ -55,10 +55,10 @@
           
             <BoxView Grid.Row="7" Grid.ColumnSpan="4" Color="#dcdcdc" VerticalOptions="EndAndExpand" />
             <pb:ProgressBarView Grid.Row="7" Grid.ColumnSpan="4"
-                                Color="Red" Progress="{Binding NavigatorProgress}"
+                                Color="Red" Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" LabelStringFormat=""
                                 LabelFontSize="20" LabelPosition="AfterBar" VerticalOptions="FillAndExpand" />
-            <Label Text="{Binding CurrentProgress}" Grid.Row="7" Grid.ColumnSpan="4" HorizontalTextAlignment="End" FontSize="25"/>
+            <Label Text="{Binding ProgressBar}" Grid.Row="7" Grid.ColumnSpan="4" HorizontalTextAlignment="End" FontSize="25"/>
             <Image x:Name="FirstDirectionPicture"
                    Source="{Binding FirstDirectionImage}"
                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
