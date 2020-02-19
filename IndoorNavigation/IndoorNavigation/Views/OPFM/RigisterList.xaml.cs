@@ -41,7 +41,7 @@ namespace IndoorNavigation
         private ViewCell lastCell=null;
 
         private INetworkSetting NetworkSettings;
-
+        private HttpRequest request;
         PhoneInformation phoneInformation;        
 
         delegate void MulitItemFinish(RgRecord FinishRecord);
@@ -98,9 +98,10 @@ namespace IndoorNavigation
             InitializeComponent();          
             Console.WriteLine("initalize graph info");
             phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;      
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _navigationGraphName = navigationGraphName;
+            request = new HttpRequest();
 
+            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             NetworkSettings = DependencyService.Get<INetworkSetting>();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
@@ -320,8 +321,8 @@ namespace IndoorNavigation
 
          async private Task ReadXml()
          {
-            HttpRequest.GetXMLBody();
-            await HttpRequest.RequestData();          
+            request.GetXMLBody();
+            await request.RequestData();          
             RefreshListView();
          }
 
@@ -375,11 +376,12 @@ namespace IndoorNavigation
             //this part might happend bugs
            
             BusyIndicatorShow(true);
-
+            Console.WriteLine("Register Finished");
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
                 await ReadXml();
+                Console.WriteLine("ReadXml finished");
                 ItemFinishFunction(record);
             }
             else

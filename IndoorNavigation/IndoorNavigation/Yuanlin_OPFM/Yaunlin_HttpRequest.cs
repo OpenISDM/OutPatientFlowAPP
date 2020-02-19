@@ -17,16 +17,16 @@ namespace IndoorNavigation
 {
     class HttpRequest
     {
-        private static string bodyString = "";
-        private static string responseString = "";
-        private static App app;
+        private string bodyString = "";
+        private string responseString = "";
+        private App app;
 
         public HttpRequest()
         {
             app = (App)Application.Current;     
         }
 
-        public static void GetXMLBody()
+        public void GetXMLBody()
         {
             Console.WriteLine("Now Excution is::: GetXMLBody");
            
@@ -34,7 +34,11 @@ namespace IndoorNavigation
             TaiwanCalendar calendar = new TaiwanCalendar();
             string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
 
+
+            Console.WriteLine("ggggggggggg");
             XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+
+            Console.WriteLine("eeeeeeeeeeee");
             XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
             XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
@@ -49,13 +53,16 @@ namespace IndoorNavigation
                 //parse xml to string
             StringWriter stringWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(stringWriter);
-
+            Console.WriteLine("faaaaaa");
             doc.WriteContentTo(writer);
+            Console.WriteLine("bbbbbbb");
             writer.Flush();
+            Console.WriteLine("cccccccccc");
             bodyString = stringWriter.ToString();
+            Console.WriteLine("dddddddddd");
         }
 
-        async public static Task RequestData()
+        async public Task RequestData()
         {
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
@@ -108,7 +115,7 @@ namespace IndoorNavigation
 
             
         }
-        public static void ResponseXmlParse()
+        public void ResponseXmlParse()
         {
             Console.WriteLine("Now Excution is::: ResponseXmlParse");
             XmlDocument XmlfromRespone = new XmlDocument();

@@ -95,14 +95,14 @@ namespace IndoorNavigation
             return true;           
         }
 
+        HttpRequest request = new HttpRequest();
         async private Task CancelorClickBack()
         {
             ResetAllState();
             app.getRigistered = false;
 
-            HttpRequest.GetXMLBody();
-            await HttpRequest.RequestData();
-
+            request.GetXMLBody();
+            await request.RequestData();
             MessagingCenter.Send(this, "isReset", true);            
         }
         
