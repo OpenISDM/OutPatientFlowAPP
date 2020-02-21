@@ -615,4 +615,7 @@
   <data name="CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
     <value>批價與領藥都要選擇一個</value>
   </data>
+  <data name="INVALID_WAYPOINT_STRING" xml:space="preserve">
+    <value>(無效的航點)</value>
+  </data>
 </root>

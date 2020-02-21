@@ -621,4 +621,7 @@
   <data name="REVISIT_STRING" xml:space="preserve">
     <value>Revisit</value>
   </data>
+  <data name="INVALID_WAYPOINT_STRING" xml:space="preserve">
+    <value>(Invalid waypoint)</value>
+  </data>
 </root>

@@ -984,6 +984,7 @@ namespace IndoorNavigation.Modules
             _waypointsOnRoute = new List<RegionWaypointPoint>();
             _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
         }
+
         #region define class and enum
         public enum NavigationResult
         {

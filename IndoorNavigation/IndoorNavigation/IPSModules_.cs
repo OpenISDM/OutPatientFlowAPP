@@ -1,14 +1,10 @@
 ﻿using System;
-using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using Dijkstra.NET.Model;
-using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
-using System.Diagnostics.Contracts;
+
 namespace IndoorNavigation
 {
     class IPSModules_ : IDisposable

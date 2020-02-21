@@ -9,10 +9,15 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using Xamarin.Forms;
+using System.Resources;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Services;
 using System.Threading.Tasks;
+using Plugin.Multilingual;
+
 using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Resources.Helpers;
+
 namespace IndoorNavigation
 {
     class HttpRequest
@@ -20,6 +25,10 @@ namespace IndoorNavigation
         private string bodyString = "";
         private string responseString = "";
         private App app;
+
+        private const string _resourceID= "IndoorNavigation.Resources.AppResources";
+        private ResourceManager _resourceManager= new ResourceManager(_resourceID, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        private CultureInfo _currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 
         public HttpRequest()
         {
@@ -34,11 +43,8 @@ namespace IndoorNavigation
             TaiwanCalendar calendar = new TaiwanCalendar();
             string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
 
-
-            Console.WriteLine("ggggggggggg");
             XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
 
-            Console.WriteLine("eeeeeeeeeeee");
             XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
             XmlNode node_patient = xmlNodeList[0].ChildNodes[0];
@@ -53,13 +59,13 @@ namespace IndoorNavigation
                 //parse xml to string
             StringWriter stringWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(stringWriter);
-            Console.WriteLine("faaaaaa");
+            
             doc.WriteContentTo(writer);
-            Console.WriteLine("bbbbbbb");
+            
             writer.Flush();
-            Console.WriteLine("cccccccccc");
+
             bodyString = stringWriter.ToString();
-            Console.WriteLine("dddddddddd");
+            
         }
 
         async public Task RequestData()
@@ -157,7 +163,7 @@ namespace IndoorNavigation
                 {
                     record.isAccept = true;
                     record.isComplete = true;
-                    record.DptName = record.DptName + "(無效的航點)";
+                    record.DptName = record.DptName + getResourceString("INVALID_WAYPOINT_STRING");
                     app.FinishCount++;
                     app.records.Insert(index++,record);
                     continue;
@@ -171,6 +177,11 @@ namespace IndoorNavigation
             if (!app.getRigistered)
                 app.records.Add(new RgRecord { type=RecordType.NULL });
             Console.WriteLine(app._TmpRecords.Count);
+        }
+
+        private string getResourceString(string key)
+        {
+            return _resourceManager.GetString(key, _currentLanguage);
         }
     }
 }
