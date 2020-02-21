@@ -66,7 +66,8 @@ namespace IndoorNavigation.ViewModels
         private string _searchedText;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, typeof(TranslateExtension)
+										     .GetTypeInfo().Assembly);
 
         public MainPageViewModel()
         {
@@ -82,14 +83,18 @@ namespace IndoorNavigation.ViewModels
 
             if (!Application.Current.Properties.ContainsKey("FirstUse"))
             {
-                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
-                NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
-                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", "Yuanlin_Christian_Hospital");
+                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", 
+												   "NTUH_YunLin");
+                NavigraphStorage.GenerateFileRoute("Taipei City Hall", 
+												   "Taipei_City_Hall");
+                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", 
+										           "Yuanlin_Christian_Hospital");
                 Application.Current.Properties["FirstUse"] = false;
             }
          
 
-            foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
+            foreach (string naviGraphName in 
+					 NavigraphStorage.GetAllNavigationGraphs())
             {
                 _locations.Add(new Location { UserNaming = naviGraphName });
             }
@@ -100,12 +105,18 @@ namespace IndoorNavigation.ViewModels
             }
             else
             {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                var currentLanguage = 
+					CrossMultilingual.Current.CurrentCultureInfo;
                 Page mainPage = Application.Current.MainPage;
+				
                 await mainPage.DisplayAlert(
-                    _resourceManager.GetString("GO_SETTING_PAGE_STRING", currentLanguage),
-                    _resourceManager.GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING", currentLanguage),
-                    _resourceManager.GetString("OK_STRING", currentLanguage));
+                    _resourceManager
+					.GetString("GO_SETTING_PAGE_STRING", currentLanguage),
+                    _resourceManager
+					.GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING"
+							   , currentLanguage),
+                    _resourceManager
+					.GetString("OK_STRING", currentLanguage));
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
         }
@@ -156,7 +167,7 @@ namespace IndoorNavigation.ViewModels
                 // Search waypoints
                 var searchedWaypoints = string.IsNullOrEmpty(value) ?
                                         _locations : _locations
-                                        .Where(c => c.UserNaming.Contains(value));
+                                        .Where(c =>c.UserNaming.Contains(value));
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }
         }

@@ -38,22 +38,10 @@
                                     TextColor="White" BackgroundColor="#3f51b5" FontAttributes="Bold"/>
                         </StackLayout>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
-                            <StackLayout Orientation="Horizontal">
-                                <Label x:Name="DptTimeText" Text="{i18n:Translate OUTPATIENT_TIME_STRING}"/>
-                                <Label x:Name="DptTimeLabel" Text="{Binding Shift,StringFormat='{0}'}"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label x:Name="CareRoomText" Text="{i18n:Translate CAREROOM_STRING}"/>
-                                <Label x:Name="CareRoomLabel" Text="{Binding CareRoom,StringFormat='{0}'}"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label x:Name="DrNameText" Text="{i18n:Translate DRNAME_STRING}"/>
-                                <Label x:Name="DrNameLabel" Text="{Binding DrName,StringFormat='{0}'}"/>
-                            </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label x:Name="SeeSeqNumberText" Text="{i18n:Translate SEQUENCE_STRING}" />
-                                <Label x:Name="SeeSeqNumLabel" Text="{Binding SeeSeq,StringFormat='{0}'}"/>
-                            </StackLayout>
+                            <Label x:Name="DptTimeText" Text="{Binding Shift, StringFormat={i18n:Translate OUTPATIENT_TIME_STRING}}"/>
+                            <Label x:Name="CareRoomText" Text="{Binding CareRoom, StringFormat={i18n:Translate CAREROOM_STRING}}"/>
+                            <Label x:Name="DrNameText" Text="{Binding DrName, StringFormat={i18n:Translate DRNAME_STRING}}"/>
+                            <Label x:Name="SeeSeqNumberText" Text="{Binding SeeSeq, StringFormat={i18n:Translate SEQUENCE_STRING}}"/>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>
@@ -87,7 +75,7 @@
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
-            <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter" NullTemplate="{StaticResource NullCell}"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
+            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" NullTemplate="{StaticResource NullCell}"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 

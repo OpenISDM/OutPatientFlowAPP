@@ -35,6 +35,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
@@ -51,7 +52,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private string _zhTW = "zh-TW";
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-        new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        new ResourceManager(_resourceId, 
+							typeof(TranslateExtension).GetTypeInfo().Assembly);
         public PhoneInformation()
         {
            
@@ -59,12 +61,16 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public string GiveCurrentLanguage()
         {
+			CultureInfo currentLanguage= 
+				CrossMultilingual.Current.CurrentCultureInfo;
             //If add one more language, here needs to add
-            if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == _en || CrossMultilingual.Current.CurrentCultureInfo.ToString() == _returnEnglish)
+            if (currentLanguage.ToString()==_en || currentLanguage.ToString() == 
+				_returnEnglish)
             {
                 return _returnEnglish;
             }
-            else if (CrossMultilingual.Current.CurrentCultureInfo.ToString() == _returnChinese || CrossMultilingual.Current.CurrentCultureInfo.ToString() == _zhTW)
+            else if (currentLanguage.ToString() == _returnChinese || 
+					 currentLanguage.ToString() == _zhTW)
             {
                 return _returnChinese;
             }
@@ -84,10 +90,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string GiveCurrentMapName(string userNaming)
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+            string NTUH_YunLin = 
+				_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
+					
+            string Taipei_City_Hall = 
+				_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
+            string Lab = 
+				_resourceManager.GetString("LAB_STRING", ci);
+				
+            string Yuanlin_Christian_Hospital = 
+				_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
+										   ci);
+										   
             string loadFileName = "";
 
             if (userNaming == NTUH_YunLin)
@@ -108,13 +122,23 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             return loadFileName;
         }
+		
         public List<string>GiveGenerateMapName(string userNaming)
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+            string NTUH_YunLin = 
+				_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
+				
+            string Taipei_City_Hall = 
+				_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
+				
+            string Lab = 
+				_resourceManager.GetString("LAB_STRING", ci);
+			
+            string Yuanlin_Christian_Hospital = 
+				_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
+										   ci);
+										   
             List<string> loadFileName = new List<string>();
 
             if (userNaming == NTUH_YunLin)
@@ -142,10 +166,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public String GetBuildingName(string naviGraphName)
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            string NTUH_YunLin = _resourceManager.GetString("HOSPITAL_NAME_STRING", ci).ToString();
-            string Taipei_City_Hall = _resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci).ToString();
-            string Lab = _resourceManager.GetString("LAB_STRING", ci).ToString();
-            string Yuanlin_Christian_Hospital = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci).ToString();
+            string NTUH_YunLin = 
+				_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
+            string Taipei_City_Hall = 
+				_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
+            string Lab = 
+				_resourceManager.GetString("LAB_STRING", ci);
+            string Yuanlin_Christian_Hospital = 
+				_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
+										   ci);
 
             if (naviGraphName == NTUH_YunLin)
             {

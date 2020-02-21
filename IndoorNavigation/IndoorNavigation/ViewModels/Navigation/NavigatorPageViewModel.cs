@@ -105,6 +105,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       XMLInformation informationXML)
                                     
         {
+			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             _firsrDirectionInstructionScaleVale = 1;
             _destinationID = destinationWaypointID;
             _destinationWaypointName = destinationWaypointName;
@@ -117,51 +118,31 @@ namespace IndoorNavigation.ViewModels.Navigation
                                                      destinationWaypointID);
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
             const string resourceId = "IndoorNavigation.Resources.AppResources";
-            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            _resourceManager = 
+				new ResourceManager(resourceId, 
+									typeof(TranslateExtension)
+									.GetTypeInfo().Assembly);
             
-            CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage()+".xml");
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
+            CurrentWaypointName = 
+				_resourceManager.GetString("NULL_STRING", currentLanguage);
+            CurrentStepLabel = 
+				_resourceManager.GetString("NO_SIGNAL_STRING",currentLanguage);
+            
+            _firstDirectionInstruction = 
+				NavigraphStorage
+				.LoadFirstDirectionXML(phoneInformation
+				.GiveCurrentMapName(navigationGraphName) + "_" + 
+				phoneInformation.GiveCurrentLanguage()+".xml");
+				
+            _navigationGraph = 
+				NavigraphStorage
+				.LoadNavigationGraphXML(phoneInformation
+				.GiveCurrentMapName(navigationGraphName));
+				
             _xmlInformation = informationXML;
             _buildingName = navigationGraphName;
            
-        }
-
-        public NavigatorPageViewModel(string navigationGraphName,
-                                     string floor,
-                                     Guid destinationRegionID,
-                                     Guid destinationWaypointID,
-                                     string destinationWaypointName,
-                                     XMLInformation informationXML)
-
-        {
-            _firsrDirectionInstructionScaleVale = 1;
-            _destinationID = destinationWaypointID;
-            _destinationWaypointName = destinationWaypointName;
-            CurrentStepImage = "waittingscan.gif";
-            isPlaying = true;
-            _progressBar = "0/0";
-            _instructionLocation = _originalInstructionLocation;
-            _navigationModule = new NavigationModule(navigationGraphName,
-                                                     destinationRegionID,
-                                                     destinationWaypointID);
-            _navigationModule._event._eventHandler += GetNavigationResultEvent;
-            const string resourceId = "IndoorNavigation.Resources.AppResources";
-            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-            //PhoneInformation phoneInformation = new PhoneInformation();
-            CurrentWaypointName = _resourceManager.GetString("NULL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            CurrentStepLabel = _resourceManager.GetString("NO_SIGNAL_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _firstDirectionInstruction = NavigraphStorage.LoadFirstDirectionXML(phoneInformation.GiveCurrentMapName(navigationGraphName) + "_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(navigationGraphName));
-            _xmlInformation = informationXML;
-            
-            _floor = floor;
-            _buildingName = navigationGraphName;
-            Console.WriteLine($"the graphName is{_buildingName} in NavigatorPageViewModel");
-        }
+        }       
 
         public void Stop() {
 
@@ -169,14 +150,16 @@ namespace IndoorNavigation.ViewModels.Navigation
         }
 
 		/// <summary>
-		/// According to each navigation status displays the text and image instructions in UI.
+		/// According to each navigation status displays the text and image 
+		/// instructions in UI.
 		/// </summary>
 		/// <param name="args">Arguments.</param>
 		private void DisplayInstructions(EventArgs args)
 		{
 
 			Console.WriteLine(">> DisplayInstructions");
-			NavigationInstruction instruction = (args as Session.NavigationEventArgs)._nextInstruction;
+			NavigationInstruction instruction = 
+				(args as Session.NavigationEventArgs)._nextInstruction;
 			var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
 			string currentStepImage;
 			string currentStepLabel;
@@ -189,7 +172,13 @@ namespace IndoorNavigation.ViewModels.Navigation
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
-					SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
+					SetInstruction(instruction, 
+								   out currentStepLabel, 
+								   out currentStepImage, 
+								   out firstDirectionPicture, 
+								   out rotationValue, 
+								   out locationValue, 
+								   out instructionScale);
 					CurrentStepLabel = currentStepLabel;
 					CurrentStepImage = currentStepImage+".png";
                     FirstDirectionPicture = firstDirectionPicture;
@@ -197,62 +186,56 @@ namespace IndoorNavigation.ViewModels.Navigation
                     RotationValue = rotationValue;
                     InstructionScaleValue = instructionScale;
                     isPlaying = false;
-                    CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
+                    CurrentWaypointName = 
+						_xmlInformation.GiveWaypointName(instruction
+														 ._currentWaypointGuid);
 					NavigationProgress = instruction._progress;
-                    //FirstDirectionPicture = null;
                     ProgressBar = instruction._progressBar;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
+											       currentLanguage));
                     break;
 
                 case NavigationResult.ArrivaIgnorePoint:
-                    CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
+                    CurrentWaypointName = 
+						_xmlInformation.GiveWaypointName(instruction
+														 ._currentWaypointGuid);
                     NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
-                    //FirstDirectionPicture = null;
+
                     isPlaying = false;
                     break;
 
                 case NavigationResult.AdjustRoute:
                     Console.WriteLine("Wrong");
 					CurrentStepLabel =
-                        _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
-					CurrentStepImage = "Waiting.gif";
+                        _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", 
+												   currentLanguage);
+					CurrentStepImage = "waittingscan.gif";
                     isPlaying = true;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
+												   currentLanguage));
 					break;
 
 				case NavigationResult.Arrival:
-					CurrentWaypointName = _xmlInformation.GiveWaypointName(_destinationID);
+					CurrentWaypointName = 
+						_xmlInformation.GiveWaypointName(_destinationID);
 					CurrentStepLabel =
-                        _resourceManager.GetString("DIRECTION_ARRIVED_STRING", currentLanguage);
+                        _resourceManager.GetString("DIRECTION_ARRIVED_STRING", 
+												   currentLanguage);
 					CurrentStepImage = "Arrived.png";
-                    //FirstDirectionPicture = null;
+
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     isPlaying = false;
-                    //_progressBar = _i
+
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
-
-                    
-                    string tmpBuildingName = _resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", currentLanguage);
-                    //string tmpBuildingName = _resourceManager.GetString("LAB_STRING", currentLanguage);
-
-                    Console.WriteLine($"tmpBuildingName={tmpBuildingName} in NavigatorPageViewModel");
-
-                    if (_buildingName == tmpBuildingName && !string.IsNullOrEmpty(_floor) && (_floor != "2" && _floor != "1" && _floor != "-1"))
-                    {
-                        //do show msg
-                        Console.WriteLine($"enter the arrival popup pages in NavigatorPageViewModel.");
-                        string msg = string.Format(_resourceManager.GetString("ELEVATOR_TO_FLOOR_STRING", currentLanguage), _floor);
-                        PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(msg, _resourceManager.GetString("OK_STRING",currentLanguage)));
-                    }
-                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("please go to 5 floor via elevator","OK"));
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
+												   currentLanguage));                                      
                     Stop();
 					break;
 
@@ -262,20 +245,33 @@ namespace IndoorNavigation.ViewModels.Navigation
                     Stop();
                     break;
                 case NavigationResult.ArriveVirtualPoint:
-                    SetInstruction(instruction, out currentStepLabel, out currentStepImage, out firstDirectionPicture, out rotationValue, out locationValue, out instructionScale);
-                    //CurrentStepLabel = currentStepLabel;
-                    CurrentStepLabel = string.Format(_resourceManager.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING", currentLanguage), currentStepLabel, Environment.NewLine);
+                    SetInstruction(instruction, 
+								   out currentStepLabel, 
+								   out currentStepImage, 
+								   out firstDirectionPicture, 
+								   out rotationValue, 
+								   out locationValue, 
+								   out instructionScale);
+                    CurrentStepLabel = 
+						string.Format(_resourceManager
+						.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING",
+								   currentLanguage),
+						currentStepLabel, 
+						Environment.NewLine);
                     CurrentStepImage = "Arrived.png";
                     NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
-                    CurrentWaypointName = _xmlInformation.GiveWaypointName(instruction._currentWaypointGuid);
+                    CurrentWaypointName = 
+						_xmlInformation.GiveWaypointName(instruction.
+														 _currentWaypointGuid);
                     FirstDirectionPicture = firstDirectionPicture;
                     InstructionLocationValue = locationValue;
                     isPlaying = false;
                     RotationValue = rotationValue;
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));                                     
+                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
+												   currentLanguage));                                     
                     Stop();
                     break;
 
@@ -293,25 +289,39 @@ namespace IndoorNavigation.ViewModels.Navigation
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string connectionTypeString = "";
             string nextWaypointName = instruction._nextWaypointName;
-            nextWaypointName = _xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
+            nextWaypointName = 
+				_xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
             string nextRegionName = instruction._information._regionName;
             firstDirectionImage = null;
             rotation = 0;
             stepImage = "";
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
-            nextRegionName = _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
+            nextRegionName = 
+				_xmlInformation.GiveRegionName(instruction._nextRegionGuid);
             switch (instruction._information._turnDirection)
 			{
                 
                 case TurnDirection.FirstDirection:
                     #region first direction part
-                    string firstDirection_Landmark = _firstDirectionInstruction.returnLandmark(instruction._currentWaypointGuid);
-                    CardinalDirection firstDirection_Direction = _firstDirectionInstruction.returnDirection(instruction._currentWaypointGuid);
+                    string firstDirection_Landmark = 
+						_firstDirectionInstruction
+						.returnLandmark(instruction._currentWaypointGuid);
+						
+                    CardinalDirection firstDirection_Direction = 
+						_firstDirectionInstruction
+						.returnDirection(instruction._currentWaypointGuid);
+						
                     int faceDirection = (int)firstDirection_Direction;
-                    int turnDirection = (int)instruction._information._relatedDirectionOfFirstDirection;
+                    int turnDirection = 
+						(int)instruction._information
+							 ._relatedDirectionOfFirstDirection;
+							 
                     string initialDirectionString = "";
-                    int directionFaceorBack = _firstDirectionInstruction.returnFaceOrBack(instruction._currentWaypointGuid);
+					
+                    int directionFaceorBack = 
+						_firstDirectionInstruction
+						.returnFaceOrBack(instruction._currentWaypointGuid);
         
                     if (faceDirection>turnDirection)
                     {
@@ -347,7 +357,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                     string instructionDirection = "";
                     string stepImageString = "";
                     
-                    CardinalDirection cardinalDirection = (CardinalDirection)turnDirection;
+                    CardinalDirection cardinalDirection = 
+						(CardinalDirection)turnDirection;
                     switch(cardinalDirection)
                     {
                         case CardinalDirection.North:
@@ -399,7 +410,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                             stepImageString = "Arrow_frontleft";
                             break;
                     }
-                    if (instruction._previousRegionGuid != Guid.Empty && instruction._previousRegionGuid != instruction._currentRegionGuid)
+                    if (instruction._previousRegionGuid != Guid.Empty && 
+						instruction._previousRegionGuid != 
+						instruction._currentRegionGuid)
                     {
                         stepLabel = string.Format(
                             _resourceManager.GetString(
@@ -409,6 +422,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
+							
                         stepImage = stepImageString;
                         break;
                     }
@@ -416,10 +430,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         string pictureName;
 
-                        string regionString = instruction._currentRegionGuid.ToString();
-                        string waypointString = instruction._currentWaypointGuid.ToString();
+                        string regionString = 
+							instruction._currentRegionGuid.ToString();
+                        string waypointString = 
+							instruction._currentWaypointGuid.ToString();
 
-                        pictureName = _navigationGraph.GetBuildingName() + regionString.Substring(33, 3) + waypointString.Substring(31, 5);
+                        pictureName = 
+							_navigationGraph.GetBuildingName() + 
+							regionString.Substring(33, 3) + 
+							waypointString.Substring(31, 5);
   
                         stepLabel = string.Format(
                             initialDirectionString,
@@ -430,6 +449,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             instructionDirection,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
+							
                         firstDirectionImage = pictureName;
                         stepImage = stepImageString;
                         rotation = 75;
@@ -447,6 +467,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             instructionDirection,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
+							
                         stepImage = stepImageString;
                         break;
                     }
@@ -540,19 +561,29 @@ namespace IndoorNavigation.ViewModels.Navigation
                     switch (instruction._information._connectionType)
                     {
                         case ConnectionType.Elevator:
-                            connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("ELEVATOR_STRING", 
+														   currentLanguage);
                             stepImage = "Elevator_up";
                             break;
                         case ConnectionType.Escalator:
-                            connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("ESCALATOR_STRING", 
+														   currentLanguage);
                              stepImage = "Stairs_up";
                             break;
                         case ConnectionType.Stair:
-                            connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("STAIR_STRING", 
+														   currentLanguage);
+														   
                             stepImage = "Stairs_up";
                             break;
                         case ConnectionType.NormalHallway:
-                            connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString(
+								"NORMALHALLWAY_STRING", currentLanguage);
+								
                             stepImage = "Stairs_up";
                             break;
                     }
@@ -563,25 +594,36 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString,
                             Environment.NewLine,
                             nextRegionName);
+							
 					break;
 
 				case TurnDirection.Down:
                     switch(instruction._information._connectionType)
                     {
                         case ConnectionType.Elevator:
-                            connectionTypeString = _resourceManager.GetString("ELEVATOR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("ELEVATOR_STRING", 
+														   currentLanguage);
+														   
                             stepImage = "Elevtor_down";
                             break;
                         case ConnectionType.Escalator:
-                            connectionTypeString = _resourceManager.GetString("ESCALATOR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("ESCALATOR_STRING", 
+														   currentLanguage);
                             stepImage = "Stairs_down";
                             break;
                         case ConnectionType.Stair:
-                            connectionTypeString = _resourceManager.GetString("STAIR_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString("STAIR_STRING", 
+														   currentLanguage);
                             stepImage = "Stairs_down";
                             break;
                         case ConnectionType.NormalHallway:
-                            connectionTypeString = _resourceManager.GetString("NORMALHALLWAY_STRING", currentLanguage);
+                            connectionTypeString = 
+								_resourceManager.GetString
+								("NORMALHALLWAY_STRING", currentLanguage);
+								
                             stepImage = "Stairs_down";
                             break;
                     }
@@ -629,7 +671,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                 await tempMainPage.Navigation.PushAsync(new NavigatorSettingPage(), true);
                 await tempMainPage.DisplayAlert(
                     _resourceManager.GetString("WARN_STRING", currentLanguage),
-                    _resourceManager.GetString("PLEASE_ADJUST_AVOID_ROUTE_STRING", currentLanguage),
+                    _resourceManager.GetString
+					("PLEASE_ADJUST_AVOID_ROUTE_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING", currentLanguage));
             });
         }
@@ -783,19 +826,21 @@ namespace IndoorNavigation.ViewModels.Navigation
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects).
-					_navigationModule._event._eventHandler -= GetNavigationResultEvent;
+					_navigationModule._event._eventHandler -= 
+						GetNavigationResultEvent;
                     _navigationModule.Dispose();
 				}
 
-				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+				// TODO: free unmanaged resources (unmanaged objects) and 
+				//		 override a finalizer below.
 				// TODO: set large fields to null.
 
 				_disposedValue = true;
 			}
 		}
 
-		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged
-		// resources.
+		// TODO: override a finalizer only if Dispose(bool disposing) above has 
+		//code to free unmanaged resources.
 		// ~NavigatorPageViewModel()
 		// {
 		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

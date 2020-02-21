@@ -490,7 +490,7 @@
     <value>請按確定跳轉至登入畫面。</value>
   </data>
   <data name="CAREROOM_STRING" xml:space="preserve">
-    <value>診間</value>
+    <value>診間 : {0}</value>
   </data>
   <data name="COMMEND_ORDER_STRING" xml:space="preserve">
     <value>建議順序</value>
@@ -499,7 +499,7 @@
     <value>不同意</value>
   </data>
   <data name="DRNAME_STRING" xml:space="preserve">
-    <value>醫師</value>
+    <value>醫師 : {0}</value>
   </data>
   <data name="EXCHANGE_STRING" xml:space="preserve">
     <value>交換</value>
@@ -553,7 +553,7 @@
     <value>門診幫手</value>
   </data>
   <data name="OUTPATIENT_TIME_STRING" xml:space="preserve">
-    <value>門診時間</value>
+    <value>門診時間 : {0}</value>
   </data>
   <data name="PAYMENT_MEDICINE_STRING" xml:space="preserve">
     <value>批價/領藥</value>
@@ -568,7 +568,7 @@
     <value>看病日期</value>
   </data>
   <data name="SEQUENCE_STRING" xml:space="preserve">
-    <value>順序</value>
+    <value>順序 : {0}</value>
   </data>
   <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
     <value>請點選兩個想要交換位置的項目，被選的項目位置將會交換。</value>

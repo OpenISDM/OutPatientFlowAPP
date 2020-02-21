@@ -223,7 +223,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Careroom 的當地語系化字串。
+        ///   查詢類似 Careroom : {0} 的當地語系化字串。
         /// </summary>
         internal static string CAREROOM_STRING {
             get {
@@ -619,7 +619,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Doctor 的當地語系化字串。
+        ///   查詢類似 Doctor : {0} 的當地語系化字串。
         /// </summary>
         internal static string DRNAME_STRING {
             get {
@@ -858,6 +858,15 @@ namespace IndoorNavigation.Resources {
         internal static string INPUT_PATIENT_ID_STRING {
             get {
                 return ResourceManager.GetString("INPUT_PATIENT_ID_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 (Invalid waypoint) 的當地語系化字串。
+        /// </summary>
+        internal static string INVALID_WAYPOINT_STRING {
+            get {
+                return ResourceManager.GetString("INVALID_WAYPOINT_STRING", resourceCulture);
             }
         }
         
@@ -1114,7 +1123,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Outpatient Time 的當地語系化字串。
+        ///   查詢類似 Outpatient Time : {0} 的當地語系化字串。
         /// </summary>
         internal static string OUTPATIENT_TIME_STRING {
             get {
@@ -1330,7 +1339,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Sequence 的當地語系化字串。
+        ///   查詢類似 Sequence : {0} 的當地語系化字串。
         /// </summary>
         internal static string SEQUENCE_STRING {
             get {

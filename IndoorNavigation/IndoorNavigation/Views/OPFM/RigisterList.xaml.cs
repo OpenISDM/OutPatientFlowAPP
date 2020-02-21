@@ -24,13 +24,7 @@ namespace IndoorNavigation
     public partial class RigisterList : CustomToolbarContentPage
     {
         RegisterListViewModel _viewmodel;
-        private string _navigationGraphName;
-
-        #region for language change
-        private const string resourceId = "IndoorNavigation.Resources.AppResources";
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        private ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        #endregion
+        private string _navigationGraphName;        
 
         private XMLInformation _nameInformation;
 
@@ -120,14 +114,13 @@ namespace IndoorNavigation
             {                       
                 if(record.type.Equals(RecordType.Pharmacy) && (app.lastFinished==null || !app.lastFinished.type.Equals(RecordType.Cashier)))
                 {
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage),
-                        _resourceManager.GetString("OK_STRING",currentLanguage)));
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("PHARMACY_ALERT_STRING"), getResourceString("OK_STRING")));
                     RefreshListView();
                     ((ListView)sender).SelectedItem = null;
                     isButtonPressed = false;
                     return;
                 }                               
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._floor, record._regionID, record._waypointID, record._waypointName, _nameInformation));
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, record._regionID, record._waypointID, record._waypointName, _nameInformation));
                 record.isComplete = true;
             }
             RefreshListView();
@@ -167,15 +160,15 @@ namespace IndoorNavigation
             bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
             if (app.FinishCount+1 >= app.records.Count - 1)
             {
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("NO_SHIFT_STRING"), getResourceString("OK_STRING")));
                 return;
             }
             else
             {
                 if (!isCheck)
                 {
-                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("SHIFT_DESCRIPTION_STRING",currentLanguage),
-                        _resourceManager.GetString("OK_STRING",currentLanguage), "isCheckedNeverShow"));
+                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(getResourceString("SHIFT_DESCRIPTION_STRING"),
+                        getResourceString("OK_STRING"), "isCheckedNeverShow"));
                 }
                 RgListView.ItemTapped -= RgListView_ItemTapped;
                 RgListView.ItemTapped += RgListViewShift_ItemTapped;
@@ -287,7 +280,7 @@ namespace IndoorNavigation
                 {
                     if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
-                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("FINISH_SCHEDULE_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                        await DisplayAlert(getResourceString("MESSAGE_STRING"),getResourceString("FINISH_SCHEDULE_STRING"), getResourceString("OK_STRING"));
                         await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
                     }else if (!app.HaveCashier)
                     {
@@ -325,6 +318,15 @@ namespace IndoorNavigation
             await request.RequestData();          
             RefreshListView();
          }
+
+        private string getResourceString(string key)
+        {
+            string resourceId = "IndoorNavigation.Resources.AppResources";
+            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            ResourceManager resourceManager= new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
+            return resourceManager.GetString(key, currentLanguage);
+        }
 
         #region UI View Control
         private void ViewCell_Tapped(object sender, EventArgs e)
@@ -386,8 +388,8 @@ namespace IndoorNavigation
             }
             else
             {
-                var CheckWantToSetting = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)
-                    , _resourceManager.GetString("OK_STRING",currentLanguage), _resourceManager.GetString("NO_STRING",currentLanguage));
+                var CheckWantToSetting = await DisplayAlert(getResourceString("MESSAGE_STRING"), getResourceString("BAD_NETWORK_STRING")
+                    ,getResourceString("OK_STRING"),getResourceString("NO_STRING"));
                 BusyIndicatorShow(false);
                 if (CheckWantToSetting)
                 {
@@ -405,7 +407,7 @@ namespace IndoorNavigation
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString = $"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
+            string HopeString = $"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{getResourceString("HOPE_STRING")}";
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
@@ -433,18 +435,16 @@ namespace IndoorNavigation
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
             TestItemCommand = new Command(async () => await TestItemMethod());
-            ToolbarItems.Clear();
-
-            //if (_viewmodel != null)
-            {
-                ToolbarItem SignInItem = new ToolbarItem { Text = _resourceManager.GetString("ACCOUNT_STRING", currentLanguage), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItem InfoItem = new ToolbarItem { Text = _resourceManager.GetString("PREFERENCES_STRING", currentLanguage), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItems.Add(SignInItem);
-                ToolbarItems.Add(InfoItem);
-                ToolbarItems.Add(TestItem);
-                OnToolbarItemAdded();
-            }
+            ToolbarItems.Clear();       
+            
+            ToolbarItem SignInItem = new ToolbarItem { Text = getResourceString("ACCOUNT_STRING"), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
+            ToolbarItem InfoItem = new ToolbarItem { Text = getResourceString("PREFERENCES_STRING"), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
+            ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
+            ToolbarItems.Add(SignInItem);
+            ToolbarItems.Add(InfoItem);
+            ToolbarItems.Add(TestItem);
+            OnToolbarItemAdded();
+            
         }
         
         private async Task TestItemMethod()
@@ -453,7 +453,7 @@ namespace IndoorNavigation
 
             INetworkSetting setting = DependencyService.Get<INetworkSetting>();
 
-            await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
+            //await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
             //await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
     
             Console.WriteLine("Finish call setting");

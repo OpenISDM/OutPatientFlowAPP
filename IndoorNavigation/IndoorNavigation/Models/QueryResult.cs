@@ -20,7 +20,6 @@ namespace IndoorNavigation
         public string CareRoom { get; set; }
         public string DrName { get; set; }
         public string SeeSeq { get; set; }
-        //date name shift careroom drname seq
         public bool isComplete { get; set; }
         public bool isAccept { get; set; }
         public override string ToString() => _waypointName;
@@ -38,13 +37,13 @@ namespace IndoorNavigation
 
     public enum RecordType
     {
-        Register = 0,
+        NULL=0,
+        Register,
         Queryresult,
         AddItem,
         Pharmacy,
         Cashier,
         Exit,
-        NULL,
         Invalid
     }
 }

@@ -63,8 +63,11 @@
       <Destination id='00000000-0000-0000-0000-000000000002' name='B51診' type='超音波' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B52診' type='尿動力檢查' category='examination'/>
       <Destination id='00000000-0000-0000-0000-000000000002' name='B53診'/>
-    </region>
-  <region id='22222222-2222-2222-2222-222222222222' floor='3'>
+    </region>  
+	</regions>
+</navigation_graph>
+
+<!--<region id='22222222-2222-2222-2222-222222222222' floor='3'>
     <Destination id='00000000-0000-0000-0000-000000000017' name='301診' category='到電梯'/>
   </region>
   <region id='22222222-2222-2222-2222-222222222222' floor='5'>
@@ -73,6 +76,4 @@
     <Destination id='00000000-0000-0000-0000-000000000017' name='503診' category='到電梯'/>
     <Destination id='00000000-0000-0000-0000-000000000017' name='504診' category='到電梯'/>
     <Destination id='00000000-0000-0000-0000-000000000017' name='506診' type='衛教' category='到電梯'/>
-  </region>
-	</regions>
-</navigation_graph>
+  </region>-->

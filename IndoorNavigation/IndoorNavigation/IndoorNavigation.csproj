@@ -102,9 +102,6 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="FakeNavigatorPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\CustomToolbarContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

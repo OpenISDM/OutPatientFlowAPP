@@ -23,9 +23,11 @@
  *
  * Abstract:
  *
- *      This file used to get the first direction information. When the user first uses our APP
- *      They do not know where there are and which direction they should face.
- *      FirstDirectionInstruction can tell the user their nearest landmark that they should face to.
+ *      This file used to get the first direction information. When the user 
+ *		first uses our APP They do not know where there are and which direction 
+ *      they should face.
+ *      FirstDirectionInstruction can tell the user their nearest landmark 
+ *      that they should face to.
  *      
  * Authors:
  *
@@ -52,7 +54,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _landmark = new Dictionary<Guid, string>();
             _relatedDirection = new Dictionary<Guid, CardinalDirection>();
             _faceOrBack = new Dictionary<Guid, int>();
-            XmlNodeList xmlWaypoint = fileName.SelectNodes("first_direction_XML/waypoint");
+            XmlNodeList xmlWaypoint = 
+					fileName.SelectNodes("first_direction_XML/waypoint");
 
             foreach(XmlNode xmlNode in xmlWaypoint)
             {
@@ -63,10 +66,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 XmlElement xmlElement = (XmlElement)xmlNode;
                 
                 tempLandmark = xmlElement.GetAttribute("Landmark").ToString();
-                tempRelatedDirection = (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
-                                                  xmlElement.GetAttribute("RelatedDirection"),
-                                                  false);
-                tempFaceOrBack = Int32.Parse(xmlElement.GetAttribute("FaceOrBack"));
+                tempRelatedDirection = 
+				(CardinalDirection)Enum.Parse(
+								   typeof(CardinalDirection),
+                                   xmlElement.GetAttribute("RelatedDirection"),
+                                   false);
+                tempFaceOrBack = 
+					Int32.Parse(xmlElement.GetAttribute("FaceOrBack"));
                 string waypointIDs = xmlElement.GetAttribute("id");
                 string[] arrayWaypointIDs = waypointIDs.Split(';');
                 for (int i = 0; i < arrayWaypointIDs.Count(); i++)

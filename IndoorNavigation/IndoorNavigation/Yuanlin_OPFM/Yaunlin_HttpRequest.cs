@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -10,8 +8,6 @@ using System.Web;
 using System.Xml;
 using Xamarin.Forms;
 using System.Resources;
-using Xamarin.Essentials;
-using Rg.Plugins.Popup.Services;
 using System.Threading.Tasks;
 using Plugin.Multilingual;
 
@@ -39,9 +35,10 @@ namespace IndoorNavigation
         {
             Console.WriteLine("Now Excution is::: GetXMLBody");
            
-            //to put into xml need taiwan year format
-            TaiwanCalendar calendar = new TaiwanCalendar();
-            string selectedDay = string.Format("{0}{1}", calendar.GetYear(app.RgDate), app.RgDate.ToString("MMdd"));
+            
+            TaiwanCalendar taiwanCalendar = new TaiwanCalendar();
+            //in request body, it require to use Taiwan calender to check date
+            string selectedDay = taiwanCalendar.GetYear(app.RgDate) + app.RgDate.ToString("MMdd");
 
             XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
 
@@ -56,7 +53,7 @@ namespace IndoorNavigation
             node_edate.InnerText = selectedDay;
             node_sdate.InnerText = selectedDay;
 
-                //parse xml to string
+            //parse xml to string
             StringWriter stringWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(stringWriter);
             
@@ -140,7 +137,7 @@ namespace IndoorNavigation
           
             XmlNodeList records = doc.GetElementsByTagName("RgRecord");
             Console.WriteLine(responseString);
-            DestinationXmlinfo infos = new DestinationXmlinfo();
+            ClinicPositionInfo infos = new ClinicPositionInfo();
 
             int index = (app.getRigistered) ? app.records.Count - 1 : app.records.Count;
 
@@ -157,8 +154,10 @@ namespace IndoorNavigation
                 record.type = RecordType.Queryresult;
                 record._waypointName = record.CareRoom;
                 record._regionID = infos.GetRegionID(record.CareRoom); 
-                record._waypointID = infos.GetDestinationID(record.CareRoom);
+                record._waypointID = infos.GetWaypointID(record.CareRoom);
                                  
+                //it may appear the reiong or floor that we doesn't support,
+                //so I ban it and show it's invalid.
                 if (record._regionID.Equals(Guid.Empty) && record._waypointID.Equals(Guid.Empty))
                 {
                     record.isAccept = true;
@@ -172,7 +171,7 @@ namespace IndoorNavigation
                 app._TmpRecords.Add(record);
 
                
-                Console.WriteLine($"HttpRequest region id={record._regionID}, waypoint id={record._waypointID}");
+                Console.WriteLine($"region id={record._regionID}, waypoint id={record._waypointID}");
             }
             if (!app.getRigistered)
                 app.records.Add(new RgRecord { type=RecordType.NULL });

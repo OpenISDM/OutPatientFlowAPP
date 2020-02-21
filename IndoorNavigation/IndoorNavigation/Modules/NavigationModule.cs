@@ -106,12 +106,16 @@ namespace IndoorNavigation.Modules
 
             // Start the session
             _session = new Session(
-                    NavigraphStorage.LoadNavigationGraphXML(_phoneInfomation.GiveCurrentMapName(_navigationGraphName)),
+                    NavigraphStorage.LoadNavigationGraphXML(
+							_phoneInfomation.
+								GiveCurrentMapName(_navigationGraphName)
+						),
                     _destinationRegionID,
                     _destinationWaypointID,
                     avoidList.ToArray());
                     
-            _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
+            _navigationResultEventHandler = 
+				new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
 
         }
@@ -140,7 +144,8 @@ namespace IndoorNavigation.Modules
                 {
                     // Dispose managed state (managed objects).
                 }
-                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // Free unmanaged resources (unmanaged objects) and override a 
+				//finalizer below.
                 // Set large fields to null.
                 _session._event._eventHandler -= _navigationResultEventHandler;
                 

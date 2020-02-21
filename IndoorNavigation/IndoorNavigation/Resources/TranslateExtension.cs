@@ -60,9 +60,10 @@ namespace IndoorNavigation.Resources.Helpers
         const string _resourceID = "IndoorNavigation.Resources.AppResources";
 
         static readonly Lazy<ResourceManager> _resourceManager =
-            new Lazy<ResourceManager>(() => new ResourceManager(_resourceID,
-                                                                typeof(TranslateExtension).GetTypeInfo()
-                                                                .Assembly));
+            new Lazy<ResourceManager>(() => 
+			new ResourceManager(_resourceID,
+                                typeof(TranslateExtension).GetTypeInfo()
+                                .Assembly));
 
         public string Text { get; set; }
 
@@ -79,10 +80,12 @@ namespace IndoorNavigation.Resources.Helpers
             {
 #if DEBUG
                 throw new ArgumentException(
-                    String.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.",
+                    String.Format("Key '{0}' was not found in resources '{1}'"+ 
+								  "for culture '{2}'.",
                                   Text, _resourceID, ci.Name), "Text");
 #else
-                translation = Text; // returns the key, which GETS DISPLAYED TO THE USER
+                translation = Text; 
+				// returns the key, which GETS DISPLAYED TO THE USER
 #endif
             }
             return translation;

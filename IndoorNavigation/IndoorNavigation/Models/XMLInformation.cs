@@ -24,8 +24,8 @@
  * Abstract:
  *
  *      This file used to read the XML information, includes, the building name
- *      the waypoint name and the region name. Because we have several languages, therefore,
- *      we need this file to help to read all kinds of languages
+ *      the waypoint name and the region name. Because we have several languages, 
+ *		therefore, we need this file to help to read all kinds of languages
  *      
  * Authors:
  *
@@ -52,8 +52,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
             XmlElement buildingElement = (XmlElement)buildingName;
             _buildingName = buildingElement.GetAttribute("building_name");
 
-            XmlNodeList xmlRegion = fileName.SelectNodes("navigation_graph/regions/region");
-            XmlNodeList xmlWaypoint = fileName.SelectNodes("navigation_graph/waypoints/waypoint");
+            XmlNodeList xmlRegion = 
+				fileName.SelectNodes("navigation_graph/regions/region");
+				
+            XmlNodeList xmlWaypoint = 
+				fileName.SelectNodes("navigation_graph/waypoints/waypoint");
+				
             returnWaypointName = new Dictionary<Guid, string>();
             returnRegionName = new Dictionary<Guid, string>();
             foreach (XmlNode xmlNode in xmlRegion)

@@ -94,12 +94,17 @@ namespace IndoorNavigation.Modules
                 return false;
             }
         }
-        public static bool DownloadFirstDirectionFile(string URL, string fileName)
+        public static bool DownloadFirstDirectionFile(string URL, 
+													  string fileName)
         {
-            string filePath = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName);
+            string filePath = 
+				Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, 
+							 fileName);
             try
             {
-                if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
+                if (!Directory.Exists(NavigraphStorage
+					._firstDirectionInstuctionFolder))
+
                     Directory.CreateDirectory(
                         NavigraphStorage._firstDirectionInstuctionFolder);
 
@@ -117,7 +122,8 @@ namespace IndoorNavigation.Modules
 
         public static bool DownloadInformationFile(string URL, string fileName)
         {
-            string filePath = Path.Combine(NavigraphStorage._informationFolder, fileName);
+            string filePath = 
+				Path.Combine(NavigraphStorage._informationFolder, fileName);
             try
             {
                 if (!Directory.Exists(NavigraphStorage._informationFolder))

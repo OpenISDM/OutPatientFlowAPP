@@ -8,7 +8,6 @@
                  x:Class="IndoorNavigation.PickCashierPopupPage"
                  xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-                 xmlns:shared="clr-namespace:IndoorNavigation"
                  >
     <pages:PopupPage.Resources>
         <ResourceDictionary>
@@ -18,7 +17,7 @@
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="shared:SelectionView">
+            <Style TargetType="input:SelectionView">
                 <Setter Property="RowSpacing" Value="10"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
@@ -38,9 +37,9 @@
                     <StackLayout x:Name="SelectionStack" Margin="5,0">
                         <!--<input:SelectionView x:Name="PickCashierView" SelectionType="RadioButton" ColumnNumber="1" ItemsSource="{Binding CashierItem}" SelectedItem="{Binding SelectItem}" RowSpacing="20"/>-->
                         <Label x:Name="CashierText" Text="{i18n:Translate CATEGORY_CASHIER_STRING}"/>
-                        <shared:SelectionView x:Name="CashierSelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Cashieritems}"/>
+                        <input:SelectionView x:Name="CashierSelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Cashieritems}"/>
                         <Label x:Name="PharmacyText" Text="{i18n:Translate CATEGORY_PHARMACY_STRING}"/>
-                        <shared:SelectionView x:Name="PharmacySelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Pharmacyitems}"/>
+                        <input:SelectionView x:Name="PharmacySelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Pharmacyitems}"/>
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">

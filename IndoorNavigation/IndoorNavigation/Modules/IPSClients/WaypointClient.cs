@@ -50,15 +50,19 @@ namespace IndoorNavigation.Modules.IPSClients
 {
     class WaypointClient : IIPSClient
     {
-        private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+        private List<WaypointBeaconsMapping> _waypointBeaconsList = 
+			new List<WaypointBeaconsMapping>();
 
         private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
         private const int _clockResetTime = 90000;
         public NavigationEvent _event { get; private set; }
-        private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
+        private List<BeaconSignalModel> _beaconSignalBuffer = 
+			new List<BeaconSignalModel>();
+			
         private int rssiOption;
-        private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+        private System.Diagnostics.Stopwatch watch = 
+			new System.Diagnostics.Stopwatch();
 
         public WaypointClient()
         {
@@ -72,7 +76,8 @@ namespace IndoorNavigation.Modules.IPSClients
             watch.Start();
         }
 
-        public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
+        public void SetWaypointList
+			(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
             
             if (Application.Current.Properties.ContainsKey("StrongRssi"))
@@ -81,11 +86,11 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     rssiOption = 5;
                 }
-                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+                else if ((bool)Application.Current.Properties["WeakRssi"]==true)
                 {
                     rssiOption = -5;
                 }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                else if((bool)Application.Current.Properties["MediumRssi"]==true)
                 {
                     rssiOption = 0;
                 }
@@ -124,33 +129,44 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
 
-                //Sort beacons through their RSSI, to let the stronger beacon can get in first
-                //_beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
-                _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
-                //BeaconSignalModel beaconSignalModel = new BeaconSignalModel();
-                //beaconSignalModel.UUID = new Guid("00000015-0000-2503-7431-000021564508");
-                
-                //_beaconSignalBuffer.Add(beaconSignalModel);
+                //Sort beacons through their RSSI, to let the stronger beacon 
+				//can get in first
+                _beaconSignalBuffer.Sort
+				(
+					(x, y) => 
+					{ 
+						return y.RSSI.CompareTo(x.RSSI); 
+					}
+				);
+
 
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
-                    foreach (WaypointBeaconsMapping waypointBeaconsMapping in _waypointBeaconsList)
+                    foreach (WaypointBeaconsMapping waypointBeaconsMapping 
+								in _waypointBeaconsList)
                     {
-                        foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
+                        foreach (Guid beaconGuid in 
+									waypointBeaconsMapping._Beacons)
                         {
                             if (beacon.UUID.Equals(beaconGuid))
                             {
-                                Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
-                                waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
+                                Console.WriteLine("Matched waypoint: {0} by"+ 
+												  "detected Beacon {1}",
+                                waypointBeaconsMapping._WaypointIDAndRegionID
+													  ._waypointID,
                                 beaconGuid);
-                                if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
+                                if (beacon.RSSI > 
+									(waypointBeaconsMapping
+									 ._BeaconThreshold[beacon.UUID]-rssiOption))
                                 {
                                     watch.Stop();
                                     watch.Reset();
                                     watch.Start();
                                     _event.OnEventCall(new WaypointSignalEventArgs
                                     {
-                                        _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
+                                        _detectedRegionWaypoint = 
+											waypointBeaconsMapping.
+												_WaypointIDAndRegionID
                                     });
                                     return;
                                 }
@@ -169,7 +185,8 @@ namespace IndoorNavigation.Modules.IPSClients
 
             foreach (BeaconSignalModel signal in signals)
             {
-                Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
+                Console.WriteLine("Detected Beacon UUID : " + signal.UUID + 
+								  " RSSI = " + signal.RSSI);
             }
 
             lock (_bufferLock)
