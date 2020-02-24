@@ -95,8 +95,8 @@ namespace IndoorNavigation.ViewModels.Navigation
         private XMLInformation _xmlInformation;
 
         PhoneInformation phoneInformation = new PhoneInformation();
-        private string _floor;
-        private string _buildingName;
+        //private string _floor;
+        //private string _buildingName;
         private bool _isplaying;
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
@@ -139,8 +139,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 				.LoadNavigationGraphXML(phoneInformation
 				.GiveCurrentMapName(navigationGraphName));
 				
-            _xmlInformation = informationXML;
-            _buildingName = navigationGraphName;
+            _xmlInformation = informationXML;     
            
         }       
 
@@ -168,7 +167,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
             int instructionScale = _originalInstructionScale;
-            //Vibration.Vibrate(500);
+            Vibration.Vibrate(500);
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
@@ -203,7 +202,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 														 ._currentWaypointGuid);
                     NavigationProgress = instruction._progress;
                     ProgressBar = instruction._progressBar;
-
+                    FirstDirectionPicture = null;
                     isPlaying = false;
                     break;
 
@@ -227,7 +226,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString("DIRECTION_ARRIVED_STRING", 
 												   currentLanguage);
 					CurrentStepImage = "Arrived.png";
-
+                    FirstDirectionPicture = null;
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     isPlaying = false;
@@ -477,7 +476,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_STRAIGHT_STRING",currentLanguage));
 					stepImage = "Arrow_up";
-
+                    
                    	break;
 
 				case TurnDirection.Forward_Right:
