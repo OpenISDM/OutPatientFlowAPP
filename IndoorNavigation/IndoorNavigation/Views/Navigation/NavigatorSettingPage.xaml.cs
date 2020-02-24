@@ -51,22 +51,27 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Globalization;
+using System.ComponentModel;
+using AiForms.Renderers;
+using SwitchCell = AiForms.Renderers.SwitchCell;
 
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
         
-        public IList _chooseRssi { get; } = new ObservableCollection<string>();
-        public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
-        public IList _voiceSearchItems { get; } =
-            new ObservableCollection<string>(new List<string> { "中文", "英文" });
+        public IList _chooseRssi { get; } = 
+			new ObservableCollection<string>();
+        public ICommand _changeRssiCommand 
+			=> new DelegateCommand(HandleChangeRssi);
+        
 		const string _resourceId = "IndoorNavigation.Resources.AppResources";
 		ResourceManager _resourceManager =
-			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        //Application.Current.Properties["StrongRssi"] = new object ();
-        //Application.Current.Properties["MediumRssi"] = new object ();
-        //Application.Current.Properties["WeakRssi"] = new object ();
+			new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
+
 		public NavigatorSettingPage()
         {
             InitializeComponent();
@@ -78,7 +83,8 @@ namespace IndoorNavigation.Views.Navigation
             {
                 case Device.Android:
                     NavigationSettingsView.HeaderHeight = 50;
-                    NavigationSettingsView.HeaderPadding = new Thickness(14, 0, 0, 16);
+                    NavigationSettingsView.HeaderPadding = 
+						new Thickness(14, 0, 0, 16);
                     break;
 
                 case Device.iOS:
@@ -91,30 +97,36 @@ namespace IndoorNavigation.Views.Navigation
             // Restore the status of route options
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
-                AvoidStair.On = (bool)Application.Current.Properties["AvoidStair"];
-                AvoidElevator.On = (bool)Application.Current.Properties["AvoidElevator"];
-                AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
+                AvoidStair.On = 
+					(bool)Application.Current.Properties["AvoidStair"];
+                AvoidElevator.On = 
+					(bool)Application.Current.Properties["AvoidElevator"];
+                AvoidEscalator.On = 
+					(bool)Application.Current.Properties["AvoidEscalator"];
             }
 
             if(Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                    OptionPicker.SelectedItem =
+                        getResource("STRONG_STRING");
                 }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+                else if((bool)Application.Current.Properties["MediumRssi"]==true)
                 {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                    OptionPicker.SelectedItem =
+                        getResource("MEDIUM_STRING");
                 }
                 else if ((bool)Application.Current.Properties["WeakRssi"] == true)
                 {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+                    OptionPicker.SelectedItem =
+                        getResource("WEAK_STRING");
                 }
             }
             
         }
 
-        private async void HandleChangeRssi()
+        private void HandleChangeRssi()
         {
             switch (OptionPicker.SelectedItem.ToString().Trim())
             {
@@ -142,9 +154,15 @@ namespace IndoorNavigation.Views.Navigation
         protected override void OnDisappearing()
         {
             // Before page close, store the status of each route options
-            Application.Current.Properties["AvoidStair"] = AvoidStair.On;
-            Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
-            Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
+            Application.Current.Properties["AvoidStair"] = 
+				AvoidStair.On;
+				
+            Application.Current.Properties["AvoidElevator"] = 
+				AvoidElevator.On;
+				
+            Application.Current.Properties["AvoidEscalator"] = 
+				AvoidEscalator.On;
+				
 			if (OptionPicker.SelectedItem != null)
 			{
 				Device.BeginInvokeOnMainThread(async () =>
@@ -180,25 +198,31 @@ namespace IndoorNavigation.Views.Navigation
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
             _chooseRssi.Clear();
-            _chooseRssi.Add(_resourceManager.GetString("STRONG_STRING", ci));
-            _chooseRssi.Add(_resourceManager.GetString("MEDIUM_STRING", ci));
-            _chooseRssi.Add(_resourceManager.GetString("WEAK_STRING", ci));
+            _chooseRssi.Add(getResource("STRONG_STRING"));
+            _chooseRssi.Add(getResource("MEDIUM_STRING"));
+            _chooseRssi.Add(getResource("WEAK_STRING"));          
         }
 
-        async void Handle_OptionPropertyChanged(object sender,
-                                                System.ComponentModel.PropertyChangedEventArgs e)
+        private string getResource(string key)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            if (e.PropertyName == AiForms.Renderers.SwitchCell.OnProperty.PropertyName)
+            return _resourceManager.GetString(key,currentLanguage);
+        }
+
+        async void Handle_OptionPropertyChanged(object sender, 
+												PropertyChangedEventArgs e)
+        {           
+            if (e.PropertyName == SwitchCell.OnProperty.PropertyName)
             {
                 if (AvoidStair.On && AvoidElevator.On && AvoidEscalator.On)
                 {
                     (sender as AiForms.Renderers.SwitchCell).On = false;
 
-                    await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
-                        _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
-                                                   currentLanguage),
-                        _resourceManager.GetString("OK_STRING", currentLanguage));
+                    await DisplayAlert(getResource("ERROR_STRING"),
+                                       getResource
+									   ("AVOID_ALL_CONNECTION_TYPE_STRING"),
+                                       getResource("OK_STRING"));
+
                 }
             }
 

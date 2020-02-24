@@ -72,22 +72,33 @@ namespace IndoorNavigation.Views.Settings
     {
         private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
         private string _downloadURL;
-        public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
-        public IList _languageItems { get; } = new ObservableCollection<string>();
-        public IList _chooseMap { get; } = new ObservableCollection<string>();
+        public IList _selectNaviGraphItems { get; } = 
+			new ObservableCollection<string>();
+			
+        public IList _cleanNaviGraphItems { get; } = 
+			new ObservableCollection<string>();
+			
+        public IList _languageItems { get; } = 
+			new ObservableCollection<string>();
+			
+        public IList _chooseMap { get; } = 
+			new ObservableCollection<string>();
 
 
-        public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);
-        //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
-        public ICommand _cleanMapCommand => new DelegateCommand(async () =>
-            { await HandleCLeanMapAsync(); });
+        public ICommand _chooseMapCommand 
+			=> new DelegateCommand(HandleChooseMap);
 
-        public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
+        public ICommand _cleanMapCommand => 
+			new DelegateCommand(async () => { await HandleCLeanMapAsync(); });
+
+        public ICommand _changeLanguageCommand 
+			=> new DelegateCommand(HandleChangeLanguage);
         private PhoneInformation _phoneInformation;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+							    typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
 
         public SettingTableViewPage()
         {
@@ -95,22 +106,31 @@ namespace IndoorNavigation.Views.Settings
             AddMapItems();
             _phoneInformation = new PhoneInformation();
             _downloadPage._event.DownloadPopUpPageEventHandler +=
-                async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
+                async delegate (object sender, EventArgs e) 
+					{ await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = 
+				Color.FromHex("#3F51B5");
+				
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = 
+				Color.White;
 
             ReloadNaviGraphItems();
 
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _languageItems.Add(_resourceManager.GetString("CHINESE_STRING", currentLanguage));
-            _languageItems.Add(_resourceManager.GetString("ENGLISH_STRING", currentLanguage));
+            _languageItems.
+				Add(_resourceManager.GetString("CHINESE_STRING", 
+										    currentLanguage));
+            _languageItems.
+				Add(_resourceManager.GetString("ENGLISH_STRING", 
+											   currentLanguage));
 
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
-                LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
+                LanguagePicker.SelectedItem = 
+					Application.Current.Properties["LanguagePicker"].ToString();
             }   
         }
 
@@ -127,22 +147,28 @@ namespace IndoorNavigation.Views.Settings
             if (DeviceInfo.DeviceType == DeviceType.Virtual)
             {
                 // qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
-                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1w_cc8pp483Dd5KTbM3-JaCelhMh8wTQs&export=download@OpenISDM";
+                qrCodeValue = "https://drive.google.com/uc?"
+				+"authuser=0&id=1w_cc8pp483Dd5KTbM3-JaCelhMh8wTQs&"
+				+"export=download@OpenISDM";
+				
             }
             else
             {
-                IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                IQrCodeDecoder qrCodeDecoder = 
+					DependencyService.Get<IQrCodeDecoder>();
+                var currentLanguage = 
+					CrossMultilingual.Current.CurrentCultureInfo;
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
                     qrCodeValue = await qrCodeDecoder.ScanAsync();
                 }
                 else
                 {
-                    await DisplayAlert(
-                            _resourceManager.GetString("WARN_STRING", currentLanguage),
-                            _resourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", currentLanguage),
-                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                    await DisplayAlert
+					(_resourceManager.GetString("WARN_STRING", currentLanguage),
+                     _resourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", 
+												currentLanguage),
+                     _resourceManager.GetString("CANCEL_STRING", currentLanguage));
                 }
 
 
@@ -152,8 +178,8 @@ namespace IndoorNavigation.Views.Settings
             IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
             string qrCodeValue = await qrCodeDecoder.ScanAsync();
 
-            // In iOS, if the User has denied the permission, you might not be able to request for
-            // permissions again.
+            // In iOS, if the User has denied the permission, you might not be 
+			//able to request for permissions again.
             /*
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
@@ -163,7 +189,8 @@ namespace IndoorNavigation.Views.Settings
 
             if (!string.IsNullOrEmpty(qrCodeValue))
             {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                var currentLanguage = 
+					CrossMultilingual.Current.CurrentCultureInfo;
                 // Determine it is URL or string
                 if ((qrCodeValue.Substring(0, 7) == "http://") ||
                     (qrCodeValue.Substring(0, 8) == "https://"))
@@ -175,15 +202,18 @@ namespace IndoorNavigation.Views.Settings
                         // open the page to input the data
                         _downloadURL = buffer[0];
 
-                        await PopupNavigation.Instance.PushAsync(_downloadPage as DownloadPopUpPage);
+                        await PopupNavigation.Instance
+							  .PushAsync(_downloadPage as DownloadPopUpPage);
                     }
                     else
                     {
                         // Use the browser to open data
-                        bool answer = await DisplayAlert(_resourceManager.GetString("NOTIFY_STRING", currentLanguage),
-                                                         _resourceManager.GetString("SURE_TO_OPEN_WEBSITE_STRING", currentLanguage),
-                                                         _resourceManager.GetString("OK_STRING", currentLanguage),
-                                                         _resourceManager.GetString("CANCEL_STRING", currentLanguage));
+                        bool answer = 
+							await DisplayAlert
+							(_resourceManager.GetString("NOTIFY_STRING", currentLanguage),
+                             _resourceManager.GetString("SURE_TO_OPEN_WEBSITE_STRING", currentLanguage),
+                             _resourceManager.GetString("OK_STRING", currentLanguage),
+                             _resourceManager.GetString("CANCEL_STRING", currentLanguage));
                         if (answer)
                             await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
                     }
@@ -335,32 +365,24 @@ namespace IndoorNavigation.Views.Settings
 
         private async Task HandleCLeanMapAsync()
         {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            //var ci = CrossMultilingual.Current.CurrentCultureInfo;
             try
             {
                 if (CleanMapPicker.SelectedItem.ToString() == _resourceManager.GetString("ALL_STRING", ci))
-                {
-                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-                                           _resourceManager.GetString("ASK_IF_CANCEL_ALL_MAP_STRING", ci),
-                                           _resourceManager.GetString("OK_STRING", ci),
-                                           _resourceManager.GetString("CANCEL_STRING", ci)))
+                {                    
+                    if(await DisplayAlert(getResource("WARN_STRING"), getResource("ASK_IF_CANCEL_ALL_MAP_STRING"),getResource("OK_STRING"),getResource("CANCEL_STRING")))
                     {
                         // Cancel All Map
                         NavigraphStorage.DeleteAllNavigationGraph();
                         NavigraphStorage.DeleteAllFirstDirectionXML();
                         NavigraphStorage.DeleteAllInformationXML();
-                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
-                                           _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
-                                           _resourceManager.GetString("OK_STRING", ci));
+                        
+                        await DisplayAlert(getResource("MESSAGE_STRING"), getResource("SUCCESSFULLY_DELETE_STRING"), getResource("OK_STRING");
                     }
                 }
                 else
                 {
-                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-                                           string.Format(_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci) + _resourceManager.GetString("MAP_STRING", ci) + ":{0}？", CleanMapPicker.SelectedItem),
-                                           _resourceManager.GetString("OK_STRING", ci),
-                                           _resourceManager.GetString("CANCEL_STRING", ci)))
-
+                    if(await DisplayAlert(getResource("WARN_STRING"),string.Format(getResource("ASK_IF_CANCEL_MAP_STRING")+getResource("MAP_STRING")+":{0}?", CleanMapPicker.SelectedItem),getResource("OK_STRINg"),getResource("CANCEL_STRING")))
                     {
                         // Delete selected map
                         string currentMap = _phoneInformation.GiveCurrentMapName(CleanMapPicker.SelectedItem.ToString());
@@ -368,18 +390,14 @@ namespace IndoorNavigation.Views.Settings
                         NavigraphStorage.DeleteNavigationGraph(currentMap);
                         NavigraphStorage.DeleteFirstDirectionXML(currentMap);
                         NavigraphStorage.DeleteInformationML(currentMap);
-                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
-                                           _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
-                                           _resourceManager.GetString("OK_STRING", ci));
+                        await DisplayAlert(getResource("MESSAGE_STRING"), getResource("SUCCESSFULLY_DELETE_STRING"), getResource("OK_STRING"));
                     }
                 }
 
             }
             catch
             {
-                await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
-                                   _resourceManager.GetString("ERROR_TO_DELETE_STRING", ci),
-                                   _resourceManager.GetString("OK_STRING", ci));
+                await DisplayAlert(getResource("ERROR_STRING"), getResource("ERROR_TO_DELETE_STRING"), getResource("OK_STRING"));
             }
 
             CleanMapPicker.SelectedItem = "";
@@ -388,15 +406,14 @@ namespace IndoorNavigation.Views.Settings
 
         private void AddMapItems()
         {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
             _chooseMap.Clear();
-            _chooseMap.Add(_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("HOSPITAL_NAME_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("LAB_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci));
+            _chooseMap.Add(getResource("TAIPEI_CITY_HALL_STRING"));
+            _chooseMap.Add(getResource("HOSPITAL_NAME_STRING"));
+            _chooseMap.Add(getResource("LAB_STRING"));
+            _chooseMap.Add(getResource("YUANLIN_CHRISTIAN_HOSPITAL_STRING"));            
         }
 
-        private async void HandleChooseMap()
+        private void HandleChooseMap()
         {
             List<string> generateName = _phoneInformation.GiveGenerateMapName(OptionPicker.SelectedItem.ToString().Trim());
 
@@ -404,6 +421,11 @@ namespace IndoorNavigation.Views.Settings
 
             ReloadNaviGraphItems();
 
+        }
+        private string getResource(string key)
+        {
+            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            return _resourceManager.GetString(key, currentLanguage);
         }
     }
 }

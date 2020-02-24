@@ -62,7 +62,8 @@ namespace IndoorNavigation.Views.Navigation
     {
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager
+			(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private string _navigationGraphName;
         public string myProperty { get; } = "";
         public NavigationHomePage(string navigationGraphName)
@@ -73,9 +74,13 @@ namespace IndoorNavigation.Views.Navigation
             myProperty = navigationGraphName;
             BindingContext = this;
             this._navigationGraphName = navigationGraphName;
-            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            NavigationPage.SetBackButtonTitle
+				(this, 
+				 _resourceManager.GetString("BACK_STRING", currentLanguage));
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = 
+				Color.FromHex("#3F51B5");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = 
+				Color.White;
 
             switch (Device.RuntimePlatform)
             {
@@ -108,56 +113,65 @@ namespace IndoorNavigation.Views.Navigation
 
         async void ClinicList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Clinics));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Clinics));
         }
 
         async void Cashier_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Cashier));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Cashier));
         }
 
         async void ExitList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Exit));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Exit));
         }
 
         async void ExaminationRoomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.ExaminationRoom));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.ExaminationRoom));
         }
 
         async void Pharmacy_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Pharmacy));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Pharmacy));
         }
 
         async void ConvenienceStore_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.ConvenienceStore));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.ConvenienceStore));
         }
 
         async void OthersList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Others));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Others));
         }
 
         async void BathroomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Bathroom));
+            await Navigation.PushAsync
+				(new DestinationPickPage(_navigationGraphName,
+                                         CategoryType.Bathroom));
         }
 
         async void BloodCollectionCounter_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.BloodCollectionCounter));
+            await Navigation.PushAsync(
+				new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.BloodCollectionCounter));
         }
     }
 }
