@@ -56,7 +56,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Models;
-
+using System.Globalization;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -67,36 +67,59 @@ namespace IndoorNavigation.Views.Navigation
         public ResourceManager _resourceManager;
 
         public ObservableCollection<string> _items { get; set; }
-        public ObservableCollection<DestinationItem> _destinationItems { get; set; }
+        public ObservableCollection<DestinationItem> 
+			_destinationItems { get; set; }
         private XMLInformation _nameInformation;
-        public DestinationPickPage(string navigationGraphName, CategoryType category)
+
+        private CultureInfo _currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
+        public DestinationPickPage(string navigationGraphName, 
+								   CategoryType category)
         {
             InitializeComponent();
 
             const string resourceId = "IndoorNavigation.Resources.AppResources";
-            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            _resourceManager = 
+				new ResourceManager(resourceId, 
+									typeof(TranslateExtension)
+									.GetTypeInfo().Assembly);
  
             _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
             PhoneInformation phoneInformation = new PhoneInformation();
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
+            _navigationGraph = 
+				NavigraphStorage.LoadNavigationGraphXML
+					(phoneInformation.GiveCurrentMapName(_navigationGraphName));
+            _nameInformation = 
+				NavigraphStorage.LoadInformationML
+					(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
+					"_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
            
-            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
+            NavigationPage
+				.SetBackButtonTitle
+				(this, _resourceManager.GetString("BACK_STRING", 
+												  _currentLanguage));
 
-            foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
+            foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> 
+						pairRegion in _navigationGraph.GetRegions())
             {
-                string floorName = _nameInformation.GiveRegionName(pairRegion.Value._id);
+                string floorName = 
+					_nameInformation.GiveRegionName(pairRegion.Value._id);
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
                 {
-                    foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
+                    foreach (Waypoint waypoint 
+						in pairRegion.Value._waypointsByCategory[category])
                     {
                         string waypointName = waypoint._name;
-                        waypointName = _nameInformation.GiveWaypointName(waypoint._id);
-                        if (waypoint._type.ToString() == "terminal" || waypoint._type.ToString() == "landmark")
+                        waypointName = 
+							_nameInformation.GiveWaypointName(waypoint._id);
+                        if (waypoint._type.ToString() == "terminal" || 
+							waypoint._type.ToString() == "landmark")
                         {
-                            Console.WriteLine("check type : " + waypoint._type.ToString());
+                            Console.WriteLine("check type : " 
+								+ waypoint._type.ToString());
+								
                             _destinationItems.Add(new DestinationItem
                             {
                                 _regionID = pairRegion.Key,
@@ -116,10 +139,12 @@ namespace IndoorNavigation.Views.Navigation
             }
 
             MyListView.ItemsSource = from waypoint in _destinationItems
-                                     group waypoint by waypoint._floor into waypointGroup
+                                     group waypoint by waypoint._floor 
+									 into waypointGroup
                                      orderby waypointGroup.Key
-                                     select new Grouping<string, DestinationItem>(waypointGroup.Key,
-                                                                               waypointGroup);
+                                     select 
+									 new Grouping<string, DestinationItem>
+									 (waypointGroup.Key, waypointGroup);
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -128,12 +153,12 @@ namespace IndoorNavigation.Views.Navigation
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
 
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                                                             destination._regionID,
-                                                             destination._waypointID,
-                                                             destination._waypointName,
-                                                             _nameInformation
-                                                             ));
+                await Navigation.PushAsync
+					(new NavigatorPage(_navigationGraphName,
+                                       destination._regionID,
+                                       destination._waypointID,
+                                       destination._waypointName,
+									   _nameInformation));
             }
 
             //Deselect Item
