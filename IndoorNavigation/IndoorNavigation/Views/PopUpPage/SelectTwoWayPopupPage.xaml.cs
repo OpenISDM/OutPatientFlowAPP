@@ -1,4 +1,36 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      SelectTwoWayPopupPage.xaml.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */
+using System;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
@@ -20,10 +52,14 @@ namespace IndoorNavigation
         bool isButtonPressed = false;        
         Page page = Application.Current.MainPage;
 
-        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        private const string _resourceId = 
+			"IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
+        CultureInfo currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
         public SelectTwoWayPopupPage(string BuildingName)
         {
             InitializeComponent();
@@ -37,7 +73,8 @@ namespace IndoorNavigation
             isButtonPressed = true;  
             
             await PopupNavigation.Instance.PopAllAsync();
-            await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
+            await page.Navigation.PushAsync
+				(new NavigationHomePage(_locationName));
         }
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
@@ -49,21 +86,34 @@ namespace IndoorNavigation
 
             if (!Preferences.Get("NotShowAgain_ToOPFM", false))
             {
-                await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(
-                    _resourceManager.GetString("ALERT_IF_YOU_HAVE_NETWORK_STRING",currentLanguage), 
-                    _resourceManager.GetString("YES_STRING",currentLanguage)
-                    , _resourceManager.GetString("NO_STRING",currentLanguage), "NotShowAgain_ToOPFM"));
-                MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM",async (msgsender, msgargs) =>
+                await PopupNavigation.Instance.PushAsync
+					  (new ShiftAlertPopupPage(
+						_resourceManager.GetString
+						("ALERT_IF_YOU_HAVE_NETWORK_STRING",currentLanguage), 
+						_resourceManager.GetString
+						("YES_STRING",currentLanguage),
+						_resourceManager.GetString
+						("NO_STRING",currentLanguage), 
+						"NotShowAgain_ToOPFM"));
+						
+                MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>
+				(this, "NotShowAgain_ToOPFM",async (msgsender, msgargs) =>
                   {                     
-                      if ((bool)msgargs) await page.Navigation.PushAsync(new RigisterList(_locationName));
-                      else await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
+                      if ((bool)msgargs) 
+						  await page.Navigation.PushAsync
+							(new RigisterList(_locationName));
+                      else 
+						  await page.Navigation.PushAsync
+							(new NavigationHomePage(_locationName));
 
-                      MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
+                      MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>
+						(this, "NotShowAgain_ToOPFM");
                   });              
             }
             else
             {                
-                await page.Navigation.PushAsync(new RigisterList(_locationName));
+                await page.Navigation.PushAsync
+					(new RigisterList(_locationName));
             }
         }
 

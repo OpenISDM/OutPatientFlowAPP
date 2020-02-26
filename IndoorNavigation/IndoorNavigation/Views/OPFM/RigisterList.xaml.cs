@@ -30,7 +30,10 @@ namespace IndoorNavigation
 
         private Object ShiftTmp=null;
         private App app = (App)Application.Current;
-        private bool isButtonPressed = false; //to prevent button multi-tap from causing error
+		
+		//to prevent button multi-tap from causing error
+        private bool isButtonPressed = false; 
+		
         private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
 
@@ -95,11 +98,15 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;
             request = new HttpRequest();
 
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _nameInformation = 
+				NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             NetworkSettings = DependencyService.Get<INetworkSetting>();
-            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            PaymemtListBtn.IsEnabled = 
+				(app.FinishCount + 1 == app.records.Count);
+				
+            PaymemtListBtn.IsVisible = 
+				(app.FinishCount + 1 == app.records.Count);
 
             BindingContext = _viewmodel;
 
@@ -130,7 +137,8 @@ namespace IndoorNavigation
 
         /*this function is to implement a simply shift function.  
           when shift button is clicked, the function will become the listview tapped event.*/
-        private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
+        private void RgListViewShift_ItemTapped(object sender,
+												ItemTappedEventArgs e)
         {
                 if (ShiftTmp == null)
                 {
@@ -194,11 +202,13 @@ namespace IndoorNavigation
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
+            app.HaveCashier = true;
             await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
             {                
                 PaymemtListBtn.IsEnabled = !(bool)Messageargs;
                 PaymemtListBtn.IsVisible = !(bool)Messageargs;
+                app.HaveCashier = (bool)Messageargs;
                 Buttonable(!(bool)Messageargs);
 
                 isButtonPressed = false;
@@ -214,27 +224,21 @@ namespace IndoorNavigation
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
-            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2(_navigationGraphName));
- 
-            MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
-            {
-                
-                var somethingchange = PaymemtListBtn.IsEnabled && PaymemtListBtn.IsVisible;
-                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            await PopupNavigation.Instance.PushAsync(new AddPopupPage(_navigationGraphName));
 
-                app.HaveCashier =! (somethingchange == (PaymemtListBtn.IsVisible && PaymemtListBtn.IsEnabled));
-
-                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "AddAnyOrNot");
-            });
-
-            MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isBack", (MessageSender, MessageArgs) => 
-            {
-                isButtonPressed = false;
-                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "isBack");
-            });
+            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel", (Messagesender, Messageargs) =>
+              {
+                  PaymemtListBtn.IsEnabled = 
+					(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
+                  PaymemtListBtn.IsVisible = 
+					(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
+                  isButtonPressed = false;
+                  MessagingCenter.Unsubscribe<AddPopupPage, bool>(this, "isCancel");                 
+              });
+          
         }
-        
+               
+
         /*to refresh listview Template and check whether user have sign in or not.*/
         protected override void OnAppearing()
         {      
@@ -242,13 +246,17 @@ namespace IndoorNavigation
            
             _viewmodel = new RegisterListViewModel();
             RefreshListView();
-            ShiftBtn.CornerRadius = (int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
-            AddBtn.CornerRadius = (int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
+            ShiftBtn.CornerRadius = 
+				(int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
+            AddBtn.CornerRadius = 
+				(int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
-            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsEnabled = 
+				(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsVisible = 
+				(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
@@ -276,17 +284,21 @@ namespace IndoorNavigation
                 }
                 _multiItemFinish(FinishBtnClickItem);
 
-                if (app.FinishCount + 1 == app.records.Count && app.lastFinished.type!= RecordType.Register)
+                if (app.FinishCount + 1 == app.records.Count && 
+					app.lastFinished.type!= RecordType.Register)
                 {
                     if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
-                        await DisplayAlert(getResourceString("MESSAGE_STRING"),getResourceString("FINISH_SCHEDULE_STRING"), getResourceString("OK_STRING"));
-                        await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
+                        await DisplayAlert(getResourceString("MESSAGE_STRING"),
+									getResourceString("FINISH_SCHEDULE_STRING"), 
+									getResourceString("OK_STRING"));
+									
+                        await PopupNavigation.Instance.PushAsync
+							(new ExitPopupPage(_navigationGraphName));
                     }else if (!app.HaveCashier)
                     {
                         PaymemtListBtn.IsEnabled = true;
                         PaymemtListBtn.IsVisible = true;
-                        app.HaveCashier = true;
                     }
                 }
             }            
@@ -322,8 +334,12 @@ namespace IndoorNavigation
         private string getResourceString(string key)
         {
             string resourceId = "IndoorNavigation.Resources.AppResources";
-            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            ResourceManager resourceManager= new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            CultureInfo currentLanguage = 
+				CrossMultilingual.Current.CurrentCultureInfo;
+            ResourceManager resourceManager= 
+				new ResourceManager(resourceId, 
+									typeof(TranslateExtension)
+									.GetTypeInfo().Assembly);
 
             return resourceManager.GetString(key, currentLanguage);
         }
@@ -379,7 +395,8 @@ namespace IndoorNavigation
            
             BusyIndicatorShow(true);
             Console.WriteLine("Register Finished");
-            bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
+            bool NetworkConnectAbility = 
+				await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
                 await ReadXml();
@@ -388,8 +405,11 @@ namespace IndoorNavigation
             }
             else
             {
-                var CheckWantToSetting = await DisplayAlert(getResourceString("MESSAGE_STRING"), getResourceString("BAD_NETWORK_STRING")
-                    ,getResourceString("OK_STRING"),getResourceString("NO_STRING"));
+                var CheckWantToSetting = 
+					await DisplayAlert(getResourceString("MESSAGE_STRING"), 
+									   getResourceString("BAD_NETWORK_STRING"),
+									   getResourceString("OK_STRING"),
+									   getResourceString("NO_STRING"));
                 BusyIndicatorShow(false);
                 if (CheckWantToSetting)
                 {
@@ -437,9 +457,20 @@ namespace IndoorNavigation
             TestItemCommand = new Command(async () => await TestItemMethod());
             ToolbarItems.Clear();       
             
-            ToolbarItem SignInItem = new ToolbarItem { Text = getResourceString("ACCOUNT_STRING"), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
-            ToolbarItem InfoItem = new ToolbarItem { Text = getResourceString("PREFERENCES_STRING"), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
-            ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
+            ToolbarItem SignInItem = 
+				new ToolbarItem { Text = getResourceString("ACCOUNT_STRING"), 
+								  Command = SignInCommand, 
+								  Order = ToolbarItemOrder.Secondary };
+								  
+            ToolbarItem InfoItem = 
+				new ToolbarItem { Text =getResourceString("PREFERENCES_STRING"), 
+								  Command =InfoItemCommand, 
+								  Order = ToolbarItemOrder.Secondary };
+								  
+            ToolbarItem TestItem = 
+				new ToolbarItem { Text = "test", 
+								  Command = TestItemCommand, 
+								  Order = ToolbarItemOrder.Secondary };
             ToolbarItems.Add(SignInItem);
             ToolbarItems.Add(InfoItem);
             ToolbarItems.Add(TestItem);
@@ -464,14 +495,18 @@ namespace IndoorNavigation
         {
             await Navigation.PushAsync(new SignInPage());
 
-            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>(this, "isReset", (msgSender, msgArgs) =>
-            {
-                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
+				(this, "isReset", (msgSender, msgArgs) =>
+				{
+					PaymemtListBtn.IsEnabled = 
+						(app.FinishCount + 1 == app.records.Count);
+					PaymemtListBtn.IsVisible = 
+						(app.FinishCount + 1 == app.records.Count);
 
-                Buttonable(true);
-                MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>(this, "isRest");
-            });
+					Buttonable(true);
+					MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>
+						(this, "isRest");
+				});
 
             await Task.CompletedTask;
         }
@@ -481,6 +516,7 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigatorSettingPage());
             await Task.CompletedTask;
         }
+		
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");

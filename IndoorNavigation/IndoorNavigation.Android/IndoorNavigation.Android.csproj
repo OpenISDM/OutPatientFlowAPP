@@ -414,7 +414,7 @@
     <AndroidResource Include="Resources\drawable\Add_Item9.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Add_Item11.png" />
+    <AndroidResource Include="Resources\drawable\Add_Item10.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Add_Item3.png" />
@@ -423,7 +423,7 @@
     <AndroidResource Include="Resources\drawable\Add_Item6.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Add_Item10.png" />
+    <AndroidResource Include="Resources\drawable\Add_Item10_.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\waittingscan.gif">

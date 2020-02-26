@@ -1,4 +1,36 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      AlertDialogPopupPage.xaml.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +50,20 @@ namespace IndoorNavigation
         Style ButtonStyle = new Style(typeof(Button))
         {
             Setters ={
-                new Setter{Property=Button.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large,typeof(Button))},
-                new Setter{Property=Button.TextColorProperty,Value=Color.FromHex("#3f51b5")},
-                new Setter{Property=Button.HorizontalOptionsProperty,Value=LayoutOptions.End},
-                new Setter{Property=Button.VerticalOptionsProperty,Value=LayoutOptions.EndAndExpand},
-                new Setter{Property=Button.BackgroundColorProperty,Value=Color.Transparent}
+                new Setter{Property=Button.FontSizeProperty, 
+					Value=Device.GetNamedSize(NamedSize.Large,typeof(Button))},
+                new Setter{Property=Button.TextColorProperty,
+					Value=Color.FromHex("#3f51b5")},
+                new Setter{Property=Button.HorizontalOptionsProperty,
+					Value=LayoutOptions.End},
+                new Setter{Property=Button.VerticalOptionsProperty,
+					Value=LayoutOptions.EndAndExpand},
+                new Setter{Property=Button.BackgroundColorProperty,
+					Value=Color.Transparent}
             }
         };
 
-        #region for no button view that it will close itself   
+        #region for no button view that it will be closed by page itself   
         public AlertDialogPopupPage(string context)
         {
             InitializeComponent();
@@ -35,7 +72,8 @@ namespace IndoorNavigation
             TempMessage.Text = context;
             Device.StartTimer(TimeSpan.FromSeconds(2.2), () =>
             {
-                //to prevent from crash issue that user have close the popup page then popup stack is empty.
+                //to prevent from crash issue that user have close the popup 
+				//page, then popup page stack is empty.
                 if (PopupNavigation.Instance.PopupStack.Count > 0)
                 {
                     PopupNavigation.Instance.PopAsync();
@@ -52,17 +90,21 @@ namespace IndoorNavigation
         #endregion
 
         #region for the view have both of cancel and confirm.
-        //---------------------two buttons------------------------------------------------
         string _message;
-        public AlertDialogPopupPage(string context, string confirm, string cancel, string message)
+        public AlertDialogPopupPage(string context, 
+									string confirm, 
+									string cancel, 
+									string message)
         {
             InitializeComponent();
             TempMessage.Text = context;
             _message = message;
             _backClick = TwoButton_Back;
 
-            Button ConfirmBtn = new Button { Style = ButtonStyle, Text = confirm };
-            Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel };
+            Button ConfirmBtn = 
+				new Button { Style = ButtonStyle, Text = confirm };
+            Button CancelBtn = 
+				new Button { Style = ButtonStyle, Text = cancel };
             CancelBtn.Clicked += CancelPageClicked;
             ConfirmBtn.Clicked += ConfirmPageClicked;
             buttonLayout.Children.Add(ConfirmBtn);
@@ -76,7 +118,7 @@ namespace IndoorNavigation
 
         #endregion
 
-        #region for view with only one button that is cancel.
+        #region for view with only one button that is used to alerting user.
         public AlertDialogPopupPage(string context, string cancel)
         {
             InitializeComponent();
@@ -84,7 +126,7 @@ namespace IndoorNavigation
 
             _backClick = NoButton_Back;
 
-            Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel };
+            Button CancelBtn = new Button { Style = ButtonStyle, Text = cancel};
 
             CancelBtn.Clicked += CancelPageClicked;
             buttonLayout.Children.Add(CancelBtn);
@@ -104,7 +146,7 @@ namespace IndoorNavigation
             PopupNavigation.Instance.PopAsync();
         } 
 
-        protected override bool OnBackButtonPressed() //待測試，可能會錯
+        protected override bool OnBackButtonPressed()
         {
             _backClick();
             return false;

@@ -165,5 +165,8 @@
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\PopUpPage\AddPopupPage.xaml.cs">
+      <DependentUpon>AddPopupPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -58,7 +58,9 @@ namespace IndoorNavigation.Views.Settings.LicensePages
     {
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension).GetTypeInfo()
+								.Assembly);
 
         public LicenseMainPage()
         {

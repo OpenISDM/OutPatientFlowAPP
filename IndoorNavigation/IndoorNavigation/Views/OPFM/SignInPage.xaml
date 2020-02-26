@@ -1,12 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      SignInPage.xaml
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ *-->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Title="{i18n:Translate LOGIN_STRING}"
-             mc:Ignorable="d"
-             x:Class="IndoorNavigation.SignInPage">
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+          xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          Title="{i18n:Translate LOGIN_STRING}"
+          mc:Ignorable="d"
+          x:Class="IndoorNavigation.SignInPage">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -21,14 +53,28 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand">
             <StackLayout Padding="20" Margin="30">
-                <Label Text="{i18n:Translate IDNUM_STRING}" FontSize="Large" />
-                <Entry x:Name="IDnumEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Large" MaxLength="10"/>
+                <Label Text="{i18n:Translate IDNUM_STRING}" 
+					   FontSize="Large" />
+					   
+                <Entry x:Name="IDnumEntry" 
+					   Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" 
+					   FontSize="Large" 
+					   MaxLength="10"/>
+					   
             </StackLayout>
-            <StackLayout Padding="20" Margin="30">
-                <Label Text="{i18n:Translate REGISTERDAY_STRING}" FontSize="Large"/>
-                <DatePicker x:Name="RgDayPicker" MinimumDate="1/1/2019" IsEnabled="True"/>
+            <StackLayout Padding="20" 
+						 Margin="30">
+                <Label Text="{i18n:Translate REGISTERDAY_STRING}" 
+					   FontSize="Large"/>
+					   
+                <DatePicker x:Name="RgDayPicker" 
+							MinimumDate="1/1/2019" 
+							IsEnabled="True"/>
             </StackLayout>
-            <Button Text="{i18n:Translate OK_STRING}" HorizontalOptions="CenterAndExpand" Clicked="Button_Clicked"/>
+            <Button Text="{i18n:Translate OK_STRING}" 
+					HorizontalOptions="CenterAndExpand" 
+					Clicked="Button_Clicked"/>
+					
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,37 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      ExitPopupViewModel.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;

@@ -1,6 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      SignInPage.xaml.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -19,17 +50,28 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SignInPage : ContentPage
     {
-        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager = new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        private const string _resourceId = 
+			"IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager = 
+			new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
+        CultureInfo currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
+			
         App app = (App)Application.Current;
         
         public SignInPage()
         {
             InitializeComponent();
-            IDnumEntry.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeCharacter);
-            RgDayPicker.Date = app.RgDate;
-            IDnumEntry.Text = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+            IDnumEntry.Keyboard = 
+				Keyboard.Create(KeyboardFlags.CapitalizeCharacter);
+				
+            RgDayPicker.Date = 
+				app.RgDate;
+				
+            IDnumEntry.Text = 
+				Preferences.Get("ID_NUMBER_STRING", string.Empty);
         }
 
         async private void Button_Clicked(object sender, EventArgs e)
@@ -37,14 +79,23 @@ namespace IndoorNavigation
             IDnumEntry.Text = IDnumEntry.Text.ToUpper();
             if(IDnumEntry.Text==null || !CheckIDLegal(IDnumEntry.Text))
             {
-                await DisplayAlert(_resourceManager.GetString("ERROR_STRING",currentLanguage), _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING", currentLanguage)
-                    ,_resourceManager.GetString("OK_STRING",currentLanguage));
+                await DisplayAlert
+					(_resourceManager.GetString("ERROR_STRING",currentLanguage), 
+					 _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING", 
+												currentLanguage),
+                     _resourceManager.GetString("OK_STRING",currentLanguage));
                 return;
             }            
             Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
-            app.IDnumber = IDnumEntry.Text;
-            app.RgDate = RgDayPicker.Date;
-            app.isRigistered = false;
+            app.IDnumber = 
+				IDnumEntry.Text;
+				
+            app.RgDate = 
+				RgDayPicker.Date;
+				
+            app.isRigistered = 
+				false;
+				
             await Navigation.PopAsync();
         }                
 

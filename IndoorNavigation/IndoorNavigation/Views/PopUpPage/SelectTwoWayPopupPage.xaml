@@ -1,26 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                 xmlns="http://xamarin.com/schemas/2014/forms"
+<!--/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      SelectTwoWayPopupPage.xaml
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */-->
+<pages:PopupPage 
+			 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.SelectTwoWayPopupPage">
     <AbsoluteLayout>
-        <ContentView AbsoluteLayout.LayoutFlags="All" BackgroundColor="Transparent" AbsoluteLayout.LayoutBounds="0,0,1,1">
+        <ContentView AbsoluteLayout.LayoutFlags="All" 
+					 BackgroundColor="Transparent" 
+					 AbsoluteLayout.LayoutBounds="0,0,1,1">
             <ContentView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </ContentView.GestureRecognizers>
         </ContentView>
-        <Frame x:Name="frame" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.95,0.3" BackgroundColor="Transparent">
+        <Frame 	x:Name="frame" 
+				AbsoluteLayout.LayoutFlags="All" 
+				AbsoluteLayout.LayoutBounds="0.5,0.5,0.95,0.3" 
+				BackgroundColor="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Text="{i18n:Translate NAVIGATION_STRING}" x:Name="toNavigationBtn" FontSize="32" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="0" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToNavigationBtn_Clicked" />
-                <Button Text="{i18n:Translate OPFM_STRING}" x:Name="toOPFM" FontSize="26" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Column="1" BackgroundColor="#3f51b5" TextColor="White" CornerRadius="8" Margin="5,0" Clicked="ToOPFM_Clicked"/>
+                <Button Text="{i18n:Translate NAVIGATION_STRING}" 
+						x:Name="toNavigationBtn" 
+						FontSize="32" 
+						HorizontalOptions="Fill" 
+						VerticalOptions="Fill" 
+						Grid.Column="0" 
+						BackgroundColor="#3f51b5" 
+						TextColor="White" 
+						CornerRadius="8" 
+						Margin="5,0" 
+						Clicked="ToNavigationBtn_Clicked" />
+						
+                <Button Text="{i18n:Translate OPFM_STRING}" 
+						x:Name="toOPFM" 
+						FontSize="26" 
+						HorizontalOptions="Fill" 
+						VerticalOptions="Fill" 
+						Grid.Column="1" 
+						BackgroundColor="#3f51b5" 
+						TextColor="White" 
+						CornerRadius="8" 
+						Margin="5,0" 
+						Clicked="ToOPFM_Clicked"/>
             </Grid>
         </Frame>
         

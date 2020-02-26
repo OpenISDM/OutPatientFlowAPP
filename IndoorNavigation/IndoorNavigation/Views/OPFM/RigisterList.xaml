@@ -1,21 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <shared:CustomToolbarContentPage 
-             xmlns:local="clr-namespace:IndoorNavigation"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
-            xmlns:shared="clr-namespace:IndoorNavigation"
-            Title="{i18n:Translate NAVIGATION_LIST_STRING}"
-             mc:Ignorable="d"
-             x:Class="IndoorNavigation.RigisterList">
+          xmlns:local="clr-namespace:IndoorNavigation"
+          xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+          xmlns:shared="clr-namespace:IndoorNavigation"
+          Title="{i18n:Translate NAVIGATION_LIST_STRING}"
+          mc:Ignorable="d"
+          x:Class="IndoorNavigation.RigisterList">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="Black"/>
-                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="TextColor" 
+						Value="Black"/>
+						
+                <Setter Property="FontSize" 
+						Value="22"/>
             </Style>
             <DataTemplate x:Key="YetNavigation">
                 <!--to show haven't started schedule view cell-->
@@ -26,47 +29,102 @@
                         </OnPlatform>
                     </ViewCell.Height>
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="RemoveItem_Clicked" CommandParameter="{Binding .}"
-                                   Text="Delete" IsDestructive="True" />
+                        <MenuItem Clicked="RemoveItem_Clicked" 
+								  CommandParameter="{Binding .}"
+                                  Text="Delete" 
+								  IsDestructive="True" />
                     </ViewCell.ContextActions>
                     <StackLayout>
-                        <StackLayout Orientation="Horizontal" Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
-                            <Label x:Name="DPTNAME" Text="{Binding DptName, StringFormat='{0}'}" FontSize="26" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" 
+                        <StackLayout Orientation="Horizontal" 
+									 Margin="10,0,10,0" 
+									 VerticalOptions="CenterAndExpand">
+									 
+                            <Label x:Name="DPTNAME" 
+								   Text="{Binding DptName, StringFormat='{0}'}" 
+								   FontSize="26" 
+								   HorizontalOptions="StartAndExpand" 
+								   VerticalOptions="CenterAndExpand" 
                                    TextColor="Black"/>
-                            <Button x:Name="yetFinishBtn" Text="{i18n:Translate FINISH_STRING}" FontSize="Large" IsEnabled="{Binding isComplete}" IsVisible="{Binding isComplete}" 
-                                    HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Clicked="YetFinishBtn_Clicked" BorderColor="#3F51B5" BorderWidth="1" 
-                                    TextColor="White" BackgroundColor="#3f51b5" FontAttributes="Bold"/>
+								   
+                            <Button x:Name="yetFinishBtn" 
+									Text="{i18n:Translate FINISH_STRING}" 
+									FontSize="Large" 									
+                                    HorizontalOptions="EndAndExpand" 
+									CommandParameter="{Binding .}" 
+									Clicked="YetFinishBtn_Clicked" 
+									BorderColor="#3F51B5" 
+									BorderWidth="1" 
+                                    TextColor="White" 
+									BackgroundColor="#3f51b5" 
+									FontAttributes="Bold"/>
                         </StackLayout>
-                        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Margin="25,0,25,0">
-                            <Label x:Name="DptTimeText" Text="{Binding Shift, StringFormat={i18n:Translate OUTPATIENT_TIME_STRING}}"/>
-                            <Label x:Name="CareRoomText" Text="{Binding CareRoom, StringFormat={i18n:Translate CAREROOM_STRING}}"/>
-                            <Label x:Name="DrNameText" Text="{Binding DrName, StringFormat={i18n:Translate DRNAME_STRING}}"/>
-                            <Label x:Name="SeeSeqNumberText" Text="{Binding SeeSeq, StringFormat={i18n:Translate SEQUENCE_STRING}}"/>
+                        <StackLayout Orientation="Vertical" 
+									 VerticalOptions="CenterAndExpand" 
+									 Margin="25,0,25,0">
+									 
+                            <Label x:Name="DptTimeText" 
+								   Text=
+								   "{Binding Shift, StringFormat=
+									 {i18n:Translate OUTPATIENT_TIME_STRING}}"/>
+								   
+                            <Label x:Name="CareRoomText" 
+								   Text="{Binding CareRoom, StringFormat=
+											{i18n:Translate CAREROOM_STRING}}"/>
+								   
+                            <Label x:Name="DrNameText" 
+								   Text="{Binding DrName, StringFormat=
+											  {i18n:Translate DRNAME_STRING}}"/>
+								   
+                            <Label x:Name="SeeSeqNumberText" 
+								   Text="{Binding SeeSeq, StringFormat=
+										    {i18n:Translate SEQUENCE_STRING}}"/>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="NotComplete">
-                <!--to show schedule that was added. this name got something wrong..-->
+            <DataTemplate x:Key="NotComplete">                
                 <ViewCell Tapped="ViewCell_Tapped" Height="60">
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="RemoveItem_Clicked" CommandParameter="{Binding .}"
-                                   Text="Delete" IsDestructive="True" />
+                        <MenuItem Clicked="RemoveItem_Clicked" 
+								  CommandParameter="{Binding .}"
+                                  Text="Delete" 
+								  IsDestructive="True" />
                     </ViewCell.ContextActions>
                     <StackLayout >
-                        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Margin="10,0,10,0">
-                            <Label x:Name="DptName" Text="{Binding DptName, StringFormat='{0}'}" FontSize="26" 
-                                   HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" TextColor="Black" />
-                            <Button x:Name="FinishBtn" Text="{i18n:Translate FINISH_STRING}" HorizontalOptions="EndAndExpand" FontSize="Large" IsEnabled="{Binding isComplete}"
-                                    IsVisible="{Binding isComplete}" Clicked="YetFinishBtn_Clicked" CommandParameter="{Binding .}" TextColor="White" BackgroundColor="#3f51b5" BorderColor="#3f51b5" BorderWidth="1"/>
+                        <StackLayout Orientation="Horizontal" 
+									 VerticalOptions="CenterAndExpand" 
+									 Margin="10,0,10,0">
+									 
+                            <Label x:Name="DptName" 
+								   Text="{Binding DptName, StringFormat='{0}'}" 
+								   FontSize="26" 
+                                   HorizontalOptions="StartAndExpand" 
+								   VerticalOptions="CenterAndExpand" 
+								   TextColor="Black" />
+								   
+                            <Button x:Name="FinishBtn" 
+									Text="{i18n:Translate FINISH_STRING}" 
+									HorizontalOptions="EndAndExpand" 
+									FontSize="Large" 
+									Clicked="YetFinishBtn_Clicked" 
+									CommandParameter="{Binding .}" 
+									TextColor="White" 
+									BackgroundColor="#3f51b5" 
+									BorderColor="#3f51b5" 
+									BorderWidth="1"/>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="Complete">
-                <ViewCell IsEnabled="False" Height="60">
+                <ViewCell IsEnabled="False" 
+						  Height="60">
                     <StackLayout BackgroundColor="#e0e0e0">
-                        <Label Text="{Binding DptName}" FontSize="26" TextColor="#c0c0c0" Margin="10,0,10,0" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="{Binding DptName}" 
+							   FontSize="26" 
+							   TextColor="#c0c0c0" 
+							   Margin="10,0,10,0" 
+							   VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
@@ -75,7 +133,11 @@
                     <StackLayout/>
                 </ViewCell>
             </DataTemplate>
-            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" NullTemplate="{StaticResource NullCell}"  NotCompleteTemplate="{StaticResource NotComplete}" CompleteTemplate="{StaticResource Complete}" YetNavigationTemplate="{StaticResource YetNavigation}"/>
+            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" 
+						NullTemplate="{StaticResource NullCell}"  
+						NotCompleteTemplate="{StaticResource NotComplete}" 
+						CompleteTemplate="{StaticResource Complete}" 
+						YetNavigationTemplate="{StaticResource YetNavigation}"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -88,36 +150,65 @@
         </OnPlatform>
     </ContentPage.Padding>
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="RigisterListAbsoluteLayout">
-            <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
+        <AbsoluteLayout x:Name="RigisterListAbsoluteLayout">            
             <Grid x:Name="RigistListGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="19*"/>
 
                 </Grid.RowDefinitions>
-                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
-                   VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Margin="5,0,5,0"/>
-
-                <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
-                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
-                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" 
+						TextColor="#3f51b5" 
+						HorizontalOptions="StartAndExpand" 
+						VerticalOptions="CenterAndExpand" 
+						FontSize="Large" 
+						Grid.Row="0" 
+						Margin="5,0,5,0"/>
+                
+                <ListView x:Name="RgListView" 
+			   Grid.Row="1" 
+			   HasUnevenRows="True" 
+			   ItemTapped="RgListView_ItemTapped"
+               ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
                 </ListView>
             </Grid>
-            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
-                    FontSize="Medium" TextColor="White" Clicked="AddBtn_Clicked" 
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" FontAttributes="Bold"
+            <Button BackgroundColor="#3f51b5" 
+					x:Name="AddBtn" 
+					Text="{i18n:Translate NEW_STRING}"
+                    FontSize="Medium" 
+					TextColor="White" 
+					Clicked="AddBtn_Clicked" 
+                    AbsoluteLayout.LayoutFlags="All" 
+					AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" 
+					FontAttributes="Bold"
                     CornerRadius="30"
                     />
-            <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
-                     AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
-                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
-            <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
+            <Button x:Name="ShiftBtn" 
+					Text="{i18n:Translate EXCHANGE_STRING}" 
+					BackgroundColor="#3f51b5" 
+					FontSize="Medium" 
+					TextColor="White" 
+					FontAttributes="Bold"
+                    AbsoluteLayout.LayoutFlags="All" 
+					CornerRadius="30"
+                    Clicked="ShiftBtn_Clicked" 
+					AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
+					
+            <Button x:Name="PaymemtListBtn" 
+					FontSize="Large" 
+					Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  
+					Clicked="PaymemtListBtn_Clicked"
+                    AbsoluteLayout.LayoutFlags="All" 
+					AbsoluteLayout.LayoutBounds="0,1,1,0.1" 
+					BorderColor="#3f51b5" 
+					BackgroundColor="#3f51b5" 
                     TextColor="White"/>
 
-            <ActivityIndicator x:Name="BusyIndicator"  Color="#3f51b5"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2"/>
+            <ActivityIndicator x:Name="BusyIndicator"  
+							   Color="#3f51b5"  
+							   AbsoluteLayout.LayoutFlags="All" 
+							   AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2"/>
 
         </AbsoluteLayout>
     </ContentPage.Content>

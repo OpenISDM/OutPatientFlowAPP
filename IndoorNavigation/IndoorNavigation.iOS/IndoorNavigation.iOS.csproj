@@ -334,10 +334,10 @@
     <BundleResource Include="Resources\Add_Item9.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Add_Item10.png" />
+    <BundleResource Include="Resources\Add_Item10_.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Add_Item11.png" />
+    <BundleResource Include="Resources\Add_Item10.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more.png" />

@@ -1,4 +1,36 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      ShiftAlertPopupPage.xaml.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +51,20 @@ namespace IndoorNavigation.Views.Navigation
         {
             Setters =
             {
-                new Setter{ Property=Button.FontSizeProperty, Value=Device.GetNamedSize(NamedSize.Large, typeof(Button))},
-                new Setter{ Property=Button.TextColorProperty, Value=Color.FromHex("#3f51b5") },
-                new Setter{ Property=Button.HorizontalOptionsProperty, Value=LayoutOptions.End},
-                new Setter{Property=Button.VerticalOptionsProperty, Value=LayoutOptions.EndAndExpand},
-                new Setter{Property=Button.BackgroundColorProperty, Value=Color.Transparent}
+                new Setter{ Property=Button.FontSizeProperty, 
+							Value=Device.GetNamedSize
+								(NamedSize.Large, typeof(Button))},
+							
+                new Setter{ Property=Button.TextColorProperty, 
+							Value=Color.FromHex("#3f51b5") },
+							
+                new Setter{ Property=Button.HorizontalOptionsProperty, 
+							Value=LayoutOptions.End},
+							
+                new Setter{	Property=Button.VerticalOptionsProperty, 
+							Value=LayoutOptions.EndAndExpand},
+                new Setter{	Property=Button.BackgroundColorProperty, 
+							Value=Color.Transparent}
             }
         };
 
@@ -33,7 +74,9 @@ namespace IndoorNavigation.Views.Navigation
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
         }
 
-        public ShiftAlertPopupPage(string AlertContext, string cancel,string prefs)
+        public ShiftAlertPopupPage(	string AlertContext, 
+									string cancel,
+									string prefs)
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
@@ -48,7 +91,10 @@ namespace IndoorNavigation.Views.Navigation
             BtnLayout.Children.Add(CancelBtn);
         }
 
-        public ShiftAlertPopupPage(string AlertContext,string confirm,string cancel,string prefs)
+        public ShiftAlertPopupPage(	string AlertContext,
+									string confirm,
+									string cancel,
+									string prefs)
         {
             InitializeComponent();    
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
@@ -77,18 +123,6 @@ namespace IndoorNavigation.Views.Navigation
             if (CheckNeverShow.IsChecked)
                 Preferences.Set(prefs, true);
         }
-
-        //protected override bool OnBackButtonPressed()
-        //{
-        //    MessagingCenter.Send(this, _prefs, false);
-        //    return base.OnBackButtonPressed();
-        //}
-
-        //private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        //{
-        //    isCheck(_prefs);
-        //    MessagingCenter.Send(this, "AlertBack", true);
-        //    PopupNavigation.Instance.PopAsync();
-        //}
+        
     }
 }
