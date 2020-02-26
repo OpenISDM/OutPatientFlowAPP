@@ -5,7 +5,9 @@ using IndoorNavigation.Models;
 [assembly: Xamarin.Forms.Dependency(typeof(TextToSpeechImplementation))]
 namespace IndoorNavigation.Droid
 {
-    public class TextToSpeechImplementation : Java.Lang.Object, ITextToSpeech, TextToSpeech.IOnInitListener
+    public class TextToSpeechImplementation : Java.Lang.Object, 
+											  ITextToSpeech, 
+											  TextToSpeech.IOnInitListener
     {
         TextToSpeech speaker;
         string toSpeak;

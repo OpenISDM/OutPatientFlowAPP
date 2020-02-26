@@ -59,9 +59,11 @@ namespace IndoorNavigation.iOS
 {
     public class QrCodeDecoder : IQrCodeDecoder
     {
-        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        private const string _resourceId = 
+			"IndoorNavigation.Resources.AppResources";
         private ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+							 typeof(TranslateExtension).GetTypeInfo().Assembly);
         
         public async Task<string> ScanAsync()
         {
@@ -79,8 +81,10 @@ namespace IndoorNavigation.iOS
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
            
-            scanner.CancelButtonText = _resourceManager.GetString("CANCEL_STRING", ci);
-            scanner.FlashButtonText = _resourceManager.GetString("FLASH_STRING", ci);
+            scanner.CancelButtonText = 
+				_resourceManager.GetString("CANCEL_STRING", ci);
+            scanner.FlashButtonText = 
+				_resourceManager.GetString("FLASH_STRING", ci);
             ZXing.Result scanResults = await scanner.Scan(scanOptions);
 
             if (scanResults != null)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-/*
+﻿/*
  * Copyright (c) 2019 Academia Sinica, Institude of Information Science
  *
  * License:
@@ -31,15 +28,12 @@ using System.Linq;
  * Authors:
  * 
  *      Jason Chang, jasonchang@iis.sinica.edu.tw    
- *      
-using System.Text;
-using System.Threading.Tasks;
+ */     
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using System.Globalization;
-using System.IO;
-using System.Xml;
 using System.Reflection;
 using Plugin.Multilingual;
 using IndoorNavigation.Resources.Helpers;

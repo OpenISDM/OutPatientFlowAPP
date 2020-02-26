@@ -23,8 +23,9 @@ namespace IndoorNavigation.Droid
         public void OpenSettingPage()
         {
             Console.WriteLine("Enter openSettingPage function");
-            Intent intent = new Intent(Android.Provider.Settings.ActionNetworkOperatorSettings);//(Android.Provider.Settings.ActionWirelessSettings);
-            Console.WriteLine("Construct setting page");
+            Intent intent = 
+				new Intent(Android.Provider.Settings
+						   .ActionNetworkOperatorSettings);
             Android.App.Application.Context.StartActivity(intent);
             Console.WriteLine("StarActivity");
         }
@@ -34,14 +35,13 @@ namespace IndoorNavigation.Droid
             try
             {
                 string CheckUrl = "https://www.google.com/";
-                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
+                HttpWebRequest iNetRequest = 
+					(HttpWebRequest)WebRequest.Create(CheckUrl);
 
                 iNetRequest.Timeout = 2000;
                 WebResponse iNetResponse = iNetRequest.GetResponse();
 
-                iNetResponse.Close();
-                //Console.WriteLine("The network is all fine.");
-                //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("the network is work fine now."));
+                iNetResponse.Close();                
                 return Task.FromResult(true);
             }
             catch

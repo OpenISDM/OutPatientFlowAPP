@@ -1,4 +1,35 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      NetworkSetting.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ */  
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,23 +57,25 @@ namespace IndoorNavigation.iOS
             }
             else
             {
-                UIApplication.SharedApplication.OpenUrl(new NSUrl("app-settings:root=General&path=USAGE/CELLULAR_USAGE")); 
+                UIApplication.SharedApplication.OpenUrl
+				(new NSUrl
+					("app-settings:root=General&path=USAGE/CELLULAR_USAGE")); 
             }
         }
-
+			
         public Task<bool> CheckInternetConnect()
         {
             try
             {
                 string Checkurl = "https://www.google.com/";
-                HttpWebRequest CheckConnectRequest = (HttpWebRequest)WebRequest.Create(Checkurl);
+                HttpWebRequest CheckConnectRequest = 
+					(HttpWebRequest)WebRequest.Create(Checkurl);
 
                 CheckConnectRequest.Timeout = 5000;
-                WebResponse CheckConnectResponse = CheckConnectRequest.GetResponse();
+                WebResponse CheckConnectResponse = 
+					CheckConnectRequest.GetResponse();
 
-                CheckConnectResponse.Close();
-                //Console.WriteLine("The network is all fine.");                
-                //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("the network is work fine now."));
+                CheckConnectResponse.Close();                
                 return Task.FromResult(true);
             }
             catch

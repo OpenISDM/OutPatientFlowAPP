@@ -52,7 +52,9 @@ using System.Linq;
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScanForIBeacon))]
 namespace IndoorNavigation.Droid
 {
-    public class BeaconScanForIBeacon : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, IBeaconScan
+    public class BeaconScanForIBeacon : Java.Lang.Object, 
+										BluetoothAdapter.ILeScanCallback, 
+											IBeaconScan
     {
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
@@ -65,7 +67,8 @@ namespace IndoorNavigation.Droid
         {
             _event = new NavigationEvent();
             var appContext = Android.App.Application.Context;
-            this._manager = (BluetoothManager)appContext.GetSystemService("bluetooth");
+            this._manager = 
+				(BluetoothManager)appContext.GetSystemService("bluetooth");
             this._adapter = this._manager.Adapter;
         }
 
@@ -85,20 +88,29 @@ namespace IndoorNavigation.Droid
             this._adapter.StopLeScan(this);
         }
 
-        //private List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
 
-        public void OnLeScan(BluetoothDevice bleDevice, int rssi, byte[] scanRecord)
+        public void OnLeScan(BluetoothDevice bleDevice, 
+							 int rssi, 
+							 byte[] scanRecord)
         {
             this._count = this._count + 1;
             if (rssi > _rssiThreshold && rssi < 0)
             {
                 string tempUUID = BitConverter.ToString(scanRecord);
                 string identifierUUID = ExtractBeaconUUID(tempUUID);
-                //Console.WriteLine($">>Beacon[{this._count}] iBeacon Client ExtractBeaconUUID function parse result :{identifierUUID}, MacAddress :{bleDevice.Address}");
-                //Console.WriteLine("\n >> Find A Beacon[{0}] Name:{1}; Address:{2}; RSSI:{3}; Record:{4}\n", this._count, bleDevice, bleDevice.Address, rssi, identifierUUID);
+
+                Console.WriteLine("\n >> Find A Beacon[{0}] Name:{1};" +
+								  "Address:{2}; RSSI:{3}; Record:{4}\n", 
+								  this._count, 
+								  bleDevice, 
+								  bleDevice.Address, 
+								  rssi, 
+								  identifierUUID);
+								  
                 if (identifierUUID.Length >= 36)
                 {
-                    List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                    List<BeaconSignalModel> signals = 
+						new List<BeaconSignalModel>();
                     signals.Add(new BeaconSignalModel
                     {
                         UUID = new Guid(identifierUUID),
@@ -128,28 +140,21 @@ namespace IndoorNavigation.Droid
        
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            Console.WriteLine($"Extract BeaconUUID : {stringAdvertisementSpecificData}");
+
             string[] parse = stringAdvertisementSpecificData.Split("-");
-            //Console.WriteLine($"stringAdverisement specific Data is : {}");
-            //for (int i = 0; i < parse.Length; i++) {
-            //    Console.WriteLine($"parse[{i}] is :{parse[i]}");
-            //}
+           
             if (parse.Count() < 60)
             {
                 return stringAdvertisementSpecificData;
             }
             else
             {
-                /*var parser =*/
                 return string.Format("00000000-0402-{0}{1}-0000-{2}{3}{4}{5}{6}{7}",
                                             parse[43], parse[42],
-                                            parse[46], parse[47], parse[48], parse[49], parse[50], parse[51]);
+                                            parse[46], parse[47], parse[48], 
+											parse[49], parse[50], parse[51]);
 
-                //var parser= string.Format("{0}{1}{2}{3}-{4}{5}-{6}{7}-{8}{9}-{10}{11}{12}{13}{14}{15}",
-                //        parse[9], parse[10], parse[11], parse[12], parse[13], parse[14], parse[15], parse[16], parse[17], parse[18],
-                //        parse[19], parse[20], parse[21], parse[22], parse[23], parse[24]);//parser.ToString();
-                //Console.WriteLine($"parser in ibeacon result = {parser}");
-                //return parser;
+                
             }
         }
     }

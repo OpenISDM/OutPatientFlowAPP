@@ -11,8 +11,13 @@ using System.Threading;
 
 namespace IndoorNavigation.Droid
 {
-    [Activity(Label = "WPIN", Icon = "@mipmap/icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(Label = "WPIN", 
+	 Icon = "@mipmap/icon", 
+	 Theme = "@style/splashscreen", 
+	 MainLauncher = true, 
+	 ConfigurationChanges=ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android
+								.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
 
@@ -29,14 +34,24 @@ namespace IndoorNavigation.Droid
 
             base.OnCreate(bundle);
            
-            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission
+					(this, Manifest.Permission.AccessCoarseLocation) 
+				!= Permission.Granted)
             {
-                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+                ActivityCompat.RequestPermissions
+					(this, new String[] 
+						  { 
+							 Manifest.Permission.AccessCoarseLocation, 
+							 Manifest.Permission.AccessFineLocation 
+						  }, 0);
             }
 
-            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission
+					(this, Manifest.Permission.WriteExternalStorage) 
+				!= Permission.Granted)
             {
-                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.WriteExternalStorage }, 0);
+                ActivityCompat.RequestPermissions(this, 
+					new String[] {Manifest.Permission.WriteExternalStorage}, 0);
             }
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
@@ -48,7 +63,10 @@ namespace IndoorNavigation.Droid
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
-            Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
+            Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 
+																   0, 
+																 160, 
+																 204));
 
             //Finish();
         }
@@ -65,12 +83,18 @@ namespace IndoorNavigation.Droid
             
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, 
+														string[] permissions, 
+													  Permission[] grantResults)
         {
-            global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            global::ZXing.Net.Mobile.Android.PermissionsHandler
+			.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            PermissionsImplementation.Current
+			.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, 
+											permissions, 
+											grantResults);
         }
     }
 }

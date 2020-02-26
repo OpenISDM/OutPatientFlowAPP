@@ -53,7 +53,9 @@ using System.Linq;
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScan))]
 namespace IndoorNavigation.Droid
 {
-    public class BeaconScan : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, LBeaconScan
+    public class BeaconScan : Java.Lang.Object, 
+							  BluetoothAdapter.ILeScanCallback, 
+							  LBeaconScan
     {
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
@@ -66,7 +68,9 @@ namespace IndoorNavigation.Droid
         {
             _event = new NavigationEvent();
             var appContext = Android.App.Application.Context;
-            this._manager = (BluetoothManager)appContext.GetSystemService("bluetooth");
+            this._manager = 
+				(BluetoothManager)appContext.GetSystemService("bluetooth");
+				
             this._adapter = this._manager.Adapter;
         }
 
@@ -86,17 +90,27 @@ namespace IndoorNavigation.Droid
             this._adapter.StopLeScan(this);
         }
 
-        public void OnLeScan(BluetoothDevice bleDevice, int rssi, byte[] scanRecord)
+        public void OnLeScan(BluetoothDevice bleDevice, 
+							 int rssi, 
+							 byte[] scanRecord)
         {
             this._count = this._count + 1;
             if (rssi > _rssiThreshold && rssi < 0)
             {
                 string tempUUID = BitConverter.ToString(scanRecord);
                 string identifierUUID = ExtractBeaconUUID(tempUUID);
-                Console.WriteLine("\n >> Find A Beacon[{0}] Name:{1}; Address:{2}; RSSI:{3}; Record:{4}\n", this._count, bleDevice, bleDevice.Address, rssi, identifierUUID);
+                Console.WriteLine("\n >> Find A Beacon[{0}] Name:{1};"+
+								  " Address:{2}; RSSI:{3}; Record:{4}\n", 
+								  this._count, 
+								  bleDevice, 
+								  bleDevice.Address, 
+								  rssi, 
+								  identifierUUID);
+								  
                 if (identifierUUID.Length >= 36)
                 {
-                    List<BeaconSignalModel> signals = new List<BeaconSignalModel>();
+                    List<BeaconSignalModel> signals = 
+						new List<BeaconSignalModel>();
                     signals.Add(new BeaconSignalModel
                     {
                         UUID = new Guid(identifierUUID),
@@ -134,12 +148,14 @@ namespace IndoorNavigation.Droid
             }
             else
             {
-                var parser = string.Format("{0}{1}{2}{3}-{4}{5}-{6}{7}-{8}{9}-{10}{11}{12}{13}{14}{15}",
-                                            parse[9], parse[10], parse[11], parse[12],
-                                            parse[13], parse[14],
-                                            parse[15], parse[16],
-                                            parse[17], parse[18],
-                                            parse[19], parse[20], parse[21], parse[22], parse[23], parse[24]);
+                var parser = string.Format("{0}{1}{2}{3}-{4}{5}-{6}{7}-{8}{9}-"+
+										   "{10}{11}{12}{13}{14}{15}",
+                                      parse[9], parse[10], parse[11], parse[12],
+                                      parse[13], parse[14],
+                                      parse[15], parse[16],
+                                      parse[17], parse[18],
+                                     parse[19], parse[20], parse[21], parse[22], 
+									  parse[23], parse[24]);
                 return parser.ToString();
             }
         }
