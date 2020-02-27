@@ -58,27 +58,37 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
-
+using TestLibrary;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
     public partial class App : Application
     {
-        public ObservableCollection<RgRecord> records = new ObservableCollection<RgRecord>();
+        public ObservableCollection<RgRecord> records = 
+			new ObservableCollection<RgRecord>();
+			
         public int FinishCount = 0;
         public bool isRigistered = false;
         public bool getRigistered = false;
+		
         public ObservableCollection<RgRecord> _TmpRecords = 
-            new ObservableCollection<RgRecord>(); //to test select date 
-        public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+            new ObservableCollection<RgRecord>(); 
+			
+        public string IDnumber = 
+			Preferences.Get("ID_NUMBER_STRING", string.Empty);
+			
         public bool HaveCashier = false;
         public bool getCashier = false;
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
-        public RgRecord lastFinished = null;       
+        public RgRecord lastFinished = null;     
+		
         public App()
         {
             InitializeComponent();
+
+            Class1 class1 = new Class1();
+            Console.WriteLine(class1.add(50,20));
 
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;

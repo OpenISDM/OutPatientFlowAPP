@@ -21,8 +21,11 @@ namespace IndoorNavigation
 
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension).GetTypeInfo()
+								.Assembly);
+        CultureInfo currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
         INetworkSetting networkSettings;
 
         public AskRegisterPopupPage()
@@ -57,7 +60,10 @@ namespace IndoorNavigation
                 await CancelorClickBack();
             else
             {
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)));
+                await PopupNavigation.Instance
+					  .PushAsync(new AlertDialogPopupPage
+					  (_resourceManager.GetString("BAD_NETWORK_STRING",
+												  currentLanguage)));
                 ButtonLock = false;
                 return;
             }
@@ -73,11 +79,15 @@ namespace IndoorNavigation
             app.getRigistered = true;
             app.records.Add(new RgRecord
             {
-                DptName =_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", currentLanguage),
+                DptName =
+					_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", 
+											   currentLanguage),
                 _regionID = new Guid("22222222-2222-2222-2222-222222222222"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
                 
-                _waypointName = "掛號台",
+                _waypointName = 
+					_resourceManager.GetString("REGISTERED_COUNTER_STRING",
+											   currentLanguage),
                 type=RecordType.Register
             });
             app.records.Add(new RgRecord {type=RecordType.NULL});

@@ -21,13 +21,16 @@ namespace IndoorNavigation
         ObservableCollection<DestinationItem> Cashieritems;
         ObservableCollection<DestinationItem> Pharmacyitems;
 
-        CultureInfo currentLanguage= CrossMultilingual.Current.CurrentCultureInfo;
+        CultureInfo currentLanguage= 
+			CrossMultilingual.Current.CurrentCultureInfo;
+			
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension).GetTypeInfo()
+								.Assembly);
         App app = (App)Application.Current;
- 
-        //PickCahsierPopPageViewModel _viewmodel;
+
         public PickCashierPopupPage()
         {
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
@@ -38,7 +41,6 @@ namespace IndoorNavigation
 
             CashierSelectionView.ItemsSource = Cashieritems;
             PharmacySelectionView.ItemsSource = Pharmacyitems;
-            //SetViewOfPage();
 
             if (Pharmacyitems.Count <= 1)
                 PharmacySelectionView.SelectedItem = Pharmacyitems[0];
@@ -48,40 +50,68 @@ namespace IndoorNavigation
         
         public void LoadData()
         {          
-            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            XmlDocument doc = 
+				NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+				
             XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
 
             foreach(XmlNode node in nodeList)
             {
                 DestinationItem item = new DestinationItem();
-                item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+				
+                item._regionID = 
+					new Guid(node.Attributes["region_id"].Value);
+					
+                item._waypointID = 
+					new Guid(node.Attributes["waypoint_id"].Value);
+					
                 item._floor = node.Attributes["floor"].Value;
+				
                 item._waypointName = node.Attributes["name"].Value;
                 Cashieritems.Add(item); 
             }
-            XmlNodeList pharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            XmlNodeList pharmacyNodeList = 
+				doc.GetElementsByTagName("Pharmacystation");
+				
             foreach(XmlNode node in pharmacyNodeList)
             {
                 DestinationItem item = new DestinationItem();
                 item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+				
+                item._waypointID = 
+					new Guid(node.Attributes["waypoint_id"].Value);
+					
                 item._floor = node.Attributes["floor"].Value;
-                item._waypointName = node.Attributes["name"].Value;
-                Console.WriteLine($"region id is{item._waypointID}, {item._regionID}");
+				
+                item._waypointName = 
+					node.Attributes["name"].Value;
+					
+                Console.WriteLine($"region id is{item._waypointID},"+
+								  $" {item._regionID}");
                 Pharmacyitems.Add(item);
             }
         }
 
         async private void CashierOKBtn_Clicked(object sender, EventArgs e)
         {            
-            var cashier_item = CashierSelectionView.SelectedItem as DestinationItem;
-            var pharmacy_item = PharmacySelectionView.SelectedItem as DestinationItem;
+            var cashier_item = 
+				CashierSelectionView.SelectedItem as DestinationItem;
+				
+            var pharmacy_item = 
+				PharmacySelectionView.SelectedItem as DestinationItem;
+				
             if(cashier_item==null || pharmacy_item == null)
-            {
-                //string alertmeg =_resourceManager.GetString("CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING",currentLanguage);
-                //await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(alertmeg));
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("CASHIER_AND_PHARMACY_SHOULD_SELECT_ONE_STRING", currentLanguage), _resourceManager.GetString("OK_STRING",currentLanguage)));
+            {                
+                await PopupNavigation.Instance.PushAsync
+					(new AlertDialogPopupPage(
+						_resourceManager.GetString
+							("CASHIER_SHOULD_SELECT_ONE_STRING", 
+							 currentLanguage), 
+						_resourceManager.GetString
+							("OK_STRING",
+							 currentLanguage)
+						)
+					);
                 return;
             }
             if (cashier_item != null && pharmacy_item!=null )

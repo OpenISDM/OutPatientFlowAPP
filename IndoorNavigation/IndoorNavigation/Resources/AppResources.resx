@@ -624,4 +624,10 @@
   <data name="INVALID_WAYPOINT_STRING" xml:space="preserve">
     <value>(Invalid waypoint)</value>
   </data>
+  <data name="CASHIER_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
+    <value>Cashier and Pharmacy need to be selected at least one.</value>
+  </data>
+  <data name="REGISTERED_COUNTER_STRING" xml:space="preserve">
+    <value>Registered counter</value>
+  </data>
 </root>

@@ -1,35 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                 xmlns="http://xamarin.com/schemas/2014/forms"
+<!--/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * File Description:
+ *
+ *      The file contains the code behind for the App class. The code is 
+ *      responsible for instantiating the first page that will be displayed by
+ *      the application on each platform, and for handling application 
+ *      lifecycle events. Both App.xaml and App.xaml.cs contribute to a class 
+ *      named App that derives from Application. This is only one entry point 
+ *      when the app launch at first time.
+ *      
+ * Version:
+ *
+ *      1.0.0, 20190605
+ * 
+ * File Name:
+ *
+ *      AskRegisterPopupPage.xaml
+ *
+ * Abstract:
+ *
+ *      Waypoint-based navigator is a mobile Bluetooth navigation application
+ *      that runs on smart phones. It is structed to support anywhere 
+ *      navigation indoors in areas covered by different indoor positioning 
+ *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
+ *      BeDIS (Building/environment Data and Information System) for indoor 
+ *      positioning. This IPS provides a location beacon at every waypoint. The 
+ *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
+ *      not need to continuously monitor its own position.
+ *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
+ *      tookit that runs on both iOS and Android.
+ *
+ * Authors:
+ *
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw
+ *
+ */-->
+<pages:PopupPage 
+			 xmlns:pages=
+				"clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:mc=
+				"http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"             
              x:Class="IndoorNavigation.AskRegisterPopupPage">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" >
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="TextColor" Value="#3f51b5"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="HeightRequest" Value="45"/>
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
     <AbsoluteLayout>
-        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+        <ContentView AbsoluteLayout.LayoutFlags="All" 
+					 AbsoluteLayout.LayoutBounds="0,0,1,1">
+					 
             <ContentView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </ContentView.GestureRecognizers>
 
         </ContentView>
-        <Frame x:Name="AddFrame" BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.85,0.3" CornerRadius="8">
+        <Frame x:Name="AddFrame" 
+			   BackgroundColor="White" 
+			   AbsoluteLayout.LayoutFlags="All" 
+			   AbsoluteLayout.LayoutBounds="0.5,0.5,0.85,0.3" 
+			   CornerRadius="8">
+			   
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" FontSize="Large" HorizontalOptions="StartAndExpand" TextColor="Black" VerticalOptions="CenterAndExpand" Grid.Row="0"/>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1">
-                    <Button x:Name="RegisterCancelBtn" Text="{i18n:Translate NO_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterCancelBtn_Clicked"  HeightRequest="45"/>
-                    <Button x:Name="RegisterOKBtn" Text="{i18n:Translate YES_STRING}" FontSize="Large" BackgroundColor="Transparent" TextColor="#3f51b5" HorizontalOptions="End"  Clicked="RegisterOKBtn_Clicked" WidthRequest="60" HeightRequest="45"/>
+                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" 
+					   FontSize="Large" 
+					   HorizontalOptions="StartAndExpand" 
+					   TextColor="Black" 
+					   VerticalOptions="CenterAndExpand" 
+					   Grid.Row="0"/>
+					   
+                <StackLayout Orientation="Horizontal" 
+							 HorizontalOptions="End" 
+							 Grid.Row="1">
+							 
+                    <Button x:Name="RegisterCancelBtn" 
+                            Text="{i18n:Translate NO_STRING}" 
+                            Clicked="RegisterCancelBtn_Clicked"/>
+                    <Button x:Name="RegisterOKBtn" 
+                            Text="{i18n:Translate YES_STRING}" 
+                            Clicked="RegisterOKBtn_Clicked" 
+                            WidthRequest="60"/>
                 </StackLayout>
             </Grid>
             
         </Frame>
-        <ActivityIndicator x:Name="BusyIndicator" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2" Color="#3f51b5"/>
+        <ActivityIndicator x:Name="BusyIndicator" 
+                           AbsoluteLayout.LayoutFlags="All" 
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2" 
+                           Color="#3f51b5"/>
     </AbsoluteLayout>
 
 </pages:PopupPage>

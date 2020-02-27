@@ -232,6 +232,15 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Cashier and Pharmacy need to be selected at least one. 的當地語系化字串。
+        /// </summary>
+        internal static string CASHIER_SHOULD_SELECT_ONE_STRING {
+            get {
+                return ResourceManager.GetString("CASHIER_SHOULD_SELECT_ONE_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Bath Room 的當地語系化字串。
         /// </summary>
         internal static string CATEGORY_BATH_ROOM_STRING {
@@ -1272,6 +1281,15 @@ namespace IndoorNavigation.Resources {
         internal static string REGISTERDAY_STRING {
             get {
                 return ResourceManager.GetString("REGISTERDAY_STRING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Registered counter 的當地語系化字串。
+        /// </summary>
+        internal static string REGISTERED_COUNTER_STRING {
+            get {
+                return ResourceManager.GetString("REGISTERED_COUNTER_STRING", resourceCulture);
             }
         }
         

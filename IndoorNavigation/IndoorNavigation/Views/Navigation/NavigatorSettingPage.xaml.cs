@@ -117,7 +117,7 @@ namespace IndoorNavigation.Views.Navigation
                     OptionPicker.SelectedItem =
                         getResource("MEDIUM_STRING");
                 }
-                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+                else if ((bool)Application.Current.Properties["WeakRssi"]==true)
                 {
                     OptionPicker.SelectedItem =
                         getResource("WEAK_STRING");
@@ -172,19 +172,19 @@ namespace IndoorNavigation.Views.Navigation
 						case "Strong":
 						case "強":
 							Application.Current.Properties["StrongRssi"] = true;
-							Application.Current.Properties["MediumRssi"] = false;
+							Application.Current.Properties["MediumRssi"] =false;
 							Application.Current.Properties["WeakRssi"] = false;
 							break;
 						case "Medium":
 						case "中":
-                            Application.Current.Properties["StrongRssi"] = false;
-                            Application.Current.Properties["MediumRssi"] = true;
+                            Application.Current.Properties["StrongRssi"] =false;
+                            Application.Current.Properties["MediumRssi"] =true;
                             Application.Current.Properties["WeakRssi"] = false;
                             break;
 						case "Weak":
 						case "弱":
-                            Application.Current.Properties["StrongRssi"] = false;
-                            Application.Current.Properties["MediumRssi"] = false;
+                            Application.Current.Properties["StrongRssi"] =false;
+                            Application.Current.Properties["MediumRssi"] =false;
                             Application.Current.Properties["WeakRssi"] = true;
                             break;
 					}

@@ -22,24 +22,36 @@
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
             </Style>
+            <Style TargetType="Button">
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+            </Style>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
     <AbsoluteLayout>
-        <ContentView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <!--<ContentView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>-->
+        <ContentView AbsoluteLayout.LayoutFlags="All" 
+					 AbsoluteLayout.LayoutBounds="0,0,1,1">            
         </ContentView>
-        <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.89,0.43"  CornerRadius="8">
+        <Frame 	BackgroundColor="White" 
+				AbsoluteLayout.LayoutFlags="All" 
+				AbsoluteLayout.LayoutBounds="0.5,0.5,0.89,0.43"  
+				CornerRadius="8">
             <StackLayout>
-                <!--<Label x:Name="TitleLabel" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}" FontSize="Large"/>-->
                 <ScrollView> 
-                    <StackLayout x:Name="SelectionStack" Margin="5,0">
-                        <!--<input:SelectionView x:Name="PickCashierView" SelectionType="RadioButton" ColumnNumber="1" ItemsSource="{Binding CashierItem}" SelectedItem="{Binding SelectItem}" RowSpacing="20"/>-->
-                        <Label x:Name="CashierText" Text="{i18n:Translate CATEGORY_CASHIER_STRING}"/>
-                        <input:SelectionView x:Name="CashierSelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Cashieritems}"/>
-                        <Label x:Name="PharmacyText" Text="{i18n:Translate CATEGORY_PHARMACY_STRING}"/>
-                        <input:SelectionView x:Name="PharmacySelectionView" ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Pharmacyitems}"/>
+                    <StackLayout x:Name="SelectionStack" 
+								 Margin="5,0">                       
+                        <Label x:Name="CashierText" 
+							   Text="{i18n:Translate CATEGORY_CASHIER_STRING}"/>
+                        <input:SelectionView x:Name="CashierSelectionView" 
+										  ColumnNumber="1" 
+										  SelectionType="RadioButton" 
+										  ItemsSource="{Binding Cashieritems}"/>
+                        <Label x:Name="PharmacyText" 
+							  Text="{i18n:Translate CATEGORY_PHARMACY_STRING}"/>
+                        <input:SelectionView x:Name="PharmacySelectionView" 
+										 ColumnNumber="1" 
+										 SelectionType="RadioButton" 
+										 ItemsSource="{Binding Pharmacyitems}"/>
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">

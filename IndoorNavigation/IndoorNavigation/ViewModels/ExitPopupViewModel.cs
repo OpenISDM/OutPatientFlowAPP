@@ -58,7 +58,10 @@ namespace IndoorNavigation
         public ICommand ButtonCommand { private set; get; }
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
+								
         private const string fileName = "Yuanlin_OPFM.ExitMap.xml";
 
         private bool isButtonPressed = false;
@@ -76,8 +79,15 @@ namespace IndoorNavigation
 
                 var o = SelectItem as DestinationItem;
 
-                await nowPage.Navigation.PushAsync(new NavigatorPage(_navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
+                await nowPage.Navigation.PushAsync
+					(new NavigatorPage(_navigationGraphName, 
+									   o._regionID, 
+									   o._waypointID, 
+									   o._waypointName, 
+									   _nameInformation));
+									   
                 App app = (App)Application.Current;
+				
                 app.records.Insert(app.FinishCount,new RgRecord
                 {
                     _waypointName = o._waypointName,
@@ -92,11 +102,17 @@ namespace IndoorNavigation
             }
             else
             {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("SELECT_EXIT_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
+                var currentLanguage = 
+					CrossMultilingual.Current.CurrentCultureInfo;
+                await nowPage.DisplayAlert
+					(_resourceManager.GetString("MESSAGE_STRING", 
+												currentLanguage), 
+					 _resourceManager.GetString("SELECT_EXIT_STRING", 
+												currentLanguage), 
+					 _resourceManager.GetString("OK_STRING", 
+												currentLanguage));
                 return;
             }
-          //  await nowPage.PopupNavigation.Instance.PopAllAsync();
         }
 
         public DestinationItem SelectItem
@@ -114,7 +130,12 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;
             phoneInformation = new PhoneInformation();
 
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _nameInformation = 
+				NavigraphStorage.LoadInformationML
+				(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
+				"_info_" + 
+				phoneInformation.GiveCurrentLanguage() + 
+				".xml");
 
             ButtonCommand = new Command(ToNavigatorExit);
             LoadData();
@@ -138,6 +159,8 @@ namespace IndoorNavigation
             return;
         }       
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string propName=null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        public void OnPropertyChanged([CallerMemberName]string propName=null) =>
+			PropertyChanged?.Invoke(this, 
+									new PropertyChangedEventArgs(propName));
     }
 }

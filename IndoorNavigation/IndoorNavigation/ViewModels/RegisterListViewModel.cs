@@ -51,9 +51,13 @@ namespace IndoorNavigation.ViewModels
     {
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
 
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        CultureInfo currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
+			
         private Page mainPage = Application.Current.MainPage;
         private App app = (App)Application.Current;
 
@@ -73,7 +77,7 @@ namespace IndoorNavigation.ViewModels
         }
         async public void CheckRegister()
         {
-            await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());                       
+		   await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());                       
         }               
         private string GetResourceString(string key)
         {
@@ -82,13 +86,20 @@ namespace IndoorNavigation.ViewModels
 
         public async void CheckSignIn()
         {
-            string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-            string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
+            string IDnum = 
+				Preferences.Get("ID_NUMBER_STRING", string.Empty);
+				
+            string patientID = 
+				Preferences.Get("PATIENT_ID_STRING", string.Empty);				
 
             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
             {
-                var wantSignIn = await mainPage.DisplayAlert(
-                  GetResourceString("MESSAGE_STRING"), GetResourceString("ALERT_LOGIN_STRING"), GetResourceString("OK_STRING"), GetResourceString("CANCEL_STRING"));                                   
+                var wantSignIn = 
+					await mainPage
+					.DisplayAlert(GetResourceString("MESSAGE_STRING"), 
+								  GetResourceString("ALERT_LOGIN_STRING"), 
+								  GetResourceString("OK_STRING"), 
+								  GetResourceString("CANCEL_STRING"));                                   
                 if (wantSignIn)
                     await mainPage.Navigation.PushAsync(new SignInPage());
                 else

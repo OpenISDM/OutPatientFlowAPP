@@ -11093,7 +11093,7 @@ namespace IndoorNavigation.Droid
 			public const int Add_Item10 = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int Add_Item11 = 2130837589;
+			public const int Add_Item10_ = 2130837589;
 			
 			// aapt resource value: 0x7f020056
 			public const int Add_Item2 = 2130837590;
