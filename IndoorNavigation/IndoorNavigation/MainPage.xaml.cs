@@ -173,6 +173,8 @@ namespace IndoorNavigation
                 {
                     StreamReader tr = new StreamReader(stream);
                     string fileContents = tr.ReadToEnd();
+                    Console.WriteLine(">>MainPage :: HandleItemTapped");
+                    Console.WriteLine(fileContents);
                     xmlDocument.LoadXml(fileContents);
                 }
 

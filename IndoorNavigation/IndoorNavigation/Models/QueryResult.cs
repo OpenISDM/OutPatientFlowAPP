@@ -53,8 +53,8 @@ namespace IndoorNavigation
         public string CareRoom { get; set; }
         public string DrName { get; set; }
         public string SeeSeq { get; set; }
-        public bool isComplete { get; set; }
-        public bool isAccept { get; set; }
+        public bool isComplete { get; set; } = false;
+        public bool isAccept { get; set; } = false;
         public override string ToString() => _waypointName;
        
     }

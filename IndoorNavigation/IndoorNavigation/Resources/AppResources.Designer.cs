@@ -421,7 +421,7 @@ namespace IndoorNavigation.Resources {
         }
         
         /// <summary>
-        ///   查詢類似 2.0.170 的當地語系化字串。
+        ///   查詢類似 2.0.171 的當地語系化字串。
         /// </summary>
         internal static string CURRENT_VERSION_STRING {
             get {

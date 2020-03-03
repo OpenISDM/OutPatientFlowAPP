@@ -58,7 +58,6 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
-using TestLibrary;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -86,9 +85,6 @@ namespace IndoorNavigation
         public App()
         {
             InitializeComponent();
-
-            Class1 class1 = new Class1();
-            Console.WriteLine(class1.add(50,20));
 
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;

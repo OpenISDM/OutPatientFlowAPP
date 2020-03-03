@@ -47,7 +47,9 @@
                                    TextColor="Black"/>
 								   
                             <Button x:Name="yetFinishBtn" 
-									Text="{i18n:Translate FINISH_STRING}" 
+									Text="{i18n:Translate FINISH_STRING}"
+                                    IsEnabled="{Binding isComplete}" 
+                                    IsVisible="{Binding isComplete}"
 									FontSize="Large" 									
                                     HorizontalOptions="EndAndExpand" 
 									CommandParameter="{Binding .}" 
@@ -106,6 +108,8 @@
 									Text="{i18n:Translate FINISH_STRING}" 
 									HorizontalOptions="EndAndExpand" 
 									FontSize="Large" 
+                                    IsEnabled="{Binding isComplete}" 
+                                    IsVisible="{Binding isComplete}"
 									Clicked="YetFinishBtn_Clicked" 
 									CommandParameter="{Binding .}" 
 									TextColor="White" 

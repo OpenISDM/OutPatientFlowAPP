@@ -584,7 +584,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 							 (Guid.Parse(arrayWaypointIDs[i]), tempBeaconsList);
                             Console.WriteLine
 								($"beacon handle wayponit id:"+
-								 "{waypointID.ToString()}");
+								 $"{waypointID.ToString()}");
                         }
                         else
                         {
