@@ -58,6 +58,6 @@ Then plug your Phone into PC's USB port.
 Finally click Run button in the Visual Studio above menu.
 
 ## License
-This project is licensed under the GPLv3 - see the [License](License) file for details.
+This project is licensed under the GPLv3 - see the [LICENSE](LICENSE) file for details.
 
 
