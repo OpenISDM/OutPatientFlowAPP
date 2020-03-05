@@ -111,6 +111,7 @@
     <Compile Include="BeaconScan.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <None Include="iOSDiagram.cd" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="NetworkSetting.cs" />
