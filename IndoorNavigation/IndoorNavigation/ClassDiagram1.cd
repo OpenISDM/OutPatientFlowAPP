@@ -1,451 +1,480 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="Folder: Models">
-    <Position X="0.5" Y="0.919" Height="0.401" Width="1.188" />
-  </Comment>
-  <Comment CommentText="NavigationGraph.cs">
-    <Position X="0.5" Y="5.12" Height="0.328" Width="1.594" />
-  </Comment>
   <Comment CommentText="FirstDirectionInstruction.cs">
-    <Position X="0.5" Y="2.905" Height="0.311" Width="1.927" />
+    <Position X="2.75" Y="1.625" Height="0.311" Width="1.927" />
   </Comment>
   <Comment CommentText="BeaconScanEventArgs.cs">
     <Position X="0.5" Y="1.653" Height="0.295" Width="1.7" />
   </Comment>
   <Comment CommentText="NavigationEvent.cs">
-    <Position X="3.241" Y="1.682" Height="0.284" Width="1.7" />
+    <Position X="5.229" Y="1.615" Height="0.284" Width="1.7" />
   </Comment>
   <Comment CommentText="NavigationModel.cs">
-    <Position X="3.273" Y="2.919" Height="0.287" Width="1.456" />
+    <Position X="7.282" Y="1.622" Height="0.287" Width="1.456" />
   </Comment>
   <Comment CommentText="PhoneInformation.cs">
-    <Position X="3.013" Y="5.116" Height="0.354" Width="1.7" />
+    <Position X="10.979" Y="1.562" Height="0.354" Width="1.7" />
   </Comment>
   <Comment CommentText="ReadVersion.cs">
-    <Position X="3.008" Y="6.458" Height="0.291" Width="1.198" />
+    <Position X="13.26" Y="1.562" Height="0.291" Width="1.198" />
+  </Comment>
+  <Comment CommentText="NavigationGraph.cs">
+    <Position X="0.5" Y="5.12" Height="0.328" Width="1.594" />
   </Comment>
   <Comment CommentText="Region.cs">
-    <Position X="3.065" Y="7.644" Height="0.34" Width="0.923" />
+    <Position X="4.771" Y="5.115" Height="0.34" Width="0.923" />
   </Comment>
   <Comment CommentText="Waypoint.cs">
-    <Position X="6.055" Y="1.585" Height="0.347" Width="1.092" />
+    <Position X="8.253" Y="5.033" Height="0.347" Width="1.092" />
   </Comment>
   <Comment CommentText="XMLInformation.cs">
-    <Position X="6.003" Y="4.373" Height="0.354" Width="1.432" />
-  </Comment>
-  <Comment CommentText="ClinincPositionInfo.cs">
-    <Position X="6.01" Y="5.679" Height="0.298" Width="1.58" />
+    <Position X="13.5" Y="5" Height="0.354" Width="1.432" />
   </Comment>
   <Comment CommentText="ListDataTemplates.cs">
-    <Position X="6.045" Y="6.873" Height="0.34" Width="1.622" />
+    <Position X="2.483" Y="14.829" Height="0.34" Width="1.622" />
+  </Comment>
+  <Comment CommentText="ClinincPositionInfo.cs">
+    <Position X="0.5" Y="14.854" Height="0.298" Width="1.58" />
   </Comment>
   <Comment CommentText="QueryResult.cs">
-    <Position X="6.048" Y="8.229" Height="0.368" Width="1.382" />
+    <Position X="4.725" Y="14.789" Height="0.368" Width="1.382" />
   </Comment>
   <Comment CommentText="Interface.cs">
-    <Position X="8.517" Y="1.563" Height="0.36" Width="1.115" />
-  </Comment>
-  <Comment CommentText="Folder: Modules">
-    <Position X="12.053" Y="0.962" Height="0.364" Width="1.7" />
-  </Comment>
-  <Comment CommentText="iBeaconClients.cs">
-    <Position X="12.051" Y="1.646" Height="0.328" Width="1.448" />
+    <Position X="8.5" Y="14.75" Height="0.36" Width="1.115" />
   </Comment>
   <Comment CommentText="WaypointClient.cs">
-    <Position X="12.003" Y="2.852" Height="0.393" Width="1.578" />
+    <Position X="3.271" Y="20.052" Height="0.393" Width="1.578" />
   </Comment>
   <Comment CommentText="Session.cs">
-    <Position X="12.055" Y="4.852" Height="0.384" Width="1.334" />
+    <Position X="6.792" Y="20.031" Height="0.384" Width="1.334" />
   </Comment>
   <Comment CommentText="NavigationModule">
-    <Position X="12.035" Y="6.113" Height="0.328" Width="1.635" />
+    <Position X="8.949" Y="20.021" Height="0.328" Width="1.635" />
+  </Comment>
+  <Comment CommentText="iBeaconClients.cs">
+    <Position X="0.777" Y="20.086" Height="0.328" Width="1.448" />
   </Comment>
   <Comment CommentText="IPSModules.cs">
-    <Position X="14.458" Y="1.626" Height="0.354" Width="1.686" />
-  </Comment>
-  <Comment CommentText="Folder : Resources">
-    <Position X="17.78" Y="0.642" Height="0.305" Width="1.7" />
+    <Position X="10.792" Y="20.021" Height="0.354" Width="1.686" />
   </Comment>
   <Comment CommentText="TranslateExtension.cs">
-    <Position X="17.76" Y="1.63" Height="0.347" Width="1.7" />
-  </Comment>
-  <Comment CommentText="Folder :Utilities">
-    <Position X="20.777" Y="0.586" Height="0.347" Width="1.7" />
-  </Comment>
-  <Comment CommentText="Storage.cs">
-    <Position X="20.798" Y="1.561" Height="0.347" Width="1.545" />
+    <Position X="0.5" Y="30.354" Height="0.347" Width="1.492" />
   </Comment>
   <Comment CommentText="Utility.cs">
-    <Position X="20.832" Y="2.856" Height="0.34" Width="0.944" />
+    <Position X="4.301" Y="30.309" Height="0.34" Width="0.944" />
   </Comment>
-  <Comment CommentText="Folder : ViewModels">
-    <Position X="24.044" Y="0.599" Height="0.326" Width="1.575" />
-  </Comment>
-  <Comment CommentText="NavigatorPageViewModel.cs">
-    <Position X="24.013" Y="1.428" Height="0.305" Width="1.926" />
-  </Comment>
-  <Comment CommentText="ExitPopupPageViewModel.cs">
-    <Position X="24.033" Y="2.889" Height="0.314" Width="1.933" />
-  </Comment>
-  <Comment CommentText="MainPageViewModel.cs">
-    <Position X="24.058" Y="4.177" Height="0.295" Width="1.7" />
-  </Comment>
-  <Comment CommentText="RegisterListViewModel.cs">
-    <Position X="24.034" Y="5.954" Height="0.289" Width="1.909" />
-  </Comment>
-  <Comment CommentText="Folder : Views">
-    <Position X="27.529" Y="0.592" Height="0.346" Width="1.213" />
-  </Comment>
-  <Comment CommentText="CityHallHomePage">
-    <Position X="27.532" Y="2.129" Height="0.352" Width="1.474" />
-  </Comment>
-  <Comment CommentText="DestinationPickPage">
-    <Position X="27.504" Y="3.659" Height="0.331" Width="1.636" />
-  </Comment>
-  <Comment CommentText="NavigationHomePage">
-    <Position X="27.521" Y="5.866" Height="0.348" Width="1.7" />
-  </Comment>
-  <Comment CommentText="NavigatorPage">
-    <Position X="27.511" Y="7.087" Height="0.302" Width="1.551" />
-  </Comment>
-  <Comment CommentText="NavigatorSettingPage">
-    <Position X="27.528" Y="8.26" Height="0.367" Width="1.7" />
-  </Comment>
-  <Comment CommentText="RegisterList">
-    <Position X="30.282" Y="2.129" Height="0.33" Width="1.644" />
-  </Comment>
-  <Comment CommentText="SignInPage">
-    <Position X="30.277" Y="3.636" Height="0.32" Width="1.195" />
-  </Comment>
-  <Comment CommentText="Folder : Navigation">
-    <Position X="27.479" Y="1.423" Height="0.39" Width="1.553" />
-  </Comment>
-  <Comment CommentText="Folder : OPFM">
-    <Position X="30.277" Y="1.387" Height="0.374" Width="1.453" />
-  </Comment>
-  <Comment CommentText="Folder : PopupPage">
-    <Position X="33.234" Y="1.39" Height="0.363" Width="1.7" />
-  </Comment>
-  <Comment CommentText="AddPopupPage">
-    <Position X="33.285" Y="2.164" Height="0.284" Width="1.7" />
-  </Comment>
-  <Comment CommentText="AlertDialogPopupPage">
-    <Position X="33.267" Y="3.38" Height="0.331" Width="1.7" />
-  </Comment>
-  <Comment CommentText="AskRegisterPopupPage">
-    <Position X="33.277" Y="4.828" Height="0.385" Width="1.7" />
-  </Comment>
-  <Comment CommentText="DownloadPopupPage">
-    <Position X="33.234" Y="6.13" Height="0.342" Width="1.7" />
-  </Comment>
-  <Comment CommentText="ExitPopupPage">
-    <Position X="36.541" Y="2.167" Height="0.309" Width="1.7" />
-  </Comment>
-  <Comment CommentText="SelectTwoWayPopupPage">
-    <Position X="36.472" Y="3.352" Height="0.385" Width="1.904" />
-  </Comment>
-  <Comment CommentText="ShiftAlertPopupPage">
-    <Position X="36.523" Y="5.946" Height="0.284" Width="1.7" />
-  </Comment>
-  <Comment CommentText="SettingTableViewPage">
-    <Position X="27.512" Y="9.674" Height="0.324" Width="1.601" />
-  </Comment>
-  <Comment CommentText="Yuanlin_HttpRequest">
-    <Position X="38.995" Y="1.343" Height="0.386" Width="1.7" />
-  </Comment>
-  <Comment CommentText="Folder : Root">
-    <Position X="42.035" Y="0.612" Height="0.341" Width="1.119" />
-  </Comment>
-  <Comment CommentText="PickCashierPopupPage">
-    <Position X="36.506" Y="4.661" Height="0.331" Width="1.7" />
-  </Comment>
-  <Comment CommentText="Folder : Yuanlin_OPFM">
-    <Position X="39.046" Y="0.629" Height="0.393" Width="1.7" />
+  <Comment CommentText="Storage.cs">
+    <Position X="2.496" Y="30.316" Height="0.347" Width="0.93" />
   </Comment>
   <Comment CommentText="App">
-    <Position X="42.034" Y="1.434" Height="0.284" Width="0.7" />
+    <Position X="6.039" Y="30.299" Height="0.284" Width="0.7" />
   </Comment>
   <Comment CommentText="MainPage">
-    <Position X="42.011" Y="2.693" Height="0.284" Width="0.867" />
+    <Position X="7.777" Y="30.37" Height="0.284" Width="0.867" />
   </Comment>
-  <Class Name="IndoorNavigation.Models.BeaconScanEventArgs" Collapsed="true">
+  <Comment CommentText="Yuanlin_HttpRequest">
+    <Position X="9.531" Y="30.28" Height="0.386" Width="1.7" />
+  </Comment>
+  <Comment CommentText="NavigatorPageViewModel.cs">
+    <Position X="1.25" Y="37" Height="0.305" Width="1.926" />
+  </Comment>
+  <Comment CommentText="ExitPopupPageViewModel.cs">
+    <Position X="3.551" Y="37.034" Height="0.314" Width="1.933" />
+  </Comment>
+  <Comment CommentText="MainPageViewModel.cs">
+    <Position X="5.993" Y="37.062" Height="0.295" Width="1.7" />
+  </Comment>
+  <Comment CommentText="RegisterListViewModel.cs">
+    <Position X="9.698" Y="37.109" Height="0.289" Width="1.909" />
+  </Comment>
+  <Comment CommentText="CityHallHomePage">
+    <Position X="0.75" Y="49.25" Height="0.352" Width="1.474" />
+  </Comment>
+  <Comment CommentText="DestinationPickPage">
+    <Position X="2.493" Y="49.27" Height="0.331" Width="1.48" />
+  </Comment>
+  <Comment CommentText="NavigationHomePage">
+    <Position X="5.979" Y="49.279" Height="0.348" Width="1.544" />
+  </Comment>
+  <Comment CommentText="NavigatorPage">
+    <Position X="7.729" Y="49.302" Height="0.302" Width="1.114" />
+  </Comment>
+  <Comment CommentText="NavigatorSettingPage">
+    <Position X="9.465" Y="49.256" Height="0.367" Width="1.606" />
+  </Comment>
+  <Comment CommentText="SettingTableViewPage">
+    <Position X="11.459" Y="49.243" Height="0.324" Width="1.601" />
+  </Comment>
+  <Comment CommentText="RegisterList">
+    <Position X="0.772" Y="56.035" Height="0.33" Width="1.644" />
+  </Comment>
+  <Comment CommentText="SignInPage">
+    <Position X="3.527" Y="55.99" Height="0.32" Width="1.195" />
+  </Comment>
+  <Comment CommentText="SelectTwoWayPopupPage">
+    <Position X="6.962" Y="56.029" Height="0.385" Width="1.821" />
+  </Comment>
+  <Comment CommentText="ShiftAlertPopupPage">
+    <Position X="10.919" Y="56.081" Height="0.284" Width="1.7" />
+  </Comment>
+  <Comment CommentText="PickCashierPopupPage">
+    <Position X="8.996" Y="56.067" Height="0.331" Width="1.7" />
+  </Comment>
+  <Comment CommentText="ExitPopupPage">
+    <Position X="5.27" Y="56.021" Height="0.309" Width="1.179" />
+  </Comment>
+  <Comment CommentText="DownloadPopupPage">
+    <Position X="0.5" Y="66.5" Height="0.342" Width="1.7" />
+  </Comment>
+  <Comment CommentText="AddPopupPage">
+    <Position X="0.775" Y="71.812" Height="0.284" Width="1.7" />
+  </Comment>
+  <Comment CommentText="AlertDialogPopupPage">
+    <Position X="2.705" Y="71.778" Height="0.331" Width="1.7" />
+  </Comment>
+  <Comment CommentText="AskRegisterPopupPage">
+    <Position X="4.746" Y="71.758" Height="0.385" Width="1.7" />
+  </Comment>
+  <Class Name="IndoorNavigation.Models.BeaconScanEventArgs">
     <Position X="0.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\BeaconScanEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.NavigaionLayer.FirstDirectionInstruction" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.NavigaionLayer.FirstDirectionInstruction">
+    <Position X="2.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAIAAAAAAAAAAAAAAAAAAAAAAgABAAggAAA=</HashCode>
       <FileName>Models\FirstDirectionInstruction.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.NavigationEvent" Collapsed="true">
-    <Position X="3.25" Y="2" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.NavigationEvent">
+    <Position X="5.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\NavigationEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph" Collapsed="true">
-    <Position X="0.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QBAFAgJAEAgAKAgCIkRAAAEAgADAAJAAwAAIGARQAAQ=</HashCode>
-      <FileName>Models\NavigationGraph.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.Models.BeaconSignal" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.BeaconSignal">
+    <Position X="7.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAEAAAAAAgAAAAACA=</HashCode>
       <FileName>Models\NavigationModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.BeaconSignalModel" Collapsed="true">
-    <Position X="3.25" Y="4" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.BeaconSignalModel">
+    <Position X="9" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\NavigationModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IndoorNavigation.Models.NavigaionLayer.PhoneInformation" Collapsed="true">
-    <Position X="3" Y="5.5" Width="1.5" />
+    <Position X="11" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAUQFAAAAAAAQAIAAAAAAAAggAAAAAAAAAQAA=</HashCode>
       <FileName>Models\PhoneInformation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.NavigaionLayer.ReadVersion" Collapsed="true">
-    <Position X="3" Y="6.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.NavigaionLayer.ReadVersion">
+    <Position X="13.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ReadVersion.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.Region" Collapsed="true">
-    <Position X="3" Y="8" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.Navigraph" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Struct Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.RegionEdge" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.WaypointEdge" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QBAFAgJAEAgAKAgCIkRAAAEAgADAAJAAwAAIGARQAAQ=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.Models.Region">
+    <Position X="6.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAIABABAAAAAAAAABAAAAAACAAAAAAA=</HashCode>
       <FileName>Models\Region.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.RegionWaypointPoint" Collapsed="true">
-    <Position X="3" Y="8.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.RegionWaypointPoint">
+    <Position X="4.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Region.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.Waypoint" Collapsed="true">
-    <Position X="6" Y="2.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.Waypoint">
+    <Position X="10" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAABASAIABAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Models\Waypoint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.PortalWaypoints" Collapsed="true">
-    <Position X="6" Y="3.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.PortalWaypoints">
+    <Position X="11.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Waypoint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.GroupWaypoint" Collapsed="true">
-    <Position X="6" Y="2" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.GroupWaypoint">
+    <Position X="8.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Waypoint.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.NavigaionLayer.XMLInformation" Collapsed="true">
-    <Position X="6" Y="4.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.NavigaionLayer.XMLInformation">
+    <Position X="13.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAgAAAEAAAAAAAAAAgAAAAIACAAAAAAAAAA=</HashCode>
       <FileName>Models\XMLInformation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ClinicPositionInfo" Collapsed="true">
-    <Position X="6" Y="6" Width="1.5" />
+  <Class Name="IndoorNavigation.ClinicPositionInfo">
+    <Position X="0.5" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Models\ClinicPositionInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ListDataTemplates" Collapsed="true">
-    <Position X="6" Y="7.25" Width="1.5" />
+  <Class Name="IndoorNavigation.ListDataTemplates">
+    <Position X="2.5" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAgAAAAAQAAAAABAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ListDataTemplates.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.RgRecord" Collapsed="true">
-    <Position X="6" Y="9.5" Width="1.5" />
+  <Class Name="IndoorNavigation.RgRecord">
+    <Position X="6.5" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAQAAgEAAAAAAAAAEAAAAAAAAAGAAEgAEA=</HashCode>
       <FileName>Models\QueryResult.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.DestinationItem" Collapsed="true">
-    <Position X="6" Y="8.75" Width="1.5" />
+  <Class Name="IndoorNavigation.DestinationItem">
+    <Position X="4.75" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAIEAAAAAAAAIEQBAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\QueryResult.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Models.WaypointBeaconsMapping" Collapsed="true">
-    <Position X="8.5" Y="2" Width="1.5" />
+  <Class Name="IndoorNavigation.Models.WaypointBeaconsMapping">
+    <Position X="8.5" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IndoorNavigation.Modules.IPSClients.IBeaconClient" Collapsed="true">
-    <Position X="12" Y="2" Width="1.5" />
+    <Position X="0.75" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAEAAAAACAAAAAAAAABQAAAAAAIAAAAAIAAAAEoQIAg=</HashCode>
       <FileName>Modules\IPSClients\iBeaconClient.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Orientation="Left" Position="0.172" />
+    <Lollipop Orientation="Bottom" Position="0.314" />
   </Class>
-  <Class Name="IndoorNavigation.Modules.IPSClients.WaypointClient" Collapsed="true">
-    <Position X="12" Y="3.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.IPSClients.WaypointClient">
+    <Position X="3.25" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAEAAAAACAAAAAAAAABAAAAAAAIAAAAAIAAAAEoQIAg=</HashCode>
       <FileName>Modules\IPSClients\WaypointClient.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Orientation="Left" Position="0.1" />
+    <Lollipop Orientation="Bottom" Position="0.241" />
   </Class>
-  <Class Name="IndoorNavigation.Modules.IPSClients.WaypointSignalEventArgs" Collapsed="true">
-    <Position X="12" Y="4" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.IPSClients.WaypointSignalEventArgs">
+    <Position X="5" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Modules\IPSClients\WaypointClient.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Modules.Session" Collapsed="true">
-    <Position X="12" Y="5.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.Session">
+    <Position X="6.75" Y="20.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="IndoorNavigation.Modules.Session.NavigationResult" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="IndoorNavigation.Modules.Session.NavigationInstruction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="IndoorNavigation.Modules.Session.NavigationEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AOEACIAAIAgAECAAEAqwCIAAAAAAABAAAoACgAQAAig=</HashCode>
       <FileName>Modules\Navigation\Session.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Modules.NavigationModule" Collapsed="true">
-    <Position X="12" Y="6.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.NavigationModule">
+    <Position X="9" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAACgAAAAABAAAAAAgAAAAAAAgIAQCAgAAAAg=</HashCode>
       <FileName>Modules\NavigationModule.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Modules.IPSModules" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.5" Y="2" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.IPSModules" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAABQEAgCIACBAAAAggQEACQIAABIQAQgAIEEDABEk=</HashCode>
       <FileName>Modules\IPSModules.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Resources.Helpers.TranslateExtension" Collapsed="true">
-    <Position X="17.75" Y="2" Width="1.75" />
+  <Class Name="IndoorNavigation.Resources.Helpers.TranslateExtension">
+    <Position X="0.5" Y="30.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAACAAAQAAAAAgAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>Resources\TranslateExtension.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Modules.Utilities.NavigraphStorage" Collapsed="true">
-    <Position X="20.75" Y="2" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.Utilities.NavigraphStorage">
+    <Position X="2.5" Y="30.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAkAJIAQsAACAAAEBABCAAQAAAAAAEAAQAAAA=</HashCode>
       <FileName>Utilities\Storage.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Modules.Utility" Collapsed="true">
-    <Position X="20.75" Y="3.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Modules.Utility">
+    <Position X="4.25" Y="30.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAIAAEAgAAAAAAAAAAAAAAEAAAAAAIAAAAAA=</HashCode>
       <FileName>Utilities\Utility.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ViewModels.Navigation.NavigatorPageViewModel" Collapsed="true">
-    <Position X="24" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.App">
+    <Position X="6" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAABAgQAgAEAAACAEAAAAIAAARAgAAADAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.MainPage">
+    <Position X="7.75" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAABUAgAgAhQAIAAAAAAAAAAAAwAQBAEAJAgAAA=</HashCode>
+      <FileName>MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.HttpRequest">
+    <Position X="9.5" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAQAAAAAgIBAAAAAAIAEAAAAAAACCAAAAAAIA=</HashCode>
+      <FileName>Yuanlin_OPFM\Yaunlin_HttpRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.ViewModels.Navigation.NavigatorPageViewModel">
+    <Position X="1.25" Y="37.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CwDAAAQQQCADMBkBAgIgAhxAgAKAiDAEIEEAQCACAoA=</HashCode>
       <FileName>ViewModels\Navigation\NavigatorPageViewModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Orientation="Left" Position="0.1" />
   </Class>
-  <Class Name="IndoorNavigation.ExitPopupViewModel" Collapsed="true">
-    <Position X="24" Y="3.25" Width="1.5" />
+  <Class Name="IndoorNavigation.ExitPopupViewModel">
+    <Position X="3.5" Y="37.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAQAAQAAgAIAAAAEQAgAAAAAgAQEQCAAAACgA=</HashCode>
       <FileName>ViewModels\ExitPopupViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ViewModels.MainPageViewModel" Collapsed="true">
-    <Position X="24" Y="4.5" Width="1.5" />
+  <Class Name="IndoorNavigation.ViewModels.MainPageViewModel">
+    <Position X="6" Y="37.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAQDAAAAAAAAAAAEAAAQAAAAgAABAAIAAAAIA=</HashCode>
       <FileName>ViewModels\MainPageViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ViewModels.Location" Collapsed="true">
-    <Position X="24" Y="5.25" Width="1.5" />
+  <Class Name="IndoorNavigation.ViewModels.Location">
+    <Position X="8" Y="37.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\MainPageViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.ViewModels.RegisterListViewModel" Collapsed="true">
-    <Position X="24" Y="6.25" Width="1.5" />
+  <Class Name="IndoorNavigation.ViewModels.RegisterListViewModel">
+    <Position X="9.75" Y="37.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QBBAAAAAQQAAAAAAAAAAAAAAAAAAAAgAACAAAAAAQAA=</HashCode>
       <FileName>ViewModels\RegisterListViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.CityHallHomePage" Collapsed="true">
-    <Position X="27.5" Y="2.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.CityHallHomePage">
+    <Position X="0.75" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgQBkAAAAAAAAAAAAAAAAAAAgAAAACQAAAAAA=</HashCode>
       <FileName>Views\Navigation\CityHall\CityHallHomePage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.DestinationPickPage" Collapsed="true">
-    <Position X="27.5" Y="4" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.DestinationPickPage">
+    <Position X="2.5" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAAAAAAABIAgAAAAABAAAAAAAAACAAAACAA=</HashCode>
       <FileName>Views\Navigation\DestinationPickPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.DestinationItem" Collapsed="true">
-    <Position X="27.5" Y="5" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.DestinationItem">
+    <Position X="4.25" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAIEQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\Navigation\DestinationPickPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.NavigationHomePage" Collapsed="true">
-    <Position X="27.5" Y="6.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.NavigationHomePage">
+    <Position X="6" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAgYBgAAAAAAAAgAEAgAAAAAAgAAIACAgAQAAA=</HashCode>
       <FileName>Views\Navigation\NavigationHomePage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.NavigatorPage" Collapsed="true">
-    <Position X="27.5" Y="7.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.NavigatorPage">
+    <Position X="7.75" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\Navigation\NavigatorPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.NavigatorSettingPage" Collapsed="true">
-    <Position X="27.5" Y="8.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.NavigatorSettingPage">
+    <Position X="9.5" Y="49.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAASEAAAAAAAAAAAAIAACAAAAggAAAAAAAAAAg=</HashCode>
       <FileName>Views\Navigation\NavigatorSettingPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.RigisterList" Collapsed="true">
-    <Position X="30.25" Y="2.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Settings.SettingTableViewPage">
+    <Position X="11.5" Y="49.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQIAAAAASAAQBAAAAAgAAAAAgAAAIBlABQAFIEAAAAg=</HashCode>
+      <FileName>Views\Settings\SettingTableViewPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.RigisterList">
+    <Position X="0.75" Y="56.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
@@ -461,232 +490,218 @@
       <FileName>Views\OPFM\RigisterList.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.SignInPage" Collapsed="true">
-    <Position X="30.25" Y="4" Width="1.5" />
+  <Class Name="IndoorNavigation.SignInPage">
+    <Position X="3.5" Y="56.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAgAAAQAAAAAAAAAAAAAAAACCAAAgAACAAAAAAAAA=</HashCode>
       <FileName>Views\OPFM\SignInPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.AddPopupPage" Collapsed="true">
-    <Position X="33.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAAACIQIAQAAgAAgAACAABAAAEAAgAkCAIAoAAAAA=</HashCode>
-      <FileName>Views\PopUpPage\AddPopupPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.AlertDialogPopupPage" Collapsed="true">
-    <Position X="33.25" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAgABAAQAAAAIAAACAAAAAAAAEAAAAoAAAAA=</HashCode>
-      <FileName>Views\PopUpPage\AlertDialogPopupPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.AskRegisterPopupPage" Collapsed="true">
-    <Position X="33.25" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EBAAAAAASAgAAAABAAIQgACIAAAAAAgAECAAAoAAAAA=</HashCode>
-      <FileName>Views\PopUpPage\AskRegisterPopupPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPage" Collapsed="true">
-    <Position X="33.25" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EAgQAAAAQAAABAAAAQAAAAAAAAAAAAgAEAAAACAAAAg=</HashCode>
-      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPageEvent" Collapsed="true">
-    <Position X="33.25" Y="8.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPageEventArgs" Collapsed="true">
-    <Position X="33.25" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IndoorNavigation.ExitPopupPage" Collapsed="true">
-    <Position X="36.5" Y="2.5" Width="1.5" />
+  <Class Name="IndoorNavigation.ExitPopupPage">
+    <Position X="5.25" Y="56.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAQAAAAAAQAAAAAAAAAAAAAAgAECACAIAAAAA=</HashCode>
       <FileName>Views\PopUpPage\ExitPopupPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.SelectTwoWayPopupPage" Collapsed="true">
-    <Position X="36.5" Y="3.75" Width="1.5" />
+  <Class Name="IndoorNavigation.SelectTwoWayPopupPage">
+    <Position X="7" Y="56.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gBAAAAAAQAAAAAgAUAAAAgAAAAAAAAgAAAAAAoAAAAA=</HashCode>
       <FileName>Views\PopUpPage\SelectTwoWayPopupPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.PickCashierPopupPage" Collapsed="true">
-    <Position X="36.5" Y="5" Width="1.5" />
+  <Class Name="IndoorNavigation.PickCashierPopupPage">
+    <Position X="9" Y="56.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAggAQAAQAAAAAAACAAAAAAAAAAgAACAAAMAAAAA=</HashCode>
       <FileName>Views\PopUpPage\PickCashierPopupPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Navigation.ShiftAlertPopupPage" Collapsed="true">
-    <Position X="36.5" Y="6.25" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.Navigation.ShiftAlertPopupPage">
+    <Position X="11" Y="56.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Views\PopUpPage\ShiftAlertPopupPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Views.Settings.SettingTableViewPage" Collapsed="true">
-    <Position X="27.5" Y="10" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPage">
+    <Position X="0.5" Y="67" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IQIAAAAASAAQBAAAAAgAAAAAgAAAIBlABQAFIEAAAAg=</HashCode>
-      <FileName>Views\Settings\SettingTableViewPage.xaml.cs</FileName>
+      <HashCode>EAgQAAAAQAAABAAAAQAAAAAAAAAAAAgAEAAAACAAAAg=</HashCode>
+      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.HttpRequest" Collapsed="true">
-    <Position X="39" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPageEvent">
+    <Position X="4" Y="67" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAQAAAAAgIBAAAAAAIAEAAAAAAACCAAAAAAIA=</HashCode>
-      <FileName>Yuanlin_OPFM\Yaunlin_HttpRequest.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.App" Collapsed="true">
-    <Position X="42" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Views.PopUpPage.DownloadPopUpPageEventArgs">
+    <Position X="2.25" Y="67" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAABAgQAgAEAAACAEAAAAIAAARAgAAADAAAAA=</HashCode>
-      <FileName>App.xaml.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Views\PopUpPage\DownloadPopUpPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.MainPage" Collapsed="true">
-    <Position X="42" Y="3" Width="1.5" />
+  <Class Name="IndoorNavigation.AddPopupPage">
+    <Position X="0.75" Y="72.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="IndoorNavigation.AddPopupPage.AddExaminationItem" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Views\PopUpPage\AddPopupPage.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ABAAAAABUAgAgAhQAIAAAAAAAAAAAAwAQBAEAJAgAAA=</HashCode>
-      <FileName>MainPage.xaml.cs</FileName>
+      <HashCode>ABAAAACIQIAQAAgAAgAACAABAAAEAAgAkCAIAoAAAAA=</HashCode>
+      <FileName>Views\PopUpPage\AddPopupPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.AlertDialogPopupPage">
+    <Position X="2.75" Y="72.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="IndoorNavigation.AlertDialogPopupPage.Background_BackButtonClickEvent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Views\PopUpPage\AlertDialogPopupPage.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAgABAAQAAAAIAAACAAAAAAAAEAAAAoAAAAA=</HashCode>
+      <FileName>Views\PopUpPage\AlertDialogPopupPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.AskRegisterPopupPage">
+    <Position X="4.75" Y="72.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAAAAASAgAAAABAAIQgACIAAAAAAgAECAAAoAAAAA=</HashCode>
+      <FileName>Views\PopUpPage\AskRegisterPopupPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="IndoorNavigation.Models.NavigaionLayer.InstructionInformation" Collapsed="true">
-    <Position X="0.5" Y="6.25" Width="1.5" />
+    <Position X="2.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAEAAAIAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Struct>
   <Interface Name="IndoorNavigation.Models.IBeaconScan" Collapsed="true">
-    <Position X="8.5" Y="3.5" Width="1.5" />
+    <Position X="10.25" Y="16" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAg=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IndoorNavigation.Models.LBeaconScan" Collapsed="true">
-    <Position X="8.5" Y="4.25" Width="1.5" />
+    <Position X="10.25" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAg=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IndoorNavigation.Models.IQrCodeDecoder" Collapsed="true">
-    <Position X="8.5" Y="5" Width="1.5" />
+    <Position X="10.25" Y="17.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IndoorNavigation.Models.ITextToSpeech" Collapsed="true">
-    <Position X="8.5" Y="6.5" Width="1.5" />
+    <Position X="10.25" Y="19" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IndoorNavigation.Models.INetworkSetting" Collapsed="true">
-    <Position X="8.5" Y="2.75" Width="1.5" />
+    <Position X="10.25" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IndoorNavigation.Models.IIPSClient" Collapsed="true">
-    <Position X="8.5" Y="5.75" Width="1.5" />
+    <Position X="10.25" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAgAAAg=</HashCode>
       <FileName>Models\Interface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.LocationType" Collapsed="true">
-    <Position X="0.5" Y="11.5" Width="1.5" />
+    <Position X="2.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAACAAAAQAAAAAAgAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.CardinalDirection" Collapsed="true">
-    <Position X="0.5" Y="7" Width="1.5" />
+    <Position X="2.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACCCABABAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAQ=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.TurnDirection" Collapsed="true">
-    <Position X="0.5" Y="8.5" Width="1.5" />
+    <Position X="2.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAOAAAAAAAIAAAAAAAAAQAAAAAAICACAAAAAEAI=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.IPSType" Collapsed="true">
-    <Position X="0.5" Y="10" Width="1.5" />
+    <Position X="2.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.DirectionalConnection" Collapsed="true">
-    <Position X="0.5" Y="7.75" Width="1.5" />
+    <Position X="2.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.ConnectionType" Collapsed="true">
-    <Position X="0.5" Y="12.25" Width="1.5" />
+    <Position X="2.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAACAAAAAAAAAAAAAEAAAAAAAEAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.CategoryType" Collapsed="true">
-    <Position X="0.5" Y="9.25" Width="1.5" />
+    <Position X="2.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>hAAAACAAAAgIAAAAQgAGIAAAAAAACAAAIAAACAAAAAA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.Models.NavigaionLayer.waypointDecisionOrIgnore" Collapsed="true">
-    <Position X="0.5" Y="10.75" Width="1.5" />
+    <Position X="2.5" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Models\NavigationGraph.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="IndoorNavigation.RecordType" Collapsed="true">
-    <Position X="6" Y="10.5" Width="1.5" />
+    <Position X="4.75" Y="17.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAIAAAAAgAAAAAIgAABAIAAIAAAAAAAAAA=</HashCode>
       <FileName>Models\QueryResult.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Delegate Name="_addInterestedBeacon" Collapsed="true">
-    <Position X="14.5" Y="2.75" Width="1.5" />
+    <Position X="12.5" Y="20.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Modules\IPSModules.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="_runClient" Collapsed="true">
-    <Position X="14.5" Y="3.5" Width="1.5" />
+    <Position X="12.5" Y="21.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
       <FileName>Modules\IPSModules.cs</FileName>

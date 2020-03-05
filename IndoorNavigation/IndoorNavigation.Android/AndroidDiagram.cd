@@ -1,46 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="IndoorNavigation.Droid.BeaconScan" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.BeaconScan" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAgAACAAAAAAAAAAAQAAAAAEAAAAAECAABCAABg=</HashCode>
       <FileName>BeaconScan.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="IndoorNavigation.Droid.BeaconScanForIBeacon" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.BeaconScanForIBeacon" BaseTypeListCollapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAgAACAAAAAAAAAAAQAAAAAEAAAAAECAABCAABg=</HashCode>
       <FileName>BeaconScanForIBeacon.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="IndoorNavigation.Droid.MainActivity" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.MainActivity">
+    <Position X="8.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAACAAAAAAQAAAAgAAAAA=</HashCode>
       <FileName>MainActivity.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IndoorNavigation.Droid.NetworkSetting" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.NetworkSetting" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>NetworkSetting.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="IndoorNavigation.Droid.QrCodeDecoder" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.25" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.QrCodeDecoder" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>QrCodeDecoder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="IndoorNavigation.Droid.TextToSpeechImplementation" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4" Y="1.75" Width="1.5" />
+  <Class Name="IndoorNavigation.Droid.TextToSpeechImplementation" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAACAAAIAAAIAQAAAAAAAAAAAA=</HashCode>
       <FileName>TextToSpeechImplementation.cs</FileName>
