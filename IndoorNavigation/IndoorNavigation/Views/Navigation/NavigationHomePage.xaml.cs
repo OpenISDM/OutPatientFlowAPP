@@ -55,6 +55,8 @@ using System.Reflection;
 using System.Collections.ObjectModel;
 using System.Collections;
 
+using Xamarin.Essentials;
+
 namespace IndoorNavigation.Views.Navigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -100,10 +102,35 @@ namespace IndoorNavigation.Views.Navigation
             }
 
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+
+        }
+
+        async public void DetectGPS()
+        {
+            Location location;
+            try
+            {
+                location = await Geolocation.GetLocationAsync();
+                Console.WriteLine("get location, longt=" + location.Longitude + "  lati=" + location.Latitude);
+            }
+            catch(Exception e)
+            {
+                location = await Geolocation.GetLastKnownLocationAsync();
+                Console.WriteLine("Geolocation exception:" + e.StackTrace);
+                Console.WriteLine("get latest location, longt=" + location.Longitude + "  lati=" + location.Latitude);
+            }
+
+
+            
+        }
+
+        private bool ComparisonLocation(Location destination, Location currentLocation)
+        {
+
         }
 
         async void InfoButton_Clicked(object sender, EventArgs e)
@@ -173,5 +200,15 @@ namespace IndoorNavigation.Views.Navigation
 				new DestinationPickPage(_navigationGraphName,
                                         CategoryType.BloodCollectionCounter));
         }
+        /*if(sourceList.Contains(passedItem))
+							{
+								sourceList.Remove (passedItem);
+								if (destinationList.Count >= insertLocation)
+									destinationList.Insert(insertLocation - 1, passedItem);
+								else
+								{
+									destinationList.Add(passedItem);
+								}
+							}*/
     }
 }

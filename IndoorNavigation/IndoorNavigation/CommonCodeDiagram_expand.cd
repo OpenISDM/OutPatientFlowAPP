@@ -338,6 +338,7 @@
       <HashCode>AAEAAAAAACgAAAAABAAAAAAgAAAAAAAgIAQCAgAAAAg=</HashCode>
       <FileName>Modules\NavigationModule.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="IndoorNavigation.Modules.IPSModules" BaseTypeListCollapsed="true">
     <Position X="10.75" Y="20.5" Width="1.5" />
@@ -345,6 +346,7 @@
       <HashCode>gAAABQEAgCIACBAAAAggQEACQIAABIQAQgAIEEDABEk=</HashCode>
       <FileName>Modules\IPSModules.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="IndoorNavigation.Resources.Helpers.TranslateExtension">
     <Position X="0.5" Y="30.75" Width="1.75" />
@@ -352,6 +354,7 @@
       <HashCode>AAAACAAAQAAAAAgAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>Resources\TranslateExtension.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="IndoorNavigation.Modules.Utilities.NavigraphStorage">
     <Position X="2.5" Y="30.75" Width="1.5" />
@@ -402,6 +405,7 @@
       <HashCode>AAAEAAAAQAAQAAgAIAAAAEQAgAAAAAgAQEQCAAAACgA=</HashCode>
       <FileName>ViewModels\ExitPopupViewModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="IndoorNavigation.ViewModels.MainPageViewModel">
     <Position X="6" Y="37.5" Width="1.5" />
@@ -448,7 +452,7 @@
   <Class Name="IndoorNavigation.Views.Navigation.NavigationHomePage">
     <Position X="6" Y="49.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAgYBgAAAAAAAAgAEAgAAAAAAgAAIACAgAQAAA=</HashCode>
+      <HashCode>AAQAAAAgYBgAAAAACAAgAEAgAEAAAAgAAIACAgAQAAA=</HashCode>
       <FileName>Views\Navigation\NavigationHomePage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
