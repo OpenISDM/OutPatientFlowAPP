@@ -128,10 +128,10 @@ namespace IndoorNavigation.Views.Navigation
             
         }
 
-        private bool ComparisonLocation(Location destination, Location currentLocation)
-        {
+        //private bool ComparisonLocation(Location destination, Location currentLocation)
+        //{
 
-        }
+        //}
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {

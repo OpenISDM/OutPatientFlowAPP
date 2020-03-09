@@ -119,6 +119,8 @@
     <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Renderers\CustomContentPageRenderer.cs" />
     <None Include="Helpers\TranslateExtension.txt" />
+    <Compile Include="Renderers\DragableListViewRender.cs" />
+    <Compile Include="Renderers\DragableViewCellRender.cs" />
     <Compile Include="Renderers\RightToolbarMenuCustomRenderer.cs" />
     <Compile Include="Services\TableSource.cs" />
     <Compile Include="TextToSpeech.cs" />

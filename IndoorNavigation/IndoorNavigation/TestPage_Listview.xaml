@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:local="clr-namespace:IndoorNavigation"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.TestPage_Listview">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" 
+						Value="Black"/>
+
+                <Setter Property="FontSize" 
+						Value="22"/>
+            </Style>
+            <DataTemplate x:Key="YetNavigation">
+                <!--to show haven't started schedule view cell-->
+                <controls:DraggableViewCell>
+                    <ViewCell.Height>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="iOS" Value="170"/>
+                        </OnPlatform>
+                    </ViewCell.Height>
+                    <ViewCell.ContextActions>
+                       
+                    </ViewCell.ContextActions>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" 
+									 Margin="10,0,10,0" 
+									 VerticalOptions="CenterAndExpand">
+
+                            <Label x:Name="DPTNAME" 
+								   Text="{Binding DptName, StringFormat='{0}'}" 
+								   FontSize="26" 
+								   HorizontalOptions="StartAndExpand" 
+								   VerticalOptions="CenterAndExpand" 
+                                   TextColor="Black"/>
+
+                            <Button x:Name="yetFinishBtn" 
+									Text="{i18n:Translate FINISH_STRING}"
+                                    IsEnabled="{Binding isComplete}" 
+                                    IsVisible="{Binding isComplete}"
+									FontSize="Large" 									
+                                    HorizontalOptions="EndAndExpand" 
+									CommandParameter="{Binding .}" 
+									
+									BorderColor="#3F51B5" 
+									BorderWidth="1" 
+                                    TextColor="White" 
+									BackgroundColor="#3f51b5" 
+									FontAttributes="Bold"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" 
+									 VerticalOptions="CenterAndExpand" 
+									 Margin="25,0,25,0">
+
+                            <Label x:Name="DptTimeText" 
+								   Text=
+								   "{Binding Shift, StringFormat=
+									 {i18n:Translate OUTPATIENT_TIME_STRING}}"/>
+
+                            <Label x:Name="CareRoomText" 
+								   Text="{Binding CareRoom, StringFormat=
+											{i18n:Translate CAREROOM_STRING}}"/>
+
+                            <Label x:Name="DrNameText" 
+								   Text="{Binding DrName, StringFormat=
+											  {i18n:Translate DRNAME_STRING}}"/>
+
+                            <Label x:Name="SeeSeqNumberText" 
+								   Text="{Binding SeeSeq, StringFormat=
+										    {i18n:Translate SEQUENCE_STRING}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </controls:DraggableViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="NotComplete">
+                <controls:DraggableViewCell  Height="60">
+                    <ViewCell.ContextActions>
+                       
+                    </ViewCell.ContextActions>
+                    <StackLayout >
+                        <StackLayout Orientation="Horizontal" 
+									 VerticalOptions="CenterAndExpand" 
+									 Margin="10,0,10,0">
+
+                            <Label x:Name="DptName" 
+								   Text="{Binding DptName, StringFormat='{0}'}" 
+								   FontSize="26" 
+                                   HorizontalOptions="StartAndExpand" 
+								   VerticalOptions="CenterAndExpand" 
+								   TextColor="Black" />
+
+                            <Button x:Name="FinishBtn" 
+									Text="{i18n:Translate FINISH_STRING}" 
+									HorizontalOptions="EndAndExpand" 
+									FontSize="Large" 
+                                    IsEnabled="{Binding isComplete}" 
+                                    IsVisible="{Binding isComplete}"
+									CommandParameter="{Binding .}" 
+									TextColor="White" 
+									BackgroundColor="#3f51b5" 
+									BorderColor="#3f51b5" 
+									BorderWidth="1"/>
+                        </StackLayout>
+                    </StackLayout>
+                </controls:DraggableViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Complete">
+                <controls:DraggableViewCell IsEnabled="False" 
+						  Height="60">
+                    <StackLayout BackgroundColor="#e0e0e0">
+                        <Label Text="{Binding DptName}" 
+							   FontSize="26" 
+							   TextColor="#c0c0c0" 
+							   Margin="10,0,10,0" 
+							   VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </controls:DraggableViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="NullCell">
+                <controls:DraggableViewCell IsEnabled="False" Height="250">
+                    <StackLayout/>
+                </controls:DraggableViewCell>
+            </DataTemplate>
+            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" 
+						NullTemplate="{StaticResource NullCell}"  
+						NotCompleteTemplate="{StaticResource NotComplete}" 
+						CompleteTemplate="{StaticResource Complete}" 
+						YetNavigationTemplate="{StaticResource YetNavigation}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <controls:DraggableListView x:Name="TestListView" HasUnevenRows="True" ItemTapped="TestListView_ItemTapped" ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+        </controls:DraggableListView>
+    </ContentPage.Content>
+</ContentPage>

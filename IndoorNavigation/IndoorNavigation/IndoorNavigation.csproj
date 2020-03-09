@@ -102,7 +102,10 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Views\Settings\CustomToolbarContentPage.xaml">
+    <EmbeddedResource Update="TestPage_Listview.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Controls\CustomToolbarContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PopUpPage\DownloadPopUpPage.xaml">
