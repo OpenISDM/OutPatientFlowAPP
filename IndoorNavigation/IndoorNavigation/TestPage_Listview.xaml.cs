@@ -18,7 +18,7 @@ namespace IndoorNavigation
             InitializeComponent();
             LoadData();
 
-            //TestListView.ItemsSource = records;
+            TestListView.ItemsSource = records;
         }
 
         private void LoadData()

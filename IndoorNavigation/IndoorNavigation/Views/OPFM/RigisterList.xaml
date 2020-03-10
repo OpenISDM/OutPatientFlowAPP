@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<shared:CustomToolbarContentPage 
+<local:CustomToolbarContentPage 
           xmlns:local="clr-namespace:IndoorNavigation"
           xmlns="http://xamarin.com/schemas/2014/forms"
           xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           xmlns:d="http://xamarin.com/schemas/2014/forms/design"
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-          xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
-          xmlns:shared="clr-namespace:IndoorNavigation"
+          xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"
           Title="{i18n:Translate NAVIGATION_LIST_STRING}"
           mc:Ignorable="d"
           x:Class="IndoorNavigation.RigisterList">
@@ -22,18 +21,18 @@
             </Style>
             <DataTemplate x:Key="YetNavigation">
                 <!--to show haven't started schedule view cell-->
-                <ViewCell Tapped="ViewCell_Tapped">
+                <controls:DraggableViewCell Tapped="ViewCell_Tapped">
                     <ViewCell.Height>
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="iOS" Value="170"/>
                         </OnPlatform>
                     </ViewCell.Height>
-                    <ViewCell.ContextActions>
+                    <!--<ViewCell.ContextActions>
                         <MenuItem Clicked="RemoveItem_Clicked" 
 								  CommandParameter="{Binding .}"
                                   Text="Delete" 
 								  IsDestructive="True" />
-                    </ViewCell.ContextActions>
+                    </ViewCell.ContextActions>-->
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" 
 									 Margin="10,0,10,0" 
@@ -82,16 +81,16 @@
 										    {i18n:Translate SEQUENCE_STRING}}"/>
                         </StackLayout>
                     </StackLayout>
-                </ViewCell>
+                </controls:DraggableViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NotComplete">                
-                <ViewCell Tapped="ViewCell_Tapped" Height="60">
-                    <ViewCell.ContextActions>
+                <controls:DraggableViewCell Tapped="ViewCell_Tapped" Height="60">
+                    <!--<ViewCell.ContextActions>
                         <MenuItem Clicked="RemoveItem_Clicked" 
 								  CommandParameter="{Binding .}"
                                   Text="Delete" 
 								  IsDestructive="True" />
-                    </ViewCell.ContextActions>
+                    </ViewCell.ContextActions>-->
                     <StackLayout >
                         <StackLayout Orientation="Horizontal" 
 									 VerticalOptions="CenterAndExpand" 
@@ -118,7 +117,7 @@
 									BorderWidth="1"/>
                         </StackLayout>
                     </StackLayout>
-                </ViewCell>
+                </controls:DraggableViewCell>
             </DataTemplate>
             <DataTemplate x:Key="Complete">
                 <ViewCell IsEnabled="False" 
@@ -133,9 +132,9 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NullCell">
-                <ViewCell IsEnabled="False" Height="250">
+                <controls:DraggableViewCell IsEnabled="False" Height="250">
                     <StackLayout/>
-                </ViewCell>
+                </controls:DraggableViewCell>
             </DataTemplate>
             <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" 
 						NullTemplate="{StaticResource NullCell}"  
@@ -169,13 +168,13 @@
 						Grid.Row="0" 
 						Margin="5,0,5,0"/>
                 
-                <ListView x:Name="RgListView" 
+                <controls:DraggableListView x:Name="RgListView" 
 			   Grid.Row="1" 
 			   HasUnevenRows="True" 
 			   ItemTapped="RgListView_ItemTapped"
                ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
-                </ListView>
+                </controls:DraggableListView>
             </Grid>
             <Button BackgroundColor="#3f51b5" 
 					x:Name="AddBtn" 
@@ -188,7 +187,7 @@
 					FontAttributes="Bold"
                     CornerRadius="30"
                     />
-            <Button x:Name="ShiftBtn" 
+            <!--<Button x:Name="ShiftBtn" 
 					Text="{i18n:Translate EXCHANGE_STRING}" 
 					BackgroundColor="#3f51b5" 
 					FontSize="Medium" 
@@ -197,7 +196,7 @@
                     AbsoluteLayout.LayoutFlags="All" 
 					CornerRadius="30"
                     Clicked="ShiftBtn_Clicked" 
-					AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
+					AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->
 					
             <Button x:Name="PaymemtListBtn" 
 					FontSize="Large" 
@@ -216,4 +215,4 @@
 
         </AbsoluteLayout>
     </ContentPage.Content>
-</shared:CustomToolbarContentPage>
+</local:CustomToolbarContentPage>

@@ -21,35 +21,55 @@ namespace IndoorNavigation.Droid.Renders
 
 		public DragAndDropListViewRenderer(Context context) : base(context) { }
 
+		private int TmpId;
+
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 
 			Console.WriteLine(">>OnElementPropertyChanged");
 
+			Console.WriteLine("e.propertyName is == "+e.PropertyName);
+
+
 			if (e.PropertyName == Xamarin.Forms.ListView.ItemsSourceProperty.PropertyName)
 			{
-				Console.WriteLine(">>if property name== listviews'");
+				//Console.WriteLine(">>if property name== listviews'");
+				//Console.WriteLine("e.PropertyName==" + e.PropertyName);
+				//Console.WriteLine("e.hasCode=="+e.GetHashCode().ToString());
+				//Xamarin.Forms.ListView lv = (Xamarin.Forms.ListView)sender;
+
+				//Console.WriteLine(">> PropertyChanged control id : " + Control.Id);
+
+				ListMap[TmpId.ToString()] =(IList) (((Xamarin.Forms.ListView)sender).ItemsSource);
 			}
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.ListView> e)
 		{
 			base.OnElementChanged(e);
-
+			Console.WriteLine(">>OnElementChanged");
 
 
 			if (e.NewElement != null)
 			{
+				Console.WriteLine(">>New Element case");
+				Console.WriteLine("control id is : " + Control.Id);
+				
+
 				Control.OnItemLongClickListener = this;
 				Control.SetOnDragListener(this);
 
 				Control.Id = Control.GetHashCode();
-
+				TmpId = Control.Id;
 				ListMap.Add(Control.Id.ToString(), (IList)this.Element.ItemsSource);
 			}
 
-
+			if (e.OldElement != null)
+			{
+				Console.WriteLine(">>Old Element case");
+			}
+			Console.WriteLine("<<OnElementChanged");
 		}
 
 		public bool OnItemLongClick(Android.Widget.AdapterView parent, Android.Views.View view, int position, long id)

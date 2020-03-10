@@ -136,10 +136,10 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
+        <!--<StackLayout>
             <SearchBar VerticalOptions="StartAndExpand"/>
-        </StackLayout>
-        <!--<controls:DraggableListView x:Name="TestListView" HasUnevenRows="True" ItemTapped="TestListView_ItemTapped" ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
-        </controls:DraggableListView>-->
+        </StackLayout>-->
+        <controls:DraggableListView x:Name="TestListView" HasUnevenRows="True" ItemTapped="TestListView_ItemTapped" ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+        </controls:DraggableListView>
     </ContentPage.Content>
 </ContentPage>

@@ -172,8 +172,8 @@ namespace IndoorNavigation
         //the function is to control the button whether it is visible 
         private void Buttonable(bool enable)
         {
-            ShiftBtn.IsEnabled = enable;
-            ShiftBtn.IsVisible = enable;
+            //ShiftBtn.IsEnabled = enable;
+            //ShiftBtn.IsVisible = enable;
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
         }    
@@ -237,8 +237,8 @@ namespace IndoorNavigation
            
             _viewmodel = new RegisterListViewModel(_navigationGraphName);
             RefreshListView();
-            ShiftBtn.CornerRadius = 
-				(int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
+    //        ShiftBtn.CornerRadius = 
+				//(int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
             AddBtn.CornerRadius = 
 				(int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
