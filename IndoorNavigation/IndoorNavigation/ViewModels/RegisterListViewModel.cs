@@ -61,10 +61,13 @@ namespace IndoorNavigation.ViewModels
         private Page mainPage = Application.Current.MainPage;
         private App app = (App)Application.Current;
 
+        private string _naviGraphName;
 
+        public RegisterListViewModel() { }
         //bool 
-        public RegisterListViewModel()
-        {                      
+        public RegisterListViewModel(string navigationGraphName)
+        {
+            _naviGraphName = navigationGraphName;
             if (app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();
@@ -77,7 +80,7 @@ namespace IndoorNavigation.ViewModels
         }
         async public void CheckRegister()
         {
-		   await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());                       
+		   await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage(_naviGraphName));                       
         }               
         private string GetResourceString(string key)
         {

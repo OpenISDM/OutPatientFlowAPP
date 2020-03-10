@@ -11,6 +11,9 @@ using System.Globalization;
 using IndoorNavigation.Models;
 using System.Reflection;
 using System.Threading.Tasks;
+using IndoorNavigation.Views.Navigation;
+using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -28,10 +31,20 @@ namespace IndoorNavigation
 			CrossMultilingual.Current.CurrentCultureInfo;
         INetworkSetting networkSettings;
 
-        public AskRegisterPopupPage()
+        string _navigationGraphName;
+        XMLInformation _XmlInfo;
+
+        PhoneInformation phoneInformation = new PhoneInformation();
+
+        public AskRegisterPopupPage(string navigraphName)
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+
+            _navigationGraphName = navigraphName;
+            _XmlInfo = NavigraphStorage.LoadInformationML
+                (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
+                 "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
         }
         protected override void OnAppearing()
         {
@@ -77,22 +90,26 @@ namespace IndoorNavigation
             ResetAllState();
             ButtonLock = true;
             app.getRigistered = true;
-            app.records.Add(new RgRecord
+
+            RgRecord record = new RgRecord
             {
                 DptName =
-					_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", 
-											   currentLanguage),
+                    _resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING",
+                                               currentLanguage),
                 _regionID = new Guid("22222222-2222-2222-2222-222222222222"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
-                
-                _waypointName = 
-					_resourceManager.GetString("REGISTERED_COUNTER_STRING",
-											   currentLanguage),
-                type=RecordType.Register
-            });
+
+                _waypointName =
+                    _resourceManager.GetString("REGISTERED_COUNTER_STRING",
+                                               currentLanguage),
+                type = RecordType.Register,
+                isComplete = true
+            };
+            app.records.Add(record);
             app.records.Add(new RgRecord {type=RecordType.NULL});
             MessagingCenter.Send(this, "isReset", true);
             ButtonLock = true;
+            await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._regionID,record._waypointID,record._waypointName,_XmlInfo));
             await PopupNavigation.Instance.PopAllAsync();
         }
          

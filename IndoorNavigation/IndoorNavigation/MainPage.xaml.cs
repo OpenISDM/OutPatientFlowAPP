@@ -348,5 +348,10 @@ namespace IndoorNavigation
                 });                
             }
         }
+
+        async private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TestPage_Listview());
+        }
     }
 }

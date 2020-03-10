@@ -91,11 +91,17 @@
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
+    <Compile Include="Custom\ItemDragListener.cs" />
+    <Compile Include="Renders\DragableListViewRender.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MainActivity.cs" />
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="QrCodeDecoder.cs" />
+    <Compile Include="Renders\DragableViewCellRender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Custom\TempObject.cs" />
     <Compile Include="TextToSpeechImplementation.cs" />
   </ItemGroup>
   <ItemGroup>

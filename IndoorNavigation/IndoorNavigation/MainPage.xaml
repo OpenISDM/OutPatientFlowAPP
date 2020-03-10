@@ -68,7 +68,8 @@
 					 Priority="1" 
 					 Order="Primary" 
                      Clicked="SettingBtn_Clicked"/>
-					 
+        <ToolbarItem Text="test" Clicked="ToolbarItem_Clicked" Order="Secondary"/>
+
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>

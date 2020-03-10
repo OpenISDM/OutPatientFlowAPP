@@ -235,7 +235,7 @@ namespace IndoorNavigation
         {      
             base.OnAppearing();
            
-            _viewmodel = new RegisterListViewModel();
+            _viewmodel = new RegisterListViewModel(_navigationGraphName);
             RefreshListView();
             ShiftBtn.CornerRadius = 
 				(int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
