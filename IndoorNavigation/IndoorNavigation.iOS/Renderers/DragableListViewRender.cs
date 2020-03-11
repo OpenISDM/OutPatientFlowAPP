@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using IndoorNavigation.Views.Controls;
 using IndoorNavigation.iOS.Renderers;
 using Xamarin.Forms.Platform.iOS;
-
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(DraggableListView),typeof(DragAndDropListViewRenderer))]
 namespace IndoorNavigation.iOS.Renderers
@@ -82,6 +82,23 @@ namespace IndoorNavigation.iOS.Renderers
 		}
 
 		private new ListView Element => base.Element as ListView;
+
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
+
+			if(e.PropertyName== ListView.ItemsSourceProperty.PropertyName)
+			{
+				Console.WriteLine(">>OnElementPropertyChange");
+				Console.WriteLine("Control.tostring()== " + Control.ToString());
+				//ListMap[_tmpTag.ToString()] =new Tuple<UITableView, IList>(;
+				ListMap[_tmpTag.ToString()] = new Tuple<UITableView, IList>(Control, (IList)((ListView)sender).ItemsSource);
+			}
+		}
+
+		private nint _tmpTag;
+
+		
 		protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
 		{
 
@@ -89,15 +106,23 @@ namespace IndoorNavigation.iOS.Renderers
 
 			if (e.NewElement != null)
 			{
+				Console.WriteLine(">>NewElement");
+				Console.WriteLine("Control.Tostring is " + Control.ToString());
 				// Make row reorderable
 				Control.Tag = (nint)Control.GetHashCode();
-
+				_tmpTag = Control.Tag;
+				Console.WriteLine("Control.tostring after assigning id is" + Control.ToString());
 				ListMap.Add(Control.Tag.ToString(), new Tuple<UITableView, IList>(Control, (IList)this.Element.ItemsSource));
 
 				Control.Source = new ReorderableTableViewSource { View = new WeakReference<ListView>(Element), Source = Control.Source };
+
+				Console.WriteLine("Control.tostring after assigning source is " + Control.ToString());
 			}
 
-
+			if (e.OldElement != null)
+			{
+				Console.WriteLine(">>OldElement");
+			}
 		}
 
 		protected override void Dispose(bool disposing)
