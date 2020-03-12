@@ -22,7 +22,9 @@
                   ItemTapped="Handle_ItemTapped" 
                   CachingStrategy="RecycleElement"
                   IsGroupingEnabled="true"
-                  GroupDisplayBinding="{Binding Key}">
+                  GroupDisplayBinding="{Binding Key}"
+                  BackgroundColor="White"
+                  SeparatorColor="#E4E4E4">
             
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>

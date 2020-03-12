@@ -18,6 +18,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
 using System.Threading;
+using System.Collections.Generic;
+using System.Xml;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -188,19 +191,52 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             app.HaveCashier = true;
-            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
-            MessagingCenter.Subscribe<PickCashierPopupPage, bool>
-			(this, "GetCashierorNot", (Messagesender, Messageargs) =>
-				{                
-					PaymemtListBtn.IsEnabled = !(bool)Messageargs;
-					PaymemtListBtn.IsVisible = !(bool)Messageargs;
-					app.HaveCashier = (bool)Messageargs;
-					Buttonable(!(bool)Messageargs);
 
-					isButtonPressed = false;
-					MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>
-						(this, "GetCashierorNot");
-            });              
+            //DestinationItem cashier = CashierPosition[app.lastFinished._regionID];
+
+            //app.records.Insert(app.records.Count - 1, new RgRecord { });
+            //app.records.Insert(app.records.Count - 1, new RgRecord { });
+            #region pick cashier page code.
+            //         await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
+            //         MessagingCenter.Subscribe<PickCashierPopupPage, bool>
+            //(this, "GetCashierorNot", (Messagesender, Messageargs) =>
+            //	{                
+            //		PaymemtListBtn.IsEnabled = !(bool)Messageargs;
+            //		PaymemtListBtn.IsVisible = !(bool)Messageargs;
+            //		app.HaveCashier = (bool)Messageargs;
+            //		Buttonable(!(bool)Messageargs);
+
+            //		isButtonPressed = false;
+            //		MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>
+            //			(this, "GetCashierorNot");
+            //         });    
+            #endregion
+        }
+
+
+        Dictionary<Guid, DestinationItem> CashierPosition;
+        public void LoadCashierData() 
+        {
+            CashierPosition = new Dictionary<Guid, DestinationItem>();
+
+            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
+
+            foreach(XmlNode node in nodeList)
+            {
+                DestinationItem item = new DestinationItem();
+
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor =node.Attributes["floor"].Value;
+                item._waypointName =node.Attributes["name"].Value;
+
+                Console.WriteLine(item._waypointName +" region id:"+ item._regionID+ ", waypoint id: "+item._waypointID);
+
+                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            return;
         }
 
         /*to show popup page for add route to listview*/

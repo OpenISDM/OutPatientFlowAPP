@@ -50,7 +50,8 @@
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"             
-             Title="{i18n:Translate LOCATION_STRING}">
+             Title="{i18n:Translate LOCATION_STRING}"
+             BackgroundColor="White">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -93,7 +94,9 @@
                       ItemTapped="Handle_ItemTapped"
                       SelectedItem="LocationListView_ItemSelected"
                       IsPullToRefreshEnabled="true"
-                      Refreshing="LocationListView_Refreshing">
+                      Refreshing="LocationListView_Refreshing"
+                      BackgroundColor="White"                   
+                      SeparatorColor="#E4E4E4">
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>

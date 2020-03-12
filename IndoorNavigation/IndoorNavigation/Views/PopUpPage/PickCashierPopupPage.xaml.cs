@@ -12,7 +12,7 @@ using IndoorNavigation.Modules.Utilities;
 using System.Resources;
 using System.Globalization;
 using Plugin.Multilingual;
-
+using Plugin.InputKit.Shared.Configuration;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -31,6 +31,8 @@ namespace IndoorNavigation
 								.Assembly);
         App app = (App)Application.Current;
 
+        bool _buttonLock = false;
+
         public PickCashierPopupPage()
         {
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
@@ -41,6 +43,8 @@ namespace IndoorNavigation
 
             CashierSelectionView.ItemsSource = Cashieritems;
             PharmacySelectionView.ItemsSource = Pharmacyitems;
+
+            
 
             if (Pharmacyitems.Count <= 1)
                 PharmacySelectionView.SelectedItem = Pharmacyitems[0];
@@ -93,7 +97,10 @@ namespace IndoorNavigation
         }
 
         async private void CashierOKBtn_Clicked(object sender, EventArgs e)
-        {            
+        {
+            if (_buttonLock) return;
+            _buttonLock = true;
+
             var cashier_item = 
 				CashierSelectionView.SelectedItem as DestinationItem;
 				

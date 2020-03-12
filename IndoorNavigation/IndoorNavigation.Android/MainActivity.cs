@@ -1,6 +1,7 @@
 ﻿using Android;
 using Android.App;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
@@ -11,11 +12,15 @@ using System.Threading;
 
 namespace IndoorNavigation.Droid
 {
+    // Android Dark mode theme need to be test.
+    // it require android 10 or up version.
+
     [Activity(Label = "WPIN", 
 	 Icon = "@mipmap/icon", 
 	 Theme = "@style/splashscreen", 
 	 MainLauncher = true, 
-	 ConfigurationChanges=ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	 ConfigurationChanges=ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode,
+     ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android
 								.FormsAppCompatActivity
     {
@@ -95,6 +100,18 @@ namespace IndoorNavigation.Droid
             base.OnRequestPermissionsResult(requestCode, 
 											permissions, 
 											grantResults);
+        }
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            if((newConfig.UiMode & UiMode.NightNo) != 0)
+            {
+                //changed to light theme
+            }
+            else
+            {
+                // changed to dark theme
+            }
         }
     }
 }

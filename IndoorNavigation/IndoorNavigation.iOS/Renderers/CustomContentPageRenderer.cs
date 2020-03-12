@@ -4,6 +4,8 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
+using System.Resources;
+
 [assembly: ExportRenderer(typeof(ContentPage), typeof(IndoorNavigation.iOS.Renderers.CustomContentPageRenderer))]
 namespace IndoorNavigation.iOS.Renderers
 {
@@ -38,6 +40,34 @@ namespace IndoorNavigation.iOS.Renderers
                     //leftItems = navigationItem.LeftBarButtonItems.Union(leftItems).ToArray();
                 navigationItem.SetLeftBarButtonItems(leftItems, false);
             }
+        }
+
+        public override void TraitCollectionDidChange(UITraitCollection previousTraitCollection)
+        {
+            base.TraitCollectionDidChange(previousTraitCollection);
+
+            if(this.TraitCollection.UserInterfaceStyle != previousTraitCollection.UserInterfaceStyle)
+            {
+                SetAppTheme();
+            }
+        }
+
+        void SetAppTheme() 
+        {
+            if (this.TraitCollection.UserInterfaceStyle == UIUserInterfaceStyle.Dark) 
+            {
+                //change to dark theme
+            }
+            else 
+            {
+                //change to light theme
+            }
+        }
+
+        public ResourceDictionary lightTheme 
+        {
+            get;
+            set;
         }
     }
 }

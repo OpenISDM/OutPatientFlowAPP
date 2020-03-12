@@ -52,33 +52,36 @@
     <AbsoluteLayout>
         <Frame 	BackgroundColor="White" 
 				AbsoluteLayout.LayoutFlags="All" 
-				AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.45" 
+				AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.4" 
 				CornerRadius="8">
 				
             <StackLayout>
                 <Label 	x:Name="AskSelectExit" 
 						Text="{i18n:Translate SELECT_EXIT_STRING}" 
 						FontSize="Large" 
-						HorizontalOptions="Start" 
+						HorizontalOptions="Start"                        
 						Margin="0,5"/>
-						
-                <ScrollView VerticalOptions="CenterAndExpand" 
-							HorizontalOptions="CenterAndExpand" 
-							Margin="20,0,20,0">
+                <Label/>
+                <ScrollView VerticalOptions="Start" 
+							HorizontalOptions="StartAndExpand" 
+							Margin="10,0,10,0"
+                            >
 							
-                    <StackLayout 	Spacing="12" 
-									Padding="10,0">
-                        <input:SelectionView x:Name="selectionView" 
+                        <StackLayout Padding="5,0">
+                        <!--<input:SelectionView x:Name="selectionView" 
 											 SelectionType="RadioButton" 
 											 ItemsSource="{Binding exits}" 
 											 ColumnNumber="1" 
 											 SelectedItem="{Binding SelectItem}"  
-											 RowSpacing="20" />
+											 RowSpacing="20" />-->
+                            <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="CenterAndExpand">
+                            
+                            </input:RadioButtonGroupView>
                     </StackLayout>
                 </ScrollView>
                 <Button x:Name="ExitPopup" 
 						Text="{i18n:Translate OK_STRING}" 
-						Command="{Binding ButtonCommand}" 
+						Clicked="ExitPopup_Clicked"
 						HorizontalOptions="End" 
 						VerticalOptions="End"/>
 

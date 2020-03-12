@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:local="clr-namespace:IndoorNavigation"
+             xmlns:inputkit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.TestPage_Listview">
     <ContentPage.Resources>
@@ -135,11 +136,21 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.Content>
-        <!--<StackLayout>
+    <!--<ContentPage.Content>
+        <StackLayout>
             <SearchBar VerticalOptions="StartAndExpand"/>
-        </StackLayout>-->
+        </StackLayout>
         <controls:DraggableListView x:Name="TestListView" HasUnevenRows="True" ItemTapped="TestListView_ItemTapped" ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
         </controls:DraggableListView>
+    </ContentPage.Content>-->
+
+    <ContentPage.Content>
+        <StackLayout x:Name="DisplayTest">
+            <inputkit:RadioButtonGroupView x:Name="Group">
+                <inputkit:RadioButton Text="1" TextFontSize="25"/>
+                <inputkit:RadioButton Text="2"/>
+            </inputkit:RadioButtonGroupView>
+            <Button x:Name="event" Text="Show" Clicked="event_Clicked"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

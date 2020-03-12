@@ -58,6 +58,7 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
+
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -77,11 +78,11 @@ namespace IndoorNavigation
 			Preferences.Get("ID_NUMBER_STRING", string.Empty);
 			
         public bool HaveCashier = false;
-        public bool getCashier = false;
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;     
 		
+        
         public App()
         {
             InitializeComponent();

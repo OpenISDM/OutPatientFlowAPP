@@ -169,9 +169,11 @@
 						Margin="5,0,5,0"/>
                 
                 <controls:DraggableListView x:Name="RgListView" 
-			   Grid.Row="1" 
-			   HasUnevenRows="True" 
-			   ItemTapped="RgListView_ItemTapped"
+			                                Grid.Row="1" 
+			                                HasUnevenRows="True" 
+			                                ItemTapped="RgListView_ItemTapped"
+                                            BackgroundColor="White"
+                                            SeparatorColor="#E4E4E4"
                ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
                 </controls:DraggableListView>
