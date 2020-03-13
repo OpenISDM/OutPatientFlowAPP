@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Collections.Generic;
 using System.Xml;
+using System.Linq;
 
 namespace IndoorNavigation
 {
@@ -67,6 +68,8 @@ namespace IndoorNavigation
             PaymemtListBtn.IsVisible = 
 				(app.FinishCount + 1 == app.records.Count);
 
+            LoadCashierData();
+
             BindingContext = _viewmodel;
 
         }
@@ -75,14 +78,17 @@ namespace IndoorNavigation
         async private void RgListView_ItemTapped(object sender, 
 												 ItemTappedEventArgs e)  
         {
+            Console.WriteLine("the Record type is : "+((RgRecord)e.Item).type);
             if (isButtonPressed) return;
             isButtonPressed = true;
+            Console.WriteLine("ccccccccccccc");
             if (e.Item is RgRecord record)
             {                       
                 if(record.type.Equals(RecordType.Pharmacy) && 
 				   (app.lastFinished==null || 
 				   !app.lastFinished.type.Equals(RecordType.Cashier)))
                 {
+                    Console.WriteLine("aaaaaaaaaaa");
                     await PopupNavigation.Instance.PushAsync
 						( new AlertDialogPopupPage
 							(getResourceString("PHARMACY_ALERT_STRING"), 
@@ -183,7 +189,7 @@ namespace IndoorNavigation
 
         //the function is a button event to add payment and medicine recieving 
 		//route to listview
-        async private void PaymemtListBtn_Clicked(object sender, EventArgs e)
+        private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
             Buttonable(false);    
             if (isButtonPressed) return;
@@ -191,11 +197,41 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             app.HaveCashier = true;
-
-            //DestinationItem cashier = CashierPosition[app.lastFinished._regionID];
-
-            //app.records.Insert(app.records.Count - 1, new RgRecord { });
-            //app.records.Insert(app.records.Count - 1, new RgRecord { });
+            DestinationItem cashier, pharmacy;
+            try
+            {
+                cashier= CashierPosition[app.lastFinished._regionID];
+            }
+            catch 
+            {
+                cashier = CashierPosition.First().Value;
+            }
+            try
+            {
+                pharmacy = PharmacyPostition[app.lastFinished._regionID];
+            }
+            catch
+            {
+                pharmacy = PharmacyPostition.First().Value;
+            }
+           
+            app.records.Insert(app.records.Count - 1, 
+                new RgRecord { 
+                    _waypointID=cashier._waypointID,
+                    _regionID=cashier._regionID,
+                    _waypointName=cashier._waypointName,
+                    type=RecordType.Cashier,
+                    DptName=cashier._waypointName
+                });
+            app.records.Insert(app.records.Count - 1, 
+                new RgRecord { 
+                    _waypointID=pharmacy._waypointID,
+                    _regionID=pharmacy._regionID,
+                    _waypointName=pharmacy._waypointName,
+                    type=RecordType.Pharmacy,
+                    DptName=pharmacy._waypointName
+                });
+            isButtonPressed = false;
             #region pick cashier page code.
             //         await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
             //         MessagingCenter.Subscribe<PickCashierPopupPage, bool>
@@ -215,14 +251,15 @@ namespace IndoorNavigation
 
 
         Dictionary<Guid, DestinationItem> CashierPosition;
+        Dictionary<Guid, DestinationItem> PharmacyPostition;
         public void LoadCashierData() 
         {
             CashierPosition = new Dictionary<Guid, DestinationItem>();
-
+            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
             XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
-            XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
-
-            foreach(XmlNode node in nodeList)
+            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
+            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            foreach(XmlNode node in CashiernodeList)
             {
                 DestinationItem item = new DestinationItem();
 
@@ -234,6 +271,19 @@ namespace IndoorNavigation
                 Console.WriteLine(item._waypointName +" region id:"+ item._regionID+ ", waypoint id: "+item._waypointID);
 
                 CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            foreach(XmlNode node in PharmacyNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+
+                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
+
+                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
             }
 
             return;

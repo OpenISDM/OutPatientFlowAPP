@@ -50,6 +50,7 @@
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage"
+             BackgroundColor="White"
              Title="{i18n:Translate PREFERENCES_STRING}">
     
     <ContentPage.Resources>
@@ -118,7 +119,8 @@
     <ContentPage.Content>
         
         <sv:SettingsView x:Name="NavigationSettingsView" 
-                         HasUnevenRows="true" >
+                         HasUnevenRows="true" 
+                         BackgroundColor="White">
     
             <sv:Section Title="{i18n:Translate ROUTE_OPTION_STRING}">
                 <sv:SwitchCell 	x:Name="AvoidStair" 

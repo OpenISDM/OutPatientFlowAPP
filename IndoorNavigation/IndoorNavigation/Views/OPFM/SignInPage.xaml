@@ -57,7 +57,9 @@
 					   FontSize="Large" />
 					   
                 <Entry x:Name="IDnumEntry" 
-					   Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" 
+					   Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}"
+                       BackgroundColor="White"
+                       TextColor="Black"
 					   FontSize="Large" 
 					   MaxLength="10"/>
 					   
@@ -69,6 +71,8 @@
 					   
                 <DatePicker x:Name="RgDayPicker" 
 							MinimumDate="1/1/2019" 
+                            BackgroundColor="White"
+                            TextColor="Black"
 							IsEnabled="True"/>
             </StackLayout>
             <Button Text="{i18n:Translate OK_STRING}" 

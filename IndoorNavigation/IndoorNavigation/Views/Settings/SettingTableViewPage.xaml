@@ -117,7 +117,7 @@
     
     <ContentPage.Content>
         
-        <sv:SettingsView HasUnevenRows="true">
+        <sv:SettingsView HasUnevenRows="true" BackgroundColor="White">
     
             <sv:Section Title="{i18n:Translate SETTING_STRING}">
                 <sv:CommandCell IconSource="icon.png" 

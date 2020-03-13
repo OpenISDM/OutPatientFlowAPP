@@ -102,6 +102,9 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Theme\LightTheme.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="TestPage_Listview.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -167,6 +170,9 @@
     </Compile>
     <Compile Update="Resources\AppResources.zh.Designer.cs">
       <DependentUpon>AppResources.zh.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Theme\LightTheme.xaml.cs">
+      <DependentUpon>LightTheme.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\PopUpPage\AddPopupPage.xaml.cs">
       <DependentUpon>AddPopupPage.xaml</DependentUpon>
