@@ -60,6 +60,18 @@
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="BoxView">
+                <Setter Property="HorizontalOptions" 
+						Value="Fill"/>
+
+                <Setter Property="VerticalOptions" 
+						Value="Fill"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <ContentPage.Content>
         <!-- TODO: Add PAUSE button -->
@@ -76,6 +88,21 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             
+            <!--#region to show the layout Navigator
+            <BoxView BackgroundColor="Brown" Grid.Column="0" Grid.Row="0"/>
+            <BoxView BackgroundColor="Yellow" Grid.Column="1" Grid.Row="0"/>
+            <BoxView BackgroundColor="Blue" Grid.Column="0" Grid.Row="1"/>
+            <BoxView BackgroundColor="Red" Grid.Column="1" Grid.Row="1"/>
+            <BoxView BackgroundColor="Gray" Grid.Column="0" Grid.Row="2"/>
+            <BoxView BackgroundColor="Green" Grid.Column="1" Grid.Row="2"/>
+            <BoxView BackgroundColor="LightBlue" Grid.Column="0" Grid.Row="3"/>
+            <BoxView BackgroundColor="Cyan" Grid.Column="1" Grid.Row="3"/>
+            <BoxView BackgroundColor="Aqua" Grid.Column="2" Grid.Row="4"/>
+            <BoxView BackgroundColor="Chocolate" Grid.Column="3" Grid.Row="5"/>
+            <BoxView BackgroundColor="Gold" Grid.Column="4" Grid.Row="6"/>
+            <BoxView BackgroundColor="DarkOrange" Grid.Column="0" Grid.Row="7"/>-->
+            
+            <!--#endregion-->
             <Label Grid.Row="0" 
 				   Grid.Column="0"  
 				   Grid.ColumnSpan="2" 
@@ -146,8 +173,8 @@
 								Progress="{Binding NavigationProgress}"
                                 LabelShowIntValuesOnly="false" 
 								LabelStringFormat=""
-                                LabelFontSize="20" 
-								LabelPosition="AfterBar" 
+                                LabelFontSize="20"                              
+								LabelPosition="End" 
 								VerticalOptions="FillAndExpand" />
 								
             <Label Text="{Binding ProgressBar}" 
@@ -167,6 +194,14 @@
                    Aspect="Fill"
                    Scale="1.3" 
 				   Margin="5,0,0,0 " />
+
+            <!--<Button x:Name="FinishButton"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    />-->
         </Grid>
     </ContentPage.Content>
     

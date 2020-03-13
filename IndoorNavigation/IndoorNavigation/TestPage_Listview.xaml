@@ -7,150 +7,79 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:local="clr-namespace:IndoorNavigation"
              xmlns:inputkit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.TestPage_Listview">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="TextColor" 
-						Value="Black"/>
-
-                <Setter Property="FontSize" 
-						Value="22"/>
-            </Style>
-            <DataTemplate x:Key="YetNavigation">
-                <!--to show haven't started schedule view cell-->
-                <controls:DraggableViewCell>
-                    <ViewCell.Height>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS" Value="170"/>
-                        </OnPlatform>
-                    </ViewCell.Height>
-                    <ViewCell.ContextActions>
-                       
-                    </ViewCell.ContextActions>
-                    <StackLayout>
-                        <StackLayout Orientation="Horizontal" 
-									 Margin="10,0,10,0" 
-									 VerticalOptions="CenterAndExpand">
-
-                            <Label x:Name="DPTNAME" 
-								   Text="{Binding DptName, StringFormat='{0}'}" 
-								   FontSize="26" 
-								   HorizontalOptions="StartAndExpand" 
-								   VerticalOptions="CenterAndExpand" 
-                                   TextColor="Black"/>
-
-                            <Button x:Name="yetFinishBtn" 
-									Text="{i18n:Translate FINISH_STRING}"
-                                    IsEnabled="{Binding isComplete}" 
-                                    IsVisible="{Binding isComplete}"
-									FontSize="Large" 									
-                                    HorizontalOptions="EndAndExpand" 
-									CommandParameter="{Binding .}" 
-									
-									BorderColor="#3F51B5" 
-									BorderWidth="1" 
-                                    TextColor="White" 
-									BackgroundColor="#3f51b5" 
-									FontAttributes="Bold"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Vertical" 
-									 VerticalOptions="CenterAndExpand" 
-									 Margin="25,0,25,0">
-
-                            <Label x:Name="DptTimeText" 
-								   Text=
-								   "{Binding Shift, StringFormat=
-									 {i18n:Translate OUTPATIENT_TIME_STRING}}"/>
-
-                            <Label x:Name="CareRoomText" 
-								   Text="{Binding CareRoom, StringFormat=
-											{i18n:Translate CAREROOM_STRING}}"/>
-
-                            <Label x:Name="DrNameText" 
-								   Text="{Binding DrName, StringFormat=
-											  {i18n:Translate DRNAME_STRING}}"/>
-
-                            <Label x:Name="SeeSeqNumberText" 
-								   Text="{Binding SeeSeq, StringFormat=
-										    {i18n:Translate SEQUENCE_STRING}}"/>
-                        </StackLayout>
-                    </StackLayout>
-                </controls:DraggableViewCell>
-            </DataTemplate>
-            <DataTemplate x:Key="NotComplete">
-                <controls:DraggableViewCell  Height="60">
-                    <ViewCell.ContextActions>
-                       
-                    </ViewCell.ContextActions>
-                    <StackLayout >
-                        <StackLayout Orientation="Horizontal" 
-									 VerticalOptions="CenterAndExpand" 
-									 Margin="10,0,10,0">
-
-                            <Label x:Name="DptName" 
-								   Text="{Binding DptName, StringFormat='{0}'}" 
-								   FontSize="26" 
-                                   HorizontalOptions="StartAndExpand" 
-								   VerticalOptions="CenterAndExpand" 
-								   TextColor="Black" />
-
-                            <Button x:Name="FinishBtn" 
-									Text="{i18n:Translate FINISH_STRING}" 
-									HorizontalOptions="EndAndExpand" 
-									FontSize="Large" 
-                                    IsEnabled="{Binding isComplete}" 
-                                    IsVisible="{Binding isComplete}"
-									CommandParameter="{Binding .}" 
-									TextColor="White" 
-									BackgroundColor="#3f51b5" 
-									BorderColor="#3f51b5" 
-									BorderWidth="1"/>
-                        </StackLayout>
-                    </StackLayout>
-                </controls:DraggableViewCell>
-            </DataTemplate>
-            <DataTemplate x:Key="Complete">
-                <controls:DraggableViewCell IsEnabled="False" 
-						  Height="60">
-                    <StackLayout BackgroundColor="#e0e0e0">
-                        <Label Text="{Binding DptName}" 
-							   FontSize="26" 
-							   TextColor="#c0c0c0" 
-							   Margin="10,0,10,0" 
-							   VerticalOptions="CenterAndExpand"/>
-                    </StackLayout>
-                </controls:DraggableViewCell>
-            </DataTemplate>
-            <DataTemplate x:Key="NullCell">
-                <controls:DraggableViewCell IsEnabled="False" Height="250">
-                    <StackLayout/>
-                </controls:DraggableViewCell>
-            </DataTemplate>
-            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" 
-						NullTemplate="{StaticResource NullCell}"  
-						NotCompleteTemplate="{StaticResource NotComplete}" 
-						CompleteTemplate="{StaticResource Complete}" 
-						YetNavigationTemplate="{StaticResource YetNavigation}"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <SearchBar VerticalOptions="StartAndExpand"/>
-        </StackLayout>
-        <controls:DraggableListView x:Name="TestListView" HasUnevenRows="True" ItemTapped="TestListView_ItemTapped" ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
-        </controls:DraggableListView>
-    </ContentPage.Content>-->
 
     <ContentPage.Content>
-        <StackLayout x:Name="DisplayTest">
-            <inputkit:RadioButtonGroupView x:Name="Group">
-                <inputkit:RadioButton Text="1" TextFontSize="25"/>
-                <inputkit:RadioButton Text="2"/>
-            </inputkit:RadioButtonGroupView>
-            <Button x:Name="event" Text="Show" Clicked="event_Clicked"/>
+        <StackLayout>
+            <StackLayout Margin="25,15,15,15">
+                <Label Text="目的地 : 北區停車場入口" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+                <BoxView HeightRequest="3" BackgroundColor="Transparent"/>
+                <Label Text="目前位置 : 地政局" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+            </StackLayout>
+            <Grid x:Name="TestGrid" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image x:Name="InstructionImg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="Arrow_left.png"/>
+
+                <Label x:Name="InstructionLab" Text="面對圖片的方向\n然後向左轉\n直走約4公尺" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
+                       LineBreakMode="WordWrap" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            
+                <Button x:Name="FinishButton" Text="{i18n:Translate FINISH_STRING}"
+                        Grid.Row="3" Grid.Column="2" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
+                        />
+
+                <Image x:Name="FirstDirectionImg"/>
+
+                <pb:ProgressBarView x:Name="ProgressBar"
+                                    Color="Red"
+                                    LabelStringFormat=""
+                                    Progress="100"
+                                    VerticalOptions="FillAndExpand"
+                                    Grid.Column="0"
+                                    Grid.Row="4"
+                                    Grid.ColumnSpan="3"
+                                    />
+                <Label x:Name="ProgressTextValue" Text="7/7" HorizontalOptions="EndAndExpand" FontSize="Large"
+                       Grid.Row="4" Grid.Column="2"/>
+            </Grid>
+
         </StackLayout>
+        <!--<AbsoluteLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="5.5*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="目的地" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                       Grid.Column="0" Grid.Row="0" FontSize="Large"/>
+                <Label Text="北區停車場出入口" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                       Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" FontSize="Large"/>
+            </Grid>
+        </AbsoluteLayout>-->
     </ContentPage.Content>
 </ContentPage>

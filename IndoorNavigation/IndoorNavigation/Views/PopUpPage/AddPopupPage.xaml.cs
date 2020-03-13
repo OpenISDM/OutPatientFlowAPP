@@ -176,7 +176,7 @@ namespace IndoorNavigation
                     boxList.Add(box);
                 }
                 
-                outSideGrid.Children.Add(image, 0, 2, 0, 4);
+                outSideGrid.Children.Add(image, 0, 2, 0, 4);               
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(BoxLayout, 2,5,0,5);
 				
