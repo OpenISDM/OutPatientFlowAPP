@@ -46,6 +46,11 @@ using Android.Speech.Tts;
 using IndoorNavigation.Droid;
 using IndoorNavigation.Models;
 
+using System;
+
+using Java.Lang;
+using Java.Util;
+
 [assembly: Xamarin.Forms.Dependency(typeof(TextToSpeechImplementation))]
 namespace IndoorNavigation.Droid
 {
@@ -57,7 +62,8 @@ namespace IndoorNavigation.Droid
         string toSpeak;
 
         public void Speak(string text, string language)
-        {
+        {        
+
             toSpeak = text;
             if (speaker == null)
             {
@@ -68,7 +74,10 @@ namespace IndoorNavigation.Droid
                 speaker.SetLanguage(new Java.Util.Locale(language));
                 speaker.SetSpeechRate(0.8f);
                 speaker.Speak(toSpeak, QueueMode.Flush, null, null);
+
             }
+
+           
         }
 
         public void OnInit(OperationResult status)
@@ -78,5 +87,7 @@ namespace IndoorNavigation.Droid
                 speaker.Speak(toSpeak, QueueMode.Flush, null, null);
             }
         }
+
+      
     }
 }

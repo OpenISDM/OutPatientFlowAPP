@@ -16,9 +16,9 @@ namespace IndoorNavigation.Droid
     // it require android 10 or up version.
 
     [Activity(Label = "WPIN", 
-	 Icon = "@mipmap/icon", 
-	 Theme = "@style/splashscreen", 
-	 MainLauncher = true, 
+	 Icon = "@mipmap/icon",
+     Theme = "@style/splashscreen",
+     MainLauncher = true, 
 	 ConfigurationChanges=ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode,
      ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android

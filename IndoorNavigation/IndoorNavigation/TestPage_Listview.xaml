@@ -10,8 +10,19 @@
              xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.TestPage_Listview">
-
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" BackgroundColor="#3f51b5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Button Text="back" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
+            <Label Text="使用者帳戶" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
+            <Button Text="ok" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Hello world!" FontSize="32" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+    <!--<ContentPage.Content>
         <StackLayout>
             <StackLayout Margin="25,15,15,15">
                 <Label Text="{Binding DestinationWaypointName , StringFormat={i18n:Translate DESTINATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
@@ -56,30 +67,6 @@
                         />
             </Grid>
 
-        </StackLayout>
-        <!--<AbsoluteLayout>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="5.5*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Text="目的地" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                       Grid.Column="0" Grid.Row="0" FontSize="Large"/>
-                <Label Text="北區停車場出入口" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                       Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" FontSize="Large"/>
-            </Grid>
-        </AbsoluteLayout>-->
-    </ContentPage.Content>
+        </StackLayout>      
+    </ContentPage.Content>-->
 </ContentPage>

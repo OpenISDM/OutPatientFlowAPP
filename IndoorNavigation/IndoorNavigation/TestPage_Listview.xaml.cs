@@ -33,7 +33,14 @@ namespace IndoorNavigation
             //    }
             //}
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
+            Page page = Application.Current.MainPage;
+            //((NavigationPage)page).BarBackgroundColor = Color.FromHex("3f51b5");
+
+        }
         private void FinishButton_Clicked(object sender, EventArgs e)
         {
 

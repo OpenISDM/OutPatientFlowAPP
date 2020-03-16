@@ -21,12 +21,14 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using IndoorNavigation.Views.Controls;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : CustomToolbarContentPage
     {
+        #region variable declaration
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;        
 
@@ -47,7 +49,9 @@ namespace IndoorNavigation
 
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
-        
+
+        #endregion
+
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();          
@@ -575,7 +579,13 @@ namespace IndoorNavigation
         {
             //await Navigation.PushAsync(new SignInPage());
             //await Navigation.PushModalAsync(new SignInPage());
-            await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+            //await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+
+            NavigationPage navigationPage = new NavigationPage(new SignInPage()) 
+                { BarBackgroundColor = Color.FromHex("#3f51b5") };
+
+            await Navigation.PushModalAsync(navigationPage);
+
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
 				(this, "isReset", (msgSender, msgArgs) =>
 				{

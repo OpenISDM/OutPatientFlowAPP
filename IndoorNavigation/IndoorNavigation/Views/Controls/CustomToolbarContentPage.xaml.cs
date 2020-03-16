@@ -4,7 +4,7 @@ using IndoorNavigation.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.Controls
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CustomToolbarContentPage : ContentPage, IAddToolbarItem

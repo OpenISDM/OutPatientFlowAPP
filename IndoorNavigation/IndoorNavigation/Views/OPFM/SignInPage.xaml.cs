@@ -39,6 +39,7 @@ using Plugin.Multilingual;
 using IndoorNavigation.Resources.Helpers;
 using System.Resources;
 
+using IndoorNavigation.Views.Controls;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -137,6 +138,12 @@ namespace IndoorNavigation
             }
         }
 
-       
+
+        protected override bool OnBackButtonPressed()
+        {
+            //Console.Write("aaaa");
+            //return base.OnBackButtonPressed();
+            return true;
+        }
     }
 }
