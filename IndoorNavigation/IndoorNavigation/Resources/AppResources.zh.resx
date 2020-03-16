@@ -337,10 +337,10 @@
     <value>無法避開所有路線選項</value>
   </data>
   <data name="DESTINATION_STRING" xml:space="preserve">
-    <value>目的地 : </value>
+    <value>目的地 : {0}</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>目前位置 : </value>
+    <value>目前位置 : {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
@@ -620,5 +620,8 @@
   </data>
   <data name="REGISTERED_COUNTER_STRING" xml:space="preserve">
     <value>掛號櫃台</value>
+  </data>
+  <data name="RETURN_STRING" xml:space="preserve">
+    <value>返回</value>
   </data>
 </root>

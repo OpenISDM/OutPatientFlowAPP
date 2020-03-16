@@ -62,11 +62,11 @@ namespace IndoorNavigation
 				 "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             NetworkSettings = DependencyService.Get<INetworkSetting>();
-            PaymemtListBtn.IsEnabled = 
-				(app.FinishCount + 1 == app.records.Count);
-				
-            PaymemtListBtn.IsVisible = 
-				(app.FinishCount + 1 == app.records.Count);
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
+            //(app.FinishCount + 1 == app.records.Count);
+
+            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
+				//(app.FinishCount + 1 == app.records.Count);
 
             LoadCashierData();
 
@@ -215,16 +215,18 @@ namespace IndoorNavigation
                 pharmacy = PharmacyPostition.First().Value;
             }
            
-            app.records.Insert(app.records.Count - 1, 
-                new RgRecord { 
+            //app.records.Insert(app.records.Count - 1, 
+            app.records.Add(new RgRecord { 
+                //new RgRecord { 
                     _waypointID=cashier._waypointID,
                     _regionID=cashier._regionID,
                     _waypointName=cashier._waypointName,
                     type=RecordType.Cashier,
                     DptName=cashier._waypointName
                 });
-            app.records.Insert(app.records.Count - 1, 
-                new RgRecord { 
+            //app.records.Insert(app.records.Count - 1, 
+            app.records.Add(new RgRecord { 
+                //new RgRecord { 
                     _waypointID=pharmacy._waypointID,
                     _regionID=pharmacy._regionID,
                     _waypointName=pharmacy._waypointName,
@@ -303,10 +305,10 @@ namespace IndoorNavigation
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel", 
 			  (Messagesender, Messageargs) =>
               {
-                PaymemtListBtn.IsEnabled = 
-				 (app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
-                PaymemtListBtn.IsVisible = 
-				 (app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
+                  PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && !app.HaveCashier;
+                  //(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
+                  PaymemtListBtn.IsVisible = app.FinishCount==app.records.Count && !app.HaveCashier;
+				 //(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
                 isButtonPressed = false;
                 MessagingCenter.Unsubscribe<AddPopupPage, bool>
 					(this, "isCancel");                 
@@ -331,10 +333,10 @@ namespace IndoorNavigation
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) 
 				Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = 
-				(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
-            PaymemtListBtn.IsVisible = 
-				(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
+            //(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
+				//(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
@@ -363,8 +365,10 @@ namespace IndoorNavigation
                 }
                 _multiItemFinish(FinishBtnClickItem);
 
-                if (app.FinishCount + 1 == app.records.Count && 
-					app.lastFinished.type!= RecordType.Register)
+                //           if (app.FinishCount + 1 == app.records.Count && 
+                //app.lastFinished.type!= RecordType.Register)
+                if (app.FinishCount == app.records.Count &&
+                app.lastFinished.type != RecordType.Register)
                 {
                     if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
@@ -569,15 +573,16 @@ namespace IndoorNavigation
 		
         private async Task SignInItemMethod()
         {
-            await Navigation.PushAsync(new SignInPage());
-
+            //await Navigation.PushAsync(new SignInPage());
+            //await Navigation.PushModalAsync(new SignInPage());
+            await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
 				(this, "isReset", (msgSender, msgArgs) =>
 				{
-					PaymemtListBtn.IsEnabled = 
-						(app.FinishCount + 1 == app.records.Count);
-					PaymemtListBtn.IsVisible = 
-						(app.FinishCount + 1 == app.records.Count);
+                    PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
+                        //(app.FinishCount + 1 == app.records.Count);
+                    PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
+						//(app.FinishCount + 1 == app.records.Count);
 
 					Buttonable(true);
 					MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>

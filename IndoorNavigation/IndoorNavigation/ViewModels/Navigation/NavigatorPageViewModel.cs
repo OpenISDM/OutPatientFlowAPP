@@ -98,6 +98,8 @@ namespace IndoorNavigation.ViewModels.Navigation
         //private string _floor;
         //private string _buildingName;
         private bool _isplaying;
+        private bool _isfinished=false;
+
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
                                       Guid destinationWaypointID,
@@ -204,6 +206,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     ProgressBar = instruction._progressBar;
                     FirstDirectionPicture = null;
                     isPlaying = false;
+                    isFinished = true;
                     break;
 
                 case NavigationResult.AdjustRoute:
@@ -230,6 +233,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 					NavigationProgress = 100;
                     ProgressBar = instruction._progressBar;
                     isPlaying = false;
+                    isFinished = true;
 
                     Utility._textToSpeech.Speak(
                         CurrentStepLabel,
@@ -676,6 +680,11 @@ namespace IndoorNavigation.ViewModels.Navigation
             });
         }
 
+        public bool isFinished
+        {
+            get { return _isfinished; }
+            set { SetProperty(ref _isfinished, value); }
+        }
         public string CurrentStepLabel
 		{
 			get

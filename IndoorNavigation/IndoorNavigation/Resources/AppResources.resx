@@ -337,10 +337,10 @@
     <value>Unable to avoid all connection types</value>
   </data>
   <data name="DESTINATION_STRING" xml:space="preserve">
-    <value>Goal : </value>
+    <value>Goal : {0}</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>Current: </value>
+    <value>Current: {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
@@ -629,5 +629,8 @@
   </data>
   <data name="REGISTERED_COUNTER_STRING" xml:space="preserve">
     <value>Registered counter</value>
+  </data>
+  <data name="RETURN_STRING" xml:space="preserve">
+    <value>Return</value>
   </data>
 </root>

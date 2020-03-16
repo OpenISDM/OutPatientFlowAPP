@@ -49,6 +49,7 @@
 									Text="{i18n:Translate FINISH_STRING}"
                                     IsEnabled="{Binding isComplete}" 
                                     IsVisible="{Binding isComplete}"
+                                    VerticalOptions="CenterAndExpand"
 									FontSize="Large" 									
                                     HorizontalOptions="EndAndExpand" 
 									CommandParameter="{Binding .}" 
@@ -105,7 +106,8 @@
 								   
                             <Button x:Name="FinishBtn" 
 									Text="{i18n:Translate FINISH_STRING}" 
-									HorizontalOptions="EndAndExpand" 
+									HorizontalOptions="EndAndExpand"
+                                    VerticalOptions="CenterAndExpand"
 									FontSize="Large" 
                                     IsEnabled="{Binding isComplete}" 
                                     IsVisible="{Binding isComplete}"
@@ -213,7 +215,7 @@
             <ActivityIndicator x:Name="BusyIndicator"  
 							   Color="#3f51b5"  
 							   AbsoluteLayout.LayoutFlags="All" 
-							   AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2"/>
+							   AbsoluteLayout.LayoutBounds="0.5,0.5,0.3,0.3"/>
 
         </AbsoluteLayout>
     </ContentPage.Content>

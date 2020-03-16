@@ -39,7 +39,7 @@ namespace IndoorNavigation
         public AskRegisterPopupPage(string navigraphName)
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
 
             _navigationGraphName = navigraphName;
             _XmlInfo = NavigraphStorage.LoadInformationML
@@ -106,7 +106,7 @@ namespace IndoorNavigation
                 isComplete = true
             };
             app.records.Add(record);
-            app.records.Add(new RgRecord {type=RecordType.NULL});
+            //app.records.Add(new RgRecord {type=RecordType.NULL});
             MessagingCenter.Send(this, "isReset", true);
             ButtonLock = true;
             await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._regionID,record._waypointID,record._waypointName,_XmlInfo));

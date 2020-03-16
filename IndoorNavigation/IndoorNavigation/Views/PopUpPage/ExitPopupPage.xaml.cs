@@ -78,7 +78,7 @@ namespace IndoorNavigation
         public ExitPopupPage(string navigationGraphName)
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _navigationGraphName = navigationGraphName;
             phoneInformation = new PhoneInformation();
 
@@ -181,7 +181,8 @@ namespace IndoorNavigation
                 if (radio.IsChecked)
                 {
                     string radioName = radio.Text;
-                    app.records.Insert(app.FinishCount, new RgRecord
+                    //app.records.Insert(app.FinishCount, new RgRecord
+                    app.records.Add(new RgRecord 
                     {
                         _waypointName = radioName,
                         type = RecordType.Exit,

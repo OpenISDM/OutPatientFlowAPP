@@ -33,6 +33,11 @@ namespace IndoorNavigation
             //    }
             //}
         }
+
+        private void FinishButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
         //ObservableCollection<RgRecord> records = new ObservableCollection<RgRecord>();
         //public TestPage_Listview()
         //{

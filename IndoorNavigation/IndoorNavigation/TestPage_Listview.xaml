@@ -14,9 +14,9 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Margin="25,15,15,15">
-                <Label Text="目的地 : 北區停車場入口" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding DestinationWaypointName , StringFormat={i18n:Translate DESTINATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
                 <BoxView HeightRequest="3" BackgroundColor="Transparent"/>
-                <Label Text="目前位置 : 地政局" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding CurrentWaypointName, StringFormat={i18n:Translate CURRENT_LOCATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
             <Grid x:Name="TestGrid" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
                 <Grid.RowDefinitions>
@@ -32,28 +32,28 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Image x:Name="InstructionImg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="Arrow_left.png"/>
+                <Image x:Name="InstructionImg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding CurrentStepImage}" IsAnimationPlaying="{Binding isPlaying}"/>
 
-                <Label x:Name="InstructionLab" Text="面對圖片的方向\n然後向左轉\n直走約4公尺" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
+                <Label x:Name="InstructionLab" Text="{Binding CurrentStepLabel}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
                        LineBreakMode="WordWrap" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-            
-                <Button x:Name="FinishButton" Text="{i18n:Translate FINISH_STRING}"
-                        Grid.Row="3" Grid.Column="2" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
-                        />
-
-                <Image x:Name="FirstDirectionImg"/>
 
                 <pb:ProgressBarView x:Name="ProgressBar"
                                     Color="Red"
+                                    BackgroundColor="#dcdcdc"
                                     LabelStringFormat=""
-                                    Progress="100"
+                                    Progress="{Binding NavigationProgress}"
                                     VerticalOptions="FillAndExpand"
                                     Grid.Column="0"
                                     Grid.Row="4"
                                     Grid.ColumnSpan="3"
                                     />
-                <Label x:Name="ProgressTextValue" Text="7/7" HorizontalOptions="EndAndExpand" FontSize="Large"
+                <Label x:Name="ProgressTextValue" Text="{Binding ProgressBar}" HorizontalOptions="EndAndExpand" FontSize="Large"
                        Grid.Row="4" Grid.Column="2"/>
+                <Image x:Name="FirstDirectionImg" Source="{Binding FirstDirectionPicture}" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" 
+                       VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="Fill"/>
+                <Button x:Name="FinishButton" Text="{i18n:Translate FINISH_STRING}" Clicked="FinishButton_Clicked" IsVisible="{Binding isFinished}"
+                        Grid.Row="3" Grid.Column="2" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
+                        />
             </Grid>
 
         </StackLayout>

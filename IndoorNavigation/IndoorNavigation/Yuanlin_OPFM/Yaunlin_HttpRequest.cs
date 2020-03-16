@@ -184,8 +184,8 @@ namespace IndoorNavigation
             Console.WriteLine(responseString);
             ClinicPositionInfo infos = new ClinicPositionInfo();
 
-            int index = 
-				(app.getRigistered) ? app.records.Count - 1 : app.records.Count;
+    //        int index = 
+				//(app.getRigistered) ? app.records.Count - 1 : app.records.Count;
 
             for (int i = 0; i < records.Count; i++)
             {
@@ -213,20 +213,30 @@ namespace IndoorNavigation
 						record.DptName 
 						+ getResourceString("INVALID_WAYPOINT_STRING");
                     app.FinishCount++;
-                    app.records.Insert(index++,record);
+                    //app.records.Insert(index++,record);
+                    app.records.Add(record);
                     continue;
                 }
-                app.records.Insert(index++,record);
+                //app.records.Insert(index++,record);
+                app.records.Add(record);
                 app._TmpRecords.Add(record);
 
                
                 Console.WriteLine($"region id={record._regionID},"
 					+$" waypoint id={record._waypointID}");
             }
-            if (!app.getRigistered)
-                app.records.Add(new RgRecord { type=RecordType.NULL });
+            //if (!app.getRigistered)
+            //    app.records.Add(new RgRecord { type=RecordType.NULL });
             Console.WriteLine(app._TmpRecords.Count);
         }
+
+        //private void AddRecord(RgRecord record)
+        //{
+        //    if (app.getRigistered)
+        //        app.records.Add(record);
+        //    else
+        //        app.records.in
+        //}
 
         private string getResourceString(string key)
         {

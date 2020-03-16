@@ -63,7 +63,7 @@ namespace IndoorNavigation
         public SelectTwoWayPopupPage(string BuildingName)
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _locationName = BuildingName;
         }
 

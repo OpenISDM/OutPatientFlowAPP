@@ -89,8 +89,9 @@ namespace IndoorNavigation
 				
             app.isRigistered = 
 				false;
-				
-            await Navigation.PopAsync();
+
+            //await Navigation.PopAsync();
+            await Navigation.PopModalAsync();
         }                
 
         //to check the ID number is a legal one or not.

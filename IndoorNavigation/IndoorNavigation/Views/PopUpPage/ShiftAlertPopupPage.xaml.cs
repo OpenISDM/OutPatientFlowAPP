@@ -71,7 +71,7 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage()
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
         }
 
         public ShiftAlertPopupPage(	string AlertContext, 
@@ -79,7 +79,7 @@ namespace IndoorNavigation.Views.Navigation
 									string prefs)
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
             Button CancelBtn = new Button{ Text = cancel, Style=ButtonStyle };
@@ -97,7 +97,7 @@ namespace IndoorNavigation.Views.Navigation
 									string prefs)
         {
             InitializeComponent();    
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
             Button CancelBtn = new Button{ Text = cancel , Style=ButtonStyle };

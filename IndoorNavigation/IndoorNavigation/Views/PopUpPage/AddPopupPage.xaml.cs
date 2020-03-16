@@ -364,12 +364,12 @@ namespace IndoorNavigation
 
         protected override bool OnBackButtonPressed()
         {
-            PopAddPage(AllFinished);
+            PopAddPage(false);
             return base.OnBackButtonPressed();
         }
         protected override bool OnBackgroundClicked()
         {
-            PopAddPage(AllFinished);
+            PopAddPage(false);
             return base.OnBackgroundClicked();
         }
 
