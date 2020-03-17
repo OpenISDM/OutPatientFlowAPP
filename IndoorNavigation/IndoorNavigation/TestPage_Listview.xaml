@@ -20,6 +20,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Hello world!" FontSize="32" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+            <controls:ProgressBar BackgroundColor="Aqua" ProgressColor="Red" Progress="20"/>
+            <controls:ProgressBar x:Name="TestProgressBar" backgroundColor="Blue" ProgressColor="Brown" />
         </StackLayout>
     </ContentPage.Content>
     <!--<ContentPage.Content>

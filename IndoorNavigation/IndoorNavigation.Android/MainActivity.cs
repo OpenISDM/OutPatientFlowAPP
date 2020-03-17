@@ -58,6 +58,7 @@ namespace IndoorNavigation.Droid
                 ActivityCompat.RequestPermissions(this, 
 					new String[] {Manifest.Permission.WriteExternalStorage}, 0);
             }
+            
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);

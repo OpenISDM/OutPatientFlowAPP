@@ -32,6 +32,11 @@ namespace IndoorNavigation
             //        TestGrid.Children.Add(view, j , i);
             //    }
             //}
+
+            for (i = 0; i < 101; i++)
+            {
+                TestProgressBar.Progress = i;
+            }
         }
         protected override void OnAppearing()
         {

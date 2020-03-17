@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using CoreGraphics;
-using IndoorNavigation;
+using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Models;
 using iOSSecondaryToolbarMenubar.iOS.Renderers;
 using iOSSecondaryToolbarMenubar.iOS.Services;
