@@ -515,7 +515,8 @@ namespace IndoorNavigation
         async private void ExitFinish(RgRecord record)
         {
             string HopeString = 
-				$"{phoneInformation.GetBuildingName(_navigationGraphName)}"+
+				//$"{phoneInformation.GetBuildingName(_navigationGraphName)}"+
+                $"{_navigationGraphName}"+
 				$"\n{getResourceString("HOPE_STRING")}";
             await PopupNavigation.Instance.PushAsync
 				(new AlertDialogPopupPage(HopeString));

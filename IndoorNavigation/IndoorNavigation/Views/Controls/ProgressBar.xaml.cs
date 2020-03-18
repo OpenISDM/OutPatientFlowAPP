@@ -18,15 +18,10 @@ namespace IndoorNavigation.Views.Controls
             InitializeComponent();
 
             Container.BackgroundColor = backgroundColor;
-            //_pregressColor = new BoxView 
-            //{ 
-            //    Color = ProgressColor, 
-            //    VerticalOptions = LayoutOptions.FillAndExpand, 
-            //    HorizontalOptions = LayoutOptions.FillAndExpand 
-            //};
+           
 
             WidthOfContainer = Application.Current.MainPage.Width;//Container.Width;
-            Console.WriteLine(WidthOfContainer + " 11111111");
+            //Console.WriteLine(WidthOfContainer + " 11111111");
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -65,7 +60,7 @@ namespace IndoorNavigation.Views.Controls
                 });
             }
 
-            Console.WriteLine(Container.Width + "bbbbbbb");
+            //Console.WriteLine(Container.Width + "bbbbbbb");
         }
 
         public double NormalizeValue(double value)
@@ -95,7 +90,12 @@ namespace IndoorNavigation.Views.Controls
             get { return (Color)GetValue(backgroundColorProperty); }
             set { SetValue(backgroundColorProperty, value); }
         } 
-
+        //public double Width
+        //{
+        //    get { return (double)GetValue(WidthProperty); }
+        //    set { SetValue(WidthProperty, value); }
+        //}
+        //public static readonly BindableProperty WidthProperty = BindableProperty.Create(nameof(Width), typeof(double), typeof(ProgressBarView), default(double));
         public static readonly BindableProperty ProgressColorProperty = BindableProperty.Create(nameof(ProgressColor), typeof(Color), typeof(ProgressBarView), Color.Blue);
         public static readonly BindableProperty backgroundColorProperty = BindableProperty.Create(nameof(backgroundColor), typeof(Color), typeof(ProgressBarView), Color.Transparent);
         public static readonly BindableProperty ProgressProperty = BindableProperty.Create(nameof(Progress), typeof(double), typeof(ProgressBarView), default(double));

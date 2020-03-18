@@ -337,7 +337,7 @@
           "lib/xamarin.ios10/Plugin.InputKit.dll": {}
         }
       },
-      "Xamarin.Forms.Visual.Material/4.4.0.991640": {
+      "Xamarin.Forms.Visual.Material/3.6.0.344457": {
         "type": "package",
         "dependencies": {
           "Xamarin.iOS.MaterialComponents": "72.2.0.1"
@@ -739,7 +739,7 @@
           "lib/xamarin.ios10/Plugin.InputKit.dll": {}
         }
       },
-      "Xamarin.Forms.Visual.Material/4.4.0.991640": {
+      "Xamarin.Forms.Visual.Material/3.6.0.344457": {
         "type": "package",
         "dependencies": {
           "Xamarin.iOS.MaterialComponents": "72.2.0.1"
@@ -1141,7 +1141,7 @@
           "lib/xamarin.ios10/Plugin.InputKit.dll": {}
         }
       },
-      "Xamarin.Forms.Visual.Material/4.4.0.991640": {
+      "Xamarin.Forms.Visual.Material/3.6.0.344457": {
         "type": "package",
         "dependencies": {
           "Xamarin.iOS.MaterialComponents": "72.2.0.1"
@@ -1543,7 +1543,7 @@
           "lib/xamarin.ios10/Plugin.InputKit.dll": {}
         }
       },
-      "Xamarin.Forms.Visual.Material/4.4.0.991640": {
+      "Xamarin.Forms.Visual.Material/3.6.0.344457": {
         "type": "package",
         "dependencies": {
           "Xamarin.iOS.MaterialComponents": "72.2.0.1"
@@ -2339,23 +2339,23 @@
         "xamarin.forms.inputkit.nuspec"
       ]
     },
-    "Xamarin.Forms.Visual.Material/4.4.0.991640": {
-      "sha512": "VzrLohvuFW8JhxCP/tes1EhjkArRUWbWdnc0lAPlt403sa3L3PeAoI0ESFv1xudnKoFr5wqrWpgnjzxAaw/ABw==",
+    "Xamarin.Forms.Visual.Material/3.6.0.344457": {
+      "sha512": "tKf5pN//n8EVlluitVpPAN/2joEPtKq5WpIGYQhbI0CRM/0yKEFb3V6D+ngQ8QSrtapHrr4KR5pH6uCo7EvXNA==",
       "type": "package",
-      "path": "xamarin.forms.visual.material/4.4.0.991640",
+      "path": "xamarin.forms.visual.material/3.6.0.344457",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/MonoAndroid10/Xamarin.Forms.Visual.Material.targets",
         "lib/MonoAndroid10/_._",
         "lib/MonoAndroid90/Xamarin.Forms.Material.dll",
+        "lib/MonoAndroid90/Xamarin.Forms.Material.dll.mdb",
         "lib/MonoAndroid90/Xamarin.Forms.Material.pdb",
         "lib/Xamarin.iOS10/Xamarin.Forms.Material.dll",
+        "lib/Xamarin.iOS10/Xamarin.Forms.Material.dll.mdb",
         "lib/Xamarin.iOS10/Xamarin.Forms.Material.pdb",
         "lib/netstandard1.0/_._",
-        "lib/tizen40/Xamarin.Forms.Material.dll",
-        "lib/tizen40/Xamarin.Forms.Material.pdb",
-        "xamarin.forms.visual.material.4.4.0.991640.nupkg.sha512",
+        "xamarin.forms.visual.material.3.6.0.344457.nupkg.sha512",
         "xamarin.forms.visual.material.nuspec"
       ]
     },
@@ -2428,7 +2428,7 @@
       "Plugin.Multilingual >= 1.0.2",
       "Xamarin.CustomControls.ProgressBarView >= 1.0.2",
       "Xamarin.Forms >= 4.4.0.991537",
-      "Xamarin.Forms.Visual.Material >= 4.4.0.991640"
+      "Xamarin.Forms.Visual.Material >= 3.6.0.344457"
     ]
   },
   "packageFolders": {
@@ -2487,7 +2487,7 @@
           },
           "Xamarin.Forms.Visual.Material": {
             "target": "Package",
-            "version": "[4.4.0.991640, )"
+            "version": "[3.6.0.344457, )"
           }
         }
       }
