@@ -19,6 +19,7 @@
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>
+            <Button Text="aaaa" FontSize="50" Clicked="Button_Clicked"/>
             <Label Text="Hello world!" FontSize="32" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
             <controls:ProgressBar BackgroundColor="Aqua" ProgressColor="Red" Progress="20"/>
             <controls:ProgressBar x:Name="TestProgressBar" backgroundColor="Blue" ProgressColor="Brown" />

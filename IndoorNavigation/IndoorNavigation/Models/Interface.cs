@@ -64,6 +64,15 @@ namespace IndoorNavigation.Models
         NavigationEvent _event { get; }
     }
 
+    public interface PermissioCheck
+    {
+        bool CameraPermissionCheck();
+        void CameraPermissionAsk();
+        bool LocationPermissionCheck();
+        void LocationPermissionAsk();
+
+    }
+
     public interface LBeaconScan
     {
         void StartScan();

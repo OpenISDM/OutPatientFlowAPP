@@ -66,6 +66,8 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
@@ -155,21 +157,39 @@ namespace IndoorNavigation.Views.Settings
             }
             else
             {
-                IQrCodeDecoder qrCodeDecoder = 
-					DependencyService.Get<IQrCodeDecoder>();
-                var currentLanguage = 
-					CrossMultilingual.Current.CurrentCultureInfo;
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                var shouldShowRequest = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera);
+                Console.WriteLine(shouldShowRequest.ToString());
+                var cameraPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+
+                if (cameraPermission != PermissionStatus.Granted)
                 {
-                    qrCodeValue = await qrCodeDecoder.ScanAsync();
+                    Console.WriteLine("No Camera permission.");
+                    var status = await Utility.CheckPermissions(Permission.Camera);
+                    //var newStatus = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+
+                    //if (!newStatus.ContainsKey(Permission.Camera))
+                    //    return;
+                    //cameraPermission = newStatus[Permission.Camera];
+                    Console.WriteLine("End NoCamer permission.");
                 }
                 else
                 {
-                    await DisplayAlert(getResource("WARN_STRING"), 
-						getResource("PLEASE_CHECK_INTERNET_STRING"), 
-						getResource("CANCEL_STRING"));                    
+                    Console.WriteLine("Have Camera permission");
+                    IQrCodeDecoder qrCodeDecoder =
+                        DependencyService.Get<IQrCodeDecoder>();
+                    var currentLanguage =
+                        CrossMultilingual.Current.CurrentCultureInfo;
+                    if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                    {
+                        qrCodeValue = await qrCodeDecoder.ScanAsync();
+                    }
+                    else
+                    {
+                        await DisplayAlert(getResource("WARN_STRING"),
+                            getResource("PLEASE_CHECK_INTERNET_STRING"),
+                            getResource("CANCEL_STRING"));
+                    }
                 }
-
 
             }
 #else

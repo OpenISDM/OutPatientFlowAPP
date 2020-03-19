@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Content.Res;
 using Android.OS;
+using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
@@ -63,7 +64,7 @@ namespace IndoorNavigation.Droid
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            Xamarin.Essentials.Platform.Init(this, bundle);
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
@@ -89,18 +90,24 @@ namespace IndoorNavigation.Droid
             
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, 
-														string[] permissions, 
-													  Permission[] grantResults)
+        //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        //{
+        //    PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        //    base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        //}
+
+        public override void OnRequestPermissionsResult(int requestCode,
+                                                        string[] permissions,
+                                                      [GeneratedEnum] Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler
-			.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            .OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             PermissionsImplementation.Current
-			.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, 
-											permissions, 
-											grantResults);
+            .OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode,
+                                            permissions,
+                                            grantResults);
         }
         public override void OnConfigurationChanged(Configuration newConfig)
         {

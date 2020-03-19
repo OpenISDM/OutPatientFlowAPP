@@ -633,4 +633,7 @@
   <data name="RETURN_STRING" xml:space="preserve">
     <value>Return</value>
   </data>
+  <data name="REGISTER_STRING" xml:space="preserve">
+    <value>Register</value>
+  </data>
 </root>

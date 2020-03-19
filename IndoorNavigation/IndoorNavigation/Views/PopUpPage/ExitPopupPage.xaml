@@ -39,45 +39,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.ExitPopupPage">
-    <pages:PopupPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="EntryStyle" TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="#9cdaf1"/>
-                <Setter Property="TextColor" Value="#7dbbe6"/>
-            </Style>
-        </ResourceDictionary>
-    </pages:PopupPage.Resources>
+             x:Class="IndoorNavigation.ExitPopupPage"
+                 SystemPaddingSides="All"
+                 HasSystemPadding="True">
 
-    <AbsoluteLayout>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
         <Frame 	BackgroundColor="White" 
-				AbsoluteLayout.LayoutFlags="All" 
-				AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.4" 
+				HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"
+                Margin="15,0,15,0"
 				CornerRadius="8">
-				
-            <StackLayout>
+
+            <StackLayout >
                 <Label 	x:Name="AskSelectExit" 
 						Text="{i18n:Translate SELECT_EXIT_STRING}" 
-						FontSize="Large" 
-						HorizontalOptions="Start"                        
-						Margin="0,5"/>
+						FontSize="Title" 
+						HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand"/>
                 <Label/>
                 <ScrollView VerticalOptions="Start" 
-							HorizontalOptions="StartAndExpand" 
+							HorizontalOptions="FillAndExpand" 
 							Margin="10,0,10,0"
                             >
-							
-                        <StackLayout Padding="5,0">
-                        <!--<input:SelectionView x:Name="selectionView" 
-											 SelectionType="RadioButton" 
-											 ItemsSource="{Binding exits}" 
-											 ColumnNumber="1" 
-											 SelectedItem="{Binding SelectItem}"  
-											 RowSpacing="20" />-->
-                            <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="CenterAndExpand">
-                            
-                            </input:RadioButtonGroupView>
-                    </StackLayout>
+                    <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="StartAndExpand" Margin="5,0,5,0"/>
+                    <!--<StackLayout Padding="5,0">
+                        <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="CenterAndExpand">
+
+                        </input:RadioButtonGroupView>
+                    </StackLayout>-->
                 </ScrollView>
                 <Button x:Name="ExitPopup" 
 						Text="{i18n:Translate OK_STRING}" 
@@ -87,5 +75,5 @@
 
             </StackLayout>
         </Frame>
-    </AbsoluteLayout>
+    </StackLayout>
 </pages:PopupPage>

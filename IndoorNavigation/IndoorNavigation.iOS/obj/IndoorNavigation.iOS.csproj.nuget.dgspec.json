@@ -148,7 +148,7 @@
             },
             "Plugin.Permissions": {
               "target": "Package",
-              "version": "[3.0.0.12, )"
+              "version": "[2.2.1, )"
             },
             "Prism.Forms": {
               "target": "Package",

@@ -63,58 +63,42 @@
                 <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="TextColor" Value="#3f51b5"/>
-                <Setter Property="HorizontalOptions" Value="End"/>
-                <Setter Property="HeightRequest" Value="45"/>
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
             </Style>
         </ResourceDictionary>
     </pages:PopupPage.Resources>
-    <AbsoluteLayout>
-        <ContentView AbsoluteLayout.LayoutFlags="All" 
-					 AbsoluteLayout.LayoutBounds="0,0,1,1">
-					 
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 
-        </ContentView>
         <Frame x:Name="AddFrame" 
-			   BackgroundColor="White" 
-			   AbsoluteLayout.LayoutFlags="All" 
-			   AbsoluteLayout.LayoutBounds="0.5,0.5,0.85,0.3" 
-			   CornerRadius="8">
-			   
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Text="{i18n:Translate NEED_REGISTER_STRING}" 
-					   FontSize="Large" 
+			       BackgroundColor="White" 			  
+			       CornerRadius="8"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Margin="15,0,15,0">
+            <AbsoluteLayout>
+                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <Label Text="{i18n:Translate NEED_REGISTER_STRING}" 
+					   FontSize="Title" 
 					   HorizontalOptions="StartAndExpand" 
 					   TextColor="Black" 
 					   VerticalOptions="CenterAndExpand" 
-					   Grid.Row="0"/>
-					   
-                <StackLayout Orientation="Horizontal" 
-							 HorizontalOptions="End" 
-							 Grid.Row="1">
-							 
-                    <Button x:Name="RegisterCancelBtn" 
+					  />
+                    <BoxView BackgroundColor="Transparent" HeightRequest="10"/>
+                    <StackLayout Orientation="Horizontal" 
+							 HorizontalOptions="EndAndExpand" 
+							 >
+                        <Button x:Name="RegisterOKBtn" 
+                                Text="{i18n:Translate REGISTER_STRING}" 
+                                Clicked="RegisterOKBtn_Clicked"                  
+                            />
+                        <Button x:Name="RegisterCancelBtn" 
                             Text="{i18n:Translate NO_STRING}" 
                             Clicked="RegisterCancelBtn_Clicked"/>
-                    <Button x:Name="RegisterOKBtn" 
-                            Text="{i18n:Translate YES_STRING}" 
-                            Clicked="RegisterOKBtn_Clicked" 
-                            WidthRequest="60"/>
+                    </StackLayout>
                 </StackLayout>
-            </Grid>
-            
+                <ActivityIndicator x:Name="BusyIndicator"                           
+                                   Color="#3f51b5" 
+                                   AbsoluteLayout.LayoutFlags="All" 
+                                   AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"/>
+            </AbsoluteLayout>
         </Frame>
-        <ActivityIndicator x:Name="BusyIndicator" 
-                           AbsoluteLayout.LayoutFlags="All" 
-                           AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2" 
-                           Color="#3f51b5"/>
-    </AbsoluteLayout>
-
+    </StackLayout>
 </pages:PopupPage>
