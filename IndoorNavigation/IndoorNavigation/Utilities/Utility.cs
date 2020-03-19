@@ -47,9 +47,14 @@ using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
+
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules
 {
@@ -142,5 +147,69 @@ namespace IndoorNavigation.Modules
 
         }
 
+        public static async Task<PermissionStatus>CheckPermissions(Permission permission)
+        {
+            Console.WriteLine(">>Utility.CheckPermission");
+            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
+            bool request = false;
+            Console.WriteLine("permissionStatus is : " + permissionStatus.ToString());
+            if (permissionStatus == PermissionStatus.Denied)
+            {
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    var title = $"{permission} Permission";
+                    var question = $"To use this plugin the {permission} permission is required. Please go into Settings and turn on {permission} for the app.";
+                    var positive = "Settings";
+                    var negative = "Maybe Later";
+                    var task = Application.Current?.MainPage?.DisplayAlert(title, question, positive, negative);
+                    if (task == null)
+                        return permissionStatus;
+
+                    var result = await task;
+                    if (result)
+                    {
+                        CrossPermissions.Current.OpenAppSettings();
+                    }
+
+                    return permissionStatus;
+                }
+                request = true;
+            }
+            if (request || permissionStatus != PermissionStatus.Granted)
+            {
+                var newStatus = await CrossPermissions.Current.RequestPermissionsAsync(permission);
+
+                if (!newStatus.ContainsKey(permission))
+                {
+                    Console.WriteLine(permission.ToString()+"5555555555555555");
+                    return permissionStatus;
+                    //return unknown?
+                }
+
+                permissionStatus = newStatus[permission];
+
+                if (newStatus[permission] != PermissionStatus.Granted)
+                {
+                    permissionStatus = newStatus[permission];
+                    var title = $"{permission} Permission";
+                    var question = $"To use the plugin the {permission} permission is required.";
+                    var positive = "Settings";
+                    var negative = "Maybe Later";
+                    var task = Application.Current?.MainPage?.DisplayAlert(title, question, positive, negative);
+                    if (task == null)
+                        return permissionStatus;
+
+                    var result = await task;
+                    if (result)
+                    {
+                        CrossPermissions.Current.OpenAppSettings();
+                    }
+                    return permissionStatus;
+                }
+            }
+
+            return permissionStatus;
+        }
+    
     }
 }

@@ -92,6 +92,7 @@
     <Compile Include="BeaconScan.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
     <Compile Include="Custom\ItemDragListener.cs" />
+    <Compile Include="PermissionCheckDroid.cs" />
     <Compile Include="Renders\DragableListViewRender.cs">
       <SubType>Code</SubType>
     </Compile>
