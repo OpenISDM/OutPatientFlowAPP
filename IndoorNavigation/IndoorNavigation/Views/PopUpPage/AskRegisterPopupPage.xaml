@@ -56,7 +56,7 @@
 				"http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"             
-             x:Class="IndoorNavigation.AskRegisterPopupPage">
+             x:Class="IndoorNavigation.Views.PopUpPage.AskRegisterPopupPage">
     <pages:PopupPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" >
@@ -85,13 +85,14 @@
                     <StackLayout Orientation="Horizontal" 
 							 HorizontalOptions="EndAndExpand" 
 							 >
+                        <Button x:Name="RegisterCancelBtn" 
+                            Text="{i18n:Translate NO_STRING}" 
+                            Clicked="RegisterCancelBtn_Clicked"/>
+                        
                         <Button x:Name="RegisterOKBtn" 
                                 Text="{i18n:Translate REGISTER_STRING}" 
                                 Clicked="RegisterOKBtn_Clicked"                  
                             />
-                        <Button x:Name="RegisterCancelBtn" 
-                            Text="{i18n:Translate NO_STRING}" 
-                            Clicked="RegisterCancelBtn_Clicked"/>
                     </StackLayout>
                 </StackLayout>
                 <ActivityIndicator x:Name="BusyIndicator"                           

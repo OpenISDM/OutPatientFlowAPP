@@ -39,7 +39,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.ExitPopupPage"
+             x:Class="IndoorNavigation.Views.PopUpPage.ExitPopupPage"
                  SystemPaddingSides="All"
                  HasSystemPadding="True">
 

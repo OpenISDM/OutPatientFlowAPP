@@ -54,7 +54,7 @@ using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ExitPopupPage :PopupPage

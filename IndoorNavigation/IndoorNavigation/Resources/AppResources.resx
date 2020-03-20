@@ -490,7 +490,7 @@
     <value>EXC</value>
   </data>
   <data name="NEW_STRING" xml:space="preserve">
-    <value>NEW</value>
+    <value>Add</value>
   </data>
   <data name="DRNAME_STRING" xml:space="preserve">
     <value>Doctor : {0}</value>

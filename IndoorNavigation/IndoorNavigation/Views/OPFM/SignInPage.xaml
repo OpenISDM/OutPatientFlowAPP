@@ -49,13 +49,13 @@
         </OnPlatform>
     </ContentPage.Padding>
 
-    <NavigationPage.TitleView>
+    <!--<NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Button x:Name="BarCancelBtn" Text="{i18n:Translate CANCEL_STRING}" FontSize="Medium" BackgroundColor="#3f51b5" TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
             <Label x:Name="BarLabel" Text="{i18n:Translate LOGIN_STRING}" FontSize="Title" BackgroundColor="Transparent" TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
             <Button x:Name="BarOKBtn" Margin="0,0,10,0" Text="{i18n:Translate OK_STRING}" FontSize="Medium" BackgroundColor="#3f51b5" TextColor="White" HorizontalOptions="EndAndExpand"/>
         </StackLayout>
-    </NavigationPage.TitleView>
+    </NavigationPage.TitleView>-->
     
     <!--<ContentPage.ToolbarItems>
         <ToolbarItem Text="aaa" Priority="1" Order="Primary"/>
@@ -87,9 +87,11 @@
                             TextColor="Black"
 							IsEnabled="True"/>
             </StackLayout>
-            <Button Text="{i18n:Translate OK_STRING}" 
-					HorizontalOptions="CenterAndExpand" 
-					Clicked="Button_Clicked"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="5,0,5,0">
+                <Button x:Name="CancelButton" Text="{i18n:Translate CANCEL_STRING}" HorizontalOptions="EndAndExpand" Clicked="CancelButton_Clicked"/>
+                <Button x:Name="ConfirmButton" Text="{i18n:Translate OK_STRING}" HorizontalOptions="EndAndExpand" Clicked="ConfirmButton_Clicked"/>
+            </StackLayout>
+           
 					
         </StackLayout>
     </ContentPage.Content>

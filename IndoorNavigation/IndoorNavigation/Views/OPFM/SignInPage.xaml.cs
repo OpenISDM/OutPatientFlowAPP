@@ -145,5 +145,18 @@ namespace IndoorNavigation
             //return base.OnBackButtonPressed();
             return true;
         }
+
+        async private void ConfirmButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
+
+        async private void CancelButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+            await Navigation.PopToRootAsync();
+
+            
+        }
     }
 }

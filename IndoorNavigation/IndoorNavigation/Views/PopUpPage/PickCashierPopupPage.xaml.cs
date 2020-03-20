@@ -13,6 +13,8 @@ using System.Resources;
 using System.Globalization;
 using Plugin.Multilingual;
 using Plugin.InputKit.Shared.Configuration;
+using IndoorNavigation.Views.PopUpPage;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

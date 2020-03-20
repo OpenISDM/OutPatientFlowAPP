@@ -42,8 +42,10 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System.Globalization;
 using Plugin.Multilingual;
+using IndoorNavigation.Views.PopUpPage;
+using IndoorNavigation.Models;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SelectTwoWayPopupPage : PopupPage
@@ -54,17 +56,36 @@ namespace IndoorNavigation
 
         private const string _resourceId = 
 			"IndoorNavigation.Resources.AppResources";
+
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, 
 								typeof(TranslateExtension)
 								.GetTypeInfo().Assembly);
+
         CultureInfo currentLanguage = 
 			CrossMultilingual.Current.CurrentCultureInfo;
+
+        private INetworkSetting setting;
+
+        public SelectTwoWayPopupPage()
+        {
+            InitializeComponent();
+        }
+
         public SelectTwoWayPopupPage(string BuildingName)
         {
             InitializeComponent();
             //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _locationName = BuildingName;
+
+            setting = DependencyService.Get<INetworkSetting>();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //Console.WriteLine("the width of a button is : " + a.Width);
+            //Console.WriteLine("the width of b button is : " + b.Width);
         }
 
         async private void ToNavigationBtn_Clicked(object sender, EventArgs e)
@@ -84,37 +105,45 @@ namespace IndoorNavigation
 
             await PopupNavigation.Instance.PopAsync();
 
-            if (!Preferences.Get("NotShowAgain_ToOPFM", false))
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            bool NetworkIsFine = await setting.CheckInternetConnect();
+            await PopupNavigation.Instance.PopAllAsync();
+            if (NetworkIsFine)
             {
-                await PopupNavigation.Instance.PushAsync
-					  (new ShiftAlertPopupPage(
-						_resourceManager.GetString
-						("ALERT_IF_YOU_HAVE_NETWORK_STRING",currentLanguage), 
-						_resourceManager.GetString
-						("YES_STRING",currentLanguage),
-						_resourceManager.GetString
-						("NO_STRING",currentLanguage), 
-						"NotShowAgain_ToOPFM"));
-						
-                MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>
-				(this, "NotShowAgain_ToOPFM",async (msgsender, msgargs) =>
-                  {                     
-                      if ((bool)msgargs) 
-						  await page.Navigation.PushAsync
-							(new RigisterList(_locationName));
-                      else 
-						  await page.Navigation.PushAsync
-							(new NavigationHomePage(_locationName));
+                await page.Navigation.PushAsync(new RigisterList(_locationName));
+            }
+            else 
+            {
+                if (!Preferences.Get("NotShowAgain_ToOPFM", false))
+                {
+                    Console.WriteLine("aaaaa");
+                    await PopupNavigation.Instance.PushAsync
+                          (new ShiftAlertPopupPage(
+                            _resourceManager.GetString
+                            ("ALERT_IF_YOU_HAVE_NETWORK_STRING", currentLanguage),
+                            _resourceManager.GetString
+                            ("YES_STRING", currentLanguage),
+                            _resourceManager.GetString
+                            ("NO_STRING", currentLanguage),
+                            "NotShowAgain_ToOPFM"));
 
-                      MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>
-						(this, "NotShowAgain_ToOPFM");
-                  });              
-            }
-            else
-            {                
-                await page.Navigation.PushAsync
-					(new RigisterList(_locationName));
-            }
+                    MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM", async (msgsender, msgargs) =>
+                       {
+                           if ((bool)msgargs)
+                               await page.Navigation.PushAsync
+                                             (new RigisterList(_locationName));
+                           else
+                               await PopupNavigation.Instance.PopAllAsync();
+
+                          MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
+                      });
+                }
+                else
+                {
+                    await page.Navigation.PushAsync
+                        (new RigisterList(_locationName));
+                }
+            } 
         }
 
         protected override bool OnBackButtonPressed()

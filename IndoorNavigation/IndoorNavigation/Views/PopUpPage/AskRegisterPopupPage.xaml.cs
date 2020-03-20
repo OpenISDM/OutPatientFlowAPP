@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AskRegisterPopupPage : PopupPage
@@ -73,10 +73,15 @@ namespace IndoorNavigation
                 await CancelorClickBack();
             else
             {
-                await PopupNavigation.Instance
-					  .PushAsync(new AlertDialogPopupPage
-					  (_resourceManager.GetString("BAD_NETWORK_STRING",
-												  currentLanguage)));
+                //         await PopupNavigation.Instance
+                //.PushAsync(new AlertDialogPopupPage
+                //(_resourceManager.GetString("BAD_NETWORK_STRING",
+                //					  currentLanguage)));
+                var CheckWantToSetting =
+                    await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                          getResourceString("BAD_NETWORK_STRING"),
+                          getResourceString("OK_STRING"),
+                          getResourceString("NO_STRING"));
                 ButtonLock = false;
                 return;
             }
@@ -143,6 +148,10 @@ namespace IndoorNavigation
             app.lastFinished = null;
         }
 
+        private string getResourceString(string key)
+        {
+            return _resourceManager.GetString(key, currentLanguage);
+        }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             OnBackButtonPressed();

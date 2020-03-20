@@ -33,14 +33,13 @@
  */-->
 <pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
                  xmlns="http://xamarin.com/schemas/2014/forms"
-                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;
-					assembly=Plugin.InputKit"
+                 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  mc:Ignorable="d"
-                 x:Class="IndoorNavigation.AddPopupPage"
+                 x:Class="IndoorNavigation.Views.PopUpPage.AddPopupPage"
                 >
     <AbsoluteLayout>
         <ContentView 	BackgroundColor="Transparent" 
@@ -67,14 +66,15 @@
                 <StackLayout Orientation="Horizontal" 
 							 VerticalOptions="End" 
 							 HorizontalOptions="End">
-                    <Button Text="{i18n:Translate OK_STRING}" 
-							HorizontalOptions="End" 
-							VerticalOptions="End" 
-							Clicked="AddConfirmButton_Clicked"/>
                     <Button Text="{i18n:Translate CANCEL_STRING}" 
 							HorizontalOptions="End" 
 							VerticalOptions="End" 
 							Clicked="AddCancelButton_Clicked"/>
+                    
+                    <Button Text="{i18n:Translate NEW_STRING}" 
+							HorizontalOptions="End" 
+							VerticalOptions="End" 
+							Clicked="AddConfirmButton_Clicked"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

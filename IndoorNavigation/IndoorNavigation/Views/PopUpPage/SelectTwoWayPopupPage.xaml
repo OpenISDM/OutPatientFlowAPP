@@ -39,7 +39,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.SelectTwoWayPopupPage">
+             x:Class="IndoorNavigation.Views.PopUpPage.SelectTwoWayPopupPage">
+    <!--<StackLayout>
+        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="15,0,15,0">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="a" Text="{i18n:Translate NAVIGATION_STRING}" FontSize="32" Grid.Column="0"/>
+                <Button x:Name="b" Text="{i18n:Translate OPFM_STRING}" FontSize="26" Grid.Column="1"/>
+            </Grid>
+        </Frame>
+    </StackLayout>-->
     <AbsoluteLayout>
         <ContentView AbsoluteLayout.LayoutFlags="All" 
 					 BackgroundColor="Transparent" 

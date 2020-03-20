@@ -625,6 +625,6 @@
     <value>返回</value>
   </data>
   <data name="REGISTER_STRING" xml:space="preserve">
-    <value>掛號</value>
+    <value>去掛號</value>
   </data>
 </root>

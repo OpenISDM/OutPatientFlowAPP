@@ -38,27 +38,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.AlertDialogPopupPage">
-    <AbsoluteLayout>
-        <ContentView AbsoluteLayout.LayoutFlags="All" 
-					 AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-            <ContentView.GestureRecognizers>
-                <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped"/>
-            </ContentView.GestureRecognizers>
-
-        </ContentView>
+             x:Class="IndoorNavigation.Views.PopUpPage.AlertDialogPopupPage">
+    <StackLayout>
         <Frame 	x:Name="AlertFrame" 
-				BackgroundColor="White" 
-				AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.3" 
-				AbsoluteLayout.LayoutFlags="All" 
-				CornerRadius="8" >
-				
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.5*"/>
-                </Grid.RowDefinitions>
-				
+				BackgroundColor="White" 				 
+				CornerRadius="8"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Margin="15,0,15,0"
+                >
+            <StackLayout>
                 <Label 	x:Name="TempMessage" 
 						Text="0" 
 						FontSize="26" 
@@ -69,13 +58,11 @@
 						VerticalTextAlignment="Center" 
 						LineBreakMode="WordWrap"/>
                 <StackLayout 	x:Name="buttonLayout" 
-								Orientation="Horizontal" 
-								Grid.Row="1" 
-								HorizontalOptions="End">                    
+								Orientation="Horizontal" 							
+								HorizontalOptions="End">
                 </StackLayout>
-            </Grid>
-
+            </StackLayout>
         </Frame>
         
-    </AbsoluteLayout>
+    </StackLayout>
 </pages:PopupPage>

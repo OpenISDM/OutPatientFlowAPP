@@ -50,6 +50,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Models
@@ -64,14 +65,14 @@ namespace IndoorNavigation.Models
         NavigationEvent _event { get; }
     }
 
-    public interface PermissioCheck
-    {
-        bool CameraPermissionCheck();
-        void CameraPermissionAsk();
-        bool LocationPermissionCheck();
-        void LocationPermissionAsk();
+    //public interface PermissioCheck
+    //{
+    //    bool OpenAppSetting();
+    //    Task<Dictionary<Permission, PermissionStatus>> RequestPermissionsAsync(params Permission[] permissions);
+    //    Task<bool> ShouldShowRequestPermissionRationaleAsync(Permission permission);
+    //    Task<PermissionStatus> CheckPermissionStatusAsync(Permission permission);        
 
-    }
+    //}
 
     public interface LBeaconScan
     {

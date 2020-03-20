@@ -48,6 +48,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Settings;
 using IndoorNavigation.Views.Navigation;
+using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.ViewModels;
 using Plugin.Multilingual;
 using System.Resources;
@@ -352,8 +353,11 @@ namespace IndoorNavigation
         async private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new TestPage_Listview());
-            NavigationPage page = new NavigationPage(new TestPage_Listview()) { BarBackgroundColor = Color.FromHex("#3f51b5") };
-            await Navigation.PushModalAsync(page);
+            //NavigationPage page = new NavigationPage(new TestPage_Listview()) { BarBackgroundColor = Color.FromHex("#3f51b5") };
+            //await Navigation.PushModalAsync(page);
+            //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bb","cc","zzz"));
+            //await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
         }
     }
 }

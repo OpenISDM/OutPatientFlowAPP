@@ -42,9 +42,8 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
-using System.Windows.Input;
-using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Models;
+using IndoorNavigation.Views.PopUpPage;
+
 namespace IndoorNavigation.ViewModels
 {
     class RegisterListViewModel:BaseViewModel
@@ -102,12 +101,13 @@ namespace IndoorNavigation.ViewModels
 					.DisplayAlert(GetResourceString("MESSAGE_STRING"), 
 								  GetResourceString("ALERT_LOGIN_STRING"), 
 								  GetResourceString("OK_STRING"), 
-								  GetResourceString("CANCEL_STRING"));                                   
+								  GetResourceString("CANCEL_STRING"));
                 if (wantSignIn)
-                    await mainPage.Navigation.PushAsync(new SignInPage());
+                    //await mainPage.Navigation.PushAsync(new SignInPage());
+                    await mainPage.Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
                 else
                 {
-                    await mainPage.Navigation.PopAsync() ;
+                    await mainPage.Navigation.PopAsync();
                 }
             }
         }       

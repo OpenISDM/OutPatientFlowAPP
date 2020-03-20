@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
 using IndoorNavigation.Views.Controls;
+using IndoorNavigation.Views.PopUpPage;
 
 namespace IndoorNavigation
 {
