@@ -457,7 +457,7 @@ namespace IndoorNavigation
                 ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
                 ToolbarItems.Add(SignInItem);
                 ToolbarItems.Add(InfoItem);
-                ToolbarItems.Add(TestItem);
+                //ToolbarItems.Add(TestItem);
                 OnToolbarItemAdded();
             }
         }
