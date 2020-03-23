@@ -69,11 +69,13 @@
                     <Button Text="{i18n:Translate CANCEL_STRING}" 
 							HorizontalOptions="End" 
 							VerticalOptions="End" 
+                            FontSize="Medium"
 							Clicked="AddCancelButton_Clicked"/>
                     
                     <Button Text="{i18n:Translate NEW_STRING}" 
 							HorizontalOptions="End" 
-							VerticalOptions="End" 
+							VerticalOptions="End"
+                            FontSize="Medium"
 							Clicked="AddConfirmButton_Clicked"/>
                 </StackLayout>
             </StackLayout>

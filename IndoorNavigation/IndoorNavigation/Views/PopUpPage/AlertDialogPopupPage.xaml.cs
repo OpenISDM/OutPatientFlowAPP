@@ -107,13 +107,14 @@ namespace IndoorNavigation.Views.PopUpPage
 				new Button { Style = ButtonStyle, Text = cancel };
             CancelBtn.Clicked += CancelPageClicked;
             ConfirmBtn.Clicked += ConfirmPageClicked;
-            buttonLayout.Children.Add(ConfirmBtn);
             buttonLayout.Children.Add(CancelBtn);
+            buttonLayout.Children.Add(ConfirmBtn);
+            
         }
         private void TwoButton_Back()
         {
-            MessagingCenter.Send(this, _message, false);
             PopupNavigation.Instance.PopAsync();
+            MessagingCenter.Send(this, _message, false);
         }
 
         #endregion
@@ -142,14 +143,14 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private void ConfirmPageClicked(Object sender, EventArgs args)
         {
-            MessagingCenter.Send(this, _message, true);
             PopupNavigation.Instance.PopAsync();
+            MessagingCenter.Send(this, _message, true);            
         } 
 
         protected override bool OnBackButtonPressed()
         {
             _backClick();
-            return false;
+            return true;
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

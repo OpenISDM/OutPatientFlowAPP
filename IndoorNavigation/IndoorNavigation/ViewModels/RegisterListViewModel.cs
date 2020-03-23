@@ -96,19 +96,21 @@ namespace IndoorNavigation.ViewModels
 
             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
             {
-                var wantSignIn = 
-					await mainPage
-					.DisplayAlert(GetResourceString("MESSAGE_STRING"), 
-								  GetResourceString("ALERT_LOGIN_STRING"), 
-								  GetResourceString("OK_STRING"), 
-								  GetResourceString("CANCEL_STRING"));
-                if (wantSignIn)
-                    //await mainPage.Navigation.PushAsync(new SignInPage());
-                    await mainPage.Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
-                else
-                {
-                    await mainPage.Navigation.PopAsync();
-                }
+                //var wantSignIn =
+                //    await mainPage
+                //    .DisplayAlert(GetResourceString("MESSAGE_STRING"),
+                //                  GetResourceString("ALERT_LOGIN_STRING"),
+                //                  GetResourceString("OK_STRING"),
+                //                  GetResourceString("CANCEL_STRING"));
+                //if (wantSignIn)
+                //    await mainPage.Navigation.PushAsync(new SignInPage());
+                //await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
+                //await mainPage.Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+                //else
+                //{
+                //    await mainPage.Navigation.PopAsync();
+                //}
+                await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
             }
         }       
     }

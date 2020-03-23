@@ -580,14 +580,7 @@ namespace IndoorNavigation
         private async Task SignInItemMethod()
         {
             //await Navigation.PushAsync(new SignInPage());
-            //await Navigation.PushModalAsync(new SignInPage());
-            //await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
-
-            NavigationPage navigationPage = new NavigationPage(new SignInPage()) 
-                { BarBackgroundColor = Color.FromHex("#3f51b5") };
-
-            await Navigation.PushModalAsync(navigationPage);
-
+            await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_navigationGraphName));
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
 				(this, "isReset", (msgSender, msgArgs) =>
 				{

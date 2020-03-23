@@ -357,7 +357,8 @@ namespace IndoorNavigation
             //await Navigation.PushModalAsync(page);
             //await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","bb","cc","zzz"));
             //await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+            //await Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+            //await PopupNavigation.Instance.PushAsync(new SignInPopupPage());
         }
     }
 }

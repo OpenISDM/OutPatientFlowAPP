@@ -143,20 +143,62 @@ namespace IndoorNavigation
         {
             //Console.Write("aaaa");
             //return base.OnBackButtonPressed();
+            //return true;
+
+            Device.BeginInvokeOnMainThread(async() => 
+                {
+                    await Navigation.PopToRootAsync();
+                }
+            );
+            //return base.OnBackButtonPressed();
             return true;
         }
 
         async private void ConfirmButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            IDnumEntry.Text = IDnumEntry.Text.ToUpper();
+            if (IDnumEntry.Text == null || !CheckIDLegal(IDnumEntry.Text))
+            {
+                await DisplayAlert
+                    (_resourceManager.GetString("ERROR_STRING", currentLanguage),
+                     _resourceManager.GetString("IDNUM_TYPE_WRONG_STRING",
+                                                currentLanguage),
+                     _resourceManager.GetString("OK_STRING", currentLanguage));
+                return;
+            }
+            Preferences.Set("ID_NUMBER_STRING", IDnumEntry.Text);
+            app.IDnumber = IDnumEntry.Text;
+
+            app.RgDate = RgDayPicker.Date;
+
+            app.isRigistered = false;
+            await Navigation.PopAsync();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            //if (string.IsNullOrEmpty(IDnumEntry.Text) || string.IsNullOrEmpty(app.IDnumber))
+            //{
+            //    Device.BeginInvokeOnMainThread(async () =>
+            //    {
+            //        await Navigation.PopToRootAsync();
+            //    });
+            //}
         }
 
         async private void CancelButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
             await Navigation.PopToRootAsync();
 
-            
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    for(int AsyncPagesIndex=Navigation.NavigationStack.Count-1; AsyncPagesIndex>0; AsyncPagesIndex--)
+            //    {
+            //        Navigation.RemovePage(Navigation.NavigationStack[AsyncPagesIndex]);
+            //    }
+            //});
         }
     }
 }

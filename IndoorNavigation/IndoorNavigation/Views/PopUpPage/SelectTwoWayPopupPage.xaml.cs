@@ -114,35 +114,58 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             else 
             {
-                if (!Preferences.Get("NotShowAgain_ToOPFM", false))
-                {
-                    Console.WriteLine("aaaaa");
-                    await PopupNavigation.Instance.PushAsync
-                          (new ShiftAlertPopupPage(
-                            _resourceManager.GetString
-                            ("ALERT_IF_YOU_HAVE_NETWORK_STRING", currentLanguage),
-                            _resourceManager.GetString
-                            ("YES_STRING", currentLanguage),
-                            _resourceManager.GetString
-                            ("NO_STRING", currentLanguage),
-                            "NotShowAgain_ToOPFM"));
+                Console.WriteLine(">>SelectTwoWay : No Network");
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(
+                    _resourceManager.GetString("ALERT_IF_YOU_HAVE_NETWORK_STRING", currentLanguage),
+                    _resourceManager.GetString("GO_TO_SETTING", currentLanguage),
+                    _resourceManager.GetString("CANCEL_STRING",currentLanguage),
+                    "GoToSetting"));
 
-                    MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM", async (msgsender, msgargs) =>
-                       {
-                           if ((bool)msgargs)
-                               await page.Navigation.PushAsync
-                                             (new RigisterList(_locationName));
-                           else
-                               await PopupNavigation.Instance.PopAllAsync();
-
-                          MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
-                      });
-                }
-                else
+                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "GoToSetting",async (msgSender, msgArgs) => 
                 {
-                    await page.Navigation.PushAsync
-                        (new RigisterList(_locationName));
-                }
+                    Console.WriteLine("Go to setting messagingCenter sender is : " + (bool)msgArgs);
+
+                    
+
+                    if ((bool)msgArgs)
+                    {
+                        INetworkSetting setting = DependencyService.Get<INetworkSetting>();
+                        setting.OpenSettingPage();                        
+                    }
+
+                    await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(_locationName));
+
+                    MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "GoToSetting");
+                });
+                //if (!Preferences.Get("NotShowAgain_ToOPFM", false))
+                //{
+                //    Console.WriteLine("aaaaa");
+                //    await PopupNavigation.Instance.PushAsync
+                //          (new ShiftAlertPopupPage(
+                //            _resourceManager.GetString
+                //            ("ALERT_IF_YOU_HAVE_NETWORK_STRING", currentLanguage),
+                //            _resourceManager.GetString
+                //            ("YES_STRING", currentLanguage),
+                //            _resourceManager.GetString
+                //            ("NO_STRING", currentLanguage),
+                //            "NotShowAgain_ToOPFM"));
+
+                //    MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM", async (msgsender, msgargs) =>
+                //       {
+                //           if ((bool)msgargs)
+                //               await page.Navigation.PushAsync
+                //                             (new RigisterList(_locationName));
+                //           else
+                //               await PopupNavigation.Instance.PopAllAsync();
+
+                //           MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
+                //       });
+                //}
+                //else
+                //{
+                //    await page.Navigation.PushAsync
+                //        (new RigisterList(_locationName));
+                //}
             } 
         }
 
