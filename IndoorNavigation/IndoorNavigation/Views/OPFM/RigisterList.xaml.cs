@@ -7,17 +7,13 @@ using IndoorNavigation.Views.Navigation;
 using Plugin.Multilingual;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.ComponentModel;
-using System.Threading;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
@@ -34,14 +30,13 @@ namespace IndoorNavigation
         private string _navigationGraphName;        
 
         private XMLInformation _nameInformation;
-
-        private Object ShiftTmp=null;
         private App app = (App)Application.Current;
-		
-		//to prevent button multi-tap from causing error
-        private bool isButtonPressed = false; 
-		
-        private bool ShiftButtonPressed = false;
+
+        Dictionary<Guid, DestinationItem> CashierPosition;
+        Dictionary<Guid, DestinationItem> PharmacyPostition;
+
+        //to prevent button multi-tap from causing error
+        private bool isButtonPressed = false; 		
         private ViewCell lastCell=null;
 
         private INetworkSetting NetworkSettings;
@@ -67,18 +62,14 @@ namespace IndoorNavigation
 				 "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             NetworkSettings = DependencyService.Get<INetworkSetting>();
+
             PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
-            //(app.FinishCount + 1 == app.records.Count);
-
             PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
-				//(app.FinishCount + 1 == app.records.Count);
-
+            //RgListView.ScrollTo()
             LoadCashierData();
-
             BindingContext = _viewmodel;
 
         }
-        #region ListView Tapped event
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender, 
 												 ItemTappedEventArgs e)  
@@ -86,14 +77,13 @@ namespace IndoorNavigation
             Console.WriteLine("the Record type is : "+((RgRecord)e.Item).type);
             if (isButtonPressed) return;
             isButtonPressed = true;
-            Console.WriteLine("ccccccccccccc");
+
             if (e.Item is RgRecord record)
             {                       
                 if(record.type.Equals(RecordType.Pharmacy) && 
 				   (app.lastFinished==null || 
 				   !app.lastFinished.type.Equals(RecordType.Cashier)))
                 {
-                    Console.WriteLine("aaaaaaaaaaa");
                     await PopupNavigation.Instance.PushAsync
 						( new AlertDialogPopupPage
 							(getResourceString("PHARMACY_ALERT_STRING"), 
@@ -117,77 +107,10 @@ namespace IndoorNavigation
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
         }
-       
 
-        /*this function is to implement a simply shift function.  
-          when shift button is clicked, the function will become the listview 
-		  tapped event.
-		*/
-        private void RgListViewShift_ItemTapped(object sender,
-												ItemTappedEventArgs e)
-        {
-                if (ShiftTmp == null)
-                {
-                    ShiftTmp = e.Item as RgRecord;
-                }
-                else
-                {
-                    var o = e.Item as RgRecord;
-                   
-                    int index1 = app.records.IndexOf(ShiftTmp as RgRecord);
-                    int index2 = app.records.IndexOf(o as RgRecord);
-                    //swap
-                    app.records[index1] = o as RgRecord;
-                    app.records[index2] = ShiftTmp as RgRecord;
-                    // retrieve original function.
-                    RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-                    RgListView.ItemTapped += RgListView_ItemTapped;
-                    ShiftTmp = null;
-                    ShiftButtonPressed = false;
-                    Buttonable(true);
-                }  
-        }
-        #endregion
-        /* the function is a button event which is to change listview tapped 
-		event*/
-        async private void ShiftBtn_Clicked(object sender, EventArgs e)
-        {
-            bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
-            if (app.FinishCount+1 >= app.records.Count - 1)
-            {
-                await PopupNavigation.Instance.PushAsync
-					(new AlertDialogPopupPage(
-							getResourceString("NO_SHIFT_STRING"), 
-							getResourceString("OK_STRING")
-						)
-					);
-                return;
-            }
-            else
-            {
-                if (!isCheck)
-                {
-                    await PopupNavigation.Instance.PushAsync
-						(new ShiftAlertPopupPage
-							(
-								getResourceString("SHIFT_DESCRIPTION_STRING"),
-								getResourceString("OK_STRING"), 
-								"isCheckedNeverShow"
-							)
-						);
-                }
-                RgListView.ItemTapped -= RgListView_ItemTapped;
-                RgListView.ItemTapped += RgListViewShift_ItemTapped;
-                ShiftButtonPressed = true;
-                Buttonable(false);
-            }
-            
-        }
         //the function is to control the button whether it is visible 
         private void Buttonable(bool enable)
         {
-            //ShiftBtn.IsEnabled = enable;
-            //ShiftBtn.IsVisible = enable;
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
         }    
@@ -220,45 +143,25 @@ namespace IndoorNavigation
                 pharmacy = PharmacyPostition.First().Value;
             }
            
-            //app.records.Insert(app.records.Count - 1, 
             app.records.Add(new RgRecord { 
-                //new RgRecord { 
                     _waypointID=cashier._waypointID,
                     _regionID=cashier._regionID,
                     _waypointName=cashier._waypointName,
                     type=RecordType.Cashier,
                     DptName=cashier._waypointName
                 });
-            //app.records.Insert(app.records.Count - 1, 
             app.records.Add(new RgRecord { 
-                //new RgRecord { 
                     _waypointID=pharmacy._waypointID,
                     _regionID=pharmacy._regionID,
                     _waypointName=pharmacy._waypointName,
                     type=RecordType.Pharmacy,
                     DptName=pharmacy._waypointName
                 });
-            isButtonPressed = false;
-            #region pick cashier page code.
-            //         await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
-            //         MessagingCenter.Subscribe<PickCashierPopupPage, bool>
-            //(this, "GetCashierorNot", (Messagesender, Messageargs) =>
-            //	{                
-            //		PaymemtListBtn.IsEnabled = !(bool)Messageargs;
-            //		PaymemtListBtn.IsVisible = !(bool)Messageargs;
-            //		app.HaveCashier = (bool)Messageargs;
-            //		Buttonable(!(bool)Messageargs);
 
-            //		isButtonPressed = false;
-            //		MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>
-            //			(this, "GetCashierorNot");
-            //         });    
-            #endregion
+            RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, true);
+            isButtonPressed = false;           
         }
-
-
-        Dictionary<Guid, DestinationItem> CashierPosition;
-        Dictionary<Guid, DestinationItem> PharmacyPostition;
+        
         public void LoadCashierData() 
         {
             CashierPosition = new Dictionary<Guid, DestinationItem>();
@@ -287,9 +190,7 @@ namespace IndoorNavigation
                 item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
                 item._floor = node.Attributes["floor"].Value;
                 item._waypointName = node.Attributes["name"].Value;
-
-                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
-
+               
                 PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
             }
 
@@ -311,9 +212,7 @@ namespace IndoorNavigation
 			  (Messagesender, Messageargs) =>
               {
                   PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && !app.HaveCashier;
-                  //(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
                   PaymemtListBtn.IsVisible = app.FinishCount==app.records.Count && !app.HaveCashier;
-				 //(app.FinishCount + 1 == app.records.Count) && !app.HaveCashier;
                 isButtonPressed = false;
                 MessagingCenter.Unsubscribe<AddPopupPage, bool>
 					(this, "isCancel");                 
@@ -329,22 +228,31 @@ namespace IndoorNavigation
             base.OnAppearing();
            
             _viewmodel = new RegisterListViewModel(_navigationGraphName);
+
             RefreshListView();
-    //        ShiftBtn.CornerRadius = 
-				//(int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
+    
             AddBtn.CornerRadius = 
 				(int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) 
 				Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
-            //(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;            
             PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
-				//(app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+
+            if (app.lastFinished != null && !app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.lastFinished, ScrollToPosition.MakeVisible, false);
+            }
+            else if(app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, false);
+            }
+
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
+
         // this function is a button event, which is to check user whether have 
 		// arrive at destination.
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -369,9 +277,7 @@ namespace IndoorNavigation
                         break;
                 }
                 _multiItemFinish(FinishBtnClickItem);
-
-                //           if (app.FinishCount + 1 == app.records.Count && 
-                //app.lastFinished.type!= RecordType.Register)
+               
                 if (app.FinishCount == app.records.Count &&
                 app.lastFinished.type != RecordType.Register)
                 {
@@ -390,27 +296,7 @@ namespace IndoorNavigation
                     }
                 }
             }            
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            if (ShiftButtonPressed)
-            {
-                ShiftTmp = null;
-                RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-                RgListView.ItemTapped += RgListView_ItemTapped;
-                Buttonable(true);
-            }
-        }       
-
-        private void RemoveItem_Clicked(object sender, EventArgs e)
-        {
-            var item = (RgRecord)((MenuItem)sender).CommandParameter;
-            if (item != null)
-                app.records.Remove(item);
-        }    
+        }               
 
          async private Task ReadXml()
          {
@@ -444,11 +330,11 @@ namespace IndoorNavigation
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
 
-                Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
-                {
-                    viewCell.View.BackgroundColor = Color.Transparent;
-                    return false;
-                });
+                //Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+                //{
+                //    viewCell.View.BackgroundColor = Color.Transparent;
+                //    return false;
+                //});
             }
         }
         public void BusyIndicatorShow(bool isBusy)
@@ -473,7 +359,6 @@ namespace IndoorNavigation
             app.FinishCount++;
             app.lastFinished = record;
 
-            //to refresh listview to make sure template is work.
             RefreshListView();
         }
 
@@ -516,7 +401,6 @@ namespace IndoorNavigation
         async private void ExitFinish(RgRecord record)
         {
             string HopeString = 
-				//$"{phoneInformation.GetBuildingName(_navigationGraphName)}"+
                 $"{_navigationGraphName}"+
 				$"\n{getResourceString("HOPE_STRING")}";
             await PopupNavigation.Instance.PushAsync
@@ -546,7 +430,7 @@ namespace IndoorNavigation
         {       
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
-            //TestItemCommand = new Command(async () => await TestItemMethod());
+
             ToolbarItems.Clear();       
             
             ToolbarItem SignInItem = 
@@ -565,29 +449,19 @@ namespace IndoorNavigation
 								  Order = ToolbarItemOrder.Secondary };
             ToolbarItems.Add(SignInItem);
             ToolbarItems.Add(InfoItem);
-			//for test 
-            //ToolbarItems.Add(TestItem);
+			
             OnToolbarItemAdded();
             
-        }
-        
-		//for test
-        // private async Task TestItemMethod()
-        // {                       
-            // await Task.CompletedTask;
-        // }
+        }        		
 		
         private async Task SignInItemMethod()
-        {
-            //await Navigation.PushAsync(new SignInPage());
+        {           
             await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_navigationGraphName));
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
 				(this, "isReset", (msgSender, msgArgs) =>
 				{
                     PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
-                        //(app.FinishCount + 1 == app.records.Count);
                     PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
-						//(app.FinishCount + 1 == app.records.Count);
 
 					Buttonable(true);
 					MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>

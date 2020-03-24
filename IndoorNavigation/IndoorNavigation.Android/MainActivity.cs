@@ -42,14 +42,16 @@ namespace IndoorNavigation.Droid
            
             if (ContextCompat.CheckSelfPermission
 					(this, Manifest.Permission.AccessCoarseLocation) 
-				!= Permission.Granted ||  ContextCompat.CheckSelfPermission(this,Manifest.Permission.WriteExternalStorage)!= Permission.Granted)
+				!= Permission.Granted ||  ContextCompat.CheckSelfPermission(this,Manifest.Permission.WriteExternalStorage)!= Permission.Granted 
+                || ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != Permission.Granted)
             {
                 ActivityCompat.RequestPermissions
 					(this, new String[] 
 						  { 
 							 Manifest.Permission.AccessCoarseLocation, 
 							 Manifest.Permission.AccessFineLocation,
-                             Manifest.Permission.WriteExternalStorage
+                             Manifest.Permission.WriteExternalStorage,
+                             Manifest.Permission.Camera
 						  }, 0);
             }
 
@@ -99,7 +101,7 @@ namespace IndoorNavigation.Droid
 
         public override void OnRequestPermissionsResult(int requestCode,
                                                         string[] permissions,
-                                                      [GeneratedEnum] Permission[] grantResults)
+                                                        Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler
             .OnRequestPermissionsResult(requestCode, permissions, grantResults);

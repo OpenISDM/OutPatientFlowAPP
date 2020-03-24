@@ -112,15 +112,13 @@
           "lib/Xamarin.iOS10/Plugin.Multilingual.dll": {}
         }
       },
-      "Plugin.Permissions/2.2.1": {
+      "Plugin.Permissions/3.0.0.12": {
         "type": "package",
         "compile": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         },
         "runtime": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         }
       },
       "Prism.Core/7.1.0.431": {
@@ -399,7 +397,7 @@
           "Microsoft.AppCenter.Crashes": "1.14.0",
           "Newtonsoft.Json": "12.0.1",
           "Plugin.Multilingual": "1.0.2",
-          "Plugin.Permissions": "2.2.1",
+          "Plugin.Permissions": "3.0.0.12",
           "Prism.Forms": "7.1.0.431",
           "Refractored.MvvmHelpers": "1.3.0",
           "Rg.Plugins.Popup": "1.2.0.223",
@@ -516,15 +514,13 @@
           "lib/Xamarin.iOS10/Plugin.Multilingual.dll": {}
         }
       },
-      "Plugin.Permissions/2.2.1": {
+      "Plugin.Permissions/3.0.0.12": {
         "type": "package",
         "compile": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         },
         "runtime": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         }
       },
       "Prism.Core/7.1.0.431": {
@@ -803,7 +799,7 @@
           "Microsoft.AppCenter.Crashes": "1.14.0",
           "Newtonsoft.Json": "12.0.1",
           "Plugin.Multilingual": "1.0.2",
-          "Plugin.Permissions": "2.2.1",
+          "Plugin.Permissions": "3.0.0.12",
           "Prism.Forms": "7.1.0.431",
           "Refractored.MvvmHelpers": "1.3.0",
           "Rg.Plugins.Popup": "1.2.0.223",
@@ -920,15 +916,13 @@
           "lib/Xamarin.iOS10/Plugin.Multilingual.dll": {}
         }
       },
-      "Plugin.Permissions/2.2.1": {
+      "Plugin.Permissions/3.0.0.12": {
         "type": "package",
         "compile": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         },
         "runtime": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         }
       },
       "Prism.Core/7.1.0.431": {
@@ -1207,7 +1201,7 @@
           "Microsoft.AppCenter.Crashes": "1.14.0",
           "Newtonsoft.Json": "12.0.1",
           "Plugin.Multilingual": "1.0.2",
-          "Plugin.Permissions": "2.2.1",
+          "Plugin.Permissions": "3.0.0.12",
           "Prism.Forms": "7.1.0.431",
           "Refractored.MvvmHelpers": "1.3.0",
           "Rg.Plugins.Popup": "1.2.0.223",
@@ -1324,15 +1318,13 @@
           "lib/Xamarin.iOS10/Plugin.Multilingual.dll": {}
         }
       },
-      "Plugin.Permissions/2.2.1": {
+      "Plugin.Permissions/3.0.0.12": {
         "type": "package",
         "compile": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         },
         "runtime": {
-          "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll": {},
-          "lib/Xamarin.iOS10/Plugin.Permissions.dll": {}
+          "lib/xamarinios10/Plugin.Permissions.dll": {}
         }
       },
       "Prism.Core/7.1.0.431": {
@@ -1611,7 +1603,7 @@
           "Microsoft.AppCenter.Crashes": "1.14.0",
           "Newtonsoft.Json": "12.0.1",
           "Plugin.Multilingual": "1.0.2",
-          "Plugin.Permissions": "2.2.1",
+          "Plugin.Permissions": "3.0.0.12",
           "Prism.Forms": "7.1.0.431",
           "Refractored.MvvmHelpers": "1.3.0",
           "Rg.Plugins.Popup": "1.2.0.223",
@@ -1873,39 +1865,25 @@
         "plugin.multilingual.nuspec"
       ]
     },
-    "Plugin.Permissions/2.2.1": {
-      "sha512": "ixEdsOBokh6eIofokJmru0u18hZKUODkvJZeest0CsHiiuRcO38yiTr+2Nq6Pg9hm0fhyavFQydhbldfHOp44Q==",
+    "Plugin.Permissions/3.0.0.12": {
+      "sha512": "VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
       "type": "package",
-      "path": "plugin.permissions/2.2.1",
+      "path": "plugin.permissions/3.0.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.dll",
-        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.pdb",
-        "lib/MonoAndroid10/Plugin.Permissions.Abstractions.xml",
-        "lib/MonoAndroid10/Plugin.Permissions.XML",
-        "lib/MonoAndroid10/Plugin.Permissions.dll",
-        "lib/MonoAndroid10/Plugin.Permissions.pdb",
-        "lib/UAP10/Plugin.Permissions.Abstractions.dll",
-        "lib/UAP10/Plugin.Permissions.Abstractions.pdb",
-        "lib/UAP10/Plugin.Permissions.Abstractions.xml",
-        "lib/UAP10/Plugin.Permissions.XML",
-        "lib/UAP10/Plugin.Permissions.dll",
-        "lib/UAP10/Plugin.Permissions.pdb",
-        "lib/UAP10/Plugin.Permissions.pri",
-        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.dll",
-        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.pdb",
-        "lib/Xamarin.iOS10/Plugin.Permissions.Abstractions.xml",
-        "lib/Xamarin.iOS10/Plugin.Permissions.XML",
-        "lib/Xamarin.iOS10/Plugin.Permissions.dll",
-        "lib/netstandard1.0/Plugin.Permissions.Abstractions.dll",
-        "lib/netstandard1.0/Plugin.Permissions.Abstractions.pdb",
-        "lib/netstandard1.0/Plugin.Permissions.Abstractions.xml",
-        "lib/netstandard1.0/Plugin.Permissions.deps.json",
+        "lib/monoandroid71/Plugin.Permissions.dll",
+        "lib/monoandroid71/Plugin.Permissions.xml",
         "lib/netstandard1.0/Plugin.Permissions.dll",
-        "lib/netstandard1.0/Plugin.Permissions.pdb",
         "lib/netstandard1.0/Plugin.Permissions.xml",
-        "plugin.permissions.2.2.1.nupkg.sha512",
+        "lib/netstandard2.0/Plugin.Permissions.dll",
+        "lib/netstandard2.0/Plugin.Permissions.xml",
+        "lib/uap10.0.10240/Plugin.Permissions.dll",
+        "lib/uap10.0.10240/Plugin.Permissions.pri",
+        "lib/uap10.0.10240/Plugin.Permissions.xml",
+        "lib/xamarinios10/Plugin.Permissions.dll",
+        "lib/xamarinios10/Plugin.Permissions.xml",
+        "plugin.permissions.3.0.0.12.nupkg.sha512",
         "plugin.permissions.nuspec",
         "readme.txt"
       ]

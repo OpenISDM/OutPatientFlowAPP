@@ -45,7 +45,7 @@ namespace IndoorNavigation.Views.Controls
         public DataTemplate NotCompleteTemplate { get; set; }
         public DataTemplate CompleteTemplate { get; set; }
         public DataTemplate YetNavigationTemplate { get; set; }
-        public DataTemplate NullTemplate { get; set; }
+        //public DataTemplate NullTemplate { get; set; }
         protected override DataTemplate OnSelectTemplate
 										(Object item,BindableObject container)
         {
@@ -56,8 +56,8 @@ namespace IndoorNavigation.Views.Controls
             if (o.type.Equals(RecordType.Queryresult)) 
 				return YetNavigationTemplate;
 			
-            if (o.type.Equals(RecordType.NULL)) 
-				return NullTemplate;
+    //        if (o.type.Equals(RecordType.NULL)) 
+				//return NullTemplate;
 			
             return NotCompleteTemplate;            
         }

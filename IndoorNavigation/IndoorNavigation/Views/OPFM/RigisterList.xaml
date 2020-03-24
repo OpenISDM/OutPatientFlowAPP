@@ -84,14 +84,8 @@
                     </StackLayout>
                 </controls:DraggableViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="NotComplete">                
+            <DataTemplate x:Key="NotComplete">
                 <controls:DraggableViewCell Tapped="ViewCell_Tapped" Height="60">
-                    <!--<ViewCell.ContextActions>
-                        <MenuItem Clicked="RemoveItem_Clicked" 
-								  CommandParameter="{Binding .}"
-                                  Text="Delete" 
-								  IsDestructive="True" />
-                    </ViewCell.ContextActions>-->
                     <StackLayout >
                         <StackLayout Orientation="Horizontal" 
 									 VerticalOptions="CenterAndExpand" 
@@ -133,13 +127,8 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate x:Key="NullCell">
-                <controls:DraggableViewCell IsEnabled="False" Height="250">
-                    <StackLayout/>
-                </controls:DraggableViewCell>
-            </DataTemplate>
-            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter" 
-						NullTemplate="{StaticResource NullCell}"  
+          
+            <local:ListDataTemplates x:Key="RegistrationDataTemplateSelecter"   
 						NotCompleteTemplate="{StaticResource NotComplete}" 
 						CompleteTemplate="{StaticResource Complete}" 
 						YetNavigationTemplate="{StaticResource YetNavigation}"/>
@@ -176,6 +165,7 @@
 			                                ItemTapped="RgListView_ItemTapped"
                                             BackgroundColor="White"
                                             SeparatorColor="#E4E4E4"
+                                            VerticalScrollBarVisibility="Always"                                            
                ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
                 </controls:DraggableListView>
@@ -191,16 +181,7 @@
 					FontAttributes="Bold"
                     CornerRadius="30"
                     />
-            <!--<Button x:Name="ShiftBtn" 
-					Text="{i18n:Translate EXCHANGE_STRING}" 
-					BackgroundColor="#3f51b5" 
-					FontSize="Medium" 
-					TextColor="White" 
-					FontAttributes="Bold"
-                    AbsoluteLayout.LayoutFlags="All" 
-					CornerRadius="30"
-                    Clicked="ShiftBtn_Clicked" 
-					AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->
+           
 					
             <Button x:Name="PaymemtListBtn" 
 					FontSize="Large" 
