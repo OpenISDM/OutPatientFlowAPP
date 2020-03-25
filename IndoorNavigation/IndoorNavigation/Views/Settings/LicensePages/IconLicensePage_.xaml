@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.Settings.LicensePages.IconLicensePage_"
+             Title="{i18n:Translate OK_STRING}">
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+    <ContentPage.Content>
+        <ScrollView>
+            <Label FontSize="14">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Icons&#10;"/>
+                        
+                        <!--#region Blood collection Icon-->                        
+                        <Span Text="&#10;Blood icon from&#10;"/>
+                        <Span Text="icon-icons.com&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://icon-icons.com/icon/blood-hospital/108852"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region Health Education Center-->
+                        <Span Text="&#10;Blood icon from&#10;"/>
+                        <Span Text="www.clipart.email&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.clipart.email/download/9616176.html"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region Plastic Surgery-->
+                        <Span Text="&#10;Plastic Surgery icon from&#10;"/>
+                        <Span Text="www.pngguru.com&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.pngguru.com/free-transparent-background-png-clipart-ewody"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region Thyroid-->
+                        <Span Text="&#10;Thyroid Icon made by "/>
+                        <Span Text="IconLabs" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://thenounproject.com/term/thyroid/2653160/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" thenounproject.com&#10;"/>
+                        <!--#endregion-->
+
+                        <!--#region Radiology-->
+                        <Span Text="&#10;Radiology Icon made by "/>
+                        <Span Text="Freepik " TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" www.flaticon.com&#10;"/>
+                        <!--#endregion-->
+                        
+                        <!--#region Examination-->
+                        <Span Text="&#10;Plastic Surgery icon from&#10;"/>
+                        <Span Text="www.pngfuel.com&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.pngfuel.com/free-png/lhxgf"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+
+                        <!--#region Pediatrics-->
+                        <Span Text="&#10;Pediatrics Icon made by "/>
+                        <Span Text="italianpolitic" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.onlinewebfonts.com/icon/369880"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" www.onlinewebfonts.com&#10;"/>
+                        <!--#endregion-->
+                        
+                        <!--#region Breast-->
+                        <Span Text="&#10;Breast surgery Icon made by "/>
+                        <Span Text="Freepik " TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" www.flaticon.com&#10;"/>
+                        <!--#endregion-->
+                        
+                        <!--#region Urology-->
+                        <Span Text="&#10;Urology icon from&#10;"/>
+                        <Span Text="www.pngfuel.com&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.pngfuel.com/free-png/ugmrj"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region Revisit-->
+                        <Span Text="&#10;Restart Icon made by "/>
+                        <Span Text="marceloadelar" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.onlinewebfonts.com/icon/130208"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" www.onlinewebfonts.com&#10;"/>
+                        <!--#endregion-->
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

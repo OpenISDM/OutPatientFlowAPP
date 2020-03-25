@@ -8,7 +8,7 @@ using Plugin.Multilingual;
 using IndoorNavigation.Resources.Helpers;
 namespace IndoorNavigation.Models
 {
-    class PhoneInformation_
+    public class PhoneInformation_
     {
         //private const string _resourceId= "IndoorNavigation.Resources.AppResources";
         #region Propertys
@@ -17,7 +17,7 @@ namespace IndoorNavigation.Models
         private string Lab;
         private string YCH;
 
-        private CultureInfo _currentLanguage;
+        private static CultureInfo _currentLanguage;
         #endregion
 
         public PhoneInformation_()
@@ -36,9 +36,11 @@ namespace IndoorNavigation.Models
                 return "en-US";
             if (_currentLanguage.ToString() == "zh-TW" || _currentLanguage.ToString() == "zh")
                 return "zh";
-
+            
             return string.Empty;
         }
+
+        
 
         public string GetCurrentMapName(string userNaming)
         {

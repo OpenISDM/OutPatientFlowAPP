@@ -46,8 +46,8 @@ using Plugin.Multilingual;
 
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
-
-namespace IndoorNavigation
+using IndoorNavigation.Models;
+namespace IndoorNavigation.Models
 {
     class HttpRequest
     {

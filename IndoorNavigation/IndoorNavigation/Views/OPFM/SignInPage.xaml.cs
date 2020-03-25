@@ -40,7 +40,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Resources;
 
 using IndoorNavigation.Views.Controls;
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.OPFM
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SignInPage : ContentPage

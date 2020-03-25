@@ -20,7 +20,7 @@ using System.Linq;
 using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Views.PopUpPage;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.OPFM
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : CustomToolbarContentPage

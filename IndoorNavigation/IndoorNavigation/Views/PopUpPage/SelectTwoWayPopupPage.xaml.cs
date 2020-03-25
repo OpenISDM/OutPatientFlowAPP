@@ -44,7 +44,7 @@ using System.Globalization;
 using Plugin.Multilingual;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Models;
-
+using IndoorNavigation.Views.OPFM;
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

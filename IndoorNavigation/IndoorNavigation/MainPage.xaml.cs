@@ -268,7 +268,7 @@ namespace IndoorNavigation
 						 _resourceManager
 						 .GetString("ASK_LEAVE_APP_STRING", currentLanguage), 
 						 _resourceManager
-						 .GetString("OK_STRING",currentLanguage),
+						 .GetString("LEAVE_STRING",currentLanguage),
 						 _resourceManager
 						 .GetString("CANCEL_STRING",currentLanguage));
 

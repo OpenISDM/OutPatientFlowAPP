@@ -37,7 +37,7 @@
           xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"          
           mc:Ignorable="d"
-          x:Class="IndoorNavigation.SignInPage">
+          x:Class="IndoorNavigation.Views.OPFM.SignInPage">
     
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">

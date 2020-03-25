@@ -9,7 +9,7 @@
           xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"          
           Title="{i18n:Translate NAVIGATION_LIST_STRING}"
           mc:Ignorable="d"
-          x:Class="IndoorNavigation.RigisterList">
+          x:Class="IndoorNavigation.Views.OPFM.RigisterList">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">

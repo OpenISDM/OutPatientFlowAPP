@@ -630,4 +630,7 @@
   <data name="GO_TO_SETTING" xml:space="preserve">
     <value>去設定</value>
   </data>
+  <data name="LEAVE_STRING" xml:space="preserve">
+    <value>離開</value>
+  </data>
 </root>

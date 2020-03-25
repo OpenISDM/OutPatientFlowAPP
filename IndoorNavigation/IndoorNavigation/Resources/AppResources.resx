@@ -639,4 +639,7 @@
   <data name="GO_TO_SETTING" xml:space="preserve">
     <value>Setting</value>
   </data>
+  <data name="LEAVE_STRING" xml:space="preserve">
+    <value>LEAVE</value>
+  </data>
 </root>

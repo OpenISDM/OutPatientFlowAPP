@@ -40,7 +40,7 @@ using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
-namespace IndoorNavigation
+namespace IndoorNavigation.Models
 {
     class ClinicPositionInfo
     {
