@@ -40,7 +40,6 @@
   <ItemGroup>
     <Folder Include="Utilities\" />
     <Folder Include="Views\Navigation\" />
-    <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
     <Folder Include="Resources\NTUH_YunLin\" />
@@ -131,6 +130,9 @@
     <EmbeddedResource Update="Views\PopUpPage\SignInPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\LicensePages\IconLicensePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\AppResources.English" />
@@ -185,6 +187,12 @@
     </Compile>
     <Compile Update="Views\PopUpPage\AddPopupPage.xaml.cs">
       <DependentUpon>AddPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\LicensePages\IconLicensePage.xaml.cs">
+      <DependentUpon>IconLicensePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Settings\LicensePages\IconsLicensePage__.xaml.cs">
+      <DependentUpon>IconsLicensePage__.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

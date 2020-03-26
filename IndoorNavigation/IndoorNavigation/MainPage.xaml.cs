@@ -61,6 +61,7 @@ using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
+using IndoorNavigation.Views.Settings.LicensePages;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -352,6 +353,7 @@ namespace IndoorNavigation
 
         async private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
+            //await Navigation.PushAsync(new IconLicensePage_());
             //await Navigation.PushAsync(new TestPage_Listview());
             //NavigationPage page = new NavigationPage(new TestPage_Listview()) { BarBackgroundColor = Color.FromHex("#3f51b5") };
             //await Navigation.PushModalAsync(page);

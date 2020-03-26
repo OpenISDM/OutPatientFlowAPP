@@ -49,6 +49,7 @@
 using Xamarin.Forms;
 using Plugin.Multilingual;
 using System.Resources;
+using IndoorNavigation.Views.Settings.LicensePages;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 
@@ -72,7 +73,8 @@ namespace IndoorNavigation.Views.Settings.LicensePages
 
         async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new IconsLicensePage());
+            //await Navigation.PushAsync(new IconsLicensePage());
+            await Navigation.PushAsync(new IconLicensePage());
         }
     }
 }

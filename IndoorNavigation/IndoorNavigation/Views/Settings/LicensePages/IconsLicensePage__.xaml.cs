@@ -52,9 +52,9 @@ using System.Windows.Input;
 
 namespace IndoorNavigation.Views.Settings.LicensePages
 {
-    public partial class IconsLicensePage : ContentPage
+    public partial class IconsLicensePage__ : ContentPage
     {
-        public IconsLicensePage()
+        public IconsLicensePage__()
         {
             InitializeComponent();
             BindingContext = this;

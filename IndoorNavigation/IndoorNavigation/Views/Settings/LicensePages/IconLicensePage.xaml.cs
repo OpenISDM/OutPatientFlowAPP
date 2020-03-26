@@ -6,9 +6,9 @@ using Xamarin.Forms.Xaml;
 namespace IndoorNavigation.Views.Settings.LicensePages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class IconLicensePage_ : ContentPage
+    public partial class IconLicensePage : ContentPage
     {
-        public IconLicensePage_()
+        public IconLicensePage()
         {
             InitializeComponent();
             BindingContext = this;
