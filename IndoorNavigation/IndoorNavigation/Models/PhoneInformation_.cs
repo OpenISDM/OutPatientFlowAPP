@@ -8,29 +8,29 @@ using Plugin.Multilingual;
 using IndoorNavigation.Resources.Helpers;
 namespace IndoorNavigation.Models
 {
-    public class PhoneInformation_
+    public static class PhoneInformation_
     {
         //private const string _resourceId= "IndoorNavigation.Resources.AppResources";
         #region Propertys
-        private string NTUH_Yunlin;
-        private string TCH;
-        private string Lab;
-        private string YCH;
+        private static string NTUH_Yunlin= GetResourceString("HOSPITAL_NAME_STRING");
+        private static string TCH = GetResourceString("TAIPEI_CITY_HALL_STRING");
+        private static string Lab = GetResourceString("LAB_STRING");
+        private static string YCH = GetResourceString("YUANLIN_CHRISTIAN_HOSPITAL_STRING");
 
         private static CultureInfo _currentLanguage;
         #endregion
 
-        public PhoneInformation_()
-        {
-            NTUH_Yunlin = GetResourceString("HOSPITAL_NAME_STRING");
-            TCH = GetResourceString("TAIPEI_CITY_HALL_STRING");
-            Lab = GetResourceString("LAB_STRING");
-            YCH = GetResourceString("YUANLIN_CHRISTIAN_HOSPITAL_STRING");
+        //public PhoneInformation_()
+        //{
+        //    NTUH_Yunlin = GetResourceString("HOSPITAL_NAME_STRING");
+        //    TCH = GetResourceString("TAIPEI_CITY_HALL_STRING");
+        //    Lab = GetResourceString("LAB_STRING");
+        //    YCH = GetResourceString("YUANLIN_CHRISTIAN_HOSPITAL_STRING");
 
-            _currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        }
+        //    _currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+        //}
 
-        public string GiveCurrentLanguage()
+        public static string GiveCurrentLanguage()
         {
             if (_currentLanguage.ToString() == "en-US" || _currentLanguage.ToString() == "en")
                 return "en-US";
@@ -42,7 +42,7 @@ namespace IndoorNavigation.Models
 
         
 
-        public string GetCurrentMapName(string userNaming)
+        public static string GetCurrentMapName(string userNaming)
         {
             if (userNaming == NTUH_Yunlin)
                 return "NTUH Yunlin Branch";
@@ -56,7 +56,7 @@ namespace IndoorNavigation.Models
         }
 
 
-        public MapName GiveGenerateMapName(string userNaming)
+        public static MapName GiveGenerateMapName(string userNaming)
         {
 
             if (userNaming == NTUH_Yunlin)
@@ -68,27 +68,26 @@ namespace IndoorNavigation.Models
             if (userNaming == YCH)
                 return new MapName("Yuanlin Christian Hospital", "Yuanlin_Christian_Hospital");
             return null;
-        }
+        }       
 
-        public class MapName
-        {
-            public string _fileName;
-            public string _readingPath;
-
-            public MapName(string fileName,string readingPath) 
-            {
-                this._fileName = fileName;
-                this._readingPath = readingPath;
-            }
-        }
-
-        private string GetResourceString(string key)
+        private static string GetResourceString(string key)
         {
             string _resourceId = "IndoorNavigation.Resources.AppResources";
             ResourceManager resourceManager = 
                 new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
             return resourceManager.GetString(key, _currentLanguage);
+        }
+    }
+    public class MapName
+    {
+        public string _fileName;
+        public string _readingPath;
+
+        public MapName(string fileName, string readingPath)
+        {
+            this._fileName = fileName;
+            this._readingPath = readingPath;
         }
     }
 }

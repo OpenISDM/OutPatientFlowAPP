@@ -62,6 +62,8 @@ using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
 using IndoorNavigation.Views.Settings.LicensePages;
+using IndoorNavigation.Models;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -161,13 +163,13 @@ namespace IndoorNavigation
             if (e.Item is Location location)
             {
                 var ci = CrossMultilingual.Current.CurrentCultureInfo;
-               
-                string map = 
-					_phoneInformation.GiveCurrentMapName(location.UserNaming);
+
+                string map = PhoneInformation_.GetCurrentMapName(location.UserNaming);
+					//_phoneInformation.GiveCurrentMapName(location.UserNaming);
                 
                 NavigationGraph navigationGraph =
 					NavigraphStorage.LoadNavigationGraphXML(map);
-
+                Console.WriteLine("string Map : " + map);
                 XmlDocument xmlDocument = new XmlDocument();
                 using (var stream = 
 							Assembly.GetExecutingAssembly()

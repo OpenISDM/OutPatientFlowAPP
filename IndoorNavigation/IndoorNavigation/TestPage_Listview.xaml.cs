@@ -14,6 +14,7 @@ namespace IndoorNavigation
         public TestPage_Listview()
         {
             InitializeComponent();
+            
         }
 
         async private void Button_Clicked(object sender, System.EventArgs e)

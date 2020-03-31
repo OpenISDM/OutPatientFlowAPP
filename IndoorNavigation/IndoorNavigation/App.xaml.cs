@@ -80,13 +80,12 @@ namespace IndoorNavigation
         public bool HaveCashier = false;
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
-        public RgRecord lastFinished = null;     
-		
-        
+        public RgRecord lastFinished = null;            		
+               
         public App()
         {
             InitializeComponent();
-
+          
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
             if (AppResources.Culture.ToString().Contains("zh"))
@@ -130,5 +129,6 @@ namespace IndoorNavigation
         {
             // Handle when your app resumes
         }
+   
     }
 }
