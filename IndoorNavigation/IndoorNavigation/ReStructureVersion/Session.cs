@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Threading;
 namespace NavigatorStruture
 {
     // it's in User Interface Layer
@@ -9,6 +9,8 @@ namespace NavigatorStruture
     {
         #region Properties
         private List<Instruction> _instructions;
+        private Thread _navigationThread;
+        private RegionGraph _regionGraph;
         #endregion
        
 
@@ -17,6 +19,8 @@ namespace NavigatorStruture
         //todo : Request PS Interface to 
         private void CheckArrivedWaypoint(object sender, EventArgs args) { }
         //todo : Read the Event from PS Interface to check arrived waypoint or not.        
+        private void NavigationProgram() { }
+        //todo : the function for navigationThread work to do the UI update, destination detect, wrong way detect.
         #endregion
         
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Xml;
 namespace NavigatorStruture
 {
     //indeed: Length, Picture, Route( Distance, Direction, Next point
@@ -14,14 +14,23 @@ namespace NavigatorStruture
         private List<Guid> _allRegionIDs;
         private const double EARTH_RADIUS = 6378137;
 
-        public string BuildingName;        
+        private string BuildingName;        
         #endregion
 
         #region Methods
         private double GetDistance(Point point1, Point point2) { return 0; }
+        public string GetWaypointName(Waypoint waypoint) { return "name"; }
+        public LocationType GetLocationType(Waypoint waypoint) { return LocationType.midpath; }
+        public double GetDistanceOfLongHallway(Waypoint currentWaypoint, List<Waypoint> allRoute, int nextStep, ConnectionType avoidConnectionType) { return 0; }
+        //Todo : to return a straight hall way length totally.
         public Instruction GetInstruction(int currentStep, Waypoint currentWaypoint, Waypoint nextWaypoint, Waypoint previousWaypoint, ConnectionType[] avoidConnectionTypes) { return new Instruction(); }
+        //Todo : to return the instruction that 
+        public List<Waypoint> GenerateRoute(Waypoint currentWaypoint, Waypoint destinationWaypoint) { return new List<Waypoint>(); }
         #endregion
-     
+
+        #region Constructor
+        public RegionGraph(XmlDocument inputxmlDocument  /*or input a string .etc*/) { }
+        #endregion
         public struct NaviGraph //a region
         {           
             public Guid RegionID { get; set; }
@@ -30,28 +39,12 @@ namespace NavigatorStruture
             public List<Guid> WaypointIDs { get; set; } //the waypoint IDs in the region.
             public List<Guid> Neighbors { get; set; } //this is the other region in the same building
         }
-        //public NaviGraph() { }
 
-        //#region Private Propeties
-        //private List<Waypoint> _waypointOnRoute;
-        //private Dictionary<Waypoint, List<Waypoint>> _wrongpointOnRoute;
-
-        //private PreferenceType PreferenceType;
-        //private Waypoint _currentWaypoint;
-        //private Waypoint _destinationWaypoint;
-        //#endregion
-
-        //#region Public Methods
-        //public List<Instruction> ReturnInstruction(Waypoint currentWaypoint, Waypoint destinationWaypoint)
-        //{
-        //    return new List<Instruction>();
-        //}
-        ////I'm curious about it that should it need to return all route just call it first time?
-        //#endregion
-
-        //#region Private Methods
-        //private void GenerateRoute() { }
-        //private void GenerateWrong() { }
-        //#endregion
+        #region Enums
+        public enum LocationType
+        {
+            midpath=0   
+        }
+        #endregion
     }
 }
