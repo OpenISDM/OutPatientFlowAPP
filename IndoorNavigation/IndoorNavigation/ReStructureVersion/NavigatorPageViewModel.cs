@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
-namespace NavigatorStruture
+using IndoorNavigation.Model;
+
+namespace IndoorNavigation.UI
 {
     // it's in User Interface Layer
     class NavigatorPageViewModel

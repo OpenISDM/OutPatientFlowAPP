@@ -359,6 +359,7 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        //it will be moved to "Navigation Layer"
         private void GenerateRoute(Guid sourceRegionID,
                                    Guid sourceWaypointID,
                                    Guid destinationRegionID,
@@ -711,6 +712,7 @@ namespace IndoorNavigation.Modules
 
         }
 
+        //it will be moved to "Navgiation Layer"
         public void AddPortalWrongWaypoint(Region tempRegion, 
 									RegionWaypointPoint locationRegionWaypoint, 
 									int nextStep, 
@@ -755,6 +757,7 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        //it will be moved to Navigation Layer"
         public void AddWrongWaypoint(Guid waypointID, 
 									 Guid regionID, 
 									 RegionWaypointPoint locationRegionWaypoint, 
@@ -780,6 +783,7 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        //it will be moved to "Navigation Layer".
         public void OneMoreLayer(Guid guid, 
 								 RegionWaypointPoint locationRegionWaypoint, 
 								 int nextStep, 
@@ -1239,6 +1243,7 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
 
+        
         public void HandleWrongWay()
         {
             _accumulateStraightDistance = 0;
