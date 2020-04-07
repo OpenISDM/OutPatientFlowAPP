@@ -12,7 +12,7 @@ namespace IndoorNavigation.Navigation
         #region Properties
         //the Key guid is region id
         private Dictionary<Guid, NaviGraph> _regions { get; set; } //all region in the coverage area
-        private Dictionary<Tuple<Guid,Guid>, List<Edge>> _edges { get; set; }
+        private Dictionary<Tuple<Guid,Guid>, List<RegionEdge>> _edges { get; set; }
 
         private List<Guid> _allRegionIDs;
 
@@ -40,8 +40,8 @@ namespace IndoorNavigation.Navigation
         {
             return (double)d * Math.PI / 180d;
         }
-        public string GetWaypointName(Waypoint waypoint) { return "name"; }
-        public LocationType GetLocationType(Waypoint waypoint) { return LocationType.midpath; }
+        public string GetWaypointName(RegionWaypointPoint waypoint) { return "name"; }
+        public LocationType GetLocationType(RegionWaypointPoint waypoint) { return LocationType.midpath; }
         public double GetDistanceOfLongHallway(Waypoint currentWaypoint, List<Waypoint> allRoute, int nextStep, ConnectionType avoidConnectionType) { return 0; }
         //Todo : to return a straight hall way length totally.
         public Instruction GetInstruction(int currentStep, Waypoint currentWaypoint, Waypoint nextWaypoint, Waypoint previousWaypoint, ConnectionType[] avoidConnectionTypes) { return new Instruction(); }
@@ -55,7 +55,10 @@ namespace IndoorNavigation.Navigation
             return regionIDs;
         }
         //Todo : to return the instruction details.
-        public List<Waypoint> GenerateRoute(Waypoint currentWaypoint, Waypoint destinationWaypoint) { return new List<Waypoint>(); }
+        public List<Waypoint> GenerateRoute(RegionWaypointPoint currentWaypoint, RegionWaypointPoint destinationWaypoint) 
+        { 
+            return new List<Waypoint>(); 
+        }
         #endregion
 
         #region Constructor
@@ -69,7 +72,7 @@ namespace IndoorNavigation.Navigation
             public List<Guid> WaypointIDs { get; set; } //the waypoint IDs in the region.
             public List<Guid> Neighbors { get; set; } //this is the other region in the same building
 
-            public Dictionary<Tuple<Guid, Guid>, Edge> _edges { get; set; }  //this is the edges between waypoint and waypoint
+            public Dictionary<Tuple<Guid, Guid>, WaypointEdge> _edges { get; set; }  //this is the edges between waypoint and waypoint
         }
 
         #region Enums

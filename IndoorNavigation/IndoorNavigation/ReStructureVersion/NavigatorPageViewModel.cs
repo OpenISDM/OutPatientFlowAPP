@@ -15,10 +15,21 @@ namespace IndoorNavigation.UI
 
         #region  Methods
         private void StartToNavigate() { }
+
+        private void Stop()
+        {
+            _session.CloseSession();
+        }
+
+        //it will recieve the data from Session.
+        private void NavigationResultHandler(object sender, EventArgs args)
+        {
+            
+        }
         #endregion
 
         #region Constructor
-        public NavigatorPageViewModel(Waypoint DestinationWaypoint) { }
+        public NavigatorPageViewModel(RegionWaypointPoint DestinationWaypoint) { }
         #endregion
     }
 }
