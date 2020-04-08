@@ -109,7 +109,7 @@ namespace IndoorNavigation.Modules
             _regiongraphs = _navigationGraph.GetRegions();
             _nextWaypointStep = -1;
             _isKeepDetection = true;
-            _iPSModules = new IPSModules(_navigationGraph);
+            _iPSModules = new IPSModules("a");
             _iPSModules._event._eventHandler += 
 				new EventHandler(CheckArrivedWaypoint);
 				

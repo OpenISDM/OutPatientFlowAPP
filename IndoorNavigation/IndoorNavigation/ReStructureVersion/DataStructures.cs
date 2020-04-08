@@ -39,7 +39,7 @@ namespace IndoorNavigation.Model
     public struct RegionEdge
     {
         public RegionWaypointPoint SourceWaypoint { get; set; }
-        public RegionWaypointPoint DestinationWaypoint { get; set; }        
+        public RegionWaypointPoint DestinationWaypoint { get; set; }
         public Direction Direction { get; set; }
         public ConnectionType ConnectionType { get; set; }
         public double Distance { get; set; }        
@@ -62,6 +62,13 @@ namespace IndoorNavigation.Model
     #endregion
 
     #region Enums
+    //it is to enum the edge is two way or one way.
+    public enum DirectionalConnection
+    {
+
+    }
+
+    //it is to enum the edge how to connect, for example : escalator, elevator, etc.
     public enum ConnectionType
     {
 
