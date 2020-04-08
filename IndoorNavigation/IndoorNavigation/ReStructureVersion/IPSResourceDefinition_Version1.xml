@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<navigation_graph>
+  <ips_resources region_number="2">
+    <ips_resource region_id="222" type="iBeacon">
+      <beacons beacon_number="1">
+        <beacon uuid="11" waypoint_ids="00" threshold="-50"/>
+      </beacons>
+    </ips_resource>
+    <ips_resource region_id="111" type="LBeacon">
+      <beacons beacon_number="1">
+        <beacon uuid="22" waypoint_ids="44" threshold="-56"/>
+      </beacons>
+    </ips_resource>
+  </ips_resources>
+</navigation_graph>

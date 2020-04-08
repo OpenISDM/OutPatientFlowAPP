@@ -11,6 +11,8 @@ namespace IndoorNavigation.ReStructureVersion
     {
         #region Properties
         private string _naviGraphName;
+
+       
         #endregion
 
         #region Methods
@@ -37,9 +39,19 @@ namespace IndoorNavigation.ReStructureVersion
 
         #region Constructor
 
-        public IPSResource(string naviGraphName)
+        public IPSResource(string naviGraphName) { }
+
+        public IPSResource(XmlDocument xmlDocument)
         {
             
+        }
+        #endregion
+
+        #region Structs and Classes
+        public struct IPSInfo
+        {
+            public Dictionary<Guid, int> _beaconRSSIThreshold { get; set; }
+            public Dictionary<Guid, List<Guid>> _beacons { get; set; }
         }
         #endregion
     }
