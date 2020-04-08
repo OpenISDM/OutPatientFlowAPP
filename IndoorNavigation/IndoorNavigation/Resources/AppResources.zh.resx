@@ -633,4 +633,10 @@
   <data name="LEAVE_STRING" xml:space="preserve">
     <value>離開</value>
   </data>
+  <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
+    <value>發生預期外的錯誤，請問要重試嗎?</value>
+  </data>
+  <data name="RETRY_STRING" xml:space="preserve">
+    <value>重試</value>
+  </data>
 </root>

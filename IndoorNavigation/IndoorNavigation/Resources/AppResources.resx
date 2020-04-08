@@ -642,4 +642,10 @@
   <data name="LEAVE_STRING" xml:space="preserve">
     <value>LEAVE</value>
   </data>
+  <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
+    <value>it seems to happend some error, do you want to retry?</value>
+  </data>
+  <data name="RETRY_STRING" xml:space="preserve">
+    <value>RETRY</value>
+  </data>
 </root>

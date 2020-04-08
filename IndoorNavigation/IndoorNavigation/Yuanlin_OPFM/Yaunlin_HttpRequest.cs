@@ -39,6 +39,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Xml;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Resources;
 using System.Threading.Tasks;
@@ -55,31 +56,31 @@ namespace IndoorNavigation.Models
         private string responseString = "";
         private App app;
 
-        private const string _resourceID= "IndoorNavigation.Resources.AppResources";
-        private ResourceManager _resourceManager= 
-			new ResourceManager(_resourceID, typeof(TranslateExtension)
-			.GetTypeInfo().Assembly);
-        private CultureInfo _currentLanguage = 
-			CrossMultilingual.Current.CurrentCultureInfo;
+        private const string _resourceID = "IndoorNavigation.Resources.AppResources";
+        private ResourceManager _resourceManager =
+            new ResourceManager(_resourceID, typeof(TranslateExtension)
+            .GetTypeInfo().Assembly);
+        private CultureInfo _currentLanguage =
+            CrossMultilingual.Current.CurrentCultureInfo;
 
         public HttpRequest()
         {
-            app = (App)Application.Current;     
+            app = (App)Application.Current;
         }
 
         public void GetXMLBody()
         {
             Console.WriteLine("Now Excution is::: GetXMLBody");
-           
-            
+
+
             TaiwanCalendar taiwanCalendar = new TaiwanCalendar();
             //in request body, it require to use Taiwan calender to check date
-            string selectedDay = 
-				taiwanCalendar.GetYear(app.RgDate) 
-				+ app.RgDate.ToString("MMdd");
+            string selectedDay =
+                taiwanCalendar.GetYear(app.RgDate)
+                + app.RgDate.ToString("MMdd");
 
-            XmlDocument doc = 
-				NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+            XmlDocument doc =
+                NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
 
             XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
@@ -87,7 +88,7 @@ namespace IndoorNavigation.Models
 
             XmlNode node_sdate = xmlNodeList[0].ChildNodes[4];
             XmlNode node_edate = xmlNodeList[0].ChildNodes[5];
-                
+
             node_patient.InnerText = app.IDnumber;
             node_edate.InnerText = selectedDay;
             node_sdate.InnerText = selectedDay;
@@ -95,22 +96,22 @@ namespace IndoorNavigation.Models
             //parse xml to string
             StringWriter stringWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(stringWriter);
-            
+
             doc.WriteContentTo(writer);
-            
+
             writer.Flush();
 
             bodyString = stringWriter.ToString();
-            
+
         }
 
         async public Task RequestData()
         {
             Console.WriteLine("Now Excution is::: RequstData");
             string contentString;
-            HttpWebRequest request = 
-				(HttpWebRequest)WebRequest
-				.Create("http://bc.cch.org.tw:8080/WSRgSRV/Service.asmx");
+            HttpWebRequest request =
+                (HttpWebRequest)WebRequest
+                .Create("http://bc.cch.org.tw:8080/WSRgSRV/Service.asmx");
 
             //set headers
             //request.Headers.Set(HttpRequestHeader.ContentType, "text/xml");
@@ -126,22 +127,23 @@ namespace IndoorNavigation.Models
             try
             {
                 //do post
-                using (Stream postStream 
-					= await request.GetRequestStreamAsync())
+                using (Stream postStream
+                    = await request.GetRequestStreamAsync())
                 {
                     postStream.Write(bytes, 0, bytes.Length);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Network error - Request : " + e.StackTrace);
             }
             try
             {
                 //get response 
-                using (HttpWebResponse response = 
-					(HttpWebResponse)await request.GetResponseAsync())
-                using (StreamReader reader = 
-					new StreamReader(response.GetResponseStream()))
+                using (HttpWebResponse response =
+                    (HttpWebResponse)await request.GetResponseAsync())
+                using (StreamReader reader =
+                    new StreamReader(response.GetResponseStream()))
                 {
                     string content = reader.ReadToEnd();
 
@@ -149,43 +151,55 @@ namespace IndoorNavigation.Models
                     responseString = content;
 
                 }
-            }catch(Exception e)
+                ResponseXmlParse();
+            }
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Network error - WebResponse " + e.StackTrace);
+                Page page = Application.Current.MainPage;
+
+                var WantRetry = await page.DisplayAlert(getResourceString("ERROR_STRING"), getResourceString("HAPPEND_ERROR_STRING"), getResourceString("RETRY_STRING"), getResourceString("NO_STRING"));
+                if (WantRetry)
+                {
+                    await RequestData();
+                }
+                else
+                {
+                    await page.Navigation.PopAsync();
+                    ((App)(Application.Current)).isRigistered = false;
+                    ((App)(Application.Current)).records = new ObservableCollection<RgRecord>();
+                }
             }
             finally
             {
                 request.Abort();
             }
 
-            ResponseXmlParse();
-
-            
         }
         public void ResponseXmlParse()
         {
             Console.WriteLine("Now Excution is::: ResponseXmlParse");
             XmlDocument XmlfromRespone = new XmlDocument();
             XmlfromRespone.LoadXml(responseString);
-            XmlNodeList ResponeList = 
-				XmlfromRespone.GetElementsByTagName("GetRGdata2Response");
+            XmlNodeList ResponeList =
+                XmlfromRespone.GetElementsByTagName("GetRGdata2Response");
 
             string modifyString = ResponeList[0].InnerText;
-          
+
             StringWriter writer = new StringWriter();
             HttpUtility.HtmlDecode(modifyString, writer);
             responseString = writer.ToString();
 
             XmlDocument doc = new XmlDocument();
-           
+
             doc.LoadXml(responseString);
-          
+
             XmlNodeList records = doc.GetElementsByTagName("RgRecord");
             Console.WriteLine(responseString);
             ClinicPositionInfo infos = new ClinicPositionInfo();
 
-    //        int index = 
-				//(app.getRigistered) ? app.records.Count - 1 : app.records.Count;
+            //        int index = 
+            //(app.getRigistered) ? app.records.Count - 1 : app.records.Count;
 
             for (int i = 0; i < records.Count; i++)
             {
@@ -199,19 +213,19 @@ namespace IndoorNavigation.Models
                 record.SeeSeq = records[i].ChildNodes[5].InnerText;
                 record.type = RecordType.Queryresult;
                 record._waypointName = record.CareRoom;
-                record._regionID = infos.GetRegionID(record.CareRoom); 
+                record._regionID = infos.GetRegionID(record.CareRoom);
                 record._waypointID = infos.GetWaypointID(record.CareRoom);
-                                 
+
                 //it may appear the reiong or floor that we doesn't support,
                 //so I ban it and show it's invalid.
-                if (record._regionID.Equals(Guid.Empty) && 
-					record._waypointID.Equals(Guid.Empty))
+                if (record._regionID.Equals(Guid.Empty) &&
+                    record._waypointID.Equals(Guid.Empty))
                 {
                     record.isAccept = true;
                     record.isComplete = true;
-                    record.DptName = 
-						record.DptName 
-						+ getResourceString("INVALID_WAYPOINT_STRING");
+                    record.DptName =
+                        record.DptName
+                        + getResourceString("INVALID_WAYPOINT_STRING");
                     app.FinishCount++;
                     //app.records.Insert(index++,record);
                     app.records.Add(record);
@@ -221,9 +235,9 @@ namespace IndoorNavigation.Models
                 app.records.Add(record);
                 app._TmpRecords.Add(record);
 
-               
+
                 Console.WriteLine($"region id={record._regionID},"
-					+$" waypoint id={record._waypointID}");
+                    + $" waypoint id={record._waypointID}");
             }
             //if (!app.getRigistered)
             //    app.records.Add(new RgRecord { type=RecordType.NULL });

@@ -164,8 +164,8 @@ namespace IndoorNavigation
             {
                 var ci = CrossMultilingual.Current.CurrentCultureInfo;
 
-                string map = PhoneInformation_.GetCurrentMapName(location.UserNaming);
-					//_phoneInformation.GiveCurrentMapName(location.UserNaming);
+                string map = //PhoneInformation_.GetCurrentMapName(location.UserNaming);
+					_phoneInformation.GiveCurrentMapName(location.UserNaming);
                 
                 NavigationGraph navigationGraph =
 					NavigraphStorage.LoadNavigationGraphXML(map);
