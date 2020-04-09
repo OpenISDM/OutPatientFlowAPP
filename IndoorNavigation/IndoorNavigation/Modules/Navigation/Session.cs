@@ -160,10 +160,10 @@ namespace IndoorNavigation.Modules
 					                  + _currentWaypointID);
                     // Detection of starting waypoing:
                     // Detected the waypoint most closed to user.
-                    GenerateRoute(_currentRegionID,
-                                  _currentWaypointID,
-                                  _destinationRegionID,
-                                  _destinationWaypointID);
+                    //GenerateRoute(_currentRegionID,
+                    //              _currentWaypointID,
+                    //              _destinationRegionID,
+                    //              _destinationWaypointID);
 
                     _nextWaypointStep++;
                     Guid _nextRegionID = 
@@ -195,11 +195,11 @@ namespace IndoorNavigation.Modules
 									  "the route");
                     _nextWaypointStep = 0;
 
-                    GenerateRoute(
-                                    _currentRegionID,
-                                    _currentWaypointID,
-                                    _destinationRegionID,
-                                    _destinationWaypointID);
+                    //GenerateRoute(
+                    //                _currentRegionID,
+                    //                _currentWaypointID,
+                    //                _destinationRegionID,
+                    //                _destinationWaypointID);
 
                     Console.WriteLine("Finish Construct New Route");
 

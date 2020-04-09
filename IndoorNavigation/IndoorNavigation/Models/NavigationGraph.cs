@@ -53,7 +53,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dijkstra.NET.Model;
 using System.Xml;
-
+using Dijkstra.NET.Extensions;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -1522,6 +1522,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
 
         private const int _tooCloseDistance = 10;
+        private ConnectionType[] _avoidConnectionTypes;
+        private Graph<Guid, string> _graphRegionGraph;
 
         private void GenerateRoute(Guid sourceRegionID,
                                    Guid sourceWaypointID,
@@ -1581,21 +1583,21 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 if (regionsOnRoute.IndexOf(checkPoint._regionID) + 1 <
                     regionsOnRoute.Count())
                 {
-                    LocationType waypointType =
-                        _navigationGraph
-                        .GetWaypointTypeInRegion(checkPoint._regionID,
-                                                 checkPoint._waypointID);
+                    LocationType waypointType = GetWaypointTypeInRegion(checkPoint._regionID, checkPoint._waypointID);
+                        //_navigationGraph
+                        //.GetWaypointTypeInRegion(checkPoint._regionID,
+                        //                         checkPoint._waypointID);
 
                     Guid nextRegionID =
                         regionsOnRoute[regionsOnRoute.
                                        IndexOf(checkPoint._regionID) + 1];
 
-                    PortalWaypoints portalWaypoints =
-                        _navigationGraph
-                        .GetPortalWaypoints(checkPoint._regionID,
-                                            checkPoint._waypointID,
-                                            nextRegionID,
-                                            _avoidConnectionTypes);
+                    PortalWaypoints portalWaypoints = GetPortalWaypoints(checkPoint._regionID, checkPoint._waypointID, nextRegionID, _avoidConnectionTypes);
+                        //_navigationGraph
+                        //.GetPortalWaypoints(checkPoint._regionID,
+                        //                    checkPoint._waypointID,
+                        //                    nextRegionID,
+                        //                    _avoidConnectionTypes);
 
                     if (LocationType.portal != waypointType)
                     {
@@ -1628,15 +1630,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
             }
             int indexLastCheckPoint = _waypointsOnRoute.Count() - 1;
-            if (!(_destinationRegionID.
+            if (!(destinationRegionID.
                 Equals(_waypointsOnRoute[indexLastCheckPoint]._regionID) &&
-                _destinationWaypointID.
+                destinationWaypointID.
                 Equals(_waypointsOnRoute[indexLastCheckPoint]._waypointID)))
             {
                 _waypointsOnRoute.Add(new RegionWaypointPoint
                 {
-                    _regionID = _destinationRegionID,
-                    _waypointID = _destinationWaypointID
+                    _regionID = destinationRegionID,
+                    _waypointID = destinationWaypointID
                 });
             }
 
@@ -1658,10 +1660,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 if (currentCheckPoint._regionID.Equals(nextCheckPoint._regionID))
                 {
-                    Graph<Guid, string> _graphNavigraph =
-                        _navigationGraph
-                        .GenerateNavigraph(currentCheckPoint._regionID,
-                                           _avoidConnectionTypes);
+                    Graph<Guid, string> _graphNavigraph = GenerateNavigraph(currentCheckPoint._regionID, _avoidConnectionTypes);
+                        //_navigationGraph
+                        //.GenerateNavigraph(currentCheckPoint._regionID,
+                        //                   _avoidConnectionTypes);
 
                     // generate path between two waypoints in the
                     // same region / navigraph
@@ -1723,19 +1725,21 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                   + locationRegionWaypoint._waypointID);
                 //Get the neighbor of all wapoint in _waypointOnRoute.
                 neighborGuid = new List<Guid>();
-                neighborGuid = _navigationGraph
-                               .GetNeighbor(locationRegionWaypoint._regionID,
-                                            locationRegionWaypoint._waypointID);
+                neighborGuid = GetNeighbor(locationRegionWaypoint._regionID, locationRegionWaypoint._waypointID);
+                    //_navigationGraph
+                    //.GetNeighbor(locationRegionWaypoint._regionID,
+                    //locationRegionWaypoint._waypointID);
 
-                tempRegion = _regiongraphs[locationRegionWaypoint._regionID];
+                tempRegion = 
+                    _regions[locationRegionWaypoint._regionID];
 
-                LocationType locationType =
-                        _navigationGraph
-                        .GetWaypointTypeInRegion
-                        (
-                         locationRegionWaypoint._regionID,
-                         locationRegionWaypoint._waypointID
-                        );
+                LocationType locationType = GetWaypointTypeInRegion(locationRegionWaypoint._regionID, locationRegionWaypoint._waypointID);
+                        //_navigationGraph
+                        //.GetWaypointTypeInRegion
+                        //(
+                        // locationRegionWaypoint._regionID,
+                        // locationRegionWaypoint._waypointID
+                        //);
                 // If the waypoints are portal, we need to get its related portal
                 // waypoints in other regions.
                 if (locationType.ToString() == "portal")
@@ -1755,12 +1759,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     {
                         if (_waypointsOnRoute[nextStep]._waypointID != guid)
                         {
-                            double distanceBetweenCurrentAndNeighbor =
-                                _navigationGraph
-                                .StraightDistanceBetweenWaypoints(
-                                       locationRegionWaypoint._regionID,
-                                       locationRegionWaypoint._waypointID,
-                                       guid);
+                            double distanceBetweenCurrentAndNeighbor = StraightDistanceBetweenWaypoints(locationRegionWaypoint._regionID, locationRegionWaypoint._waypointID, guid);
+                                //_navigationGraph
+                                //.StraightDistanceBetweenWaypoints(
+                                //       locationRegionWaypoint._regionID,
+                                //       locationRegionWaypoint._waypointID,
+                                //       guid);
 
                             double distanceBetweenNextAndNeighbor = 0;
 
@@ -1776,12 +1780,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             if (locationRegionWaypoint._regionID
                                 == _waypointsOnRoute[nextStep]._regionID)
                             {
-                                distanceBetweenNextAndNeighbor =
-                                    _navigationGraph
-                                    .StraightDistanceBetweenWaypoints(
-                                       locationRegionWaypoint._regionID,
-                                       _waypointsOnRoute[nextStep]._waypointID,
-                                       guid);
+                                distanceBetweenNextAndNeighbor = StraightDistanceBetweenWaypoints(locationRegionWaypoint._regionID, _waypointsOnRoute[nextStep]._waypointID, guid);
+                                    //_navigationGraph
+                                    //.StraightDistanceBetweenWaypoints(
+                                    //   locationRegionWaypoint._regionID,
+                                    //   _waypointsOnRoute[nextStep]._waypointID,
+                                    //   guid);
                             }
                             else
                             {
@@ -1885,11 +1889,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 RegionWaypointPoint portalWaypointRegionGuid =
                     new RegionWaypointPoint();
-                portalWaypointRegionGuid =
-                    _navigationGraph.GiveNeighborWaypointInNeighborRegion(
-                                locationRegionWaypoint._regionID,
-                                guid,
-                                regionNeighborGuid);
+                portalWaypointRegionGuid = GiveNeighborWaypointInNeighborRegion(locationRegionWaypoint._regionID, guid, regionNeighborGuid);
+                    //_navigationGraph.GiveNeighborWaypointInNeighborRegion(
+                    //            locationRegionWaypoint._regionID,
+                    //            guid,
+                    //            regionNeighborGuid);
                 if (portalWaypointRegionGuid._waypointID != Guid.Empty)
                 {
                     if (_waypointsOnRoute.Count() > nextStep)
@@ -1949,11 +1953,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                  int nextStep,
                                  RegionWaypointPoint tempRegionWaypoint)
         {
-            LocationType currentType =
-                _navigationGraph
-                .GetWaypointTypeInRegion(locationRegionWaypoint._regionID, guid);
+            LocationType currentType = GetWaypointTypeInRegion(locationRegionWaypoint._regionID, guid);
+                //_navigationGraph
+                //.GetWaypointTypeInRegion(locationRegionWaypoint._regionID, guid);
             Region nearWaypointRegion = new Region();
-            nearWaypointRegion = _regiongraphs[locationRegionWaypoint._regionID];
+            nearWaypointRegion = _regions[locationRegionWaypoint._regionID];
 
             if (currentType.ToString() == "portal")
             {
@@ -1966,32 +1970,32 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             List<Guid> nearNonePortalWaypoint = new List<Guid>();
 
-            nearNonePortalWaypoint = _navigationGraph
-                                    .GetNeighbor(locationRegionWaypoint
-                                                 ._regionID,
-                                                 guid);
+            nearNonePortalWaypoint = GetNeighbor(locationRegionWaypoint._regionID, guid); 
+                //_navigationGraph
+                //.GetNeighbor(locationRegionWaypoint._regionID,
+                //             guid);
 
             foreach (Guid nearWaypointofSameRegion in nearNonePortalWaypoint)
             {
                 if (_waypointsOnRoute.Count() > nextStep)
                 {
-                    double distanceBetweenCurrentAndNearNeighbor =
-                        _navigationGraph.StraightDistanceBetweenWaypoints(
-                            locationRegionWaypoint._regionID,
-                            locationRegionWaypoint._waypointID,
-                            nearWaypointofSameRegion
-                        );
+                    double distanceBetweenCurrentAndNearNeighbor = StraightDistanceBetweenWaypoints(locationRegionWaypoint._regionID, locationRegionWaypoint._waypointID, nearWaypointofSameRegion);
+                        //_navigationGraph.StraightDistanceBetweenWaypoints(
+                        //    locationRegionWaypoint._regionID,
+                        //    locationRegionWaypoint._waypointID,
+                        //    nearWaypointofSameRegion
+                        //);
 
                     double distanceBetweenNextAndNearNeighbor = 0;
                     if (locationRegionWaypoint._regionID ==
                         _waypointsOnRoute[nextStep]._regionID)
                     {
-                        distanceBetweenNextAndNearNeighbor =
-                            _navigationGraph.StraightDistanceBetweenWaypoints(
-                                locationRegionWaypoint._regionID,
-                                _waypointsOnRoute[nextStep]._waypointID,
-                                nearWaypointofSameRegion
-                            );
+                        distanceBetweenNextAndNearNeighbor = StraightDistanceBetweenWaypoints(locationRegionWaypoint._regionID, _waypointsOnRoute[nextStep]._waypointID, nearWaypointofSameRegion);
+                            //_navigationGraph.StraightDistanceBetweenWaypoints(
+                            //    locationRegionWaypoint._regionID,
+                            //    _waypointsOnRoute[nextStep]._waypointID,
+                            //    nearWaypointofSameRegion
+                            //);
                     }
                     else
                     {
