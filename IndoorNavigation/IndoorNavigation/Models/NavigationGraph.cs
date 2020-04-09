@@ -86,11 +86,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public Dictionary<Guid, Waypoint> _waypoints { get; set; }
 
             public Dictionary<Tuple<Guid, Guid>, WaypointEdge> _edges { get; set; }
-
-            //Guid is waypoint's Guid
-            public Dictionary<Guid, List<Guid>> _beacons { get; set; }
-
-            public Dictionary<Guid, int> _beaconRSSIThreshold { get; set; }
+          
         }
 
         public struct RegionEdge
@@ -418,9 +414,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 // initialize structures
                 navigraph._waypoints = new Dictionary<Guid, Waypoint>();
                 navigraph._edges =
-                    new Dictionary<Tuple<Guid, Guid>, WaypointEdge>();
-                navigraph._beacons = new Dictionary<Guid, List<Guid>>();
-                navigraph._beaconRSSIThreshold = new Dictionary<Guid, int>();
+                    new Dictionary<Tuple<Guid, Guid>, WaypointEdge>();               
                 // Read all attributes of each navigraph
                 XmlElement xmlElement = (XmlElement)navigraphNode;
                 navigraph._regionID =
@@ -563,58 +557,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         }
                     }
                 }
-                #endregion
-                // Read all <beacon> block within <navigraph/beacons>
-                Console.WriteLine
-                    ("Read attributes of <navigation_graph><navigraphs>/" +
-                     "<navigraph>/<beacons>/<beacon>");
-                #region read beacons
-                XmlNodeList xmlBeacon =
-                    navigraphNode.SelectNodes("beacons/beacon");
-                foreach (XmlNode beaconNode in xmlBeacon)
-                {
-                    // Read all attributes of each beacon
-                    XmlElement xmlBeaconElement = (XmlElement)beaconNode;
-                    Guid beaconGuid =
-                        Guid.Parse(xmlBeaconElement.GetAttribute("uuid"));
-                    Console.WriteLine("uuid : " + beaconGuid);
-
-                    string waypointIDs =
-                        xmlBeaconElement.GetAttribute("waypoint_ids");
-                    Console.WriteLine("waypoint_ids : " + waypointIDs);
-
-                    // fill data into _beacons structure
-                    string[] arrayWaypointIDs = waypointIDs.Split(';');
-                    for (int i = 0; i < arrayWaypointIDs.Count(); i++)
-                    {
-                        Guid waypointID = Guid.Parse(arrayWaypointIDs[i]);
-                        if (!navigraph._beacons.ContainsKey(waypointID))
-                        {
-                            List<Guid> tempBeaconsList = new List<Guid>();
-                            tempBeaconsList.Add(beaconGuid);
-                            navigraph._beacons.Add
-                             (Guid.Parse(arrayWaypointIDs[i]), tempBeaconsList);
-                            Console.WriteLine
-                                ($"beacon handle wayponit id:" +
-                                 $"{waypointID.ToString()}");
-                        }
-                        else
-                        {
-                            navigraph._beacons[waypointID].Add(beaconGuid);
-                        }
-                    }
-
-                    int beaconRSSI =
-                        Int32.Parse(xmlBeaconElement.GetAttribute("threshold"));
-                    navigraph._beaconRSSIThreshold.Add(beaconGuid, beaconRSSI);
-                }
-
                 _navigraphs.Add(navigraph._regionID, navigraph);
             }
             #endregion
             Console.WriteLine("<< NavigationGraph");
         }
 
+        #region Private Method
         private double GetDistance(double lon1,
                                    double lat1,
                                    double lon2,
@@ -824,7 +773,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             return waypointEdge;
         }
+        #endregion
 
+        #region Get-Methods
         public int GetDistanceOfLongHallway(RegionWaypointPoint currentGuid,
                                             int nextStep,
                                             List<RegionWaypointPoint> allRoute,
@@ -916,15 +867,16 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _regions;
         }
 
-        public List<Guid> GetAllBeaconIDInOneWaypointOfRegion(Guid regionID,
-                                                              Guid waypointID)
-        {
-            List<Guid> beaconIDs = new List<Guid>();
+        //it will be move to ips_resource.
+        //public List<Guid> GetAllBeaconIDInOneWaypointOfRegion(Guid regionID,
+        //                                                      Guid waypointID)
+        //{
+        //    List<Guid> beaconIDs = new List<Guid>();
 
-            beaconIDs = _navigraphs[regionID]._beacons[waypointID];
+        //    beaconIDs = _navigraphs[regionID]._beacons[waypointID];
 
-            return beaconIDs;
-        }
+        //    return beaconIDs;
+        //}
 
         public List<Guid> GetAllWaypointIDInOneRegion(Guid regionID)
         {
@@ -1559,6 +1511,535 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             return graph;
         }
+
+        #endregion
+
+        #region GeneratePath
+
+        private List<RegionWaypointPoint> _waypointsOnRoute = new List<RegionWaypointPoint>();
+
+        private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>> _waypointsOnWrongWay = 
+                new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+
+        private const int _tooCloseDistance = 10;
+
+        private void GenerateRoute(Guid sourceRegionID,
+                                   Guid sourceWaypointID,
+                                   Guid destinationRegionID,
+                                   Guid destinationWaypointID)
+        {
+            // generate path between regions (from sourceRegionID to 
+            // destnationRegionID)
+            uint region1Key = _graphRegionGraph
+                              .Where(node => node.Item.Equals(sourceRegionID))
+                              .Select(node => node.Key).First();
+            uint region2Key = _graphRegionGraph
+                              .Where(node => node.Item.Equals(destinationRegionID))
+                              .Select(node => node.Key).First();
+
+            var pathRegions = _graphRegionGraph
+                             .Dijkstra(region1Key, region2Key)
+                             .GetPath();
+
+            if (0 == pathRegions.Count())
+            {
+                Console.WriteLine("No path.Need to change avoid connection" +
+                                  " type");
+                _event.OnEventCall(new NavigationEventArgs
+                {
+                    _result = NavigationResult.NoRoute
+                });
+                return;
+            }
+
+            // store the generate Dijkstra path across regions
+            List<Guid> regionsOnRoute = new List<Guid>();
+            for (int i = 0; i < pathRegions.Count(); i++)
+            {
+                regionsOnRoute.Add(_graphRegionGraph[pathRegions.ToList()[i]]
+                                   .Item);
+            }
+
+            // generate the path of the region/waypoint checkpoints across 
+            // regions
+            _waypointsOnRoute = new List<RegionWaypointPoint>();
+            _waypointsOnRoute.Add(new RegionWaypointPoint
+            {
+                _regionID = sourceRegionID,
+                _waypointID = sourceWaypointID
+            });
+
+            for (int i = 0; i < _waypointsOnRoute.Count(); i++)
+            {
+                RegionWaypointPoint checkPoint = _waypointsOnRoute[i];
+                Console.WriteLine("check index = {0}, count = {1}, region {2}" +
+                                  " waypoint {3}",
+                                  i,
+                                  _waypointsOnRoute.Count(),
+                                  checkPoint._regionID,
+                                  checkPoint._waypointID);
+                if (regionsOnRoute.IndexOf(checkPoint._regionID) + 1 <
+                    regionsOnRoute.Count())
+                {
+                    LocationType waypointType =
+                        _navigationGraph
+                        .GetWaypointTypeInRegion(checkPoint._regionID,
+                                                 checkPoint._waypointID);
+
+                    Guid nextRegionID =
+                        regionsOnRoute[regionsOnRoute.
+                                       IndexOf(checkPoint._regionID) + 1];
+
+                    PortalWaypoints portalWaypoints =
+                        _navigationGraph
+                        .GetPortalWaypoints(checkPoint._regionID,
+                                            checkPoint._waypointID,
+                                            nextRegionID,
+                                            _avoidConnectionTypes);
+
+                    if (LocationType.portal != waypointType)
+                    {
+                        _waypointsOnRoute.Add(new RegionWaypointPoint
+                        {
+                            _regionID = checkPoint._regionID,
+                            _waypointID = portalWaypoints._portalWaypoint1
+                        });
+                    }
+                    else if (LocationType.portal == waypointType)
+                    {
+                        if (!checkPoint._waypointID.Equals(portalWaypoints
+                                                           ._portalWaypoint1))
+                        {
+                            _waypointsOnRoute.Add(new RegionWaypointPoint
+                            {
+                                _regionID = checkPoint._regionID,
+                                _waypointID = portalWaypoints._portalWaypoint1
+                            });
+                        }
+                        else
+                        {
+                            _waypointsOnRoute.Add(new RegionWaypointPoint
+                            {
+                                _regionID = nextRegionID,
+                                _waypointID = portalWaypoints._portalWaypoint2
+                            });
+                        }
+                    }
+                }
+            }
+            int indexLastCheckPoint = _waypointsOnRoute.Count() - 1;
+            if (!(_destinationRegionID.
+                Equals(_waypointsOnRoute[indexLastCheckPoint]._regionID) &&
+                _destinationWaypointID.
+                Equals(_waypointsOnRoute[indexLastCheckPoint]._waypointID)))
+            {
+                _waypointsOnRoute.Add(new RegionWaypointPoint
+                {
+                    _regionID = _destinationRegionID,
+                    _waypointID = _destinationWaypointID
+                });
+            }
+
+            foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("region-graph region/waypoint = {0}/{1}",
+                                  checkPoint._regionID,
+                                  checkPoint._waypointID);
+            }
+
+
+
+            // fill in all the path between waypoints in the
+            // same region / navigraph
+            for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
+            {
+                RegionWaypointPoint currentCheckPoint = _waypointsOnRoute[i];
+                RegionWaypointPoint nextCheckPoint = _waypointsOnRoute[i + 1];
+
+                if (currentCheckPoint._regionID.Equals(nextCheckPoint._regionID))
+                {
+                    Graph<Guid, string> _graphNavigraph =
+                        _navigationGraph
+                        .GenerateNavigraph(currentCheckPoint._regionID,
+                                           _avoidConnectionTypes);
+
+                    // generate path between two waypoints in the
+                    // same region / navigraph
+                    uint waypoint1Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                        .Equals(currentCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
+                    uint waypoint2Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                        .Equals(nextCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
+
+                    var pathWaypoints =
+                        _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key)
+                                       .GetPath();
+
+                    for (int j = pathWaypoints.Count() - 1; j > 0; j--)
+                    {
+                        if (j != 0 && j != pathWaypoints.Count() - 1)
+                        {
+                            _waypointsOnRoute.Insert(i + 1,
+                                                     new RegionWaypointPoint
+                                                     {
+                                                         _regionID = currentCheckPoint._regionID,
+                                                         _waypointID =
+                                    _graphNavigraph[pathWaypoints.ToList()[j]]
+                                    .Item
+                                                     });
+                        }
+                    }
+                }
+            }
+
+            // display the resulted full path of region/waypoint between 
+            // source and destination
+            foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("full-path region/waypoint = {0}/{1}",
+                                  checkPoint._regionID,
+                                  checkPoint._waypointID);
+            }
+
+
+
+            int nextStep = 1;
+            _waypointsOnWrongWay =
+                new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+            Region tempRegion = new Region();
+            List<Guid> neighborGuid = new List<Guid>();
+
+            //For each waypoint in _waypointsOnRoute, decide their wrong 
+            //waypoint.
+            foreach (RegionWaypointPoint locationRegionWaypoint
+                     in _waypointsOnRoute)
+            {
+                RegionWaypointPoint tempRegionWaypoint =
+                    new RegionWaypointPoint();
+                Console.WriteLine("Important Current Waypoint : "
+                                  + locationRegionWaypoint._waypointID);
+                //Get the neighbor of all wapoint in _waypointOnRoute.
+                neighborGuid = new List<Guid>();
+                neighborGuid = _navigationGraph
+                               .GetNeighbor(locationRegionWaypoint._regionID,
+                                            locationRegionWaypoint._waypointID);
+
+                tempRegion = _regiongraphs[locationRegionWaypoint._regionID];
+
+                LocationType locationType =
+                        _navigationGraph
+                        .GetWaypointTypeInRegion
+                        (
+                         locationRegionWaypoint._regionID,
+                         locationRegionWaypoint._waypointID
+                        );
+                // If the waypoints are portal, we need to get its related portal
+                // waypoints in other regions.
+                if (locationType.ToString() == "portal")
+                {
+                    AddPortalWrongWaypoint(tempRegion,
+                                           locationRegionWaypoint,
+                                           nextStep,
+                                           tempRegionWaypoint,
+                                           locationRegionWaypoint._waypointID);
+                }
+                //Get the waypoint neighbor's Guids and add them in
+                //_waypointsOnWrongWay except next Waypoint Guid.
+                //We know just consider One-Step Wrong Way.
+                foreach (Guid guid in neighborGuid)
+                {
+                    if (_waypointsOnRoute.Count() > nextStep)
+                    {
+                        if (_waypointsOnRoute[nextStep]._waypointID != guid)
+                        {
+                            double distanceBetweenCurrentAndNeighbor =
+                                _navigationGraph
+                                .StraightDistanceBetweenWaypoints(
+                                       locationRegionWaypoint._regionID,
+                                       locationRegionWaypoint._waypointID,
+                                       guid);
+
+                            double distanceBetweenNextAndNeighbor = 0;
+
+                            //If current region == next region, we can get get 
+                            //the straight distance of the neighbors of current 
+                            //waypoint and next waypoint.
+
+                            //If current region != next region, we just consider
+                            //the distance between cuurent and its neighbers, 
+                            //therefore, we give distanceBetweenNextAndNeighbor
+
+                            //the same value of distanceBetweenCurrentAndNeighbor.
+                            if (locationRegionWaypoint._regionID
+                                == _waypointsOnRoute[nextStep]._regionID)
+                            {
+                                distanceBetweenNextAndNeighbor =
+                                    _navigationGraph
+                                    .StraightDistanceBetweenWaypoints(
+                                       locationRegionWaypoint._regionID,
+                                       _waypointsOnRoute[nextStep]._waypointID,
+                                       guid);
+                            }
+                            else
+                            {
+                                distanceBetweenNextAndNeighbor =
+                                    distanceBetweenCurrentAndNeighbor;
+                            }
+                            //If the distance of current and its neighbors and 
+                            //the distance between next and current's neighbors
+                            //are far enough, we add them into 
+                            //_waypointOnWrongWay, else if the distance between 
+                            //current and its neighbors are too close, we need 
+                            //to find one more step.
+                            if (distanceBetweenCurrentAndNeighbor >=
+                                _tooCloseDistance &&
+                                distanceBetweenNextAndNeighbor >=
+                                _tooCloseDistance)
+                            {
+                                if (nextStep >= 2)
+                                {
+                                    if (_waypointsOnRoute[nextStep - 2]
+                                        ._waypointID != guid)
+                                    {
+                                        AddWrongWaypoint(guid,
+                                                        locationRegionWaypoint
+                                                        ._regionID,
+                                                        locationRegionWaypoint,
+                                                        tempRegionWaypoint);
+                                    }
+                                }
+                                else
+                                {
+                                    AddWrongWaypoint(guid,
+                                                    locationRegionWaypoint
+                                                    ._regionID,
+                                                    locationRegionWaypoint,
+                                                    tempRegionWaypoint);
+                                }
+
+                            }
+                            else if (distanceBetweenCurrentAndNeighbor <
+                                     _tooCloseDistance)
+                            {
+                                OneMoreLayer(guid,
+                                            locationRegionWaypoint,
+                                            nextStep,
+                                            tempRegionWaypoint);
+                            }
+
+                            if (nextStep >= 2)
+                            {
+                                if (_waypointsOnRoute[nextStep - 2]
+                                    ._waypointID == guid)
+                                {
+                                    OneMoreLayer(guid,
+                                                 locationRegionWaypoint,
+                                                 nextStep,
+                                                 tempRegionWaypoint);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!_waypointsOnWrongWay.Keys
+                                .Contains(locationRegionWaypoint))
+                            {
+                                _waypointsOnWrongWay
+                                .Add(locationRegionWaypoint,
+                                     new List<RegionWaypointPoint> { });
+                            }
+                        }
+                    }
+                }
+                nextStep++;
+            }
+
+            //Print All Possible Wrong Way
+            foreach (KeyValuePair<RegionWaypointPoint, List<RegionWaypointPoint>>
+                     item in _waypointsOnWrongWay)
+            {
+                Console.WriteLine("Region ID : " + item.Key._regionID);
+                Console.WriteLine("Waypoint ID : " + item.Key._waypointID);
+                Console.WriteLine("All possible Wrong : ");
+                foreach (RegionWaypointPoint items in item.Value)
+                {
+                    Console.WriteLine("Region Guid : " + items._regionID);
+                    Console.WriteLine("Waypoint Guid : " + items._waypointID);
+                }
+                Console.WriteLine("\n");
+            }
+
+
+        }
+
+        public void AddPortalWrongWaypoint(Region tempRegion,
+                                    RegionWaypointPoint locationRegionWaypoint,
+                                    int nextStep,
+                                    RegionWaypointPoint tempRegionWaypoint,
+                                    Guid guid)
+        {
+            foreach (Guid regionNeighborGuid in tempRegion._neighbors)
+            {
+                RegionWaypointPoint portalWaypointRegionGuid =
+                    new RegionWaypointPoint();
+                portalWaypointRegionGuid =
+                    _navigationGraph.GiveNeighborWaypointInNeighborRegion(
+                                locationRegionWaypoint._regionID,
+                                guid,
+                                regionNeighborGuid);
+                if (portalWaypointRegionGuid._waypointID != Guid.Empty)
+                {
+                    if (_waypointsOnRoute.Count() > nextStep)
+                    {
+                        if (_waypointsOnRoute[nextStep]._waypointID !=
+                            portalWaypointRegionGuid._waypointID)
+                        {
+                            AddWrongWaypoint(portalWaypointRegionGuid
+                                             ._waypointID,
+                                             portalWaypointRegionGuid._regionID,
+                                             locationRegionWaypoint,
+                                             tempRegionWaypoint);
+                        }
+                        else
+                        {
+                            if (!_waypointsOnWrongWay.Keys
+                                 .Contains(locationRegionWaypoint))
+                            {
+                                _waypointsOnWrongWay
+                                .Add(locationRegionWaypoint,
+                                     new List<RegionWaypointPoint> { });
+                            }
+                        }
+                    }
+                    //else
+                }
+            }
+        }
+
+        public void AddWrongWaypoint(Guid waypointID,
+                                     Guid regionID,
+                                     RegionWaypointPoint locationRegionWaypoint,
+                                     RegionWaypointPoint tempRegionWaypoint)
+        {
+            if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
+            {
+                tempRegionWaypoint = new RegionWaypointPoint();
+                tempRegionWaypoint._waypointID = waypointID;
+                tempRegionWaypoint._regionID = regionID;
+                _waypointsOnWrongWay
+                .Add(locationRegionWaypoint,
+                     new List<RegionWaypointPoint> { tempRegionWaypoint });
+            }
+            else
+            {
+                tempRegionWaypoint = new RegionWaypointPoint();
+                tempRegionWaypoint._regionID = regionID;
+                tempRegionWaypoint._waypointID = waypointID;
+                _waypointsOnWrongWay[locationRegionWaypoint]
+                .Add(tempRegionWaypoint);
+
+            }
+        }
+
+        public void OneMoreLayer(Guid guid,
+                                 RegionWaypointPoint locationRegionWaypoint,
+                                 int nextStep,
+                                 RegionWaypointPoint tempRegionWaypoint)
+        {
+            LocationType currentType =
+                _navigationGraph
+                .GetWaypointTypeInRegion(locationRegionWaypoint._regionID, guid);
+            Region nearWaypointRegion = new Region();
+            nearWaypointRegion = _regiongraphs[locationRegionWaypoint._regionID];
+
+            if (currentType.ToString() == "portal")
+            {
+                AddPortalWrongWaypoint(nearWaypointRegion,
+                                       locationRegionWaypoint,
+                                       nextStep,
+                                       tempRegionWaypoint,
+                                       guid);
+            }
+
+            List<Guid> nearNonePortalWaypoint = new List<Guid>();
+
+            nearNonePortalWaypoint = _navigationGraph
+                                    .GetNeighbor(locationRegionWaypoint
+                                                 ._regionID,
+                                                 guid);
+
+            foreach (Guid nearWaypointofSameRegion in nearNonePortalWaypoint)
+            {
+                if (_waypointsOnRoute.Count() > nextStep)
+                {
+                    double distanceBetweenCurrentAndNearNeighbor =
+                        _navigationGraph.StraightDistanceBetweenWaypoints(
+                            locationRegionWaypoint._regionID,
+                            locationRegionWaypoint._waypointID,
+                            nearWaypointofSameRegion
+                        );
+
+                    double distanceBetweenNextAndNearNeighbor = 0;
+                    if (locationRegionWaypoint._regionID ==
+                        _waypointsOnRoute[nextStep]._regionID)
+                    {
+                        distanceBetweenNextAndNearNeighbor =
+                            _navigationGraph.StraightDistanceBetweenWaypoints(
+                                locationRegionWaypoint._regionID,
+                                _waypointsOnRoute[nextStep]._waypointID,
+                                nearWaypointofSameRegion
+                            );
+                    }
+                    else
+                    {
+                        distanceBetweenNextAndNearNeighbor =
+                            distanceBetweenCurrentAndNearNeighbor;
+                    }
+
+                    if (_waypointsOnRoute[nextStep]._waypointID !=
+                        nearWaypointofSameRegion &&
+                        nearWaypointofSameRegion != guid &&
+                        distanceBetweenCurrentAndNearNeighbor >=
+                        _tooCloseDistance &&
+                        distanceBetweenNextAndNearNeighbor >= _tooCloseDistance)
+                    {
+                        if (nextStep >= 2)
+                        {
+                            if (_waypointsOnRoute[nextStep - 2]._waypointID
+                                != nearWaypointofSameRegion)
+                            {
+                                AddWrongWaypoint(nearWaypointofSameRegion,
+                                                 locationRegionWaypoint
+                                                 ._regionID,
+                                                 locationRegionWaypoint,
+                                                 tempRegionWaypoint);
+                            }
+                        }
+                        else
+                        {
+                            AddWrongWaypoint(nearWaypointofSameRegion,
+                                             locationRegionWaypoint._regionID,
+                                             locationRegionWaypoint,
+                                             tempRegionWaypoint);
+                        }
+                    }
+                    else
+                    {
+                        if (!_waypointsOnWrongWay.Keys
+                             .Contains(locationRegionWaypoint))
+                        {
+                            _waypointsOnWrongWay
+                            .Add(locationRegionWaypoint,
+                                 new List<RegionWaypointPoint> { });
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
     }
 
     #region Structs and Enums

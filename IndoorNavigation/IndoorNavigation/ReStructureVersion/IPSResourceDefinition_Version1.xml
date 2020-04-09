@@ -13,3 +13,5 @@
     </ips_resource>
   </ips_resources>
 </navigation_graph>
+
+<!--It need to consider how to store Gps Info.-->
