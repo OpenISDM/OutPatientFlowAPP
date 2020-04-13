@@ -11,7 +11,7 @@ namespace IndoorNavigation.ReStructureVersion
     {
         #region Properties
         private string _naviGraphName;
-
+        private Dictionary<Guid, BeaconsGraph> _beaconGraph;
        
         #endregion
 
@@ -47,13 +47,21 @@ namespace IndoorNavigation.ReStructureVersion
         }
         #endregion
 
-        #region Structs and Classes
-        public struct IPSInfo
-        {
-            public Dictionary<Guid, int> _beaconRSSIThreshold { get; set; }
-            public Dictionary<Guid, List<Guid>> _beacons { get; set; }
-        }
-        #endregion
+        //#region Structs and Classes
+        //public struct IPSInfo
+        //{
+        //    public Dictionary<Guid, int> _beaconRSSIThreshold { get; set; }
+        //    public Dictionary<Guid, List<Guid>> _beacons { get; set; }
+        //}
+        //#endregion
+    }
+
+    #region Classes and Enums
+    public class BeaconsGraph
+    {
+        //the Guid is waypoint's ID.
+        public Dictionary<Guid,List<Guid>> _beacons { get; set; } 
+        public Dictionary<Guid,int> _beaconRSSIThreshold { get; set; }
     }
 
     public enum IPSType
@@ -62,4 +70,5 @@ namespace IndoorNavigation.ReStructureVersion
         iBeacon,
         GPS
     }
+    #endregion
 }

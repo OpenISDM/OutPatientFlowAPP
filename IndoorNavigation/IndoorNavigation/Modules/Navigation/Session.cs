@@ -51,19 +51,15 @@ namespace IndoorNavigation.Modules
     {
         private int _nextWaypointStep;
 
-        private List<RegionWaypointPoint> _waypointsOnRoute = 
-			new List<RegionWaypointPoint>();
-
-        private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
-            _waypointsOnWrongWay = 
-				new Dictionary<RegionWaypointPoint,List<RegionWaypointPoint>>();
-
-        private Graph<Guid, string> _graphRegionGraph = 
-			new Graph<Guid, string>();
+        private List<RegionWaypointPoint> _waypointsOnRoute;
+        private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>> _waypointsOnWrongWay;
 
         private NavigationGraph _navigationGraph;
+
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
+        private Guid _currentRegionID;
+        private Guid _currentWaypointID;
 
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
@@ -72,20 +68,16 @@ namespace IndoorNavigation.Modules
         private int _accumulateStraightDistance = 0;
 
         private bool _isKeepDetection;
-        private Guid _currentRegionID = new Guid();
-        private Guid _currentWaypointID = new Guid();
-
+        
         private ConnectionType[] _avoidConnectionTypes;
 
         private ManualResetEventSlim _nextWaypointEvent = 
 			new ManualResetEventSlim(false);
 
         public NavigationEvent _event { get; private set; }
-        private Dictionary<Guid, Region> _regiongraphs = 
-			new Dictionary<Guid, Region>();
 			
         private IPSModules _iPSModules;
-        private const int _tooCLoseDistance = 10;
+        private RouteInfos _routeInfo;
 
         public Session(NavigationGraph navigationGraph,
                        Guid destinationRegionID,
@@ -100,13 +92,7 @@ namespace IndoorNavigation.Modules
             _destinationWaypointID = destinationWaypointID;
             _accumulateStraightDistance = 0;
             _avoidConnectionTypes = avoidConnectionTypes;
-            // construct region graph (across regions) which we can use to 
-			// generate route
-			
-            _graphRegionGraph = 
-				navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
-				
-            _regiongraphs = _navigationGraph.GetRegions();
+            
             _nextWaypointStep = -1;
             _isKeepDetection = true;
             _iPSModules = new IPSModules("a");
@@ -160,10 +146,10 @@ namespace IndoorNavigation.Modules
 					                  + _currentWaypointID);
                     // Detection of starting waypoing:
                     // Detected the waypoint most closed to user.
-                    //GenerateRoute(_currentRegionID,
-                    //              _currentWaypointID,
-                    //              _destinationRegionID,
-                    //              _destinationWaypointID);
+
+                    _routeInfo = _navigationGraph.GenerateRoute(_currentRegionID, _currentWaypointID, _destinationRegionID, _destinationWaypointID);
+                    _waypointsOnRoute = _routeInfo._waypointsOnRoute;
+                    _waypointsOnWrongWay = _routeInfo._waypointsOnWrongRoute;
 
                     _nextWaypointStep++;
                     Guid _nextRegionID = 
@@ -194,12 +180,9 @@ namespace IndoorNavigation.Modules
                     Console.WriteLine("In Program Wrong, going to Re-calculate"+
 									  "the route");
                     _nextWaypointStep = 0;
-
-                    //GenerateRoute(
-                    //                _currentRegionID,
-                    //                _currentWaypointID,
-                    //                _destinationRegionID,
-                    //                _destinationWaypointID);
+                    _routeInfo = _navigationGraph.GenerateRoute(_currentRegionID, _currentWaypointID, _destinationRegionID, _destinationWaypointID);
+                    _waypointsOnRoute = _routeInfo._waypointsOnRoute;
+                    _waypointsOnWrongWay = _routeInfo._waypointsOnWrongRoute;                    
 
                     Console.WriteLine("Finish Construct New Route");
 
@@ -284,15 +267,7 @@ namespace IndoorNavigation.Modules
 
         private void NavigateToNextWaypoint(Guid regionID, int nextStep)
         {
-            List<WaypointBeaconsMapping> monitorWaypointList =
-                new List<WaypointBeaconsMapping>();
-				
-            List<WaypointBeaconsMapping> monitorWaypointListInWaypointClient =
-                new List<WaypointBeaconsMapping>();
-				
-            List<WaypointBeaconsMapping> monitorWaypointListInIBeaconClient =
-                new List<WaypointBeaconsMapping>();
-				
+        
             if (nextStep == -1)
             {
 
@@ -740,7 +715,7 @@ namespace IndoorNavigation.Modules
             _isKeepDetection = false;
             _nextWaypointStep = -1;
             _iPSModules.Close();
-            //_IPSClient.Stop();
+
             _nextWaypointEvent.Dispose();
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
