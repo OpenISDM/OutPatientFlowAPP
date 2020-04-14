@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IndoorNavigation.Modules.Session" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="IndoorNavigation.Modules.Session.NavigationResult" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="IndoorNavigation.Modules.Session.NavigationInstruction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="IndoorNavigation.Modules.Session.NavigationEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modules\Navigation\Session.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AKEAAIAAIAgAEGAAAAKwAIAAAAAAABAAAIACgAQAAgg=</HashCode>
+      <FileName>Modules\Navigation\Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph">
+    <Position X="4" Y="0.5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.Navigraph" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Struct Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.RegionEdge" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="IndoorNavigation.Models.NavigaionLayer.NavigationGraph.WaypointEdge" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\NavigationGraph.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QDAECgJAEAgAOAgCMkxACAEAgADAABAAwgAIGARQACQ=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndoorNavigation.ReStructureVersion.IPSResource">
+    <Position X="4" Y="12.25" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="IndoorNavigation.ReStructureVersion.IPSResource.BeaconsGraph" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ReStructureVersion\IPSResource.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Enum Name="IndoorNavigation.ReStructureVersion.IPSResource.IPSType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ReStructureVersion\IPSResource.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAgAiAAAAAAAAAAAJAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReStructureVersion\IPSResource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="IndoorNavigation.Models.NavigaionLayer.RouteInfos" Collapsed="true">
+    <Position X="9.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="IndoorNavigation.Models.NavigaionLayer.InstructionInformation" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAIAAAAAAAAAAAABAAAAAAAAEAAAIAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.LocationType" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAACAAAAQAAAAAAgAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.CardinalDirection" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCCABABAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAQ=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.TurnDirection" Collapsed="true">
+    <Position X="7.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAOAAAAAAAIAAAAAAAAAQAAAAAAICACAAAAAEAI=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.DirectionalConnection" Collapsed="true">
+    <Position X="9.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.ConnectionType" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAACAAAAAAAAAAAAAEAAAAAAAEAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IndoorNavigation.Models.NavigaionLayer.CategoryType" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAACAAAAgIAAAAQgAGIAAAAAAACAAAIAAACAAAAAA=</HashCode>
+      <FileName>Models\NavigationGraph.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft JhengHei UI" Size="9" />
+</ClassDiagram>

@@ -699,7 +699,7 @@ namespace IndoorNavigation.Modules
         }
 
         
-        public void HandleWrongWay()
+        private void HandleWrongWay()
         {
             _accumulateStraightDistance = 0;
             Console.WriteLine("---- [case: wrong waypoint] .... ");
