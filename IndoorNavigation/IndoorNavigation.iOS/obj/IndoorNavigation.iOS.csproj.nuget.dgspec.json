@@ -172,7 +172,7 @@
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[4.4.0.991537, )"
+              "version": "[4.5.0.396, )"
             },
             "Xamarin.Forms.InputKit": {
               "target": "Package",
@@ -180,7 +180,7 @@
             },
             "Xamarin.Forms.Visual.Material": {
               "target": "Package",
-              "version": "[3.6.0.344457, )"
+              "version": "[4.5.0.396, )"
             },
             "ZXing.Net.Mobile": {
               "target": "Package",
@@ -192,10 +192,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -403,9 +403,9 @@
           "Rg.Plugins.Popup": "1.2.0.223",
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
-          "Xamarin.Forms": "4.4.0.991537",
+          "Xamarin.Forms": "4.5.0.396",
           "Xamarin.Forms.InputKit": "3.0.11",
-          "Xamarin.Forms.Visual.Material": "3.6.0.344457",
+          "Xamarin.Forms.Visual.Material": "4.5.0.396",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
         },
@@ -805,9 +805,9 @@
           "Rg.Plugins.Popup": "1.2.0.223",
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
-          "Xamarin.Forms": "4.4.0.991537",
+          "Xamarin.Forms": "4.5.0.396",
           "Xamarin.Forms.InputKit": "3.0.11",
-          "Xamarin.Forms.Visual.Material": "3.6.0.344457",
+          "Xamarin.Forms.Visual.Material": "4.5.0.396",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
         },
@@ -1207,9 +1207,9 @@
           "Rg.Plugins.Popup": "1.2.0.223",
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
-          "Xamarin.Forms": "4.4.0.991537",
+          "Xamarin.Forms": "4.5.0.396",
           "Xamarin.Forms.InputKit": "3.0.11",
-          "Xamarin.Forms.Visual.Material": "3.6.0.344457",
+          "Xamarin.Forms.Visual.Material": "4.5.0.396",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
         },
@@ -1609,9 +1609,9 @@
           "Rg.Plugins.Popup": "1.2.0.223",
           "Xamarin.CustomControls.ProgressBarView": "1.0.2",
           "Xamarin.Essentials": "1.1.0",
-          "Xamarin.Forms": "4.4.0.991537",
+          "Xamarin.Forms": "4.5.0.396",
           "Xamarin.Forms.InputKit": "3.0.11",
-          "Xamarin.Forms.Visual.Material": "3.6.0.344457",
+          "Xamarin.Forms.Visual.Material": "4.5.0.396",
           "ZXing.Net.Mobile": "2.4.1",
           "ZXing.Net.Mobile.Forms": "2.4.1"
         },
@@ -2503,5 +2503,33 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "偵測到套件降級: Xamarin.Forms.Visual.Material 從 4.5.0.396 降到 4.4.0.991640。請直接從專案參考套件，以選取不同的版本。 \r\n IndoorNavigation.iOS -> IndoorNavigation -> Xamarin.Forms.Visual.Material (>= 4.5.0.396) \r\n IndoorNavigation.iOS -> Xamarin.Forms.Visual.Material (>= 4.4.0.991640)",
+      "libraryId": "Xamarin.Forms.Visual.Material",
+      "targetGraphs": [
+        "Xamarin.iOS,Version=v1.0",
+        "Xamarin.iOS,Version=v1.0/win",
+        "Xamarin.iOS,Version=v1.0/win-x64",
+        "Xamarin.iOS,Version=v1.0/win-x86"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "偵測到套件降級: Xamarin.Forms 從 4.5.0.396 降到 4.4.0.991537。請直接從專案參考套件，以選取不同的版本。 \r\n IndoorNavigation.iOS -> IndoorNavigation -> Xamarin.Forms (>= 4.5.0.396) \r\n IndoorNavigation.iOS -> Xamarin.Forms (>= 4.4.0.991537)",
+      "libraryId": "Xamarin.Forms",
+      "targetGraphs": [
+        "Xamarin.iOS,Version=v1.0",
+        "Xamarin.iOS,Version=v1.0/win",
+        "Xamarin.iOS,Version=v1.0/win-x64",
+        "Xamarin.iOS,Version=v1.0/win-x86"
+      ]
+    }
+  ]
 }
