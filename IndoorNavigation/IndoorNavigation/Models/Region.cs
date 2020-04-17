@@ -59,7 +59,7 @@ namespace IndoorNavigation.Models
         public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
     }
 
-    public class RegionWaypointPoint
+    public struct RegionWaypointPoint
     {
         public Guid _regionID { get; set; }
         public Guid _waypointID { get; set; }
