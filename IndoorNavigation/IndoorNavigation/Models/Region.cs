@@ -60,15 +60,13 @@ namespace IndoorNavigation.Models
 		{ get; set; }
     }
 
-    public class RegionWaypointPoint
+    public struct RegionWaypointPoint
     {
         public RegionWaypointPoint(Guid regionID,Guid waypointID)
         {
             this._regionID = regionID;
             this._waypointID = waypointID;
         }
-
-        public RegionWaypointPoint() { }
 
         public Guid _regionID { get; set; }
         public Guid _waypointID { get; set; }
