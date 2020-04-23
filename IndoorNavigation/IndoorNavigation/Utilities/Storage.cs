@@ -51,6 +51,8 @@ using System.Reflection;
 using System.Xml;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Net;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -344,6 +346,52 @@ namespace IndoorNavigation.Modules.Utilities
             xmlDocument.LoadXml(xmlContent);
 
             return xmlDocument;
+        }
+    }
+
+    public class DownloadNavigraph
+    {
+        private const string url = "https://localhost/";
+
+        public DownloadNavigraph() { }
+
+        async public void DownloadFDFile(string graphName, string language)
+        {
+
+        }
+
+        async public void DownloadInfoFile(string graphName, string language)
+        {
+
+        }
+
+        async public void DownloadMainFile(string graphName)
+        {
+
+        }
+
+        async public void DownloadBeaconFile(string graphName)
+        {
+
+        }
+
+        async private Task<string> Download(string url)
+        {
+            string ContextString = "";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //request.ContentType = "text/xml";
+            request.Timeout = 10000;
+            request.Method = "GET";
+
+            using(HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    ContextString = reader.ReadToEnd();
+                }              
+            }
+            return ContextString;
         }
     }
 }
