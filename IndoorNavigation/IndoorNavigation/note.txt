@@ -1,0 +1,4 @@
+﻿note :
+	Changes that need to test on iOS ver:
+		Xamarin.Essential version 
+			1.10 => 1.5.3.1
