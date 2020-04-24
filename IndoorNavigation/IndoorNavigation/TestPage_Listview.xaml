@@ -10,19 +10,16 @@
              xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.TestPage_Listview">
-    <NavigationPage.TitleView>
+    <!--<NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" BackgroundColor="#3f51b5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Button Text="back" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
             <Label Text="使用者帳戶" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
             <Button Text="ok" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
         </StackLayout>
-    </NavigationPage.TitleView>
+    </NavigationPage.TitleView>-->
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="aaaa" FontSize="50" Clicked="Button_Clicked"/>
-            <Label Text="Hello world!" FontSize="32" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
-            <controls:ProgressBar BackgroundColor="Aqua" ProgressColor="Red" Progress="20"/>
-            <controls:ProgressBar x:Name="TestProgressBar" backgroundColor="Blue" ProgressColor="Brown" />
+            <Button Text="click" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
     <!--<ContentPage.Content>

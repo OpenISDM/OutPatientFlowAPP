@@ -50,10 +50,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using IndoorNavigation.Models.NavigaionLayer;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Net;
-using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -349,99 +345,5 @@ namespace IndoorNavigation.Modules.Utilities
             return xmlDocument;
         }
     }
-   
-    public class DownloadNavigraph
-    {
-        private const string _localhost = "https://localhost:port/";
-        public string _context;     
-        public DownloadNavigraph() { }
-
-        async public Task CheckMapVersion(string graphName)
-        {
-            //url format : {localhost}:{port}/version
-
-            string url = _localhost + "version";
-
-            _context = await Download(url);
-
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadFDFile(string graphName, string language)
-        {
-            //url format : {localhost}:{port}/firstdirections/{language}
-
-            string url = _localhost + "firstdirections/" + language;
-            _context = await Download(url);
-            
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadInfoFile(string graphName, string language)
-        {
-            //url format : {localhost}:{port}/infos/{language}
-
-            string url = _localhost + "infos/" + language;
-            _context = await Download(url);
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadMainFile(string graphName)
-        {
-            //url format : {localhost}:{port}/main
-            string url = _localhost + "main";
-            _context = await Download(url);
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadBeaconFile(string graphName)
-        {
-            //url format : {localhost}:{port}/beacondata
-            string url = _localhost + "beacondata";
-            _context = await Download(url);
-            await Task.CompletedTask;
-        }
-
-        async private Task<string> Download(string url)
-        {
-            string ContextString = "";
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            //request.ContentType = "text/xml";
-            request.Timeout = 10000;
-            request.Method = "GET";            
-
-            try
-            {
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                    {
-                        ContextString = reader.ReadToEnd();
-                    }
-                }
-            }
-            catch(Exception exc)
-            {
-                Console.WriteLine("Download Error : " + exc.Message);
-
-                Page CurrentPage = Application.Current.MainPage;
-
-                var WantRetry = await CurrentPage.DisplayAlert("Error", exc.Message, "Ok", "Cancel");
-
-                if (WantRetry)
-                    ContextString = await Download(url);
-                else
-                {
-                    //do something if user cancel.
-                }
-            }
-            finally
-            {              
-                request.Abort();
-            }
-            
-            return ContextString;
-        }
-    }
+      
 }
