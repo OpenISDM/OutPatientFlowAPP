@@ -469,7 +469,7 @@
     <value>版本</value>
   </data>
   <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1072</value>
+    <value>2.0.1073</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>按下確定來更新圖資</value>
@@ -608,5 +608,11 @@
   </data>
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>搭電梯前往{0}樓</value>
+  </data>
+  <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
+    <value>伺服器沒有回應，請問要重試嗎?</value>
+  </data>
+  <data name="RETRY_STRING" xml:space="preserve">
+    <value>重試</value>
   </data>
 </root>

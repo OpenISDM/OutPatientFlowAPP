@@ -8,11 +8,11 @@ using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
 namespace IndoorNavigation
 {
-    class DestinationXmlinfo
+    class ClinicPositionInfo
     {
         private Dictionary<String, RoomInfo> RoomInfos;
 
-        public DestinationXmlinfo()
+        public ClinicPositionInfo()
         {
             
             Guid Dguid,Rguid;

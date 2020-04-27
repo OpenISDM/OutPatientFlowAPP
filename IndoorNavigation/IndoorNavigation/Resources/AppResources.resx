@@ -469,7 +469,7 @@
     <value>Version</value>
   </data>
   <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1072</value>
+    <value>2.0.1073</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>Press OK to update Map</value>
@@ -617,5 +617,11 @@
   </data>
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>Take Elevator to {0} floor.</value>
+  </data>
+  <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
+    <value>Server didn't response, do you want to retry again?</value>
+  </data>
+  <data name="RETRY_STRING" xml:space="preserve">
+    <value>RETRY</value>
   </data>
 </root>
