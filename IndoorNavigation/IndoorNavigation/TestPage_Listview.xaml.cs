@@ -7,6 +7,8 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.Resources;
 using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 
 using Newtonsoft.Json;
 using IndoorNavigation.Modules.Utilities;
@@ -16,23 +18,25 @@ namespace IndoorNavigation
     public partial class TestPage_Listview : ContentPage
     {
         ResourceManager manager;
-        
+
+        CloudDownload _cloudDownload;
+        Thread ResourceThread;
+
         public TestPage_Listview()
         {
-            InitializeComponent();           
-           
+            InitializeComponent();                      
         }
 
-        async private void Button_Clicked(object sender, System.EventArgs e)
+        //private void Thread_Running()
+        //{
+        //    _cloudDownload = new CloudDownload();
+        //}
+
+        private void Button_Clicked(object sender, System.EventArgs e)
         {
-            string TestJsonData = "{'Maps':[{'Name':'Lab' , 'Version':'1.000'}], 'Languages':[{'Name':'en-US'}] }";
+            _cloudDownload = new CloudDownload();
 
-            Console.WriteLine(TestJsonData);
-
-            CurrentMapInfos infos = JsonConvert.DeserializeObject<CurrentMapInfos>(TestJsonData);
-
-            Console.WriteLine("Maps : " + infos.Maps[0].Name + ", " + infos.Maps[0].Version);
-            Console.WriteLine("Languages : " + infos.Languages[0].Name);
+            _cloudDownload.Download(_cloudDownload.getMainUrl("Lab"));
         }
     }
 }

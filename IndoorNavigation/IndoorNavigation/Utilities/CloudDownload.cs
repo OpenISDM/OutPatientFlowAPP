@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.IO;
-
-
 using Xamarin.Forms;
 using Newtonsoft.Json;
-using IndoorNavigation.Modules.Utilities;
 //using IndoorNavigation.Resources;
 namespace IndoorNavigation.Modules.Utilities
 {
+    #region Notes
+    //this class should be run in a thread instead of ui thread
+
+    //the word "FD" is mean FirstDirection
+
+    //  /buildingName/main                          is for waypoint id
+    //  /buildingName/infos/language                is for landmark names
+    //  /buildingName/firstdirections/language      is for  firstdirection
+    //  /buildingName/beacondata                    is for beacon ids
+    //  /                                           is for all support map and languages
+    #endregion
+
     public class CloudDownload
     {
-        private const string _localhost = "https://localhost:port/";
-        private string _context;
-        private CurrentMapInfos _currentInfos;
+        public const string _localhost = "http://140.109.22.175:3000/";
+        //private string _context;
+        public CurrentMapInfos _currentInfos;
 
         //private const string _informationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Information");
         //private const string _firstDirectionFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"FirstDirection");
@@ -25,28 +31,37 @@ namespace IndoorNavigation.Modules.Utilities
 
         public CloudDownload()
         {
-
+            string contextString = Download(getSupportListUrl());
+            _currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
         }
 
         public void GenerateFilePath(string fileName)
-        {
+        {            
+            string sourceInformation_zh = Download(getInfoUrl(fileName, "zh"));           
+            string sourceInformation_en = Download(getInfoUrl(fileName, "en-US"));
+            string sourceFD_zh = Download(getFDUrl(fileName,"zh"));
+            string sourceFD_en = Download(getFDUrl(fileName,"en-US"));
+            string sourceNaviGraph = Download(getMainUrl(fileName));
+
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
             string sinkFDData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
             string sinkFDData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
             string sinkNaviGraph = Path.Combine(NavigraphStorage._navigraphFolder, fileName);
+            try 
+            { 
+                if (!Directory.Exists(NavigraphStorage._navigraphFolder))
+                    Directory.CreateDirectory(NavigraphStorage._navigraphFolder);
+                if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
+                    Directory.CreateDirectory(NavigraphStorage._firstDirectionInstuctionFolder);
+                if (!Directory.Exists(NavigraphStorage._informationFolder))
+                    Directory.CreateDirectory(NavigraphStorage._informationFolder);
 
-            if (!Directory.Exists(NavigraphStorage._navigraphFolder))
-                Directory.CreateDirectory(NavigraphStorage._navigraphFolder);
-            if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
-                Directory.CreateDirectory(NavigraphStorage._firstDirectionInstuctionFolder);
-            if (!Directory.Exists(NavigraphStorage._informationFolder))
-                Directory.CreateDirectory(NavigraphStorage._informationFolder);
-
-
-            try
-            {
-                
+                Storing(sourceInformation_en, sinkInformation_en);
+                Storing(sourceInformation_zh, sinkInformation_zh);
+                Storing(sourceFD_en, sinkFDData_en);
+                Storing(sourceFD_zh, sinkFDData_zh);
+                Storing(sourceNaviGraph, sinkNaviGraph);
             }
             catch(Exception exc)
             {
@@ -60,66 +75,17 @@ namespace IndoorNavigation.Modules.Utilities
             File.WriteAllText(sinkRoute, context);
         }
 
-        async public Task<bool> CheckMapVersion(string localgraphName, string localVersion)
+        public bool CheckMapVersion(string localgraphName, string localVersion)
         {
-            //url format : {localhost}:{port}/
-            string url = _localhost + "version";
+            //string contextString = Download(getSupportListUrl());
 
-            _context = Download(url);
+            //_currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
 
-            _currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(_context);
-            var samaNameMap = _currentInfos.Maps.Where(p => p.Name == localgraphName).First();
-
-            //this statement might happend error.
-            if (samaNameMap.Version.Equals(localVersion))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }            
+            Dictionary<string, string> VersionDict = _currentInfos.ToDictionary();
+            return VersionDict[localgraphName].Equals(localVersion);            
         }
 
-        async public Task DownloadFDFile(string graphName, string language)
-        {
-            //url format : {localhost}:{port}/firstdirections/{language}
-
-            string url = _localhost + "firstdirections/" + language;
-            _context = Download(url);
-
-            
-
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadInfoFile(string graphName, string language)
-        {
-            //url format : {localhost}:{port}/infos/{language}
-
-            string url = _localhost + "infos/" + language;
-            _context = Download(url);
-            await Task.CompletedTask;
-        }
-
-        async public Task DownloadMainFile(string graphName)
-        {
-            //url format : {localhost}:{port}/main
-            string url = _localhost + "main";
-            _context = Download(url);
-            await Task.CompletedTask;
-        }
-
-        //this function might be useless in future?
-        //async public Task DownloadBeaconFile(string graphName)
-        //{
-        ////    url format : { localhost}:{ port}/ beacondata
-        //    string url = _localhost + "beacondata";
-        //    _context = Download(url);
-        //    await Task.CompletedTask;
-        //}
-
-        private string Download(string url)
+        public string Download(string url)
         {
             string ContextString = "";
             //bool Error=true;
@@ -132,6 +98,8 @@ namespace IndoorNavigation.Modules.Utilities
             {
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
+                    Console.WriteLine("url : " + url + ", StatusCode : " + response.StatusCode);
+
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         ContextString = reader.ReadToEnd();
@@ -140,7 +108,7 @@ namespace IndoorNavigation.Modules.Utilities
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Download Error : " + exc.Message);
+                Console.WriteLine("Download Error : " + exc.Message + ", url : " + url);
                 ContextString = "";
                 //Page CurrentPage = Application.Current.MainPage;
 
@@ -157,21 +125,63 @@ namespace IndoorNavigation.Modules.Utilities
             {
                 request.Abort();
             }
-
+            Console.WriteLine("url :" + url + ", ContextString : " + ContextString);
             return ContextString;
         }
+
+        #region Get url function region
+        public string getSupportListUrl()
+        {
+            return _localhost;
+        }
+        public string getFDUrl(string graphName, string language)
+        {
+            return _localhost + graphName + "/firstdirections/" + language;
+        }
+        public string getInfoUrl(string graphName, string language)
+        {
+            return _localhost + graphName + "/infos/" + language;
+        }     
+        public string getMainUrl(string graphName)
+        {
+            return _localhost + graphName + "/main/";
+        }       
+        
+        //the function is not supported now.
+        public string getBeaconListUrl(string graphName)
+        {
+            return _localhost + graphName + "/beacons/";
+        }
+        #endregion
+ 
     }
 
     public class CurrentMapInfos
     {
+        [JsonProperty("Maps")]
         public List<MapInfo> Maps { get; set;}
+
+        [JsonProperty("Languages")]
         public List<LanguageInfo> Languages { get; set; }
+
+        public Dictionary<string, string> ToDictionary()
+        {
+            Dictionary<string, string> results = new Dictionary<string, string>();
+
+            foreach(MapInfo info in Maps)
+            {
+                results.Add(info.Name, info.Version);
+            }
+
+            return results;
+        }
     }
 
     public struct MapInfo
     {
+        [JsonProperty("Name")]
         public string Name { get; set; }
-
+        [JsonProperty("Version")]
         public string Version { get; set; }
         // the version might be considered as a double or a digit type, 
         // it could be more easier to compare?
@@ -179,13 +189,8 @@ namespace IndoorNavigation.Modules.Utilities
 
     public struct LanguageInfo
     {
+        [JsonProperty("Name")]
         public string Name { get; set; }
-    }
+    }   
 
-    //note 
-    //  /buildingName/main                          is for waypoint id
-    //  /buildingName/infos/language                is for landmark names
-    //  /buildingName/firstdirections/language      is for  firstdirection
-    //  /buildingName/beacondata                    is for beacon ids
-    //  /                                           is for all support map and languages
 }
