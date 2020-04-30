@@ -8,7 +8,7 @@
              x:Class="IndoorNavigation.Views.PopUpPage.IndicatorPopupPage">
             
     <StackLayout>
-      <Frame BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20,0,20,0">
+      <Frame BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20,0,20,0" CornerRadius="8">
         <StackLayout Orientation="Horizontal">
           <ActivityIndicator Color="#3f51b5"  IsRunning="True" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
                 <Label Text="Loading" TextColor="#3f51b5" FontSize="Title" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>

@@ -35,13 +35,28 @@ namespace IndoorNavigation.Modules.Utilities
             _currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
         }
 
-        public void GenerateFilePath(string fileName)
+        public void DeleteFile(string fileName)
+        {
+            string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
+            string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
+            string sinkFDData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
+            string sinkFDData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
+            string sinkNaviGraph = Path.Combine(NavigraphStorage._navigraphFolder, fileName);
+
+            File.Delete(sinkFDData_en);
+            File.Delete(sinkFDData_zh);
+            File.Delete(sinkInformation_en);
+            File.Delete(sinkInformation_zh);
+            File.Delete(sinkNaviGraph);
+        }
+
+        public void GenerateFilePath(string fileName, string downloadPath)
         {            
-            string sourceInformation_zh = Download(getInfoUrl(fileName, "zh"));           
-            string sourceInformation_en = Download(getInfoUrl(fileName, "en-US"));
-            string sourceFD_zh = Download(getFDUrl(fileName,"zh"));
-            string sourceFD_en = Download(getFDUrl(fileName,"en-US"));
-            string sourceNaviGraph = Download(getMainUrl(fileName));
+            string sourceInformation_zh = Download(getInfoUrl(downloadPath, "zh"));           
+            string sourceInformation_en = Download(getInfoUrl(downloadPath, "en-US"));
+            string sourceFD_zh = Download(getFDUrl(downloadPath,"zh"));
+            string sourceFD_en = Download(getFDUrl(downloadPath,"en-US"));
+            string sourceNaviGraph = Download(getMainUrl(downloadPath));
 
             string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
             string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
@@ -68,6 +83,11 @@ namespace IndoorNavigation.Modules.Utilities
                 Console.WriteLine(exc.Message);
                 throw exc;
             }
+        }
+
+        public string GetContextString()
+        {
+            return Download("NTUH_Yunlin");
         }
 
         private void Storing(string context, string sinkRoute)
@@ -144,13 +164,13 @@ namespace IndoorNavigation.Modules.Utilities
         }     
         public string getMainUrl(string graphName)
         {
-            return _localhost + graphName + "/main/";
+            return _localhost + graphName + "/main";
         }       
         
         //the function is not supported now.
         public string getBeaconListUrl(string graphName)
         {
-            return _localhost + graphName + "/beacons/";
+            return _localhost + graphName + "/beacons";
         }
         #endregion
  

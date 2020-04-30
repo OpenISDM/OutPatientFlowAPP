@@ -53,20 +53,20 @@ namespace IndoorNavigation.Views.PopUpPage
             ButtonLock = false;
         }
 
-        private void BusyShow(bool isBusy)
-        {
-            BusyIndicator.IsRunning = isBusy;
-            BusyIndicator.IsVisible = isBusy;
-            BusyIndicator.IsEnabled = isBusy;
-        }
+        //private void BusyShow(bool isBusy)
+        //{
+        //    BusyIndicator.IsRunning = isBusy;
+        //    BusyIndicator.IsVisible = isBusy;
+        //    BusyIndicator.IsEnabled = isBusy;
+        //}
 
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
             if (ButtonLock) return;
             ButtonLock = true;
 
-            BusyShow(true);
-
+            //BusyShow(true);
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             networkSettings = DependencyService.Get<INetworkSetting>();
             bool network_ability =await networkSettings.CheckInternetConnect();
             if(network_ability)
@@ -85,7 +85,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 ButtonLock = false;
                 return;
             }
-            BusyShow(false);
+            //BusyShow(false);
            PopupNavigation.Instance.PopAllAsync();
         }
 

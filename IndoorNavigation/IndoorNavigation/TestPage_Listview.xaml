@@ -10,63 +10,15 @@
              xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.TestPage_Listview">
-    <!--<NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" BackgroundColor="#3f51b5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Button Text="back" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
-            <Label Text="使用者帳戶" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
-            <Button Text="ok" FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="#3f51b5" TextColor="White"/>
-        </StackLayout>
-    </NavigationPage.TitleView>-->
+
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="click" Clicked="Button_Clicked"/>
+            <ActivityIndicator IsRunning="False" x:Name="BusyView"/>
+            <Button Text="start" Clicked="Button_Clicked"/>
+            <Button Text="Download Yunlin Graph" Clicked="Button_Clicked_1"/>
+            <Button Text="Download Lab Graph" Clicked="Button_Clicked_4"/>
+            <Button Text="Download CCH Graph" Clicked="Button_Clicked_3"/>
+            <Button Text="DeleteGraph" Clicked="Button_Clicked_2"/>
         </StackLayout>
     </ContentPage.Content>
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <StackLayout Margin="25,15,15,15">
-                <Label Text="{Binding DestinationWaypointName , StringFormat={i18n:Translate DESTINATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
-                <BoxView HeightRequest="3" BackgroundColor="Transparent"/>
-                <Label Text="{Binding CurrentWaypointName, StringFormat={i18n:Translate CURRENT_LOCATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
-            </StackLayout>
-            <Grid x:Name="TestGrid" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="0.5*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Image x:Name="InstructionImg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding CurrentStepImage}" IsAnimationPlaying="{Binding isPlaying}"/>
-
-                <Label x:Name="InstructionLab" Text="{Binding CurrentStepLabel}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
-                       LineBreakMode="WordWrap" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-
-                <pb:ProgressBarView x:Name="ProgressBar"
-                                    Color="Red"
-                                    BackgroundColor="#dcdcdc"
-                                    LabelStringFormat=""
-                                    Progress="{Binding NavigationProgress}"
-                                    VerticalOptions="FillAndExpand"
-                                    Grid.Column="0"
-                                    Grid.Row="4"
-                                    Grid.ColumnSpan="3"
-                                    />
-                <Label x:Name="ProgressTextValue" Text="{Binding ProgressBar}" HorizontalOptions="EndAndExpand" FontSize="Large"
-                       Grid.Row="4" Grid.Column="2"/>
-                <Image x:Name="FirstDirectionImg" Source="{Binding FirstDirectionPicture}" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" 
-                       VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="Fill"/>
-                <Button x:Name="FinishButton" Text="{i18n:Translate FINISH_STRING}" Clicked="FinishButton_Clicked" IsVisible="{Binding isFinished}"
-                        Grid.Row="3" Grid.Column="2" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
-                        />
-            </Grid>
-
-        </StackLayout>      
-    </ContentPage.Content>-->
 </ContentPage>

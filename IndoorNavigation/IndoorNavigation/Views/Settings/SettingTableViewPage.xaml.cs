@@ -214,6 +214,8 @@ namespace IndoorNavigation.Views.Settings
             {
                 _selectNaviGraphItems.Add(naviGraphName);
                 _cleanNaviGraphItems.Add(naviGraphName);
+
+                Console.WriteLine("naviGraphName in SettingTableViewPage : " + naviGraphName);
             }
         }
 
@@ -285,11 +287,11 @@ namespace IndoorNavigation.Views.Settings
             {
                 case "英文":
                 case "English":
-                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en");
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en-US");
                     break;
                 case "中文":
                 case "Chinese":
-                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh");
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh-TW");
                     break;
 
                 default:

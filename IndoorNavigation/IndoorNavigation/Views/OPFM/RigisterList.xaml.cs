@@ -365,8 +365,9 @@ namespace IndoorNavigation.Views.OPFM
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
-           
-            BusyIndicatorShow(true);
+
+            //BusyIndicatorShow(true);
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             Console.WriteLine("Register Finished");
             bool NetworkConnectAbility = 
 				await NetworkSettings.CheckInternetConnect();
@@ -383,7 +384,8 @@ namespace IndoorNavigation.Views.OPFM
 									   getResourceString("BAD_NETWORK_STRING"),
 									   getResourceString("OK_STRING"),
 									   getResourceString("NO_STRING"));
-                BusyIndicatorShow(false);
+                //BusyIndicatorShow(false);
+                PopupNavigation.Instance.PopAsync();
                 if (CheckWantToSetting)
                 {
                     NetworkSettings.OpenSettingPage();
@@ -396,7 +398,8 @@ namespace IndoorNavigation.Views.OPFM
                 }
             }
 
-            BusyIndicatorShow(false);
+            //BusyIndicatorShow(false);
+            await PopupNavigation.Instance.PopAsync();
         }
         async private void ExitFinish(RgRecord record)
         {
