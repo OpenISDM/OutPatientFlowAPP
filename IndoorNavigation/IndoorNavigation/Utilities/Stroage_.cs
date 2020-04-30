@@ -6,9 +6,14 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
+//note :
+//     first step is to define the stroage path
+//      
+//
+
 namespace IndoorNavigation.Utilities
 {
-    public static class Stroage_
+    public static class NaviGraphStroage_
     {
         #region Static Pathes and objects
         internal static readonly string _navigraphFolder =
@@ -43,10 +48,47 @@ namespace IndoorNavigation.Utilities
         //        File.WriteAllText(sinkRoute, fileContents.ToString());
         //    }
         //}
+
+        #region Load Graph Files
+
+        public static string[] GetAllNavigationGraphName() { }
+        public static NavigationGraph LoadNavigationGraphXml(string fileName)
+        {
+
+        }
+
+        public static XMLInformation LoadInformationXml(string fileName) 
+        {
+
+        }
+
+        public static FirstDirectionInstruction LoadFirstDirectionXml(string fileName)
+        {
+
+        }
+
+        #endregion
+
+        #region Delete Graph Files
+        public static void DeleteNavigationGraph(string fileName) { }
+        public static void DeleteFirstDirectionXml(string fileName) { }
+        public static void DeleteInfomationXml(string fileName) { }
+
+        public static void DeleteAllGraphFile() { }
+
+        #endregion
+
+        #region Update Graph files
+        public static void GenerateFileRoute(string sourceRoute, string sinkRoute) 
+        {
+
+        }
+
         private static void Storing(string sourceContext, string sinkRoute)
         {
             File.WriteAllText(sinkRoute, sourceContext);
         }
+        #endregion
         public static XmlDocument XmlReader(string FileName) 
         {
             var assembly = typeof(Stroage_).GetTypeInfo().Assembly;

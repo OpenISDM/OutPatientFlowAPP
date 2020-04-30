@@ -76,7 +76,8 @@ namespace IndoorNavigation.Modules.Utilities
         private static PhoneInformation _phoneInformation = 
 			new PhoneInformation();
         private static object _fileLock = new object();
-        
+
+        #region Load file
         public static string[] GetAllNavigationGraphs()
         {
             // Check the folder of navigation graph if it is exist
@@ -173,7 +174,9 @@ namespace IndoorNavigation.Modules.Utilities
             return xmlInformation;
 
         }
+        #endregion
 
+        #region Delete File
         public static void DeleteNavigationGraph(string GraphName)
         {
             string filePath = Path.Combine(_navigraphFolder, GraphName);
@@ -248,7 +251,9 @@ namespace IndoorNavigation.Modules.Utilities
                 DeleteInformationML(map);
             }
         }
+        #endregion
 
+        #region Update file
         public static void GenerateFileRoute(string fileName,string readingPath)
         {
             string sourceNavigationData = 
@@ -323,6 +328,7 @@ namespace IndoorNavigation.Modules.Utilities
                 File.WriteAllText(sinkRoute, fileContents.ToString());
             }
         }
+        #endregion
 
         public static XmlDocument XmlReader(string FileName)
         {
