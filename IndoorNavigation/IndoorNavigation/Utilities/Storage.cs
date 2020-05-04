@@ -55,6 +55,7 @@ namespace IndoorNavigation.Modules.Utilities
 {
     public static class NavigraphStorage
     {
+        #region Static readonly folder path
         internal static readonly string _navigraphFolder =
             Path.Combine(Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData),
@@ -73,6 +74,8 @@ namespace IndoorNavigation.Modules.Utilities
 
         internal static readonly string _embeddedResourceReoute = 
 			"IndoorNavigation.Resources.";
+        #endregion
+
         private static PhoneInformation _phoneInformation = 
 			new PhoneInformation();
         private static object _fileLock = new object();

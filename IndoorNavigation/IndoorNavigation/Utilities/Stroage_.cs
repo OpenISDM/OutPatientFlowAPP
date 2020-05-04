@@ -1,13 +1,16 @@
-﻿using IndoorNavigation.Models.NavigaionLayer;
+﻿//This is the stroage re-structure version.
+
+using IndoorNavigation.Models.NavigaionLayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using System.Linq;
 
 //note :
-//     first step is to define the stroage path
+//     We need to define the stroage path first
 //      
 //
 
@@ -51,35 +54,118 @@ namespace IndoorNavigation.Utilities
 
         #region Load Graph Files
 
-        public static string[] GetAllNavigationGraphName() { }
+        private static void CheckDirectoryExist()
+        {
+            if (!Directory.Exists(_navigraphFolder))
+                Directory.CreateDirectory(_navigraphFolder);
+            if (!Directory.Exists(_firstDirectionInstuctionFolder))
+                Directory.CreateDirectory(_firstDirectionInstuctionFolder);
+            if (!Directory.Exists(_informationFolder))
+                Directory.CreateDirectory(_informationFolder);
+        }
+        public static string[] GetAllNavigationGraphName() 
+        {
+            CheckDirectoryExist();
+
+            string[] existNaviGraphName = 
+                Directory.GetFiles(_navigraphFolder)
+                .Select(path => Path.GetFileName(path))
+                .OrderBy(file => file)
+                .ToArray();
+            //string[] result = new string[existNaviGraphName.Count()];
+            List<string> result = new List<string>();
+            XMLInformation information;
+            foreach(string fileName in existNaviGraphName)
+            {
+                information = NaviGraphStroage_.LoadInformationXml(fileName);
+                result.Add(information.GiveGraphName());
+            }
+
+            return result.ToArray();
+        }
         public static NavigationGraph LoadNavigationGraphXml(string fileName)
         {
+            Console.WriteLine(">> LoadNavigationGraphXml");
+            Console.WriteLine("fileName : " + fileName);
 
+            return new NavigationGraph(new XmlDocument());
         }
 
-        public static XMLInformation LoadInformationXml(string fileName) 
+        public static XMLInformation LoadInformationXml(string fileName)
         {
+            Console.WriteLine(">> LoadInformationXml");
+            Console.WriteLine("fileName : " + fileName);
 
+            return new XMLInformation(new XmlDocument());
         }
 
         public static FirstDirectionInstruction LoadFirstDirectionXml(string fileName)
         {
+            Console.WriteLine(">> FirstDirectionInstruction");
+            Console.WriteLine("fileName : " + fileName);
 
+            return new FirstDirectionInstruction(new XmlDocument());
         }
 
         #endregion
 
         #region Delete Graph Files
-        public static void DeleteNavigationGraph(string fileName) { }
-        public static void DeleteFirstDirectionXml(string fileName) { }
-        public static void DeleteInfomationXml(string fileName) { }
 
-        public static void DeleteAllGraphFile() { }
+        public static void DeleteFile(string path)
+        {
+            CheckDirectoryExist();
+            lock (_fileLock)
+            {
+                File.Delete(path);
+            }
+        }
+
+        public static void DeleteNavigationGraph(string fileName)
+        {
+            CheckDirectoryExist();
+            string filePath = "";
+
+            DeleteFile(filePath);
+        }
+        public static void DeleteFirstDirectionXml(string fileName)
+        {
+            CheckDirectoryExist();
+            string filePath_en = "";
+            string filePath_zh = "";
+
+            DeleteFile(filePath_en);
+            DeleteFile(filePath_zh);
+        }
+        public static void DeleteInfomationXml(string fileName)
+        {
+            CheckDirectoryExist();
+            string filePath_en = "";
+            string filePath_zh = "";
+
+            DeleteFile(filePath_en);
+            DeleteFile(filePath_zh);
+        }
+
+        public static void ClearAllGraphFile() 
+        {
+            CheckDirectoryExist();
+            foreach(string buildingName in GetAllNavigationGraphName())
+            {
+                string map = _phoneInformation.GiveCurrentMapName(buildingName);
+                DeleteFirstDirectionXml(buildingName);
+                DeleteInfomationXml(buildingName);
+                DeleteNavigationGraph(buildingName);
+            }
+        }
+
+        //private static void DeleteAllFirstDirectionXml() { }
+        //private static void DeleteAllInfomationXml() { }
+        //private static void DeleteAllNaviGraphXml() { }
 
         #endregion
 
         #region Update Graph files
-        public static void GenerateFileRoute(string sourceRoute, string sinkRoute) 
+        public static void GenerateFileRoute(string sourceRoute, string sinkRoute)
         {
 
         }
@@ -89,9 +175,9 @@ namespace IndoorNavigation.Utilities
             File.WriteAllText(sinkRoute, sourceContext);
         }
         #endregion
-        public static XmlDocument XmlReader(string FileName) 
+        public static XmlDocument XmlReader(string FileName)
         {
-            var assembly = typeof(Stroage_).GetTypeInfo().Assembly;
+            var assembly = typeof(NaviGraphStroage_).GetTypeInfo().Assembly;
             string xmlContent = "";
 
             Stream stream =
@@ -111,3 +197,4 @@ namespace IndoorNavigation.Utilities
         }
     }
 }
+
