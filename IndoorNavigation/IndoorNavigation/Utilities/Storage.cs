@@ -333,6 +333,7 @@ namespace IndoorNavigation.Modules.Utilities
         }
         #endregion
 
+        #region Others
         public static XmlDocument XmlReader(string FileName)
         {
             var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
@@ -353,6 +354,7 @@ namespace IndoorNavigation.Modules.Utilities
 
             return xmlDocument;
         }
+        #endregion
     }
       
 }

@@ -8,11 +8,14 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Linq;
+using System.Security.Authentication;
+using Newtonsoft.Json;
+/*
+note :
+     We need to define the stroage path first
 
-//note :
-//     We need to define the stroage path first
-//      
-//
+
+*/
 
 namespace IndoorNavigation.Utilities
 {
@@ -56,6 +59,7 @@ namespace IndoorNavigation.Utilities
 
         private static void CheckDirectoryExist()
         {
+            Console.WriteLine(">>CheckDirectoryExist");
             if (!Directory.Exists(_navigraphFolder))
                 Directory.CreateDirectory(_navigraphFolder);
             if (!Directory.Exists(_firstDirectionInstuctionFolder))
@@ -63,11 +67,11 @@ namespace IndoorNavigation.Utilities
             if (!Directory.Exists(_informationFolder))
                 Directory.CreateDirectory(_informationFolder);
         }
-        public static string[] GetAllNavigationGraphName() 
+        public static string[] GetAllNavigationGraphName()
         {
             CheckDirectoryExist();
-
-            string[] existNaviGraphName = 
+            Console.WriteLine(">>GetAllNavigationGraphName");
+            string[] existNaviGraphName =
                 Directory.GetFiles(_navigraphFolder)
                 .Select(path => Path.GetFileName(path))
                 .OrderBy(file => file)
@@ -75,8 +79,9 @@ namespace IndoorNavigation.Utilities
             //string[] result = new string[existNaviGraphName.Count()];
             List<string> result = new List<string>();
             XMLInformation information;
-            foreach(string fileName in existNaviGraphName)
+            foreach (string fileName in existNaviGraphName)
             {
+                Console.WriteLine("fileName : " + fileName);
                 information = NaviGraphStroage_.LoadInformationXml(fileName);
                 result.Add(information.GiveGraphName());
             }
@@ -114,6 +119,7 @@ namespace IndoorNavigation.Utilities
         public static void DeleteFile(string path)
         {
             CheckDirectoryExist();
+            Console.WriteLine(">>DeleteFile");
             lock (_fileLock)
             {
                 File.Delete(path);
@@ -139,6 +145,7 @@ namespace IndoorNavigation.Utilities
         public static void DeleteInfomationXml(string fileName)
         {
             CheckDirectoryExist();
+            Console.WriteLine(">>DeleteInformationXml");
             string filePath_en = "";
             string filePath_zh = "";
 
@@ -146,10 +153,11 @@ namespace IndoorNavigation.Utilities
             DeleteFile(filePath_zh);
         }
 
-        public static void ClearAllGraphFile() 
+        public static void ClearAllGraphFile()
         {
             CheckDirectoryExist();
-            foreach(string buildingName in GetAllNavigationGraphName())
+            Console.WriteLine(">>ClearAllGraphFile");
+            foreach (string buildingName in GetAllNavigationGraphName())
             {
                 string map = _phoneInformation.GiveCurrentMapName(buildingName);
                 DeleteFirstDirectionXml(buildingName);
@@ -164,19 +172,53 @@ namespace IndoorNavigation.Utilities
 
         #endregion
 
-        #region Update Graph files
-        public static void GenerateFileRoute(string sourceRoute, string sinkRoute)
-        {
+        #region Update and Write Graph files
+        //public static void GenerateFileRoute(string sourceRoute, string sinkRoute)
+        //{
+        //    Console.WriteLine(">>GenerateFileRoute");
 
+        //    CheckDirectoryExist();
+
+        //    string sinkNaviGraphData = Path.Combine();
+        //    string sinkInformationData_en = Path.Combine();
+        //    string sinkInformationData_zh = Path.Combine();
+        //    string sinkFirstDirectionData_en = Path.Combine();
+        //    string sinkFirstDirectionData_zh = Path.Combine();
+
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception exc) 
+        //    {
+        //        Console.WriteLine("GenerateFileRoute error : " + exc.Message);
+        //        throw exc;
+        //    }
+        //}
+
+        private static void Storing(string sourceContext, string sinkFileName)
+        {
+            Console.WriteLine(">>Storing");
+
+            string sinkFileRoute = Path.Combine();
+
+            File.WriteAllText(sinkFileRoute, sourceContext);
         }
 
-        private static void Storing(string sourceContext, string sinkRoute)
+        private static void Storing(string sourceContext, string sinkFileName, string DocumentType, string Language)
         {
-            File.WriteAllText(sinkRoute, sourceContext);
+            Console.WriteLine(">>Storing");
+
+            string sinkFileRoute = Path.Combine();
+
+            File.WriteAllText(sinkFileRoute, sourceContext);
         }
         #endregion
+
+        #region Others
         public static XmlDocument XmlReader(string FileName)
         {
+            Console.WriteLine(">>XmlReader");
             var assembly = typeof(NaviGraphStroage_).GetTypeInfo().Assembly;
             string xmlContent = "";
 
@@ -195,6 +237,40 @@ namespace IndoorNavigation.Utilities
 
             return xmlDocument;
         }
+
+        #endregion
+    }
+
+    public class FileResources
+    {
+        [JsonProperty("Resources")]
+        public List<FileResource> _resources { get; set; }
+        public Dictionary<string, FileResource> toDictionary()
+        {
+            Dictionary<string, FileResource> result = new Dictionary<string, FileResource>();
+
+            foreach (FileResource resource in _resources)
+            {
+                result.Add(resource._buildingName, resource);
+            }
+            return result;
+        }
+    }
+
+    public class FileResource
+    {
+        [JsonProperty("")]
+        public string _buildingName { get; set; }
+        [JsonProperty("")]
+        public string _version { get; set; }
+        [JsonProperty("")]
+        public string _naviGraphSinkRoute { get; set; }
+        
+        //need to how to storage multi-language
+        [JsonProperty("")]
+        public List<string> _fDDataSinkRoute { get; set; }
+        [JsonProperty("")]
+        public List<string> _infoDataSinkRoute { get; set; }
     }
 }
 
