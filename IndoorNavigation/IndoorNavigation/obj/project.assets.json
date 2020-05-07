@@ -217,7 +217,7 @@
           "lib/netstandard2.0/Xamarin.Essentials.dll": {}
         }
       },
-      "Xamarin.Forms/4.5.0.396": {
+      "Xamarin.Forms/4.5.0.725": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Xamarin.Forms.Core.dll": {},
@@ -230,8 +230,8 @@
           "lib/netstandard2.0/Xamarin.Forms.Xaml.dll": {}
         },
         "build": {
-          "build/Xamarin.Forms.props": {},
-          "build/Xamarin.Forms.targets": {}
+          "buildTransitive/Xamarin.Forms.props": {},
+          "buildTransitive/Xamarin.Forms.targets": {}
         }
       },
       "Xamarin.Forms.InputKit/3.0.11": {
@@ -246,10 +246,10 @@
           "lib/netstandard2.0/Plugin.InputKit.dll": {}
         }
       },
-      "Xamarin.Forms.Visual.Material/4.5.0.396": {
+      "Xamarin.Forms.Visual.Material/4.5.0.725": {
         "type": "package",
         "dependencies": {
-          "Xamarin.Forms": "4.5.0.396"
+          "Xamarin.Forms": "4.5.0.725"
         },
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -891,10 +891,10 @@
         "xamarin.essentials.nuspec"
       ]
     },
-    "Xamarin.Forms/4.5.0.396": {
-      "sha512": "4yU8Dj83+/2PFTd76Q88G/fuVQ5MryvadGbc26ZqwQiLOUdMVLu5Otmzp51cWvJfwSgTI97fzPfE2urHKbF/XA==",
+    "Xamarin.Forms/4.5.0.725": {
+      "sha512": "X2VttysPn5fIFTmnjPKNt5o9IiqkYKsOgCXf9JYMAzTl0fuZvqHgeErXpizMLqQNNaR9TYXDVmP8U7kwKDZe0w==",
       "type": "package",
-      "path": "xamarin.forms/4.5.0.396",
+      "path": "xamarin.forms/4.5.0.725",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -925,6 +925,33 @@
         "build/netstandard2.0/Xamarin.Forms.Build.Tasks.dll",
         "build/netstandard2.0/Xamarin.Forms.Core.dll",
         "build/netstandard2.0/Xamarin.Forms.Xaml.dll",
+        "buildTransitive/MonoAndroid10/proguard.cfg",
+        "buildTransitive/XCODE10/Xamarin.Forms.Platform.iOS.dll",
+        "buildTransitive/XCODE10/Xamarin.Forms.Platform.iOS.pdb",
+        "buildTransitive/XCODE10/Xamarin.Forms.Platform.macOS.dll",
+        "buildTransitive/XCODE11/Xamarin.Forms.Platform.iOS.dll",
+        "buildTransitive/XCODE11/Xamarin.Forms.Platform.iOS.pdb",
+        "buildTransitive/XCODE11/Xamarin.Forms.Platform.macOS.dll",
+        "buildTransitive/Xamarin.Forms.DefaultItems.props",
+        "buildTransitive/Xamarin.Forms.DefaultItems.targets",
+        "buildTransitive/Xamarin.Forms.props",
+        "buildTransitive/Xamarin.Forms.targets",
+        "buildTransitive/net46/Mono.Cecil.Mdb.dll",
+        "buildTransitive/net46/Mono.Cecil.Pdb.dll",
+        "buildTransitive/net46/Mono.Cecil.Rocks.dll",
+        "buildTransitive/net46/Mono.Cecil.dll",
+        "buildTransitive/net46/System.ValueTuple.dll",
+        "buildTransitive/net46/Xamarin.Forms.Build.Tasks.dll",
+        "buildTransitive/net46/Xamarin.Forms.Core.dll",
+        "buildTransitive/net46/Xamarin.Forms.Xaml.dll",
+        "buildTransitive/netstandard2.0/Mono.Cecil.Mdb.dll",
+        "buildTransitive/netstandard2.0/Mono.Cecil.Pdb.dll",
+        "buildTransitive/netstandard2.0/Mono.Cecil.Rocks.dll",
+        "buildTransitive/netstandard2.0/Mono.Cecil.dll",
+        "buildTransitive/netstandard2.0/System.CodeDom.dll",
+        "buildTransitive/netstandard2.0/Xamarin.Forms.Build.Tasks.dll",
+        "buildTransitive/netstandard2.0/Xamarin.Forms.Core.dll",
+        "buildTransitive/netstandard2.0/Xamarin.Forms.Xaml.dll",
         "lib/MonoAndroid10.0/Design/Xamarin.Forms.Core.Design.dll",
         "lib/MonoAndroid10.0/Design/Xamarin.Forms.Xaml.Design.dll",
         "lib/MonoAndroid10.0/FormsViewGroup.dll",
@@ -1172,7 +1199,7 @@
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.dll",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.pdb",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.xml",
-        "xamarin.forms.4.5.0.396.nupkg.sha512",
+        "xamarin.forms.4.5.0.725.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
     },
@@ -1198,14 +1225,15 @@
         "xamarin.forms.inputkit.nuspec"
       ]
     },
-    "Xamarin.Forms.Visual.Material/4.5.0.396": {
-      "sha512": "2uvxhC0wD/Wtsm3hn8cCPJnD6oYdL9smWUQ1nXk3aJENByBYL21bQUJGB+jLJyKNyvsQHBqipsnKASSjvX6ukA==",
+    "Xamarin.Forms.Visual.Material/4.5.0.725": {
+      "sha512": "4Q5+t69aZsZUY5/DH9qLXmJObirj9CUofsS8jlIg3dX+qKgXy+kcIfd8eS9U4U5zVh0ilYMyyPkoasO3IWQfVA==",
       "type": "package",
-      "path": "xamarin.forms.visual.material/4.5.0.396",
+      "path": "xamarin.forms.visual.material/4.5.0.725",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/MonoAndroid10/Xamarin.Forms.Visual.Material.targets",
+        "buildTransitive/MonoAndroid10/Xamarin.Forms.Visual.Material.targets",
         "lib/MonoAndroid10.0/Xamarin.Forms.Material.dll",
         "lib/MonoAndroid10.0/Xamarin.Forms.Material.pdb",
         "lib/MonoAndroid10/_._",
@@ -1216,7 +1244,7 @@
         "lib/netstandard1.0/_._",
         "lib/tizen40/Xamarin.Forms.Material.dll",
         "lib/tizen40/Xamarin.Forms.Material.pdb",
-        "xamarin.forms.visual.material.4.5.0.396.nupkg.sha512",
+        "xamarin.forms.visual.material.4.5.0.725.nupkg.sha512",
         "xamarin.forms.visual.material.nuspec"
       ]
     },
@@ -1281,9 +1309,9 @@
       "Rg.Plugins.Popup >= 1.2.0.223",
       "Xamarin.CustomControls.ProgressBarView >= 1.0.2",
       "Xamarin.Essentials >= 1.1.0",
-      "Xamarin.Forms >= 4.5.0.396",
+      "Xamarin.Forms >= 4.5.0.725",
       "Xamarin.Forms.InputKit >= 3.0.11",
-      "Xamarin.Forms.Visual.Material >= 4.5.0.396",
+      "Xamarin.Forms.Visual.Material >= 4.5.0.725",
       "ZXing.Net.Mobile >= 2.4.1",
       "ZXing.Net.Mobile.Forms >= 2.4.1"
     ]
@@ -1392,7 +1420,7 @@
           },
           "Xamarin.Forms": {
             "target": "Package",
-            "version": "[4.5.0.396, )"
+            "version": "[4.5.0.725, )"
           },
           "Xamarin.Forms.InputKit": {
             "target": "Package",
@@ -1400,7 +1428,7 @@
           },
           "Xamarin.Forms.Visual.Material": {
             "target": "Package",
-            "version": "[4.5.0.396, )"
+            "version": "[4.5.0.725, )"
           },
           "ZXing.Net.Mobile": {
             "target": "Package",
