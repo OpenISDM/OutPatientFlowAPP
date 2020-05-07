@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Xml;
 using System.Linq;
-using System.Security.Authentication;
 using Newtonsoft.Json;
 /*
 note :
@@ -43,6 +41,17 @@ namespace IndoorNavigation.Utilities
 
         private static object _fileLock = new object();
         private static PhoneInformation _phoneInformation = new PhoneInformation();
+
+        public static object _fileResources;
+        #endregion
+
+        #region Static Constructor
+        static NaviGraphStroage_()
+        {
+            Console.WriteLine(">>NaviGraphStroage Constructor");
+
+            _fileResources = JsonConvert.DeserializeObject<FileResources>(EmbeddedSourceReader("not define yet"));
+        }
         #endregion
 
         //private static void Storing(string sourceRoute, string sinkRoute) 
@@ -216,21 +225,25 @@ namespace IndoorNavigation.Utilities
         #endregion
 
         #region Others
-        public static XmlDocument XmlReader(string FileName)
+        public static string EmbeddedSourceReader(string FileName)
         {
-            Console.WriteLine(">>XmlReader");
+            Console.WriteLine(">>EmbeddedSourceReader");
             var assembly = typeof(NaviGraphStroage_).GetTypeInfo().Assembly;
-            string xmlContent = "";
 
-            Stream stream =
-                assembly.GetManifestResourceStream($"{assembly.GetName().Name}"
-                                                  + $".{FileName}");
+            string sourceContext = "";
+            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
 
             using (StreamReader reader = new StreamReader(stream))
             {
-                xmlContent = reader.ReadToEnd();
+                sourceContext = reader.ReadToEnd();
             }
             stream.Close();
+            return sourceContext;
+        }
+        public static XmlDocument XmlReader(string FileName)
+        {
+            Console.WriteLine(">>XmlReader");
+            string xmlContent = EmbeddedSourceReader(FileName);
 
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(xmlContent);
@@ -256,21 +269,21 @@ namespace IndoorNavigation.Utilities
             return result;
         }
     }
-
     public class FileResource
     {
-        [JsonProperty("")]
+        [JsonProperty("BuildingName")]
         public string _buildingName { get; set; }
-        [JsonProperty("")]
+        [JsonProperty("CurrentVersion")]
         public string _version { get; set; }
-        [JsonProperty("")]
-        public string _naviGraphSinkRoute { get; set; }
-        
-        //need to how to storage multi-language
-        [JsonProperty("")]
-        public List<string> _fDDataSinkRoute { get; set; }
-        [JsonProperty("")]
-        public List<string> _infoDataSinkRoute { get; set; }
+        [JsonProperty("NaviGraphSinkRoute")]
+        public string _naviGraphSinkRoute { get; set; }        
+        //need to think how to storage multi-language
+        //the first string is language, second one is path
+        [JsonProperty("FDDataSinkRoute")]
+        public Dictionary<string,string> _fDDataSinkRoute { get; set; }
+        //the first string is language, second one is path
+        [JsonProperty("InfoDataSinkRoute")]
+        public Dictionary<string,string> _infoDataSinkRoute { get; set; }
     }
 }
 

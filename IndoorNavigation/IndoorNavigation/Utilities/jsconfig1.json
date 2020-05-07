@@ -1,6 +1,12 @@
 {
   "Resources": 
   [
-    {},{}
+    {
+      "BuildingName": "",
+      "CurrentVersion": "",
+      "NaviGraphSinkRoute": "",
+      "FDDataSinkRoute": [],
+      "InfoDataSinkRoute": []
+    },{}
   ]
 }
