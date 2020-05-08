@@ -14,11 +14,11 @@
     <ContentPage.Content>
         <StackLayout>
             <ActivityIndicator IsRunning="False" x:Name="BusyView"/>
-            <Button Text="start" Clicked="Button_Clicked"/>
+            <!--<Button Text="start" Clicked="Button_Clicked"/>
             <Button Text="Download Yunlin Graph" Clicked="Button_Clicked_1"/>
             <Button Text="Download Lab Graph" Clicked="Button_Clicked_4"/>
             <Button Text="Download CCH Graph" Clicked="Button_Clicked_3"/>
-            <Button Text="DeleteGraph" Clicked="Button_Clicked_2"/>
+            <Button Text="DeleteGraph" Clicked="Button_Clicked_2"/>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

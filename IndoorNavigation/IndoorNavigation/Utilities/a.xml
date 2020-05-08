@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+  <Building name ="" currentVersion="">
+    <NaivGraphData path=""/>
+    <InfoDatas>
+      <InfoData language="" path=""/>
+      <InfoData language="" path=""/>
+    </InfoDatas>
+    <FDDatas>
+      <FDData language="" path=""/>        
+      <FDData language="" path=""/>
+    </FDDatas>
+  </Building>
+  <Building name ="">
+    
+  </Building>
+</Buildings>
