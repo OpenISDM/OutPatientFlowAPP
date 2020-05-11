@@ -1,14 +1,14 @@
 ﻿//This is the stroage re-structure version.
 
 using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
+
 /*
 note :
 1. We need to define the stroage path first
@@ -19,7 +19,7 @@ note :
 
 3. 
 
-then, FD is means FirstDirection.
+then, FD means FirstDirection.
 
 */
 
@@ -59,6 +59,10 @@ namespace IndoorNavigation.Utilities
         {
             Console.WriteLine(">>NaviGraphStroage Constructor");
             _resources = new GraphResource();
+
+            _resources.AddLanguage(new CultureInfo("zh-TW"));            
+            _resources.AddLanguage(new CultureInfo("en-US"));
+
             CreateDirectory();            
         }
         #endregion
@@ -127,13 +131,21 @@ namespace IndoorNavigation.Utilities
         static private void CreateDirectory()
         {
             if (!Directory.Exists(_navigraphFolder))
+            {                
                 Directory.CreateDirectory(_navigraphFolder);
+                Console.WriteLine("Create naviGraphFolder success!");
+            }
 
             if (!Directory.Exists(_informationFolder))
+            {
                 Directory.CreateDirectory(_informationFolder);
-
+                Console.WriteLine("Create informationFolder success!");
+            }
             if (!Directory.Exists(_firstDirectionInstuctionFolder))
+            {
                 Directory.CreateDirectory(_firstDirectionInstuctionFolder);
+                Console.WriteLine("Create FD Folder success!");
+            }
         }
 
         public static string EmbeddedSourceReader(string FileName)
@@ -177,9 +189,36 @@ namespace IndoorNavigation.Utilities
                 UpdateGraphList(GraphName, AccessGraphOperate.Delete);
             }
         }
+
+        static public void DeleteGraphFile(string fileName)
+        {
+            if (_resources.GraphNames.Contains(fileName))
+            {
+                try
+                {
+                    DeleteNaviGraph(fileName);
+                    DeleteXmlInformation(fileName);
+                    DeleteFDXml(fileName);
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine("DeleteGraphFile error : ", exc.Message);
+                    throw exc;
+                }
+                _resources.GraphNames.Remove(fileName);
+            }
+        }
+
         static public void DeleteFDXml(string fileName) 
         {
             //use loop to access multi-langugaes
+
+            foreach(string language in _resources.Languages)
+            {
+                string filePath = Path.Combine(_firstDirectionInstuctionFolder, $"{fileName}_FD_{language}.xml");
+                lock (_fileLock)
+                    File.Delete(filePath);
+            }
         }
         static public void DeleteNaviGraph(string fileName) 
         {
@@ -191,7 +230,13 @@ namespace IndoorNavigation.Utilities
         static public void DeleteXmlInformation(string fileName) 
         {
             //use loop to access multi-language
+            foreach(string language in _resources.Languages)
+            {
+                string filePath = Path.Combine(_informationFolder,$"{fileName}_info_{language}.xml");
 
+                lock (_fileLock)
+                    File.Delete(filePath);
+            }
         }
         #endregion
 
@@ -209,6 +254,7 @@ namespace IndoorNavigation.Utilities
                 }
                 case AccessGraphOperate.Delete:
                 {
+                    
                     break;
                 }
                 default:
@@ -217,7 +263,37 @@ namespace IndoorNavigation.Utilities
         }
 
         public static void EmbeddedGenerateFile(string sourceName, string sinkName) 
-        { 
+        {
+            Console.WriteLine(">>EmbeddedGenerateFile");
+
+            var assembly = typeof(NaviGraphStroage_).GetTypeInfo().Assembly;
+
+            try
+            {
+                string sourceNaviGraph = $"{assembly.GetName().Name}.{sourceName}.{sourceName}.xml";
+                string sinkNaviGraph = Path.Combine(_navigraphFolder,sinkName);
+
+                EmbeddedStoring(sourceNaviGraph, sinkNaviGraph);
+
+                foreach (string language in _resources.Languages)
+                {
+                    string sourceInfomation = $"{assembly.GetName().Name}";
+                    string sourceFDFile = $"{assembly.GetName().Name}";
+
+                    string sinkInformationPath = Path.Combine(_informationFolder, $"{sinkName}_info_{language}.xml");
+                    string sinkFDPath = Path.Combine(_firstDirectionInstuctionFolder, $"{sinkName}_FD_{language}.xml");
+
+                    EmbeddedStoring(sourceInfomation, sinkInformationPath);
+                    EmbeddedStoring(sourceFDFile, sinkFDPath);
+                }
+                _resources.GraphNames.Add(sourceName);
+                Console.WriteLine("<<EmbeddedGenerateFile");
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("EmbeddedGenerateFile error : " + exc.Message);
+                throw exc;
+            }
         }
         public static void EmbeddedStoring(string sourceRoute,string sinkRoute) 
         {
@@ -225,9 +301,30 @@ namespace IndoorNavigation.Utilities
             File.WriteAllText(sinkRoute, FileContext);            
         }
 
-        public static void CloudGenerateFile(string sinkName) 
-        {
+        private static object _downloadLock =new object();
 
+        public static void CloudGenerateFile(string sourceName, string sinkName) 
+        {
+            CloudDownload _clouddownload = new CloudDownload();
+            string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));
+            string sinkNaviGraph = Path.Combine(_navigraphFolder, sinkName);
+
+            CloudStoring(sourceNaviGraph, sinkNaviGraph);
+
+            foreach(string language in _resources.Languages)
+            {
+                //lock (_downloadLock)
+                {
+                    string sourceFD = _clouddownload.Download(_clouddownload.getFDUrl(sourceName, language));
+                    string sourceInfo = _clouddownload.Download(_clouddownload.getInfoUrl(sourceName, language));
+
+                    string sinkFD = Path.Combine(_firstDirectionInstuctionFolder, $"{sinkName}_FD_{language}.xml");
+                    string sinkInfo = Path.Combine(_informationFolder, $"{sinkName}_info_{language}.xml");
+
+                    CloudStoring(sourceFD, sinkFD);
+                    CloudStoring(sourceInfo, sinkInfo);
+                }
+            }
         }
         public static void CloudStoring(string Context,string sinkRoute) 
         {
@@ -242,6 +339,12 @@ namespace IndoorNavigation.Utilities
         {
             public List<string> GraphNames { get; set; }
             public List<string> Languages { get; set; }
+
+            public void AddLanguage(CultureInfo language)
+            {
+                Console.WriteLine("AddLanguage : " + language.Name);
+                Languages.Add(language.Name);
+            }
         }
 
         public enum AccessGraphOperate

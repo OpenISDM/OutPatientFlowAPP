@@ -96,11 +96,7 @@ namespace IndoorNavigation.Modules.Utilities
         }
 
         public bool CheckMapVersion(string localgraphName, string localVersion)
-        {
-            //string contextString = Download(getSupportListUrl());
-
-            //_currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
-
+        {            
             Dictionary<string, string> VersionDict = _currentInfos.ToDictionary();
             return VersionDict[localgraphName].Equals(localVersion);            
         }

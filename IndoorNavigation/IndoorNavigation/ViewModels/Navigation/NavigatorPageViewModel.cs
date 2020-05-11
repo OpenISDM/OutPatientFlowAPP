@@ -57,16 +57,14 @@ using IndoorNavigation.Views.Navigation;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using IndoorNavigation.Modules.Utilities;
-using Rg.Plugins.Popup.Services;
 using System.Globalization;
-
+using System.Timers;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
 	public class NavigatorPageViewModel : BaseViewModel, IDisposable
-	{
-		private Guid _destinationID;
-		private NavigationModule _navigationModule;
+	{		
+        #region Consts
         private const string _pictureType = "picture";
         private const int _originalInstructionLocation = 3;
         private const int _firstDirectionInstructionLocation = 4;
@@ -76,29 +74,34 @@ namespace IndoorNavigation.ViewModels.Navigation
         private const int _millisecondsTimeoutForOneSecond = 1000;
         private const int _initialFaceDirection = 0;
         private const int _initialBackDirection = 1;
-        private string _currentStepLabelName=" ";
-		private string _currentStepImageName;
+        #endregion
+
+        #region Other Structures
+        private bool _disposedValue = false; // To detect redundant calls
+		public ResourceManager _resourceManager;
+        private FirstDirectionInstruction _firstDirectionInstruction;
+        private NavigationGraph _navigationGraph;
+        private XMLInformation _xmlInformation;
+        private Guid _destinationID;
+        private NavigationModule _navigationModule;
+        private PhoneInformation phoneInformation = new PhoneInformation();
+        private Timer _watchdog = new Timer();
+        #endregion
+
+        #region Private Data Binding
+        private bool _isplaying;
+        private bool _isfinished=false;
+        private string _currentStepLabelName = " ";
+        private string _currentStepImageName;
         private string _firstDirectionPicture;
         private int _firstDirectionRotationValue;
         private int _firsrDirectionInstructionScaleVale;
         private int _instructionLocation;
-		private string _currentWaypointName;
-        private string _firstDirectiionPicture;
-		private string _destinationWaypointName;
+        private string _currentWaypointName;
+        private string _destinationWaypointName;
         private string _progressBar;
-		private double _navigationProgress;
-		private bool _disposedValue = false; // To detect redundant calls
-		public ResourceManager _resourceManager;
-        public NavigatorPage _navigatorPage;
-        private FirstDirectionInstruction _firstDirectionInstruction;
-        private NavigationGraph _navigationGraph;
-        private XMLInformation _xmlInformation;
-
-        PhoneInformation phoneInformation = new PhoneInformation();
-        //private string _floor;
-        //private string _buildingName;
-        private bool _isplaying;
-        private bool _isfinished=false;
+        private double _navigationProgress;
+        #endregion
 
         public NavigatorPageViewModel(string navigationGraphName,
                                       Guid destinationRegionID,
@@ -173,111 +176,119 @@ namespace IndoorNavigation.ViewModels.Navigation
 			switch ((args as Session.NavigationEventArgs)._result)
 			{
 				case NavigationResult.Run:
-					SetInstruction(instruction, 
-								   out currentStepLabel, 
-								   out currentStepImage, 
-								   out firstDirectionPicture, 
-								   out rotationValue, 
-								   out locationValue, 
-								   out instructionScale);
-					CurrentStepLabel = currentStepLabel;
-					CurrentStepImage = currentStepImage+".png";
-                    FirstDirectionPicture = firstDirectionPicture;
-                    InstructionLocationValue = locationValue;
-                    RotationValue = rotationValue;
-                    InstructionScaleValue = instructionScale;
-                    isPlaying = false;
-                    CurrentWaypointName = 
-						_xmlInformation.GiveWaypointName(instruction
-														 ._currentWaypointGuid);
-					NavigationProgress = instruction._progress;
-                    ProgressBar = instruction._progressBar;
-                    Utility._textToSpeech.Speak(
-                        CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
-											       currentLanguage));
-                    break;
-
+                    {
+                        SetInstruction(instruction,
+                                       out currentStepLabel,
+                                       out currentStepImage,
+                                       out firstDirectionPicture,
+                                       out rotationValue,
+                                       out locationValue,
+                                       out instructionScale);
+                        CurrentStepLabel = currentStepLabel;
+                        CurrentStepImage = currentStepImage + ".png";
+                        FirstDirectionPicture = firstDirectionPicture;
+                        InstructionLocationValue = locationValue;
+                        RotationValue = rotationValue;
+                        InstructionScaleValue = instructionScale;
+                        isPlaying = false;
+                        CurrentWaypointName =
+                            _xmlInformation.GiveWaypointName(instruction
+                                                             ._currentWaypointGuid);
+                        NavigationProgress = instruction._progress;
+                        ProgressBar = instruction._progressBar;
+                        Utility._textToSpeech.Speak(
+                            CurrentStepLabel,
+                            _resourceManager.GetString("CULTURE_VERSION_STRING",
+                                                       currentLanguage));
+                        break;
+                    }
                 case NavigationResult.ArrivaIgnorePoint:
-                    CurrentWaypointName = 
-						_xmlInformation.GiveWaypointName(instruction
-														 ._currentWaypointGuid);
-                    NavigationProgress = instruction._progress;
-                    ProgressBar = instruction._progressBar;
-                    FirstDirectionPicture = null;
-                    isPlaying = false;
-                    isFinished = true;
-                    break;
-
+                    {
+                        CurrentWaypointName =
+                            _xmlInformation.GiveWaypointName(instruction
+                                                             ._currentWaypointGuid);
+                        NavigationProgress = instruction._progress;
+                        ProgressBar = instruction._progressBar;
+                        FirstDirectionPicture = null;
+                        isPlaying = false;
+                        isFinished = true;
+                        break;
+                    }
                 case NavigationResult.AdjustRoute:
-                    Console.WriteLine("Wrong");
-					CurrentStepLabel =
-                        _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", 
-												   currentLanguage);
-					CurrentStepImage = "waittingscan.gif";
-                    isPlaying = true;
-                    Utility._textToSpeech.Speak(
-                        CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
-												   currentLanguage));
-					break;
+                    {
+                        Console.WriteLine("Get a wrong way.");
 
+                        //CurrentStepLabel =
+                        //    _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING",
+                        //                               currentLanguage);
+                        //CurrentStepImage = "waittingscan.gif";
+                        //isPlaying = true;
+                        //Utility._textToSpeech.Speak(
+                        //    CurrentStepLabel,
+                        //    _resourceManager.GetString("CULTURE_VERSION_STRING",
+                        //                               currentLanguage));
+                        break;
+                    }
 				case NavigationResult.Arrival:
-					CurrentWaypointName = 
-						_xmlInformation.GiveWaypointName(_destinationID);
-					CurrentStepLabel =
-                        _resourceManager.GetString("DIRECTION_ARRIVED_STRING", 
-												   currentLanguage);
-					CurrentStepImage = "Arrived.png";
-                    FirstDirectionPicture = null;
-					NavigationProgress = 100;
-                    ProgressBar = instruction._progressBar;
-                    isPlaying = false;
-                    isFinished = true;
+                    {
+                        CurrentWaypointName =
+                          _xmlInformation.GiveWaypointName(_destinationID);
+                        CurrentStepLabel =
+                            _resourceManager.GetString("DIRECTION_ARRIVED_STRING",
+                                                       currentLanguage);
+                        CurrentStepImage = "Arrived.png";
+                        FirstDirectionPicture = null;
+                        NavigationProgress = 100;
+                        ProgressBar = instruction._progressBar;
+                        isPlaying = false;
+                        isFinished = true;
 
-                    Utility._textToSpeech.Speak(
-                        CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
-												   currentLanguage));                                      
-                    Stop();
-					break;
-
+                        Utility._textToSpeech.Speak(
+                            CurrentStepLabel,
+                            _resourceManager.GetString("CULTURE_VERSION_STRING",
+                                                       currentLanguage));
+                        Stop();
+                        break;
+                    }
                 case NavigationResult.NoRoute:
-                    Console.WriteLine("No Route");                   
-                    GoAdjustAvoidType();
-                    Stop();
-                    break;
+                    {
+                        Console.WriteLine("No Route");
+                        GoAdjustAvoidType();
+                        Stop();
+                        break;
+                    }
                 case NavigationResult.ArriveVirtualPoint:
-                    SetInstruction(instruction, 
-								   out currentStepLabel, 
-								   out currentStepImage, 
-								   out firstDirectionPicture, 
-								   out rotationValue, 
-								   out locationValue, 
-								   out instructionScale);
-                    CurrentStepLabel = 
-						string.Format(_resourceManager
-						.GetString("DIRECTION_ARRIVED_VIRTUAL_STRING",
-								   currentLanguage),
-						currentStepLabel, 
-						Environment.NewLine);
-                    CurrentStepImage = "Arrived.png";
-                    NavigationProgress = 100;
-                    ProgressBar = instruction._progressBar;
-                    CurrentWaypointName = 
-						_xmlInformation.GiveWaypointName(instruction.
-														 _currentWaypointGuid);
-                    FirstDirectionPicture = firstDirectionPicture;
-                    InstructionLocationValue = locationValue;
-                    isPlaying = false;
-                    RotationValue = rotationValue;
-                    Utility._textToSpeech.Speak(
-                        CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", 
-												   currentLanguage));                                     
-                    Stop();
-                    break;
-
+                    {
+                        SetInstruction(instruction,
+                                       out currentStepLabel,
+                                       out currentStepImage,
+                                       out firstDirectionPicture,
+                                       out rotationValue,
+                                       out locationValue,
+                                       out instructionScale);
+                        CurrentStepLabel =
+                            string.Format(_resourceManager
+                            .GetString("DIRECTION_ARRIVED_VIRTUAL_STRING",
+                                       currentLanguage),
+                            currentStepLabel,
+                            Environment.NewLine);
+                        CurrentStepImage = "Arrived.png";
+                        NavigationProgress = 100;
+                        ProgressBar = instruction._progressBar;
+                        CurrentWaypointName =
+                            _xmlInformation.GiveWaypointName(instruction.
+                                                             _currentWaypointGuid);
+                        FirstDirectionPicture = firstDirectionPicture;
+                        InstructionLocationValue = locationValue;
+                        isPlaying = false;
+                        RotationValue = rotationValue;
+                        Utility._textToSpeech.Speak(
+                            CurrentStepLabel,
+                            _resourceManager.GetString("CULTURE_VERSION_STRING",
+                                                       currentLanguage));
+                        Stop();
+                        break;
+                    }
             }
         }
 
@@ -657,6 +668,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             
             DisplayInstructions(args);
 		}
+       
 
         #region NavigatorPage Binding Args
 
