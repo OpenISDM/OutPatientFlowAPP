@@ -74,34 +74,7 @@ namespace IndoorNavigation.Views.Navigation
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");
-        }
-
-        public NavigatorPage(string navigationGraphName,
-                             string destinationFloor,
-                             Guid destinationRegionID,
-                             Guid destinationWaypointID,
-                             string destinationWaypointName,
-                             XMLInformation informationXML)
-        {
-            Console.WriteLine(">> NavigatorPage constructor: {0} {1} {2} {3} ",
-                              navigationGraphName,
-                              destinationRegionID,
-                              destinationWaypointID,
-                              destinationWaypointName);
-
-            InitializeComponent();
-
-            _viewModel = new NavigatorPageViewModel(navigationGraphName,
-                                                    destinationFloor,
-                                                    destinationRegionID,
-                                                    destinationWaypointID,
-                                                    destinationWaypointName,
-                                                    informationXML);
-            BindingContext = _viewModel;
-
-            Console.WriteLine("<< NavigatorPage constructor");
-        }
-
+        }  
         protected override void OnDisappearing()
         {
             _viewModel.Stop();
@@ -114,6 +87,10 @@ namespace IndoorNavigation.Views.Navigation
             base.OnAppearing();
             //CurrentInstructionImage.Source = "waittingscan.gif";
             //_viewModel.CurrentStepImage = "waittingscan.gif";
+        }
+        async private void FinishButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
         }
     }
 }

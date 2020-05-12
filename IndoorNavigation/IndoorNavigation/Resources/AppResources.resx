@@ -337,10 +337,10 @@
     <value>Unable to avoid all connection types</value>
   </data>
   <data name="DESTINATION_STRING" xml:space="preserve">
-    <value>Goal : </value>
+    <value>Goal : {0}</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>Current: </value>
+    <value>Current: {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
@@ -469,7 +469,7 @@
     <value>Version</value>
   </data>
   <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1075</value>
+    <value>2.0.171</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>Press OK to update Map</value>
@@ -490,10 +490,10 @@
     <value>EXC</value>
   </data>
   <data name="NEW_STRING" xml:space="preserve">
-    <value>NEW</value>
+    <value>Add</value>
   </data>
   <data name="DRNAME_STRING" xml:space="preserve">
-    <value>Doctor</value>
+    <value>Doctor : {0}</value>
   </data>
   <data name="PHARMACY_ALERT_STRING" xml:space="preserve">
     <value>You can go pharmacy only if you finish cashier.</value>
@@ -520,7 +520,7 @@
     <value>Birthday</value>
   </data>
   <data name="CAREROOM_STRING" xml:space="preserve">
-    <value>Careroom</value>
+    <value>Careroom : {0}</value>
   </data>
   <data name="FINISH_SCHEDULE_STRING" xml:space="preserve">
     <value>You finish today schedule.</value>
@@ -550,7 +550,7 @@
     <value>Please select a destination at least</value>
   </data>
   <data name="OUTPATIENT_TIME_STRING" xml:space="preserve">
-    <value>Outpatient Time</value>
+    <value>Outpatient Time : {0}</value>
   </data>
   <data name="PAYMENT_MEDICINE_STRING" xml:space="preserve">
     <value>Cashier/Pharmacy</value>
@@ -580,7 +580,7 @@
     <value>Navigation List</value>
   </data>
   <data name="SEQUENCE_STRING" xml:space="preserve">
-    <value>Sequence</value>
+    <value>Sequence : {0}</value>
   </data>
   <data name="NO_SHIFT_STRING" xml:space="preserve">
     <value>There is no item that could be switched.</value>
@@ -601,7 +601,7 @@
     <value>There is no network, please check it and try again</value>
   </data>
   <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
-    <value>This service will need network to recieve data. If you don't have cellular network or WiFi, please press "No" button to use Navigator service</value>
+    <value>This service will need network to recieve data. Do you wanna go to setting?</value>
   </data>
   <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
     <value>You select some duplicate examination room.</value>
@@ -618,8 +618,32 @@
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>Take Elevator to {0} floor.</value>
   </data>
+  <data name="REVISIT_STRING" xml:space="preserve">
+    <value>Revisit</value>
+  </data>
+  <data name="INVALID_WAYPOINT_STRING" xml:space="preserve">
+    <value>(Invalid waypoint)</value>
+  </data>
+  <data name="CASHIER_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
+    <value>Cashier and Pharmacy need to be selected at least one.</value>
+  </data>
+  <data name="REGISTERED_COUNTER_STRING" xml:space="preserve">
+    <value>Registered counter</value>
+  </data>
+  <data name="RETURN_STRING" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="REGISTER_STRING" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="GO_TO_SETTING" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="LEAVE_STRING" xml:space="preserve">
+    <value>LEAVE</value>
+  </data>
   <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
-    <value>Server didn't response, do you want to retry again?</value>
+    <value>it seems to happend some error, do you want to retry?</value>
   </data>
   <data name="RETRY_STRING" xml:space="preserve">
     <value>RETRY</value>

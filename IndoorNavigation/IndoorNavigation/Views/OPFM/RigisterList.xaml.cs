@@ -128,7 +128,7 @@ namespace IndoorNavigation
                     isButtonPressed = false;
                     return;
                 }                               
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._floor, record._regionID, record._waypointID, record._waypointName, _nameInformation));
+                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, record._regionID, record._waypointID, record._waypointName, _nameInformation));
                 record.isComplete = true;
             }
             RefreshListView();

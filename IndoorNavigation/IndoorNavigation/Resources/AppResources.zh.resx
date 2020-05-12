@@ -337,10 +337,10 @@
     <value>無法避開所有路線選項</value>
   </data>
   <data name="DESTINATION_STRING" xml:space="preserve">
-    <value>目的地 : </value>
+    <value>目的地 : {0}</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>目前位置 : </value>
+    <value>目前位置 : {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
@@ -469,7 +469,7 @@
     <value>版本</value>
   </data>
   <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1075</value>
+    <value>2.0.1071</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>按下確定來更新圖資</value>
@@ -490,7 +490,7 @@
     <value>請按確定跳轉至登入畫面。</value>
   </data>
   <data name="CAREROOM_STRING" xml:space="preserve">
-    <value>診間</value>
+    <value>診間 : {0}</value>
   </data>
   <data name="COMMEND_ORDER_STRING" xml:space="preserve">
     <value>建議順序</value>
@@ -499,7 +499,7 @@
     <value>不同意</value>
   </data>
   <data name="DRNAME_STRING" xml:space="preserve">
-    <value>醫師</value>
+    <value>醫師 : {0}</value>
   </data>
   <data name="EXCHANGE_STRING" xml:space="preserve">
     <value>交換</value>
@@ -553,7 +553,7 @@
     <value>門診幫手</value>
   </data>
   <data name="OUTPATIENT_TIME_STRING" xml:space="preserve">
-    <value>門診時間</value>
+    <value>門診時間 : {0}</value>
   </data>
   <data name="PAYMENT_MEDICINE_STRING" xml:space="preserve">
     <value>批價/領藥</value>
@@ -568,7 +568,7 @@
     <value>看病日期</value>
   </data>
   <data name="SEQUENCE_STRING" xml:space="preserve">
-    <value>順序</value>
+    <value>順序 : {0}</value>
   </data>
   <data name="SHIFT_DESCRIPTION_STRING" xml:space="preserve">
     <value>請點選兩個想要交換位置的項目，被選的項目位置將會交換。</value>
@@ -592,7 +592,7 @@
     <value>導航至掛號台</value>
   </data>
   <data name="ALERT_IF_YOU_HAVE_NETWORK_STRING" xml:space="preserve">
-    <value>這項服務將會需要使用到網路服務，若您沒有行動網路或是WiFi連線，請按"否"改用導航服務</value>
+    <value>這項服務將會需要使用到網路服務，請問是否要去設定?</value>
   </data>
   <data name="SELECT_DUPLICATE_EXAM_STRING" xml:space="preserve">
     <value>您選取了重複的檢查內容。</value>
@@ -609,8 +609,32 @@
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>搭電梯前往{0}樓</value>
   </data>
+  <data name="REVISIT_STRING" xml:space="preserve">
+    <value>回診</value>
+  </data>
+  <data name="CASHIER_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
+    <value>批價與領藥都要選擇一個</value>
+  </data>
+  <data name="INVALID_WAYPOINT_STRING" xml:space="preserve">
+    <value>(無效的航點)</value>
+  </data>
+  <data name="REGISTERED_COUNTER_STRING" xml:space="preserve">
+    <value>掛號櫃台</value>
+  </data>
+  <data name="RETURN_STRING" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="REGISTER_STRING" xml:space="preserve">
+    <value>去掛號</value>
+  </data>
+  <data name="GO_TO_SETTING" xml:space="preserve">
+    <value>去設定</value>
+  </data>
+  <data name="LEAVE_STRING" xml:space="preserve">
+    <value>離開</value>
+  </data>
   <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
-    <value>伺服器沒有回應，請問要重試嗎?</value>
+    <value>發生預期外的錯誤，請問要重試嗎?</value>
   </data>
   <data name="RETRY_STRING" xml:space="preserve">
     <value>重試</value>

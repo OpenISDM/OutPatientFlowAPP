@@ -43,7 +43,7 @@ namespace IndoorNavigation
 
                 var o = SelectItem as DestinationItem;
 
-                await nowPage.Navigation.PushAsync(new NavigatorPage(_navigationGraphName, o._floor, o._regionID, o._waypointID, o._waypointName, _nameInformation));
+                await nowPage.Navigation.PushAsync(new NavigatorPage(_navigationGraphName, o._regionID, o._waypointID, o._waypointName, _nameInformation));
                 App app = (App)Application.Current;
                 app.records.Insert(app.FinishCount,new RgRecord
                 {
