@@ -215,14 +215,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
 
                 case NavigationResult.AdjustRoute:
-                    Console.WriteLine("Wrong");
-					CurrentStepLabel =
-                        _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
-					CurrentStepImage = "Waiting.gif";
-                    isPlaying = true;
-                    Utility._textToSpeech.Speak(
-                        CurrentStepLabel,
-                        _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
+                    Console.WriteLine("AdjustRoute");
+
+					//CurrentStepLabel =
+     //                   _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING", currentLanguage);
+					//CurrentStepImage = "Waiting.gif";
+     //               isPlaying = true;
+     //               Utility._textToSpeech.Speak(
+     //                   CurrentStepLabel,
+     //                   _resourceManager.GetString("CULTURE_VERSION_STRING", currentLanguage));
 					break;
 
 				case NavigationResult.Arrival:

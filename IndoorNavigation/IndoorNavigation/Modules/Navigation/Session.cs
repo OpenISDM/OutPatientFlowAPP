@@ -44,7 +44,6 @@ using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
-using System.Security.Cryptography;
 
 namespace IndoorNavigation.Modules
 {
@@ -86,7 +85,12 @@ namespace IndoorNavigation.Modules
             new Dictionary<Guid, Region>();
 
         private IPSModules _iPSModules;
-        private const int _tooCLoseDistance = 9;
+        private const int _tooCLoseDistance = 1;
+
+        #region wait for test variable
+        private bool _DetectWrongWaypoint = true;
+
+        #endregion
 
         public Session(NavigationGraph navigationGraph,
                        Guid destinationRegionID,
@@ -201,7 +205,7 @@ namespace IndoorNavigation.Modules
                 else if (_nextWaypointStep >= 1 &&
                     _waypointsOnWrongWay
                     [_waypointsOnRoute[_nextWaypointStep - 1]]
-                    .Contains(checkWrongRegionWaypoint) == true)
+                    .Contains(checkWrongRegionWaypoint) == true && _DetectWrongWaypoint==false)
                 {
 
                     Console.WriteLine("In Program Wrong, going to Re-calculate" +
@@ -213,7 +217,7 @@ namespace IndoorNavigation.Modules
                                     _currentWaypointID,
                                     _destinationRegionID,
                                     _destinationWaypointID);
-
+                    _DetectWrongWaypoint = true;
                     Console.WriteLine("Finish Construct New Route");
 
                     Guid previousRegionID = new Guid();
@@ -222,7 +226,7 @@ namespace IndoorNavigation.Modules
                     // Add this function can avoid that when users go to the 
                     // worong waypoint, the instuction will jump to fast.
 
-                    SpinWait.SpinUntil(() => false, 5000);
+                    //SpinWait.SpinUntil(() => false, 5000);
                     RegionWaypointPoint regionWaypointPoint =
                         new RegionWaypointPoint();
                     regionWaypointPoint._regionID = _currentRegionID;
@@ -1250,7 +1254,7 @@ namespace IndoorNavigation.Modules
                     else if (_nextWaypointStep >= 1 &&
                              _waypointsOnWrongWay
                              [_waypointsOnRoute[_nextWaypointStep - 1]]
-                             .Contains(detectWrongWay) == true)
+                             .Contains(detectWrongWay) == true && _DetectWrongWaypoint)
                     {
                         Console.WriteLine("In next next wrong way");
                         HandleWrongWay();
@@ -1261,7 +1265,7 @@ namespace IndoorNavigation.Modules
                 else if (_nextWaypointStep >= 1 &&
                          _waypointsOnWrongWay
                          [_waypointsOnRoute[_nextWaypointStep - 1]].
-                         Contains(detectWrongWay) == true)
+                         Contains(detectWrongWay) == true && _DetectWrongWaypoint)
                 {
                     HandleWrongWay();
                 }
@@ -1275,6 +1279,7 @@ namespace IndoorNavigation.Modules
         public void HandleWrongWay()
         {
             _accumulateStraightDistance = 0;
+            _DetectWrongWaypoint = false;
             Console.WriteLine("---- [case: wrong waypoint] .... ");
             _event.OnEventCall(new NavigationEventArgs
             {
