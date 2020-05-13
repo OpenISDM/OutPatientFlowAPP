@@ -36,7 +36,6 @@ using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Navigation;
-using Xamarin.Essentials;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
@@ -45,12 +44,15 @@ using Plugin.Multilingual;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Models;
 using IndoorNavigation.Views.OPFM;
+using IndoorNavigation.ViewModels;
+
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SelectTwoWayPopupPage : PopupPage
     {
         String _locationName;
+        Location _location;
         bool isButtonPressed = false;        
         Page page = Application.Current.MainPage;
 
@@ -72,12 +74,12 @@ namespace IndoorNavigation.Views.PopUpPage
             InitializeComponent();
         }
 
-        public SelectTwoWayPopupPage(string BuildingName)
+        public SelectTwoWayPopupPage(Location location)
         {
             InitializeComponent();
             //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            _locationName = BuildingName;
-
+            _locationName = location.sourcePath;
+            _location = location;
             setting = DependencyService.Get<INetworkSetting>();
         }
 
@@ -95,7 +97,7 @@ namespace IndoorNavigation.Views.PopUpPage
             
             await PopupNavigation.Instance.PopAllAsync();
             await page.Navigation.PushAsync
-				(new NavigationHomePage(_locationName));
+				(new NavigationHomePage(_location));
         }
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
@@ -125,47 +127,16 @@ namespace IndoorNavigation.Views.PopUpPage
                 {
                     Console.WriteLine("Go to setting messagingCenter sender is : " + (bool)msgArgs);
 
-                    
-
                     if ((bool)msgArgs)
                     {
                         INetworkSetting setting = DependencyService.Get<INetworkSetting>();
                         setting.OpenSettingPage();                        
                     }
 
-                    await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(_locationName));
+                    await PopupNavigation.Instance.PushAsync(new SelectTwoWayPopupPage(_location));
 
                     MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "GoToSetting");
-                });
-                //if (!Preferences.Get("NotShowAgain_ToOPFM", false))
-                //{
-                //    Console.WriteLine("aaaaa");
-                //    await PopupNavigation.Instance.PushAsync
-                //          (new ShiftAlertPopupPage(
-                //            _resourceManager.GetString
-                //            ("ALERT_IF_YOU_HAVE_NETWORK_STRING", currentLanguage),
-                //            _resourceManager.GetString
-                //            ("YES_STRING", currentLanguage),
-                //            _resourceManager.GetString
-                //            ("NO_STRING", currentLanguage),
-                //            "NotShowAgain_ToOPFM"));
-
-                //    MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM", async (msgsender, msgargs) =>
-                //       {
-                //           if ((bool)msgargs)
-                //               await page.Navigation.PushAsync
-                //                             (new RigisterList(_locationName));
-                //           else
-                //               await PopupNavigation.Instance.PopAllAsync();
-
-                //           MessagingCenter.Unsubscribe<ShiftAlertPopupPage, bool>(this, "NotShowAgain_ToOPFM");
-                //       });
-                //}
-                //else
-                //{
-                //    await page.Navigation.PushAsync
-                //        (new RigisterList(_locationName));
-                //}
+                });                
             } 
         }
 

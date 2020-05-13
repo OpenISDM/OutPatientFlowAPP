@@ -48,6 +48,7 @@ using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources;
 using IndoorNavigation.Resources.Helpers;
+using IndoorNavigation.Utilities;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Views.Settings.LicensePages;
 using Plugin.Multilingual;
@@ -345,9 +346,10 @@ namespace IndoorNavigation.Views.Settings
                                            _resourceManager.GetString("CANCEL_STRING", ci)))
                     {
                         // Cancel All Map
-                        NavigraphStorage.DeleteAllNavigationGraph();
-                        NavigraphStorage.DeleteAllFirstDirectionXML();
-                        NavigraphStorage.DeleteAllInformationXML();
+                        //NavigraphStorage.DeleteAllNavigationGraph();
+                        //NavigraphStorage.DeleteAllFirstDirectionXML();
+                        //NavigraphStorage.DeleteAllInformationXML();
+                        Storage.DeleteAllGraphFiles();
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -355,10 +357,7 @@ namespace IndoorNavigation.Views.Settings
                 }
                 else
                 {
-                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-                                           //_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci),
-                                           //_resourceManager.GetString("MAP_STRING", ci),
-                                           //string.Format(":{0}？", CleanMapPicker.SelectedItem),
+                    if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),                                           
                                            string.Format(_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci) + _resourceManager.GetString("MAP_STRING", ci) + ":{0}？", CleanMapPicker.SelectedItem),
                                            _resourceManager.GetString("OK_STRING", ci),
                                            _resourceManager.GetString("CANCEL_STRING", ci)))

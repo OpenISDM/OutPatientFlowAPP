@@ -101,12 +101,12 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="ViewCell_Tapped">
-                            <ViewCell.ContextActions>
+                            <!--<ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" 
 										  CommandParameter="{Binding .}"
 										  Text="Delete" 
 										  IsDestructive="True" />
-                             </ViewCell.ContextActions>
+                             </ViewCell.ContextActions>-->
                             
                             <StackLayout Orientation="Horizontal"
                                          Padding="20, 20, 20, 1">                                

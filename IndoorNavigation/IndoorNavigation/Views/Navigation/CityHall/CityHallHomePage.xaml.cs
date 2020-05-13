@@ -51,7 +51,7 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-
+using IndoorNavigation.ViewModels;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -66,12 +66,12 @@ namespace IndoorNavigation.Views.Navigation
 
         private string _navigationGraphName;
 
-        public CityHallHomePage(string navigationGraphName)
+        public CityHallHomePage(Location location)
         {
             InitializeComponent();
             var currentLanguage = 
 				CrossMultilingual.Current.CurrentCultureInfo;
-            this._navigationGraphName = navigationGraphName;
+            this._navigationGraphName = location.sourcePath;
 
             NavigationPage
 			.SetBackButtonTitle

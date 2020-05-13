@@ -54,6 +54,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -83,20 +84,19 @@ namespace IndoorNavigation.ViewModels
 
             if (!Application.Current.Properties.ContainsKey("FirstUse"))
             {
-                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", 
-												   "NTUH_YunLin");
-                NavigraphStorage.GenerateFileRoute("Taipei City Hall", 
-												   "Taipei_City_Hall");
-                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", 
-										           "Yuanlin_Christian_Hospital");
+                Storage.EmbeddedGenerateFile("NTUH_Yunlin");
+                Console.WriteLine("aaaaa");
+                Storage.EmbeddedGenerateFile("Taipei_City_Hall");
+                Storage.EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
+                Storage.EmbeddedGenerateFile("Lab");
                 Application.Current.Properties["FirstUse"] = false;
             }
          
 
-            foreach (string naviGraphName in 
-					 NavigraphStorage.GetAllNavigationGraphs())
+            foreach (Location location in 
+					 Storage.GetAllNaviGraphName())
             {
-                _locations.Add(new Location { UserNaming = naviGraphName });
+                _locations.Add(location);
             }
 
             if (_locations.Any())
@@ -167,7 +167,7 @@ namespace IndoorNavigation.ViewModels
                 // Search waypoints
                 var searchedWaypoints = string.IsNullOrEmpty(value) ?
                                         _locations : _locations
-                                        .Where(c =>c.UserNaming.Contains(value));
+                                        .Where(c =>c.UserNaming.Contains(value));                
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }
         }
@@ -176,5 +176,8 @@ namespace IndoorNavigation.ViewModels
     public class Location
     {
         public string UserNaming { get; set; }
+        public string sourcePath { get; set; }
+
+        public override string ToString() => UserNaming;
     }
 }

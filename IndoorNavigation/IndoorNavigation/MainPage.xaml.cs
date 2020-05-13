@@ -63,6 +63,7 @@ using Rg.Plugins.Popup.Services;
 using System.Globalization;
 using IndoorNavigation.Views.Settings.LicensePages;
 using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation
 {
@@ -161,15 +162,9 @@ namespace IndoorNavigation
         {
              var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
-            {
-                var ci = CrossMultilingual.Current.CurrentCultureInfo;
-
-                string map = //PhoneInformation_.GetCurrentMapName(location.UserNaming);
-					_phoneInformation.GiveCurrentMapName(location.UserNaming);
-                
+            {              
                 NavigationGraph navigationGraph =
-					NavigraphStorage.LoadNavigationGraphXML(map);
-                Console.WriteLine("string Map : " + map);
+                    Storage.LoadNavigationGraphXml(location.sourcePath);               
                 XmlDocument xmlDocument = new XmlDocument();
                 using (var stream = 
 							Assembly.GetExecutingAssembly()
@@ -206,8 +201,7 @@ namespace IndoorNavigation
 							_phoneInformation
 							.GiveGenerateMapName(location.UserNaming);
 
-                        NavigraphStorage.GenerateFileRoute(generateName[0], 
-														   generateName[1]);
+                        Storage.EmbeddedGenerateFile(generateName[1]);
                         updateMapOrNot = true;
                     }
                     else
@@ -236,16 +230,16 @@ namespace IndoorNavigation
 										   currentLanguage))
                                 await PopupNavigation.Instance
 									  .PushAsync(new SelectTwoWayPopupPage
-									  (location.UserNaming));
+									  (location));
                             else
                                 await Navigation.PushAsync
-								  (new NavigationHomePage(location.UserNaming));
+								  (new NavigationHomePage(location));
                             
                             break;
 
                         case "city_hall":
                             await Navigation.PushAsync
-								  (new CityHallHomePage(location.UserNaming));
+								  (new CityHallHomePage(location));
                             
                             break;
 
@@ -295,47 +289,47 @@ namespace IndoorNavigation
             LocationListView.EndRefresh();
         }
 
-        void Item_Delete(object sender, EventArgs e)
-        {
-            var item = (Location)((MenuItem)sender).CommandParameter;
-            var ci = 
-				CrossMultilingual.Current.CurrentCultureInfo;
-            string NTUH_YunLin = 
-				_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
+    //    void Item_Delete(object sender, EventArgs e)
+    //    {
+    //        var item = (Location)((MenuItem)sender).CommandParameter;
+    //        var ci = 
+				//CrossMultilingual.Current.CurrentCultureInfo;
+    //        string NTUH_YunLin = 
+				//_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
 				
-            string Taipei_City_Hall = 
-				_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
+    //        string Taipei_City_Hall = 
+				//_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
 				
-            string Lab = 
-				_resourceManager.GetString("LAB_STRING", ci);
+    //        string Lab = 
+				//_resourceManager.GetString("LAB_STRING", ci);
 			
-            string Yuanlin_Christian_Hospital = 
-				_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
-										   ci);
-            string loadFileName = "";
+    //        string Yuanlin_Christian_Hospital = 
+				//_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
+				//						   ci);
+    //        string loadFileName = "";
 
-            if (item.UserNaming == NTUH_YunLin)
-            {
-                loadFileName = "NTUH Yunlin Branch";
-            }
-            else if (item.UserNaming == Taipei_City_Hall)
-            {
-                loadFileName = "Taipei City Hall";
-            }
-            else if (item.UserNaming == Lab)
-            {
-                loadFileName = "Lab";
-            }
-            else if (item.UserNaming == Yuanlin_Christian_Hospital)
-            {
-                loadFileName = "Yuanlin Christian Hospital";
-            }
-            if (item != null)
-            {
-                NavigraphStorage.DeleteNavigationGraph(loadFileName);
-                _viewModel.LoadNavigationGraph();
-            }
-        }
+    //        if (item.UserNaming == NTUH_YunLin)
+    //        {
+    //            loadFileName = "NTUH Yunlin Branch";
+    //        }
+    //        else if (item.UserNaming == Taipei_City_Hall)
+    //        {
+    //            loadFileName = "Taipei City Hall";
+    //        }
+    //        else if (item.UserNaming == Lab)
+    //        {
+    //            loadFileName = "Lab";
+    //        }
+    //        else if (item.UserNaming == Yuanlin_Christian_Hospital)
+    //        {
+    //            loadFileName = "Yuanlin Christian Hospital";
+    //        }
+    //        if (item != null)
+    //        {
+    //            NavigraphStorage.DeleteNavigationGraph(loadFileName);
+    //            _viewModel.LoadNavigationGraph();
+    //        }
+    //    }
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
             if (lastCell != null)

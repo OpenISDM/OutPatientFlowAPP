@@ -49,6 +49,7 @@ using Xamarin.Forms;
 using System.Linq;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Modules
 {
@@ -106,10 +107,7 @@ namespace IndoorNavigation.Modules
 
             // Start the session
             _session = new Session(
-                    NavigraphStorage.LoadNavigationGraphXML(
-							_phoneInfomation.
-								GiveCurrentMapName(_navigationGraphName)
-						),
+                    Storage.LoadNavigationGraphXml(_navigationGraphName),
                     _destinationRegionID,
                     _destinationWaypointID,
                     avoidList.ToArray());

@@ -54,8 +54,8 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System.Collections.ObjectModel;
 using System.Collections;
-
-using Xamarin.Essentials;
+using IndoorNavigation.Utilities;
+using IndoorNavigation.ViewModels;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -68,14 +68,16 @@ namespace IndoorNavigation.Views.Navigation
 			(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         private string _navigationGraphName;
         public string myProperty { get; } = "";
-        public NavigationHomePage(string navigationGraphName)
+        public NavigationHomePage(Location location)
         {
             InitializeComponent();
 
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            myProperty = navigationGraphName;
+
+            #region Layout setting
+            myProperty = location.UserNaming;
             BindingContext = this;
-            this._navigationGraphName = navigationGraphName;
+            this._navigationGraphName = location.sourcePath;
             NavigationPage.SetBackButtonTitle
 				(this, 
 				 _resourceManager.GetString("BACK_STRING", currentLanguage));
@@ -100,38 +102,14 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
-
+            #endregion
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
 
-        }
-
-        async public void DetectGPS()
-        {
-            Location location;
-            try
-            {
-                location = await Geolocation.GetLocationAsync();
-                Console.WriteLine("get location, longt=" + location.Longitude + "  lati=" + location.Latitude);
-            }
-            catch(Exception e)
-            {
-                location = await Geolocation.GetLastKnownLocationAsync();
-                Console.WriteLine("Geolocation exception:" + e.StackTrace);
-                Console.WriteLine("get latest location, longt=" + location.Longitude + "  lati=" + location.Latitude);
-            }
-
-
-            
-        }
-
-        //private bool ComparisonLocation(Location destination, Location currentLocation)
-        //{
-
-        //}
+        }      
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {
@@ -199,16 +177,6 @@ namespace IndoorNavigation.Views.Navigation
             await Navigation.PushAsync(
 				new DestinationPickPage(_navigationGraphName,
                                         CategoryType.BloodCollectionCounter));
-        }
-        /*if(sourceList.Contains(passedItem))
-							{
-								sourceList.Remove (passedItem);
-								if (destinationList.Count >= insertLocation)
-									destinationList.Insert(insertLocation - 1, passedItem);
-								else
-								{
-									destinationList.Add(passedItem);
-								}
-							}*/
+        }       
     }
 }

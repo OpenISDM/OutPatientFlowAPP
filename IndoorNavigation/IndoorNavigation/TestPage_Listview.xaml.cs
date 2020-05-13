@@ -1,20 +1,10 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Essentials;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 
 using System;
-using System.Resources;
-using System.IO;
-using System.Threading.Tasks;
-using System.Threading;
-using Rg.Plugins.Popup.Services;
-using Newtonsoft.Json;
-using IndoorNavigation.Modules.Utilities;
-using IndoorNavigation.Views.PopUpPage;
-using IndoorNavigation.Utilities;
-using System.Collections.Generic;
+using System.Xml;
+
+using static IndoorNavigation.Utilities.Storage;
 
 namespace IndoorNavigation
 {
@@ -24,20 +14,42 @@ namespace IndoorNavigation
         public TestPage_Listview()
         {
             InitializeComponent();
+            _resources = new GraphResources();
 
-           // string context = NaviGraphStroage_.EmbeddedSourceReader("Utilities.a.json");
+            XmlDocument doc =  XmlReader("Resources.GraphResource.xml");
 
-           //// var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, FileResource>>(context);
-           // Console.WriteLine(">>parse well done");
-           // foreach(KeyValuePair<string, FileResource> resource in jsonObject)
-           // {
-           //     Console.WriteLine("Key = " + resource.Key);
-           //     //Console.WriteLine("Value = " + resource.Value);
-           //     Console.WriteLine("Value version = " + resource.Value._version);
-           //     Console.WriteLine("Value naviGarphSinkRoute = " + resource.Value._naviGraphSinkRoute);
-           //     Console.WriteLine("Value FD SinkRoute = " + resource.Value._infoDataSinkRoute.Values);
-           //     Console.WriteLine("Value Info SinkRoute = " + resource.Value._infoDataSinkRoute.Keys);
-           // }
+            XmlNodeList GraphsList = doc.SelectNodes("GraphResource/Graphs/Graph");
+            XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
+
+            foreach (XmlNode GraphNode in GraphsList)
+            {
+                Console.WriteLine(GraphNode.OuterXml);
+                Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
+                string GraphName = GraphNode.Attributes["name"].Value;
+                GraphInfo info = new GraphInfo();
+
+                XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
+                Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
+                foreach (XmlNode displayName in DisplayNameList)
+                {
+                    Console.WriteLine(">>displayName, name : " + displayName.Attributes["name"].Value);
+                    Console.WriteLine(">>displayName, version : " + displayName.Attributes["language"].Value);
+
+                    info._displayNames.Add(displayName.Attributes["language"].Value, displayName.Attributes["name"].Value);
+                    //Console.WriteLine("dddddddd");
+                }
+                Console.WriteLine("ddddddd");
+                //Console.WriteLine(GraphNode.OuterXml);
+                _resources._graphResources.Add(GraphName, info);
+                Console.WriteLine("<<Next GraphNode");
+            }
+            Console.WriteLine("Next to parse Language");
+            foreach (XmlNode languageNode in LanguageList)
+            {
+                Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
+                _resources._languages.Add(languageNode.Attributes["name"].Value);
+            }
+
         }
 
         #region Cloud Test
