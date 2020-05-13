@@ -173,7 +173,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
             int instructionScale = _originalInstructionScale;
-            Vibration.Vibrate(500);
+            //Vibration.Vibrate(500);
             switch ((args as Session.NavigationEventArgs)._result)
             {
                 case NavigationResult.Run:
