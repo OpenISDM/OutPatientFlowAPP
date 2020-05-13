@@ -112,7 +112,7 @@ namespace IndoorNavigation.Utilities
 
         #region Load File
         static public List<Location> GetAllNaviGraphName() 
-        {
+        {           
             List<Location> names = new List<Location>();
            foreach(KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
             {
