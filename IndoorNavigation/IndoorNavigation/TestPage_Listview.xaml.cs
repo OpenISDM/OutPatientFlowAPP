@@ -5,53 +5,88 @@ using System;
 using System.Xml;
 
 using static IndoorNavigation.Utilities.Storage;
+using System.Xml.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage_Listview : ContentPage
     {
+
         public TestPage_Listview()
         {
             InitializeComponent();
-            _resources = new GraphResources();
 
-            XmlDocument doc =  XmlReader("Resources.GraphResource.xml");
+            XElement root = new XElement("GraphResource");
+            XElement GraphsElement = new XElement("Graphs");
 
-            XmlNodeList GraphsList = doc.SelectNodes("GraphResource/Graphs/Graph");
-            XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
-
-            foreach (XmlNode GraphNode in GraphsList)
-            {
-                Console.WriteLine(GraphNode.OuterXml);
-                Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
-                string GraphName = GraphNode.Attributes["name"].Value;
-                GraphInfo info = new GraphInfo();
-
-                XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
-                Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
-                foreach (XmlNode displayName in DisplayNameList)
+            foreach(KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
+            {                
+                XElement displayNameElement= new XElement("DisplayNames");
+                foreach(KeyValuePair<string,string> displaynamePair in pair.Value._displayNames)
                 {
-                    Console.WriteLine(">>displayName, name : " + displayName.Attributes["name"].Value);
-                    Console.WriteLine(">>displayName, version : " + displayName.Attributes["language"].Value);
-
-                    info._displayNames.Add(displayName.Attributes["language"].Value, displayName.Attributes["name"].Value);
-                    //Console.WriteLine("dddddddd");
+                    //displayNameElement.Add("DisplayName",new XAttribute("name", displayname.Value), new XAttribute("language", displayname.Key));                     
+                    displayNameElement.Add(new XElement("DisplayName", new XAttribute("name", displaynamePair.Value), new XAttribute("language", displaynamePair.Key)));
                 }
-                Console.WriteLine("ddddddd");
-                //Console.WriteLine(GraphNode.OuterXml);
-                _resources._graphResources.Add(GraphName, info);
-                Console.WriteLine("<<Next GraphNode");
+                GraphsElement.Add(new XElement("Graph",new XAttribute("name",pair.Key),new XAttribute("version",pair.Value._localVersion),displayNameElement));
             }
-            Console.WriteLine("Next to parse Language");
-            foreach (XmlNode languageNode in LanguageList)
+
+            XElement LanguageElement = new XElement("Languages");
+
+            foreach(string language in _resources._languages)
             {
-                Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
-                _resources._languages.Add(languageNode.Attributes["name"].Value);
+                LanguageElement.Add(new XElement("Langugae", new XAttribute("name", language)));
             }
+            root.Add(GraphsElement, LanguageElement);
+            Console.WriteLine(root.ToString());
+            
+        } 
 
-        }
+        #region Xml to Resource implement
+        //public TestPage_Listview()
+        //{
+        //    InitializeComponent();
+        //    _resources = new GraphResources();
 
+        //    XmlDocument doc =  XmlReader("Resources.GraphResource.xml");
+
+        //    XmlNodeList GraphsList = doc.SelectNodes("GraphResource/Graphs/Graph");
+        //    XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
+
+        //    foreach (XmlNode GraphNode in GraphsList)
+        //    {
+        //        Console.WriteLine(GraphNode.OuterXml);
+        //        Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
+        //        string GraphName = GraphNode.Attributes["name"].Value;
+        //        GraphInfo info = new GraphInfo();
+
+        //        XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
+        //        Console.WriteLine(">>GraphNode : " + GraphNode.Attributes["name"].Value);
+        //        foreach (XmlNode displayName in DisplayNameList)
+        //        {
+        //            Console.WriteLine(">>displayName, name : " + displayName.Attributes["name"].Value);
+        //            Console.WriteLine(">>displayName, version : " + displayName.Attributes["language"].Value);
+
+        //            info._displayNames.Add(displayName.Attributes["language"].Value, displayName.Attributes["name"].Value);
+        //            //Console.WriteLine("dddddddd");
+        //        }
+        //        Console.WriteLine("ddddddd");
+        //        //Console.WriteLine(GraphNode.OuterXml);
+        //        _resources._graphResources.Add(GraphName, info);
+        //        Console.WriteLine("<<Next GraphNode");
+        //    }
+        //    Console.WriteLine("Next to parse Language");
+        //    foreach (XmlNode languageNode in LanguageList)
+        //    {
+        //        Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
+        //        _resources._languages.Add(languageNode.Attributes["name"].Value);
+        //    }
+
+        //}
+        #endregion
         #region Cloud Test
         //CloudDownload _cloudDownload;
         //Thread ResourceThread;

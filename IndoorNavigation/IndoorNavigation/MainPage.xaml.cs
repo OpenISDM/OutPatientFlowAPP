@@ -54,15 +54,13 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
-using IndoorNavigation.Views.Settings.LicensePages;
-using IndoorNavigation.Models;
+
 using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation

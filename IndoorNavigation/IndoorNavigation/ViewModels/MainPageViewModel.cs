@@ -85,7 +85,6 @@ namespace IndoorNavigation.ViewModels
             if (!Application.Current.Properties.ContainsKey("FirstUse"))
             {
                 Storage.EmbeddedGenerateFile("NTUH_Yunlin");
-                Console.WriteLine("aaaaa");
                 Storage.EmbeddedGenerateFile("Taipei_City_Hall");
                 Storage.EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
                 Storage.EmbeddedGenerateFile("Lab");

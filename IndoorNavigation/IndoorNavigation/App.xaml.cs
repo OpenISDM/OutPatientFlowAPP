@@ -88,11 +88,11 @@ namespace IndoorNavigation
           
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
-            if (AppResources.Culture.ToString().Contains("zh"))
+            if (AppResources.Culture.ToString().Contains("zh-TW"))
             {
                 Current.Properties["LanguagePicker"] = "Chinese";
             }
-            else if (AppResources.Culture.ToString().Contains("en"))
+            else if (AppResources.Culture.ToString().Contains("en-US"))
             {
                 Current.Properties["LanguagePicker"] = "English";
             }

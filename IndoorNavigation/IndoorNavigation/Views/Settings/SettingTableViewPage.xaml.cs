@@ -93,6 +93,11 @@ namespace IndoorNavigation.Views.Settings
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
+        #region Beta Functions
+        public IList _downloadItemList = new ObservableCollection<string>();
+        public ICommand _downloadItemCommand => new DelegateCommand(ChooseDownloadMap);
+        #endregion
+
         public SettingTableViewPage()
         {
             InitializeComponent();
@@ -447,6 +452,12 @@ namespace IndoorNavigation.Views.Settings
             #endregion
             ReloadNaviGraphItems();
 
+        }
+
+        private void ChooseDownloadMap()
+        {
+            string selectItem = DownloadFromServer.SelectedItem.ToString().Trim();
+            //strin
         }
     }
 }
