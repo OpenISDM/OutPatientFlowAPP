@@ -9,42 +9,51 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using IndoorNavigation.Utilities;
+using Dijkstra.NET.Model;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage_Listview : ContentPage
     {
-
         public TestPage_Listview()
         {
             InitializeComponent();
 
-            XElement root = new XElement("GraphResource");
-            XElement GraphsElement = new XElement("Graphs");
+                        
+        }
 
-            foreach(KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
-            {                
-                XElement displayNameElement= new XElement("DisplayNames");
-                foreach(KeyValuePair<string,string> displaynamePair in pair.Value._displayNames)
-                {
-                    //displayNameElement.Add("DisplayName",new XAttribute("name", displayname.Value), new XAttribute("language", displayname.Key));                     
-                    displayNameElement.Add(new XElement("DisplayName", new XAttribute("name", displaynamePair.Value), new XAttribute("language", displaynamePair.Key)));
-                }
-                GraphsElement.Add(new XElement("Graph",new XAttribute("name",pair.Key),new XAttribute("version",pair.Value._localVersion),displayNameElement));
-            }
+        #region Object to Xml implemenet
+        //public TestPage_Listview()
+        //{
+        //    InitializeComponent();
 
-            XElement LanguageElement = new XElement("Languages");
+        //    XElement root = new XElement("GraphResource");
+        //    XElement GraphsElement = new XElement("Graphs");
 
-            foreach(string language in _resources._languages)
-            {
-                LanguageElement.Add(new XElement("Langugae", new XAttribute("name", language)));
-            }
-            root.Add(GraphsElement, LanguageElement);
-            Console.WriteLine(root.ToString());
-            
-        } 
+        //    foreach(KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
+        //    {                
+        //        XElement displayNameElement= new XElement("DisplayNames");
+        //        foreach(KeyValuePair<string,string> displaynamePair in pair.Value._displayNames)
+        //        {
+        //            //displayNameElement.Add("DisplayName",new XAttribute("name", displayname.Value), new XAttribute("language", displayname.Key));                     
+        //            displayNameElement.Add(new XElement("DisplayName", new XAttribute("name", displaynamePair.Value), new XAttribute("language", displaynamePair.Key)));
+        //        }
+        //        GraphsElement.Add(new XElement("Graph",new XAttribute("name",pair.Key),new XAttribute("version",pair.Value._localVersion),displayNameElement));
+        //    }
 
+        //    XElement LanguageElement = new XElement("Languages");
+
+        //    foreach(string language in _resources._languages)
+        //    {
+        //        LanguageElement.Add(new XElement("Langugae", new XAttribute("name", language)));
+        //    }
+        //    root.Add(GraphsElement, LanguageElement);
+        //    Console.WriteLine(root.ToString());
+
+        //} 
+        #endregion
         #region Xml to Resource implement
         //public TestPage_Listview()
         //{

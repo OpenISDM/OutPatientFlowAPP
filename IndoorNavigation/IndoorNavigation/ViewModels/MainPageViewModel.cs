@@ -82,14 +82,14 @@ namespace IndoorNavigation.ViewModels
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
 
-            if (!Application.Current.Properties.ContainsKey("FirstUse"))
-            {
-                Storage.EmbeddedGenerateFile("NTUH_Yunlin");
-                Storage.EmbeddedGenerateFile("Taipei_City_Hall");
-                Storage.EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
-                Storage.EmbeddedGenerateFile("Lab");
-                Application.Current.Properties["FirstUse"] = false;
-            }
+            //if (!Application.Current.Properties.ContainsKey("FirstUse"))
+            //{
+            //    Storage.EmbeddedGenerateFile("NTUH_Yunlin");
+            //    Storage.EmbeddedGenerateFile("Taipei_City_Hall");
+            //    Storage.EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
+            //    Storage.EmbeddedGenerateFile("Lab");
+            //    Application.Current.Properties["FirstUse"] = false;
+            //}
          
 
             foreach (Location location in 
