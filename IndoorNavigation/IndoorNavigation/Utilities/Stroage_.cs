@@ -52,7 +52,7 @@ namespace IndoorNavigation.Utilities
         private static object _fileLock = new object();
         public static GraphResources _resources;
         public static Dictionary<string, GraphInfo> _localResources;
-        public static CultureInfo _currentLanguage;
+        public static CultureInfo _currentCulture = CrossMultilingual.Current.CurrentCultureInfo;
         #endregion
 
         #region Initial
@@ -64,7 +64,13 @@ namespace IndoorNavigation.Utilities
             CreateDirectory();
             Console.WriteLine("finish Creat Directory");
             GraphResourceParse();
-            Console.WriteLine("<<Storage Constructor");                      
+            Console.WriteLine("<<Storage Constructor");
+
+            string[] filePaths = Directory.GetFiles(_informationFolder, "*.xml", SearchOption.AllDirectories);
+            foreach(var paths in filePaths)
+            {
+                Console.WriteLine("paths in information folder : " + paths);
+            }
         }                
         #endregion
 
@@ -72,47 +78,31 @@ namespace IndoorNavigation.Utilities
         static public List<Location> GetAllNaviGraphName() 
         {
             Console.WriteLine(">>GetAllNaviGraphName");
+            Console.WriteLine("Graph count : " + _resources._graphResources.Count);
             List<Location> names = new List<Location>();
-            //names = 
-            //    _resources._graphResources.Select(o => 
-            //        new Location { 
-            //        sourcePath = o.Key, 
-            //        UserNaming = o.Value._displayNames[_currentLanguage.Name] 
-            //        })
-            //    .ToList();
-            //Console.WriteLine("name :" + names[1]);
-            foreach (KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
-            {
-                Console.WriteLine("pair value : " + pair.Key, "pair key : " + pair.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]);
-                names.Add(new Location
+            names = 
+                _resources._graphResources.Select
+                (o => new Location
                 {
-                    sourcePath = pair.Key,
-                    UserNaming = pair.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]
-                }
-                );
-            }
+                    sourcePath = o.Key,
+                    UserNaming = o.Value._displayNames[_currentCulture.Name]
+                })
+                .ToList();
             Console.WriteLine("<<GetAllNaviGraphName");
             return names;
         }       
         static public List<Location> GetLocalGraphNames()
         {
             List<Location> LocalNames = new List<Location>();
-            _localResources = GraphInfoReader(XmlReader("Resources.GraphResource.xml"));
-            foreach (KeyValuePair<string, GraphInfo> pair in _localResources)
-            {
-                Console.WriteLine("pair value : " + pair.Key, "pair key : " + pair.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]);
-                LocalNames.Add(new Location
-                {
-                    sourcePath = pair.Key,
-                    UserNaming = pair.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]
-                }
-                );
-            }
-            //LocalNames = 
-            //        _localResources.Select(o => 
-            //            new Location { sourcePath = o.Key, 
-            //                           UserNaming = o.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name] })
-            //            .ToList();
+            _localResources = GraphInfoReader(XmlReader("Resources.GraphResource.xml"));           
+            LocalNames =
+                    _localResources.Select(o =>
+                        new Location
+                        {
+                            sourcePath = o.Key,
+                            UserNaming = o.Value._displayNames[_currentCulture.Name]
+                        })
+                        .ToList();
             return LocalNames;
         }
         static public  NavigationGraph LoadNavigationGraphXml(string fileName) 
@@ -136,7 +126,7 @@ namespace IndoorNavigation.Utilities
             Console.WriteLine(">>NaviStorage : LoadFDXml");
 
             
-            string filePath = Path.Combine(_firstDirectionInstuctionFolder, $"{fileName}_FD_{CrossMultilingual.Current.CurrentCultureInfo.Name}.xml");
+            string filePath = Path.Combine(_firstDirectionInstuctionFolder, $"{fileName}_FD_{_currentCulture}.xml");
             Console.WriteLine("First Direction File path : " + filePath);
             XmlDocument doc = new XmlDocument();
             try
@@ -154,7 +144,7 @@ namespace IndoorNavigation.Utilities
         static public XMLInformation LoadXmlInformation(string fileName)
         {
             Console.WriteLine(">>LoadXmlInformation");
-            string filePath = Path.Combine(_informationFolder, $"{fileName}_info_{CrossMultilingual.Current.CurrentCultureInfo.Name}.xml");
+            string filePath = Path.Combine(_informationFolder, $"{fileName}_info_{_currentCulture.Name}.xml");
             Console.WriteLine("Information file path : " + filePath);
             XmlDocument doc = new XmlDocument();
 
@@ -195,6 +185,8 @@ namespace IndoorNavigation.Utilities
 
             if(!File.Exists(Path.Combine(_LocalData, "ResourceStatus.xml")))
             {
+                UpdateGraphList("zh-TW", AccessGraphOperate.AddLanguage);
+                UpdateGraphList("en-US", AccessGraphOperate.AddLanguage);
                 EmbeddedGenerateFile("NTUH_Yunlin");
                 EmbeddedGenerateFile("Lab");
                 EmbeddedGenerateFile("Taipei_City_Hall");
@@ -267,7 +259,14 @@ namespace IndoorNavigation.Utilities
                 UpdateGraphList(location.sourcePath, AccessGraphOperate.Delete);                
             }
         }
-        static public void DeleteFDXml(string fileName) 
+        static public void DeleteBuildingGraph(string fileName)
+        {
+            DeleteFDXml(fileName);
+            DeleteNaviGraph(fileName);
+            DeleteXmlInformation(fileName);
+            UpdateGraphList(fileName, AccessGraphOperate.Delete);
+        }
+        static private void DeleteFDXml(string fileName) 
         {
             //use loop to access multi-langugaes
 
@@ -278,14 +277,14 @@ namespace IndoorNavigation.Utilities
                     File.Delete(filePath);
             }
         }
-        static public void DeleteNaviGraph(string fileName) 
+        static private void DeleteNaviGraph(string fileName) 
         {
             string filePath = Path.Combine(_navigraphFolder, fileName);
 
             lock (_fileLock)
                 File.Delete(filePath);
         }
-        static public void DeleteXmlInformation(string fileName) 
+        static private void DeleteXmlInformation(string fileName) 
         {
             //use loop to access multi-language
             foreach(string language in _resources._languages)
@@ -393,6 +392,15 @@ namespace IndoorNavigation.Utilities
                         }
                         break;
                     }
+                case AccessGraphOperate.AddLanguage:
+                    {
+                        Console.WriteLine(">>AddLanguage");
+                        if (!_resources._languages.Contains(fileName)) 
+                        {
+                            _resources._languages.Add(fileName);
+                        }
+                        break;
+                    }
                 case AccessGraphOperate.Delete:
                     {
                         Console.WriteLine(">>Delete");
@@ -423,11 +431,11 @@ namespace IndoorNavigation.Utilities
             XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
             foreach (XmlNode languageNode in LanguageList)
             {
-                Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
+                //Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
                 _resources._languages.Add(languageNode.Attributes["name"].Value);
             }
-            Console.WriteLine("Language context is : " + _resources._languages.Count);
-
+            //Console.WriteLine("Language context is : " + _resources._languages.Count);
+            _resources._graphResources = Graphinfos;
         }
         static private void StoreGraphStatus()
         {
@@ -504,6 +512,7 @@ namespace IndoorNavigation.Utilities
         {
             AddLocal,
             AddServer,
+            AddLanguage,
             Delete,
             Update
         }

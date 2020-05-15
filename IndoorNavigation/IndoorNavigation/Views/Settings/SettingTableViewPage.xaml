@@ -130,11 +130,10 @@
 								 Items="{Binding _chooseMap}" 
 								 SelectedCommand="{Binding _chooseMapCommand}"/>
 
-                <sv:TextPickerCell x:Name="DownloadFromServer"
-                                   Title="從雲端下載"
-                                   Items="{Binding }"
-                                   SelectedCommand="{Binding }"
-                                   />
+                <sv:CommandCell x:Name="DownloadFromServer"
+                                Title="從雲端下載"
+                                Command="{Binding _downloadItemCommand}"/>
+
 
                 <sv:CommandCell x:Name="DownloadMapButton" 
 							 Title="{i18n:Translate DOWNLOAD_QRCODE_MAP_STRING}" 
@@ -152,7 +151,8 @@
                 <sv:TextPickerCell x:Name="LanguagePicker" 
 							Title="{i18n:Translate CHANGE_LANGUAGE_STRING}" 
                             Items="{Binding _languageItems}" 
-							SelectedCommand="{Binding _changeLanguageCommand}"/>
+							SelectedCommand="{Binding _changeLanguageCommand}"
+                                   />
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate LICENSE_AND_PRIVACY_STRING}">
