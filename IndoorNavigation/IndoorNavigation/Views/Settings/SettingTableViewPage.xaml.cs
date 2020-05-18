@@ -75,29 +75,50 @@ namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
+        #region Variables and Objects
+
+        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        private ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
         private string _downloadURL;
         public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         public IList _chooseMap { get; } = new ObservableCollection<string>();
+        public IList _downloadMap { get; } = new ObservableCollection<string>();
 
+        public bool Connectable { get; set; }
+        #endregion
 
+        #region Command defined
         public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);
         //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand _cleanMapCommand => new DelegateCommand(async () =>
         { await HandleCLeanMapAsync(); });
 
         public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
+        #endregion
 
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);       
-
+        #region Initial
         public SettingTableViewPage()
         {
+            InitialPage();
+            Console.WriteLine("can not connect");
+            Connectable = false;
+        }
+
+        public SettingTableViewPage(object o)
+        {
+            InitialPage();
+            Console.WriteLine("connect");
+            Connectable = true;
+        }
+
+        private void InitialPage()
+        {
             InitializeComponent();
-            LoadData();
             AddMapItems();
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
@@ -118,7 +139,32 @@ namespace IndoorNavigation.Views.Settings
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
             }
         }
+        private void AddMapItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            _chooseMap.Clear();
 
+            foreach (Location location in Storage.GetLocalGraphNames())
+            {
+                _chooseMap.Add(location.UserNaming);
+            }
+        }
+        private void ReloadNaviGraphItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+
+            _cleanNaviGraphItems.Clear();
+            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
+
+            foreach (var installedName in Storage.GetAllNaviGraphName())
+            {
+                _cleanNaviGraphItems.Add(installedName.UserNaming);
+                Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
+            }
+        }
+        #endregion
+
+        #region Tapped Event
         async void LicenseBtn_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new LicenseMainPage());
@@ -209,20 +255,9 @@ namespace IndoorNavigation.Views.Settings
                 _resourceManager.GetString("CULTURE_VERSION_STRING", ci));
         }
 
-        private void ReloadNaviGraphItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            
-            _cleanNaviGraphItems.Clear();
-            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
-
-            foreach(var installedName in Storage.GetAllNaviGraphName())
-            {
-                _cleanNaviGraphItems.Add(installedName.UserNaming);
-                Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
-            }            
-        }
-
+        #endregion
+        
+        #region Command Handle
         /// <summary>
         /// Handles the download page event.
         /// </summary>
@@ -391,19 +426,7 @@ namespace IndoorNavigation.Views.Settings
             CleanMapPicker.SelectedItem = "";
             ReloadNaviGraphItems();
         }
-
-        private void AddMapItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _chooseMap.Clear();
-
-            foreach (Location location in Storage.GetLocalGraphNames())
-            {
-                _chooseMap.Add(location.UserNaming);
-            }           
-        }
-
-
+       
         //for embedded data download;
         private void HandleChooseMap()
         {
@@ -416,23 +439,13 @@ namespace IndoorNavigation.Views.Settings
 
         }
 
-
+        #endregion
 
         #region Beta Functions
 
         public IList _downloadItemList { get; set; } = new ObservableCollection<Location>();
         public ICommand _downloadItemCommand => new DelegateCommand(ChooseDownloadMap);
-
-        private void LoadData()
-        {
-            //await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            for(int i=0; i< 10; i++)
-            {
-                //_downloadItemList.Add(i.ToString());
-                _downloadItemList.Add(new Location { sourcePath = i.ToString(), UserNaming = (i * 2).ToString() });
-            }
-        }
-
+        
         //for Server data Download
         async private void ChooseDownloadMap()
         {
@@ -440,11 +453,10 @@ namespace IndoorNavigation.Views.Settings
             //string selectItem = DownloadFromServer.SelectedItem.ToString().Trim();           
         }
 
-        async private void DownloadFromServer_Tapped(object sender, EventArgs e)
-        {
-            Console.WriteLine("aaaaaaaa");
-            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-        }
+        //async private void DownloadFromServer_Tapped(object sender, EventArgs e)
+        //{
+        //    await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+        //}
         #endregion
 
 

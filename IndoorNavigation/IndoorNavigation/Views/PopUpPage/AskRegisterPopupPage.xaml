@@ -60,7 +60,7 @@
     <pages:PopupPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" >
-                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="FontSize" Value="Medium"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="TextColor" Value="#3f51b5"/>
                 <Setter Property="HorizontalOptions" Value="EndAndExpand"/>

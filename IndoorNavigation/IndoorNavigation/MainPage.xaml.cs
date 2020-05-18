@@ -60,8 +60,11 @@ using System.IO;
 using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
-
+using Newtonsoft.Json;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Models;
+using IndoorNavigation.Modules.Utilities;
+using Prism.Modularity;
 
 namespace IndoorNavigation
 {
@@ -151,10 +154,43 @@ namespace IndoorNavigation
             }
         }
 
+        #region To implement 
+        private INetworkSetting setting;
+        private CloudDownload _download = new CloudDownload();
+        private CurrentMapInfos mapInfosFromServer = new CurrentMapInfos();
         async void SettingBtn_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SettingTableViewPage());
-        }
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            setting = DependencyService.Get<INetworkSetting>();
+            bool Connectable = await setting.CheckInternetConnect();
+
+            if (Connectable)
+            {
+                string SupportList = _download.Download(_download.getSupportListUrl());
+
+                Console.WriteLine("supportList is : " + SupportList);
+
+                try
+                {
+                    // Object o = JsonConvert.DeserializeObject<CurrentMapInfos>(SupportList);
+                    Console.WriteLine(">>try");
+                   // foreach (MapInfo info in (o as CurrentMapInfos).Maps)
+                   // {
+                   //     Console.WriteLine("Map name : " + info.Name);
+                   // }
+                }catch(Exception exc)
+                {
+                    Console.WriteLine("Parse Error : " + exc.Message);
+                    throw exc;
+                }
+                await Navigation.PushAsync(new SettingTableViewPage());
+            }
+            else 
+                await Navigation.PushAsync(new SettingTableViewPage());
+
+            await PopupNavigation.Instance.PopAllAsync();
+        }        
+        #endregion
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -286,48 +322,7 @@ namespace IndoorNavigation
         {
             LocationListView.EndRefresh();
         }
-
-    //    void Item_Delete(object sender, EventArgs e)
-    //    {
-    //        var item = (Location)((MenuItem)sender).CommandParameter;
-    //        var ci = 
-				//CrossMultilingual.Current.CurrentCultureInfo;
-    //        string NTUH_YunLin = 
-				//_resourceManager.GetString("HOSPITAL_NAME_STRING", ci);
-				
-    //        string Taipei_City_Hall = 
-				//_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci);
-				
-    //        string Lab = 
-				//_resourceManager.GetString("LAB_STRING", ci);
-			
-    //        string Yuanlin_Christian_Hospital = 
-				//_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", 
-				//						   ci);
-    //        string loadFileName = "";
-
-    //        if (item.UserNaming == NTUH_YunLin)
-    //        {
-    //            loadFileName = "NTUH Yunlin Branch";
-    //        }
-    //        else if (item.UserNaming == Taipei_City_Hall)
-    //        {
-    //            loadFileName = "Taipei City Hall";
-    //        }
-    //        else if (item.UserNaming == Lab)
-    //        {
-    //            loadFileName = "Lab";
-    //        }
-    //        else if (item.UserNaming == Yuanlin_Christian_Hospital)
-    //        {
-    //            loadFileName = "Yuanlin Christian Hospital";
-    //        }
-    //        if (item != null)
-    //        {
-    //            NavigraphStorage.DeleteNavigationGraph(loadFileName);
-    //            _viewModel.LoadNavigationGraph();
-    //        }
-    //    }
+    
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
             if (lastCell != null)
@@ -348,6 +343,7 @@ namespace IndoorNavigation
         async private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new TestPage_Listview());            
+            //await PopupNavigation.Instance.PushAsync(new PickDownloadPopupPage());
         }
     }
 }

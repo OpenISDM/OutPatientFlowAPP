@@ -11,17 +11,21 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using IndoorNavigation.Utilities;
 using Dijkstra.NET.Model;
+using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage_Listview : ContentPage
     {
+        CloudDownload _download;
         public TestPage_Listview()
         {
             InitializeComponent();
 
-                        
+            _download = new CloudDownload();
+            //Storage.CloudGenerateFile("Lab");
+            Storage.CloudGenerateFile("Taipei_City_Hall");
         }
 
         #region Object to Xml implemenet

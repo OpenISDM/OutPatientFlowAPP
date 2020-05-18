@@ -21,86 +21,22 @@ namespace IndoorNavigation.Modules.Utilities
 
     public class CloudDownload
     {
-        public const string _localhost = "http://140.109.22.175:3000/";
+        public const string _localhost = "http://140.109.22.175:80/";
         //private string _context;
         public CurrentMapInfos _currentInfos;
-
-        //private const string _informationFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Information");
-        //private const string _firstDirectionFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"FirstDirection");
-        //private const string _naviGraphFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Navigraph");       
-
+      
         public CloudDownload()
         {
             string contextString = Download(getSupportListUrl());
             _currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
-        }
-
-        //public void DeleteFile(string fileName)
-        //{
-        //    string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
-        //    string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
-        //    string sinkFDData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
-        //    string sinkFDData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
-        //    string sinkNaviGraph = Path.Combine(NavigraphStorage._navigraphFolder, fileName);
-
-        //    File.Delete(sinkFDData_en);
-        //    File.Delete(sinkFDData_zh);
-        //    File.Delete(sinkInformation_en);
-        //    File.Delete(sinkInformation_zh);
-        //    File.Delete(sinkNaviGraph);
-        //}
-
-        //public void GenerateFilePath(string fileName, string downloadPath)
-        //{            
-        //    string sourceInformation_zh = Download(getInfoUrl(downloadPath, "zh"));           
-        //    string sourceInformation_en = Download(getInfoUrl(downloadPath, "en-US"));
-        //    string sourceFD_zh = Download(getFDUrl(downloadPath,"zh"));
-        //    string sourceFD_en = Download(getFDUrl(downloadPath,"en-US"));
-        //    string sourceNaviGraph = Download(getMainUrl(downloadPath));
-
-        //    string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
-        //    string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
-        //    string sinkFDData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
-        //    string sinkFDData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
-        //    string sinkNaviGraph = Path.Combine(NavigraphStorage._navigraphFolder, fileName);
-        //    try 
-        //    { 
-        //        if (!Directory.Exists(NavigraphStorage._navigraphFolder))
-        //            Directory.CreateDirectory(NavigraphStorage._navigraphFolder);
-        //        if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
-        //            Directory.CreateDirectory(NavigraphStorage._firstDirectionInstuctionFolder);
-        //        if (!Directory.Exists(NavigraphStorage._informationFolder))
-        //            Directory.CreateDirectory(NavigraphStorage._informationFolder);
-
-        //        Storing(sourceInformation_en, sinkInformation_en);
-        //        Storing(sourceInformation_zh, sinkInformation_zh);
-        //        Storing(sourceFD_en, sinkFDData_en);
-        //        Storing(sourceFD_zh, sinkFDData_zh);
-        //        Storing(sourceNaviGraph, sinkNaviGraph);
-        //    }
-        //    catch(Exception exc)
-        //    {
-        //        Console.WriteLine(exc.Message);
-        //        throw exc;
-        //    }
-        //}
-
-        //public string GetContextString()
-        //{
-        //    return Download("NTUH_Yunlin");
-        //}
-
-        private void Storing(string context, string sinkRoute)
-        {
-            File.WriteAllText(sinkRoute, context);
-        }
+        }            
 
         public bool CheckMapVersion(string localgraphName, string localVersion)
         {            
             Dictionary<string, string> VersionDict = _currentInfos.ToDictionary();
             return VersionDict[localgraphName].Equals(localVersion);            
         }
-
+        
         public string Download(string url)
         {
             string ContextString = "";

@@ -73,7 +73,6 @@ namespace IndoorNavigation.Utilities
             }
         }                
         #endregion
-
         #region Load File
         static public List<Location> GetAllNaviGraphName() 
         {
@@ -159,7 +158,13 @@ namespace IndoorNavigation.Utilities
             }
             return new XMLInformation(doc);
         }
+
         #region Others
+        static private string GetDisplayName(string key)
+        {
+            return _resources._graphResources[key]._displayNames[_currentCulture.Name];
+        }
+
         static private void CreateDirectory()
         {
             if (!Directory.Exists(_LocalData))
@@ -247,7 +252,6 @@ namespace IndoorNavigation.Utilities
         #endregion
 
         #endregion
-
         #region Delete File
         static public void DeleteAllGraphFiles()
         {
@@ -367,7 +371,6 @@ namespace IndoorNavigation.Utilities
             File.WriteAllText(sinkRoute, Context);
         }
         #endregion
-
         #region Update
         static private void UpdateGraphList(string fileName, AccessGraphOperate operate)
         {
@@ -388,7 +391,8 @@ namespace IndoorNavigation.Utilities
                         Console.WriteLine(">>AddServer");
                         if (!_resources._graphResources.ContainsKey(fileName))
                         {
-
+                            //I use local to test it could work or not, the second parameter will be server document.
+                            _resources._graphResources.Add(fileName, _localResources[fileName]);
                         }
                         break;
                     }
@@ -501,6 +505,8 @@ namespace IndoorNavigation.Utilities
             public Dictionary<string, string> _displayNames { get; set; }
             public string _graphName { get; set; }
             public string _localVersion { get; set; }
+            public override string ToString() => _displayNames[_currentCulture.Name];
+            
         }       
 
         public class Utf8StringWriter : StringWriter
