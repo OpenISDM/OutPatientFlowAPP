@@ -132,9 +132,8 @@
 
                 <sv:TextPickerCell x:Name="DownloadFromServer"
                                 Title="從雲端下載"
-                                Items="{Binding }"
-                                SelectedCommand="{Binding _downloadItemCommand}"
-                                IsEnabled="{Binding Connectable}"/>
+                                Items="{Binding _downloadMap}"
+                                SelectedCommand="{Binding _downloadItemCommand}"/>
 
 
                 <sv:CommandCell x:Name="DownloadMapButton" 

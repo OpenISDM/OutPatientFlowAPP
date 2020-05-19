@@ -57,6 +57,7 @@ using Rg.Plugins.Popup.Services;
 using System;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
@@ -68,7 +69,7 @@ using IndoorNavigation.ViewModels;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
 using AiForms.Renderers;
-using Rg.Plugins.Popup.Services;
+using System.Linq.Expressions;
 /*Note : remember to edit GetAllGraph method.*/
 
 namespace IndoorNavigation.Views.Settings
@@ -87,16 +88,16 @@ namespace IndoorNavigation.Views.Settings
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         public IList _chooseMap { get; } = new ObservableCollection<string>();
-        public IList _downloadMap { get; } = new ObservableCollection<string>();
+        public IList _downloadMap { get; set; }
 
-        public bool Connectable { get; set; }
+        private bool _connectable;
         #endregion
 
         #region Command defined
-        public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);
-        //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
+        public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);       
         public ICommand _cleanMapCommand => new DelegateCommand(async () =>
         { await HandleCLeanMapAsync(); });
+        public ICommand _downloadItemCommand => new DelegateCommand(ChooseDownloadMap);
 
         public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
         #endregion
@@ -106,14 +107,27 @@ namespace IndoorNavigation.Views.Settings
         {
             InitialPage();
             Console.WriteLine("can not connect");
-            Connectable = false;
+            _connectable = false ;
         }
 
-        public SettingTableViewPage(object o)
+        public SettingTableViewPage(Object sender)
         {
             InitialPage();
             Console.WriteLine("connect");
-            Connectable = true;
+            _connectable = true;
+
+            _downloadMap = sender as ObservableCollection<string>;
+            Console.WriteLine("DownloadMap count : " + _downloadMap.Count);
+            foreach(string str in _downloadMap)
+            {
+                Console.WriteLine("aaaaaa : " + str);
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            DownloadFromServer.IsEnabled = _connectable;
         }
 
         private void InitialPage()
@@ -441,24 +455,16 @@ namespace IndoorNavigation.Views.Settings
 
         #endregion
 
-        #region Beta Functions
-
-        public IList _downloadItemList { get; set; } = new ObservableCollection<Location>();
-        public ICommand _downloadItemCommand => new DelegateCommand(ChooseDownloadMap);
-        
+        #region Beta Functions              
         //for Server data Download
         async private void ChooseDownloadMap()
         {
+            Console.WriteLine("eeeeeeeeeeeeeeeeeeeeeee");
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             //string selectItem = DownloadFromServer.SelectedItem.ToString().Trim();           
         }
 
-        //async private void DownloadFromServer_Tapped(object sender, EventArgs e)
-        //{
-        //    await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-        //}
         #endregion
-
-
+        
     }
 }

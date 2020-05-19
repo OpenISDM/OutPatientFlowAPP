@@ -40,7 +40,6 @@ namespace IndoorNavigation.Modules.Utilities
         public string Download(string url)
         {
             string ContextString = "";
-            //bool Error=true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             //request.ContentType = "text/xml";
             request.Timeout = 10000;
@@ -61,17 +60,7 @@ namespace IndoorNavigation.Modules.Utilities
             catch (Exception exc)
             {
                 Console.WriteLine("Download Error : " + exc.Message + ", url : " + url);
-                ContextString = "";
-                //Page CurrentPage = Application.Current.MainPage;
-
-                //var WantRetry = await CurrentPage.DisplayAlert("Error", exc.Message, "Ok", "Cancel");
-
-                //if (WantRetry)
-                //    ContextString = await Download(url);
-                //else
-                //{
-                //    //do something if user cancel.
-                //}
+                ContextString = "";                
             }
             finally
             {

@@ -65,6 +65,10 @@ using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
 using Prism.Modularity;
+using System.Linq;
+using Xamarin.Essentials;
+using Location = IndoorNavigation.ViewModels.Location;
+using System.Collections.ObjectModel;
 
 namespace IndoorNavigation
 {
@@ -168,22 +172,26 @@ namespace IndoorNavigation
             {
                 string SupportList = _download.Download(_download.getSupportListUrl());
 
-                Console.WriteLine("supportList is : " + SupportList);
-
-                try
+                #region when server not response. I know the code 很母湯，but it's temporary haha.
+                if (string.IsNullOrEmpty(SupportList))
                 {
-                    // Object o = JsonConvert.DeserializeObject<CurrentMapInfos>(SupportList);
-                    Console.WriteLine(">>try");
-                   // foreach (MapInfo info in (o as CurrentMapInfos).Maps)
-                   // {
-                   //     Console.WriteLine("Map name : " + info.Name);
-                   // }
-                }catch(Exception exc)
-                {
-                    Console.WriteLine("Parse Error : " + exc.Message);
-                    throw exc;
+                    await (Navigation.PushAsync(new SettingTableViewPage()));
                 }
-                await Navigation.PushAsync(new SettingTableViewPage());
+                else
+                {
+                    CurrentMapInfos infos = JsonConvert.DeserializeObject<CurrentMapInfos>(SupportList);
+                    ObservableCollection<string> result = new ObservableCollection<string>();
+
+                    foreach(MapInfo info in infos.Maps)
+                    {
+                        //result.Add(info.Name);
+                        result.Add(Storage.GetDisplayName(info.Name));
+                        Console.WriteLine("Result name is : " + info.Name);
+                    }
+
+                    await Navigation.PushAsync(new SettingTableViewPage(result));
+                }
+                #endregion
             }
             else 
                 await Navigation.PushAsync(new SettingTableViewPage());

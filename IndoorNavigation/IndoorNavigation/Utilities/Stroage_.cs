@@ -160,9 +160,9 @@ namespace IndoorNavigation.Utilities
         }
 
         #region Others
-        static private string GetDisplayName(string key)
+        static public string GetDisplayName(string key)
         {
-            return _resources._graphResources[key]._displayNames[_currentCulture.Name];
+            return _localResources[key]._displayNames[_currentCulture.Name];
         }
 
         static private void CreateDirectory()
