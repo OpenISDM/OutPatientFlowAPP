@@ -131,7 +131,7 @@
 								 SelectedCommand="{Binding _chooseMapCommand}"/>
 
                 <sv:TextPickerCell x:Name="DownloadFromServer"
-                                Title="從雲端下載"
+                                Title="{i18n:Translate DOWNLOAD_FROM_SERVER_STRING}"
                                 Items="{Binding _downloadMap}"
                                 SelectedCommand="{Binding _downloadItemCommand}"/>
 

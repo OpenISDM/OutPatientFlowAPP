@@ -639,4 +639,7 @@
   <data name="RETRY_STRING" xml:space="preserve">
     <value>重試</value>
   </data>
+  <data name="DOWNLOAD_FROM_SERVER_STRING" xml:space="preserve">
+    <value>從雲端下載</value>
+  </data>
 </root>

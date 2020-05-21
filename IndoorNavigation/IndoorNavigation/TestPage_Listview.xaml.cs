@@ -23,9 +23,9 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
-            _download = new CloudDownload();
+            //_download = new CloudDownload();
             //Storage.CloudGenerateFile("Lab");
-            Storage.CloudGenerateFile("Taipei_City_Hall");
+            //Storage.CloudGenerateFile("Taipei_City_Hall");
         }
 
         #region Object to Xml implemenet

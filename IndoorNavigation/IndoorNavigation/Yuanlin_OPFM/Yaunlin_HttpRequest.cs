@@ -45,9 +45,9 @@ using System.Resources;
 using System.Threading.Tasks;
 using Plugin.Multilingual;
 
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
-using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
+
 namespace IndoorNavigation.Models
 {
     class HttpRequest
@@ -80,7 +80,7 @@ namespace IndoorNavigation.Models
                 + app.RgDate.ToString("MMdd");
 
             XmlDocument doc =
-                NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+                Storage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
 
             XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
@@ -104,7 +104,6 @@ namespace IndoorNavigation.Models
             bodyString = stringWriter.ToString();
 
         }
-
         async public Task RequestData()
         {
             Console.WriteLine("Now Excution is::: RequstData");
@@ -239,18 +238,9 @@ namespace IndoorNavigation.Models
                 Console.WriteLine($"region id={record._regionID},"
                     + $" waypoint id={record._waypointID}");
             }
-            //if (!app.getRigistered)
-            //    app.records.Add(new RgRecord { type=RecordType.NULL });
+            
             Console.WriteLine(app._TmpRecords.Count);
-        }
-
-        //private void AddRecord(RgRecord record)
-        //{
-        //    if (app.getRigistered)
-        //        app.records.Add(record);
-        //    else
-        //        app.records.in
-        //}
+        }       
 
         private string getResourceString(string key)
         {

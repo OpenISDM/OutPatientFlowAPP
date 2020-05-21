@@ -47,6 +47,7 @@ using IndoorNavigation.Modules.Utilities;
 using System.IO;
 using Plugin.InputKit.Shared.Controls;
 using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -87,8 +88,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private void LoadData()
         {
             XmlDocument doc = 
-				NavigraphStorage
-				.XmlReader("Yuanlin_OPFM.ExaminationRoomMap.xml");
+				Storage.XmlReader("Yuanlin_OPFM.ExaminationRoomMap.xml");
 				
             XmlNodeList DepartmentLists = 
 				doc.GetElementsByTagName("Department");

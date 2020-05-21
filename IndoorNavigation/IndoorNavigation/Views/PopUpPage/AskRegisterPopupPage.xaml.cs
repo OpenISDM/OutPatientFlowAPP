@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Utilities;
+using static IndoorNavigation.Utilities.Storage;
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -34,7 +36,7 @@ namespace IndoorNavigation.Views.PopUpPage
         string _navigationGraphName;
         XMLInformation _XmlInfo;
 
-        PhoneInformation phoneInformation = new PhoneInformation();
+        //PhoneInformation phoneInformation = new PhoneInformation();
 
         public AskRegisterPopupPage(string navigraphName)
         {
@@ -42,23 +44,17 @@ namespace IndoorNavigation.Views.PopUpPage
             //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
 
             _navigationGraphName = navigraphName;
-            _XmlInfo = NavigraphStorage.LoadInformationML
-                (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
-                 "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _XmlInfo = LoadXmlInformation(navigraphName);
+            //_XmlInfo = NavigraphStorage.LoadInformationML
+            //    (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
+            //     "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             ButtonLock = false;
-        }
-
-        //private void BusyShow(bool isBusy)
-        //{
-        //    BusyIndicator.IsRunning = isBusy;
-        //    BusyIndicator.IsVisible = isBusy;
-        //    BusyIndicator.IsEnabled = isBusy;
-        //}
+        }      
 
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {

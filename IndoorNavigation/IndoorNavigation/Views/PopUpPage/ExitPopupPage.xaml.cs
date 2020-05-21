@@ -53,6 +53,8 @@ using Plugin.InputKit.Shared.Controls;
 using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
+using static IndoorNavigation.Utilities.Storage;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -82,18 +84,15 @@ namespace IndoorNavigation.Views.PopUpPage
             _navigationGraphName = navigationGraphName;
             phoneInformation = new PhoneInformation();
 
-            _nameInformation = NavigraphStorage.LoadInformationML
-                (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
-                "_info_" +
-                phoneInformation.GiveCurrentLanguage() +
-                ".xml");
+            _nameInformation = LoadXmlInformation(_navigationGraphName);
+            //_nameInformation = NavigraphStorage.LoadInformationML
+            //    (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
+            //    "_info_" +
+            //    phoneInformation.GiveCurrentLanguage() +
+            //    ".xml");
 
             LoadData();
-            setRadioButton();
-
-            //_viewmodel = new ExitPopupViewModel(_navigationGraphName);                        
-
-            //BindingContext = _viewmodel;            
+            setRadioButton();               
         }
 
 
@@ -103,7 +102,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private Dictionary<string ,DestinationItem> ExitItems;
         private void LoadData()
         {
-            XmlDocument doc = NavigraphStorage.XmlReader(filename);
+            XmlDocument doc = Storage.XmlReader(filename);
             ExitItems = new Dictionary<string, DestinationItem>();
             try
             {

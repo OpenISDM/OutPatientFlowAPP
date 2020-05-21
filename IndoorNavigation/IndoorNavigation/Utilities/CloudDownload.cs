@@ -27,8 +27,8 @@ namespace IndoorNavigation.Modules.Utilities
       
         public CloudDownload()
         {
-            string contextString = Download(getSupportListUrl());
-            _currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
+            //string contextString = Download(getSupportListUrl());
+            //_currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
         }            
 
         public bool CheckMapVersion(string localgraphName, string localVersion)

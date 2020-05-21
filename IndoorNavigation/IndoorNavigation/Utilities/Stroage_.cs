@@ -53,6 +53,7 @@ namespace IndoorNavigation.Utilities
         public static GraphResources _resources;
         public static Dictionary<string, GraphInfo> _localResources;
         public static CultureInfo _currentCulture = CrossMultilingual.Current.CurrentCultureInfo;
+        public static Dictionary<string, GraphInfo> _serverResources;
         #endregion
 
         #region Initial
@@ -64,13 +65,7 @@ namespace IndoorNavigation.Utilities
             CreateDirectory();
             Console.WriteLine("finish Creat Directory");
             GraphResourceParse();
-            Console.WriteLine("<<Storage Constructor");
-
-            string[] filePaths = Directory.GetFiles(_informationFolder, "*.xml", SearchOption.AllDirectories);
-            foreach(var paths in filePaths)
-            {
-                Console.WriteLine("paths in information folder : " + paths);
-            }
+            Console.WriteLine("<<Storage Constructor");                     
         }                
         #endregion
         #region Load File
@@ -159,12 +154,7 @@ namespace IndoorNavigation.Utilities
             return new XMLInformation(doc);
         }
 
-        #region Others
-        static public string GetDisplayName(string key)
-        {
-            return _localResources[key]._displayNames[_currentCulture.Name];
-        }
-
+        #region Others      
         static private void CreateDirectory()
         {
             if (!Directory.Exists(_LocalData))
@@ -198,7 +188,7 @@ namespace IndoorNavigation.Utilities
                 Console.WriteLine("first Use Generate Success");
             }
         }
-        static private Dictionary<string, GraphInfo> GraphInfoReader(XmlDocument xmlDocument)
+        static public Dictionary<string, GraphInfo> GraphInfoReader(XmlDocument xmlDocument)
         {
             Dictionary<string, GraphInfo> result = new Dictionary<string, GraphInfo>();
 
@@ -227,7 +217,7 @@ namespace IndoorNavigation.Utilities
         {
             Console.WriteLine(">>EmbeddedSourceReader");
             Console.WriteLine("FileName : " + FileName);
-            var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
+            var assembly = typeof(Storage).GetTypeInfo().Assembly;
 
             string sourceContext = "";
             Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
@@ -305,7 +295,7 @@ namespace IndoorNavigation.Utilities
         {
             Console.WriteLine(">>EmbeddedGenerateFile");
 
-            var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
+            var assembly = typeof(Storage).GetTypeInfo().Assembly;
 
             try
             {
@@ -346,8 +336,8 @@ namespace IndoorNavigation.Utilities
         {
             CloudDownload _clouddownload = new CloudDownload();
             string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));
-            string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName);
-
+            string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");
+            Console.WriteLine("SinkNaviGraph path : " + sinkNaviGraph);
             CloudStoring(sourceNaviGraph, sinkNaviGraph);
 
             foreach(string language in _resources._languages)
@@ -359,6 +349,9 @@ namespace IndoorNavigation.Utilities
 
                     string sinkFD = Path.Combine(_firstDirectionInstuctionFolder, $"{sourceName}_FD_{language}.xml");
                     string sinkInfo = Path.Combine(_informationFolder, $"{sourceName}_info_{language}.xml");
+
+                    Console.WriteLine("Sink FirstDirection path : " + sinkFD);
+                    Console.WriteLine("Sink InformationXml path : " + sinkInfo);
 
                     CloudStoring(sourceFD, sinkFD);
                     CloudStoring(sourceInfo, sinkInfo);
@@ -392,8 +385,9 @@ namespace IndoorNavigation.Utilities
                         if (!_resources._graphResources.ContainsKey(fileName))
                         {
                             //I use local to test it could work or not, the second parameter will be server document.
-                            _resources._graphResources.Add(fileName, _localResources[fileName]);
-                        }
+                            //_resources._graphResources.Add(fileName, _localResources[fileName]);
+                            _resources._graphResources.Add(fileName, _serverResources[fileName]);
+                        }                  
                         break;
                     }
                 case AccessGraphOperate.AddLanguage:
@@ -421,24 +415,22 @@ namespace IndoorNavigation.Utilities
         }
         static private void GraphResourceParse()
         {
+            Console.WriteLine(">>GraphResourceParse");
             _resources = new GraphResources();
 
             string filePath = Path.Combine(_LocalData, "ResourceStatus.xml");
-            Console.WriteLine("file context : " + File.ReadAllText(filePath));
             XmlDocument doc = new XmlDocument();
             doc.Load(filePath);
 
             Dictionary<string, GraphInfo> Graphinfos = GraphInfoReader(doc);
-            Console.WriteLine("Graph context is :" + Graphinfos.Count);
+
             Console.WriteLine("Next to parse Language");
 
             XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
             foreach (XmlNode languageNode in LanguageList)
             {
-                //Console.WriteLine(">> languagesNode name : " + languageNode.OuterXml);
                 _resources._languages.Add(languageNode.Attributes["name"].Value);
             }
-            //Console.WriteLine("Language context is : " + _resources._languages.Count);
             _resources._graphResources = Graphinfos;
         }
         static private void StoreGraphStatus()

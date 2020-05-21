@@ -1,310 +1,310 @@
-﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
- *
- * Project Name:
- *
- *      IndoorNavigation
- *
- * File Description:
- * 
- *      This static class contains all the static functions that provide 
- *      methods for loading and saving data on the phone, such as loading a 
- *      waypoint-based navigation graph.
- *      
- * Version:
- *
- *      1.0.0-beta.1, 20190521
- * 
- * File Name:
- *
- *      Storage.cs
- *
- * Abstract:
- *
- *      Waypoint-based navigator is a mobile Bluetooth navigation application
- *      that runs on smart phones. It is structed to support anywhere 
- *      navigation. Indoors in areas covered by different indoor positioning 
- *      system (IPS) and outdoors covered by GPS. In particilar, it can rely on 
- *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. Using this IPS, the navigator does not need to 
- *      continuously monitor its own position, since the IPS broadcast to the 
- *      navigator the location of each waypoint. 
- *      This version makes use of Xamarin.Forms, which is a complete 
- *      cross-platform UI tookit that runs on both iOS and Android.
- *
- * Authors:
- *
- *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
- *      Paul Chang, paulchang@iis.sinica.edu.tw
- *      
- */
+﻿///*
+// * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+// *
+// * License:
+// *      GPL 3.0 : The content of this file is subject to the terms and
+// *      conditions defined in file 'COPYING.txt', which is part of this source
+// *      code package.
+// *
+// * Project Name:
+// *
+// *      IndoorNavigation
+// *
+// * File Description:
+// * 
+// *      This static class contains all the static functions that provide 
+// *      methods for loading and saving data on the phone, such as loading a 
+// *      waypoint-based navigation graph.
+// *      
+// * Version:
+// *
+// *      1.0.0-beta.1, 20190521
+// * 
+// * File Name:
+// *
+// *      Storage.cs
+// *
+// * Abstract:
+// *
+// *      Waypoint-based navigator is a mobile Bluetooth navigation application
+// *      that runs on smart phones. It is structed to support anywhere 
+// *      navigation. Indoors in areas covered by different indoor positioning 
+// *      system (IPS) and outdoors covered by GPS. In particilar, it can rely on 
+// *      BeDIS (Building/environment Data and Information System) for indoor 
+// *      positioning. Using this IPS, the navigator does not need to 
+// *      continuously monitor its own position, since the IPS broadcast to the 
+// *      navigator the location of each waypoint. 
+// *      This version makes use of Xamarin.Forms, which is a complete 
+// *      cross-platform UI tookit that runs on both iOS and Android.
+// *
+// * Authors:
+// *
+// *      Kenneth Tang, kenneth@gm.nssh.ntpc.edu.tw
+// *      Paul Chang, paulchang@iis.sinica.edu.tw
+// *      
+// */
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml;
-using IndoorNavigation.Models.NavigaionLayer;
-using System.Runtime.CompilerServices;
+//using System;
+//using System.IO;
+//using System.Linq;
+//using System.Reflection;
+//using System.Xml;
+//using IndoorNavigation.Models.NavigaionLayer;
+//using System.Runtime.CompilerServices;
 
-namespace IndoorNavigation.Modules.Utilities
-{
-    public static class NavigraphStorage
-    {
-        internal static readonly string _navigraphFolder =
-            Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData),
-                    "Navigraph");
-        internal static readonly string _firstDirectionInstuctionFolder
-             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FirstDirection");
+//namespace IndoorNavigation.Modules.Utilities
+//{
+//    public static class NavigraphStorage
+//    {
+//        internal static readonly string _navigraphFolder =
+//            Path.Combine(Environment.GetFolderPath(
+//                    Environment.SpecialFolder.LocalApplicationData),
+//                    "Navigraph");
+//        internal static readonly string _firstDirectionInstuctionFolder
+//             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FirstDirection");
 
-        internal static readonly string _informationFolder
-             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Information");
+//        internal static readonly string _informationFolder
+//             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Information");
 
-        internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
-        private static PhoneInformation _phoneInformation = new PhoneInformation();
-        private static object _fileLock = new object();
+//        internal static readonly string _embeddedResourceReoute = "IndoorNavigation.Resources.";
+//        private static PhoneInformation _phoneInformation = new PhoneInformation();
+//        private static object _fileLock = new object();
 
-        public static string[] GetAllNavigationGraphs()   
-        {
-            Console.WriteLine(">>GetAllNavigationGraphs");
-            // Check the folder of navigation graph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
-                Directory.CreateDirectory(_navigraphFolder);
-            if (!Directory.Exists(_firstDirectionInstuctionFolder))
-                Directory.CreateDirectory(_firstDirectionInstuctionFolder);
-            if (!Directory.Exists(_informationFolder))
-                Directory.CreateDirectory(_informationFolder);
-            PhoneInformation phoneInformation = new PhoneInformation();
+//        public static string[] GetAllNavigationGraphs()   
+//        {
+//            Console.WriteLine(">>GetAllNavigationGraphs");
+//            // Check the folder of navigation graph if it is exist
+//            if (!Directory.Exists(_navigraphFolder))
+//                Directory.CreateDirectory(_navigraphFolder);
+//            if (!Directory.Exists(_firstDirectionInstuctionFolder))
+//                Directory.CreateDirectory(_firstDirectionInstuctionFolder);
+//            if (!Directory.Exists(_informationFolder))
+//                Directory.CreateDirectory(_informationFolder);
+//            PhoneInformation phoneInformation = new PhoneInformation();
 
 
-            string[] existNavigraphname = Directory.GetFiles(_navigraphFolder)
-                .Select(path => Path.GetFileName(path))
-                .OrderBy(file => file).ToArray();
-            string[] returnGraphName = new string[existNavigraphname.Count()];
-            for (int i = 0; i < existNavigraphname.Count(); i++)
-            {
+//            string[] existNavigraphname = Directory.GetFiles(_navigraphFolder)
+//                .Select(path => Path.GetFileName(path))
+//                .OrderBy(file => file).ToArray();
+//            string[] returnGraphName = new string[existNavigraphname.Count()];
+//            for (int i = 0; i < existNavigraphname.Count(); i++)
+//            {
                
-                XMLInformation information;
-                information = NavigraphStorage.LoadInformationML(existNavigraphname[i].ToString() + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-                Console.WriteLine("the information is : " + information.GiveGraphName());
-                returnGraphName[i] = information.GiveGraphName();
-            }
+//                XMLInformation information;
+//                information = NavigraphStorage.LoadInformationML(existNavigraphname[i].ToString() + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+//                Console.WriteLine("the information is : " + information.GiveGraphName());
+//                returnGraphName[i] = information.GiveGraphName();
+//            }
 
-            //return Directory.GetFiles(_navigraphFolder)
-            //    .Select(path => Path.GetFileName(path))
-            //    .OrderBy(file => file).ToArray();
-            return returnGraphName;
-        }
+//            //return Directory.GetFiles(_navigraphFolder)
+//            //    .Select(path => Path.GetFileName(path))
+//            //    .OrderBy(file => file).ToArray();
+//            return returnGraphName;
+//        }
 
-        public static NavigationGraph LoadNavigationGraphXML(string FileName)
-        {
-            Console.WriteLine("FileName : " + FileName);
-            string filePath = Path.Combine(_navigraphFolder, FileName);
-            Console.WriteLine("Reading File Name : " + filePath);
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException();
+//        public static NavigationGraph LoadNavigationGraphXML(string FileName)
+//        {
+//            Console.WriteLine("FileName : " + FileName);
+//            string filePath = Path.Combine(_navigraphFolder, FileName);
+//            Console.WriteLine("Reading File Name : " + filePath);
+//            if (!File.Exists(filePath))
+//                throw new FileNotFoundException();
 
-            var xmlString = File.ReadAllText(filePath);
-            if (xmlString == "")
-            {
-                DeleteNavigationGraph(FileName);
-            }
-            StringReader stringReader = new StringReader(xmlString);
-            XmlDocument document = new XmlDocument();
-            document.Load(filePath);
-            //XMLParser xmlParser = new XMLParser();
-            //NavigationGraph navigationGraph =  xmlParser.GetString(document);
-            NavigationGraph navigationGraph = new NavigationGraph(document);
+//            var xmlString = File.ReadAllText(filePath);
+//            if (xmlString == "")
+//            {
+//                DeleteNavigationGraph(FileName);
+//            }
+//            StringReader stringReader = new StringReader(xmlString);
+//            XmlDocument document = new XmlDocument();
+//            document.Load(filePath);
+//            //XMLParser xmlParser = new XMLParser();
+//            //NavigationGraph navigationGraph =  xmlParser.GetString(document);
+//            NavigationGraph navigationGraph = new NavigationGraph(document);
 
-            return navigationGraph;
-        }
+//            return navigationGraph;
+//        }
 
-        public static FirstDirectionInstruction LoadFirstDirectionXML(string FileName)
-        {
-            string filePath = Path.Combine(_firstDirectionInstuctionFolder, FileName);
+//        public static FirstDirectionInstruction LoadFirstDirectionXML(string FileName)
+//        {
+//            string filePath = Path.Combine(_firstDirectionInstuctionFolder, FileName);
 
-            var xmlString = File.ReadAllText(filePath);
-            if (xmlString == "")
-            {
-                DeleteFirstDirectionXML(FileName);
-            }
+//            var xmlString = File.ReadAllText(filePath);
+//            if (xmlString == "")
+//            {
+//                DeleteFirstDirectionXML(FileName);
+//            }
 
-            StringReader stringReader = new StringReader(xmlString);
-            XmlDocument document = new XmlDocument();
-            document.Load(filePath);
+//            StringReader stringReader = new StringReader(xmlString);
+//            XmlDocument document = new XmlDocument();
+//            document.Load(filePath);
 
-            FirstDirectionInstruction firstDirectionInstruction = new FirstDirectionInstruction(document);
+//            FirstDirectionInstruction firstDirectionInstruction = new FirstDirectionInstruction(document);
 
-            return firstDirectionInstruction;
+//            return firstDirectionInstruction;
 
-        }
+//        }
 
-        public static XMLInformation LoadInformationML(string FileName)
-        {
-            string filePath = Path.Combine(_informationFolder, FileName);
+//        public static XMLInformation LoadInformationML(string FileName)
+//        {
+//            string filePath = Path.Combine(_informationFolder, FileName);
 
 
-            var xmlString = File.ReadAllText(filePath);
-            if (xmlString == "")
-            {
-                DeleteFirstDirectionXML(FileName);
-            }
+//            var xmlString = File.ReadAllText(filePath);
+//            if (xmlString == "")
+//            {
+//                DeleteFirstDirectionXML(FileName);
+//            }
 
-            StringReader stringReader = new StringReader(xmlString);
-            XmlDocument document = new XmlDocument();
-            document.Load(filePath);
+//            StringReader stringReader = new StringReader(xmlString);
+//            XmlDocument document = new XmlDocument();
+//            document.Load(filePath);
 
-            XMLInformation xmlInformation = new XMLInformation(document);
+//            XMLInformation xmlInformation = new XMLInformation(document);
 
-            return xmlInformation;
+//            return xmlInformation;
 
-        }
+//        }
 
-        public static void DeleteNavigationGraph(string GraphName)
-        {
-            string filePath = Path.Combine(_navigraphFolder, GraphName);
-            // Check the folder of navigraph if it is exist
-            if (!Directory.Exists(_navigraphFolder))
-                Directory.CreateDirectory(_navigraphFolder);
+//        public static void DeleteNavigationGraph(string GraphName)
+//        {
+//            string filePath = Path.Combine(_navigraphFolder, GraphName);
+//            // Check the folder of navigraph if it is exist
+//            if (!Directory.Exists(_navigraphFolder))
+//                Directory.CreateDirectory(_navigraphFolder);
 
-            lock (_fileLock)
-                File.Delete(filePath);
-        }
+//            lock (_fileLock)
+//                File.Delete(filePath);
+//        }
 
-        public static void DeleteFirstDirectionXML(string fileName)
-        {
-            string filePath_en = Path.Combine(_firstDirectionInstuctionFolder, fileName + "_en-US.xml");
-            string filePath_zh = Path.Combine(_firstDirectionInstuctionFolder, fileName + "_zh.xml");
-            if (!Directory.Exists(_firstDirectionInstuctionFolder))
-                Directory.CreateDirectory(_firstDirectionInstuctionFolder);
+//        public static void DeleteFirstDirectionXML(string fileName)
+//        {
+//            string filePath_en = Path.Combine(_firstDirectionInstuctionFolder, fileName + "_en-US.xml");
+//            string filePath_zh = Path.Combine(_firstDirectionInstuctionFolder, fileName + "_zh.xml");
+//            if (!Directory.Exists(_firstDirectionInstuctionFolder))
+//                Directory.CreateDirectory(_firstDirectionInstuctionFolder);
 
-            lock (_fileLock)
-            {
-                File.Delete(filePath_en);
-                File.Delete(filePath_zh);
-            }
-            //File.Delete(filePath);
-        }
+//            lock (_fileLock)
+//            {
+//                File.Delete(filePath_en);
+//                File.Delete(filePath_zh);
+//            }
+//            //File.Delete(filePath);
+//        }
 
-        public static void DeleteInformationML(string fileName)
-        {
-            string filePath_en = Path.Combine(_informationFolder, fileName + "_info_en-US.xml");
-            string filePath_zh = Path.Combine(_informationFolder, fileName + "_info_zh.xml");
-            if (!Directory.Exists(_informationFolder))
-                Directory.CreateDirectory(_informationFolder);
+//        public static void DeleteInformationML(string fileName)
+//        {
+//            string filePath_en = Path.Combine(_informationFolder, fileName + "_info_en-US.xml");
+//            string filePath_zh = Path.Combine(_informationFolder, fileName + "_info_zh.xml");
+//            if (!Directory.Exists(_informationFolder))
+//                Directory.CreateDirectory(_informationFolder);
 
-            lock (_fileLock)
-            {
-                File.Delete(filePath_en);
-                File.Delete(filePath_zh);
-            }
-            // File.Delete(filePath);
-        }
+//            lock (_fileLock)
+//            {
+//                File.Delete(filePath_en);
+//                File.Delete(filePath_zh);
+//            }
+//            // File.Delete(filePath);
+//        }
 
-        public static void DeleteAllNavigationGraph()
-        {
-            foreach (string place in GetAllNavigationGraphs())
-            {
-                string map = _phoneInformation.GiveCurrentMapName(place);
-                DeleteNavigationGraph(map);
-            }
+//        public static void DeleteAllNavigationGraph()
+//        {
+//            foreach (string place in GetAllNavigationGraphs())
+//            {
+//                string map = _phoneInformation.GiveCurrentMapName(place);
+//                DeleteNavigationGraph(map);
+//            }
 
-        }
+//        }
 
-        public static void DeleteAllFirstDirectionXML()
-        {
-            foreach (string place in GetAllNavigationGraphs())
-            {
-                string map = _phoneInformation.GiveCurrentMapName(place);
-                DeleteFirstDirectionXML(map);
-            }
-        }
+//        public static void DeleteAllFirstDirectionXML()
+//        {
+//            foreach (string place in GetAllNavigationGraphs())
+//            {
+//                string map = _phoneInformation.GiveCurrentMapName(place);
+//                DeleteFirstDirectionXML(map);
+//            }
+//        }
 
-        public static void DeleteAllInformationXML()
-        {
-            foreach (string place in GetAllNavigationGraphs())
-            {
-                string map = _phoneInformation.GiveCurrentMapName(place);
-                DeleteInformationML(map);
-            }
-        }
+//        public static void DeleteAllInformationXML()
+//        {
+//            foreach (string place in GetAllNavigationGraphs())
+//            {
+//                string map = _phoneInformation.GiveCurrentMapName(place);
+//                DeleteInformationML(map);
+//            }
+//        }
 
-        public static void GenerateFileRoute(string fileName, string readingPath)
-        {
-            string sourceNavigationData = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + ".xml");
-            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder,
-                                            fileName);
-            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_en-US.xml");
-            string sourceFirstDirectionData_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_zh.xml");
-            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
-            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
+//        public static void GenerateFileRoute(string fileName, string readingPath)
+//        {
+//            string sourceNavigationData = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + ".xml");
+//            string sinkNavigationData = Path.Combine(NavigraphStorage._navigraphFolder,
+//                                            fileName);
+//            string sourceFirstDirectionData_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_en-US.xml");
+//            string sourceFirstDirectionData_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_zh.xml");
+//            string sinkFirstDirectionData_en = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_en-US.xml");
+//            string sinkFirstDirectionData_zh = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName + "_zh.xml");
 
-            string sourceInformation_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_en-US.xml");
-            string sourceInformation_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_zh.xml");
-            string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
-            string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
+//            string sourceInformation_en = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_en-US.xml");
+//            string sourceInformation_zh = Path.Combine(_embeddedResourceReoute + readingPath + "." + readingPath + "_info_zh.xml");
+//            string sinkInformation_en = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_en-US.xml");
+//            string sinkInformation_zh = Path.Combine(NavigraphStorage._informationFolder, fileName + "_info_zh.xml");
 
-            Console.WriteLine("SinkNavigationData : " + sinkNavigationData);
+//            Console.WriteLine("SinkNavigationData : " + sinkNavigationData);
 
-            try
-            {
-                if (!Directory.Exists(NavigraphStorage._navigraphFolder))
-                    Directory.CreateDirectory(
-                        NavigraphStorage._navigraphFolder);
+//            try
+//            {
+//                if (!Directory.Exists(NavigraphStorage._navigraphFolder))
+//                    Directory.CreateDirectory(
+//                        NavigraphStorage._navigraphFolder);
 
-                if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
-                    Directory.CreateDirectory(
-                        NavigraphStorage._firstDirectionInstuctionFolder);
+//                if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
+//                    Directory.CreateDirectory(
+//                        NavigraphStorage._firstDirectionInstuctionFolder);
 
-                if (!Directory.Exists(NavigraphStorage._informationFolder))
-                    Directory.CreateDirectory(
-                        NavigraphStorage._informationFolder);
+//                if (!Directory.Exists(NavigraphStorage._informationFolder))
+//                    Directory.CreateDirectory(
+//                        NavigraphStorage._informationFolder);
 
-                Storing(sourceNavigationData, sinkNavigationData);
-                Storing(sourceFirstDirectionData_en, sinkFirstDirectionData_en);
-                Storing(sourceFirstDirectionData_zh, sinkFirstDirectionData_zh);
-                Storing(sourceInformation_en, sinkInformation_en);
-                Storing(sourceInformation_zh, sinkInformation_zh);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+//                Storing(sourceNavigationData, sinkNavigationData);
+//                Storing(sourceFirstDirectionData_en, sinkFirstDirectionData_en);
+//                Storing(sourceFirstDirectionData_zh, sinkFirstDirectionData_zh);
+//                Storing(sourceInformation_en, sinkInformation_en);
+//                Storing(sourceInformation_zh, sinkInformation_zh);
+//            }
+//            catch (Exception e)
+//            {
+//                Console.WriteLine(e);
+//            }
+//        }
 
-        public static void Storing(string sourceRoute, string sinkRoute)
-        {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(sourceRoute))
-            {
-                StreamReader tr = new StreamReader(stream);
-                string fileContents = tr.ReadToEnd();
-                File.WriteAllText(sinkRoute, fileContents.ToString());
-            }
-        }
+//        public static void Storing(string sourceRoute, string sinkRoute)
+//        {
+//            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(sourceRoute))
+//            {
+//                StreamReader tr = new StreamReader(stream);
+//                string fileContents = tr.ReadToEnd();
+//                File.WriteAllText(sinkRoute, fileContents.ToString());
+//            }
+//        }
 
-        public static XmlDocument XmlReader(string FileName)
-        {
-            var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
-            string xmlContent = "";
+//        public static XmlDocument XmlReader(string FileName)
+//        {
+//            var assembly = typeof(NavigraphStorage).GetTypeInfo().Assembly;
+//            string xmlContent = "";
 
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
+//            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
 
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                xmlContent = reader.ReadToEnd();
-            }
-            stream.Close();
+//            using (StreamReader reader = new StreamReader(stream))
+//            {
+//                xmlContent = reader.ReadToEnd();
+//            }
+//            stream.Close();
 
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(xmlContent);
+//            XmlDocument xmlDocument = new XmlDocument();
+//            xmlDocument.LoadXml(xmlContent);
 
-            return xmlDocument;
-        }
-    }
-}
+//            return xmlDocument;
+//        }
+//    }
+//}

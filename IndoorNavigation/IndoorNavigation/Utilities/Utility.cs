@@ -51,7 +51,7 @@ using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
-
+using IndoorNavigation.Utilities;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
@@ -81,13 +81,13 @@ namespace IndoorNavigation.Modules
         /// <returns></returns>
         public static bool DownloadNavigraph(string URL, string navigraphName)
         {
-            string filePath = Path.Combine(NavigraphStorage._navigraphFolder,
+            string filePath = Path.Combine(Storage._navigraphFolder,
                                             navigraphName);
             try
             {
-                if (!Directory.Exists(NavigraphStorage._navigraphFolder))
+                if (!Directory.Exists(Storage._navigraphFolder))
                     Directory.CreateDirectory(
-                        NavigraphStorage._navigraphFolder);
+                        Storage._navigraphFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);
@@ -103,15 +103,15 @@ namespace IndoorNavigation.Modules
 													  string fileName)
         {
             string filePath = 
-				Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, 
+				Path.Combine(Storage._firstDirectionInstuctionFolder, 
 							 fileName);
             try
             {
-                if (!Directory.Exists(NavigraphStorage
+                if (!Directory.Exists(Storage
 					._firstDirectionInstuctionFolder))
 
                     Directory.CreateDirectory(
-                        NavigraphStorage._firstDirectionInstuctionFolder);
+                        Storage._firstDirectionInstuctionFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);
@@ -128,12 +128,11 @@ namespace IndoorNavigation.Modules
         public static bool DownloadInformationFile(string URL, string fileName)
         {
             string filePath = 
-				Path.Combine(NavigraphStorage._informationFolder, fileName);
+				Path.Combine(Storage._informationFolder, fileName);
             try
             {
-                if (!Directory.Exists(NavigraphStorage._informationFolder))
-                    Directory.CreateDirectory(
-                        NavigraphStorage._informationFolder);
+                if (!Directory.Exists(Storage._informationFolder))
+                    Directory.CreateDirectory(Storage._informationFolder);
 
                 using (WebClient webClient = new WebClient())
                     webClient.DownloadFileAsync(new Uri(URL), filePath);

@@ -48,6 +48,8 @@ using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Xml;
+using static IndoorNavigation.Utilities.Storage;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation
 {
@@ -128,14 +130,14 @@ namespace IndoorNavigation
         {
             exits = new ObservableCollection<DestinationItem>();
             _navigationGraphName = navigationGraphName;
-            phoneInformation = new PhoneInformation();
+            //phoneInformation = new PhoneInformation();
 
-            _nameInformation = 
-				NavigraphStorage.LoadInformationML
-				(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
-				"_info_" + 
-				phoneInformation.GiveCurrentLanguage() + 
-				".xml");
+            _nameInformation = LoadXmlInformation(_navigationGraphName);
+				//NavigraphStorage.LoadInformationML
+				//(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
+				//"_info_" + 
+				//phoneInformation.GiveCurrentLanguage() + 
+				//".xml");
 
             ButtonCommand = new Command(ToNavigatorExit);
             LoadData();
@@ -144,7 +146,7 @@ namespace IndoorNavigation
 
         private void LoadData()
         {
-            XmlDocument doc = NavigraphStorage.XmlReader(fileName);
+            XmlDocument doc = Storage.XmlReader(fileName);
             XmlNodeList exitNodes = doc.GetElementsByTagName("exit");
             foreach (XmlNode node in exitNodes)
             {

@@ -14,6 +14,7 @@ using System.Globalization;
 using Plugin.Multilingual;
 using Plugin.InputKit.Shared.Configuration;
 using IndoorNavigation.Views.PopUpPage;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation
 {
@@ -57,7 +58,7 @@ namespace IndoorNavigation
         public void LoadData()
         {          
             XmlDocument doc = 
-				NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+				Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
 				
             XmlNodeList nodeList = doc.GetElementsByTagName("Cashierstation");
 

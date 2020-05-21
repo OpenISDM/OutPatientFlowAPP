@@ -19,6 +19,8 @@ using System.Xml;
 using System.Linq;
 using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Views.PopUpPage;
+using static IndoorNavigation.Utilities.Storage;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -56,10 +58,10 @@ namespace IndoorNavigation.Views.OPFM
             _navigationGraphName = navigationGraphName;
             request = new HttpRequest();
 
-            _nameInformation = 
-				NavigraphStorage.LoadInformationML
-				(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
-				 "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _nameInformation = LoadXmlInformation(navigationGraphName);
+				//NavigraphStorage.LoadInformationML
+				//(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
+				// "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
             NetworkSettings = DependencyService.Get<INetworkSetting>();
 
@@ -166,7 +168,7 @@ namespace IndoorNavigation.Views.OPFM
         {
             CashierPosition = new Dictionary<Guid, DestinationItem>();
             PharmacyPostition = new Dictionary<Guid, DestinationItem>();
-            XmlDocument doc = NavigraphStorage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
             XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
             XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
             foreach(XmlNode node in CashiernodeList)

@@ -69,6 +69,8 @@ using System.Linq;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
 using System.Collections.ObjectModel;
+using static IndoorNavigation.Utilities.Storage;
+using System.Data.Common;
 
 namespace IndoorNavigation
 {
@@ -170,8 +172,9 @@ namespace IndoorNavigation
 
             if (Connectable)
             {
+                //it will be a xml format
                 string SupportList = _download.Download(_download.getSupportListUrl());
-
+                Console.WriteLine("SupporList context : " + SupportList);
                 #region when server not response. I know the code 很母湯，but it's temporary haha.
                 if (string.IsNullOrEmpty(SupportList))
                 {
@@ -179,17 +182,11 @@ namespace IndoorNavigation
                 }
                 else
                 {
-                    CurrentMapInfos infos = JsonConvert.DeserializeObject<CurrentMapInfos>(SupportList);
-                    ObservableCollection<string> result = new ObservableCollection<string>();
-
-                    foreach(MapInfo info in infos.Maps)
-                    {
-                        //result.Add(info.Name);
-                        result.Add(Storage.GetDisplayName(info.Name));
-                        Console.WriteLine("Result name is : " + info.Name);
-                    }
-
-                    await Navigation.PushAsync(new SettingTableViewPage(result));
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(SupportList);
+                    Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
+                    _serverResources = SupportListDict;
+                    await Navigation.PushAsync(new SettingTableViewPage(SupportListDict));
                 }
                 #endregion
             }

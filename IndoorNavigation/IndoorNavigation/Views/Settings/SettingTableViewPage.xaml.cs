@@ -70,6 +70,9 @@ using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
 using AiForms.Renderers;
 using System.Linq.Expressions;
+using static IndoorNavigation.Utilities.Storage;
+using System.Security;
+using Dijkstra.NET.Model;
 /*Note : remember to edit GetAllGraph method.*/
 
 namespace IndoorNavigation.Views.Settings
@@ -88,8 +91,9 @@ namespace IndoorNavigation.Views.Settings
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         public IList _chooseMap { get; } = new ObservableCollection<string>();
-        public IList _downloadMap { get; set; }
+        public IList _downloadMap { get; } = new ObservableCollection<string>();
 
+        private Dictionary<string, GraphInfo> _tmpResourceDict;
         private bool _connectable;
         #endregion
 
@@ -113,14 +117,15 @@ namespace IndoorNavigation.Views.Settings
         public SettingTableViewPage(Object sender)
         {
             InitialPage();
-            Console.WriteLine("connect");
+            Console.WriteLine("SettingTableView page Construct : connect");
             _connectable = true;
 
-            _downloadMap = sender as ObservableCollection<string>;
-            Console.WriteLine("DownloadMap count : " + _downloadMap.Count);
-            foreach(string str in _downloadMap)
+            _tmpResourceDict = sender as Dictionary<string, GraphInfo>;
+            
+            foreach(KeyValuePair<string, GraphInfo> pair in _tmpResourceDict)
             {
-                Console.WriteLine("aaaaaa : " + str);
+                Console.WriteLine("pair key : " + pair.Key);
+                _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
             }
         }
 
@@ -459,9 +464,10 @@ namespace IndoorNavigation.Views.Settings
         //for Server data Download
         async private void ChooseDownloadMap()
         {
-            Console.WriteLine("eeeeeeeeeeeeeeeeeeeeeee");
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            //string selectItem = DownloadFromServer.SelectedItem.ToString().Trim();           
+            //Storage.CloudGenerateFile(Storage.GetKeyName(DownloadFromServer.SelectedItem.ToString()));
+            CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key);
+            await PopupNavigation.Instance.PopAsync();
         }
 
         #endregion

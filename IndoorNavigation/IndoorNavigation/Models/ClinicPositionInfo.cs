@@ -40,6 +40,8 @@ using Xamarin.Forms;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
+
 namespace IndoorNavigation.Models
 {
     class ClinicPositionInfo
@@ -53,7 +55,7 @@ namespace IndoorNavigation.Models
             _clinicsPositions = new Dictionary<string, RegionWaypointPoint>();
 
             XmlDocument doc = 
-				NavigraphStorage.XmlReader("Yuanlin_OPFM.CareRoomMapp.xml");           
+				Storage.XmlReader("Yuanlin_OPFM.CareRoomMapp.xml");           
 
             XmlNodeList destinationList = 
 				doc.SelectNodes("navigation_graph/regions/region/Destination");
