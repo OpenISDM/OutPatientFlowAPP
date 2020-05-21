@@ -466,7 +466,19 @@ namespace IndoorNavigation.Views.Settings
         {
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             //Storage.CloudGenerateFile(Storage.GetKeyName(DownloadFromServer.SelectedItem.ToString()));
-            CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key);
+
+            try 
+            { 
+                CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key); 
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("Error message : " + exc.Message);
+                await PopupNavigation.Instance.PopAsync();
+                await DisplayAlert("Error", "download error", "ok");
+                return;
+            }
+            await DisplayAlert("success", "finish download", "ok");
             await PopupNavigation.Instance.PopAsync();
         }
 

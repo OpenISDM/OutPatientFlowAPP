@@ -21,7 +21,7 @@ namespace IndoorNavigation.Modules.Utilities
 
     public class CloudDownload
     {
-        public const string _localhost = "http://140.109.22.175:80/";
+        public const string _localhost = "http://140.109.22.34:80/";
         //private string _context;
         public CurrentMapInfos _currentInfos;
       

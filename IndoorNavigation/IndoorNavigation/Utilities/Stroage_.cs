@@ -361,6 +361,8 @@ namespace IndoorNavigation.Utilities
         }
         static private void CloudStoring(string Context,string sinkRoute) 
         {
+            if (string.IsNullOrEmpty(Context))
+                throw new Exception("Download context can't be null or empty. Please check url or network");
             File.WriteAllText(sinkRoute, Context);
         }
         #endregion
