@@ -51,7 +51,7 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-
+using IndoorNavigation.ViewModels;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -60,20 +60,27 @@ namespace IndoorNavigation.Views.Navigation
     {
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId,
+                                typeof(TranslateExtension)
+                                .GetTypeInfo().Assembly);
 
         private string _navigationGraphName;
 
-        public CityHallHomePage(string navigationGraphName)
+        public CityHallHomePage(Location location)
         {
             InitializeComponent();
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            this._navigationGraphName = navigationGraphName;
+            var currentLanguage =
+                CrossMultilingual.Current.CurrentCultureInfo;
+            this._navigationGraphName = location.sourcePath;
 
-            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", currentLanguage));
+            NavigationPage
+            .SetBackButtonTitle
+            (this, _resourceManager.GetString("BACK_STRING", currentLanguage));
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor
+                = Color.FromHex("#3F51B5");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor
+                = Color.White;
 
             switch (Device.RuntimePlatform)
             {
@@ -105,32 +112,37 @@ namespace IndoorNavigation.Views.Navigation
 
         async void BathroomList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Bathroom));
+            await Navigation.PushAsync(
+                new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.Bathroom));
         }
 
         async void ParkingList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Parking));
+            await Navigation.PushAsync(
+                new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.Parking));
         }
 
         async void OfficeList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Office));
+            await Navigation.PushAsync(
+                new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.Office));
         }
 
         async void OthersList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.Others));
+            await Navigation.PushAsync(
+                new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.Others));
         }
 
         async void BranchList_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName,
-                                                               CategoryType.ConferenceRoom));
+            await Navigation.PushAsync(
+                new DestinationPickPage(_navigationGraphName,
+                                        CategoryType.ConferenceRoom));
         }
     }
 }

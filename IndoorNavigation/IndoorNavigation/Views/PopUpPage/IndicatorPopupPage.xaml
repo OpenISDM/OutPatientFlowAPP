@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.PopUpPage.IndicatorPopupPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BackgroundColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="20,0,20,0" CornerRadius="8">
+                <StackLayout Orientation="Horizontal">
+                    <ActivityIndicator Color="#3f51b5"  IsRunning="True" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="Loading" TextColor="#3f51b5" FontSize="Title" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</pages:PopupPage>

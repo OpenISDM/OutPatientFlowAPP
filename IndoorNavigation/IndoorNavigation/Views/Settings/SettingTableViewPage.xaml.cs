@@ -44,17 +44,18 @@
  *
  */
 using IndoorNavigation.Models;
-using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources;
 using IndoorNavigation.Resources.Helpers;
+using IndoorNavigation.Utilities;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Views.Settings.LicensePages;
 using Plugin.Multilingual;
 using Prism.Commands;
 using Rg.Plugins.Popup.Services;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,37 +64,81 @@ using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
+using IndoorNavigation.ViewModels;
+using Xamarin.Essentials;
+using Location = IndoorNavigation.ViewModels.Location;
+using AiForms.Renderers;
+using System.Linq.Expressions;
+using static IndoorNavigation.Utilities.Storage;
+using System.Security;
+using Dijkstra.NET.Model;
+/*Note : remember to edit GetAllGraph method.*/
 
 namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
+        #region Variables and Objects
+
+        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        private ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
         private DownloadPopUpPage _downloadPage = new DownloadPopUpPage();
         private string _downloadURL;
         public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
         public IList _chooseMap { get; } = new ObservableCollection<string>();
+        public IList _downloadMap { get; } = new ObservableCollection<string>();
 
+        private Dictionary<string, GraphInfo> _tmpResourceDict;
+        private bool _connectable;
+        #endregion
 
+        #region Command defined
         public ICommand _chooseMapCommand => new DelegateCommand(HandleChooseMap);
-        //public ICommand SelectedMapCommand => new DelegateCommand(HandleSelectedMap);
         public ICommand _cleanMapCommand => new DelegateCommand(async () =>
-            { await HandleCLeanMapAsync(); });
+        { await HandleCLeanMapAsync(); });
+        public ICommand _downloadItemCommand => new DelegateCommand(ChooseDownloadMap);
 
         public ICommand _changeLanguageCommand => new DelegateCommand(HandleChangeLanguage);
-        private PhoneInformation _phoneInformation;
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        #endregion
 
+        #region Initial
         public SettingTableViewPage()
+        {
+            InitialPage();
+            Console.WriteLine("can not connect");
+            _connectable = false;
+        }
+
+        public SettingTableViewPage(Object sender)
+        {
+            InitialPage();
+            Console.WriteLine("SettingTableView page Construct : connect");
+            _connectable = true;
+
+            _tmpResourceDict = sender as Dictionary<string, GraphInfo>;
+
+            foreach (KeyValuePair<string, GraphInfo> pair in _tmpResourceDict)
+            {
+                Console.WriteLine("pair key : " + pair.Key);
+                _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            DownloadFromServer.IsEnabled = _connectable;
+        }
+
+        private void InitialPage()
         {
             InitializeComponent();
             AddMapItems();
-            _phoneInformation = new PhoneInformation();
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
@@ -111,9 +156,34 @@ namespace IndoorNavigation.Views.Settings
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
-            }   
+            }
         }
+        private void AddMapItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            _chooseMap.Clear();
 
+            foreach (Location location in Storage.GetLocalGraphNames())
+            {
+                _chooseMap.Add(location.UserNaming);
+            }
+        }
+        private void ReloadNaviGraphItems()
+        {
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+
+            _cleanNaviGraphItems.Clear();
+            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
+
+            foreach (var installedName in Storage.GetAllNaviGraphName())
+            {
+                _cleanNaviGraphItems.Add(installedName.UserNaming);
+                Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
+            }
+        }
+        #endregion
+
+        #region Tapped Event
         async void LicenseBtn_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new LicenseMainPage());
@@ -204,22 +274,9 @@ namespace IndoorNavigation.Views.Settings
                 _resourceManager.GetString("CULTURE_VERSION_STRING", ci));
         }
 
-        private void ReloadNaviGraphItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _selectNaviGraphItems.Clear();
-            _selectNaviGraphItems.Add(_resourceManager.GetString("CHOOSE_MAP_STRING", ci));
+        #endregion
 
-            _cleanNaviGraphItems.Clear();
-            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
-
-            foreach (var naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
-            {
-                _selectNaviGraphItems.Add(naviGraphName);
-                _cleanNaviGraphItems.Add(naviGraphName);
-            }
-        }
-
+        #region Command Handle
         /// <summary>
         /// Handles the download page event.
         /// </summary>
@@ -257,7 +314,7 @@ namespace IndoorNavigation.Views.Settings
             string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1C_ncshn2Q2veLMVMgvqW81xLP3DJnQpW&export=download";
 
             //Testing in Taipei City hall 2F
-           // string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=17AarNw7QqBFlRqSNMTjwU8_WkMK98SPI&export=download";
+            // string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=17AarNw7QqBFlRqSNMTjwU8_WkMK98SPI&export=download";
             Utility.DownloadFirstDirectionFile(firstDirectionFile_zh_TW, fileLanguageTaiwanChinese);
 
             string stringfileLanguageUSEnglish = fileName + "_en-US.xml";
@@ -277,7 +334,7 @@ namespace IndoorNavigation.Views.Settings
             Utility.DownloadInformationFile(infoFile_zh_TW, infoTaiwanChinese);
 
             string infoFile_en_US = "https://drive.google.com/uc?authuser=0&id=1KCbZUDPrfGv5H14OTSX2PaTnREG8Xk94&export=download";
-            Utility.DownloadInformationFile(infoFile_en_US,infoEnglish);
+            Utility.DownloadInformationFile(infoFile_en_US, infoEnglish);
 
             ReloadNaviGraphItems();
         }
@@ -288,18 +345,21 @@ namespace IndoorNavigation.Views.Settings
             {
                 case "英文":
                 case "English":
-                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en");
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("en-US");
                     break;
                 case "中文":
                 case "Chinese":
-                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh");
+                    CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("zh-TW");
                     break;
 
                 default:
                     break;
             }
-           
+            Console.WriteLine("Current Culture is : " + CultureInfo.CurrentCulture.Name);
             AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
+            Storage._currentCulture = AppResources.Culture;
+            AddMapItems();
+
             await Navigation.PushAsync(new MainPage());
         }
 
@@ -345,10 +405,8 @@ namespace IndoorNavigation.Views.Settings
                                            _resourceManager.GetString("OK_STRING", ci),
                                            _resourceManager.GetString("CANCEL_STRING", ci)))
                     {
-                        // Cancel All Map
-                        NavigraphStorage.DeleteAllNavigationGraph();
-                        NavigraphStorage.DeleteAllFirstDirectionXML();
-                        NavigraphStorage.DeleteAllInformationXML();
+                        // Cancel All Map                        
+                        Storage.DeleteAllGraphFiles();
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -363,11 +421,13 @@ namespace IndoorNavigation.Views.Settings
 
                     {
                         // Delete selected map
-                        string currentMap = _phoneInformation.GiveCurrentMapName(CleanMapPicker.SelectedItem.ToString());
 
-                        NavigraphStorage.DeleteNavigationGraph(currentMap);
-                        NavigraphStorage.DeleteFirstDirectionXML(currentMap);
-                        NavigraphStorage.DeleteInformationML(currentMap);
+                        string Key =
+                            Storage._resources._graphResources
+                            .First(o => o.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]
+                            == CleanMapPicker.SelectedItem.ToString())
+                            .Key;
+                        Storage.DeleteBuildingGraph(Key);
                         await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
                                            _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
                                            _resourceManager.GetString("OK_STRING", ci));
@@ -386,24 +446,43 @@ namespace IndoorNavigation.Views.Settings
             ReloadNaviGraphItems();
         }
 
-        private void AddMapItems()
+        //for embedded data download;
+        private void HandleChooseMap()
         {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _chooseMap.Clear();
-            _chooseMap.Add(_resourceManager.GetString("TAIPEI_CITY_HALL_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("HOSPITAL_NAME_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("LAB_STRING", ci));
-            _chooseMap.Add(_resourceManager.GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING", ci));
-        }
-
-        private async void HandleChooseMap()
-        {
-            List<string> generateName = _phoneInformation.GiveGenerateMapName(OptionPicker.SelectedItem.ToString().Trim());
-
-            NavigraphStorage.GenerateFileRoute(generateName[0],generateName[1]);
+            string selectItem = OptionPicker.SelectedItem.ToString().Trim();
+            string Key =
+                Storage._localResources.First(x => x.Value._displayNames[Storage._currentCulture.Name] == selectItem).Key;
+            Storage.EmbeddedGenerateFile(Key);
 
             ReloadNaviGraphItems();
 
         }
+
+        #endregion
+
+        #region Beta Functions              
+        //for Server data Download
+        async private void ChooseDownloadMap()
+        {
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            //Storage.CloudGenerateFile(Storage.GetKeyName(DownloadFromServer.SelectedItem.ToString()));
+
+            try
+            {
+                CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("Error message : " + exc.Message);
+                await PopupNavigation.Instance.PopAsync();
+                await DisplayAlert("Error", "download error", "ok");
+                return;
+            }
+            await DisplayAlert("success", "finish download", "ok");
+            await PopupNavigation.Instance.PopAsync();
+        }
+
+        #endregion
+
     }
 }

@@ -38,14 +38,10 @@
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Utilities\" />
     <Folder Include="Views\Navigation\" />
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
-    <Folder Include="Resources\NTUH_YunLin\" />
-    <Folder Include="Resources\Taipei_City_Hall\" />
-    <Folder Include="Resources\Lab\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\NavigationStructure.cs" />
@@ -74,27 +70,28 @@
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\GraphResource.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
-    <EmbeddedResource Include="Resources\Lab\Lab_en-US.xml" />
-    <EmbeddedResource Include="Resources\Lab\Lab_zh.xml" />
+    <EmbeddedResource Include="Resources\Lab\Lab_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\Lab\Lab_FD_zh-TW.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Lab\Lab_info_zh.xml" />
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_en-US.xml" />
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_zh.xml" />
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin.xml" />
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_zh.xml" />
+    <EmbeddedResource Include="Resources\Lab\Lab_info_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_zh-TW.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_zh-TW.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
-    <EmbeddedResource Include="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
     <EmbeddedResource Include="Resources\Map_Version.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CareRoomMapp.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CashierStation.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExaminationRoomMap.xml" />
@@ -103,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="FakeNavigatorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PopUpPage\IndicatorPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ProgressBar.xaml">
@@ -125,33 +125,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\AppResources.English" />
+    <None Remove="Resources\GraphResource.xml" />
+    <None Remove="Resources\Lab\Lab_FD_en-US.xml" />
+    <None Remove="Resources\Lab\Lab_FD_zh-TW.xml" />
+    <None Remove="Resources\Lab\Lab_info_zh-TW.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_en-US.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_zh-TW.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_info_zh-TW.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_en-US.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_zh-TW.xml" />
+    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_zh.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
     <None Remove="TestingXML.xml" />
     <None Remove="Resources\Lab\Lab.xml" />
-    <None Remove="Resources\Lab\Lab_en-US.xml" />
-    <None Remove="Resources\Lab\Lab_zh.xml" />
     <None Remove="Resources\Lab\Lab_info_en-US.xml" />
-    <None Remove="Resources\Lab\Lab_Info_zh.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_Info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_Info_zh.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_en-US.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_zh.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_zh.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_info_en-US.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_zh.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_Info_zh.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_Info_en-US.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_info_en-US.xml" />
-    <None Remove="Resources\NTUH_YunLin\NTUH_YunLin_Info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_Info_en-US.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_info_en-US.xml" />
+    <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_Info_en-US.xml" />
     <None Remove="Resources\Map_Version.xml" />
     <None Remove="Yuanlin_OPFM\CareRoomMapp.xml" />
     <None Remove="Yuanlin_OPFM\CashierStation.xml" />

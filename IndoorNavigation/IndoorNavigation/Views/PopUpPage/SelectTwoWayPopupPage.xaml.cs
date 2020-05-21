@@ -4,12 +4,14 @@ using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Navigation;
-using Xamarin.Essentials;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System.Globalization;
 using Plugin.Multilingual;
+using IndoorNavigation.ViewModels;
+using Xamarin.Essentials;
+using Location = IndoorNavigation.ViewModels.Location;
 
 namespace IndoorNavigation
 {
@@ -25,12 +27,15 @@ namespace IndoorNavigation
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        public SelectTwoWayPopupPage(string BuildingName)
+
+        Location _location;
+        public SelectTwoWayPopupPage(Location location)
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
 
-            _locationName = BuildingName;
+            _locationName = location.sourcePath;
+            _location = location;
         }
 
         async private void ToNavigationBtn_Clicked(object sender, EventArgs e)
@@ -38,7 +43,7 @@ namespace IndoorNavigation
             if (isButtonPressed) return;
             isButtonPressed = true;            
             await PopupNavigation.Instance.PopAllAsync();
-            await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
+            await page.Navigation.PushAsync(new NavigationHomePage(_location));
         }
 
         async private void ToOPFM_Clicked(object sender, EventArgs e)
@@ -60,7 +65,7 @@ namespace IndoorNavigation
                       MessagingCenter.Unsubscribe<ShiftAlertPopupPage,bool>(this, "NotShowAgain_ToOPFM");
                       Page page = Application.Current.MainPage;
                       if (msg) await page.Navigation.PushAsync(new RigisterList(_locationName));
-                      else await page.Navigation.PushAsync(new NavigationHomePage(_locationName));
+                      else await page.Navigation.PushAsync(new NavigationHomePage(_location));
                   });
                 MessagingCenter.Subscribe<ShiftAlertPopupPage, bool>(this, "AlertBack", (msgsender, msgargs) => 
                 {

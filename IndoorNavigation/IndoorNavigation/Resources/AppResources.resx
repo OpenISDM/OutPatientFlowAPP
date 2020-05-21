@@ -648,4 +648,7 @@
   <data name="RETRY_STRING" xml:space="preserve">
     <value>RETRY</value>
   </data>
+  <data name="DOWNLOAD_FROM_SERVER_STRING" xml:space="preserve">
+    <value>download graph file from server</value>
+  </data>
 </root>

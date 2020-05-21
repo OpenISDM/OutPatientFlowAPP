@@ -56,7 +56,8 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Models;
-
+using static IndoorNavigation.Utilities.Storage;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -80,8 +81,8 @@ namespace IndoorNavigation.Views.Navigation
 
             _navigationGraphName = navigationGraphName;
             PhoneInformation phoneInformation = new PhoneInformation();
-            _navigationGraph = NavigraphStorage.LoadNavigationGraphXML(phoneInformation.GiveCurrentMapName(_navigationGraphName));
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage()+".xml");
+            _navigationGraph = Storage.LoadNavigationGraphXml(_navigationGraphName);
+            _nameInformation = Storage.LoadXmlInformation(_navigationGraphName);
            
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
 

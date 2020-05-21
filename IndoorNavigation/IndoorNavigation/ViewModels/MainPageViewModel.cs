@@ -54,6 +54,7 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -66,7 +67,8 @@ namespace IndoorNavigation.ViewModels
         private string _searchedText;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+            new ResourceManager(_resourceId, typeof(TranslateExtension)
+                                             .GetTypeInfo().Assembly);
 
         public MainPageViewModel()
         {
@@ -78,20 +80,12 @@ namespace IndoorNavigation.ViewModels
         {
             _locations = new ObservableRangeCollection<Location>();
 
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;            
 
-            if (!Application.Current.Properties.ContainsKey("FirstUse"))
+            foreach (Location location in
+                     Storage.GetAllNaviGraphName())
             {
-                NavigraphStorage.GenerateFileRoute("NTUH Yunlin Branch", "NTUH_YunLin");
-                NavigraphStorage.GenerateFileRoute("Taipei City Hall", "Taipei_City_Hall");
-                NavigraphStorage.GenerateFileRoute("Yuanlin Christian Hospital", "Yuanlin_Christian_Hospital");
-                Application.Current.Properties["FirstUse"] = false;
-            }
-         
-
-            foreach (string naviGraphName in NavigraphStorage.GetAllNavigationGraphs())
-            {
-                _locations.Add(new Location { UserNaming = naviGraphName });
+                _locations.Add(location);
             }
 
             if (_locations.Any())
@@ -100,12 +94,18 @@ namespace IndoorNavigation.ViewModels
             }
             else
             {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+                var currentLanguage =
+                    CrossMultilingual.Current.CurrentCultureInfo;
                 Page mainPage = Application.Current.MainPage;
+
                 await mainPage.DisplayAlert(
-                    _resourceManager.GetString("GO_SETTING_PAGE_STRING", currentLanguage),
-                    _resourceManager.GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING", currentLanguage),
-                    _resourceManager.GetString("OK_STRING", currentLanguage));
+                    _resourceManager
+                    .GetString("GO_SETTING_PAGE_STRING", currentLanguage),
+                    _resourceManager
+                    .GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING"
+                               , currentLanguage),
+                    _resourceManager
+                    .GetString("OK_STRING", currentLanguage));
                 await mainPage.Navigation.PushAsync(new SettingTableViewPage());
             }
         }
@@ -165,5 +165,8 @@ namespace IndoorNavigation.ViewModels
     public class Location
     {
         public string UserNaming { get; set; }
+        public string sourcePath { get; set; }
+
+        public override string ToString() => UserNaming;
     }
 }

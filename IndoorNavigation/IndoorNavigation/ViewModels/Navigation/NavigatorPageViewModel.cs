@@ -59,6 +59,7 @@ using Xamarin.Essentials;
 using IndoorNavigation.Modules.Utilities;
 using System.Globalization;
 using System.Timers;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -133,16 +134,16 @@ namespace IndoorNavigation.ViewModels.Navigation
             CurrentStepLabel =
                 _resourceManager.GetString("NO_SIGNAL_STRING", currentLanguage);
 
-            _firstDirectionInstruction =
-                NavigraphStorage
-                .LoadFirstDirectionXML(phoneInformation
-                .GiveCurrentMapName(navigationGraphName) + "_" +
-                phoneInformation.GiveCurrentLanguage() + ".xml");
+            _firstDirectionInstruction = Storage.LoadFDXml(navigationGraphName);
+                //NavigraphStorage
+                //.LoadFirstDirectionXML(phoneInformation
+                //.GiveCurrentMapName(navigationGraphName) + "_" +
+                //phoneInformation.GiveCurrentLanguage() + ".xml");
 
-            _navigationGraph =
-                NavigraphStorage
-                .LoadNavigationGraphXML(phoneInformation
-                .GiveCurrentMapName(navigationGraphName));
+            _navigationGraph = Storage.LoadNavigationGraphXml(navigationGraphName);
+                //NavigraphStorage
+                //.LoadNavigationGraphXML(phoneInformation
+                //.GiveCurrentMapName(navigationGraphName));
 
             _xmlInformation = informationXML;
 
