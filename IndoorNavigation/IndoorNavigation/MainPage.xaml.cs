@@ -173,9 +173,10 @@ namespace IndoorNavigation
             if (Connectable)
             {
                 //it will be a xml format
+                #region when server not response. I know the code 很母湯，but it's temporary haha.
                 string SupportList = _download.Download(_download.getSupportListUrl());
                 Console.WriteLine("SupporList context : " + SupportList);
-                #region when server not response. I know the code 很母湯，but it's temporary haha.
+                
                 if (string.IsNullOrEmpty(SupportList))
                 {
                     await (Navigation.PushAsync(new SettingTableViewPage()));

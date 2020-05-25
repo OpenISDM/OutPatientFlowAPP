@@ -55,6 +55,8 @@ using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using System;
 using IndoorNavigation.Utilities;
+using System.Xml;
+using static IndoorNavigation.Utilities.Storage;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -106,7 +108,25 @@ namespace IndoorNavigation.ViewModels
                                , currentLanguage),
                     _resourceManager
                     .GetString("OK_STRING", currentLanguage));
-                await mainPage.Navigation.PushAsync(new SettingTableViewPage());
+                #region when server not response. I know the code 很母湯，but it's temporary haha.
+
+                CloudDownload _download = new CloudDownload();
+                string SupportList = _download.Download(_download.getSupportListUrl());
+                Console.WriteLine("SupporList context : " + SupportList);
+
+                if (string.IsNullOrEmpty(SupportList))
+                {
+                    await (mainPage.Navigation.PushAsync(new SettingTableViewPage()));
+                }
+                else
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(SupportList);
+                    Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
+                    _serverResources = SupportListDict;
+                    await mainPage.Navigation.PushAsync(new SettingTableViewPage(SupportListDict));
+                }
+                #endregion
             }
         }
 
