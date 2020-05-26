@@ -92,10 +92,6 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, 
 								typeof(TranslateExtension).GetTypeInfo()
 								.Assembly);
-								
-        private bool updateMapOrNot;
-        private static PhoneInformation _phoneInformation = 
-			new PhoneInformation();
 
         ViewCell lastCell = null;
         bool isButtonPressed = false; //to prevent multi-click
@@ -111,7 +107,7 @@ namespace IndoorNavigation
 											  .GetString("HOME_STRING", 
 														 currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
-            updateMapOrNot = false;
+
             switch (Device.RuntimePlatform)
             {
                 case Device.Android:
@@ -163,7 +159,7 @@ namespace IndoorNavigation
         #region To implement 
         private INetworkSetting setting;
         private CloudDownload _download = new CloudDownload();
-        private CurrentMapInfos mapInfosFromServer = new CurrentMapInfos();
+
         async void SettingBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
@@ -176,22 +172,17 @@ namespace IndoorNavigation
                 string SupportList = _download.Download(_download.getSupportListUrl());
                 Console.WriteLine("SupporList context : " + SupportList);
                 #region when server not response. I know the code 很母湯，but it's temporary haha.
-                if (string.IsNullOrEmpty(SupportList))
-                {
-                    await (Navigation.PushAsync(new SettingTableViewPage()));
-                }
-                else
-                {
+                if (!string.IsNullOrEmpty(SupportList)) 
+                {                     
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(SupportList);
                     Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
                     _serverResources = SupportListDict;
-                    await Navigation.PushAsync(new SettingTableViewPage(SupportListDict));
                 }
                 #endregion
             }
-            else 
-                await Navigation.PushAsync(new SettingTableViewPage());
+
+            await Navigation.PushAsync(new SettingTableViewPage());
 
             await PopupNavigation.Instance.PopAllAsync();
         }        

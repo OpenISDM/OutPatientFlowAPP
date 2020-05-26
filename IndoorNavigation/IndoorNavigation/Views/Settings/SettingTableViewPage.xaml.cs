@@ -45,7 +45,6 @@
  */
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources;
 using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.Utilities;
@@ -65,13 +64,9 @@ using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using IndoorNavigation.ViewModels;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
-using AiForms.Renderers;
-using System.Linq.Expressions;
 using static IndoorNavigation.Utilities.Storage;
-using System.Security;
 using Dijkstra.NET.Model;
 /*Note : remember to edit GetAllGraph method.*/
 
@@ -93,8 +88,8 @@ namespace IndoorNavigation.Views.Settings
         public IList _chooseMap { get; } = new ObservableCollection<string>();
         public IList _downloadMap { get; } = new ObservableCollection<string>();
 
-        private Dictionary<string, GraphInfo> _tmpResourceDict;
-        private bool _connectable;
+        private bool _connectable = false;
+
         #endregion
 
         #region Command defined
@@ -109,36 +104,20 @@ namespace IndoorNavigation.Views.Settings
         #region Initial
         public SettingTableViewPage()
         {
-            InitialPage();
-            Console.WriteLine("can not connect");
-            _connectable = false ;
-        }
-
-        public SettingTableViewPage(Object sender)
-        {
-            InitialPage();
-            Console.WriteLine("SettingTableView page Construct : connect");
-            _connectable = true;
-
-            _tmpResourceDict = sender as Dictionary<string, GraphInfo>;
-            
-            foreach(KeyValuePair<string, GraphInfo> pair in _tmpResourceDict)
-            {
-                Console.WriteLine("pair key : " + pair.Key);
-                _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
-            }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            DownloadFromServer.IsEnabled = _connectable;
-        }
-
-        private void InitialPage()
-        {
             InitializeComponent();
             AddMapItems();
+            VersionTracking.Track();
+
+            if (_serverResources != null)
+            {
+                _connectable = true;
+
+                foreach(KeyValuePair<string, GraphInfo> pair in _serverResources)
+                {
+                    _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
+                }
+            }          
+
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
@@ -158,6 +137,14 @@ namespace IndoorNavigation.Views.Settings
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
             }
         }
+       
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            DownloadFromServer.IsEnabled = _connectable;
+            VersionNumberCell.Title = VersionTracking.CurrentVersion;
+        }
+       
         private void AddMapItems()
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
@@ -460,16 +447,33 @@ namespace IndoorNavigation.Views.Settings
 
         #endregion
 
-        #region Beta Functions              
+        #region Beta Functions                     
         //for Server data Download
         async private void ChooseDownloadMap()
         {
+            Console.WriteLine(">>ChoosDownloadMap");
+            string selectItem = _serverResources.First(o=> o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key;
+            Console.WriteLine("SelectItem  :  " + selectItem);
+            
+            if(_resources._graphResources.ContainsKey(selectItem) && 
+                _serverResources[selectItem]._currentVersion <= _resources._graphResources[selectItem]._currentVersion)
+            {
+                if (! await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",_currentCulture), 
+                                        _resourceManager.GetString("ASK_STILL_DOWNLOAD_STRING", _currentCulture),
+                                        _resourceManager.GetString("OK_STRING",_currentCulture), 
+                                        _resourceManager.GetString("CANCEL_STRING",_currentCulture))
+                    )
+                {
+                    return;
+                }
+            }
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             //Storage.CloudGenerateFile(Storage.GetKeyName(DownloadFromServer.SelectedItem.ToString()));
-
+            
             try 
-            { 
-                CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key); 
+            {
+                CloudGenerateFile(selectItem);
+                //CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == selectItem).Key); 
             }
             catch(Exception exc)
             {

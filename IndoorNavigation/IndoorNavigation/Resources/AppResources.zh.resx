@@ -642,4 +642,7 @@
   <data name="DOWNLOAD_FROM_SERVER_STRING" xml:space="preserve">
     <value>從雲端下載</value>
   </data>
+  <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
+    <value>手機端的檔案比雲端上的檔案是同樣版本甚至是更新的，請問要繼續下載嗎?</value>
+  </data>
 </root>

@@ -170,7 +170,7 @@
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate VERSION_STRING}">
-                    <sv:CommandCell Title="{i18n:Translate CURRENT_VERSION_STRING}"/>
+                    <sv:CommandCell x:Name="VersionNumberCell" Title="null"/>
             </sv:Section>
 
         </sv:SettingsView>
