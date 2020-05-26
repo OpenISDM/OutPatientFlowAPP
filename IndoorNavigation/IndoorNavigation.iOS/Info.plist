@@ -20,8 +20,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleDisplayName</key>
-	<string>WPIN</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM.OPFM</string>
 	<key>CFBundleVersion</key>
@@ -59,5 +57,7 @@
 	<string>This app need to access bluetooth to get beacon signal always.</string>
 	<key>MinimumOSVersion</key>
 	<string>12.2</string>
+	<key>CFBundleDisplayName</key>
+	<string>帶路機</string>
 </dict>
 </plist>
