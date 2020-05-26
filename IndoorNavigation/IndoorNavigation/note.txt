@@ -2,3 +2,8 @@
 	Changes that need to test on iOS ver:
 		Xamarin.Essential version 
 			1.10 => 1.5.3.1
+
+Storage function not implement:
+	Authication to Web.
+	SSL certification.
+	Check version.

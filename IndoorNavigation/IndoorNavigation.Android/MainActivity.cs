@@ -16,7 +16,7 @@ namespace IndoorNavigation.Droid
     // Android Dark mode theme need to be test.
     // it require android 10 or up version.
 
-    [Activity(Label = "WPIN", 
+    [Activity(Label = "帶路機_developerVer", 
 	 Icon = "@mipmap/icon",
      Theme = "@style/splashscreen",
      MainLauncher = true, 
