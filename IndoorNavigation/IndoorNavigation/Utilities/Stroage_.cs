@@ -17,6 +17,7 @@ using System.Linq;
 using System.Globalization;
 using System.Security.Authentication;
 using Dijkstra.NET.Model;
+using System.ComponentModel;
 /*
 note :
 1. We need to define the stroage path first
@@ -199,7 +200,7 @@ namespace IndoorNavigation.Utilities
                 GraphInfo info = new GraphInfo();
 
                 string GraphName = GraphNode.Attributes["name"].Value;
-                info._localVersion = GraphNode.Attributes["version"].Value;
+                info._currentVersion = Convert.ToDouble(GraphNode.Attributes["version"].Value);//GraphNode.Attributes["version"].Value;
                 info._graphName = GraphName;
 
                 XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
@@ -367,6 +368,36 @@ namespace IndoorNavigation.Utilities
         }
         #endregion
         #region Update
+
+        static public bool CheckVersionNumber(string fileName, double currentVersion, AccessGraphOperate operate)
+        {
+            Console.WriteLine(">>CheckVersionNumber, Operate : " + operate) ;
+            switch (operate)
+            {
+                case AccessGraphOperate.CheckLocalVersion:
+                    {
+                        Console.WriteLine(">>CheckVersionNumber -> local");
+                        if (_localResources.ContainsKey(fileName) && _localResources[fileName]._currentVersion > currentVersion)
+                        { 
+                            return true; 
+                        }
+                        
+
+                        return false;
+                    }
+                case AccessGraphOperate.CheckCloudVersion:
+                    {
+                        Console.WriteLine(">>CheckVersionNumber -> Cloud");
+                        if (_serverResources!= null && _serverResources.ContainsKey(fileName) && _serverResources[fileName]._currentVersion>currentVersion)
+                            return true;
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+                
+            
+        }      
         static private void UpdateGraphList(string fileName, AccessGraphOperate operate)
         {
             Console.WriteLine(">>UpdateGraphList");            
@@ -379,6 +410,10 @@ namespace IndoorNavigation.Utilities
                         {
                             _resources._graphResources.Add(fileName, _localResources[fileName]);
                         }
+                        else
+                        {
+                            _resources._graphResources[fileName]._currentVersion = _localResources[fileName]._currentVersion;
+                        }
                         break;
                     }
                 case AccessGraphOperate.AddServer:
@@ -389,7 +424,11 @@ namespace IndoorNavigation.Utilities
                             //I use local to test it could work or not, the second parameter will be server document.
                             //_resources._graphResources.Add(fileName, _localResources[fileName]);
                             _resources._graphResources.Add(fileName, _serverResources[fileName]);
-                        }                  
+                        }
+                        else
+                        {
+                            _resources._graphResources[fileName]._currentVersion = _serverResources[fileName]._currentVersion;
+                        }
                         break;
                     }
                 case AccessGraphOperate.AddLanguage:
@@ -450,7 +489,7 @@ namespace IndoorNavigation.Utilities
                 }
                 GraphsElement.Add(new XElement("Graph",
                     new XAttribute("name", pair.Key),
-                    new XAttribute("version", pair.Value._localVersion),
+                    new XAttribute("version", pair.Value._currentVersion),
                     displayNameElement));
             }
 
@@ -498,7 +537,7 @@ namespace IndoorNavigation.Utilities
             }
             public Dictionary<string, string> _displayNames { get; set; }
             public string _graphName { get; set; }
-            public string _localVersion { get; set; }
+            public double _currentVersion { get; set; }
             public override string ToString() => _displayNames[_currentCulture.Name];
             
         }       
@@ -513,6 +552,8 @@ namespace IndoorNavigation.Utilities
             AddLocal,
             AddServer,
             AddLanguage,
+            CheckLocalVersion,
+            CheckCloudVersion,
             Delete,
             Update
         }

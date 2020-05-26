@@ -1,15 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<navigation_graph country='Taiwan' city_county='Taipei' industry_service='city_hall' owner_organization='BeDI' building_name='Taipei_City_Hall' version = '1.0'>
+<navigation_graph country='Taiwan' city_county='Taipei' industry_service='city_hall' owner_organization='BeDI' building_name='Taipei_City_Hall' version = '1.0001'>
     <regions region_numbers='2' edge_numbers='6'>
         <region id='22222222-2222-2222-2222-222222222222' ips_type='iBeacon' name='Second' floor='2'>
             <waypoint id='00000000-0000-0000-0000-000000000301' name='北區電梯' type='portal' lat='25.038503' lon='121.564535' category='Elevator' />
-            <waypoint id='00000000-0000-0000-0000-000000000302' name='產業發展局' type='terminal' lat='25.038403' lon='121.56453' category='Office' />
-            
+            <waypoint id='00000000-0000-0000-0000-000000000302' name='產業發展局' type='terminal' lat='25.038403' lon='121.56453' category='Office' />            
             <waypoint id='00000000-0000-0000-0000-000000303304' name='路口' type='junction' lat='25.038408' lon='121.564403' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000305304' name='路口' type='junction' lat='25.038409' lon='121.564312' category='Others' />
-            
-            <waypoint id='00000000-0000-0000-0000-000000000306' name='化妝室' type='terminal' lat='25.038407' lon='121.564192' category='Bathroom' />
-            
+            <waypoint id='00000000-0000-0000-0000-000000305304' name='路口' type='junction' lat='25.038409' lon='121.564312' category='Others' />            
+            <waypoint id='00000000-0000-0000-0000-000000000306' name='化妝室' type='terminal' lat='25.038407' lon='121.564192' category='Bathroom' />            
             <waypoint id='00000000-0000-0000-0000-000000000307' name='緊急出口大門' type='junction' lat='25.03841' lon='121.564079' category='Exit' />
             <waypoint id='00000000-0000-0000-0000-000000000308' name='社會局/老人福利局' type='terminal' lat='25.037948' lon='121.564525' category='Office' />
             <waypoint id='00000000-0000-0000-0000-000000000309' name='路口' type='junction' lat='25.037984' lon='121.56439' category='Others' />
@@ -31,25 +28,20 @@
             <waypoint id='00000000-0000-0000-0000-100000000321' name='休憩區' type='terminal' lat='25.037325' lon='121.564515' category='Others' />
             <waypoint id='00000000-0000-0000-0000-100000322323' name='電梯' type='portal' lat='25.037253' lon='121.564518' category='Elevator' />
             <waypoint id='00000000-0000-0000-0000-000000322323' name='路口' type='junction' lat='25.037253' lon='121.564518' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000324' name='手扶梯' type='terminal' lat='25.037188' lon='121.564335' category='Others' />
-            
+            <waypoint id='00000000-0000-0000-0000-000000000324' name='手扶梯' type='terminal' lat='25.037188' lon='121.564335' category='Others' />            
             <waypoint id='00000000-0000-0000-0000-000000000325' name='路口' type='junction' lat='25.037184' lon='121.564514' category='Others' />
             <waypoint id='00000000-0000-0000-0000-100000000325' name='衛生局' type='terminal' lat='25.037184' lon='121.564514' category='Office' />
-            <waypoint id='00000000-0000-0000-0000-200000000325' name='廁所(南區衛生局旁)' type='terminal' lat='25.037184' lon='121.564514' category='Bathroom' />
-            
+            <waypoint id='00000000-0000-0000-0000-200000000325' name='廁所(南區衛生局旁)' type='terminal' lat='25.037184' lon='121.564514' category='Bathroom' />            
             <waypoint id='00000000-0000-0000-0000-000000000326' name='路口' type='junction' lat='25.037829' lon='121.564426' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000327' name='路口' type='junction' lat='25.037182' lon='121.564285' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000328' name='建管處' type='terminal' lat='25.037109' lon='121.564509' category='Office' />
             <waypoint id='00000000-0000-0000-0000-000000000329' name='路口' type='junction' lat='25.037071' lon='121.564386' category='Others' />
             <waypoint id='00000000-0000-0000-0000-000000000330' name='路口' type='junction' lat='25.037078' lon='121.564292' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000331' name='建築管理工程處資訊室' type='terminal' lat='25.036963' lon='121.564286' category='Office' />    
-            
+            <waypoint id='00000000-0000-0000-0000-000000000331' name='建築管理工程處資訊室' type='terminal' lat='25.036963' lon='121.564286' category='Office' />                
             <waypoint id='00000000-0000-0000-0000-000000003234' name='路口' type='junction' lat='25.036693' lon='121.564324' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000003235' name='員工子女幼兒園' type='terminal' lat='25.036644' lon='121.564270' category='Others' /> 
-            
+            <waypoint id='00000000-0000-0000-0000-000000003235' name='員工子女幼兒園' type='terminal' lat='25.036644' lon='121.564270' category='Others' />             
             <waypoint id='00000000-0000-0000-0000-000000000333' name='轉角處' type='junction' lat='25.036645' lon='121.564489' category='Others' />
-            <waypoint id='00000000-0000-0000-0000-000000000336' name='南區電梯' type='portal' lat='25.036547' lon='121.564494' category='Elevator' />
-            
+            <waypoint id='00000000-0000-0000-0000-000000000336' name='南區電梯' type='portal' lat='25.036547' lon='121.564494' category='Elevator' />            
             <waypoint id='00000000-0000-0000-0000-000000003201' name='會議室N201' type='terminal' lat='25.037994' lon='121.564172' category='ConferenceRoom' />
             <waypoint id='00000000-0000-0000-0000-000000003202' name='會議室N202' type='terminal' lat='25.038167' lon='121.564076' category='ConferenceRoom' />
             <waypoint id='00000000-0000-0000-0000-000000003203' name='會議室N203' type='terminal' lat='25.038325' lon='121.564076' category='ConferenceRoom' />

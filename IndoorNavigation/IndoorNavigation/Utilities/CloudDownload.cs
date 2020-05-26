@@ -21,7 +21,7 @@ namespace IndoorNavigation.Modules.Utilities
 
     public class CloudDownload
     {
-        public const string _localhost = "http://140.109.22.34:80/";
+        public const string _localhost = "http://140.109.22.36:80/";
         //private string _context;
         public CurrentMapInfos _currentInfos;
       
@@ -42,7 +42,7 @@ namespace IndoorNavigation.Modules.Utilities
             string ContextString = "";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             //request.ContentType = "text/xml";
-            request.Timeout = 10000;
+            request.Timeout = 7000;
             request.Method = "GET";
 
             try

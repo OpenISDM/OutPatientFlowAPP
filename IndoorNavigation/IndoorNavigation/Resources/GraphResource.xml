@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GraphResource>
   <Graphs>
-    <Graph name="NTUH_Yunlin" version="1">
+    <Graph name="NTUH_Yunlin" version="1.0002">
       <DisplayNames>
         <DisplayName name="NTUH Yunlin" language="en-US"/>
         <DisplayName name="台大醫院雲林分院" language="zh-TW"/>
       </DisplayNames>
    </Graph>
-   <Graph name="Yuanlin_Christian_Hospital" version="1">
+   <Graph name="Yuanlin_Christian_Hospital" version="1.0005">
       <DisplayNames>
         <DisplayName name="員林基督教醫院" language="zh-TW"/>
         <DisplayName name="Yuanlin Christian Hospital" language="en-US"/>
       </DisplayNames>
     </Graph>
-   <Graph name="Taipei_City_Hall" version="1">
+   <Graph name="Taipei_City_Hall" version="1.0001">
       <DisplayNames>
          <DisplayName name="台北市政府" language="zh-TW"/>
          <DisplayName name="Taipei City Hall" language="en-US"/>
       </DisplayNames>
      </Graph>
-    <Graph name="Lab" version="1">
+    <Graph name="Lab" version="1.0001">
      <DisplayNames>
        <DisplayName name="Lab" language="en-US"/>
        <DisplayName name="實驗室" language="zh-TW"/>

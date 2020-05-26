@@ -203,58 +203,75 @@ namespace IndoorNavigation
             if (e.Item is Location location)
             {              
                 NavigationGraph navigationGraph =
-                    Storage.LoadNavigationGraphXml(location.sourcePath);               
-                XmlDocument xmlDocument = new XmlDocument();
-                using (var stream = 
-							Assembly.GetExecutingAssembly()
-							.GetManifestResourceStream(_versionRoute))
+                    Storage.LoadNavigationGraphXml(location.sourcePath);
+
+                if(Storage.CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(),AccessGraphOperate.CheckLocalVersion))
                 {
-                    StreamReader tr = new StreamReader(stream);
-                    string fileContents = tr.ReadToEnd();
-                    Console.WriteLine(">>MainPage :: HandleItemTapped");
-                    Console.WriteLine(fileContents);
-                    xmlDocument.LoadXml(fileContents);
-                }
-
-
-                ReadVersion readVersion = new ReadVersion(xmlDocument);
-                double newVersion = 
-				   readVersion.ReturnVersion(navigationGraph.GetBuildingName());
-				   
-                if (navigationGraph.GetVersion() != newVersion)
-                {                    
-                    var answser = await DisplayAlert(
-                                _resourceManager
-								.GetString("UPDATE_MAP_STRING",currentLanguage),
-                                location.UserNaming, 
-								_resourceManager
-								.GetString("OK_STRING", currentLanguage),
-                                _resourceManager
-								.GetString("CANCEL_STRING", currentLanguage));
-                    
-                    
-                    if (answser)
+                    if (await DisplayAlert(
+                        _resourceManager.GetString("UPDATE_MAP_STRING", _currentCulture), 
+                        location.UserNaming, 
+                        _resourceManager.GetString("OK_STRING", _currentCulture),
+                        _resourceManager.GetString("CANCEL_STRING", _currentCulture))
+                    )
                     {
-
-                        List<string> generateName = 
-							_phoneInformation
-							.GiveGenerateMapName(location.UserNaming);
-
-                        Storage.EmbeddedGenerateFile(generateName[1]);
-                        updateMapOrNot = true;
-                    }
-                    else
-                    {
-
-                        updateMapOrNot = false;
+                        EmbeddedGenerateFile(location.sourcePath);
                     }
                 }
-                else
-                {
-                    updateMapOrNot = true;
-                }
 
-                if(updateMapOrNot == true)
+
+                #region Version Compare
+                //         XmlDocument xmlDocument = new XmlDocument();
+                //         using (var stream = 
+                //Assembly.GetExecutingAssembly()
+                //.GetManifestResourceStream(_versionRoute))
+                //         {
+                //             StreamReader tr = new StreamReader(stream);
+                //             string fileContents = tr.ReadToEnd();
+                //             Console.WriteLine(">>MainPage :: HandleItemTapped");
+                //             Console.WriteLine(fileContents);
+                //             xmlDocument.LoadXml(fileContents);
+                //         }
+
+
+                //         ReadVersion readVersion = new ReadVersion(xmlDocument);
+                //         double newVersion = 
+                //readVersion.ReturnVersion(navigationGraph.GetBuildingName());
+
+                //         if (navigationGraph.GetVersion() != newVersion)
+                //         {                    
+                //             var answser = await DisplayAlert(
+                //                         _resourceManager
+                //	.GetString("UPDATE_MAP_STRING",currentLanguage),
+                //                         location.UserNaming, 
+                //	_resourceManager
+                //	.GetString("OK_STRING", currentLanguage),
+                //                         _resourceManager
+                //	.GetString("CANCEL_STRING", currentLanguage));
+
+
+                //             if (answser)
+                //             {
+
+                //                 List<string> generateName = 
+                //_phoneInformation
+                //.GiveGenerateMapName(location.UserNaming);
+
+                //                 Storage.EmbeddedGenerateFile(generateName[1]);
+                //                 updateMapOrNot = true;
+                //             }
+                //             else
+                //             {
+
+                //                 updateMapOrNot = false;
+                //             }
+                //         }
+                //         else
+                //         {
+                //             updateMapOrNot = true;
+                //         }
+
+                //         if(updateMapOrNot == true)
+                #endregion
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;
