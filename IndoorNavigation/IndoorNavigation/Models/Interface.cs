@@ -48,6 +48,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using Plugin.Permissions.Abstractions;
@@ -110,6 +111,14 @@ namespace IndoorNavigation.Models
         Task<bool> CheckInternetConnect();
         void OpenSettingPage();
     }
+
+    public interface IMultilingual
+    {
+        CultureInfo CurrentCultureInfo { get; set; }
+        CultureInfo DeviceCultureInfo { get;}
+        public CultureInfo GetCulture(string Name);
+    }
+
     #endregion
 
     #region Interface for IPS Client
