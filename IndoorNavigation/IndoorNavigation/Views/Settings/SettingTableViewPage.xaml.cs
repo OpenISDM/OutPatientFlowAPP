@@ -62,6 +62,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -117,7 +118,7 @@ namespace IndoorNavigation.Views.Settings
                     _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
                 }
             }          
-
+            
             _downloadPage._event.DownloadPopUpPageEventHandler +=
                 async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
@@ -132,6 +133,8 @@ namespace IndoorNavigation.Views.Settings
             _languageItems.Add(_resourceManager.GetString("CHINESE_STRING", currentLanguage));
             _languageItems.Add(_resourceManager.GetString("ENGLISH_STRING", currentLanguage));
 
+
+            
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();

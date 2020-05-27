@@ -71,6 +71,7 @@ using Location = IndoorNavigation.ViewModels.Location;
 using System.Collections.ObjectModel;
 using static IndoorNavigation.Utilities.Storage;
 using System.Data.Common;
+using System.Threading;
 
 namespace IndoorNavigation
 {
@@ -92,7 +93,7 @@ namespace IndoorNavigation
             new ResourceManager(_resourceId, 
 								typeof(TranslateExtension).GetTypeInfo()
 								.Assembly);
-
+        
         ViewCell lastCell = null;
         bool isButtonPressed = false; //to prevent multi-click
         CultureInfo currentLanguage = 
@@ -353,9 +354,13 @@ namespace IndoorNavigation
             }
         }
 
-        async private void ToolbarItem_Clicked(object sender, EventArgs e)
+        //async private void ToolbarItem_Clicked(object sender, EventArgs e)
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new TestPage_Listview());            
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+            
+            //await Navigation.PushAsync(new TestPage_Listview());            
             //await PopupNavigation.Instance.PushAsync(new PickDownloadPopupPage());
         }
     }

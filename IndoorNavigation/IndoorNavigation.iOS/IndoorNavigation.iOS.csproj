@@ -114,6 +114,7 @@
     <None Include="iOSDiagram.cd" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
+    <Compile Include="MutilingualImplemtation.cs" />
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QrCodeDecoder.cs" />

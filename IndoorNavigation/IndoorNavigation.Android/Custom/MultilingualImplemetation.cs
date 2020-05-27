@@ -1,6 +1,7 @@
 ﻿using IndoorNavigation.Models;
 using System;
 using System.Globalization;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -17,7 +18,9 @@ namespace IndoorNavigation.Droid.Custom
             get { return _currentCultureInfo; }
             set
             {
-
+                _currentCultureInfo = value;
+                Thread.CurrentThread.CurrentCulture = value;
+                Thread.CurrentThread.CurrentUICulture = value;
             }
         }
 

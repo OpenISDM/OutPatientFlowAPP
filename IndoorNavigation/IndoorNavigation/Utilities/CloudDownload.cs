@@ -4,7 +4,10 @@ using System.Net;
 using System.IO;
 using Xamarin.Forms;
 using Newtonsoft.Json;
-//using IndoorNavigation.Resources;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
+using System.Net.Security;
+
 namespace IndoorNavigation.Modules.Utilities
 {
     #region Notes
@@ -17,31 +20,34 @@ namespace IndoorNavigation.Modules.Utilities
     //  /buildingName/firstdirections/language      is for  firstdirection
     //  /buildingName/beacondata                    is for beacon ids
     //  /                                           is for all support map and languages
+
+    // The SSL certification will expire at Aug 23, 2020
+    // remeber to add Https ssl certification in C# code
+    // and add a autheication mechanism to check user identity
+    //
     #endregion
 
     public class CloudDownload
     {
-        public const string _localhost = "http://140.109.22.36:80/";
-        //private string _context;
-        public CurrentMapInfos _currentInfos;
-      
+        public const string _localhost = "https://wpin.iis.sinica.edu.tw/";      
         public CloudDownload()
         {
             //string contextString = Download(getSupportListUrl());
             //_currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
-        }            
-
-        public bool CheckMapVersion(string localgraphName, string localVersion)
-        {            
-            Dictionary<string, string> VersionDict = _currentInfos.ToDictionary();
-            return VersionDict[localgraphName].Equals(localVersion);            
         }
-        
+
+        #region Send Request
         public string Download(string url)
         {
             string ContextString = "";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             //request.ContentType = "text/xml";
+
+            if(url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckSSLValidation);
+            }
+
             request.Timeout = 7000;
             request.Method = "GET";
 
@@ -69,7 +75,11 @@ namespace IndoorNavigation.Modules.Utilities
             Console.WriteLine("url :" + url + ", ContextString : " + ContextString);
             return ContextString;
         }
-
+        private bool CheckSSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
+        }
+        #endregion
         #region Get url function region
         public string getSupportListUrl()
         {
@@ -96,42 +106,4 @@ namespace IndoorNavigation.Modules.Utilities
         #endregion
  
     }
-
-    public class CurrentMapInfos
-    {
-        [JsonProperty("Maps")]
-        public List<MapInfo> Maps { get; set;}
-
-        [JsonProperty("Languages")]
-        public List<LanguageInfo> Languages { get; set; }
-
-        public Dictionary<string, string> ToDictionary()
-        {
-            Dictionary<string, string> results = new Dictionary<string, string>();
-
-            foreach(MapInfo info in Maps)
-            {
-                results.Add(info.Name, info.Version);
-            }
-
-            return results;
-        }
-    }
-
-    public struct MapInfo
-    {
-        [JsonProperty("Name")]
-        public string Name { get; set; }
-        [JsonProperty("Version")]
-        public string Version { get; set; }
-        // the version might be considered as a double or a digit type, 
-        // it could be more easier to compare?
-    }
-
-    public struct LanguageInfo
-    {
-        [JsonProperty("Name")]
-        public string Name { get; set; }
-    }   
-
 }
