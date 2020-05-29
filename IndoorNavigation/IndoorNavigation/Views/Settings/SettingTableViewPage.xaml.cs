@@ -119,8 +119,8 @@ namespace IndoorNavigation.Views.Settings
                 }
             }          
             
-            _downloadPage._event.DownloadPopUpPageEventHandler +=
-                async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
+            //_downloadPage._event.DownloadPopUpPageEventHandler +=
+            //    async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
 
             BindingContext = this;
 
@@ -179,84 +179,6 @@ namespace IndoorNavigation.Views.Settings
             await Navigation.PushAsync(new LicenseMainPage());
         }
 
-        async void DownloadGraphBtn_Tapped(object sender, EventArgs e)
-        {
-
-#if DEBUG
-            string qrCodeValue = string.Empty;
-            if (DeviceInfo.DeviceType == DeviceType.Virtual)
-            {
-                // qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1C-JgyOHEikxuqgVi9S7Ww9g05u2Jb3-q&export=download@OpenISDM";
-                qrCodeValue = "https://drive.google.com/uc?authuser=0&id=1w_cc8pp483Dd5KTbM3-JaCelhMh8wTQs&export=download@OpenISDM";
-            }
-            else
-            {
-                IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-                {
-                    qrCodeValue = await qrCodeDecoder.ScanAsync();
-                }
-                else
-                {
-                    await DisplayAlert(
-                            _resourceManager.GetString("WARN_STRING", currentLanguage),
-                            _resourceManager.GetString("PLEASE_CHECK_INTERNET_STRING", currentLanguage),
-                            _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                }
-
-
-            }
-#else
-            // Open the camera to scan Barcode
-            IQrCodeDecoder qrCodeDecoder = DependencyService.Get<IQrCodeDecoder>();
-            string qrCodeValue = await qrCodeDecoder.ScanAsync();
-
-            // In iOS, if the User has denied the permission, you might not be able to request for
-            // permissions again.
-            /*
-            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
-            if (status != PermissionStatus.Granted)
-            {
-            }*/
-#endif
-
-            if (!string.IsNullOrEmpty(qrCodeValue))
-            {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-                // Determine it is URL or string
-                if ((qrCodeValue.Substring(0, 7) == "http://") ||
-                    (qrCodeValue.Substring(0, 8) == "https://"))
-                {
-                    // Determine it is map data or website
-                    string[] buffer = qrCodeValue.Split('@');
-                    if (buffer[buffer.Length - 1] == "OpenISDM")
-                    {
-                        // open the page to input the data
-                        _downloadURL = buffer[0];
-
-                        await PopupNavigation.Instance.PushAsync(_downloadPage as DownloadPopUpPage);
-                    }
-                    else
-                    {
-                        // Use the browser to open data
-                        bool answer = await DisplayAlert(_resourceManager.GetString("NOTIFY_STRING", currentLanguage),
-                                                         _resourceManager.GetString("SURE_TO_OPEN_WEBSITE_STRING", currentLanguage),
-                                                         _resourceManager.GetString("OK_STRING", currentLanguage),
-                                                         _resourceManager.GetString("CANCEL_STRING", currentLanguage));
-                        if (answer)
-                            await Browser.OpenAsync(qrCodeValue, BrowserLaunchMode.SystemPreferred);
-                    }
-                }
-                else
-                {
-                    await DisplayAlert(_resourceManager.GetString("QRCODE_CONTENT_STRING", currentLanguage),
-                                       qrCodeValue,
-                                       _resourceManager.GetString("OK_STRING", currentLanguage));
-                }
-            }
-        }
-
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
@@ -273,61 +195,61 @@ namespace IndoorNavigation.Views.Settings
         /// <returns>The download page async.</returns>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
-        private async Task HandleDownloadPageAsync(object sender, EventArgs e)
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            string fileName = (e as DownloadPopUpPageEventArgs).FileName;
-            if (!string.IsNullOrEmpty(_downloadURL) && !string.IsNullOrEmpty(fileName))
-            {
+        //private async Task HandleDownloadPageAsync(object sender, EventArgs e)
+        //{
+        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
+        //    string fileName = (e as DownloadPopUpPageEventArgs).FileName;
+        //    if (!string.IsNullOrEmpty(_downloadURL) && !string.IsNullOrEmpty(fileName))
+        //    {
 
-                if (Utility.DownloadNavigraph(_downloadURL, fileName))
-                {
-                    await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
-                                       _resourceManager.GetString("SUCCESSFULLY_DOWNLOAD_MAP_STRING", ci),
-                                       _resourceManager.GetString("OK_STRING", ci));
-                }
-                else
-                {
-                    await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
-                                       _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRING", ci),
-                                       _resourceManager.GetString("OK_STRING", ci));
-                }
-            }
-            else
-            {
-                await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
-                                   _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRIN", ci),
-                                   _resourceManager.GetString("OK_STRING", ci));
-            }
-            string fileLanguageTaiwanChinese = fileName + "_zh.xml";
-            //Testing in Lab
-            string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1C_ncshn2Q2veLMVMgvqW81xLP3DJnQpW&export=download";
+        //        if (Utility.DownloadNavigraph(_downloadURL, fileName))
+        //        {
+        //            await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
+        //                               _resourceManager.GetString("SUCCESSFULLY_DOWNLOAD_MAP_STRING", ci),
+        //                               _resourceManager.GetString("OK_STRING", ci));
+        //        }
+        //        else
+        //        {
+        //            await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
+        //                               _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRING", ci),
+        //                               _resourceManager.GetString("OK_STRING", ci));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
+        //                           _resourceManager.GetString("FAILED_DOWNLOAD_MAP_STRIN", ci),
+        //                           _resourceManager.GetString("OK_STRING", ci));
+        //    }
+        //    string fileLanguageTaiwanChinese = fileName + "_zh.xml";
+        //    //Testing in Lab
+        //    string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1C_ncshn2Q2veLMVMgvqW81xLP3DJnQpW&export=download";
 
-            //Testing in Taipei City hall 2F
-            // string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=17AarNw7QqBFlRqSNMTjwU8_WkMK98SPI&export=download";
-            Utility.DownloadFirstDirectionFile(firstDirectionFile_zh_TW, fileLanguageTaiwanChinese);
+        //    //Testing in Taipei City hall 2F
+        //    // string firstDirectionFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=17AarNw7QqBFlRqSNMTjwU8_WkMK98SPI&export=download";
+        //    Utility.DownloadFirstDirectionFile(firstDirectionFile_zh_TW, fileLanguageTaiwanChinese);
 
-            string stringfileLanguageUSEnglish = fileName + "_en-US.xml";
-            //Testing in Lab
-            string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1dvmo3WjW_2dljvJ0qY1sVK5qX6PNWg_g&export=download";
+        //    string stringfileLanguageUSEnglish = fileName + "_en-US.xml";
+        //    //Testing in Lab
+        //    string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1dvmo3WjW_2dljvJ0qY1sVK5qX6PNWg_g&export=download";
 
-            //Testing in Taipei City Hall 2F
-            //string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1f8zTIMWJFOsNybVwm-kkSo4enNM7lIKY&export=download";
+        //    //Testing in Taipei City Hall 2F
+        //    //string firstDirectionFile_en_US = "https://drive.google.com/uc?authuser=0&id=1f8zTIMWJFOsNybVwm-kkSo4enNM7lIKY&export=download";
 
-            Utility.DownloadFirstDirectionFile(firstDirectionFile_en_US, stringfileLanguageUSEnglish);
+        //    Utility.DownloadFirstDirectionFile(firstDirectionFile_en_US, stringfileLanguageUSEnglish);
 
-            string infoTaiwanChinese = fileName + "_info_zh.xml";
-            string infoEnglish = fileName + "_info_en-US.xml";
+        //    string infoTaiwanChinese = fileName + "_info_zh.xml";
+        //    string infoEnglish = fileName + "_info_en-US.xml";
 
 
-            string infoFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1Fajcicwcrg_GHhabuygEZyhyUJxxDY3f&export=download";
-            Utility.DownloadInformationFile(infoFile_zh_TW, infoTaiwanChinese);
+        //    string infoFile_zh_TW = "https://drive.google.com/uc?authuser=0&id=1Fajcicwcrg_GHhabuygEZyhyUJxxDY3f&export=download";
+        //    Utility.DownloadInformationFile(infoFile_zh_TW, infoTaiwanChinese);
 
-            string infoFile_en_US = "https://drive.google.com/uc?authuser=0&id=1KCbZUDPrfGv5H14OTSX2PaTnREG8Xk94&export=download";
-            Utility.DownloadInformationFile(infoFile_en_US, infoEnglish);
+        //    string infoFile_en_US = "https://drive.google.com/uc?authuser=0&id=1KCbZUDPrfGv5H14OTSX2PaTnREG8Xk94&export=download";
+        //    Utility.DownloadInformationFile(infoFile_en_US, infoEnglish);
 
-            ReloadNaviGraphItems();
-        }
+        //    ReloadNaviGraphItems();
+        //}
 
         private async void HandleChangeLanguage()
         {

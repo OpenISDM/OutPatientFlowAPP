@@ -40,10 +40,9 @@ namespace IndoorNavigation.Droid
 
             base.OnCreate(bundle);
            
-            if (ContextCompat.CheckSelfPermission
-					(this, Manifest.Permission.AccessCoarseLocation) 
-				!= Permission.Granted ||  ContextCompat.CheckSelfPermission(this,Manifest.Permission.WriteExternalStorage)!= Permission.Granted 
-                || ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != Permission.Granted)
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation)!= Permission.Granted ||  
+                ContextCompat.CheckSelfPermission(this,Manifest.Permission.WriteExternalStorage)!= Permission.Granted )
+                /*|| ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != Permission.Granted)*/
             {
                 ActivityCompat.RequestPermissions
 					(this, new String[] 
@@ -51,18 +50,10 @@ namespace IndoorNavigation.Droid
 							 Manifest.Permission.AccessCoarseLocation, 
 							 Manifest.Permission.AccessFineLocation,
                              Manifest.Permission.WriteExternalStorage,
-                             Manifest.Permission.Camera
+                             //Manifest.Permission.Camera
 						  }, 0);
             }
-
-    //        if (ContextCompat.CheckSelfPermission
-				//	(this, Manifest.Permission.WriteExternalStorage) 
-				//!= Permission.Granted)
-    //        {
-    //            ActivityCompat.RequestPermissions(this, 
-				//	new String[] {Manifest.Permission.WriteExternalStorage}, 0);
-    //        }
-            
+   
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
@@ -70,8 +61,8 @@ namespace IndoorNavigation.Droid
             Xamarin.Essentials.Platform.Init(this, bundle);
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
-            ZXing.Net.Mobile.Forms.Android.Platform.Init();
-            ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
+            //ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            //ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 
 																   0, 
@@ -91,20 +82,13 @@ namespace IndoorNavigation.Droid
                 // base.OnBackPressed();
             }
             
-        }
-
-        //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        //{
-        //    PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        //    base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        //}
-
+        }     
         public override void OnRequestPermissionsResult(int requestCode,
                                                         string[] permissions,
                                                         Permission[] grantResults)
         {
-            global::ZXing.Net.Mobile.Android.PermissionsHandler
-            .OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            //global::ZXing.Net.Mobile.Android.PermissionsHandler
+            //.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             PermissionsImplementation.Current
             .OnRequestPermissionsResult(requestCode, permissions, grantResults);

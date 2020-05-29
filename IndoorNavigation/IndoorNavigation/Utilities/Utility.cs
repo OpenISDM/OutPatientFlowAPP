@@ -42,19 +42,8 @@
  *      
  */
 
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using GeoCoordinatePortable;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Utilities;
-using IndoorNavigation.Utilities;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
-using Xamarin.Forms;
+
 
 namespace IndoorNavigation.Modules
 {
@@ -65,150 +54,86 @@ namespace IndoorNavigation.Modules
         public static ITextToSpeech _textToSpeech;
 
         // Skip SSL checking
-        private static bool ValidateServerCertificate(Object sender,
-            X509Certificate certificate,
-            X509Chain chain,
-            SslPolicyErrors sslPolicyErrors)
-        {
-            return true;
-        }
+    //    private static bool ValidateServerCertificate(Object sender,
+    //        X509Certificate certificate,
+    //        X509Chain chain,
+    //        SslPolicyErrors sslPolicyErrors)
+    //    {
+    //        return true;
+    //    }
 
-        /// <summary>
-        /// Download navigation graph from specified server
-        /// </summary>
-        /// <param name="URL"></param>
-        /// <param name="navigraphName"></param>
-        /// <returns></returns>
-        public static bool DownloadNavigraph(string URL, string navigraphName)
-        {
-            string filePath = Path.Combine(Storage._navigraphFolder,
-                                            navigraphName);
-            try
-            {
-                if (!Directory.Exists(Storage._navigraphFolder))
-                    Directory.CreateDirectory(
-                        Storage._navigraphFolder);
+    //    /// <summary>
+    //    /// Download navigation graph from specified server
+    //    /// </summary>
+    //    /// <param name="URL"></param>
+    //    /// <param name="navigraphName"></param>
+    //    /// <returns></returns>
+    //    public static bool DownloadNavigraph(string URL, string navigraphName)
+    //    {
+    //        string filePath = Path.Combine(Storage._navigraphFolder,
+    //                                        navigraphName);
+    //        try
+    //        {
+    //            if (!Directory.Exists(Storage._navigraphFolder))
+    //                Directory.CreateDirectory(
+    //                    Storage._navigraphFolder);
 
-                using (WebClient webClient = new WebClient())
-                    webClient.DownloadFileAsync(new Uri(URL), filePath);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-        }
-        public static bool DownloadFirstDirectionFile(string URL, 
-													  string fileName)
-        {
-            string filePath = 
-				Path.Combine(Storage._firstDirectionInstuctionFolder, 
-							 fileName);
-            try
-            {
-                if (!Directory.Exists(Storage
-					._firstDirectionInstuctionFolder))
+    //            using (WebClient webClient = new WebClient())
+    //                webClient.DownloadFileAsync(new Uri(URL), filePath);
+    //            return true;
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Console.WriteLine(e);
+    //            return false;
+    //        }
+    //    }
+    //    public static bool DownloadFirstDirectionFile(string URL, 
+				//									  string fileName)
+    //    {
+    //        string filePath = 
+				//Path.Combine(Storage._firstDirectionInstuctionFolder, 
+				//			 fileName);
+    //        try
+    //        {
+    //            if (!Directory.Exists(Storage
+				//	._firstDirectionInstuctionFolder))
 
-                    Directory.CreateDirectory(
-                        Storage._firstDirectionInstuctionFolder);
+    //                Directory.CreateDirectory(
+    //                    Storage._firstDirectionInstuctionFolder);
 
-                using (WebClient webClient = new WebClient())
-                    webClient.DownloadFileAsync(new Uri(URL), filePath);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
+    //            using (WebClient webClient = new WebClient())
+    //                webClient.DownloadFileAsync(new Uri(URL), filePath);
+    //            return true;
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Console.WriteLine(e);
+    //            return false;
+    //        }
 
-        }
+    //    }
 
-        public static bool DownloadInformationFile(string URL, string fileName)
-        {
-            string filePath = 
-				Path.Combine(Storage._informationFolder, fileName);
-            try
-            {
-                if (!Directory.Exists(Storage._informationFolder))
-                    Directory.CreateDirectory(Storage._informationFolder);
+    //    public static bool DownloadInformationFile(string URL, string fileName)
+    //    {
+    //        string filePath = 
+				//Path.Combine(Storage._informationFolder, fileName);
+    //        try
+    //        {
+    //            if (!Directory.Exists(Storage._informationFolder))
+    //                Directory.CreateDirectory(Storage._informationFolder);
 
-                using (WebClient webClient = new WebClient())
-                    webClient.DownloadFileAsync(new Uri(URL), filePath);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
+    //            using (WebClient webClient = new WebClient())
+    //                webClient.DownloadFileAsync(new Uri(URL), filePath);
+    //            return true;
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Console.WriteLine(e);
+    //            return false;
+    //        }
 
-        }
-
-        public static async Task<PermissionStatus>CheckPermissions(Permission permission)
-        {
-            Console.WriteLine(">>Utility.CheckPermission");
-            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
-            bool request = false;
-            Console.WriteLine("permissionStatus is : " + permissionStatus.ToString());
-            if (permissionStatus == PermissionStatus.Denied)
-            {
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    var title = $"{permission} Permission";
-                    var question = $"To use this plugin the {permission} permission is required. Please go into Settings and turn on {permission} for the app.";
-                    var positive = "Settings";
-                    var negative = "Maybe Later";
-                    var task = Application.Current?.MainPage?.DisplayAlert(title, question, positive, negative);
-                    if (task == null)
-                        return permissionStatus;
-
-                    var result = await task;
-                    if (result)
-                    {
-                        CrossPermissions.Current.OpenAppSettings();
-                    }
-
-                    return permissionStatus;
-                }
-                request = true;
-            }
-            if (request || permissionStatus != PermissionStatus.Granted)
-            {
-                var newStatus = await CrossPermissions.Current.RequestPermissionsAsync(permission);
-
-                if (!newStatus.ContainsKey(permission))
-                {
-                    Console.WriteLine(permission.ToString()+"5555555555555555");
-                    return permissionStatus;
-                    //return unknown?
-                }
-
-                permissionStatus = newStatus[permission];
-
-                if (newStatus[permission] != PermissionStatus.Granted)
-                {
-                    permissionStatus = newStatus[permission];
-                    var title = $"{permission} Permission";
-                    var question = $"To use the plugin the {permission} permission is required.";
-                    var positive = "Settings";
-                    var negative = "Maybe Later";
-                    var task = Application.Current?.MainPage?.DisplayAlert(title, question, positive, negative);
-                    if (task == null)
-                        return permissionStatus;
-
-                    var result = await task;
-                    if (result)
-                    {
-                        CrossPermissions.Current.OpenAppSettings();
-                    }
-                    return permissionStatus;
-                }
-            }
-
-            return permissionStatus;
-        }
-    
+    //    }
+     
     }
 }
