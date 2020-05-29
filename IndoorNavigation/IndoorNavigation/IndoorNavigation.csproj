@@ -118,9 +118,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\AppResources.zh.resx">
+    <EmbeddedResource Update="Resources\AppResources.zh-TW.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.zh.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppResources.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -167,8 +167,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\AppResources.zh.Designer.cs">
-      <DependentUpon>AppResources.zh.resx</DependentUpon>
+    <Compile Update="Resources\AppResources.zh-TW.Designer.cs">
+      <DependentUpon>AppResources.zh-TW.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

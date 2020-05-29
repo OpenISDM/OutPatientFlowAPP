@@ -60,6 +60,9 @@
     <PackageReference Include="Monkey.Robotics">
       <Version>0.5.2</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.Multilingual">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Annotations">
       <Version>28.0.0.3</Version>
     </PackageReference>
@@ -452,4 +455,20 @@
     <AndroidResource Include="Resources\drawable\Lab11100008.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Target Name="_ResolveSatellitePaths"
+   DependsOnTargets="_ResolveAssemblies">
+    <ResolveAssemblyReference
+        AllowedAssemblyExtensions="$(AllowedReferenceAssemblyFileExtensions)"
+        AssemblyFiles="@(ResolvedUserAssemblies)"
+        AutoUnify="$(AutoUnifyAssemblyReferences)"
+        FindDependencies="True"
+        FindRelatedFiles="False"
+        FindSatellites="True"
+        SearchPaths="$(AssemblySearchPaths)"
+        TargetFrameworkMoniker="$(TargetFrameworkMoniker)"
+        TargetFrameworkMonikerDisplayName="$(TargetFrameworkMonikerDisplayName)"
+        TargetFrameworkDirectories="$(TargetFrameworkDirectory)">
+      <Output TaskParameter="SatelliteFiles" ItemName="_AndroidResolvedSatellitePaths"/>
+    </ResolveAssemblyReference>
+  </Target>
 </Project>

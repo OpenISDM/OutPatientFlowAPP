@@ -260,3 +260,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.cache
+IndoorNavigation/IndoorNavigation/obj/project.assets.json
+IndoorNavigation/IndoorNavigation.Android/obj/IndoorNavigation.Android.csproj.nuget.dgspec.json
+IndoorNavigation/IndoorNavigation.Android/obj/project.assets.json
+IndoorNavigation/IndoorNavigation/obj/Debug/netstandard2.0/IndoorNavigation.csproj.FileListAbsolute.txt
