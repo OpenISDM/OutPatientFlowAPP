@@ -360,40 +360,40 @@
     <AndroidResource Include="Resources\drawable\service_hospital_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300020.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300020.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300021.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300021.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300022.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300022.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300029.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300029.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300030.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300030.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300033.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300033.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300034.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300034.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300035.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300035.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300036.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300036.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300037.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300037.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300038.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300038.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\NTUH_YunLin33300039.png" />
+    <AndroidResource Include="Resources\drawable\NTUH_Yunlin33300039.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Add_Item1.png" />
@@ -455,20 +455,9 @@
     <AndroidResource Include="Resources\drawable\Lab11100008.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Target Name="_ResolveSatellitePaths"
-   DependsOnTargets="_ResolveAssemblies">
-    <ResolveAssemblyReference
-        AllowedAssemblyExtensions="$(AllowedReferenceAssemblyFileExtensions)"
-        AssemblyFiles="@(ResolvedUserAssemblies)"
-        AutoUnify="$(AutoUnifyAssemblyReferences)"
-        FindDependencies="True"
-        FindRelatedFiles="False"
-        FindSatellites="True"
-        SearchPaths="$(AssemblySearchPaths)"
-        TargetFrameworkMoniker="$(TargetFrameworkMoniker)"
-        TargetFrameworkMonikerDisplayName="$(TargetFrameworkMonikerDisplayName)"
-        TargetFrameworkDirectories="$(TargetFrameworkDirectory)">
-      <Output TaskParameter="SatelliteFiles" ItemName="_AndroidResolvedSatellitePaths"/>
+  <Target Name="_ResolveSatellitePaths" DependsOnTargets="_ResolveAssemblies">
+    <ResolveAssemblyReference AllowedAssemblyExtensions="$(AllowedReferenceAssemblyFileExtensions)" AssemblyFiles="@(ResolvedUserAssemblies)" AutoUnify="$(AutoUnifyAssemblyReferences)" FindDependencies="True" FindRelatedFiles="False" FindSatellites="True" SearchPaths="$(AssemblySearchPaths)" TargetFrameworkMoniker="$(TargetFrameworkMoniker)" TargetFrameworkMonikerDisplayName="$(TargetFrameworkMonikerDisplayName)" TargetFrameworkDirectories="$(TargetFrameworkDirectory)">
+      <Output TaskParameter="SatelliteFiles" ItemName="_AndroidResolvedSatellitePaths" />
     </ResolveAssemblyReference>
   </Target>
 </Project>

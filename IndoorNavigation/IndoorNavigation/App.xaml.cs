@@ -75,9 +75,7 @@ namespace IndoorNavigation
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;
-        //---------------
-        public string LastWaypointName = "";
-
+       
         #region 
         public Guid _tmpCurrentRegionID;
         public Guid _tmpCurrentWaypointID;
@@ -85,14 +83,18 @@ namespace IndoorNavigation
         public App()
         {
             InitializeComponent();
-
+            Console.WriteLine("Current Culture is : " + CrossMultilingual.Current.DeviceCultureInfo);
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
-            if (AppResources.Culture.ToString().Contains("zh"))
+
+            
+
+            Console.WriteLine("aaaaaa " + AppResources_zh.Culture);
+            if (AppResources.Culture.ToString().Contains("zh-TW"))
             {
                 Current.Properties["LanguagePicker"] = "Chinese";
             }
-            else if (AppResources.Culture.ToString().Contains("en"))
+            else if (AppResources.Culture.ToString().Contains("en-US"))
             {
                 Current.Properties["LanguagePicker"] = "English";
             }
