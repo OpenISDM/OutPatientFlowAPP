@@ -432,9 +432,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         stepLabel = string.Format(
                             _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_CROSS_REGION_STRING",
-                            currentLanguage),
-                            instructionDirection,
+                            "DIRECTION_INITIAIL_CROSS_REGION_STRING",currentLanguage),instructionDirection,
                             Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
@@ -458,9 +456,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                         stepLabel = string.Format(
                             initialDirectionString,
-                            _resourceManager.GetString(
-                            "PICTURE_DIRECTION_STRING",
-                            currentLanguage),
+                            _resourceManager.GetString("PICTURE_DIRECTION_STRING",currentLanguage),
                             Environment.NewLine,
                             instructionDirection,
                             Environment.NewLine,
@@ -513,6 +509,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_RIGHT_STRING",
                             currentLanguage),
                             Environment.NewLine,
+                            Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_right";
 
@@ -523,6 +520,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_REAR_STRING",
                             currentLanguage),
+                            Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_rearright";
@@ -535,6 +533,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_REAR_STRING",
                             currentLanguage),
                             Environment.NewLine,
+                            Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_down";
 
@@ -545,6 +544,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_REAR_STRING",
                             currentLanguage),
+                            Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_rearleft";
@@ -557,6 +557,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             "DIRECTION_LEFT_STRING",
                             currentLanguage),
                             Environment.NewLine,
+                            Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_left";
 
@@ -567,6 +568,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_LEFT_FRONT_STRING",
                             currentLanguage),
+                            Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_frontleft";

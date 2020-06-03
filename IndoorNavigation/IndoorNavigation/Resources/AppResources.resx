@@ -343,37 +343,37 @@
     <value>Current: {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-    <value>Face to {0}{1}then {2}{3} And go straight about {4}m </value>
+    <value>Face to {0}{1}then {2}{3} And go straight about {4} m </value>
   </data>
   <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-    <value>Back to {0}{1}then {2}{3} And go straight about {4}m </value>
+    <value>Back to {0}{1}then {2}{3} And go straight about {4} m </value>
   </data>
   <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-    <value>{0}{1}And Go Straight {2} About {3}m</value>
+    <value>{0}{1}And Go Straight {2} About {3} m</value>
   </data>
   <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
     <value>Continue to go straight </value>
   </data>
   <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>Turn right front{0} and go straight about{1}m </value>
+    <value>Turn right front{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-    <value>Turn right {0} and go straight about{1}m </value>
+    <value>Turn right {0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-    <value>Turn right rear{0} and go straight about{1}m </value>
+    <value>Turn right rear{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-    <value>Turn back{0} and go straight about{1}m </value>
+    <value>Turn back{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-    <value>Turn left rear{0} and go straight about{1}m </value>
+    <value>Turn left rear{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-    <value>Turn left{0} and go straight about{1}m </value>
+    <value>Turn left{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>Turn left front{0} and go straight about{1}m </value>
+    <value>Turn left front{0} and go straight{1} about {2} m </value>
   </data>
   <data name="DIRECTION_UP_STRING" xml:space="preserve">
     <value>Take {0} go upstairs to{1}{2} </value>
@@ -643,7 +643,7 @@
     <value>LEAVE</value>
   </data>
   <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
-    <value>it seems to happend some error, do you want to retry?</value>
+    <value>it seems that server doesn't response, do you want to retry?</value>
   </data>
   <data name="RETRY_STRING" xml:space="preserve">
     <value>RETRY</value>

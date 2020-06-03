@@ -343,37 +343,37 @@
     <value>目前位置 : {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
-    <value>面向{0}{1}然後{2}{3}直走約{4}公尺</value>
+    <value>面向{0}{1}然後{2}{3}直走約 {4} 公尺</value>
   </data>
   <data name="DIRECTION_INITIAIL_BACK_STRING" xml:space="preserve">
-    <value>背向{0}{1}然後{2}{3}直走約{4}公尺</value>
+    <value>背向{0}{1}然後{2}{3}直走約 {4} 公尺</value>
   </data>
   <data name="DIRECTION_INITIAIL_CROSS_REGION_STRING" xml:space="preserve">
-    <value>{0}{1}然後直走{2}約{3}公尺</value>
+    <value>{0}{1}然後直走{2}約 {3} 公尺</value>
   </data>
   <data name="DIRECTION_STRAIGHT_STRING" xml:space="preserve">
     <value>繼續向前走 </value>
   </data>
   <data name="DIRECTION_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>向右前方轉{0} 然後直走約{1}公尺 </value>
+    <value>向右前方轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_RIGHT_STRING" xml:space="preserve">
-    <value>向右轉{0} 然後直走約{1}公尺 </value>
+    <value>向右轉{0} 然後直走{1}約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_RIGHT_REAR_STRING" xml:space="preserve">
-    <value>向右後轉{0} 然後直走約{1}公尺 </value>
+    <value>向右後轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_REAR_STRING" xml:space="preserve">
-    <value>向後轉{0} 然後直走約{1}公尺 </value>
+    <value>向後轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_LEFT_REAR_STRING" xml:space="preserve">
-    <value>向左後轉{0} 然後直走約{1}公尺 </value>
+    <value>向左後轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_LEFT_STRING" xml:space="preserve">
-    <value>向左轉{0} 然後直走約{1}公尺 </value>
+    <value>向左轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>向左前轉{0} 然後直走約{1}公尺 </value>
+    <value>向左前轉{0} 然後直走{1} 約 {2} 公尺 </value>
   </data>
   <data name="DIRECTION_UP_STRING" xml:space="preserve">
     <value>{0}上樓前往{1}{2} </value>
@@ -634,7 +634,7 @@
     <value>離開</value>
   </data>
   <data name="HAPPEND_ERROR_STRING" xml:space="preserve">
-    <value>發生預期外的錯誤，請問要重試嗎?</value>
+    <value>伺服器沒有回應，請問要重試嗎?</value>
   </data>
   <data name="RETRY_STRING" xml:space="preserve">
     <value>重試</value>
