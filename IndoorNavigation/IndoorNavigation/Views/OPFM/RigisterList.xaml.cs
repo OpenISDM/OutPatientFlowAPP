@@ -18,6 +18,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
 using System.Threading;
+using IndoorNavigation.Views.PopUpPage;
+using IndoorNavigation.Utilities;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -43,7 +46,7 @@ namespace IndoorNavigation
         private HttpRequest request;
         private INetworkSetting NetworkSettings;
 
-        PhoneInformation phoneInformation;        
+        //PhoneInformation phoneInformation;        
 
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
@@ -98,10 +101,10 @@ namespace IndoorNavigation
         {
             InitializeComponent();          
             Console.WriteLine("initalize graph info");
-            phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;      
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-
+            //phoneInformation = new PhoneInformation();
+            _navigationGraphName = navigationGraphName;
+            //_nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            _nameInformation = Storage.LoadXmlInformation(navigationGraphName);
             Console.WriteLine("initialize http request");
             request = new HttpRequest();
             NetworkSettings = DependencyService.Get<INetworkSetting>();
@@ -381,6 +384,7 @@ namespace IndoorNavigation
             RgListView.ItemsSource = app.records;
         }
 
+      
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
@@ -415,7 +419,7 @@ namespace IndoorNavigation
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString = $"{phoneInformation.GetBuildingName(_navigationGraphName)}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
+            string HopeString = $"{_navigationGraphName}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
@@ -468,7 +472,7 @@ namespace IndoorNavigation
 
             INetworkSetting setting = DependencyService.Get<INetworkSetting>();
 
-            await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
+           // await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
             //await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
     
             Console.WriteLine("Finish call setting");

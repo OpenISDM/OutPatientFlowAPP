@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.SelectTwoWayPopupPage">
+             x:Class="IndoorNavigation.Views.PopUpPage.SelectTwoWayPopupPage">
     <AbsoluteLayout>
         <ContentView AbsoluteLayout.LayoutFlags="All" BackgroundColor="Transparent" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <ContentView.GestureRecognizers>

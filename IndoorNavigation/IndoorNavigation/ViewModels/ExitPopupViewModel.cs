@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Xml;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation
 {
@@ -81,8 +82,8 @@ namespace IndoorNavigation
             _navigationGraphName = navigationGraphName;
             phoneInformation = new PhoneInformation();
 
-            _nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-
+            _nameInformation = Storage.LoadXmlInformation(_navigationGraphName);
+           
             ButtonCommand = new Command(ToNavigatorExit);
             LoadData();
         }
