@@ -196,7 +196,7 @@ namespace IndoorNavigation.Utilities
                 GraphInfo info = new GraphInfo();
 
                 string GraphName = GraphNode.Attributes["name"].Value;
-                info._localVersion = GraphNode.Attributes["version"].Value;
+                info._currentVersion =double.Parse(GraphNode.Attributes["version"].Value);
                 info._graphName = GraphName;
 
                 XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
@@ -454,7 +454,7 @@ namespace IndoorNavigation.Utilities
                 }
                 GraphsElement.Add(new XElement("Graph",
                     new XAttribute("name", pair.Key),
-                    new XAttribute("version", pair.Value._localVersion),
+                    new XAttribute("version", pair.Value._currentVersion),
                     displayNameElement));
             }
 
@@ -477,6 +477,36 @@ namespace IndoorNavigation.Utilities
                 Console.WriteLine(">>StoreGraphStatus writer : " + writer.ToString());
             }
             Console.WriteLine("<<StoreGraphStatus");
+        }
+
+        static public bool CheckVersionNumber(string fileName, double currentVersion, AccessGraphOperate operate)
+        {
+            Console.WriteLine(">>CheckVersionNumber, Operate : " + operate);
+            switch (operate)
+            {
+                case AccessGraphOperate.CheckLocalVersion:
+                    {
+                        Console.WriteLine(">>CheckVersionNumber -> local");
+                        if (_localResources.ContainsKey(fileName) && _localResources[fileName]._currentVersion > currentVersion)
+                        {
+                            return true;
+                        }
+
+
+                        return false;
+                    }
+                case AccessGraphOperate.CheckCloudVersion:
+                    {
+                        Console.WriteLine(">>CheckVersionNumber -> Cloud");
+                        if (_serverResources != null && _serverResources.ContainsKey(fileName) && _serverResources[fileName]._currentVersion > currentVersion)
+                            return true;
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+
+
         }
         #endregion
         #region Enums and Classes
@@ -502,7 +532,7 @@ namespace IndoorNavigation.Utilities
             }
             public Dictionary<string, string> _displayNames { get; set; }
             public string _graphName { get; set; }
-            public string _localVersion { get; set; }
+            public double _currentVersion { get; set; }
             public override string ToString() => _displayNames[_currentCulture.Name];
 
         }
@@ -518,7 +548,9 @@ namespace IndoorNavigation.Utilities
             AddServer,
             AddLanguage,
             Delete,
-            Update
+            Update,
+            CheckLocalVersion,
+            CheckCloudVersion
         }
         #endregion
     }

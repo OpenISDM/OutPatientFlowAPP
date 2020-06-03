@@ -71,6 +71,7 @@ using Location = IndoorNavigation.ViewModels.Location;
 using System.Collections.ObjectModel;
 using static IndoorNavigation.Utilities.Storage;
 using System.Data.Common;
+using System.Threading;
 
 namespace IndoorNavigation
 {
@@ -93,10 +94,6 @@ namespace IndoorNavigation
                                 typeof(TranslateExtension).GetTypeInfo()
                                 .Assembly);
 
-        private bool updateMapOrNot;
-        private static PhoneInformation _phoneInformation =
-            new PhoneInformation();
-
         ViewCell lastCell = null;
         bool isButtonPressed = false; //to prevent multi-click
         CultureInfo currentLanguage =
@@ -111,7 +108,7 @@ namespace IndoorNavigation
                                               .GetString("HOME_STRING",
                                                          currentLanguage));
             NavigationPage.SetHasBackButton(this, false);
-            updateMapOrNot = false;
+
             switch (Device.RuntimePlatform)
             {
                 case Device.Android:
@@ -133,34 +130,9 @@ namespace IndoorNavigation
                 Color.White;
 
             _viewModel = new MainPageViewModel();
-            BindingContext = _viewModel;
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.Android:
-                    //NavigatorButton.Padding = new Thickness(30, 1, 1, 1);
-                    //AbsoluteLayout.SetLayoutBounds(NavigatorButton,
-                    //    new Rectangle(0.5, 0.52, 0.7, 0.1));
-                    break;
-
-                case Device.iOS:
-                    // customize CurrentInstruction UI for iPhone 5s/SE
-                    if (Height < 600)
-                    {
-                        //WelcomeLabel.FontSize = 36;
-                        //BeDISLabel.FontSize = 39;
-                        //SloganLabel.Text = "";
-                        //AbsoluteLayout.SetLayoutBounds(NavigatorButton,
-                        //    new Rectangle(0.5, 0.47, 0.7, 0.12));
-                    }
-                    break;
-
-                default:
-                    break;
-            }
+            BindingContext = _viewModel;            
         }
 
-        #region To implement 
         private INetworkSetting setting;
         private CloudDownload _download = new CloudDownload();
 
@@ -173,30 +145,21 @@ namespace IndoorNavigation
             if (Connectable)
             {
                 //it will be a xml format
-                #region when server not response. I know the code 很母湯，but it's temporary haha.
                 string SupportList = _download.Download(_download.getSupportListUrl());
-                Console.WriteLine("SupporList context : " + SupportList);
-                
-                if (string.IsNullOrEmpty(SupportList))
-                {
-                    await (Navigation.PushAsync(new SettingTableViewPage()));
-                }
-                else
+                Console.WriteLine("SupporList context : " + SupportList);                
+                if (!string.IsNullOrEmpty(SupportList))
                 {
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(SupportList);
                     Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
                     _serverResources = SupportListDict;
-                    await Navigation.PushAsync(new SettingTableViewPage(SupportListDict));
                 }
-                #endregion
             }
-            else
-                await Navigation.PushAsync(new SettingTableViewPage());
+
+            await Navigation.PushAsync(new SettingTableViewPage());
 
             await PopupNavigation.Instance.PopAllAsync();
         }
-        #endregion
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -205,57 +168,19 @@ namespace IndoorNavigation
             {
                 NavigationGraph navigationGraph =
                     Storage.LoadNavigationGraphXml(location.sourcePath);
-                XmlDocument xmlDocument = new XmlDocument();
-                using (var stream =
-                            Assembly.GetExecutingAssembly()
-                            .GetManifestResourceStream(_versionRoute))
+
+                if (Storage.CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckLocalVersion))
                 {
-                    StreamReader tr = new StreamReader(stream);
-                    string fileContents = tr.ReadToEnd();
-                    Console.WriteLine(">>MainPage :: HandleItemTapped");
-                    Console.WriteLine(fileContents);
-                    xmlDocument.LoadXml(fileContents);
-                }
-
-
-                ReadVersion readVersion = new ReadVersion(xmlDocument);
-                double newVersion =
-                   readVersion.ReturnVersion(navigationGraph.GetBuildingName());
-
-                if (navigationGraph.GetVersion() != newVersion)
-                {
-                    var answser = await DisplayAlert(
-                                _resourceManager
-                                .GetString("UPDATE_MAP_STRING", currentLanguage),
-                                location.UserNaming,
-                                _resourceManager
-                                .GetString("OK_STRING", currentLanguage),
-                                _resourceManager
-                                .GetString("CANCEL_STRING", currentLanguage));
-
-
-                    if (answser)
+                    if (await DisplayAlert(
+                        _resourceManager.GetString("UPDATE_MAP_STRING", _currentCulture),
+                        location.UserNaming,
+                        _resourceManager.GetString("OK_STRING", _currentCulture),
+                        _resourceManager.GetString("CANCEL_STRING", _currentCulture))
+                    )
                     {
-
-                        List<string> generateName =
-                            _phoneInformation
-                            .GiveGenerateMapName(location.UserNaming);
-
-                        Storage.EmbeddedGenerateFile(generateName[1]);
-                        updateMapOrNot = true;
+                        EmbeddedGenerateFile(location.sourcePath);
                     }
-                    else
-                    {
-
-                        updateMapOrNot = false;
-                    }
-                }
-                else
-                {
-                    updateMapOrNot = true;
-                }
-
-                if (updateMapOrNot == true)
+                }                
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;
@@ -274,7 +199,6 @@ namespace IndoorNavigation
                             else
                                 await Navigation.PushAsync
                                   (new NavigationHomePage(location));
-
                             break;
 
                         case "city_hall":
@@ -344,6 +268,7 @@ namespace IndoorNavigation
                     return false;
                 });
             }
-        }        
+        }
+        
     }
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 using Xamarin.Forms;
 using Newtonsoft.Json;
+using System.Net.Security;
 //using IndoorNavigation.Resources;
 namespace IndoorNavigation.Modules.Utilities
 {
@@ -21,19 +24,29 @@ namespace IndoorNavigation.Modules.Utilities
 
     public class CloudDownload
     {
-        public const string _localhost = "http://140.109.22.34:80/";
+        //this is apikey for access seeing-i-Go server.
+        private const string apikey = "m9AZq97gPlIusBXs7osDOFBjZc345iwtkGDdWy2UVHAe";
+        private const string _localhost = "https://wpin.iis.sinica.edu.tw/";
         public CloudDownload()
-        {
-            //string contextString = Download(getSupportListUrl());
-            //_currentInfos = JsonConvert.DeserializeObject<CurrentMapInfos>(contextString);
+        {            
         }
        
+        private bool CheckSSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
+        }
+        
         public string Download(string url)
         {
             string ContextString = "";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            //request.ContentType = "text/xml";
-            request.Timeout = 10000;
+
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckSSLValidation);
+            }
+
+            request.Timeout = 5000;
             request.Method = "GET";
 
             try
