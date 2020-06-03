@@ -11,6 +11,8 @@ using System.Globalization;
 using IndoorNavigation.Models;
 using System.Reflection;
 using System.Threading.Tasks;
+using IndoorNavigation.Views.PopUpPage;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

@@ -58,6 +58,7 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
+using System.Security.Cryptography;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -86,10 +87,7 @@ namespace IndoorNavigation
             Console.WriteLine("Current Culture is : " + CrossMultilingual.Current.DeviceCultureInfo);
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
-
-            
-
-            Console.WriteLine("aaaaaa " + AppResources_zh.Culture);
+           
             if (AppResources.Culture.ToString().Contains("zh-TW"))
             {
                 Current.Properties["LanguagePicker"] = "Chinese";

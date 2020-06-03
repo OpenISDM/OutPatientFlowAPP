@@ -15,6 +15,7 @@ using IndoorNavigation.Modules.Utilities;
 using System.IO;
 using Plugin.InputKit.Shared.Controls;
 using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
+using IndoorNavigation.Views.PopUpPage;
 
 namespace IndoorNavigation
 {
