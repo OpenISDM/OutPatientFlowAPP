@@ -642,4 +642,13 @@
   <data name="DOWNLOAD_FROM_SERVER_STRING" xml:space="preserve">
     <value>從雲端下載</value>
   </data>
+  <data name="DOWNLOAD_FAIL_STRING" xml:space="preserve">
+    <value>下載失敗</value>
+  </data>
+  <data name="DOWNLOAD_STRING" xml:space="preserve">
+    <value>下載</value>
+  </data>
+  <data name="DOWNLOAD_SUCCESS_STRING" xml:space="preserve">
+    <value>下載成功</value>
+  </data>
 </root>

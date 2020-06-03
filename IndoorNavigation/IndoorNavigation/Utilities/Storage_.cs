@@ -180,7 +180,8 @@ namespace IndoorNavigation.Utilities
                 UpdateGraphList("zh-TW", AccessGraphOperate.AddLanguage);
                 UpdateGraphList("en-US", AccessGraphOperate.AddLanguage);
                 EmbeddedGenerateFile("NTUH_Yunlin");
-                EmbeddedGenerateFile("Lab");
+                EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
+                //EmbeddedGenerateFile("Lab");
                 EmbeddedGenerateFile("Taipei_City_Hall");
                 Console.WriteLine("first Use Generate Success");
             }

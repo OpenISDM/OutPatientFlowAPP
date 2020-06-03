@@ -385,7 +385,7 @@ namespace IndoorNavigation.Views.Settings
             {
                 if (!await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", _currentCulture),
                                         _resourceManager.GetString("ASK_STILL_DOWNLOAD_STRING", _currentCulture),
-                                        _resourceManager.GetString("OK_STRING", _currentCulture),
+                                        _resourceManager.GetString("DOWNLOAD_STRING", _currentCulture),
                                         _resourceManager.GetString("CANCEL_STRING", _currentCulture))
                     )
                 {
@@ -393,21 +393,26 @@ namespace IndoorNavigation.Views.Settings
                 }
             }
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            //Storage.CloudGenerateFile(Storage.GetKeyName(DownloadFromServer.SelectedItem.ToString()));
-
             try
             {
-                CloudGenerateFile(selectItem);
-                //CloudGenerateFile(_tmpResourceDict.First(o => o.Value._displayNames[_currentCulture.Name] == selectItem).Key); 
+                CloudGenerateFile(selectItem);                
             }
             catch (Exception exc)
             {
                 Console.WriteLine("Error message : " + exc.Message);
                 await PopupNavigation.Instance.PopAsync();
-                await DisplayAlert("Error", "download error", "ok");
+                await DisplayAlert(
+                    _resourceManager.GetString("MESSAGE_STRING",_currentCulture), 
+                    _resourceManager.GetString("DOWNLOAD_FAIL_STRING",_currentCulture), 
+                    _resourceManager.GetString("OK_STRING",_currentCulture)
+                );
                 return;
             }
-            await DisplayAlert("success", "finish download", "ok");
+            await DisplayAlert(
+                _resourceManager.GetString("MESSAGE_STRING",_currentCulture), 
+                _resourceManager.GetString("DOWNLOAD_SUCCESS_STRING",_currentCulture), 
+                _resourceManager.GetString("OK_STRING",_currentCulture)
+             );
             await PopupNavigation.Instance.PopAsync();
         }
 
