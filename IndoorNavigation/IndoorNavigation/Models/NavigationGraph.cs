@@ -372,7 +372,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
 
                 // construct navigation_graph._regions[]._neighbors
-                if (DirectionalConnection.BiDirection == regionEdge._biDirection)
+                if (DirectionalConnection.BiDirection == 
+					regionEdge._biDirection)
                 {
                     _regions[regionEdge._region1].
 						_neighbors.Add(regionEdge._region2);
@@ -651,7 +652,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     RegionEdge edgeItem = _edges[edgeKeyFromNode1][i];
 
-                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    if (!avoidConnectionTypes
+						.Contains(edgeItem._connectionType))
                     {
                         if (DirectionalConnection.BiDirection == 
 							edgeItem._biDirection || 
@@ -816,7 +818,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public int GetDistanceOfLongHallway(RegionWaypointPoint currentGuid, 
 											int nextStep, 
 											List<RegionWaypointPoint> allRoute, 
-										    ConnectionType[] avoidConnectionType)
+										   ConnectionType[] avoidConnectionType)
         {
             int distance = 0;
             if (nextStep <= 0)
@@ -1150,7 +1152,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             else
                             {
 
-                                // previousWaypoint and currentWaypoint are on the same floor
+                                // previousWaypoint and currentWaypoint are on 
+								// the same floor
                                 RegionEdge prevEdge =
                                     GetRegionEdgeMostNearSourceWaypoint
 														 (previousRegionID,
@@ -1173,7 +1176,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 									System.Convert.ToInt32(prevEdgeDirection);
 									
                                 int currentDirection =
-                                    System.Convert.ToInt32(currentEdgeDirection);
+                                    System.Convert
+									.ToInt32(currentEdgeDirection);
 
                                 if (currentDirection - prevDirection >= 0)
                                 {
@@ -1192,7 +1196,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 									
                                 information._distance =
                                     System.Convert
-										  .ToInt32(currentEdge._distance);
+									.ToInt32(currentEdge._distance);
                             }
                         }
                         else
@@ -1422,7 +1426,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 for (int i = 0; i < regionEdgeItem.Value.Count(); i++)
                 {
                     RegionEdge edgeItem = regionEdgeItem.Value[i];
-                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    if (!avoidConnectionTypes
+						.Contains(edgeItem._connectionType))
                     {
 
                         if(
