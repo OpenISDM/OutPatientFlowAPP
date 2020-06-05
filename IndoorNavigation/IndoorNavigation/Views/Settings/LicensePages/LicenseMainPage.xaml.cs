@@ -70,7 +70,7 @@ namespace IndoorNavigation.Views.Settings.LicensePages
 
         async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new IconsLicensePage());
+            await Navigation.PushAsync(new IconLicensePage());
         }
     }
 }
