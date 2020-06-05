@@ -1,4 +1,4 @@
-<first_direction_XML country='Taiwan' city_county='YunLin' industry_service='hospital' owner_organization='BeDI' building_name='Taipei_City_Hall'>
+<first_direction_XML country='Taiwan' city_county='Taipei' industry_service='city_hall' owner_organization='BiDaE' building_name='Taipei_City_Hall'>
     <waypoint id = '00000000-0000-0000-0000-000000003206' Landmark = 'Conference Room N206' RelatedDirection = '6' FaceOrBack = "0"/>
     <waypoint id = '00000000-0000-0000-0000-000000003205' Landmark = 'Conference Room N205' RelatedDirection = '6' FaceOrBack = "0"/> 
     <waypoint id = '00000000-0000-0000-0000-000000003203' Landmark = 'Conference Room N203' RelatedDirection = '2' FaceOrBack = "0"/> 
