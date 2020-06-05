@@ -4,7 +4,7 @@
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              x:Class="IndoorNavigation.Views.Settings.LicensePages.LicenseMainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             Title="{i18n:Translate BEDITECH_STRING}">
+             Title="{i18n:Translate BIDAE_NAVIGATOR_STRING}">
     
     <ContentPage.Resources>
         <!-- SettingsView properties settings -->
