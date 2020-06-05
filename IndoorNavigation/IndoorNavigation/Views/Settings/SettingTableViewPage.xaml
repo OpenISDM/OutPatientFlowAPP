@@ -48,7 +48,7 @@
     
             <sv:Section Title="{i18n:Translate SETTING_STRING}">
                 <sv:CommandCell IconSource="icon.png" IconSize="60,60"
-                                Title="{i18n:Translate BEDITECH_STRING}" Description=""/>
+                                Title="{i18n:Translate BIDAE_NAVIGATOR_STRING}" Description=""/>
                 <sv:TextPickerCell x:Name="OptionPicker" Title="{i18n:Translate DOWNLOAD_MAP_STRING}" 
                                    Items="{Binding _chooseMap}" SelectedCommand="{Binding _chooseMapCommand}"/>
                 <sv:TextPickerCell x:Name="DownloadFromServer"
@@ -72,7 +72,7 @@
                 
             <sv:Section Title="{i18n:Translate OTHERS_STRING}">
                     <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
-                    <sv:CommandCell Title="{i18n:Translate ABOUT_BEDI_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate ABOUT_BIDAE_STRING}"/>
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate VERSION_STRING}">

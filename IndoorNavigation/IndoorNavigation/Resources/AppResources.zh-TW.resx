@@ -132,7 +132,7 @@
   <data name="SETTING_STRING" xml:space="preserve">
     <value>設定</value>
   </data>
-  <data name="BEDITECH_STRING" xml:space="preserve">
+  <data name="BIDAE_NAVIGATOR_STRING" xml:space="preserve">
     <value>畢迪科技室內導航</value>
   </data>
   <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
@@ -183,7 +183,7 @@
   <data name="FEEDBACK_STRING" xml:space="preserve">
     <value>意見回饋</value>
   </data>
-  <data name="ABOUT_BEDI_STRING" xml:space="preserve">
+  <data name="ABOUT_BIDAE_STRING" xml:space="preserve">
     <value>關於畢迪科技股份有限公司</value>
   </data>
   <data name="PREFERENCES_STRING" xml:space="preserve">

@@ -21,8 +21,8 @@
     </Graph>
     <Graph name="Lab" version="1.0">
       <DisplayNames>
-        <DisplayName name="Lab" language="en-US"/>
-        <DisplayName name="實驗室" language="zh-TW"/>
+        <DisplayName name="Test Field" language="en-US"/>
+        <DisplayName name="測試場域" language="zh-TW"/>
       </DisplayNames>
     </Graph>
   </Graphs>

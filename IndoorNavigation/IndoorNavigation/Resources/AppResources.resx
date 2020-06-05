@@ -132,8 +132,8 @@
   <data name="SETTING_STRING" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="BEDITECH_STRING" xml:space="preserve">
-    <value>BeDITech Indoor Navigator</value>
+  <data name="BIDAE_NAVIGATOR_STRING" xml:space="preserve">
+    <value>BiDaE Tech Indoor Navigator</value>
   </data>
   <data name="DOWNLOAD_QRCODE_MAP_STRING" xml:space="preserve">
     <value>Download QRCode Map</value>
@@ -174,8 +174,8 @@
   <data name="FEEDBACK_STRING" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="ABOUT_BEDI_STRING" xml:space="preserve">
-    <value>About BeDI Technology Inc.</value>
+  <data name="ABOUT_BIDAE_STRING" xml:space="preserve">
+    <value>About BiDaETechnology Inc.</value>
   </data>
   <data name="PREFERENCES_STRING" xml:space="preserve">
     <value>Preferences</value>
