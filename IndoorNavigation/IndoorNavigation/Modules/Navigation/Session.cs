@@ -44,6 +44,7 @@ using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
+using Xamarin.Forms.Internals;
 
 namespace IndoorNavigation.Modules
 {
@@ -89,8 +90,11 @@ namespace IndoorNavigation.Modules
 			new Dictionary<Guid, Region>();
 			
         private IPSModules _iPSModules;
-        private const int _tooCLoseDistance = 1;
+        private const int _tooCLoseDistance = 5;
 
+
+
+        private const int _tooCloseDistanceForPath = 7;
         #region fix wrong waypoint detected
         private bool _DetectedWrongWaypoint = true;
         #endregion 
@@ -111,8 +115,7 @@ namespace IndoorNavigation.Modules
             _accumulateStraightDistance = 0;
             _avoidConnectionTypes = avoidConnectionTypes;
             // construct region graph (across regions) which we can use to 
-			// generate route
-			
+			// generate route			
             _graphRegionGraph = 
 				navigationGraph.GenerateRegionGraph(avoidConnectionTypes);
 				
@@ -123,17 +126,17 @@ namespace IndoorNavigation.Modules
             _iPSModules._event._eventHandler += 
 				new EventHandler(CheckArrivedWaypoint);
 
-            _waypointDetectionThread = new Thread(() => InvokeIPSWork());
-            _waypointDetectionThread.Start();
+            //_waypointDetectionThread = new Thread(() => InvokeIPSWork());
+            //_waypointDetectionThread.Start();
 
-            _navigationControllerThread = new Thread(() => NavigatorProgram());
-            _navigationControllerThread.Start();
+            //_navigationControllerThread = new Thread(() => NavigatorProgram());
+            //_navigationControllerThread.Start();
             #region Test String
-            //Guid sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000001");
-            //Guid sourceRegion   = new Guid("11111111-1111-1111-1111-111111111111");
+            Guid sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000328");
+            Guid sourceRegion = new Guid("22222222-2222-2222-2222-222222222222");
 
-            //Console.WriteLine("Fist Try in Generate Path");
-            //GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
+            Console.WriteLine("Fist Try in Generate Path");
+            GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
 
             //sourceRegion = new Guid("11111111-1111-1111-1111-111111111111");
             //sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000021");
@@ -393,19 +396,24 @@ namespace IndoorNavigation.Modules
                                    Guid destinationWaypointID)
         {
             #region Generate route
-            // generate path between regions (from sourceRegionID to 
-            // destnationRegionID)
+
+            #region To decide region edge
+            //Get Source Region ID index in All Graph Data Structure.
             uint region1Key = _graphRegionGraph
                               .Where(node => node.Item.Equals(sourceRegionID))
                               .Select(node => node.Key).First();
+
+            //Get Destination Region ID index in All Graph Data Structure.
             uint region2Key = _graphRegionGraph
                               .Where(node=>node.Item.Equals(destinationRegionID))
-                              .Select(node => node.Key).First();
+                              .Select(node => node.Key).First();        
 
+            //Use two index in Graph data structure to check whether it have path or not.
             var pathRegions = _graphRegionGraph
 							 .Dijkstra(region1Key, region2Key)
 							 .GetPath();
 
+            //If not route between two region, return.
             if (0 == pathRegions.Count())
             {
                 Console.WriteLine("No path.Need to change avoid connection"+
@@ -417,7 +425,7 @@ namespace IndoorNavigation.Modules
                 return;
             }
 
-            // store the generate Dijkstra path across regions
+            // to store region id that generate by Dijstkra cross the route
             List<Guid> regionsOnRoute = new List<Guid>();
             for (int i = 0; i < pathRegions.Count(); i++)
             {
@@ -428,6 +436,8 @@ namespace IndoorNavigation.Modules
             // generate the path of the region/waypoint checkpoints across 
 			// regions
             _waypointsOnRoute = new List<RegionWaypointPoint>();
+
+            //to add source waypoint to route.
             _waypointsOnRoute.Add(new RegionWaypointPoint
             {
                 _regionID = sourceRegionID,
@@ -442,7 +452,8 @@ namespace IndoorNavigation.Modules
                                   i,
                                   _waypointsOnRoute.Count(),
                                   checkPoint._regionID,
-                                  checkPoint._waypointID);
+                                  checkPoint._waypointID);              
+
                 if (regionsOnRoute.IndexOf(checkPoint._regionID) + 1 <
                     regionsOnRoute.Count())
                 {
@@ -462,6 +473,7 @@ namespace IndoorNavigation.Modules
                                             nextRegionID,
                                             _avoidConnectionTypes);
 
+                    
                     if (LocationType.portal != waypointType)
                     {
                         _waypointsOnRoute.Add(new RegionWaypointPoint
@@ -469,12 +481,15 @@ namespace IndoorNavigation.Modules
                             _regionID = checkPoint._regionID,
                             _waypointID = portalWaypoints._portalWaypoint1
                         });
+
                     }
                     else if (LocationType.portal == waypointType)
                     {
                         if (!checkPoint._waypointID.Equals(portalWaypoints
 														   ._portalWaypoint1))
                         {
+                            //Add the waypoint that type is portal at current 
+                            // region
                             _waypointsOnRoute.Add(new RegionWaypointPoint
                             {
                                 _regionID = checkPoint._regionID,
@@ -483,6 +498,7 @@ namespace IndoorNavigation.Modules
                         }
                         else
                         {
+                            //Add the waypoint at the other region
                             _waypointsOnRoute.Add(new RegionWaypointPoint
                             {
                                 _regionID = nextRegionID,
@@ -511,54 +527,100 @@ namespace IndoorNavigation.Modules
                                   checkPoint._regionID,
                                   checkPoint._waypointID);
             }
+            #endregion
 
-
-
+            #region To fill the path besides portal point.
             // fill in all the path between waypoints in the
-			// same region / navigraph
+            // same region / navigraph
             for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
             {
                 RegionWaypointPoint currentCheckPoint = _waypointsOnRoute[i];
                 RegionWaypointPoint nextCheckPoint = _waypointsOnRoute[i + 1];
-
+                              
+                Console.WriteLine($"currentCheckPoint = {currentCheckPoint._waypointID}");
+                Console.WriteLine($"nextCheckPoint = {nextCheckPoint._waypointID}");
                 if (currentCheckPoint._regionID.Equals(nextCheckPoint._regionID))
-                {
+                {                   
                     Graph<Guid, string> _graphNavigraph =
                         _navigationGraph
 						.GenerateNavigraph(currentCheckPoint._regionID,
                                            _avoidConnectionTypes);
 
-                    // generate path between two waypoints in the
-					// same region / navigraph
+                    //to get source waypoint index in _graphNavigraph
                     uint waypoint1Key = _graphNavigraph
                                         .Where(node => node.Item
                                         .Equals(currentCheckPoint._waypointID))
                                         .Select(node => node.Key).First();
+
+                    //to get destination waypoint index in _graphNavigraph
                     uint waypoint2Key = _graphNavigraph
                                         .Where(node => node.Item
                                         .Equals(nextCheckPoint._waypointID))
                                         .Select(node => node.Key).First();
-
+                    //to get the path between these two waypoint
                     var pathWaypoints =
                         _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key)
 									   .GetPath();
 
+                    RegionWaypointPoint LastAddToWaypointRoute=new RegionWaypointPoint();
+
+                    //to fill the waypoint that get from dijkstra to all route.
                     for (int j = pathWaypoints.Count() - 1; j > 0; j--)
                     {
+
                         if (j != 0 && j != pathWaypoints.Count() - 1)
                         {
-                            _waypointsOnRoute.Insert(i + 1, 
-													 new RegionWaypointPoint
+                            
+                            bool isStraight =
+                                _navigationGraph.isStraightBetweenWaypoint
+                                (
+                                    currentCheckPoint._regionID,
+                                    _graphNavigraph[pathWaypoints.ToList()[j + 1]].Item,
+                                    _graphNavigraph[pathWaypoints.ToList()[j]].Item,
+                                    _graphNavigraph[pathWaypoints.ToList()[j - 1]].Item
+                                );
+
+
+                            double distance =
+                              _navigationGraph.StraightDistanceBetweenWaypoints
+                              (
+                                  currentCheckPoint._regionID,
+                                  LastAddToWaypointRoute._waypointID.Equals(Guid.Empty)
+                                  ? _graphNavigraph[pathWaypoints.ToList()[j + 1]].Item
+                                  : LastAddToWaypointRoute._waypointID,
+                                      //_graphNavigraph[pathWaypoints.ToList()[j + 1]].Item,
+                                  _graphNavigraph[pathWaypoints.ToList()[j]].Item
+                               ) ;                            
+                            
+                            Console.WriteLine("Source waypoint ID = " + _graphNavigraph[pathWaypoints.ToList()[j+1]].Item);
+                            Console.WriteLine("Destination waypoint ID = " + _graphNavigraph[pathWaypoints.ToList()[j]].Item);
+                            Console.WriteLine("isStraight = " + isStraight + "aaaaa");
+                            Console.WriteLine("Distance  ==  " + distance + "bbbb");
+                            
+                            if ((!isStraight || !(distance < _tooCloseDistanceForPath)))
                             {
-                                _regionID = currentCheckPoint._regionID,
-                                _waypointID = 
-									_graphNavigraph[pathWaypoints.ToList()[j]]
-									.Item
-                            });
+                                Console.WriteLine("Add to waypointsOnRoute : " + _graphNavigraph[pathWaypoints.ToList()[j]].Item);
+                                LastAddToWaypointRoute = 
+                                    new RegionWaypointPoint
+                                    (currentCheckPoint._regionID, 
+                                    _graphNavigraph[pathWaypoints.ToList()[j]]
+                                   .Item);
+                                _waypointsOnRoute.Insert(i + 1,
+                                new RegionWaypointPoint
+                                {
+                                    _regionID = currentCheckPoint._regionID,
+                                    _waypointID =
+                                   _graphNavigraph[pathWaypoints.ToList()[j]]
+                                   .Item
+                                }
+                                );
+                            }
                         }
                     }
                 }
             }
+            #endregion
+
             #endregion
 
             #region Wrong Point decide
@@ -741,6 +803,8 @@ namespace IndoorNavigation.Modules
                 }
                 Console.WriteLine("\n");
             }
+
+            Console.WriteLine("The total distance between the destination : " + _navigationGraph.TotalRouteDistance(_waypointsOnRoute));
             #endregion
         }
 

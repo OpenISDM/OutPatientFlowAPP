@@ -123,11 +123,15 @@ namespace IndoorNavigation
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            Console.WriteLine();
+            base.OnSleep();
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
+            Console.WriteLine();
+            base.OnSleep();
         }
    
     }

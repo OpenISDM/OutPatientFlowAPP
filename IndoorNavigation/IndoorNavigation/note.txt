@@ -7,3 +7,18 @@ Storage function not implement:
 	Authication to Web.
 	SSL certification.
 	Check version.
+
+
+6/19
+	Todo:
+		1. About connection in a region
+			- when the distance between current waypoint and next waypoint is lower than a value, we decide to ignore it
+				# maybe the value is not a constant, it can change with the mobile RSSI?
+			- We have to consider the direction, because we will not ignore a turning point.
+
+		2. About connection between region and region
+			- Consider the distance between source and portal type waypoint first.
+			- if the distances of all possible edges have no highest value, then consider the priority of the type.
+				Generally, the priority should be : Hallway(?) > escalator > elevator > stair
+
+	
