@@ -184,6 +184,8 @@ namespace IndoorNavigation.Modules
 
             StartAllExistClient();
         }
+
+        #region duplicate meaningless code?
         public void AddNextWaypointInterestedGuid(Guid regionGuid, 
 												  Guid waypointGuid)
         {
@@ -206,6 +208,7 @@ namespace IndoorNavigation.Modules
             _ibeacon(regionGuid, new List<Guid> { waypointGuid });
             _gps(regionGuid, new List<Guid> { waypointGuid });
         }
+        #endregion
 
         // In this fuction, we deal the initial location situation.
         // We do not know where the users are, therefore, we open all
@@ -288,6 +291,11 @@ namespace IndoorNavigation.Modules
                 _detectedRegionWaypoint = matchedWaypointAndRegion
             });
             return;
+        }
+
+        public void OpenPortalIPSType(RegionWaypointPoint portalPoint)
+        {
+
         }
         public void CompareToCurrentAndNextIPSType(Guid currentRegionGuid, 
 												   Guid nextRegionGuid, 

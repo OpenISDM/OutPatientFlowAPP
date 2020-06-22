@@ -20,5 +20,17 @@ Storage function not implement:
 			- Consider the distance between source and portal type waypoint first.
 			- if the distances of all possible edges have no highest value, then consider the priority of the type.
 				Generally, the priority should be : Hallway(?) > escalator > elevator > stair
+6/22
+	Todo:
+		1. Wrong Way Decide
+			- to set up a 1-hop wrong way
+			- to fix the wrong way dictionary that will count on a ingnore point.
+
+		2. Wrong Way detection Error when user is at a portal point
+			- to Open All IPS when user is at a portal point.
+			
+		3. To fix Navigator stuck when the app is calling OnResume function.
+			- to restore thread and object at App.Current.Properties?
+			- to restore thread at App global object?
 
 	

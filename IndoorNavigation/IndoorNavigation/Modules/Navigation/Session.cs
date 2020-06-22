@@ -45,6 +45,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
 using Xamarin.Forms.Internals;
+using IndoorNavigation.ViewModels;
 
 namespace IndoorNavigation.Modules
 {
@@ -627,59 +628,53 @@ namespace IndoorNavigation.Modules
             int nextStep = 1;
             _waypointsOnWrongWay = 
 				new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
-            Region tempRegion = new Region();
-            List<Guid> neighborGuid = new List<Guid>();
+            List<Guid> neighborGuids = new List<Guid>();
 
             //For each waypoint in _waypointsOnRoute, decide their wrong 
 			//waypoint.
-            foreach (RegionWaypointPoint locationRegionWaypoint 
+            foreach (RegionWaypointPoint checkWaypoint 
 					 in _waypointsOnRoute)
             {
-                //Console.WriteLine("index of waypoint on route : " + k++);
-                RegionWaypointPoint tempRegionWaypoint = 
-					new RegionWaypointPoint();
                 Console.WriteLine("Important Current Waypoint : " 
-								  + locationRegionWaypoint._waypointID);
+								  + checkWaypoint._waypointID);
                 //Get the neighbor of all wapoint in _waypointOnRoute.
-                neighborGuid = new List<Guid>();
-                neighborGuid = _navigationGraph
-							   .GetNeighbor(locationRegionWaypoint._regionID, 
-											locationRegionWaypoint._waypointID);
-
-                tempRegion = _regiongraphs[locationRegionWaypoint._regionID];
+                neighborGuids = _navigationGraph
+							   .GetNeighbor(checkWaypoint._regionID, 
+											checkWaypoint._waypointID);                
 
                 LocationType locationType =
-                        _navigationGraph
-						.GetWaypointTypeInRegion
+                        _navigationGraph.GetWaypointTypeInRegion
 						(
-						 locationRegionWaypoint._regionID,
-					     locationRegionWaypoint._waypointID
+						    checkWaypoint._regionID,
+					        checkWaypoint._waypointID
 						);
                 // If the waypoints are portal, we need to get its related portal
 				// waypoints in other regions.
-                if (locationType.ToString() == "portal")
+                if (locationType== LocationType.portal)
                 {
-                    AddPortalWrongWaypoint(tempRegion, 
-										   locationRegionWaypoint, 
+                    Region currentRegion = 
+                        _regiongraphs[checkWaypoint._regionID];
+
+                    AddPortalWrongWaypoint(currentRegion, 
+										   checkWaypoint, 
 										   nextStep, 
-										   tempRegionWaypoint, 
-										   locationRegionWaypoint._waypointID);
+										   checkWaypoint._waypointID);
                 }
                 //Get the waypoint neighbor's Guids and add them in
 				//_waypointsOnWrongWay except next Waypoint Guid.
                 //We know just consider One-Step Wrong Way.
-                foreach (Guid guid in neighborGuid)
+                foreach (Guid neighborGuid in neighborGuids)
                 {
                     if (_waypointsOnRoute.Count() > nextStep)
                     {
-                        if (_waypointsOnRoute[nextStep]._waypointID != guid)
+                        if (_waypointsOnRoute[nextStep]._waypointID != neighborGuid)
                         {
                             double distanceBetweenCurrentAndNeighbor =
                                 _navigationGraph
                                 .StraightDistanceBetweenWaypoints(
-                                       locationRegionWaypoint._regionID,
-                                       locationRegionWaypoint._waypointID,
-                                       guid);
+                                       checkWaypoint._regionID,
+                                       checkWaypoint._waypointID,
+                                       neighborGuid);
 
                             double distanceBetweenNextAndNeighbor = 0;
 
@@ -692,15 +687,15 @@ namespace IndoorNavigation.Modules
                             //therefore, we give distanceBetweenNextAndNeighbor
 
                             //the same value of distanceBetweenCurrentAndNeighbor.
-                            if (locationRegionWaypoint._regionID
+                            if (checkWaypoint._regionID
                                 == _waypointsOnRoute[nextStep]._regionID)
                             {
                                 distanceBetweenNextAndNeighbor =
                                     _navigationGraph
                                     .StraightDistanceBetweenWaypoints(
-                                       locationRegionWaypoint._regionID,
+                                       checkWaypoint._regionID,
                                        _waypointsOnRoute[nextStep]._waypointID,
-                                       guid);
+                                       neighborGuid);
                             }
                             else
                             {
@@ -721,53 +716,49 @@ namespace IndoorNavigation.Modules
                                 if (nextStep >= 2)
                                 {
                                     if (_waypointsOnRoute[nextStep - 2]
-                                        ._waypointID != guid)
+                                        ._waypointID != neighborGuid)
                                     {
-                                        AddWrongWaypoint(guid,
-                                                        locationRegionWaypoint
+                                        AddWrongWaypoint(neighborGuid,
+                                                        checkWaypoint
                                                         ._regionID,
-                                                        locationRegionWaypoint,
-                                                        tempRegionWaypoint);
+                                                        checkWaypoint);
                                     }
                                 }
                                 else
                                 {
-                                    AddWrongWaypoint(guid,
-                                                    locationRegionWaypoint
+                                    AddWrongWaypoint(neighborGuid,
+                                                    checkWaypoint
                                                     ._regionID,
-                                                    locationRegionWaypoint,
-                                                    tempRegionWaypoint);
+                                                    checkWaypoint);
                                 }
 
                             }
                             else if (distanceBetweenCurrentAndNeighbor <
                                      _tooCLoseDistance)
                             {
-                                OneMoreLayer(guid,
-                                            locationRegionWaypoint,
-                                            nextStep,
-                                            tempRegionWaypoint);
+                                OneMoreLayer(neighborGuid,
+                                            checkWaypoint,
+                                            nextStep);
                             }
 
                             if (nextStep >= 2)
                             {
                                 if (_waypointsOnRoute[nextStep - 2]
-                                    ._waypointID == guid)
+                                    ._waypointID == neighborGuid)
                                 {
-                                    OneMoreLayer(guid,
-                                                 locationRegionWaypoint,
-                                                 nextStep,
-                                                 tempRegionWaypoint);
+                                    OneMoreLayer(neighborGuid,
+                                                 checkWaypoint,
+                                                 nextStep);
                                 }
                             }
                         }
                         else
                         {
                             if (!_waypointsOnWrongWay.Keys
-                                .Contains(locationRegionWaypoint))
+                                .Contains(checkWaypoint))
                             {
                                 _waypointsOnWrongWay
-                                .Add(locationRegionWaypoint,
+                                .Add(checkWaypoint,
                                      new List<RegionWaypointPoint> { });
                             }
                         }
@@ -811,7 +802,6 @@ namespace IndoorNavigation.Modules
         public void AddPortalWrongWaypoint(Region tempRegion, 
 									RegionWaypointPoint locationRegionWaypoint, 
 									int nextStep, 
-									RegionWaypointPoint tempRegionWaypoint, 
 									Guid guid)
         {
             foreach (Guid regionNeighborGuid in tempRegion._neighbors)
@@ -833,8 +823,7 @@ namespace IndoorNavigation.Modules
                             AddWrongWaypoint(portalWaypointRegionGuid
 										     ._waypointID, 
 											 portalWaypointRegionGuid._regionID, 
-											 locationRegionWaypoint, 
-											 tempRegionWaypoint);
+											 locationRegionWaypoint);
                         }
                         else
                         {
@@ -847,40 +836,32 @@ namespace IndoorNavigation.Modules
                             }
                         }
                     }
-                    //else
                 }
             }
         }
 
         public void AddWrongWaypoint(Guid waypointID, 
 									 Guid regionID, 
-									 RegionWaypointPoint locationRegionWaypoint, 
-									 RegionWaypointPoint tempRegionWaypoint)
+									 RegionWaypointPoint locationRegionWaypoint)
         {
+            RegionWaypointPoint tmpWaypoint = 
+                new RegionWaypointPoint(regionID, waypointID);
+
             if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
-            {
-                tempRegionWaypoint = new RegionWaypointPoint();
-                tempRegionWaypoint._waypointID = waypointID;
-                tempRegionWaypoint._regionID = regionID;
+            {                
                 _waypointsOnWrongWay
-				.Add(locationRegionWaypoint, 
-					 new List<RegionWaypointPoint> { tempRegionWaypoint });
+				.Add(locationRegionWaypoint, new List<RegionWaypointPoint> 
+                { tmpWaypoint });
             }
             else
             {
-                tempRegionWaypoint = new RegionWaypointPoint();
-                tempRegionWaypoint._regionID = regionID;
-                tempRegionWaypoint._waypointID = waypointID;
-                _waypointsOnWrongWay[locationRegionWaypoint]
-				.Add(tempRegionWaypoint);
-
+                _waypointsOnWrongWay[locationRegionWaypoint].Add(tmpWaypoint);
             }
         }
 
         public void OneMoreLayer(Guid guid, 
 								 RegionWaypointPoint locationRegionWaypoint, 
-								 int nextStep, 
-								 RegionWaypointPoint tempRegionWaypoint)
+								 int nextStep)
         {
             LocationType currentType =
                 _navigationGraph
@@ -892,8 +873,7 @@ namespace IndoorNavigation.Modules
             {
                 AddPortalWrongWaypoint(nearWaypointRegion, 
 									   locationRegionWaypoint, 
-									   nextStep, 
-									   tempRegionWaypoint, 
+									   nextStep,  
 									   guid);
             }
 
@@ -947,16 +927,14 @@ namespace IndoorNavigation.Modules
                                 AddWrongWaypoint(nearWaypointofSameRegion, 
 												 locationRegionWaypoint
 												 ._regionID, 
-												 locationRegionWaypoint, 
-												 tempRegionWaypoint);
+												 locationRegionWaypoint);
                             }
                         }
                         else
                         {
                             AddWrongWaypoint(nearWaypointofSameRegion, 
 											 locationRegionWaypoint._regionID, 
-											 locationRegionWaypoint, 
-											 tempRegionWaypoint);
+											 locationRegionWaypoint);
                         }
                     }
                     else
