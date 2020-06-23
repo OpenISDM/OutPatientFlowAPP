@@ -91,13 +91,15 @@ namespace IndoorNavigation.Modules
 			new Dictionary<Guid, Region>();
 			
         private IPSModules _iPSModules;
-        private const int _tooCLoseDistance = 5;
+        private const int _tooCLoseDistance = 7;
 
 
 
         private const int _tooCloseDistanceForPath = 7;
         #region fix wrong waypoint detected
         private bool _DetectedWrongWaypoint = true;
+        private List<RegionWaypointPoint> ignoreWaypoint = 
+            new List<RegionWaypointPoint>();
         #endregion 
 
         #endregion
@@ -616,6 +618,17 @@ namespace IndoorNavigation.Modules
                                 }
                                 );
                             }
+                            else
+                            {
+                                Console.WriteLine("Add to ignore list : " + _graphNavigraph[pathWaypoints.ToList()[j]].Item);
+                                ignoreWaypoint.Add(new RegionWaypointPoint
+                                {
+                                    _regionID = currentCheckPoint._regionID,
+                                    _waypointID= 
+                                      _graphNavigraph[pathWaypoints.ToList()[j]]
+                                      .Item
+                                });
+                            }
                         }
                     }
                 }
@@ -637,7 +650,8 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("Important Current Waypoint : " 
 								  + checkWaypoint._waypointID);
-                //Get the neighbor of all wapoint in _waypointOnRoute.
+                // Get the all neighbor wapoints of checkpoint of 
+                // _waypointOnRoute.
                 neighborGuids = _navigationGraph
 							   .GetNeighbor(checkWaypoint._regionID, 
 											checkWaypoint._waypointID);                
@@ -667,6 +681,10 @@ namespace IndoorNavigation.Modules
                 {
                     if (_waypointsOnRoute.Count() > nextStep)
                     {
+                        RegionWaypointPoint CheckIgnorePoint =
+                                   new RegionWaypointPoint
+                                   (checkWaypoint._regionID, neighborGuid);
+                        //Console.WriteLine(" current neighbor id : " + neighborGuid);
                         if (_waypointsOnRoute[nextStep]._waypointID != neighborGuid)
                         {
                             double distanceBetweenCurrentAndNeighbor =
@@ -713,32 +731,66 @@ namespace IndoorNavigation.Modules
                                 distanceBetweenNextAndNeighbor >=
                                 _tooCLoseDistance)
                             {
-                                if (nextStep >= 2)
+                                if (!ignoreWaypoint.Contains(CheckIgnorePoint))
                                 {
-                                    if (_waypointsOnRoute[nextStep - 2]
-                                        ._waypointID != neighborGuid)
-                                    {
-                                        AddWrongWaypoint(neighborGuid,
-                                                        checkWaypoint
-                                                        ._regionID,
-                                                        checkWaypoint);
-                                    }
+                                    Console.WriteLine("not contains ingore point");
+                                    AddWrongWaypoint(neighborGuid,
+                                        checkWaypoint._regionID,
+                                        checkWaypoint);
                                 }
                                 else
                                 {
-                                    AddWrongWaypoint(neighborGuid,
-                                                    checkWaypoint
-                                                    ._regionID,
-                                                    checkWaypoint);
-                                }
+                                    Console.WriteLine("When there contains ignore point");
+                                    ignoreWaypoint.Remove(CheckIgnorePoint);
 
+                                    AddWrongWaypoint(neighborGuid, 
+                                        checkWaypoint._regionID, 
+                                        _waypointsOnRoute[nextStep]);
+
+                                    //ignoreWaypoint.Remove
+                                    //    (CheckIgnorePoint);
+                                    //OneMoreLayer(neighborGuid,
+                                    //    checkWaypoint, nextStep - 1);
+                                }
+                                #region I have no idea why write this code. Maybe there is something special
+                                //if (nextStep >= 2)
+                                //{
+                                //    if (_waypointsOnRoute[nextStep - 2]
+                                //        ._waypointID != neighborGuid)
+                                //    {
+                                //        AddWrongWaypoint(neighborGuid,
+                                //                        checkWaypoint
+                                //                        ._regionID,
+                                //                        checkWaypoint);
+                                //    }
+                                //}
+                                //else
+                                //{
+                                //    AddWrongWaypoint(neighborGuid,
+                                //                    checkWaypoint
+                                //                    ._regionID,
+                                //                    checkWaypoint);
+                                //}
+                                #endregion
                             }
                             else if (distanceBetweenCurrentAndNeighbor <
                                      _tooCLoseDistance)
                             {
-                                OneMoreLayer(neighborGuid,
-                                            checkWaypoint,
-                                            nextStep);
+                                if (!ignoreWaypoint.Contains(CheckIgnorePoint))
+                                {
+                                    OneMoreLayer(neighborGuid,
+                                              checkWaypoint,
+                                              nextStep);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("low distance and don't contain ignore point");
+                                    Console.WriteLine("ignore point : " + CheckIgnorePoint._waypointID);
+                                    Console.WriteLine("next step in ignore : " + nextStep);
+                                    ignoreWaypoint.Remove(CheckIgnorePoint);
+
+                                    OneMoreLayer(neighborGuid, checkWaypoint, nextStep-1);
+                                }
                             }
 
                             if (nextStep >= 2)
@@ -795,7 +847,8 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("\n");
             }
 
-            Console.WriteLine("The total distance between the destination : " + _navigationGraph.TotalRouteDistance(_waypointsOnRoute));
+            Console.WriteLine("The total distance between the destination : " + 
+                _navigationGraph.TotalRouteDistance(_waypointsOnRoute));
             #endregion
         }
 
@@ -806,9 +859,7 @@ namespace IndoorNavigation.Modules
         {
             foreach (Guid regionNeighborGuid in tempRegion._neighbors)
             {
-                RegionWaypointPoint portalWaypointRegionGuid = 
-					new RegionWaypointPoint();
-                portalWaypointRegionGuid = 
+                RegionWaypointPoint portalWaypointRegionGuid = 			
 					_navigationGraph.GiveNeighborWaypointInNeighborRegion(
                                 locationRegionWaypoint._regionID,
                                 guid,
@@ -832,7 +883,7 @@ namespace IndoorNavigation.Modules
                             {
                                 _waypointsOnWrongWay
 								.Add(locationRegionWaypoint, 
-									 new List<RegionWaypointPoint> { });
+									 new List<RegionWaypointPoint> ());
                             }
                         }
                     }
@@ -853,36 +904,36 @@ namespace IndoorNavigation.Modules
 				.Add(locationRegionWaypoint, new List<RegionWaypointPoint> 
                 { tmpWaypoint });
             }
-            else
+            else if(!_waypointsOnWrongWay[locationRegionWaypoint]
+                .Contains(tmpWaypoint))
             {
                 _waypointsOnWrongWay[locationRegionWaypoint].Add(tmpWaypoint);
             }
         }
 
-        public void OneMoreLayer(Guid guid, 
+        public void OneMoreLayer(Guid neighborGuid, 
 								 RegionWaypointPoint locationRegionWaypoint, 
 								 int nextStep)
         {
             LocationType currentType =
                 _navigationGraph
-				.GetWaypointTypeInRegion(locationRegionWaypoint._regionID, guid);
-            Region nearWaypointRegion = new Region();
-            nearWaypointRegion = _regiongraphs[locationRegionWaypoint._regionID];
+				.GetWaypointTypeInRegion(locationRegionWaypoint._regionID, 
+                neighborGuid);
 
-            if (currentType.ToString() == "portal")
+            Region nearWaypointRegion = 
+                _regiongraphs[locationRegionWaypoint._regionID];
+
+            if (currentType == LocationType.portal)
             {
                 AddPortalWrongWaypoint(nearWaypointRegion, 
 									   locationRegionWaypoint, 
 									   nextStep,  
-									   guid);
+									   neighborGuid);
             }
 
-            List<Guid> nearNonePortalWaypoint = new List<Guid>();
-
-            nearNonePortalWaypoint = _navigationGraph
-									.GetNeighbor(locationRegionWaypoint
-												 ._regionID, 
-												 guid);
+            List<Guid> nearNonePortalWaypoint
+                = _navigationGraph
+				  .GetNeighbor(locationRegionWaypoint._regionID, neighborGuid);
 
             foreach (Guid nearWaypointofSameRegion in nearNonePortalWaypoint)
             {
@@ -895,7 +946,8 @@ namespace IndoorNavigation.Modules
                             nearWaypointofSameRegion
 						);
 
-                    double distanceBetweenNextAndNearNeighbor = 0;
+                    double distanceBetweenNextAndNearNeighbor;
+
                     if (locationRegionWaypoint._regionID == 
 						_waypointsOnRoute[nextStep]._regionID)
                     {
@@ -914,7 +966,7 @@ namespace IndoorNavigation.Modules
 
                     if (_waypointsOnRoute[nextStep]._waypointID != 
 						nearWaypointofSameRegion &&
-                        nearWaypointofSameRegion != guid &&
+                        nearWaypointofSameRegion != neighborGuid &&
                         distanceBetweenCurrentAndNearNeighbor >= 
 						_tooCLoseDistance &&
                         distanceBetweenNextAndNearNeighbor >= _tooCLoseDistance)
