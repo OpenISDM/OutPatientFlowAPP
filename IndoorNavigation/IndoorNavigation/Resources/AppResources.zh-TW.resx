@@ -651,4 +651,7 @@
   <data name="DOWNLOAD_SUCCESS_STRING" xml:space="preserve">
     <value>下載成功</value>
   </data>
+  <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
+    <value>向左後方轉</value>
+  </data>
 </root>

@@ -44,22 +44,20 @@
  *
  */
 
-using System;
-using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
-using static IndoorNavigation.Modules.Session;
-using Plugin.Multilingual;
-using System.Resources;
 using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
-using IndoorNavigation.Views.Navigation;
-using Xamarin.Forms;
-using Xamarin.Essentials;
-using IndoorNavigation.Modules.Utilities;
-using System.Globalization;
-using System.Timers;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Views.Navigation;
+using MvvmHelpers;
+using Plugin.Multilingual;
+using System;
+using System.Globalization;
+using System.Reflection;
+using System.Resources;
+using System.Timers;
+using Xamarin.Forms;
+using static IndoorNavigation.Modules.Session;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -135,15 +133,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                 _resourceManager.GetString("NO_SIGNAL_STRING", currentLanguage);
 
             _firstDirectionInstruction = Storage.LoadFDXml(navigationGraphName);
-                //NavigraphStorage
-                //.LoadFirstDirectionXML(phoneInformation
-                //.GiveCurrentMapName(navigationGraphName) + "_" +
-                //phoneInformation.GiveCurrentLanguage() + ".xml");
+            //NavigraphStorage
+            //.LoadFirstDirectionXML(phoneInformation
+            //.GiveCurrentMapName(navigationGraphName) + "_" +
+            //phoneInformation.GiveCurrentLanguage() + ".xml");
 
             _navigationGraph = Storage.LoadNavigationGraphXml(navigationGraphName);
-                //NavigraphStorage
-                //.LoadNavigationGraphXML(phoneInformation
-                //.GiveCurrentMapName(navigationGraphName));
+            //NavigraphStorage
+            //.LoadNavigationGraphXML(phoneInformation
+            //.GiveCurrentMapName(navigationGraphName));
 
             _xmlInformation = informationXML;
 
@@ -409,7 +407,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             break;
                         case CardinalDirection.Southwest:
                             instructionDirection = _resourceManager.GetString(
-                            "TURN_RIGHT_REAR_STRING",
+                            "TURN_LEFT_REAR_STRING",
                             currentLanguage);
                             stepImageString = "Arrow_rearleft";
                             break;
@@ -432,7 +430,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         stepLabel = string.Format(
                             _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_CROSS_REGION_STRING",currentLanguage),instructionDirection,
+                            "DIRECTION_INITIAIL_CROSS_REGION_STRING", currentLanguage), instructionDirection,
                             Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
@@ -456,7 +454,7 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                         stepLabel = string.Format(
                             initialDirectionString,
-                            _resourceManager.GetString("PICTURE_DIRECTION_STRING",currentLanguage),
+                            _resourceManager.GetString("PICTURE_DIRECTION_STRING", currentLanguage),
                             Environment.NewLine,
                             instructionDirection,
                             Environment.NewLine,
@@ -497,6 +495,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         _resourceManager.GetString(
                             "DIRECTION_RIGHT_FRONT_STRING",
                             currentLanguage),
+                            Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
                     stepImage = "Arrow_frontright";
@@ -770,6 +769,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
+                //Console.WriteLine("first Direction picture = " + _firstDirectionPicture);
                 return string.Format("{0}.png", _firstDirectionPicture);
                 //return _firstDirectiionPicture;
             }
