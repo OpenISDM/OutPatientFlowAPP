@@ -38,6 +38,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Xamarin.Essentials;
+using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -46,17 +48,20 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private Dictionary<Guid, string> _landmark;
         private Dictionary<Guid, CardinalDirection> _relatedDirection;
         private Dictionary<Guid, int> _faceOrBack;
+        private Dictionary<Tuple<Guid,Guid>, string> _specialString;
 
         public FirstDirectionInstruction(XmlDocument fileName)
         {
+            Console.WriteLine(">>FirstDirectionInstruction constructor");
             _landmark = new Dictionary<Guid, string>();
             _relatedDirection = new Dictionary<Guid, CardinalDirection>();
             _faceOrBack = new Dictionary<Guid, int>();
+            _specialString = new Dictionary<Tuple<Guid,Guid>, string>();
+
             XmlNodeList xmlWaypoint = fileName.SelectNodes("first_direction_XML/waypoint");
 
             foreach(XmlNode xmlNode in xmlWaypoint)
-            {
-                
+            {                
                 string tempLandmark = "";
                 CardinalDirection tempRelatedDirection;
                 int tempFaceOrBack = 0;
@@ -79,7 +84,31 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 
             }
+
+            Console.WriteLine(">>Read Special string part");
+            XmlNodeList specialStringNode = fileName.SelectNodes("first_direction_XML/specials/special");
+
+            foreach(XmlNode node in specialStringNode)
+            {
+                //Guid tmpGuid = new Guid(node.Attributes["id"].Value);
+                Guid source = new Guid(node.Attributes["source"].Value);
+                Guid destination = new Guid(node.Attributes["destination"].Value);
+                String specialString = node.Attributes["instruction"].Value;
+
+
+                Console.WriteLine("source Guid = " + source.ToString());
+                Console.WriteLine("destination guid = " + destination.ToString());
+                Console.WriteLine("instruction = " + specialString);
+                Tuple<Guid, Guid> pair = new Tuple<Guid, Guid>(source, destination);
+                _specialString.Add(pair, specialString);
+            }
         }
+
+        public string GetSpecialString(Guid source, Guid destination)
+        {
+            return _specialString[new Tuple<Guid, Guid>(source,destination)];
+        }
+
         public string returnLandmark(Guid currentGuid)
         {
             return _landmark[currentGuid];

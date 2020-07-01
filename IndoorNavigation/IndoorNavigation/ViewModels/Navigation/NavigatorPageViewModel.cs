@@ -65,6 +65,7 @@ namespace IndoorNavigation.ViewModels.Navigation
     {
         #region Consts
         private const string _pictureType = "picture";
+        private const string _specialType = "special";
         private const int _originalInstructionLocation = 3;
         private const int _firstDirectionInstructionLocation = 4;
         private const int _firstDirectionInstructionScale = 2;
@@ -465,6 +466,25 @@ namespace IndoorNavigation.ViewModels.Navigation
                         rotation = 75;
                         location = _firstDirectionInstructionLocation;
                         instructionValue = _firstDirectionInstructionScale;
+                        break;
+                    }
+                    else if(firstDirection_Landmark == _specialType)
+                    {
+                        Console.WriteLine(">> specialType");
+                        string specialString = 
+                            _firstDirectionInstruction.GetSpecialString
+                            (instruction._currentWaypointGuid, 
+                            instruction._nextWaypointGuid);
+                        //string specialString=
+                        //    _firstDirectionInstruction.GetSpecialString
+                        //    (((App)Application.Current)._specialGuid);
+                        stepLabel = string.Format(initialDirectionString, 
+                            specialString, 
+                            Environment.NewLine, 
+                            instructionDirection, 
+                            Environment.NewLine, 
+                            instruction._turnDirectionDistance) ;
+                        stepImage = stepImageString;
                         break;
                     }
                     else

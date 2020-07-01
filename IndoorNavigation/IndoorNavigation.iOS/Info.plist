@@ -23,7 +23,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM.OPFM</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.1082</string>
+	<string>2.0.1083</string>
 	<key>CFBundleName</key>
 	<string>IndoorNavigation</string>
 	<key>NSCameraUsageDescription</key>
