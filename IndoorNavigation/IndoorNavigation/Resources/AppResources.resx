@@ -651,4 +651,7 @@
   <data name="DOWNLOAD_FROM_SERVER_STRING" xml:space="preserve">
     <value>download graph file from server</value>
   </data>
+  <data name="SPECIAL_INSTRUCTION_STRING" xml:space="preserve">
+    <value>{0}Then {1},for about {2} m</value>
+  </data>
 </root>

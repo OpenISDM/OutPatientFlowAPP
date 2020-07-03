@@ -89,10 +89,23 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Image x:Name="InstructionImg" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding CurrentStepImage}" IsAnimationPlaying="{Binding isPlaying}"/>
+                <Image x:Name="InstructionImg" 
+                       Grid.Row="0" Grid.Column="0" 
+                       Grid.RowSpan="2" 
+                       Source="{Binding CurrentStepImage}" 
+                       IsAnimationPlaying="{Binding isPlaying}"/>
 
-                <Label x:Name="InstructionLab" Text="{Binding CurrentStepLabel}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
-                       LineBreakMode="WordWrap" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Label x:Name="InstructionLab" 
+                       Text="{Binding CurrentStepLabel}" 
+                       Grid.Row="0" Grid.Column="1" 
+                       Grid.RowSpan="{Binding InstructionLocationValue}" 
+                       Grid.ColumnSpan="2" 
+                       LineBreakMode="WordWrap" FontSize="28" 
+                       VerticalOptions="{Binding InstructionLabVerticalOption}" 
+                       HorizontalOptions="FillAndExpand" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Start"
+                       />
 
                 <controls:ProgressBar x:Name="ProgressBar"
                                     ProgressColor="Red"                                   

@@ -654,4 +654,7 @@
   <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
     <value>向左後方轉</value>
   </data>
+  <data name="SPECIAL_INSTRUCTION_STRING" xml:space="preserve">
+    <value>{0}，然後{1}，走約{2}公尺</value>
+  </data>
 </root>

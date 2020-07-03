@@ -66,14 +66,12 @@ namespace IndoorNavigation.ViewModels.Navigation
         #region Consts
         private const string _pictureType = "picture";
         private const string _specialType = "special";
-        private const int _originalInstructionLocation = 3;
+        private const int _originalInstructionLocation = 2;
         private const int _firstDirectionInstructionLocation = 4;
         private const int _firstDirectionInstructionScale = 2;
-        private const int _originalInstructionScale = 4;
-        private const int _millisecondsTimeoutForTwoSecond = 2000;
-        private const int _millisecondsTimeoutForOneSecond = 1000;
+        private const int _originalInstructionScale = 4;        
         private const int _initialFaceDirection = 0;
-        private const int _initialBackDirection = 1;
+        private const int _initialBackDirection = 1;       
         #endregion
 
         #region Other Structures
@@ -85,7 +83,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private Guid _destinationID;
         private NavigationModule _navigationModule;
         private PhoneInformation phoneInformation = new PhoneInformation();
-        private Timer _watchdog = new Timer();
+        private Timer _watchdog = new Timer();        
         #endregion
 
         #region Private Data Binding
@@ -101,6 +99,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private string _destinationWaypointName;
         private string _progressBar;
         private double _navigationProgress;
+        private LayoutOptions _instructionLabVerticalOption;
         #endregion
 
         public NavigatorPageViewModel(string navigationGraphName,
@@ -116,8 +115,11 @@ namespace IndoorNavigation.ViewModels.Navigation
             DestinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
             isPlaying = true;
+            InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
+
             _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
+
             _navigationModule = new NavigationModule(navigationGraphName,
                                                      destinationRegionID,
                                                      destinationWaypointID);
@@ -133,16 +135,9 @@ namespace IndoorNavigation.ViewModels.Navigation
             CurrentStepLabel =
                 _resourceManager.GetString("NO_SIGNAL_STRING", currentLanguage);
 
-            _firstDirectionInstruction = Storage.LoadFDXml(navigationGraphName);
-            //NavigraphStorage
-            //.LoadFirstDirectionXML(phoneInformation
-            //.GiveCurrentMapName(navigationGraphName) + "_" +
-            //phoneInformation.GiveCurrentLanguage() + ".xml");
+            _firstDirectionInstruction = Storage.LoadFDXml(navigationGraphName);      
 
             _navigationGraph = Storage.LoadNavigationGraphXml(navigationGraphName);
-            //NavigraphStorage
-            //.LoadNavigationGraphXML(phoneInformation
-            //.GiveCurrentMapName(navigationGraphName));
 
             _xmlInformation = informationXML;
 
@@ -304,9 +299,11 @@ namespace IndoorNavigation.ViewModels.Navigation
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string connectionTypeString = "";
             string nextWaypointName = instruction._nextWaypointName;
+            InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
             nextWaypointName =
                 _xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
             string nextRegionName = instruction._information._regionName;
+            InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
             firstDirectionImage = null;
             rotation = 0;
             stepImage = "";
@@ -464,26 +461,63 @@ namespace IndoorNavigation.ViewModels.Navigation
                         firstDirectionImage = pictureName;
                         stepImage = stepImageString;
                         rotation = 75;
-                        location = _firstDirectionInstructionLocation;
+                        location = _originalInstructionLocation;
                         instructionValue = _firstDirectionInstructionScale;
                         break;
                     }
-                    else if(firstDirection_Landmark == _specialType)
+                    else if (firstDirection_Landmark == _specialType)
                     {
                         Console.WriteLine(">> specialType");
-                        string specialString = 
+                        string specialString =
                             _firstDirectionInstruction.GetSpecialString
-                            (instruction._currentWaypointGuid, 
+                            (instruction._currentWaypointGuid,
                             instruction._nextWaypointGuid);
                         //string specialString=
                         //    _firstDirectionInstruction.GetSpecialString
                         //    (((App)Application.Current)._specialGuid);
-                        stepLabel = string.Format(initialDirectionString, 
-                            specialString, 
-                            Environment.NewLine, 
-                            instructionDirection, 
-                            Environment.NewLine, 
-                            instruction._turnDirectionDistance) ;
+                        //stepLabel = string.Format(initialDirectionString, 
+                        //    specialString, 
+                        //    Environment.NewLine, 
+                        //    instructionDirection, 
+                        //    Environment.NewLine, 
+                        //    instruction._turnDirectionDistance) ;
+                        string tmpString = "";
+                        stepLabel =
+                            string.Format(_resourceManager
+                            .GetString("SPECIAL_INSTRUCTION_STRING",
+                                       currentLanguage),
+                            specialString,
+                            instructionDirection,
+                            instruction._turnDirectionDistance);
+
+                        for (int i = 0; i < stepLabel.Length; i++)
+                        {
+                            Console.WriteLine("StepLabel lenght : {0}, ch : {1}"
+                                , i, stepLabel[i]);
+
+                            tmpString += stepLabel[i];
+                            if (stepLabel[i] == '，' ||
+                                stepLabel[i] == ','  ||
+                                stepLabel[i] == '.')
+                            {
+                                Console.WriteLine(">>stepLabel char equal ,");
+                                tmpString += Environment.NewLine;
+                            }
+                        }
+                        stepLabel = tmpString;
+                        //foreach(char ch in stepLabel)
+                        // {
+                        //     if( ch.Equals("，") || 
+                        //         ch.Equals(",") || 
+                        //         ch.Equals("."))
+                        //     {
+                        //         stepLabel.Insert(stepLabel.IndexOf(ch), "\r\n");
+                        //     }
+                        // }
+
+                        InstructionLabVerticalOption =
+                            LayoutOptions.StartAndExpand;
+                        location = 3;
                         stepImage = stepImageString;
                         break;
                     }
@@ -713,6 +747,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                     ("PLEASE_ADJUST_AVOID_ROUTE_STRING", currentLanguage),
                     _resourceManager.GetString("OK_STRING", currentLanguage));
             });
+        }
+
+        public LayoutOptions InstructionLabVerticalOption
+        {
+            get { return _instructionLabVerticalOption; }
+            set
+            {
+                SetProperty(ref _instructionLabVerticalOption, value);
+            }
         }
 
         public bool isFinished
