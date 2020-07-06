@@ -58,6 +58,8 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
+using IndoorNavigation.Views.Navigation;
+using Prism.Navigation.Xaml;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -80,8 +82,10 @@ namespace IndoorNavigation
         public bool HaveCashier = false;
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
-        public RgRecord lastFinished = null;            		
-               
+        public RgRecord lastFinished = null;
+
+
+        public bool isResume = false;
         public App()
         {
             InitializeComponent();
@@ -123,15 +127,17 @@ namespace IndoorNavigation
         protected override void OnSleep()
         {
             // Handle when your app sleeps
-            Console.WriteLine();
+            Console.WriteLine(">>OnSleep");
             base.OnSleep();
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
-            Console.WriteLine();
-            base.OnSleep();
+            Console.WriteLine(">>OnResume");
+            base.OnResume();
+                        
+            isResume = true;
         }
    
     }

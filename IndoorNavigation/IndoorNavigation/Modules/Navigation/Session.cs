@@ -46,6 +46,9 @@ using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
 using Xamarin.Forms.Internals;
 using IndoorNavigation.ViewModels;
+using Xamarin.Forms;
+using Region = IndoorNavigation.Models.Region;
+
 
 namespace IndoorNavigation.Modules
 {
@@ -86,6 +89,8 @@ namespace IndoorNavigation.Modules
         private ManualResetEventSlim _wrongWaypointEvent =
             new ManualResetEventSlim(false);
 
+        private ManualResetEventSlim _OnStopThreadEvent =
+            new ManualResetEventSlim(true);
         public NavigationEvent _event { get; private set; }
         private Dictionary<Guid, Region> _regiongraphs = 
 			new Dictionary<Guid, Region>();
@@ -129,17 +134,18 @@ namespace IndoorNavigation.Modules
             _iPSModules._event._eventHandler += 
 				new EventHandler(CheckArrivedWaypoint);
 
-            //_waypointDetectionThread = new Thread(() => InvokeIPSWork());
-            //_waypointDetectionThread.Start();
+            _waypointDetectionThread = new Thread(() => InvokeIPSWork());
+            _waypointDetectionThread.Start();
 
-            //_navigationControllerThread = new Thread(() => NavigatorProgram());
-            //_navigationControllerThread.Start();
+            _navigationControllerThread = new Thread(() => NavigatorProgram());
+            _navigationControllerThread.Start();
+
             #region Test String
-            Guid sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000328");
-            Guid sourceRegion = new Guid("22222222-2222-2222-2222-222222222222");
+            //Guid sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000328");
+            //Guid sourceRegion = new Guid("22222222-2222-2222-2222-222222222222");
 
-            Console.WriteLine("Fist Try in Generate Path");
-            GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
+            //Console.WriteLine("Fist Try in Generate Path");
+            //GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
 
             //sourceRegion = new Guid("11111111-1111-1111-1111-111111111111");
             //sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000021");
@@ -163,7 +169,7 @@ namespace IndoorNavigation.Modules
                    !(_currentRegionID.Equals(_destinationRegionID) &&
                      _currentWaypointID.Equals(_destinationWaypointID)))
             {
-
+                _OnStopThreadEvent.Wait();
                 Console.WriteLine("Continue to navigate to next step, current"+
 								"location {0}/{1}",
                                   _currentRegionID, _currentWaypointID);
@@ -384,6 +390,7 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("---- InvokeIPSWork ----");
             while (true == _isKeepDetection)
             {
+                _OnStopThreadEvent.Wait();
                 //Thread.Sleep(500);
                 SpinWait.SpinUntil(() => false, 500);
                 _iPSModules.OpenBeconScanning();
@@ -1393,6 +1400,11 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("Adjust Route");
         }
 
+        public void PauseSession()
+        {
+            Console.WriteLine(">>PasueSession");
+            _OnStopThreadEvent.Reset();
+        }
         public void CloseSession()
         {
             _isKeepDetection = false;
@@ -1402,12 +1414,19 @@ namespace IndoorNavigation.Modules
             _nextWaypointEvent.Dispose();
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
-            _waypointsOnWrongWay = 
-				new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+    //        _waypointsOnWrongWay = 
+				//new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
 				
-            _waypointsOnRoute = new List<RegionWaypointPoint>();
+    //        _waypointsOnRoute = new List<RegionWaypointPoint>();
 			
             _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+        }
+
+        public void ResumeSession()
+        {
+            _nextWaypointEvent = 
+                new ManualResetEventSlim(false);
+            _OnStopThreadEvent.Set();
         }
 
         #region define class and enum

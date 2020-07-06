@@ -74,6 +74,9 @@ namespace IndoorNavigation.Views.Navigation
 
         private CultureInfo _currentLanguage = 
 			CrossMultilingual.Current.CurrentCultureInfo;
+
+        private NavigatorPage _navigatorPage;
+
         public DestinationPickPage(string navigationGraphName, 
 								   CategoryType category)
         {
@@ -151,19 +154,37 @@ namespace IndoorNavigation.Views.Navigation
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
+                _navigatorPage = new NavigatorPage(_navigationGraphName,
+                    destination._regionID,
+                    destination._waypointID,
+                    destination._waypointName,
+                    _nameInformation);
 
-                await Navigation.PushAsync
-					(new NavigatorPage(_navigationGraphName,
-                                       destination._regionID,
-                                       destination._waypointID,
-                                       destination._waypointName,
-									   _nameInformation));
+                ((App)Application.Current).isResume = false;
+
+                await Navigation.PushAsync(_navigatorPage);
+     //           await Navigation.PushAsync
+					//(new NavigatorPage(_navigationGraphName,
+     //                                  destination._regionID,
+     //                                  destination._waypointID,
+     //                                  destination._waypointName,
+					//				   _nameInformation));
             }
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
+            if( ((App)Application.Current).isResume &&_navigatorPage != null )
+            {
+                Console.WriteLine("Call Abort.");
+                ((App)Application.Current).isResume = false;
+                _navigatorPage.Abort();
+            }
+        }
     }
 
     public class DestinationItem

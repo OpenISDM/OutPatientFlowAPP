@@ -127,6 +127,14 @@ namespace IndoorNavigation.Modules
             _event.OnEventCall(args);
         }
 
+        public void Pause()
+        {
+            _session.PauseSession();
+        }
+        public void Resume()
+        {
+            _session.ResumeSession();
+        }
         public void Stop() {
             _session.CloseSession();
         }

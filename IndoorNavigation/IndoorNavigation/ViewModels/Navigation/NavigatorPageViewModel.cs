@@ -673,6 +673,15 @@ namespace IndoorNavigation.ViewModels.Navigation
             DisplayInstructions(args);
         }
 
+        public void OnPause()
+        {
+            _navigationModule.Pause();
+        }
+
+        public void Resume()
+        {
+            _navigationModule.Resume();
+        }
 
         #region NavigatorPage Binding Args
 

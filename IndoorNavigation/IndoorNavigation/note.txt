@@ -33,4 +33,15 @@ Storage function not implement:
 			- to restore thread and object at App.Current.Properties?
 			- to restore thread at App global object?
 
+ 7/6
+	1. Finish Fix Thread stuck issue(iOS version need to be verified).
+
+	Todo:
+		1. Wrong Way detection Stuck while user is at a portal point.
+		2. Think how to fix complex graph that the place may happend signal 
+		   interference.
+		3. To sort out the instruction for review.
+		4. To upload new version to Google Play console
+		5. Try to Release new version to iOS App Store.
+		6. To find out the version number increasement function.
 	

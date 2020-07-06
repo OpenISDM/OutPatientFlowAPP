@@ -75,19 +75,25 @@ namespace IndoorNavigation.Views.Navigation
 
             Console.WriteLine("<< NavigatorPage constructor");
         }
-        
-        protected override void OnDisappearing()
-        {
-            _viewModel.Stop();
-            _viewModel.Dispose();
 
-            base.OnDisappearing();
-        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //CurrentInstructionImage.Source = "waittingscan.gif";
-            //_viewModel.CurrentStepImage = "waittingscan.gif";
+
+            if (((App)Application.Current).isResume)
+                _viewModel.Resume();
+        }
+
+        protected override void OnDisappearing()
+        {
+            _viewModel.OnPause();
+            base.OnDisappearing();
+        }        
+
+        public void Abort()
+        {
+            _viewModel.Stop();
+            _viewModel.Dispose();
         }
 
         async private void FinishButton_Clicked(object sender, EventArgs e)
