@@ -1,0 +1,4 @@
+﻿
+Note : 
+	if pull this repository from github, 
+	please remeber to check Picture document name in .csproj is equal to document name in folder (upper or lower).

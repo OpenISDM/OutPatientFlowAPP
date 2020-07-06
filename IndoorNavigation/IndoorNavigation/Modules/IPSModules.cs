@@ -348,8 +348,8 @@ namespace IndoorNavigation.Modules
         public void Close()
         {
             Console.WriteLine(">>IPSmodule :: Close");
-            _lbeacon -= new _addInterestedBeacon(ADDIBeacon);
-            _ibeacon -= new _addInterestedBeacon(ADDLBeacon);
+            _lbeacon -= new _addInterestedBeacon(ADDLBeacon);
+            _ibeacon -= new _addInterestedBeacon(ADDIBeacon);
             _gps -= new _addInterestedBeacon(ADDGPS);
             _monitorIBeaconGuid = new List<WaypointBeaconsMapping>();
             _monitorLBeaconGuid = new List<WaypointBeaconsMapping>();
