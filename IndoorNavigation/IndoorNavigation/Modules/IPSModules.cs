@@ -241,9 +241,10 @@ namespace IndoorNavigation.Modules
         // private static void Detect()
         public IPSType GetIPSType(Guid regionGuid)
         {
-            IPSType regionIPSType = new IPSType();
-            regionIPSType = _navigationGraph.GetRegionIPSType(regionGuid);
-            return regionIPSType;
+            //IPSType regionIPSType = new IPSType();
+            //regionIPSType = _navigationGraph.GetRegionIPSType(regionGuid);
+            //return regionIPSType;
+            return _navigationGraph.GetRegionIPSType(regionGuid);
         }
 
         #region There is some type, it will call those functions.
@@ -293,27 +294,51 @@ namespace IndoorNavigation.Modules
             return;
         }
 
-        public void OpenPortalIPSType(RegionWaypointPoint portalPoint)
+        public void OpenIPSType(RegionWaypointPoint waypoint,
+            Guid nextRegionID)
         {
+            HaveBeaconAllFalse();
+            CloseStartAllExistClient();
+            if (_navigationGraph
+                .GetWaypointTypeInRegion(waypoint._regionID, 
+                waypoint._waypointID).Equals(LocationType.portal))
+            {
 
+                List<IPSType> nextRegionIPSType =
+                  _navigationGraph.GetAllNextRegionIPSType(waypoint);
+
+                foreach (IPSType ipsTypeInRegion in nextRegionIPSType)
+                {
+                    OpenCurrentIPSClient(ipsTypeInRegion);
+                }
+            }
+            else if(_navigationGraph.GetRegionIPSType(nextRegionID) == 
+                _navigationGraph.GetRegionIPSType(waypoint._regionID))
+            {
+                //HaveBeaconAllFalse();
+                //CloseStartAllExistClient();
+                OpenCurrentIPSClient(_navigationGraph
+                    .GetRegionIPSType(nextRegionID));
+            }
         }
-        public void CompareToCurrentAndNextIPSType(Guid currentRegionGuid, 
-												   Guid nextRegionGuid, 
-												   int firstStep)
-        {           
-            IPSType currentIPSType = 
-				_navigationGraph.GetRegionIPSType(currentRegionGuid);
-            IPSType nextIPSType = 
-				_navigationGraph.GetRegionIPSType(nextRegionGuid);
-            if (!nextIPSType.Equals(currentIPSType)||firstStep==_firstStep)
-            {               
-                HaveBeaconAllFalse();
-                CloseStartAllExistClient();
-               
-                OpenCurrentIPSClient(currentIPSType);
-                OpenCurrentIPSClient(nextIPSType);
-            }            
-        }
+    //    public void CompareToCurrentAndNextIPSType(Guid currentRegionGuid, 
+				//								   Guid nextRegionGuid, 
+				//								   int firstStep)
+    //    {           
+    //        IPSType currentIPSType = 
+				//_navigationGraph.GetRegionIPSType(currentRegionGuid);
+    //        IPSType nextIPSType = 
+				//_navigationGraph.GetRegionIPSType(nextRegionGuid);
+
+    //        if (!nextIPSType.Equals(currentIPSType) || firstStep == _firstStep)
+    //        {
+    //            HaveBeaconAllFalse();
+    //            CloseStartAllExistClient();
+
+    //            OpenCurrentIPSClient(currentIPSType);
+    //            OpenCurrentIPSClient(nextIPSType);
+    //        }            
+    //    }
 
         public void OpenCurrentIPSClient(IPSType currentIPSType)
         {

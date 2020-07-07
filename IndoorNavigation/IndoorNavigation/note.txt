@@ -36,7 +36,7 @@ Storage function not implement:
  7/6
 	1. Finish Fix Thread stuck issue(iOS version need to be verified).
 
-	Todo:
+	Task:
 		1. Wrong Way detection Stuck while user is at a portal point.
 		2. Think how to fix complex graph that the place may happend signal 
 		   interference.
@@ -44,4 +44,9 @@ Storage function not implement:
 		4. To upload new version to Google Play console
 		5. Try to Release new version to iOS App Store.
 		6. To find out the version number increasement function.
+  7/7
+	1. Finish WrongWay detection Stuck while user is at a portal point
+	   (wait for verify)
 	
+	New Task:
+		1. Go to Taipei city hall to verify whether those functions work well. 

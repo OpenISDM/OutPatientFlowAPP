@@ -342,9 +342,11 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("NavigateProgram");
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
-                _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, 
-														   checkPoint._regionID, 
-														   _nextWaypointStep);
+                //_iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID, 
+                // checkPoint._regionID, 
+                // _nextWaypointStep);
+                _iPSModules
+                    .OpenIPSType(checkPoint, _waypointsOnRoute[_nextWaypointStep +1 <_waypointsOnRoute.Count()? _nextWaypointStep+1: _nextWaypointStep]._regionID);                                                          
                 _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID, 
 														checkPoint._waypointID);
 
@@ -1050,10 +1052,13 @@ namespace IndoorNavigation.Modules
                 _accumulateStraightDistance = 0;
 
                 _iPSModules.CloseStartAllExistClient();
-                _iPSModules
-				.CompareToCurrentAndNextIPSType(_currentRegionID, 
-												_currentRegionID, 
-												_nextWaypointStep);
+                //            _iPSModules
+                //.CompareToCurrentAndNextIPSType(_currentRegionID, 
+                //								_currentRegionID, 
+                //								_nextWaypointStep);
+
+                _iPSModules.OpenIPSType(new RegionWaypointPoint
+                    (_currentRegionID, _currentWaypointID), _currentRegionID);
 
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))

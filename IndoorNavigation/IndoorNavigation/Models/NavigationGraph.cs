@@ -988,6 +988,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         {
             return _navigraphs[regionID]._waypoints[waypointID]._type;
         }
+    
 
         public string GetWaypointNameInRegion(Guid regionID, Guid waypointID) {
             return _navigraphs[regionID]._waypoints[waypointID]._name;
@@ -1133,6 +1134,61 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
 
             return TotalDistance;
+        }
+
+
+        public List<IPSType> GetAllNextRegionIPSType
+            (RegionWaypointPoint portalWaypoint)
+        {
+            List<IPSType> NextIPSTypes = new List<IPSType>();
+
+            List<Guid> NextRegionIDs = 
+                GetAllPortalPointInNextRegion(portalWaypoint);
+
+            foreach(Guid regionID in NextRegionIDs)
+            {
+                NextIPSTypes.Add(GetRegionIPSType(regionID));
+            }
+
+            #region For debug String
+            NextIPSTypes = NextIPSTypes.Distinct().ToList();
+            foreach(IPSType type in NextIPSTypes)
+            {
+                Console.WriteLine("Next type is : " + type);
+            }
+            #endregion 
+
+            return NextIPSTypes.Distinct().ToList();
+        }
+
+        public List<Guid> GetAllPortalPointInNextRegion
+            (RegionWaypointPoint portalWaypoint)
+        {
+            List<Guid> NextRegionPoints = new List<Guid>();
+
+            foreach(Guid regionID in GetAllRegionIDs())
+            {
+                Tuple<Guid, Guid> regionPair = 
+                    new Tuple<Guid, Guid>(portalWaypoint._regionID, regionID);
+
+                if(_edges.ContainsKey(regionPair) || 
+                    _edges.ContainsKey(TupleReverse(regionPair)))
+                {
+                    NextRegionPoints.Add(regionID);
+                    Console.WriteLine("NextRegionPoints add a region ID" + 
+                        regionID);
+                }
+            }
+
+            #region For Debug string
+            NextRegionPoints = NextRegionPoints.Distinct().ToList();
+            foreach(Guid region in NextRegionPoints)
+            {
+                Console.WriteLine("RegionID = " + region);
+            }
+            #endregion
+
+            return NextRegionPoints.Distinct().ToList();
         }
 
         public InstructionInformation GetInstructionInformation(
