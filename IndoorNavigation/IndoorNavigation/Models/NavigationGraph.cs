@@ -668,7 +668,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
 
                             Waypoint sinkWaypoint =
-                                _navigraphs[sinkRegionID]._waypoints[edgeItem._waypoint1];
+                                _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint2];
 
                             double distanceFromSource =
                                 GetDistance(sourceWaypoint._lon,

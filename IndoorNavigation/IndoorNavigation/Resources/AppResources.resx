@@ -654,4 +654,13 @@
   <data name="SPECIAL_INSTRUCTION_STRING" xml:space="preserve">
     <value>{0}Then {1},for about {2} m</value>
   </data>
+  <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
+    <value>Local file version is higher or equal to cloud's, do you still want to continue?</value>
+  </data>
+  <data name="DOWNLOAD_STRING" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DOWNLOAD_SUCCESS_STRING" xml:space="preserve">
+    <value>Download Successfully.</value>
+  </data>
 </root>
