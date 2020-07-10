@@ -75,7 +75,8 @@ namespace IndoorNavigation.Views.Navigation
         private CultureInfo _currentLanguage = 
 			CrossMultilingual.Current.CurrentCultureInfo;
 
-        private NavigatorPage _navigatorPage;
+        private NavigatorPage _navigatorPage = 
+            ((App)Application.Current)._globalNavigatorPage;
 
         public DestinationPickPage(string navigationGraphName, 
 								   CategoryType category)

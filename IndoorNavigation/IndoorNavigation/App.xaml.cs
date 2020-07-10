@@ -50,6 +50,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models;
+using IndoorNavigation.ViewModels;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -60,6 +61,7 @@ using Xamarin.Essentials;
 using System;
 using IndoorNavigation.Views.Navigation;
 using Prism.Navigation.Xaml;
+using IndoorNavigation.ViewModels.Navigation;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -84,8 +86,8 @@ namespace IndoorNavigation
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;
 
-
         public bool isResume = false;
+        public NavigatorPage _globalNavigatorPage = null;
         public App()
         {
             InitializeComponent();
@@ -138,7 +140,18 @@ namespace IndoorNavigation
             base.OnResume();
                         
             isResume = true;
+        }                
+
+        // This is for Android for onDestroy.
+        // If we don't implement it, the thread will not be destroyed and stuck
+        // here.
+        public void OnStop()
+        {
+            Console.WriteLine("Call Onstop");
+            if (_globalNavigatorPage != null)
+            { 
+                _globalNavigatorPage.Abort(); 
+            }
         }
-   
     }
 }

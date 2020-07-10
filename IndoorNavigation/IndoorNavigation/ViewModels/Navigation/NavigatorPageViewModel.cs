@@ -151,7 +151,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         public void Stop()
         {
-
             _navigationModule.Stop();
         }
 

@@ -25,7 +25,16 @@ namespace IndoorNavigation.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android
 								.FormsAppCompatActivity
     {
+        App app;
         internal static MainActivity Instance { get; private set; }
+
+        protected override void OnDestroy()
+        {
+            app.OnStop();
+            Console.WriteLine("Call Android OnDestroy");
+            base.OnDestroy();
+            
+        }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -63,7 +72,9 @@ namespace IndoorNavigation.Droid
 
             //ZXing.Net.Mobile.Forms.Android.Platform.Init();
             //ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
-            LoadApplication(new App());
+
+            app = new App();
+            LoadApplication(app);
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 
 																   0, 
 																 160, 
