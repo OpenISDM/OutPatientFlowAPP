@@ -55,6 +55,9 @@ using System.Globalization;
 using System.ComponentModel;
 using AiForms.Renderers;
 using SwitchCell = AiForms.Renderers.SwitchCell;
+using System;
+using Rg.Plugins.Popup.Services;
+using IndoorNavigation.Views.PopUpPage;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -228,5 +231,11 @@ namespace IndoorNavigation.Views.Navigation
 
         }
 
+        async private void SlidePicker_Tapped(object sender, System.EventArgs e)
+        {
+            Console.WriteLine(">>SliderPicker_Tapped");
+
+            await PopupNavigation.Instance.PushAsync(new TestRssiPopupPage());            
+        }
     }
 }

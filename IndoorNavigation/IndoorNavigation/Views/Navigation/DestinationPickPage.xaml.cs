@@ -184,6 +184,7 @@ namespace IndoorNavigation.Views.Navigation
                 Console.WriteLine("Call Abort.");
                 ((App)Application.Current).isResume = false;
                 _navigatorPage.Abort();
+                _navigatorPage = null; 
             }
         }
     }

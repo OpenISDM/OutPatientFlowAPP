@@ -100,6 +100,13 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
             }
 
+            if (Application.Current.Properties
+                .ContainsKey("RSSI_Test_Adjustment"))
+            {
+                rssiOption = 
+                    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+            }
+            Console.WriteLine("rssi Option in iBeaconClient = " + rssiOption);
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._ibeaconScan.StartScan();
         }
@@ -292,12 +299,12 @@ namespace IndoorNavigation.Modules.IPSClients
             IEnumerable<BeaconSignalModel> signals =
                 (e as BeaconScanEventArgs)._signals;
 
-            foreach (BeaconSignalModel signal in signals)
-            {
-                Console.WriteLine
-					("Detected Beacon UUID : " + 
-					 signal.UUID + " RSSI = " + signal.RSSI);
-            }
+     //       foreach (BeaconSignalModel signal in signals)
+     //       {
+     //           Console.WriteLine
+					//("Detected Beacon UUID : " + 
+					// signal.UUID + " RSSI = " + signal.RSSI);
+     //       }
 
             lock (_bufferLock)
                 _beaconSignalBuffer.AddRange(signals);

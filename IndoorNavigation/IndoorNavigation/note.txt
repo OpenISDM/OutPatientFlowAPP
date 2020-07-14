@@ -45,8 +45,15 @@ Storage function not implement:
 		5. Try to Release new version to iOS App Store.
 		6. To find out the version number increasement function.
   7/7
-	1. Finish WrongWay detection Stuck while user is at a portal point
+	1. Finish fix "WrongWay detection Stuck while user is at a portal point" bug
 	   (wait for verify)
 	
 	New Task:
 		1. Go to Taipei city hall to verify whether those functions work well. 
+
+  7/9
+	find new bug:
+		The way of fixing "Thread stuck while call onResume" will make mobile 
+		always show "The App has stopped". It has to consider OnStop situation.
+  7/10
+	fixed bug : "The App has stopped..", need to be verified.

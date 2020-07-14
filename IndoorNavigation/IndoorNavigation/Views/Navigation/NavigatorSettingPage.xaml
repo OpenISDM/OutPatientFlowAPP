@@ -142,6 +142,9 @@
 								Title="{i18n:Translate RSSI_OPTION_STRING}" 
 								Items="{Binding _chooseRssi}" 
 								SelectedCommand="{Binding _changeRssiCommand}"/>
+                <sv:TextPickerCell x:Name="SlidePicker"
+                                   Title="{i18n:Translate TEST_STRING}"
+                                   Tapped="SlidePicker_Tapped"/>
             </sv:Section>
             
         </sv:SettingsView>

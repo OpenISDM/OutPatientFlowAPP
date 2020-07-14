@@ -654,4 +654,7 @@
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
     <value>The version of data in mobile is higher or equal to cloud's, do you still want to continue?</value>
   </data>
+  <data name="TEST_STRING" xml:space="preserve">
+    <value>Test</value>
+  </data>
 </root>
