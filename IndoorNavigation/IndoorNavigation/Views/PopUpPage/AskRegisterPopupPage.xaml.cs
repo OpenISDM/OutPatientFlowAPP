@@ -16,6 +16,8 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Utilities;
 using static IndoorNavigation.Utilities.Storage;
+using IndoorNavigation.Yuanlin_OPFM;
+
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -110,7 +112,11 @@ namespace IndoorNavigation.Views.PopUpPage
             //app.records.Add(new RgRecord {type=RecordType.NULL});
             MessagingCenter.Send(this, "isReset", true);
             ButtonLock = true;
-            await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,record._regionID,record._waypointID,record._waypointName,_XmlInfo));
+            await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                record._regionID,
+                record._waypointID,
+                record._waypointName,
+                _XmlInfo));
             await PopupNavigation.Instance.PopAllAsync();
         }
          
@@ -123,14 +129,16 @@ namespace IndoorNavigation.Views.PopUpPage
             return true;           
         }
 
-        HttpRequest request = new HttpRequest();
+        //HttpRequest request = new HttpRequest();
+        YunalinHttpRequestFake FakeHISRequest = new YunalinHttpRequestFake();
         async private Task CancelorClickBack()
         {
             ResetAllState();
             app.getRigistered = false;
 
-            request.GetXMLBody();
-            await request.RequestData();
+            await FakeHISRequest.RequestFakeHIS();
+            //request.GetXMLBody();
+            //await request.RequestData();
             MessagingCenter.Send(this, "isReset", true);            
         }
         

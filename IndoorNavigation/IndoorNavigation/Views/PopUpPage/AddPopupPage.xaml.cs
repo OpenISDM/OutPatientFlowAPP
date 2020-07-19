@@ -328,6 +328,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     _waypointID=app._TmpRecords[box.Key]._waypointID,
                     _regionID = app._TmpRecords[box.Key]._regionID,
                     _waypointName=app._TmpRecords[box.Key]._waypointName,
+                    CareRoom = app._TmpRecords[box.Key].CareRoom,                   
                     DptName=
 						_resourceManager.GetString("REVISIT_STRING",
 												   currentLanguage)

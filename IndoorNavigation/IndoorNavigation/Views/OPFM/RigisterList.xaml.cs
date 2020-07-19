@@ -21,6 +21,7 @@ using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Yuanlin_OPFM;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -42,9 +43,8 @@ namespace IndoorNavigation.Views.OPFM
         private ViewCell lastCell=null;
 
         private INetworkSetting NetworkSettings;
-        private HttpRequest request;
-        PhoneInformation phoneInformation;        
-
+        //private HttpRequest request;               
+        private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
 
@@ -54,10 +54,10 @@ namespace IndoorNavigation.Views.OPFM
         {
             InitializeComponent();          
             Console.WriteLine("initalize graph info");
-            phoneInformation = new PhoneInformation();
+            
             _navigationGraphName = navigationGraphName;
-            request = new HttpRequest();
-
+            //request = new HttpRequest();
+            FakeHISRequest = new YunalinHttpRequestFake();
             _nameInformation = LoadXmlInformation(navigationGraphName);
 				//NavigraphStorage.LoadInformationML
 				//(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
@@ -302,8 +302,9 @@ namespace IndoorNavigation.Views.OPFM
 
          async private Task ReadXml()
          {
-            request.GetXMLBody();
-            await request.RequestData();          
+            //request.GetXMLBody();
+            //await request.RequestData();          
+            await FakeHISRequest.RequestFakeHIS();
             RefreshListView();
          }
 
@@ -406,7 +407,7 @@ namespace IndoorNavigation.Views.OPFM
         async private void ExitFinish(RgRecord record)
         {
             string HopeString = 
-                $"{_navigationGraphName}"+
+                $"{Storage.GetDisplayName(_navigationGraphName)}"+
 				$"\n{getResourceString("HOPE_STRING")}";
             await PopupNavigation.Instance.PushAsync
 				(new AlertDialogPopupPage(HopeString));

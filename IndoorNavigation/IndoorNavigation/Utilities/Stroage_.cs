@@ -70,6 +70,11 @@ namespace IndoorNavigation.Utilities
         }                
         #endregion
         #region Load File
+        static public string GetDisplayName(string accessName)
+        {
+            return _resources._graphResources[accessName]
+                ._displayNames[_currentCulture.Name];
+        }
         static public List<Location> GetAllNaviGraphName() 
         {
             Console.WriteLine(">>GetAllNaviGraphName");
