@@ -66,6 +66,11 @@ namespace IndoorNavigation.Utilities
         }
         #endregion
         #region Load File
+        static public string GetDisplayName(string accessName)
+        {
+            return _resources._graphResources[accessName]
+                ._displayNames[_currentCulture.Name];
+        }
         static public List<Location> GetAllNaviGraphName()
         {
             Console.WriteLine(">>GetAllNaviGraphName");
@@ -150,6 +155,7 @@ namespace IndoorNavigation.Utilities
             }
             return new XMLInformation(doc);
         }
+        
 
         #region Others      
         static private void CreateDirectory()
@@ -219,7 +225,8 @@ namespace IndoorNavigation.Utilities
 
             string sourceContext = "";
 
-            Stream stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
+            Stream stream = 
+                assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
             using (StreamReader reader = new StreamReader(stream))
             {
                 sourceContext = reader.ReadToEnd();

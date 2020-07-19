@@ -137,6 +137,7 @@ namespace IndoorNavigation.Models
             {
                 Console.WriteLine("Network error - Request : " + e.StackTrace);
             }
+
             try
             {
                 //get response 
@@ -158,7 +159,11 @@ namespace IndoorNavigation.Models
                 Console.WriteLine("Network error - WebResponse " + e.StackTrace);
                 Page page = Application.Current.MainPage;
 
-                var WantRetry = await page.DisplayAlert(getResourceString("ERROR_STRING"), getResourceString("HAPPEND_ERROR_STRING"), getResourceString("RETRY_STRING"), getResourceString("NO_STRING"));
+                var WantRetry = 
+                    await page.DisplayAlert(getResourceString("ERROR_STRING"), 
+                    getResourceString("HAPPEND_ERROR_STRING"), 
+                    getResourceString("RETRY_STRING"), 
+                    getResourceString("NO_STRING"));
                 if (WantRetry)
                 {
                     await RequestData();

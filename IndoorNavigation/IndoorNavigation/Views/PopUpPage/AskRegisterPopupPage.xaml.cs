@@ -12,6 +12,7 @@ using IndoorNavigation.Models;
 using System.Reflection;
 using System.Threading.Tasks;
 using IndoorNavigation.Views.PopUpPage;
+using IndoorNavigation.Yuanlin_OPFM;
 
 namespace IndoorNavigation
 {
@@ -19,9 +20,9 @@ namespace IndoorNavigation
     public partial class AskRegisterPopupPage : PopupPage
     {
         private App app = (App)Application.Current;
-        private HttpRequest request;
+       // private HttpRequest request;
         private bool ButtonLock;
-
+        private YunalinHttpRequestFake request;
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
@@ -32,8 +33,8 @@ namespace IndoorNavigation
         {
             InitializeComponent();
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            request = new HttpRequest();
-
+            //request = new HttpRequest();
+            request = new YunalinHttpRequestFake();
         }
         protected override void OnAppearing()
         {
@@ -117,9 +118,9 @@ namespace IndoorNavigation
             ResetAllState();
             app.getRigistered = false;
 
-            request.GetXMLBody();
-            await request.RequestData();
-
+            //request.GetXMLBody();
+            //await request.RequestData();
+            await request.RequestFakeHIS();
             MessagingCenter.Send(this, "isReset", true);            
         }
         

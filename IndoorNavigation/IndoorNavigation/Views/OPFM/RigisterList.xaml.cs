@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Threading;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Yuanlin_OPFM;
 
 namespace IndoorNavigation
 {
@@ -43,7 +44,8 @@ namespace IndoorNavigation
         private bool ShiftButtonPressed = false;
         private ViewCell lastCell=null;
 
-        private HttpRequest request;
+        //private HttpRequest request;
+        private YunalinHttpRequestFake request;
         private INetworkSetting NetworkSettings;
 
         //PhoneInformation phoneInformation;        
@@ -106,7 +108,7 @@ namespace IndoorNavigation
             //_nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
             _nameInformation = Storage.LoadXmlInformation(navigationGraphName);
             Console.WriteLine("initialize http request");
-            request = new HttpRequest();
+            request = new YunalinHttpRequestFake();//new HttpRequest();
             NetworkSettings = DependencyService.Get<INetworkSetting>();
             PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
             PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
@@ -332,9 +334,10 @@ namespace IndoorNavigation
         }    
 
          async private Task ReadXml()
-         {           
-            request.GetXMLBody();
-            await request.RequestData();
+         {
+            //request.GetXMLBody();
+            //await request.RequestData();
+            await request.RequestFakeHIS();
             RefreshListView();
          }
 
@@ -419,7 +422,9 @@ namespace IndoorNavigation
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString = $"{_navigationGraphName}\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
+            string HopeString = 
+                $"{Storage.GetDisplayName(_navigationGraphName)}" +
+                $"\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
