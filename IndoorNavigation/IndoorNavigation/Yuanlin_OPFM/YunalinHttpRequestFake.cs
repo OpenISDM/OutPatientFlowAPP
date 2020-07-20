@@ -24,7 +24,7 @@ namespace IndoorNavigation.Yuanlin_OPFM
     public class YunalinHttpRequestFake
     {
         private const string requestWebUrl =
-            "http://wpin.iis.sinica.edu.tw/oppa?building=CCH";
+            "https://wpin.iis.sinica.edu.tw/oppa?building=CCH";
         private App app;
 
         private const string _resourceID =
