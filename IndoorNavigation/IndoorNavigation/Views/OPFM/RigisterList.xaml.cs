@@ -268,8 +268,19 @@ namespace IndoorNavigation
 
             if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
-            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count && !app.HaveCashier);
+            //Console.WriteLine("ISVisible = " + ((app.FinishCount + 1 == app.records.Count && !app.HaveCashier)
+            //    && !(!app.getRigistered && app.records.Count == 1)).ToString());
+            //Console.WriteLine("FinishCount = " + app.FinishCount);
+            //Console.WriteLine("Record count = " + app.records.Count);
+            //Console.WriteLine("GetRigistered = " + app.getRigistered);            
+
+            PaymemtListBtn.IsEnabled = 
+                (app.FinishCount + 1 == app.records.Count && !app.HaveCashier) 
+                && !(!app.getRigistered && app.records.Count==1);
+            PaymemtListBtn.IsVisible = 
+                (app.FinishCount + 1 == app.records.Count && !app.HaveCashier)
+                && !(!app.getRigistered && app.records.Count==1);
+
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
@@ -397,7 +408,7 @@ namespace IndoorNavigation
             bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                await ReadXml();
+                //await ReadXml();
                 ItemFinishFunction(record);
             }
             else

@@ -25,7 +25,11 @@ namespace IndoorNavigation.Droid
             Console.WriteLine("Enter openSettingPage function");
             Intent intent = new Intent(Android.Provider.Settings.ActionNetworkOperatorSettings);//(Android.Provider.Settings.ActionWirelessSettings);
             Console.WriteLine("Construct setting page");
-            Android.App.Application.Context.StartActivity(intent);
+            //intent.AddFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            var chooseIntent = Intent.CreateChooser(intent, "Go to Setting");
+            chooseIntent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
+
+            Android.App.Application.Context.StartActivity(chooseIntent);
             Console.WriteLine("StarActivity");
         }
 

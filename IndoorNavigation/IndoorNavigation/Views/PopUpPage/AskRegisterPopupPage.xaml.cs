@@ -59,7 +59,27 @@ namespace IndoorNavigation
                 await CancelorClickBack();
             else
             {
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)));
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage), 
+                    _resourceManager.GetString("GO_TO_SETTING", currentLanguage),
+                    _resourceManager.GetString("CANCEL_STRING",currentLanguage),"NoNetwork"));
+
+                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "NoNetwork", async (msgSender, msgArgs) =>
+                 {
+                     Console.WriteLine("Go to setting flag : " + (bool)msgArgs);
+
+                     if ((bool)msgArgs)
+                     {
+                         INetworkSetting setting = DependencyService.Get<INetworkSetting>();
+                         setting.OpenSettingPage();
+                         BusyShow(false);
+                     }
+                     else
+                     {
+                         Page mainPage = Application.Current.MainPage;
+                         await PopupNavigation.Instance.PopAllAsync();
+                         await mainPage.Navigation.PopToRootAsync();
+                     }
+                 });
                 return;
             }
 
@@ -117,11 +137,12 @@ namespace IndoorNavigation
         {
             ResetAllState();
             app.getRigistered = false;
-
+            app.records.Add(new RgRecord { type = RecordType.NULL });
             //request.GetXMLBody();
             //await request.RequestData();
-            await request.RequestFakeHIS();
-            MessagingCenter.Send(this, "isReset", true);            
+            //await request.RequestFakeHIS();
+            MessagingCenter.Send(this, "isReset", true);
+            await Task.CompletedTask;
         }
         
         private void ResetAllState()
