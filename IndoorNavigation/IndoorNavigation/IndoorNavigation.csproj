@@ -70,6 +70,7 @@
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DefineStructureOfProcess.xml" />
     <EmbeddedResource Include="Resources\GraphResource.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_FD_en-US.xml" />
@@ -140,6 +141,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="DefineStructureOfProcess.xml" />
     <None Remove="Resources\AppResources.English" />
     <None Remove="Resources\GraphResource.xml" />
     <None Remove="Resources\Lab\Lab_FD_en-US.xml" />
