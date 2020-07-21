@@ -40,24 +40,50 @@ namespace IndoorNavigation.Models
             //throw new NotImplementedException();
         }
 
-        public ObservableCollection<RgRecord> ParseProcess()
+        public ObservableCollection<ProcessRecord> ParseProcess(string selectedOptionName, string selectedid)
         {
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
-            ObservableCollection<RgRecord> result = 
-                new ObservableCollection<RgRecord>();
+            ObservableCollection<ProcessRecord> result = 
+                new ObservableCollection<ProcessRecord>();
 
-            XmlNodeList recordsNodeList = doc.GetElementsByTagName("record");
+            XmlNodeList ProcessNodeList = doc.SelectNodes($"processes/process[@id={selectedid}]");
 
-
-            foreach(XmlNode recordNode in recordsNodeList)
+            foreach (XmlNode node in ProcessNodeList)
             {
-                Console.WriteLine("Recode Node Name : " + recordNode.Attributes["name"].Value);
-               
-                if(recordNode.Attributes["note"] != null)
-                    Console.WriteLine("Record Node note : " + recordNode.Attributes["note"].Value);
+                Console.WriteLine(node.Attributes["name"].Value+"aaaaaaaa");
             }
+            #region  use for loop to find out result
+            //XmlNodeList ProcessNodeList = doc.GetElementsByTagName("process");
+
+            //foreach(XmlNode ProcessNode in ProcessNodeList)
+            //{
+            //    string processName = ProcessNode.Attributes["name"].Value;
+            //    string processID = ProcessNode.Attributes["id"].Value;
+            //    Console.WriteLine("ProcessNode name :" + processName);
+            //    Console.WriteLine("ProcessNode id : " + processID);
+
+            //    if(selectedid == processID && processName == selectedOptionName)
+            //    {
+            //        Console.WriteLine("There are one process meet the option.");
+
+            //        XmlNodeList recordNodeList = ProcessNode.SelectNodes()
+            //    }               
+            //}
+            #endregion
             return result;
         }
+    }
+
+    public struct ProcessRecord
+    {
+        public string TitleName { get; set; }
+        public string AdditionalMsg { get; set; }
+        public List<Tuple<DateTime, DateTime>> OpeningHours { get; set; }
+        public string CareNoom { get; set; }
+        public Guid _waypointID { get; set; }
+        public Guid _regionID { get; set; }
+        public string _waypointName{ get; set; }
+        public RecordType _recordType { get; set; }
     }
 }
