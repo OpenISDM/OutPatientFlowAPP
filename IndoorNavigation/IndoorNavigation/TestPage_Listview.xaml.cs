@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using IndoorNavigation.Utilities;
 using Dijkstra.NET.Model;
 using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation
 {
@@ -22,7 +23,9 @@ namespace IndoorNavigation
         public TestPage_Listview()
         {
             InitializeComponent();
+            HospitalProcessParse parse = new HospitalProcessParse();
 
+            parse.ParseProcess("大腸鏡檢查流程", "0");
             //_download = new CloudDownload();
             //Storage.CloudGenerateFile("Lab");
             //Storage.CloudGenerateFile("Taipei_City_Hall");
