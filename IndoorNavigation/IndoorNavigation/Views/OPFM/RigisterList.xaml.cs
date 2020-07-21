@@ -43,7 +43,7 @@ namespace IndoorNavigation.Views.OPFM
         private ViewCell lastCell=null;
 
         private INetworkSetting NetworkSettings;
-        //private HttpRequest request;               
+              
         private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
@@ -56,18 +56,13 @@ namespace IndoorNavigation.Views.OPFM
             Console.WriteLine("initalize graph info");
             
             _navigationGraphName = navigationGraphName;
-            //request = new HttpRequest();
-            FakeHISRequest = new YunalinHttpRequestFake();
-            _nameInformation = LoadXmlInformation(navigationGraphName);
-				//NavigraphStorage.LoadInformationML
-				//(phoneInformation.GiveCurrentMapName(_navigationGraphName) + 
-				// "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
 
+            FakeHISRequest = new YunalinHttpRequestFake();
+            _nameInformation = LoadXmlInformation(navigationGraphName);				
             NetworkSettings = DependencyService.Get<INetworkSetting>();
 
             PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
             PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
-            //RgListView.ScrollTo()
             LoadCashierData();
             BindingContext = _viewmodel;
 
@@ -331,13 +326,7 @@ namespace IndoorNavigation.Views.OPFM
             var viewCell = (ViewCell)sender;
             if (viewCell.View != null)
             {
-                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
-
-                //Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
-                //{
-                //    viewCell.View.BackgroundColor = Color.Transparent;
-                //    return false;
-                //});
+                viewCell.View.BackgroundColor = Color.FromHex("FFFF88");                
             }
         }
         public void BusyIndicatorShow(bool isBusy)

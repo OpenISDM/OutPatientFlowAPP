@@ -70,13 +70,17 @@
 							HorizontalOptions="End" 
 							VerticalOptions="End" 
                             FontSize="Medium"
-							Clicked="AddCancelButton_Clicked"/>
+                            CornerRadius="8"
+							Clicked="AddCancelButton_Clicked"
+                            />
                     
                     <Button Text="{i18n:Translate NEW_STRING}" 
 							HorizontalOptions="End" 
 							VerticalOptions="End"
                             FontSize="Medium"
-							Clicked="AddConfirmButton_Clicked"/>
+                            CornerRadius="8"
+							Clicked="AddConfirmButton_Clicked"
+                            />
                 </StackLayout>
             </StackLayout>
         </Frame>

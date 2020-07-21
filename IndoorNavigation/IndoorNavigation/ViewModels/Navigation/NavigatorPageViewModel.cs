@@ -667,8 +667,6 @@ namespace IndoorNavigation.ViewModels.Navigation
         private void GetNavigationResultEvent(object sender, EventArgs args)
         {
             Console.WriteLine("recevied event raised from NavigationModule");
-            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
             DisplayInstructions(args);
         }
 

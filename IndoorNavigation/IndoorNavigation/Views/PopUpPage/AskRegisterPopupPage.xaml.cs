@@ -38,8 +38,6 @@ namespace IndoorNavigation.Views.PopUpPage
         string _navigationGraphName;
         XMLInformation _XmlInfo;
 
-        //PhoneInformation phoneInformation = new PhoneInformation();
-
         public AskRegisterPopupPage(string navigraphName)
         {
             InitializeComponent();
@@ -47,9 +45,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _navigationGraphName = navigraphName;
             _XmlInfo = LoadXmlInformation(navigraphName);
-            //_XmlInfo = NavigraphStorage.LoadInformationML
-            //    (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
-            //     "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
+            
         }
         protected override void OnAppearing()
         {
@@ -70,11 +66,7 @@ namespace IndoorNavigation.Views.PopUpPage
             if(network_ability)
                 await CancelorClickBack();
             else
-            {
-                //         await PopupNavigation.Instance
-                //.PushAsync(new AlertDialogPopupPage
-                //(_resourceManager.GetString("BAD_NETWORK_STRING",
-                //					  currentLanguage)));
+            {       
                 var CheckWantToSetting =
                     await DisplayAlert(getResourceString("MESSAGE_STRING"),
                           getResourceString("BAD_NETWORK_STRING"),
@@ -108,16 +100,19 @@ namespace IndoorNavigation.Views.PopUpPage
                 type = RecordType.Register,
                 isComplete = true
             };
-            app.records.Add(record);
-            //app.records.Add(new RgRecord {type=RecordType.NULL});
-            MessagingCenter.Send(this, "isReset", true);
-            ButtonLock = true;
+           
             await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
                 record._regionID,
                 record._waypointID,
                 record._waypointName,
                 _XmlInfo));
             await PopupNavigation.Instance.PopAllAsync();
+            app.records.Add(record);
+            //app.records.Add(new RgRecord {type=RecordType.NULL});
+            MessagingCenter.Send(this, "isReset", true);
+            ButtonLock = true;
+            
+            
         }
          
         protected override bool OnBackgroundClicked()

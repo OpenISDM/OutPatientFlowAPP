@@ -34,8 +34,18 @@
                 <DatePicker x:Name="RegisterDatePicker" HorizontalOptions="FillAndExpand" FontSize="Large"/>
                 
                 <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand">
-                    <Button x:Name="CancelBtn" Text="{i18n:Translate CANCEL_STRING}" VerticalOptions="End" Clicked="CancelBtn_Clicked"/>
-                    <Button x:Name="ConfirmBtn" Text="{i18n:Translate OK_STRING}" VerticalOptions="End" Clicked="ConfirmBtn_Clicked"/>
+                    <Button x:Name="CancelBtn" 
+                            Text="{i18n:Translate CANCEL_STRING}" 
+                            VerticalOptions="End" 
+                            Clicked="CancelBtn_Clicked" 
+                            CornerRadius="8"
+                            />
+                    <Button x:Name="ConfirmBtn" 
+                            Text="{i18n:Translate OK_STRING}" 
+                            VerticalOptions="End" 
+                            Clicked="ConfirmBtn_Clicked"
+                            CornerRadius="8"
+                           />
                 </StackLayout>
             </StackLayout>
         </Frame>
