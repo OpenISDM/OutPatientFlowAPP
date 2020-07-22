@@ -11,6 +11,7 @@ using static IndoorNavigation.Utilities.Storage;
 using System.Linq;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace IndoorNavigation.Models
 {
@@ -23,9 +24,9 @@ namespace IndoorNavigation.Models
 
         // when user enter the oppa page, this function will be called, and
         // return how many option can be selected by user.
-        public List<string> GetProcessOption()
+        public List<ProcessOption> GetProcessOption()
         {
-            List<string> SelectList = new List<string>();
+            List<ProcessOption> SelectList = new List<ProcessOption>();
 
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
@@ -34,27 +35,32 @@ namespace IndoorNavigation.Models
             int i = 0;
             foreach(XmlNode processNode in processNodeList)
             {
-                i = int.Parse(processNode.Attributes["id"].Value);
-                SelectList.Add(processNode.Attributes["name"].Value);
+                ProcessOption option = new ProcessOption
+                {
+                    processID = processNode.Attributes["id"].Value,
+                    processName = processNode.Attributes["name"].Value
+                };
+                //i = int.Parse(processNode.Attributes["id"].Value);
+                //SelectList.Add(processNode.Attributes["name"].Value);
                 Console.WriteLine("Process Name : {0}, id : {1}", 
-                    processNode.Attributes["name"].Value, i);
+                    processNode.Attributes["name"].Value, i++);
             }
             return SelectList;
             //throw new NotImplementedException();
         }
 
         public ObservableCollection<ProcessRecord> ParseProcess
-            (string selectedOptionName, string selectedid)
-        {
-           
-
+            (ProcessOption selectedOption)
+        {           
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
             ObservableCollection<ProcessRecord> result = 
                 new ObservableCollection<ProcessRecord>();
-
+            string xmlPath =
+                string.Format("processes/process[@id='{0}' and @name='{1}']",
+                selectedOption.processID, selectedOption.processName);
             XmlNodeList ProcessNodeList = 
-                doc.SelectNodes($"processes/process[@id='{selectedid}' and @name='{selectedOptionName}']");
+                doc.SelectNodes(xmlPath);
 
             // This Loop must only run one time theortically. 
             foreach (XmlNode node in ProcessNodeList)
@@ -164,7 +170,11 @@ namespace IndoorNavigation.Models
         public TimeSpan endTime { get; set; }
         public Week dayOfWeek { get; set; }
     }
-
+    public struct ProcessOption
+    {
+        public string processID;
+        public string processName;
+    }
     public struct ProcessRecord 
     {
         public string TitleName { get; set; }
