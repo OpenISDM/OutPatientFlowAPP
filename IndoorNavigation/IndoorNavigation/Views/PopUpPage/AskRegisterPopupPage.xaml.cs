@@ -11,30 +11,41 @@ using System.Globalization;
 using IndoorNavigation.Models;
 using System.Reflection;
 using System.Threading.Tasks;
-using IndoorNavigation.Views.PopUpPage;
+using IndoorNavigation.Views.Navigation;
+using IndoorNavigation.Models.NavigaionLayer;
+using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Utilities;
+using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Yuanlin_OPFM;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AskRegisterPopupPage : PopupPage
     {
         private App app = (App)Application.Current;
-       // private HttpRequest request;
         private bool ButtonLock;
-        private YunalinHttpRequestFake request;
+
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            new ResourceManager(_resourceId,
+                                typeof(TranslateExtension).GetTypeInfo()
+                                .Assembly);
+        CultureInfo currentLanguage =
+            CrossMultilingual.Current.CurrentCultureInfo;
         INetworkSetting networkSettings;
-        NetworkAccess networkState = Connectivity.NetworkAccess;
-        public AskRegisterPopupPage()
+
+        string _navigationGraphName;
+        XMLInformation _XmlInfo;
+
+        public AskRegisterPopupPage(string navigraphName)
         {
             InitializeComponent();
-            BackgroundColor = Color.FromRgba(150, 150, 150, 70);
-            //request = new HttpRequest();
-            request = new YunalinHttpRequestFake();
+            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
+
+            _navigationGraphName = navigraphName;
+            _XmlInfo = LoadXmlInformation(navigraphName);
+
         }
         protected override void OnAppearing()
         {
@@ -43,47 +54,29 @@ namespace IndoorNavigation
             ButtonLock = false;
         }
 
-        private void BusyShow(bool isBusy)
-        {
-            BusyIndicator.IsRunning = isBusy;
-            BusyIndicator.IsVisible = isBusy;
-            BusyIndicator.IsEnabled = isBusy;
-        }
-
         async private void RegisterCancelBtn_Clicked(object sender, EventArgs e)
         {
-            BusyShow(true);
+            if (ButtonLock) return;
+            ButtonLock = true;
+
+            //BusyShow(true);
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             networkSettings = DependencyService.Get<INetworkSetting>();
-            bool network_ability =await networkSettings.CheckInternetConnect();
-            if(network_ability)
+            bool network_ability = await networkSettings.CheckInternetConnect();
+            if (network_ability)
                 await CancelorClickBack();
             else
             {
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(_resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage), 
-                    _resourceManager.GetString("GO_TO_SETTING", currentLanguage),
-                    _resourceManager.GetString("CANCEL_STRING",currentLanguage),"NoNetwork"));
-
-                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "NoNetwork", async (msgSender, msgArgs) =>
-                 {
-                     Console.WriteLine("Go to setting flag : " + (bool)msgArgs);
-
-                     if ((bool)msgArgs)
-                     {
-                         INetworkSetting setting = DependencyService.Get<INetworkSetting>();
-                         setting.OpenSettingPage();
-                         BusyShow(false);
-                     }
-                     else
-                     {
-                         Page mainPage = Application.Current.MainPage;
-                         await PopupNavigation.Instance.PopAllAsync();
-                         await mainPage.Navigation.PopToRootAsync();
-                     }
-                 });
+                var CheckWantToSetting =
+                    await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                          getResourceString("BAD_NETWORK_STRING"),
+                          getResourceString("OK_STRING"),
+                          getResourceString("NO_STRING"));
+                ButtonLock = false;
                 return;
             }
-
-           PopupNavigation.Instance.PopAllAsync();
+            //BusyShow(false);
+            PopupNavigation.Instance.PopAllAsync();
         }
 
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
@@ -92,59 +85,58 @@ namespace IndoorNavigation
             ResetAllState();
             ButtonLock = true;
             app.getRigistered = true;
-            app.records.Add(new RgRecord
+
+            RgRecord record = new RgRecord
             {
-                DptName =_resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING", currentLanguage),
+                DptName =
+                    _resourceManager.GetString("NAVIGATE_TO_REGISTER_STRING",
+                                               currentLanguage),
                 _regionID = new Guid("22222222-2222-2222-2222-222222222222"),
                 _waypointID = new Guid("00000000-0000-0000-0000-000000000018"),
-                
-                _waypointName = "掛號台",
-                type=RecordType.Register
-            });
-            app.records.Add(new RgRecord {type=RecordType.NULL});
-            MessagingCenter.Send(this, "isReset", true);
+
+                _waypointName =
+                    _resourceManager.GetString("REGISTERED_COUNTER_STRING",
+                                               currentLanguage),
+                type = RecordType.Register,
+                isComplete = true
+            };
+
+            await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                record._regionID,
+                record._waypointID,
+                record._waypointName,
+                _XmlInfo));
             await PopupNavigation.Instance.PopAllAsync();
+            app.records.Add(record);
+            //app.records.Add(new RgRecord {type=RecordType.NULL});
+            MessagingCenter.Send(this, "isReset", true);
+            ButtonLock = true;
+
+
         }
-         
+
         protected override bool OnBackgroundClicked()
         {
             return false;
-            //networkState = Connectivity.NetworkAccess;
-            //if (networkState == NetworkAccess.Internet)
-            //    CancelorClickBack();
-            //else
-            //{
-            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-            //    return false;
-            //}
-            //return base.OnBackgroundClicked();
         }
         protected override bool OnBackButtonPressed()
         {
             return true;
-            //networkState = Connectivity.NetworkAccess;
-            //if (networkState == NetworkAccess.Internet)
-            //    CancelorClickBack();
-            //else
-            //{
-            //    PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_NETWORK_STRING", currentLanguage), true));
-            //    return true;
-            //}
-            //return base.OnBackButtonPressed();
         }
 
+        //HttpRequest request = new HttpRequest();
+        YunalinHttpRequestFake FakeHISRequest = new YunalinHttpRequestFake();
         async private Task CancelorClickBack()
         {
             ResetAllState();
             app.getRigistered = false;
-            app.records.Add(new RgRecord { type = RecordType.NULL });
+
+            await FakeHISRequest.RequestFakeHIS();
             //request.GetXMLBody();
             //await request.RequestData();
-            //await request.RequestFakeHIS();
             MessagingCenter.Send(this, "isReset", true);
-            await Task.CompletedTask;
         }
-        
+
         private void ResetAllState()
         {
             app.records.Clear();
@@ -155,6 +147,10 @@ namespace IndoorNavigation
             app.lastFinished = null;
         }
 
+        private string getResourceString(string key)
+        {
+            return _resourceManager.GetString(key, currentLanguage);
+        }
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             OnBackButtonPressed();
