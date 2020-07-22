@@ -1,4 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      ExitPopupPage.xaml
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */-->
 <pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,28 +39,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.ExitPopupPage">
-    <pages:PopupPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="EntryStyle" TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="#9cdaf1"/>
-                <Setter Property="TextColor" Value="#7dbbe6"/>
-            </Style>
-        </ResourceDictionary>
-    </pages:PopupPage.Resources>
+             x:Class="IndoorNavigation.Views.PopUpPage.ExitPopupPage"
+                 SystemPaddingSides="All"
+                 HasSystemPadding="True">
 
-    <AbsoluteLayout>
-        <Frame BackgroundColor="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.45" CornerRadius="8">
-            <StackLayout>
-                <Label x:Name="AskSelectExit" Text="{i18n:Translate SELECT_EXIT_STRING}" FontSize="Large" HorizontalOptions="Start" Margin="0,5"/>
-                <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="20,0,20,0">
-                    <StackLayout Spacing="12" Padding="10,0">
-                        <input:SelectionView x:Name="selectionView" SelectionType="RadioButton" ItemsSource="{Binding exits}" ColumnNumber="1" SelectedItem="{Binding SelectItem}"  RowSpacing="20" />
-                    </StackLayout>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+        <Frame 	BackgroundColor="White" 
+				HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"
+                Margin="15,0,15,0"
+				CornerRadius="8">
+
+            <StackLayout >
+                <Label 	x:Name="AskSelectExit" 
+						Text="{i18n:Translate SELECT_EXIT_STRING}" 
+						FontSize="Title" 
+						HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand"/>
+                <Label/>
+                <ScrollView VerticalOptions="Start" 
+							HorizontalOptions="FillAndExpand" 
+							Margin="10,0,10,0"
+                            >
+                    <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="StartAndExpand" Margin="5,0,5,0"/>
+                    <!--<StackLayout Padding="5,0">
+                        <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="CenterAndExpand">
+                        </input:RadioButtonGroupView>
+                    </StackLayout>-->
                 </ScrollView>
-                <Button x:Name="ExitPopup" Text="{i18n:Translate OK_STRING}" Command="{Binding ButtonCommand}" HorizontalOptions="End" VerticalOptions="End"/>
+                <Button x:Name="ExitPopup" 
+						Text="{i18n:Translate OK_STRING}" 
+						Clicked="ExitPopup_Clicked"
+						HorizontalOptions="End" 
+						VerticalOptions="End"/>
 
             </StackLayout>
         </Frame>
-    </AbsoluteLayout>
+    </StackLayout>
 </pages:PopupPage>

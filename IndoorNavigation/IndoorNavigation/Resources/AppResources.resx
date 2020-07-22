@@ -403,7 +403,7 @@
     <value>Please adjust avoid route type </value>
   </data>
   <data name="RSSI_OPTION_STRING" xml:space="preserve">
-    <value>Rssi Option </value>
+    <value>Signal Strength Option </value>
   </data>
   <data name="STRONG_STRING" xml:space="preserve">
     <value>Strong </value>
@@ -514,7 +514,7 @@
     <value>Disagree</value>
   </data>
   <data name="OPFM_STRING" xml:space="preserve">
-    <value>OPFM</value>
+    <value>OPPA</value>
   </data>
   <data name="BIRTHDAY_STRING" xml:space="preserve">
     <value>Birthday</value>
