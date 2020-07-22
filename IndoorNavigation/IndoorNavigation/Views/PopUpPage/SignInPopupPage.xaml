@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:inputkit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.PopUpPage.SignInPopupPage">
+    <!--<ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>-->
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="15,0,15,0">
+        <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" CornerRadius="8">
+
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Label Text="{i18n:Translate IDNUM_STRING}"/>
+                <Entry x:Name="IDnumberEntry" Placeholder="{i18n:Translate INPUT_ID_NUMBER_STRING}" FontSize="Large" HorizontalOptions="FillAndExpand" MaxLength="10"/>
+                <Label Text="{i18n:Translate REGISTERDAY_STRING}"/>
+                <DatePicker x:Name="RegisterDatePicker" HorizontalOptions="FillAndExpand" FontSize="Large"/>
+
+                <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand">
+                    <Button x:Name="CancelBtn" 
+                            Text="{i18n:Translate CANCEL_STRING}" 
+                            VerticalOptions="End" 
+                            Clicked="CancelBtn_Clicked" 
+                            CornerRadius="8"
+                            />
+                    <Button x:Name="ConfirmBtn" 
+                            Text="{i18n:Translate OK_STRING}" 
+                            VerticalOptions="End" 
+                            Clicked="ConfirmBtn_Clicked"
+                            CornerRadius="8"
+                           />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+
+</pages:PopupPage>
