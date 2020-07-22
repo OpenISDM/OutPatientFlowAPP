@@ -7,224 +7,195 @@ using IndoorNavigation.Views.Navigation;
 using Plugin.Multilingual;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.ComponentModel;
-using System.Threading;
+using System.Collections.Generic;
+using System.Xml;
+using System.Linq;
+using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Views.PopUpPage;
+using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Yuanlin_OPFM;
+using IndoorNavigation;
+using DestinationItem = IndoorNavigation.DestinationItem;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : CustomToolbarContentPage
     {
+        #region variable declaration
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
 
-        #region for language change
-        private const string resourceId = "IndoorNavigation.Resources.AppResources";
-        CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-        private ResourceManager _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        #endregion
-
         private XMLInformation _nameInformation;
-
-        private Object ShiftTmp=null;
         private App app = (App)Application.Current;
-        private bool isButtonPressed = false; //to prevent button multi-tap from causing error
-        private bool ShiftButtonPressed = false;
-        private ViewCell lastCell=null;
 
-        //private HttpRequest request;
-        private YunalinHttpRequestFake request;
+        Dictionary<Guid, DestinationItem> CashierPosition;
+        Dictionary<Guid, DestinationItem> PharmacyPostition;
+
+        //to prevent button multi-tap from causing error
+        private bool isButtonPressed = false;
+        private ViewCell lastCell = null;
+
         private INetworkSetting NetworkSettings;
 
-        //PhoneInformation phoneInformation;        
-
+        private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
 
-        #region part of branch delegate implement, but it is not start to use.
-        //delegate void LoadFiles(string buildingName);
-        //delegate void FinishItem(string buildingName);
-
-        //LoadFiles _loadFiles;
-        //FinishItem _finishItem;
-
-        //private void Init()
-        //{
-        //    switch (_navigationGraphName)
-        //    {
-        //        case "員林基督教醫院":
-        //        case "Yuanlin Christian Hospital":
-        //            _loadFiles = CCH_loadFiles;
-        //            _finishItem = CCH_FinishItem;
-        //            break;
-        //        case "NTUH Yunlin Branch":
-        //        case "台大醫院雲林分院":
-        //            _loadFiles = NTUH_Yunlin_loadFiles;
-        //            _finishItem = NTUH_Yunlin_FinishItem;
-        //            break;
-        //        default:
-        //            throw new Exception();
-                    
-        //    }
-               
-        //}
-        ////CCH part
-        //private void CCH_loadFiles(string buildingname)
-        //{
-        //    Console.WriteLine("it's calling cch load files function....");            
-        //} 
-        //private void CCH_FinishItem(string buildingname)
-        //{
-        //    Console.WriteLine("it's calling cch finishitem function....");
-        //}
-        ////NTUH part
-        //private void NTUH_Yunlin_loadFiles(string buildingname)
-        //{
-        //    Console.WriteLine("it's calling NTUH_Yunlin load files function");
-        //}
-        //private void NTUH_Yunlin_FinishItem(string buildingname)
-        //{
-        //    Console.WriteLine("it's calling NTUH_Yunlin Finish item function");
-        //}
         #endregion
+
         public RigisterList(string navigationGraphName)
         {
-            InitializeComponent();          
+            InitializeComponent();
             Console.WriteLine("initalize graph info");
-            //phoneInformation = new PhoneInformation();
-            _navigationGraphName = navigationGraphName;
-            //_nameInformation = NavigraphStorage.LoadInformationML(phoneInformation.GiveCurrentMapName(_navigationGraphName) + "_info_" + phoneInformation.GiveCurrentLanguage() + ".xml");
-            _nameInformation = Storage.LoadXmlInformation(navigationGraphName);
-            Console.WriteLine("initialize http request");
-            request = new YunalinHttpRequestFake();//new HttpRequest();
-            NetworkSettings = DependencyService.Get<INetworkSetting>();
-            PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-            PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
 
+            _navigationGraphName = navigationGraphName;
+
+            FakeHISRequest = new YunalinHttpRequestFake();
+            _nameInformation = LoadXmlInformation(navigationGraphName);
+            NetworkSettings = DependencyService.Get<INetworkSetting>();
+
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
+            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
+            LoadCashierData();
             BindingContext = _viewmodel;
 
         }
-        #region ListView Tapped event
         /*this function is to push page to NavigatorPage */
-        async private void RgListView_ItemTapped(object sender, ItemTappedEventArgs e)  
+        async private void RgListView_ItemTapped(object sender,
+                                                 ItemTappedEventArgs e)
         {
+            Console.WriteLine("the Record type is : " + ((RgRecord)e.Item).type);
             if (isButtonPressed) return;
             isButtonPressed = true;
+
             if (e.Item is RgRecord record)
-            {       
-                //if(record.Key.Equals("Pharmacy") && (app.lastFinished==null || !app.lastFinished.Key.Equals("Cashier")))
-                if(record.type.Equals(RecordType.Pharmacy) && (app.lastFinished==null || !app.lastFinished.type.Equals(RecordType.Cashier)))
-                {    
-                    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("PHARMACY_ALERT_STRING", currentLanguage)));
+            {
+                if (record.type.Equals(RecordType.Pharmacy) &&
+                   (app.lastFinished == null ||
+                   !app.lastFinished.type.Equals(RecordType.Cashier)))
+                {
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage
+                            (getResourceString("PHARMACY_ALERT_STRING"),
+                             getResourceString("OK_STRING")
+                            )
+                        );
                     RefreshListView();
                     ((ListView)sender).SelectedItem = null;
                     isButtonPressed = false;
                     return;
-                }                               
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, record._regionID, record._waypointID, record._waypointName, _nameInformation));
+                }
+                await Navigation.PushAsync
+                    (new NavigatorPage(_navigationGraphName,
+                                       record._regionID,
+                                       record._waypointID,
+                                       record._waypointName,
+                                       _nameInformation)
+                    );
                 record.isComplete = true;
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
         }
-       
 
-        /*this function is to implement a simply shift function.  
-          when shift button is clicked, the function will become the listview tapped event.*/
-        private void RgListViewShift_ItemTapped(object sender,ItemTappedEventArgs e)
-        {
-                if (ShiftTmp == null)
-                {
-                    ShiftTmp = e.Item as RgRecord;
-                }
-                else
-                {
-                    var o = e.Item as RgRecord;
-                   
-                    int index1 = app.records.IndexOf(ShiftTmp as RgRecord);
-                    int index2 = app.records.IndexOf(o as RgRecord);
-                    //swap
-                    app.records[index1] = o as RgRecord;
-                    app.records[index2] = ShiftTmp as RgRecord;
-                    // retrieve original function.
-                    RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-                    RgListView.ItemTapped += RgListView_ItemTapped;
-                    ShiftTmp = null;
-                    ShiftButtonPressed = false;
-                    Buttonable(true);
-                }  
-        }
-        #endregion
-        /* the function is a button event which is to change listview tapped event*/
-        async private void ShiftBtn_Clicked(object sender, EventArgs e)
-        {
-            bool isCheck = Preferences.Get("isCheckedNeverShow", false); 
-            if (app.FinishCount+1 >= app.records.Count - 1)
-            {
-                await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(_resourceManager.GetString("NO_SHIFT_STRING", currentLanguage)));
-                return;
-            }
-            else
-            {
-                if (!isCheck)
-                {
-                    //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
-                    await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(_resourceManager.GetString("SHIFT_DESCRIPTION_STRING",currentLanguage),
-                        _resourceManager.GetString("OK_STRING",currentLanguage), "isCheckedNeverShow"));
-                }
-                RgListView.ItemTapped -= RgListView_ItemTapped;
-                RgListView.ItemTapped += RgListViewShift_ItemTapped;
-                ShiftButtonPressed = true;
-                Buttonable(false);
-            }
-            
-        }
-
-        /*the function is to disable those two float button to keep from triggering something wrong.*/
+        //the function is to control the button whether it is visible 
         private void Buttonable(bool enable)
         {
-            ShiftBtn.IsEnabled = enable;
-            ShiftBtn.IsVisible = enable;
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
-        }    
+        }
 
-        /*the function is a button event to add payment and medicine recieving route to listview*/
-        async private void PaymemtListBtn_Clicked(object sender, EventArgs e)
+        //the function is a button event to add payment and medicine recieving 
+        //route to listview
+        private void PaymemtListBtn_Clicked(object sender, EventArgs e)
         {
-            Buttonable(false);    
+            Buttonable(false);
             if (isButtonPressed) return;
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
-            await PopupNavigation.Instance.PushAsync(new PickCashierPopupPage());
-            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot", (Messagesender, Messageargs) =>
-            {                
-                PaymemtListBtn.IsEnabled = (app.FinishCount+1==app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-                Buttonable(app.FinishCount+1 == app.records.Count);
-                isButtonPressed = false;
-
-                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "GetCashierorNot");
-            });
-            MessagingCenter.Subscribe<PickCashierPopupPage, bool>(this, "isBack", (messagesender, args) => 
+            app.HaveCashier = true;
+            DestinationItem cashier, pharmacy;
+            try
             {
-                Console.WriteLine("isBack recieve the message~");
-                isButtonPressed = false;
-                MessagingCenter.Unsubscribe<PickCashierPopupPage, bool>(this, "isBack");
-            });          
+                cashier = CashierPosition[app.lastFinished._regionID];
+            }
+            catch
+            {
+                cashier = CashierPosition.First().Value;
+            }
+            try
+            {
+                pharmacy = PharmacyPostition[app.lastFinished._regionID];
+            }
+            catch
+            {
+                pharmacy = PharmacyPostition.First().Value;
+            }
+
+            app.records.Add(new RgRecord
+            {
+                _waypointID = cashier._waypointID,
+                _regionID = cashier._regionID,
+                _waypointName = cashier._waypointName,
+                type = RecordType.Cashier,
+                DptName = cashier._waypointName
+            });
+            app.records.Add(new RgRecord
+            {
+                _waypointID = pharmacy._waypointID,
+                _regionID = pharmacy._regionID,
+                _waypointName = pharmacy._waypointName,
+                type = RecordType.Pharmacy,
+                DptName = pharmacy._waypointName
+            });
+
+            RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, true);
+            isButtonPressed = false;
+        }
+
+        public void LoadCashierData()
+        {
+            CashierPosition = new Dictionary<Guid, DestinationItem>();
+            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
+            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            foreach (XmlNode node in CashiernodeList)
+            {
+                DestinationItem item = new DestinationItem();
+
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+
+                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
+
+                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            foreach (XmlNode node in PharmacyNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+
+                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            return;
         }
 
         /*to show popup page for add route to listview*/
@@ -235,60 +206,60 @@ namespace IndoorNavigation
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
-            await PopupNavigation.Instance.PushAsync(new AddPopupPage_v2(_navigationGraphName));
-            //await Navigation.PushPopupAsync(new AddPopupPage());
-            MessagingCenter.Subscribe<AddPopupPage_v2,bool>(this, "AddAnyOrNot",(Messagesender,Messageargs)=> 
-            {
-                
-                var somethingchange = PaymemtListBtn.IsEnabled && PaymemtListBtn.IsVisible;
-                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
+            await PopupNavigation.Instance.PushAsync
+                (new AddPopupPage_v2(_navigationGraphName));
 
-                app.HaveCashier =! (somethingchange == (PaymemtListBtn.IsVisible && PaymemtListBtn.IsEnabled));
+            MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isCancel",
+              (Messagesender, Messageargs) =>
+              {
+                  PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && !app.HaveCashier;
+                  PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && !app.HaveCashier;
+                  isButtonPressed = false;
+                  MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>
+                      (this, "isCancel");
+              });
 
-                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "AddAnyOrNot");
-            });
-
-            MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isBack", (MessageSender, MessageArgs) => 
-            {
-                isButtonPressed = false;
-                MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>(this, "isBack");
-            });
         }
-        
-        /*to refresh listview Template and check whether user have sign in or not.*/
+
+
+        // to refresh listview Template and check whether user have sign in or 
+        // not.
         protected override void OnAppearing()
-        {      
+        {
             base.OnAppearing();
-           
-            _viewmodel = new RegisterListViewModel();
+
+            _viewmodel = new RegisterListViewModel(_navigationGraphName);
+
             RefreshListView();
-            ShiftBtn.CornerRadius = (int)(Math.Min(ShiftBtn.Height,ShiftBtn.Width) / 2);
-            AddBtn.CornerRadius = (int)(Math.Min(AddBtn.Height,AddBtn.Width) / 2);
 
-            if (app.HaveCashier && ! PaymemtListBtn.IsEnabled) Buttonable(false);
+            AddBtn.CornerRadius =
+                (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
 
-            //Console.WriteLine("ISVisible = " + ((app.FinishCount + 1 == app.records.Count && !app.HaveCashier)
-            //    && !(!app.getRigistered && app.records.Count == 1)).ToString());
-            //Console.WriteLine("FinishCount = " + app.FinishCount);
-            //Console.WriteLine("Record count = " + app.records.Count);
-            //Console.WriteLine("GetRigistered = " + app.getRigistered);            
+            if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
+                Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = 
-                (app.FinishCount + 1 == app.records.Count && !app.HaveCashier) 
-                && !(!app.getRigistered && app.records.Count==1);
-            PaymemtListBtn.IsVisible = 
-                (app.FinishCount + 1 == app.records.Count && !app.HaveCashier)
-                && !(!app.getRigistered && app.records.Count==1);
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
+            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
+
+            if (app.lastFinished != null && !app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.lastFinished, ScrollToPosition.MakeVisible, false);
+            }
+            else if (app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, false);
+            }
 
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
-        /*this function is a button event, which is to check user whether have arrive at destination.*/
+
+        // this function is a button event, which is to check user whether have 
+        // arrive at destination.
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
             var o = (Button)sender;
-            var FinishBtnClickItem= o.CommandParameter as RgRecord;
+            var FinishBtnClickItem = o.CommandParameter as RgRecord;
             if (FinishBtnClickItem != null)
             {
                 switch (FinishBtnClickItem.type)
@@ -308,49 +279,47 @@ namespace IndoorNavigation
                 }
                 _multiItemFinish(FinishBtnClickItem);
 
-                if (app.FinishCount + 1 == app.records.Count)
+                if (app.FinishCount == app.records.Count &&
+                app.lastFinished.type != RecordType.Register)
                 {
-                    if(app.HaveCashier && !PaymemtListBtn.IsEnabled)
+                    if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                     {
-                        await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("FINISH_SCHEDULE_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage));
-                        await PopupNavigation.Instance.PushAsync(new ExitPopupPage(_navigationGraphName));
-                    }else if (!app.HaveCashier)
+                        await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                                    getResourceString("FINISH_SCHEDULE_STRING"),
+                                    getResourceString("OK_STRING"));
+
+                        await PopupNavigation.Instance.PushAsync
+                            (new ExitPopupPage(_navigationGraphName));
+                    }
+                    else if (!app.HaveCashier)
                     {
                         PaymemtListBtn.IsEnabled = true;
                         PaymemtListBtn.IsVisible = true;
-                        app.HaveCashier = true;
                     }
                 }
-            }            
+            }
         }
 
-        protected override void OnDisappearing()
+        async private Task ReadXml()
         {
-            base.OnDisappearing();
-
-            if (ShiftButtonPressed)
-            {
-                ShiftTmp = null;
-                RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-                RgListView.ItemTapped += RgListView_ItemTapped;
-                Buttonable(true);
-            }
-        }       
-
-        private void RemoveItem_Clicked(object sender, EventArgs e)
-        {
-            var item = (RgRecord)((MenuItem)sender).CommandParameter;
-            if (item != null)
-                app.records.Remove(item);
-        }    
-
-         async private Task ReadXml()
-         {
             //request.GetXMLBody();
-            //await request.RequestData();
-            await request.RequestFakeHIS();
+            //await request.RequestData();          
+            await FakeHISRequest.RequestFakeHIS();
             RefreshListView();
-         }
+        }
+
+        private string getResourceString(string key)
+        {
+            string resourceId = "IndoorNavigation.Resources.AppResources";
+            CultureInfo currentLanguage =
+                CrossMultilingual.Current.CurrentCultureInfo;
+            ResourceManager resourceManager =
+                new ResourceManager(resourceId,
+                                    typeof(TranslateExtension)
+                                    .GetTypeInfo().Assembly);
+
+            return resourceManager.GetString(key, currentLanguage);
+        }
 
         #region UI View Control
         private void ViewCell_Tapped(object sender, EventArgs e)
@@ -363,15 +332,9 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
-
-                Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
-                {
-                    viewCell.View.BackgroundColor = Color.Transparent;
-                    return false;
-                });
             }
         }
-        private void BusyIndicatorShow(bool isBusy)
+        public void BusyIndicatorShow(bool isBusy)
         {
             BusyIndicator.IsEnabled = isBusy;
             BusyIndicator.IsRunning = isBusy;
@@ -393,29 +356,33 @@ namespace IndoorNavigation
             app.FinishCount++;
             app.lastFinished = record;
 
-            //to refresh listview to make sure template is work.
-            RgListView.ItemsSource = null;
-            RgListView.ItemsSource = app.records;
+            RefreshListView();
         }
 
-      
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
-           
-            BusyIndicatorShow(true);
 
-            bool NetworkConnectAbility = await NetworkSettings.CheckInternetConnect();
+            //BusyIndicatorShow(true);
+            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            Console.WriteLine("Register Finished");
+            bool NetworkConnectAbility =
+                await NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
-                //await ReadXml();
+                await ReadXml();
+                Console.WriteLine("ReadXml finished");
                 ItemFinishFunction(record);
             }
             else
             {
-                var CheckWantToSetting = await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",currentLanguage), _resourceManager.GetString("BAD_NETWORK_STRING",currentLanguage)
-                    , _resourceManager.GetString("OK_STRING",currentLanguage), _resourceManager.GetString("NO_STRING",currentLanguage));
-                BusyIndicatorShow(false);
+                var CheckWantToSetting =
+                    await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                                       getResourceString("BAD_NETWORK_STRING"),
+                                       getResourceString("OK_STRING"),
+                                       getResourceString("NO_STRING"));
+                //BusyIndicatorShow(false);
+                PopupNavigation.Instance.PopAsync();
                 if (CheckWantToSetting)
                 {
                     NetworkSettings.OpenSettingPage();
@@ -428,17 +395,19 @@ namespace IndoorNavigation
                 }
             }
 
-            //Thread.Sleep(2000);
-            BusyIndicatorShow(false);
+            //BusyIndicatorShow(false);
+            await PopupNavigation.Instance.PopAsync();
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString = 
+            string HopeString =
                 $"{Storage.GetDisplayName(_navigationGraphName)}" +
-                $"\n{_resourceManager.GetString("HOPE_STRING",currentLanguage)}";
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(HopeString));
+                $"\n{getResourceString("HOPE_STRING")}";
+            await PopupNavigation.Instance.PushAsync
+                (new AlertDialogPopupPage(HopeString));
             await Navigation.PopAsync();
             app.FinishCount--;
+
             ItemFinishFunction(record);
         }
         private void QueryResultFinish(RgRecord record)
@@ -456,57 +425,57 @@ namespace IndoorNavigation
         #region iOS secondary toolbaritem implement
 
         public override event EventHandler ToolbarItemAdded;
-        //public ICommand Item1Command { get; set; }
-        public ICommand SignInCommand { get; set; }
-        public ICommand InfoItemCommand { get; set; }
-        public ICommand TestItemCommand { get; set; }
+
         private void RefreshToolbarOptions()
         {
-            //var viewModel = BindingContext as RegisterListViewModel;
-
-            //Item1Command = new Command(async () => await Item1CommandMethod());
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
-            TestItemCommand = new Command(async () => await TestItemMethod());
+
             ToolbarItems.Clear();
 
-            //if (_viewmodel != null)
-            {
-                ToolbarItem SignInItem = new ToolbarItem { Text = _resourceManager.GetString("ACCOUNT_STRING", currentLanguage), Command=SignInCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItem InfoItem = new ToolbarItem { Text = _resourceManager.GetString("PREFERENCES_STRING", currentLanguage), Command =InfoItemCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItem TestItem = new ToolbarItem { Text = "test", Command = TestItemCommand, Order = ToolbarItemOrder.Secondary };
-                ToolbarItems.Add(SignInItem);
-                ToolbarItems.Add(InfoItem);
-                //ToolbarItems.Add(TestItem);
-                OnToolbarItemAdded();
-            }
-        }
-        
-        private async Task TestItemMethod()
-        {
-            Console.WriteLine("Test Item click");
+            ToolbarItem SignInItem =
+                new ToolbarItem
+                {
+                    Text = getResourceString("ACCOUNT_STRING"),
+                    Command = SignInCommand,
+                    Order = ToolbarItemOrder.Secondary
+                };
 
-            INetworkSetting setting = DependencyService.Get<INetworkSetting>();
+            ToolbarItem InfoItem =
+                new ToolbarItem
+                {
+                    Text = getResourceString("PREFERENCES_STRING"),
+                    Command = InfoItemCommand,
+                    Order = ToolbarItemOrder.Secondary
+                };
 
-           // await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName, new Guid("11111111-1111-1111-1111-111111111111"), new Guid("00000000-0000-0000-0000-000000000010"), "健檢中心", _nameInformation));
-            //await Navigation.PushAsync(new FakeNavigatorPage(_navigationGraphName));
-    
-            Console.WriteLine("Finish call setting");
-            
-            await Task.CompletedTask;
+            ToolbarItem TestItem =
+                new ToolbarItem
+                {
+                    Text = "test",
+                    Command = TestItemCommand,
+                    Order = ToolbarItemOrder.Secondary
+                };
+            ToolbarItems.Add(SignInItem);
+            ToolbarItems.Add(InfoItem);
+
+            OnToolbarItemAdded();
+
         }
+
         private async Task SignInItemMethod()
         {
-            await Navigation.PushAsync(new SignInPage());
+            await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_navigationGraphName));
+            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
+                (this, "isReset", (msgSender, msgArgs) =>
+                {
+                    PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
+                    PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
 
-            MessagingCenter.Subscribe<AskRegisterPopupPage, bool>(this, "isReset", (msgSender, msgArgs) =>
-            {
-                PaymemtListBtn.IsEnabled = (app.FinishCount + 1 == app.records.Count);
-                PaymemtListBtn.IsVisible = (app.FinishCount + 1 == app.records.Count);
-
-                Buttonable(true);
-                MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>(this, "isRest");
-            });
+                    Buttonable(true);
+                    MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>
+                        (this, "isRest");
+                });
 
             await Task.CompletedTask;
         }
@@ -516,12 +485,20 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigatorSettingPage());
             await Task.CompletedTask;
         }
+
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");
             EventHandler e = ToolbarItemAdded;
             e?.Invoke(this, new EventArgs());
         }
+
+        #region ToolBarItemAttributes and Commands
+
+        public ICommand SignInCommand { get; set; }
+        public ICommand InfoItemCommand { get; set; }
+        public ICommand TestItemCommand { get; set; }
+
         public override Color CellBackgroundColor => Color.White;
         public override Color CellTextColor => Color.Black;
         public override Color MenuBackgroundColor => Color.White;
@@ -531,6 +508,7 @@ namespace IndoorNavigation
         public override float ShadowRadius => 5.0f;
         public override float ShadowOffsetDimension => 5.0f;
         public override float TableWidth => 250;
+        #endregion
 
         #endregion
     }

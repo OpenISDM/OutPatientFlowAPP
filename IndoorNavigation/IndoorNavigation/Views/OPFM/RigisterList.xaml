@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<shared:CustomToolbarContentPage 
+<local:CustomToolbarContentPage 
              xmlns:local="clr-namespace:IndoorNavigation"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
@@ -7,7 +7,6 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
-            xmlns:shared="clr-namespace:IndoorNavigation"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.RigisterList">
@@ -167,9 +166,9 @@
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" FontAttributes="Bold"
                     CornerRadius="30"
                     />
-            <Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
+            <!--<Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
                      AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
-                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
+                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
                     TextColor="White"/>
@@ -178,4 +177,4 @@
 
         </AbsoluteLayout>
     </ContentPage.Content>
-</shared:CustomToolbarContentPage>
+</local:CustomToolbarContentPage>

@@ -1,4 +1,36 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2019 Academia Sinica, Institude of Information Science
+ *
+ * License:
+ *      GPL 3.0 : The content of this file is subject to the terms and
+ *      conditions defined in file 'COPYING.txt', which is part of this source
+ *      code package.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * 
+ *     
+ *      
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      RegisterListViewModel.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@iis.sinica.edu.tw    
+ *      
+ */
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MvvmHelpers;
@@ -9,7 +41,8 @@ using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using Rg.Plugins.Popup.Services;
-using System.Windows.Input;
+using System.Globalization;
+using IndoorNavigation.Views.PopUpPage;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -17,14 +50,23 @@ namespace IndoorNavigation.ViewModels
     {
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
         ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        App app = (App)Application.Current;
-        int _recordsNumber;
-        bool _cashierAndpharmacy;
-        bool _isBusy = false;
+            new ResourceManager(_resourceId, 
+								typeof(TranslateExtension)
+								.GetTypeInfo().Assembly);
+
+        CultureInfo currentLanguage = 
+			CrossMultilingual.Current.CurrentCultureInfo;
+			
+        private Page mainPage = Application.Current.MainPage;
+        private App app = (App)Application.Current;
+
+        private string _naviGraphName;
+
+        public RegisterListViewModel() { }
         //bool 
-        public RegisterListViewModel()
+        public RegisterListViewModel(string navigationGraphName)
         {
+            _naviGraphName = navigationGraphName;
             if (app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();
@@ -33,90 +75,45 @@ namespace IndoorNavigation.ViewModels
             {
                 CheckRegister();
                 app.isRigistered = true;
-            }
-            FinishClickCommand = new Command(()=>{
-                RecordCount = app.records.Count;
-            });
+            }            
         }
-        
-        
-
         async public void CheckRegister()
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            Page nowPage = Application.Current.MainPage;
-           
-            //var NeedtoRegister =await nowPage.DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", currentLanguage), _resourceManager.GetString("NEED_REGISTER_STRING", currentLanguage), _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
-            await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage());
-            
+		   await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage(_naviGraphName));                       
+        }               
+        private string GetResourceString(string key)
+        {
+            return _resourceManager.GetString(key, currentLanguage);
         }
-        
 
         public async void CheckSignIn()
         {
-            string IDnum = Preferences.Get("ID_NUMBER_STRING", string.Empty);
-            string patientID = Preferences.Get("PATIENT_ID_STRING", string.Empty);
+            string IDnum = 
+				Preferences.Get("ID_NUMBER_STRING", string.Empty);
+				
+            string patientID = 
+				Preferences.Get("PATIENT_ID_STRING", string.Empty);				
 
             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
             {
-                var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
-                Page mainPage = Application.Current.MainPage;
-
-                var  wantContinue=await mainPage.DisplayAlert(
-                  _resourceManager.GetString("MESSAGE_STRING", currentLanguage),
-                                        _resourceManager.GetString("ALERT_LOGIN_STRING", currentLanguage),
-                                        _resourceManager.GetString("OK_STRING", currentLanguage),_resourceManager.GetString("CANCEL_STRING",currentLanguage));
-                if (wantContinue)
-                    await mainPage.Navigation.PushAsync(new SignInPage());
-                else
-                {
-                    //await PopupNavigation.Instance.PopAsync();
-                    await mainPage.Navigation.PopAsync() ;
-                }
+                Console.WriteLine("Enter No IDnumber");
+                //var wantSignIn =
+                //    await mainPage
+                //    .DisplayAlert(GetResourceString("MESSAGE_STRING"),
+                //                  GetResourceString("ALERT_LOGIN_STRING"),
+                //                  GetResourceString("OK_STRING"),
+                //                  GetResourceString("CANCEL_STRING"));
+                //if (wantSignIn)
+                //    await mainPage.Navigation.PushAsync(new SignInPage());
+                //await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
+                //await mainPage.Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
+                //else
+                //{
+                //    await mainPage.Navigation.PopAsync();
+                //}
+                await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
             }
-        }
-        #region 
+        }       
+    }
 
-        public bool Isbusy
-        {
-            get { return _isBusy; }
-            set
-            {
-                if (_isBusy != value)
-                {
-                    _isBusy = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public int RecordCount
-        {
-            get { return _recordsNumber; }
-            set { if (_recordsNumber != value)
-                {
-                    _recordsNumber = value;
-                    OnPropertyChanged();
-                    CashierAndPharmacy = (_recordsNumber+1 == app.records.Count);
-                }
-            }
-        }
-        public ICommand FinishClickCommand { private set; get; }
-        public bool CashierAndPharmacy
-        {
-            get { return _cashierAndpharmacy; }
-            set {
-                if (_cashierAndpharmacy != value)
-                {
-                    _cashierAndpharmacy = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        
-        }
-    
 }
