@@ -131,7 +131,7 @@ namespace IndoorNavigation.Views.PopUpPage
             ResetAllState();
             app.getRigistered = false;
 
-            await FakeHISRequest.RequestFakeHIS();
+            //await FakeHISRequest.RequestFakeHIS();
             //request.GetXMLBody();
             //await request.RequestData();
             MessagingCenter.Send(this, "isReset", true);

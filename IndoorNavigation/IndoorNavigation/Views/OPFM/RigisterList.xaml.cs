@@ -207,15 +207,15 @@ namespace IndoorNavigation
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
             await PopupNavigation.Instance.PushAsync
-                (new AddPopupPage_v2(_navigationGraphName));
+                (new AddPopupPage(_navigationGraphName));
 
-            MessagingCenter.Subscribe<AddPopupPage_v2, bool>(this, "isCancel",
+            MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel",
               (Messagesender, Messageargs) =>
               {
                   PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && !app.HaveCashier;
                   PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && !app.HaveCashier;
                   isButtonPressed = false;
-                  MessagingCenter.Unsubscribe<AddPopupPage_v2, bool>
+                  MessagingCenter.Unsubscribe<AddPopupPage, bool>
                       (this, "isCancel");
               });
 
@@ -304,7 +304,7 @@ namespace IndoorNavigation
         {
             //request.GetXMLBody();
             //await request.RequestData();          
-            await FakeHISRequest.RequestFakeHIS();
+            //await FakeHISRequest.RequestFakeHIS();
             RefreshListView();
         }
 
