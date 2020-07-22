@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using IndoorNavigation.Models;
 using IndoorNavigation.Utilities;
 using static IndoorNavigation.Utilities.Storage;
+using System.Linq;
+using Newtonsoft.Json.Converters;
+using System.Reflection;
 
 namespace IndoorNavigation.Models
 {
@@ -40,46 +43,133 @@ namespace IndoorNavigation.Models
             //throw new NotImplementedException();
         }
 
-        public ObservableCollection<ProcessRecord> ParseProcess(string selectedOptionName, string selectedid)
+        public ObservableCollection<ProcessRecord> ParseProcess
+            (string selectedOptionName, string selectedid)
         {
+           
+
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
             ObservableCollection<ProcessRecord> result = 
                 new ObservableCollection<ProcessRecord>();
 
-            XmlNodeList ProcessNodeList = doc.SelectNodes($"processes/process[@id={selectedid}]");
+            XmlNodeList ProcessNodeList = 
+                doc.SelectNodes($"processes/process[@id='{selectedid}' and @name='{selectedOptionName}']");
 
+            // This Loop must only run one time theortically. 
             foreach (XmlNode node in ProcessNodeList)
-            {
-                Console.WriteLine(node.Attributes["name"].Value+"aaaaaaaa");
+            {              
+                XmlNodeList RecordNodeList = 
+                    node.SelectNodes("records/record");
+
+                #region Temperoray code region
+                List<OpeningTime> openingTimes = new List<OpeningTime>();
+                string AdditionalRequire="";
+                string CareRoom;
+                string RecordName;
+                #endregion
+
+                foreach (XmlNode recordNode in RecordNodeList)
+                {
+                    RecordName = recordNode.Attributes["name"].Value;                   
+                    XmlNode CareRoomXmlNode = recordNode.ChildNodes[0];
+                    CareRoom = CareRoomXmlNode.Attributes["name"].Value;
+                    
+                    #region If the department need additionally require.
+                    if (recordNode.ChildNodes.Count >= 2)
+                    {
+                        XmlNode AdditionXmlNode = recordNode.ChildNodes[1];
+
+                        XmlNode noteXmlNode = AdditionXmlNode.ChildNodes[0];
+                        AdditionalRequire = 
+                            noteXmlNode.Attributes["text"].Value;
+                        Console.WriteLine("noteXml note text : " +
+                            AdditionalRequire);
+
+                        #region If this department has opening time. 
+                        if (AdditionXmlNode.ChildNodes.Count>=2)
+                        {
+                            Console.WriteLine("Enter OpenTime statement");
+                            XmlNodeList openTimeXmlNodeList =
+                                AdditionXmlNode.ChildNodes[1]
+                                .SelectNodes("dayoftheweek");                          
+                            foreach(XmlNode dayOfTheWeek in openTimeXmlNodeList)
+                            {
+                                Console.WriteLine("dayOftheWeek hour :"
+                                    + dayOfTheWeek.Attributes["day"].Value);
+
+                                openingTimes.Add(ParsingOpenTime(dayOfTheWeek));
+                            }
+                        }
+                        #endregion
+                    }
+                    #endregion
+
+                    ProcessRecord processRecord = new ProcessRecord
+                    {
+                        OpeningHours = openingTimes,
+                        TitleName = RecordName,
+                        CareNoom = CareRoom,
+                        AdditionalMsg = AdditionalRequire,
+                    };
+                    result.Add(processRecord);
+                }                
             }
-            #region  use for loop to find out result
-            //XmlNodeList ProcessNodeList = doc.GetElementsByTagName("process");
-
-            //foreach(XmlNode ProcessNode in ProcessNodeList)
-            //{
-            //    string processName = ProcessNode.Attributes["name"].Value;
-            //    string processID = ProcessNode.Attributes["id"].Value;
-            //    Console.WriteLine("ProcessNode name :" + processName);
-            //    Console.WriteLine("ProcessNode id : " + processID);
-
-            //    if(selectedid == processID && processName == selectedOptionName)
-            //    {
-            //        Console.WriteLine("There are one process meet the option.");
-
-            //        XmlNodeList recordNodeList = ProcessNode.SelectNodes()
-            //    }               
-            //}
-            #endregion
+            Console.WriteLine("Result count : " + result.Count);
             return result;
+        }
+        private OpeningTime ParsingOpenTime(XmlNode OpenTimeNode)
+        {
+            
+            TimeSpan startTime =
+                TimeSpan.Parse(OpenTimeNode.Attributes["startTime"].Value);
+            //DateTime startTime = DateTime.Today.Add(start);
+            TimeSpan endTime =
+                TimeSpan.Parse(OpenTimeNode.Attributes["endTime"].Value);
+            //DateTime endTime=
+                //DateTime.Parse(OpenTimeNode.Attributes["endTime"].Value);
+                
+            Week weekday = 
+                (Week)Enum.Parse(typeof(Week), 
+                OpenTimeNode.Attributes["day"].Value, 
+                false);
+            Console.WriteLine("start Time value : " + startTime);
+            Console.WriteLine("end Time value : " + endTime);
+            Console.WriteLine("weekday value : " + weekday);
+
+            return new OpeningTime(startTime, endTime, weekday);
         }
     }
 
-    public struct ProcessRecord
+    public enum Week 
+    {
+        Sunday = 0,
+        Saturday,
+        Workingday,
+        Friday,
+        Thursday,
+        Wednesday,
+        Tuesday,
+        Monday
+    }
+    public struct OpeningTime
+    {
+        public OpeningTime(TimeSpan start,TimeSpan end, Week week)
+        {
+            startTime = start;
+            endTime = end;
+            dayOfWeek = week;
+        }
+        public TimeSpan startTime { get; set; }
+        public TimeSpan endTime { get; set; }
+        public Week dayOfWeek { get; set; }
+    }
+
+    public struct ProcessRecord 
     {
         public string TitleName { get; set; }
         public string AdditionalMsg { get; set; }
-        public List<Tuple<DateTime, DateTime>> OpeningHours { get; set; }
+        public List<OpeningTime> OpeningHours { get; set; }
         public string CareNoom { get; set; }
         public Guid _waypointID { get; set; }
         public Guid _regionID { get; set; }

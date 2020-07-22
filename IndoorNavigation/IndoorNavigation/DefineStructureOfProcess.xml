@@ -6,13 +6,15 @@
         <CareRoom name="批價"/>
       </record>
       <record name="領藥" note="請在檢查前兩日完成衛教">
+        <CareRoom name="領藥"/>
       </record>
       <record name="223診衛教" note="抽號碼牌、時間、帶東西">
+        <CareRoom name="223診"/>
         <addition>
           <note text="請記得攜帶健保卡、檢查排程單、同意書及藥品"/>
           <opentime>
             <dayoftheweek day="Saturday" startTime="08:30" endTime="13:00"/>
-            <dayoftheweek day="Sunday" startTime="24:00" endTime="24:00"/>
+            <dayoftheweek day="Sunday" startTime="23:59" endTime="23:59"/>
             <dayoftheweek day="Workingday" startTime="08:30" endTime="17:30"/>
           </opentime>
         </addition>
@@ -22,8 +24,8 @@
         <addition>
           <note text="請記得攜帶健保卡、排程單、同意書及藥品"/>
           <opentime>
-            <dayoftheweek day="Saturday" startTime="24:00" endTime="24:00"/>
-            <dayoftheweek day="Sunday" startTime="24:00" endTime="24:00"/>
+            <dayoftheweek day="Saturday" startTime="23:59" endTime="23:59"/>
+            <dayoftheweek day="Sunday" startTime="23:59" endTime="23:59"/>
             <dayoftheweek day="Workingday" startTime="17:30" endTime="21:00"/>
           </opentime>
         </addition>
@@ -44,7 +46,7 @@
       <record name="223診衛教">
         <CareRoom name="223診"/>
         <addition>
-          <Beforenote text="請記得攜帶健保卡、手術同意書、手術前須知"/>
+          <note text="請記得攜帶健保卡、手術同意書、手術前須知"/>
           <opentime>
             <dayoftheweek day="Saturday" startTime="08:30" endTime="13:00"/>
             <dayoftheweek day="Sunday" startTime="24:00" endTime="24:00"/>
@@ -55,7 +57,7 @@
       <record name="301麻醉評估" note="帶東西、開放時間">
         <CareRoom name="電梯" />
         <addition>
-          <Beforenote text="請記得攜帶健保卡、手術同意書"/>
+          <note text="請記得攜帶健保卡、手術同意書"/>
           <opentime>
             <dayoftheweek day="Saturday" startTime="08:00" endTime="12:00"/>
             <dayoftheweek day="Sunday" startTime="24:00" endTime="24:00"/>
