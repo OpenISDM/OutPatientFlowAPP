@@ -27,12 +27,6 @@
                             <On Platform="iOS" Value="170"/>
                         </OnPlatform>
                     </ViewCell.Height>
-                    <!--<ViewCell.ContextActions>
-                        <MenuItem Clicked="RemoveItem_Clicked" 
-								  CommandParameter="{Binding .}"
-                                  Text="Delete" 
-								  IsDestructive="True" />
-                    </ViewCell.ContextActions>-->
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" 
 									 Margin="10,0,10,0" 

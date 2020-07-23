@@ -48,6 +48,8 @@ using System.IO;
 using Plugin.InputKit.Shared.Controls;
 using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Models;
+using System.Collections.ObjectModel;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -121,8 +123,10 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             GenerateBox();
         }
-		
-		//for generate selection with input data, and make layout.
+
+        List<CheckBox> processBoxes = new List<CheckBox>();
+
+        //for generate selection with input data, and make layout.
         private void GenerateBox()
         {
             List<CheckBox> boxList;
@@ -238,12 +242,44 @@ namespace IndoorNavigation.Views.PopUpPage
             outSideGrid.Children.Add(
 				new ScrollView {Content=BoxLayout}, 2, 5, 0, 5
 			);
-            BoxesDict.Add("revisit", boxList);
+            BoxesDict.Add("revisit", boxList);           
+            mainStackLayout.Children.Add(outSideGrid);
+
+            mainStackLayout.Children.Add(new BoxView
+            {
+                BackgroundColor = Color.FromHex("#3f51b5"),
+                HeightRequest = 1
+            });
             #endregion
 
-            mainStackLayout.Children.Add(outSideGrid);
-			
-			//blue line for dividing every depart
+            #region part of Suit Process Checkbox
+            HospitalProcessParse processParse = new HospitalProcessParse();
+
+            StackLayout processStackLayout = new StackLayout();
+
+            List<ProcessOption> processOptions = 
+                processParse.GetProcessOption();
+
+            
+
+            foreach(ProcessOption option in processOptions)
+            {
+                Console.WriteLine("Generate one time process box");
+                CheckBox optionBox = new CheckBox
+                {
+                    Key = int.Parse(option.processID),
+                    Text = option.processName,
+                    TextFontSize =
+                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                    Margin = new Thickness(0, -3),
+                    Type=CheckBox.CheckType.Box
+                };
+                processStackLayout.Children.Add(optionBox);
+                processBoxes.Add(optionBox);
+            }
+            mainStackLayout.Children.Add(processStackLayout);
+            #endregion
+            //blue line for dividing every depart
             mainStackLayout.Children.Add(new BoxView 
 				{ BackgroundColor = Color.FromHex("#3f51b5"), HeightRequest = 1 
 			});
@@ -279,7 +315,7 @@ namespace IndoorNavigation.Views.PopUpPage
             int index = 
 				(app.roundRecord == null || 
 				!app.lastFinished.type.Equals(RecordType.Queryresult)) ? 
-				(app.records.Count - 1) : 
+				(app.records.Count) : 
 				(app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
             foreach (string dptName in DepartmentList)
@@ -334,6 +370,30 @@ namespace IndoorNavigation.Views.PopUpPage
 												   currentLanguage)
 						+"-"+app._TmpRecords[box.Key].DptName
                 });
+                count++;
+            }
+
+            foreach(CheckBox optionBox in processBoxes)
+            {
+                Console.WriteLine(">>CheckBox optionBox in processBoxes");
+                if (optionBox.IsChecked)
+                {
+                    Console.WriteLine("Checked process Name : " + optionBox.Text);
+                    Console.WriteLine("Checked process Key : " + optionBox.Key);
+
+                    HospitalProcessParse parse = new HospitalProcessParse();
+                    ObservableCollection<RgRecord> SuitProcess =
+                        parse.ParseProcess(new ProcessOption
+                        {
+                            processID = optionBox.Key.ToString(),
+                            processName = optionBox.Text
+                        }) ;
+                    foreach(RgRecord record in SuitProcess)
+                    {
+                        ((App)Application.Current).records.Add(record);
+                    }
+                    //((App)Application.Current).records = SuitProcess;
+                }
                 count++;
             }
 

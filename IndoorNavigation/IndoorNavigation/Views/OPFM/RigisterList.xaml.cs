@@ -22,6 +22,7 @@ using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Yuanlin_OPFM;
+using System.Dynamic;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -75,34 +76,152 @@ namespace IndoorNavigation.Views.OPFM
             if (isButtonPressed) return;
             isButtonPressed = true;
 
+            #region For Detect Current Time
+            DateTime CurrentDate = DateTime.Now;
+            TimeSpan CurrentTimespan = DateTime.Now.TimeOfDay;
+
+            Console.WriteLine("CurrentTimeSpan : " + CurrentTimespan);
+            #endregion           
             if (e.Item is RgRecord record)
-            {                       
-                if(record.type.Equals(RecordType.Pharmacy) && 
-				   (app.lastFinished==null || 
-				   !app.lastFinished.type.Equals(RecordType.Cashier)))
+            {
+                if ((app.lastFinished == null && 
+                    !(record.order==0 || record.order==1))
+                    || (app.lastFinished!=null && 
+                    !(app.lastFinished.order == record.order 
+                    || app.lastFinished.order == record.order-1 || 
+                    record.order == 0)))
                 {
-                    await PopupNavigation.Instance.PushAsync
-						( new AlertDialogPopupPage
-							(getResourceString("PHARMACY_ALERT_STRING"), 
-							 getResourceString("OK_STRING")
-							)
-						);
+                    Console.WriteLine("Please do something first thanks");
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請照著順序做完謝謝"), "OK"));
                     RefreshListView();
-                    ((ListView)sender).SelectedItem = null;
-                    isButtonPressed = false;
                     return;
-                }                               
-                await Navigation.PushAsync
-					(new NavigatorPage(_navigationGraphName, 
-									   record._regionID, 
-									   record._waypointID, 
-									   record._waypointName, 
-									   _nameInformation)
-					);
-                record.isComplete = true;
+                }
+                #region For limit Pharmacy and Cashier
+                //if (record.type.Equals(RecordType.Pharmacy) &&
+                //   (app.lastFinished == null ||
+                //   !app.lastFinished.type.Equals(RecordType.Cashier)))
+                //{
+                //    await PopupNavigation.Instance.PushAsync
+                //        (new AlertDialogPopupPage
+                //            (getResourceString("PHARMACY_ALERT_STRING"),
+                //             getResourceString("OK_STRING")
+                //            )
+                //        );
+                //    RefreshListView();
+                //    ((ListView)sender).SelectedItem = null;
+                //    isButtonPressed = false;
+                //    return;
+                //}
+                #endregion
+                #region if the clinic has open timing.
+                else if (record.OpeningHours != null &&
+                    !isCareRoomOpening(record.OpeningHours))
+                {
+                    Console.WriteLine("The service is not available now.");
+                    //do some alert implementation
+
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage
+                        ("現在該診間不開放，請問還是要去嗎?",
+                        "前往",
+                        "否",
+                        "Still go to careroom"));
+
+                    MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
+                        (this, "Still go to careroom",
+                        async (MsgSender, MsgArgs) =>
+                        {
+                            Console.WriteLine("Get Subscribe string");
+
+                            if ((bool)MsgArgs)
+                            {
+                                await PopupNavigation.Instance.PopAllAsync();
+                                await Navigation.PushAsync
+                                    (new NavigatorPage(_navigationGraphName,
+                                               record._regionID,
+                                               record._waypointID,
+                                               record._waypointName,
+                                            _nameInformation));
+                                record.isComplete = true;
+                            }
+                            else
+                            {
+                                //isButtonPressed = false;
+                                await PopupNavigation.Instance.PopAllAsync();
+                            }
+                            MessagingCenter
+                            .Unsubscribe<AlertDialogPopupPage, bool>
+                            (this, "Still go to careroom");
+                        });
+                }
+                #endregion
+                else
+                {
+                    #region If the record has additional string.
+                    if (!string.IsNullOrEmpty(record.AdditionalMsg))
+                    {
+                        await PopupNavigation.Instance.PushAsync
+                            (new AlertDialogPopupPage(record.AdditionalMsg, "OK"));
+                    }
+                    #endregion
+                    await Navigation.PushAsync
+                        (new NavigatorPage(_navigationGraphName,
+                                           record._regionID,
+                                           record._waypointID,
+                                           record._waypointName,
+                                           _nameInformation)
+                        );
+                    record.isComplete = true;
+                }
+                
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
+        }
+
+
+        private Week GetDayofWeek()
+        {
+            switch(DateTime.Now.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return Week.Sunday;
+                case DayOfWeek.Saturday:
+                    return Week.Saturday;
+                default:
+                    return Week.Workingday;
+            }
+        }
+        private bool isCareRoomOpening(List<OpeningTime> openingTimes)
+        {
+            // TimeSpan compare function rule
+            // t1 < t2 return -1
+            // t1 = t2 return 0
+            // t1 > t2 return 1
+            if (openingTimes.Count <= 0) return true;
+
+            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
+            Week TodayOfWeekDay = GetDayofWeek();
+            Console.WriteLine("CurrentTimeSpan : " + CurrentTime);
+            Console.WriteLine("Week : " + TodayOfWeekDay);
+
+            foreach(OpeningTime openTime in openingTimes)
+            {
+                if (TodayOfWeekDay != openTime.dayOfWeek)
+                    continue;
+                int StartTimeCompare = 
+                    TimeSpan.Compare(CurrentTime, openTime.startTime);
+                int EndTimeCompare = 
+                    TimeSpan.Compare(openTime.endTime, CurrentTime);
+
+                if (StartTimeCompare ==1 && EndTimeCompare==1)
+                {
+                    Console.WriteLine("Current, the room is available now");
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         //the function is to control the button whether it is visible 
@@ -145,17 +264,20 @@ namespace IndoorNavigation.Views.OPFM
                     _regionID=cashier._regionID,
                     _waypointName=cashier._waypointName,
                     type=RecordType.Cashier,
-                    DptName=cashier._waypointName
+                    DptName=cashier._waypointName,
+                    order=app.lastFinished.order+1
                 });
             app.records.Add(new RgRecord { 
                     _waypointID=pharmacy._waypointID,
                     _regionID=pharmacy._regionID,
                     _waypointName=pharmacy._waypointName,
                     type=RecordType.Pharmacy,
-                    DptName=pharmacy._waypointName
+                    DptName=pharmacy._waypointName,
+                    order=app.lastFinished.order+2
                 });
 
-            RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, true);
+            RgListView.ScrollTo(app.records[app.records.Count - 1], 
+                ScrollToPosition.MakeVisible, true);
             isButtonPressed = false;           
         }
         
@@ -299,7 +421,7 @@ namespace IndoorNavigation.Views.OPFM
          {
             //request.GetXMLBody();
             //await request.RequestData();          
-            await FakeHISRequest.RequestFakeHIS();
+            //await FakeHISRequest.RequestFakeHIS();
             RefreshListView();
          }
 
@@ -337,6 +459,7 @@ namespace IndoorNavigation.Views.OPFM
         }
         private void RefreshListView()
         {
+            isButtonPressed = false ;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }

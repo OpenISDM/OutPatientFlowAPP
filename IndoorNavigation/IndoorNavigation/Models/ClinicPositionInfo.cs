@@ -46,7 +46,7 @@ namespace IndoorNavigation.Models
 {
     class ClinicPositionInfo
     {
-        private Dictionary<String, RegionWaypointPoint> _clinicsPositions;
+        private Dictionary<string, RegionWaypointPoint> _clinicsPositions;
 
         public ClinicPositionInfo()
         {
@@ -71,22 +71,47 @@ namespace IndoorNavigation.Models
 				.Add(destinationNode.Attributes["name"].Value,
 					 new RegionWaypointPoint(Rguid,Dguid));
 
-                Console.WriteLine($"ID={destinationNode.Attributes["id"].Value}," 
-							+$"Name={destinationNode.Attributes["name"].Value}," 
-							+$"Region id={Rguid.ToString()}");               
+       //       Console.WriteLine($"ID={destinationNode.Attributes["id"].Value}," 
+						//+$"Name={destinationNode.Attributes["name"].Value}," 
+						//+$"Region id={Rguid.ToString()}");               
             }
         }
         public Guid GetRegionID(string key)
-        {
-            if (!_clinicsPositions.ContainsKey(key))
+        {        
+            try
+            {
+                return _clinicsPositions[key]._regionID;
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("DictionaryError : " + exc.Message);
                 return new Guid();
-            return _clinicsPositions[key]._regionID;
+            }
         }
         public Guid GetWaypointID(string key)
-        {
-            if (!_clinicsPositions.ContainsKey(key))
+        {           
+            try
+            {
+                return _clinicsPositions[key]._waypointID;
+            }catch(Exception exc)
+            {
+                Console.WriteLine("Try to get waypointID dictionary Error :"
+                    + exc.Message);
                 return new Guid();
-            return _clinicsPositions[key]._waypointID;
+            }
+        }
+        public RegionWaypointPoint GetWaypoint(string key)
+        {
+            try
+            {
+                return _clinicsPositions[key];
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("Get waypoint error" + exc.Message);
+
+                return new RegionWaypointPoint(new Guid(), new Guid());
+            }
         }
     }    
 }
