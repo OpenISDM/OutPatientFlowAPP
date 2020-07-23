@@ -9,6 +9,7 @@ using System.Reflection;
 using IndoorNavigation.Views.Navigation;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation
 {
@@ -23,6 +24,13 @@ namespace IndoorNavigation
         //date name shift careroom drname seq
         public bool isComplete { get; set; }
         public bool isAccept { get; set; }
+        #region For Process Suit
+        public int order { get; set; }
+        public string TitleName { get; set; }
+        public string AdditionalMsg { get; set; }
+        public List<OpeningTime> OpeningHours { get; set; }
+        #endregion
+
         public override string ToString() => _waypointName;
        
     }
@@ -40,6 +48,7 @@ namespace IndoorNavigation
     {
         Register = 0,
         Queryresult,
+        Examination,
         AddItem,
         Pharmacy,
         Cashier,

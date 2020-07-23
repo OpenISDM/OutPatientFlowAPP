@@ -9,7 +9,7 @@
                 xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.RigisterList">
+             x:Class="IndoorNavigation.Views.OPFM.RigisterList">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -27,12 +27,6 @@
                             <On Platform="iOS" Value="170"/>
                         </OnPlatform>
                     </ViewCell.Height>
-                    <!--<ViewCell.ContextActions>
-                        <MenuItem Clicked="RemoveItem_Clicked" 
-								  CommandParameter="{Binding .}"
-                                  Text="Delete" 
-								  IsDestructive="True" />
-                    </ViewCell.ContextActions>-->
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" 
 									 Margin="10,0,10,0" 

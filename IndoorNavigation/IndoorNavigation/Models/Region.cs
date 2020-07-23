@@ -63,5 +63,11 @@ namespace IndoorNavigation.Models
     {
         public Guid _regionID { get; set; }
         public Guid _waypointID { get; set; }
+
+        public RegionWaypointPoint(Guid regionID, Guid waypointID)
+        {
+            this._regionID = regionID;
+            this._waypointID = waypointID;
+        }
     }
 }

@@ -48,6 +48,8 @@ using System.IO;
 using Plugin.InputKit.Shared.Controls;
 using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Models;
+using System.Collections.ObjectModel;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -121,6 +123,8 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             GenerateBox();
         }
+
+        List<CheckBox> processBoxes = new List<CheckBox>();
 
         //for generate selection with input data, and make layout.
         private void GenerateBox()
@@ -245,10 +249,42 @@ namespace IndoorNavigation.Views.PopUpPage
                 new ScrollView { Content = BoxLayout }, 2, 5, 0, 5
             );
             BoxesDict.Add("revisit", boxList);
-            #endregion
-
             mainStackLayout.Children.Add(outSideGrid);
 
+            mainStackLayout.Children.Add(new BoxView
+            {
+                BackgroundColor = Color.FromHex("#3f51b5"),
+                HeightRequest = 1
+            });
+            #endregion
+
+            #region part of Suit Process Checkbox
+            HospitalProcessParse processParse = new HospitalProcessParse();
+
+            StackLayout processStackLayout = new StackLayout();
+
+            List<ProcessOption> processOptions =
+                processParse.GetProcessOption();
+
+
+
+            foreach (ProcessOption option in processOptions)
+            {
+                Console.WriteLine("Generate one time process box");
+                CheckBox optionBox = new CheckBox
+                {
+                    Key = int.Parse(option.processID),
+                    Text = option.processName,
+                    TextFontSize =
+                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                    Margin = new Thickness(0, -3),
+                    Type = CheckBox.CheckType.Box
+                };
+                processStackLayout.Children.Add(optionBox);
+                processBoxes.Add(optionBox);
+            }
+            mainStackLayout.Children.Add(processStackLayout);
+            #endregion
             //blue line for dividing every depart
             mainStackLayout.Children.Add(new BoxView
             {
@@ -307,6 +343,10 @@ namespace IndoorNavigation.Views.PopUpPage
                     if (isDuplicate)
                         continue;
 
+                    int order =
+                        app.OrderDistrict.ContainsKey(0) ?
+                        app.OrderDistrict[0] : 0;
+
                     app.records.Insert(index++, new RgRecord
                     {
                         _waypointID = items[box.Key]._waypointID,
@@ -314,7 +354,9 @@ namespace IndoorNavigation.Views.PopUpPage
                         _waypointName = items[box.Key]._waypointName,
                         _floor = items[box.Key]._floor,
                         type = RecordType.AddItem,
-                        DptName = dptName + "-" + items[box.Key].DisplayName
+                        DptName = dptName + "-" + items[box.Key].DisplayName,
+                        _groupID = 0,
+                        order = order + 1
                     });
                     count++;
                 }
@@ -344,6 +386,30 @@ namespace IndoorNavigation.Views.PopUpPage
                                                    currentLanguage)
                         + "-" + app._TmpRecords[box.Key].DptName
                 });
+                count++;
+            }
+
+            foreach (CheckBox optionBox in processBoxes)
+            {
+                Console.WriteLine(">>CheckBox optionBox in processBoxes");
+                if (optionBox.IsChecked)
+                {
+                    Console.WriteLine("Checked process Name : " + optionBox.Text);
+                    Console.WriteLine("Checked process Key : " + optionBox.Key);
+
+                    HospitalProcessParse parse = new HospitalProcessParse();
+                    ObservableCollection<RgRecord> SuitProcess =
+                        parse.ParseProcess(new ProcessOption
+                        {
+                            processID = optionBox.Key.ToString(),
+                            processName = optionBox.Text
+                        });
+                    foreach (RgRecord record in SuitProcess)
+                    {
+                        ((App)Application.Current).records.Add(record);
+                    }
+                    //((App)Application.Current).records = SuitProcess;
+                }
                 count++;
             }
 

@@ -17,15 +17,12 @@ using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
-using IndoorNavigation.Views.Controls;
 using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Yuanlin_OPFM;
-using IndoorNavigation;
-using DestinationItem = IndoorNavigation.DestinationItem;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Views.OPFM
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : CustomToolbarContentPage
@@ -77,34 +74,179 @@ namespace IndoorNavigation
             if (isButtonPressed) return;
             isButtonPressed = true;
 
+            #region For Detect Current Time
+            DateTime CurrentDate = DateTime.Now;
+            TimeSpan CurrentTimespan = DateTime.Now.TimeOfDay;
+            Console.WriteLine("CurrentTimeSpan : " + CurrentTimespan);
+            #endregion           
             if (e.Item is RgRecord record)
             {
-                if (record.type.Equals(RecordType.Pharmacy) &&
-                   (app.lastFinished == null ||
-                   !app.lastFinished.type.Equals(RecordType.Cashier)))
+                if (app.OrderDistrict.ContainsKey(record._groupID) && !(app.OrderDistrict[record._groupID] == record.order || app.OrderDistrict[record._groupID] == record.order - 1)
+                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))
                 {
+                    Console.WriteLine("please do something first");
+                    string BannerName = "";
+                    for (int i = app.records.IndexOf(record); i >= 0; i--)
+                    {
+                        Console.WriteLine("Loop i = {0}, dptname = {1}", i, app.records[i]);
+                        if (app.records[i].order == record.order - 1 &&
+                            app.records[i]._groupID == record._groupID)
+                        {
+                            if (string.IsNullOrEmpty(BannerName))
+                            {
+                                BannerName = app.records[i].DptName;
+                            }
+                            else
+                            {
+                                BannerName =
+                                    BannerName + "," + app.records[i].DptName;
+                            }
+                        }
+
+                    }
+
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請先做完{0}", BannerName), "好吧"));
+                }
+                #region one way order distinct
+                //if ((app.lastFinished == null && 
+                //    !(record.order==0 || record.order==1))
+                //    || (app.lastFinished!=null && 
+                //    !(app.lastFinished.order == record.order 
+                //    || app.lastFinished.order == record.order-1 || 
+                //    record.order == 0)))
+                //{
+                //    Console.WriteLine("Please do something first thanks");
+                //    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請照著順序做完謝謝"), "OK"));
+                //    RefreshListView();
+                //    return;
+                //}
+                #endregion
+                #region For limit Pharmacy and Cashier
+                //if (record.type.Equals(RecordType.Pharmacy) &&
+                //   (app.lastFinished == null ||
+                //   !app.lastFinished.type.Equals(RecordType.Cashier)))
+                //{
+                //    await PopupNavigation.Instance.PushAsync
+                //        (new AlertDialogPopupPage
+                //            (getResourceString("PHARMACY_ALERT_STRING"),
+                //             getResourceString("OK_STRING")
+                //            )
+                //        );
+                //    RefreshListView();
+                //    ((ListView)sender).SelectedItem = null;
+                //    isButtonPressed = false;
+                //    return;
+                //}
+                #endregion
+                #region if the clinic has open timing.
+                else if (record.OpeningHours != null &&
+                    !isCareRoomOpening(record.OpeningHours))
+                {
+                    Console.WriteLine("The service is not available now.");
+                    //do some alert implementation
+
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                            (getResourceString("PHARMACY_ALERT_STRING"),
-                             getResourceString("OK_STRING")
-                            )
-                        );
-                    RefreshListView();
-                    ((ListView)sender).SelectedItem = null;
-                    isButtonPressed = false;
-                    return;
+                        ("現在該診間不開放，請問還是要去嗎?",
+                        "前往",
+                        "否",
+                        "Still go to careroom"));
+
+                    MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
+                        (this, "Still go to careroom",
+                        async (MsgSender, MsgArgs) =>
+                        {
+                            Console.WriteLine("Get Subscribe string");
+
+                            if ((bool)MsgArgs)
+                            {
+                                await PopupNavigation.Instance.PopAllAsync();
+                                await Navigation.PushAsync
+                                    (new NavigatorPage(_navigationGraphName,
+                                               record._regionID,
+                                               record._waypointID,
+                                               record._waypointName,
+                                            _nameInformation));
+                                record.isComplete = true;
+                            }
+                            else
+                            {
+                                //isButtonPressed = false;
+                                await PopupNavigation.Instance.PopAllAsync();
+                            }
+                            MessagingCenter
+                            .Unsubscribe<AlertDialogPopupPage, bool>
+                            (this, "Still go to careroom");
+                        });
                 }
-                await Navigation.PushAsync
-                    (new NavigatorPage(_navigationGraphName,
-                                       record._regionID,
-                                       record._waypointID,
-                                       record._waypointName,
-                                       _nameInformation)
-                    );
-                record.isComplete = true;
+                #endregion
+                else
+                {
+                    #region If the record has additional string.
+                    if (!string.IsNullOrEmpty(record.AdditionalMsg))
+                    {
+                        await PopupNavigation.Instance.PushAsync
+                            (new AlertDialogPopupPage(record.AdditionalMsg, "OK"));
+                    }
+                    #endregion
+                    await Navigation.PushAsync
+                        (new NavigatorPage(_navigationGraphName,
+                                           record._regionID,
+                                           record._waypointID,
+                                           record._waypointName,
+                                           _nameInformation)
+                        );
+                    record.isComplete = true;
+                }
+
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
+        }
+
+
+        private Week GetDayofWeek()
+        {
+            switch (DateTime.Now.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return Week.Sunday;
+                case DayOfWeek.Saturday:
+                    return Week.Saturday;
+                default:
+                    return Week.Workingday;
+            }
+        }
+        private bool isCareRoomOpening(List<OpeningTime> openingTimes)
+        {
+            // TimeSpan compare function rule
+            // t1 < t2 return -1
+            // t1 = t2 return 0
+            // t1 > t2 return 1
+            if (openingTimes.Count <= 0) return true;
+
+            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
+            Week TodayOfWeekDay = GetDayofWeek();
+            Console.WriteLine("CurrentTimeSpan : " + CurrentTime);
+            Console.WriteLine("Week : " + TodayOfWeekDay);
+
+            foreach (OpeningTime openTime in openingTimes)
+            {
+                if (TodayOfWeekDay != openTime.dayOfWeek)
+                    continue;
+                int StartTimeCompare =
+                    TimeSpan.Compare(CurrentTime, openTime.startTime);
+                int EndTimeCompare =
+                    TimeSpan.Compare(openTime.endTime, CurrentTime);
+
+                if (StartTimeCompare == 1 && EndTimeCompare == 1)
+                {
+                    Console.WriteLine("Current, the room is available now");
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         //the function is to control the button whether it is visible 
@@ -142,13 +284,18 @@ namespace IndoorNavigation
                 pharmacy = PharmacyPostition.First().Value;
             }
 
+            int order =
+                app.OrderDistrict.ContainsKey(0) ? app.OrderDistrict[0] : 0;
+
             app.records.Add(new RgRecord
             {
                 _waypointID = cashier._waypointID,
                 _regionID = cashier._regionID,
                 _waypointName = cashier._waypointName,
                 type = RecordType.Cashier,
-                DptName = cashier._waypointName
+                DptName = cashier._waypointName,
+                order = order + 1,
+                _groupID = 0
             });
             app.records.Add(new RgRecord
             {
@@ -156,10 +303,13 @@ namespace IndoorNavigation
                 _regionID = pharmacy._regionID,
                 _waypointName = pharmacy._waypointName,
                 type = RecordType.Pharmacy,
-                DptName = pharmacy._waypointName
+                DptName = pharmacy._waypointName,
+                order = order + 2,
+                _groupID = 0
             });
 
-            RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, true);
+            RgListView.ScrollTo(app.records[app.records.Count - 1],
+                ScrollToPosition.MakeVisible, true);
             isButtonPressed = false;
         }
 
@@ -297,6 +447,37 @@ namespace IndoorNavigation
                         PaymemtListBtn.IsVisible = true;
                     }
                 }
+                int index = app.records.IndexOf(FinishBtnClickItem);
+                //for (int i = 0; i < app.records.Count; i++)
+                //{
+                //    if (!app.records[i].isAccept &&
+                //        app.records[i].order == FinishBtnClickItem.order &&
+                //        app.records[i]._groupID == app.records[i]._groupID)
+                //    {
+                //        return;
+                //    }
+                //}
+                if (app.OrderDistrict.ContainsKey(FinishBtnClickItem._groupID))
+                {
+                    app.OrderDistrict[FinishBtnClickItem._groupID] = FinishBtnClickItem.order;
+                }
+                else
+                {
+                    app.OrderDistrict.Add(FinishBtnClickItem._groupID, FinishBtnClickItem.order);
+                }
+
+                for (int i = index; i < app.records.Count; i++)
+                {
+                    if (app.records[i].order >= FinishBtnClickItem.order + 2
+                        && app.records[i]._groupID == FinishBtnClickItem._groupID)
+                        break;
+                    if ((app.records[i].order <= FinishBtnClickItem.order + 1) &&
+                     app.records[i]._groupID == FinishBtnClickItem._groupID)
+                    {
+                        app.records[i].isComplete = true;
+                    }
+                }
+                RefreshListView();
             }
         }
 
@@ -342,6 +523,7 @@ namespace IndoorNavigation
         }
         private void RefreshListView()
         {
+            isButtonPressed = false;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }
@@ -430,7 +612,7 @@ namespace IndoorNavigation
         {
             SignInCommand = new Command(async () => await SignInItemMethod());
             InfoItemCommand = new Command(async () => await InfoItemMethod());
-
+            ClearItemCommand = new Command(async () => await ClearItemMethod());
             ToolbarItems.Clear();
 
             ToolbarItem SignInItem =
@@ -448,7 +630,13 @@ namespace IndoorNavigation
                     Command = InfoItemCommand,
                     Order = ToolbarItemOrder.Secondary
                 };
-
+            ToolbarItem ClearItem =
+                new ToolbarItem
+                {
+                    Text = "清除",
+                    Command = ClearItemCommand,
+                    Order = ToolbarItemOrder.Secondary
+                };
             ToolbarItem TestItem =
                 new ToolbarItem
                 {
@@ -458,7 +646,7 @@ namespace IndoorNavigation
                 };
             ToolbarItems.Add(SignInItem);
             ToolbarItems.Add(InfoItem);
-
+            ToolbarItems.Add(ClearItem);
             OnToolbarItemAdded();
 
         }
@@ -485,7 +673,33 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new NavigatorSettingPage());
             await Task.CompletedTask;
         }
+        private async Task ClearItemMethod()
+        {
+            Console.WriteLine("Clear item click");
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("確定要將所有紀錄清除嗎?", "清除", "不要", "ClearOrNot"));
 
+            MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot", (MsgSender, MsgArgs) =>
+            {
+                Console.WriteLine("Get ClearOrNot message.");
+
+                if ((bool)MsgArgs)
+                {
+                    app.records.Clear();
+                    app._TmpRecords.Clear();
+                    app.OrderDistrict.Clear();
+                    app.HaveCashier = false;
+                    app.lastFinished = null;
+                    app.isRigistered = false;
+                    app.getRigistered = false;
+                    Buttonable(true);
+                    OnAppearing();
+                }
+                else
+                {
+                    //do nothing;
+                }
+            });
+        }
         protected void OnToolbarItemAdded()
         {
             Console.WriteLine("call onToolbarItemAdded");
@@ -498,7 +712,7 @@ namespace IndoorNavigation
         public ICommand SignInCommand { get; set; }
         public ICommand InfoItemCommand { get; set; }
         public ICommand TestItemCommand { get; set; }
-
+        public ICommand ClearItemCommand { get; set; }
         public override Color CellBackgroundColor => Color.White;
         public override Color CellTextColor => Color.Black;
         public override Color MenuBackgroundColor => Color.White;
@@ -510,6 +724,52 @@ namespace IndoorNavigation
         public override float TableWidth => 250;
         #endregion
 
+        #endregion
+
+        #region for scroll down events.
+        //int _lastItemAppearedIndex = 0;
+        //private void RgListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        //{
+        //    var currentIndex = app.records.IndexOf(e.Item as RgRecord);
+
+        //    if (currentIndex > _lastItemAppearedIndex)
+        //        Buttonable(true);
+        //    else
+        //        Buttonable(false);
+
+        //    _lastItemAppearedIndex = app.records.IndexOf(e.Item as RgRecord);
+        //}
+
+        //double previousScrollPosition = 0;
+        //private void RgListView_Scrolled(object sender, ScrolledEventArgs e)
+        //{
+        //    if (e.ScrollY == 0) return;
+
+        //    if (previousScrollPosition >= e.ScrollY)
+        //    {
+        //        Buttonable(true);
+        //        if (e.ScrollY == 0 || Convert.ToInt32(e.ScrollY) == 0)
+        //            previousScrollPosition = 0;
+        //    }
+
+        //    else
+        //    {
+        //        Buttonable(false);
+        //        previousScrollPosition = e.ScrollY;
+        //    }
+        //    previousScrollPosition = e.ScrollY;
+        //    if (previousScrollPosition < e.ScrollY)
+        //    {
+        //        Buttonable(false);
+        //        previousScrollPosition = e.ScrollY;
+        //    }
+        //    else if (previousScrollPosition >= e.sc)
+        //    {
+        //        Buttonable(true);
+        //        if (Convert.ToInt32(e.ScrollY) == 0)
+        //            previousScrollPosition = 0;
+        //    }
+        //}
         #endregion
     }
 }

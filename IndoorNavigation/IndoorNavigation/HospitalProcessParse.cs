@@ -12,11 +12,14 @@ using System.Linq;
 using Newtonsoft.Json.Converters;
 using System.Reflection;
 using System.Diagnostics;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation.Models
 {
     public class HospitalProcessParse
     {
+        private ClinicPositionInfo _infos = new ClinicPositionInfo();
         public HospitalProcessParse()
         {
 
@@ -39,67 +42,76 @@ namespace IndoorNavigation.Models
                 {
                     processID = processNode.Attributes["id"].Value,
                     processName = processNode.Attributes["name"].Value
-                };
-                //i = int.Parse(processNode.Attributes["id"].Value);
-                //SelectList.Add(processNode.Attributes["name"].Value);
+                };                
                 Console.WriteLine("Process Name : {0}, id : {1}", 
                     processNode.Attributes["name"].Value, i++);
+
+                SelectList.Add(option);
             }
             return SelectList;
             //throw new NotImplementedException();
         }
-
-        public ObservableCollection<ProcessRecord> ParseProcess
-            (ProcessOption selectedOption)
-        {           
+        public ObservableCollection<RgRecord> ParseProcess
+           (ProcessOption selectedOption)
+        {
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
-            ObservableCollection<ProcessRecord> result = 
-                new ObservableCollection<ProcessRecord>();
-            string xmlPath =
+            ObservableCollection<RgRecord> result =
+                new ObservableCollection<RgRecord>();
+            string QueryxmlPath =
                 string.Format("processes/process[@id='{0}' and @name='{1}']",
                 selectedOption.processID, selectedOption.processName);
-            XmlNodeList ProcessNodeList = 
-                doc.SelectNodes(xmlPath);
+
+            XmlNodeList ProcessNodeList = doc.SelectNodes(QueryxmlPath);
 
             // This Loop must only run one time theortically. 
             foreach (XmlNode node in ProcessNodeList)
-            {              
-                XmlNodeList RecordNodeList = 
+            {
+                XmlNodeList RecordNodeList =
                     node.SelectNodes("records/record");
 
                 #region Temperoray code region
                 List<OpeningTime> openingTimes = new List<OpeningTime>();
-                string AdditionalRequire="";
+                string AdditionalRequire = "";
                 string CareRoom;
                 string RecordName;
+                int order = 0;
+                RecordType type;
                 #endregion
 
                 foreach (XmlNode recordNode in RecordNodeList)
                 {
-                    RecordName = recordNode.Attributes["name"].Value;                   
+                    openingTimes = new List<OpeningTime>();
+                    RecordName = recordNode.Attributes["name"].Value;
+
                     XmlNode CareRoomXmlNode = recordNode.ChildNodes[0];
-                    CareRoom = CareRoomXmlNode.Attributes["name"].Value;
-                    
+                    CareRoom = 
+                        CareRoomXmlNode.Attributes["name"].Value;
+                    type = 
+                        (RecordType)Enum.Parse(typeof(RecordType), 
+                        CareRoomXmlNode.Attributes["type"].Value, 
+                        false);
+
+                    order = 
+                        int.Parse(CareRoomXmlNode.Attributes["order"].Value);
+
                     #region If the department need additionally require.
                     if (recordNode.ChildNodes.Count >= 2)
                     {
                         XmlNode AdditionXmlNode = recordNode.ChildNodes[1];
 
                         XmlNode noteXmlNode = AdditionXmlNode.ChildNodes[0];
-                        AdditionalRequire = 
-                            noteXmlNode.Attributes["text"].Value;
-                        Console.WriteLine("noteXml note text : " +
-                            AdditionalRequire);
+                        AdditionalRequire =
+                            noteXmlNode.Attributes["text"].Value;                        
 
                         #region If this department has opening time. 
-                        if (AdditionXmlNode.ChildNodes.Count>=2)
+                        if (AdditionXmlNode.ChildNodes.Count >= 2)
                         {
                             Console.WriteLine("Enter OpenTime statement");
                             XmlNodeList openTimeXmlNodeList =
                                 AdditionXmlNode.ChildNodes[1]
-                                .SelectNodes("dayoftheweek");                          
-                            foreach(XmlNode dayOfTheWeek in openTimeXmlNodeList)
+                                .SelectNodes("dayoftheweek");
+                            foreach (XmlNode dayOfTheWeek in openTimeXmlNodeList)
                             {
                                 Console.WriteLine("dayOftheWeek hour :"
                                     + dayOfTheWeek.Attributes["day"].Value);
@@ -111,37 +123,125 @@ namespace IndoorNavigation.Models
                     }
                     #endregion
 
-                    ProcessRecord processRecord = new ProcessRecord
+                    RegionWaypointPoint point = _infos.GetWaypoint(CareRoom);
+                    bool isComplete = false;
+                    bool isAccept = false; 
+                    if( point._waypointID == Guid.Empty ||
+                        point._regionID == Guid.Empty)
+                    {
+                        RecordName = RecordName + "(無效的航點)";
+                        isComplete = true;
+                        isAccept = true;
+                        ((App)Application.Current).FinishCount++;
+                    }
+                    RgRecord processRecord = new RgRecord
                     {
                         OpeningHours = openingTimes,
                         TitleName = RecordName,
-                        CareNoom = CareRoom,
+                        CareRoom = CareRoom,
                         AdditionalMsg = AdditionalRequire,
+                        type = type,
+                        DptName = RecordName,
+                        _waypointName = CareRoom,
+                        _regionID = point._regionID,
+                        _waypointID = point._waypointID,
+                        isComplete=isComplete,
+                        order=order,
+                        isAccept = isAccept
                     };
                     result.Add(processRecord);
-                }                
-            }
-            Console.WriteLine("Result count : " + result.Count);
+                }
+            }            
             return result;
         }
+        //public ObservableCollection<ProcessRecord> ParseProcess
+        //    (ProcessOption selectedOption)
+        //{           
+        //    XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
+
+        //    ObservableCollection<ProcessRecord> result = 
+        //        new ObservableCollection<ProcessRecord>();
+        //    string xmlPath =
+        //        string.Format("processes/process[@id='{0}' and @name='{1}']",
+        //        selectedOption.processID, selectedOption.processName);
+        //    XmlNodeList ProcessNodeList = 
+        //        doc.SelectNodes(xmlPath);
+
+        //    // This Loop must only run one time theortically. 
+        //    foreach (XmlNode node in ProcessNodeList)
+        //    {              
+        //        XmlNodeList RecordNodeList = 
+        //            node.SelectNodes("records/record");
+
+        //        #region Temperoray code region
+        //        List<OpeningTime> openingTimes = new List<OpeningTime>();
+        //        string AdditionalRequire="";
+        //        string CareRoom;
+        //        string RecordName;
+        //        #endregion
+
+        //        foreach (XmlNode recordNode in RecordNodeList)
+        //        {
+        //            RecordName = recordNode.Attributes["name"].Value;                   
+        //            XmlNode CareRoomXmlNode = recordNode.ChildNodes[0];
+        //            CareRoom = CareRoomXmlNode.Attributes["name"].Value;
+
+        //            #region If the department need additionally require.
+        //            if (recordNode.ChildNodes.Count >= 2)
+        //            {
+        //                XmlNode AdditionXmlNode = recordNode.ChildNodes[1];
+
+        //                XmlNode noteXmlNode = AdditionXmlNode.ChildNodes[0];
+        //                AdditionalRequire = 
+        //                    noteXmlNode.Attributes["text"].Value;
+        //                Console.WriteLine("noteXml note text : " +
+        //                    AdditionalRequire);
+
+        //                #region If this department has opening time. 
+        //                if (AdditionXmlNode.ChildNodes.Count>=2)
+        //                {
+        //                    Console.WriteLine("Enter OpenTime statement");
+        //                    XmlNodeList openTimeXmlNodeList =
+        //                        AdditionXmlNode.ChildNodes[1]
+        //                        .SelectNodes("dayoftheweek");                          
+        //                    foreach(XmlNode dayOfTheWeek in openTimeXmlNodeList)
+        //                    {
+        //                        Console.WriteLine("dayOftheWeek hour :"
+        //                            + dayOfTheWeek.Attributes["day"].Value);
+
+        //                        openingTimes.Add(ParsingOpenTime(dayOfTheWeek));
+        //                    }
+        //                }
+        //                #endregion
+        //            }
+        //            #endregion
+
+        //            ProcessRecord processRecord = new ProcessRecord
+        //            {
+        //                OpeningHours = openingTimes,
+        //                TitleName = RecordName,
+        //                CareNoom = CareRoom,
+        //                AdditionalMsg = AdditionalRequire,
+        //            };
+        //            result.Add(processRecord);
+        //        }                
+        //    }
+        //    Console.WriteLine("Result count : " + result.Count);
+        //    return result;
+        //}
         private OpeningTime ParsingOpenTime(XmlNode OpenTimeNode)
         {
             
             TimeSpan startTime =
                 TimeSpan.Parse(OpenTimeNode.Attributes["startTime"].Value);
-            //DateTime startTime = DateTime.Today.Add(start);
+
             TimeSpan endTime =
                 TimeSpan.Parse(OpenTimeNode.Attributes["endTime"].Value);
-            //DateTime endTime=
-                //DateTime.Parse(OpenTimeNode.Attributes["endTime"].Value);
-                
+            
             Week weekday = 
                 (Week)Enum.Parse(typeof(Week), 
                 OpenTimeNode.Attributes["day"].Value, 
-                false);
-            Console.WriteLine("start Time value : " + startTime);
-            Console.WriteLine("end Time value : " + endTime);
-            Console.WriteLine("weekday value : " + weekday);
+                false);          
 
             return new OpeningTime(startTime, endTime, weekday);
         }
@@ -174,16 +274,8 @@ namespace IndoorNavigation.Models
     {
         public string processID;
         public string processName;
-    }
-    public struct ProcessRecord 
-    {
-        public string TitleName { get; set; }
-        public string AdditionalMsg { get; set; }
-        public List<OpeningTime> OpeningHours { get; set; }
-        public string CareNoom { get; set; }
-        public Guid _waypointID { get; set; }
-        public Guid _regionID { get; set; }
-        public string _waypointName{ get; set; }
-        public RecordType _recordType { get; set; }
-    }
+
+        public override string ToString() => processName;
+        
+    }    
 }

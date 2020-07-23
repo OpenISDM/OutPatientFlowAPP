@@ -199,7 +199,7 @@ namespace IndoorNavigation.Yuanlin_OPFM
                     (RecordType)Enum.Parse(typeof(RecordType), type, true);
 
                 record._regionID = infos.GetRegionID(record.CareRoom);
-                record._waypointID = infos.GetDestinationID(record.CareRoom);
+                record._waypointID = infos.GetWaypointID(record.CareRoom);
 
                 if (record._regionID.Equals(Guid.Empty) &&
                     record._waypointID.Equals(Guid.Empty))
