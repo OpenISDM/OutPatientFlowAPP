@@ -50,6 +50,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models;
+using IndoorNavigation.ViewModels;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -58,36 +59,44 @@ using Plugin.Multilingual;
 using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
-using System.Security.Cryptography;
+using IndoorNavigation.Views.Navigation;
+using Prism.Navigation.Xaml;
+using IndoorNavigation.ViewModels.Navigation;
+using System.Collections.Generic;
 
-[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
     public partial class App : Application
     {
-        public ObservableCollection<RgRecord> records = new ObservableCollection<RgRecord>();
+        public ObservableCollection<RgRecord> records =
+            new ObservableCollection<RgRecord>();
+
         public int FinishCount = 0;
         public bool isRigistered = false;
         public bool getRigistered = false;
-        public ObservableCollection<RgRecord> _TmpRecords = new ObservableCollection<RgRecord>(); //to test select date 
-        public string IDnumber = Preferences.Get("ID_NUMBER_STRING", string.Empty);
+        public ObservableCollection<RgRecord> _TmpRecords =
+            new ObservableCollection<RgRecord>();
+        public string IDnumber =
+            Preferences.Get("ID_NUMBER_STRING", string.Empty);
+
         public bool HaveCashier = false;
-        public bool getCashier = false;
         public DateTime RgDate = DateTime.Now;
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;
-       
-        #region 
-        public Guid _tmpCurrentRegionID;
-        public Guid _tmpCurrentWaypointID;
+
+        #region for fix and new functions
+        public bool isResume = false;
+        public NavigatorPage _globalNavigatorPage = null;
         #endregion
+
+        public Dictionary<int, int> OrderDistrict = new Dictionary<int, int>();
         public App()
         {
             InitializeComponent();
-            Console.WriteLine("Current Culture is : " + CrossMultilingual.Current.DeviceCultureInfo);
+
             // Get the current device language
             AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
-           
             if (AppResources.Culture.ToString().Contains("zh-TW"))
             {
                 Current.Properties["LanguagePicker"] = "Chinese";
@@ -111,7 +120,7 @@ namespace IndoorNavigation
             AppCenter.Start("ios=3efcee27-6067-4f41-a94f-87c97d6b8118;" +
              "android=8cc03d85-0d94-4cec-b4b6-808719a60857",
              typeof(Analytics), typeof(Crashes));
-            
+
             // Beacon scan api must adjust later, it should regist after
             // navigraph is be loaded.
             Utility._ibeaconScan = DependencyService.Get<IBeaconScan>();
@@ -123,13 +132,29 @@ namespace IndoorNavigation
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            Console.WriteLine(">>OnSleep");
             base.OnSleep();
         }
 
         protected override void OnResume()
         {
             // Handle when your app resumes
+            Console.WriteLine(">>OnResume");
             base.OnResume();
+
+            isResume = true;
+        }
+
+        // This is for Android for onDestroy.
+        // If we don't implement it, the thread will not be destroyed and stuck
+        // here.
+        public void OnStop()
+        {
+            Console.WriteLine("Call Onstop");
+            if (_globalNavigatorPage != null)
+            {
+               // _globalNavigatorPage.Abort();
+            }
         }
     }
 }
