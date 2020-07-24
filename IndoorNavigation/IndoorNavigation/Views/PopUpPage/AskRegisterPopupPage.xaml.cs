@@ -85,6 +85,9 @@ namespace IndoorNavigation.Views.PopUpPage
             ResetAllState();
             ButtonLock = true;
             app.getRigistered = true;
+            int order =
+                       app.OrderDistrict.ContainsKey(0) ?
+                       app.OrderDistrict[0] : 0;
 
             RgRecord record = new RgRecord
             {
@@ -98,7 +101,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     _resourceManager.GetString("REGISTERED_COUNTER_STRING",
                                                currentLanguage),
                 type = RecordType.Register,
-                isComplete = true
+                isComplete = true,
+                order = order
             };
            
             await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
@@ -131,7 +135,7 @@ namespace IndoorNavigation.Views.PopUpPage
             ResetAllState();
             app.getRigistered = false;
 
-            await FakeHISRequest.RequestFakeHIS();
+            //await FakeHISRequest.RequestFakeHIS();
             //request.GetXMLBody();
             //await request.RequestData();
             MessagingCenter.Send(this, "isReset", true);            

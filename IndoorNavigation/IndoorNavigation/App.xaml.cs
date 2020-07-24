@@ -62,6 +62,7 @@ using System;
 using IndoorNavigation.Views.Navigation;
 using Prism.Navigation.Xaml;
 using IndoorNavigation.ViewModels.Navigation;
+using System.Collections.Generic;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -73,11 +74,9 @@ namespace IndoorNavigation
 			
         public int FinishCount = 0;
         public bool isRigistered = false;
-        public bool getRigistered = false;
-		
+        public bool getRigistered = false;	
         public ObservableCollection<RgRecord> _TmpRecords = 
-            new ObservableCollection<RgRecord>(); 
-			
+            new ObservableCollection<RgRecord>(); 			
         public string IDnumber = 
 			Preferences.Get("ID_NUMBER_STRING", string.Empty);
 			
@@ -86,8 +85,12 @@ namespace IndoorNavigation
         public RgRecord roundRecord = null;
         public RgRecord lastFinished = null;
 
+        #region for fix and new functions
         public bool isResume = false;
         public NavigatorPage _globalNavigatorPage = null;
+        #endregion
+
+        public Dictionary<int, int> OrderDistrict = new Dictionary<int, int>();
         public App()
         {
             InitializeComponent();

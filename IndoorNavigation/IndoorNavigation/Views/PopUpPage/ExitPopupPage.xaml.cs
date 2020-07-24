@@ -180,6 +180,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 if (radio.IsChecked)
                 {
                     string radioName = radio.Text;
+                    int order =
+                       app.OrderDistrict.ContainsKey(0) ?
+                       app.OrderDistrict[0] : 0;
                     //app.records.Insert(app.FinishCount, new RgRecord
                     app.records.Add(new RgRecord 
                     {
@@ -189,7 +192,8 @@ namespace IndoorNavigation.Views.PopUpPage
                         _waypointID = ExitItems[radioName]._waypointID,
                         _floor = ExitItems[radioName]._floor,
                         isComplete = true,
-                        DptName = radioName
+                        DptName = radioName,
+                        order=order
                     });
                     await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, ExitItems[radioName]._regionID, ExitItems[radioName]._waypointID, radioName, _nameInformation)); ;
                     await PopupNavigation.Instance.PopAsync();

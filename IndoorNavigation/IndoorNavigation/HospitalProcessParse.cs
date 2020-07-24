@@ -44,7 +44,7 @@ namespace IndoorNavigation.Models
                     processName = processNode.Attributes["name"].Value
                 };                
                 Console.WriteLine("Process Name : {0}, id : {1}", 
-                    processNode.Attributes["name"].Value, i++);
+                    processNode.Attributes["name"].Value, option.processID);
 
                 SelectList.Add(option);
             }
@@ -60,9 +60,10 @@ namespace IndoorNavigation.Models
                 new ObservableCollection<RgRecord>();
             string QueryxmlPath =
                 string.Format("processes/process[@id='{0}' and @name='{1}']",
-                selectedOption.processID, selectedOption.processName);
-
+                selectedOption.processID, selectedOption.processName);            
             XmlNodeList ProcessNodeList = doc.SelectNodes(QueryxmlPath);
+
+
 
             // This Loop must only run one time theortically. 
             foreach (XmlNode node in ProcessNodeList)
@@ -145,9 +146,10 @@ namespace IndoorNavigation.Models
                         _waypointName = CareRoom,
                         _regionID = point._regionID,
                         _waypointID = point._waypointID,
-                        isComplete=isComplete,
-                        order=order,
-                        isAccept = isAccept
+                        isComplete = isComplete,
+                        order = order,
+                        isAccept = isAccept,
+                        _groupID = int.Parse(selectedOption.processID)
                     };
                     result.Add(processRecord);
                 }

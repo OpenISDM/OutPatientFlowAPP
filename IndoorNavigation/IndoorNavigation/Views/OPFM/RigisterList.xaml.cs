@@ -79,41 +79,49 @@ namespace IndoorNavigation.Views.OPFM
             #region For Detect Current Time
             DateTime CurrentDate = DateTime.Now;
             TimeSpan CurrentTimespan = DateTime.Now.TimeOfDay;
-
             Console.WriteLine("CurrentTimeSpan : " + CurrentTimespan);
             #endregion           
             if (e.Item is RgRecord record)
             {
-                if ((app.lastFinished == null && 
-                    !(record.order==0 || record.order==1))
-                    || (app.lastFinished!=null && 
-                    !(app.lastFinished.order == record.order 
-                    || app.lastFinished.order == record.order-1 || 
-                    record.order == 0)))
+                if (app.OrderDistrict.ContainsKey(record._groupID) && !(app.OrderDistrict[record._groupID] == record.order ||  app.OrderDistrict[record._groupID]==record.order-1)
+                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order !=1)))
                 {
-                    Console.WriteLine("Please do something first thanks");
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請照著順序做完謝謝"), "OK"));
-                    RefreshListView();
-                    return;
+                    Console.WriteLine("please do something first");
+
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請先做完前面的東西", "好吧"));
                 }
-                #region For limit Pharmacy and Cashier
-                //if (record.type.Equals(RecordType.Pharmacy) &&
-                //   (app.lastFinished == null ||
-                //   !app.lastFinished.type.Equals(RecordType.Cashier)))
-                //{
-                //    await PopupNavigation.Instance.PushAsync
-                //        (new AlertDialogPopupPage
-                //            (getResourceString("PHARMACY_ALERT_STRING"),
-                //             getResourceString("OK_STRING")
-                //            )
-                //        );
-                //    RefreshListView();
-                //    ((ListView)sender).SelectedItem = null;
-                //    isButtonPressed = false;
-                //    return;
-                //}
-                #endregion
-                #region if the clinic has open timing.
+                #region one way order distinct
+                    //if ((app.lastFinished == null && 
+                    //    !(record.order==0 || record.order==1))
+                    //    || (app.lastFinished!=null && 
+                    //    !(app.lastFinished.order == record.order 
+                    //    || app.lastFinished.order == record.order-1 || 
+                    //    record.order == 0)))
+                    //{
+                    //    Console.WriteLine("Please do something first thanks");
+                    //    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請照著順序做完謝謝"), "OK"));
+                    //    RefreshListView();
+                    //    return;
+                    //}
+                    #endregion
+                    #region For limit Pharmacy and Cashier
+                    //if (record.type.Equals(RecordType.Pharmacy) &&
+                    //   (app.lastFinished == null ||
+                    //   !app.lastFinished.type.Equals(RecordType.Cashier)))
+                    //{
+                    //    await PopupNavigation.Instance.PushAsync
+                    //        (new AlertDialogPopupPage
+                    //            (getResourceString("PHARMACY_ALERT_STRING"),
+                    //             getResourceString("OK_STRING")
+                    //            )
+                    //        );
+                    //    RefreshListView();
+                    //    ((ListView)sender).SelectedItem = null;
+                    //    isButtonPressed = false;
+                    //    return;
+                    //}
+                    #endregion
+                    #region if the clinic has open timing.
                 else if (record.OpeningHours != null &&
                     !isCareRoomOpening(record.OpeningHours))
                 {
@@ -258,14 +266,18 @@ namespace IndoorNavigation.Views.OPFM
             {
                 pharmacy = PharmacyPostition.First().Value;
             }
-           
+
+            int order = 
+                app.OrderDistrict.ContainsKey(0) ? app.OrderDistrict[0] : 0;
+
             app.records.Add(new RgRecord { 
                     _waypointID=cashier._waypointID,
                     _regionID=cashier._regionID,
                     _waypointName=cashier._waypointName,
                     type=RecordType.Cashier,
                     DptName=cashier._waypointName,
-                    order=app.lastFinished.order+1
+                    order= order+1,
+                    _groupID =0 
                 });
             app.records.Add(new RgRecord { 
                     _waypointID=pharmacy._waypointID,
@@ -273,7 +285,8 @@ namespace IndoorNavigation.Views.OPFM
                     _waypointName=pharmacy._waypointName,
                     type=RecordType.Pharmacy,
                     DptName=pharmacy._waypointName,
-                    order=app.lastFinished.order+2
+                    order=order+2,
+                    _groupID=0
                 });
 
             RgListView.ScrollTo(app.records[app.records.Count - 1], 
@@ -414,6 +427,15 @@ namespace IndoorNavigation.Views.OPFM
                         PaymemtListBtn.IsVisible = true;
                     }
                 }
+                if (app.OrderDistrict.ContainsKey(FinishBtnClickItem._groupID))
+                {
+                    app.OrderDistrict[FinishBtnClickItem._groupID] = FinishBtnClickItem.order;
+                }
+                else
+                {
+                    app.OrderDistrict.Add(FinishBtnClickItem._groupID, FinishBtnClickItem.order);
+                }
+                Console.WriteLine("Group ID = " + FinishBtnClickItem._groupID);
             }            
         }               
 

@@ -335,13 +335,19 @@ namespace IndoorNavigation.Views.PopUpPage
                     if (isDuplicate)
                         continue;
 
+                    int order =
+                        app.OrderDistrict.ContainsKey(0) ?
+                        app.OrderDistrict[0] : 0;
+
                     app.records.Insert(index++, new RgRecord {
                         _waypointID=items[box.Key]._waypointID,
                         _regionID=items[box.Key]._regionID,
                         _waypointName=items[box.Key]._waypointName,
                         _floor=items[box.Key]._floor,
                         type=RecordType.AddItem,
-                        DptName=dptName+"-"+items[box.Key].DisplayName
+                        DptName=dptName+"-"+items[box.Key].DisplayName,
+                        _groupID=0,
+                        order=order+1
                     });
                     count++;
                 }

@@ -60,6 +60,7 @@ namespace IndoorNavigation
         public int order { get; set; }
         public string TitleName { get; set; }
         public string AdditionalMsg { get; set; }
+        public int _groupID { get; set; }
         public List<OpeningTime> OpeningHours { get; set; }
         #endregion
 
