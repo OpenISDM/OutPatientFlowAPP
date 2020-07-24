@@ -43,6 +43,7 @@ using System.Globalization;
 using Plugin.Multilingual;
 using IndoorNavigation.Models;
 using IndoorNavigation.ViewModels;
+using IndoorNavigation.Views.OPFM;
 
 namespace IndoorNavigation.Views.PopUpPage
 {

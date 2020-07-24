@@ -105,7 +105,11 @@ namespace IndoorNavigation.Views.OPFM
 
                     }
 
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請先做完{0}", BannerName), "好吧"));
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage(string.Format
+                        (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"), 
+                        BannerName), 
+                        getResourceString("OK_STRING")));
                 }
                 #region one way order distinct
                 //if ((app.lastFinished == null && 
@@ -147,9 +151,9 @@ namespace IndoorNavigation.Views.OPFM
 
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        ("現在該診間不開放，請問還是要去嗎?",
-                        "前往",
-                        "否",
+                        (getResourceString("AVAILABLE_CLINICS_NOW_STRING"),
+                        getResourceString("GO_STRING"),
+                       getResourceString("NO_STRING"),
                         "Still go to careroom"));
 
                     MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
@@ -186,7 +190,8 @@ namespace IndoorNavigation.Views.OPFM
                     if (!string.IsNullOrEmpty(record.AdditionalMsg))
                     {
                         await PopupNavigation.Instance.PushAsync
-                            (new AlertDialogPopupPage(record.AdditionalMsg, "OK"));
+                            (new AlertDialogPopupPage(record.AdditionalMsg, 
+                            getResourceString("OK_STRING")));
                     }
                     #endregion
                     await Navigation.PushAsync

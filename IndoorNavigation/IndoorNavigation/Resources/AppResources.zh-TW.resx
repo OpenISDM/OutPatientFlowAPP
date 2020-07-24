@@ -663,4 +663,16 @@
   <data name="TEST_STRING" xml:space="preserve">
     <value>測試用字串</value>
   </data>
+  <data name="AVAILABLE_CLINICS_NOW_STRING" xml:space="preserve">
+    <value>該診間目前沒開放，請問您還是要去嗎?</value>
+  </data>
+  <data name="GO_STRING" xml:space="preserve">
+    <value>前往</value>
+  </data>
+  <data name="PLEASE_DO_SOMETHING_FIRST_STRING" xml:space="preserve">
+    <value>請先完成{0}，謝謝</value>
+  </data>
+  <data name="SELECT_DUMPLICATE_CONTENT_STRING" xml:space="preserve">
+    <value>抱歉，您已選取重複的檢查流程 : {0}</value>
+  </data>
 </root>

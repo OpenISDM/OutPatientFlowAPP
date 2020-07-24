@@ -58,7 +58,7 @@
 
             <StackLayout  	VerticalOptions="Start" 
 							HorizontalOptions="Start">
-                <ScrollView>
+                <ScrollView VerticalScrollBarVisibility="Always">
                     <StackLayout x:Name="mainStackLayout">
 
                     </StackLayout>

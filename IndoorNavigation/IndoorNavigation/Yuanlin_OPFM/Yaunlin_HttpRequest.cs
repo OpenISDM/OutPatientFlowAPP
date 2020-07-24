@@ -220,7 +220,7 @@ namespace IndoorNavigation.Models
                 record.type = RecordType.Queryresult;
                 record._waypointName = record.CareRoom;
                 record._regionID = infos.GetRegionID(record.CareRoom);
-                record._waypointID = infos.GetDestinationID(record.CareRoom);
+                record._waypointID = infos.GetWaypointID(record.CareRoom);
 
                 //it may appear the reiong or floor that we doesn't support,
                 //so I ban it and show it's invalid.

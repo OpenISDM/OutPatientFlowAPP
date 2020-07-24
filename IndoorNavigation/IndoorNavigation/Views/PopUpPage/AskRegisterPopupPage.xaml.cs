@@ -87,7 +87,7 @@ namespace IndoorNavigation.Views.PopUpPage
             app.getRigistered = true;
             int order =
                        app.OrderDistrict.ContainsKey(0) ?
-                       app.OrderDistrict[0] : 0;
+                       app.OrderDistrict[0] : 1;
 
             RgRecord record = new RgRecord
             {
@@ -102,7 +102,7 @@ namespace IndoorNavigation.Views.PopUpPage
                                                currentLanguage),
                 type = RecordType.Register,
                 isComplete = true,
-                order = order
+                order = order++
             };
 
             await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
@@ -149,6 +149,7 @@ namespace IndoorNavigation.Views.PopUpPage
             app.FinishCount = 0;
             app.roundRecord = null;
             app.lastFinished = null;
+            app.OrderDistrict.Clear();
         }
 
         private string getResourceString(string key)

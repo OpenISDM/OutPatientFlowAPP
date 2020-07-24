@@ -663,4 +663,16 @@
   <data name="DOWNLOAD_SUCCESS_STRING" xml:space="preserve">
     <value>Download Successfully.</value>
   </data>
+  <data name="AVAILABLE_CLINICS_NOW_STRING" xml:space="preserve">
+    <value>This clinics or examination room is not available now, do you still want to go?</value>
+  </data>
+  <data name="GO_STRING" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="PLEASE_DO_SOMETHING_FIRST_STRING" xml:space="preserve">
+    <value>Please finsih {0} first, thank you.</value>
+  </data>
+  <data name="SELECT_DUMPLICATE_CONTENT_STRING" xml:space="preserve">
+    <value>Sorry! You select some duplicate process : {0}</value>
+  </data>
 </root>

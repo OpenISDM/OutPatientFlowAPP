@@ -345,7 +345,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
                     int order =
                         app.OrderDistrict.ContainsKey(0) ?
-                        app.OrderDistrict[0] : 0;
+                        app.OrderDistrict[0] : 1;
 
                     app.records.Insert(index++, new RgRecord
                     {
@@ -356,7 +356,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         type = RecordType.AddItem,
                         DptName = dptName + "-" + items[box.Key].DisplayName,
                         _groupID = 0,
-                        order = order + 1
+                        order = order ++
                     });
                     count++;
                 }
@@ -397,6 +397,20 @@ namespace IndoorNavigation.Views.PopUpPage
                     Console.WriteLine("Checked process Name : " + optionBox.Text);
                     Console.WriteLine("Checked process Key : " + optionBox.Key);
 
+                    if (((App)Application.Current).OrderDistrict.ContainsKey(optionBox.Key))
+                    {
+                        Console.WriteLine("This item is dumplicate.");
+
+                        await PopupNavigation.Instance.PushAsync(new 
+                            AlertDialogPopupPage(
+                            _resourceManager.GetString
+                            ("SELECT_DUMPLICATE_CONTENT_STRING",currentLanguage), 
+                            _resourceManager.GetString
+                            ("OK_STRING", currentLanguage))
+                       );
+                        return;
+                    }
+
                     HospitalProcessParse parse = new HospitalProcessParse();
                     ObservableCollection<RgRecord> SuitProcess =
                         parse.ParseProcess(new ProcessOption
@@ -408,6 +422,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     {
                         ((App)Application.Current).records.Add(record);
                     }
+                    ((App)Application.Current).OrderDistrict
+                        .Add(optionBox.Key,0);
                     //((App)Application.Current).records = SuitProcess;
                 }
                 count++;
