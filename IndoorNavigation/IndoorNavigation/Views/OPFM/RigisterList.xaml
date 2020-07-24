@@ -159,7 +159,7 @@
 			                                ItemTapped="RgListView_ItemTapped"
                                             BackgroundColor="White"
                                             SeparatorColor="#E4E4E4"
-                                            VerticalScrollBarVisibility="Always"                                            
+                                            VerticalScrollBarVisibility="Always"
                ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
 
                 </controls:DraggableListView>
