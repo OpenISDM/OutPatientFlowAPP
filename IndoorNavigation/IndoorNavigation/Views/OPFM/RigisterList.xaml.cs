@@ -477,6 +477,10 @@ namespace IndoorNavigation.Views.OPFM
                     if (app.records[i].order >= FinishBtnClickItem.order + 2
                         && app.records[i]._groupID == FinishBtnClickItem._groupID)
                         break;
+
+                    if (app.records[i].order == FinishBtnClickItem.order && app.records[i]._groupID == FinishBtnClickItem._groupID 
+                        && (!app.records[i].isAccept && app.records[i].isComplete))
+                        break;
                     if ((app.records[i].order <= FinishBtnClickItem.order + 1) &&
                      app.records[i]._groupID == FinishBtnClickItem._groupID)
                     {
