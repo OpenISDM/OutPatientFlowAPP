@@ -107,7 +107,7 @@ namespace IndoorNavigation.Views.PopUpPage
             await PopupNavigation.Instance.PopAsync();
 
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            bool NetworkIsFine = await setting.CheckInternetConnect();
+            bool NetworkIsFine = true;//await setting.CheckInternetConnect();
             await PopupNavigation.Instance.PopAllAsync();
             if (NetworkIsFine)
             {

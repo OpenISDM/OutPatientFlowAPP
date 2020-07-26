@@ -62,7 +62,7 @@ namespace IndoorNavigation.Views.PopUpPage
             //BusyShow(true);
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             networkSettings = DependencyService.Get<INetworkSetting>();
-            bool network_ability = await networkSettings.CheckInternetConnect();
+            bool network_ability = true;//await networkSettings.CheckInternetConnect();
             if (network_ability)
                 await CancelorClickBack();
             else

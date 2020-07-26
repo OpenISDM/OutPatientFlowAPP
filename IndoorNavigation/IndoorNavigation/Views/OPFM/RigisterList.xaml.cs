@@ -473,6 +473,7 @@ namespace IndoorNavigation.Views.OPFM
 
                 for (int i = index; i < app.records.Count; i++)
                 {
+                    if (FinishBtnClickItem._groupID == 0) break;
                     if (app.records[i].order >= FinishBtnClickItem.order + 2
                         && app.records[i]._groupID == FinishBtnClickItem._groupID)
                         break;
@@ -649,7 +650,7 @@ namespace IndoorNavigation.Views.OPFM
                     Command = TestItemCommand,
                     Order = ToolbarItemOrder.Secondary
                 };
-            ToolbarItems.Add(SignInItem);
+            //ToolbarItems.Add(SignInItem);
             ToolbarItems.Add(InfoItem);
             ToolbarItems.Add(ClearItem);
             OnToolbarItemAdded();

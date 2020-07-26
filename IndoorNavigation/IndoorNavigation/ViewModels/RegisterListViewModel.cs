@@ -67,7 +67,7 @@ namespace IndoorNavigation.ViewModels
         public RegisterListViewModel(string navigationGraphName)
         {
             _naviGraphName = navigationGraphName;
-            if (app.IDnumber.Equals(string.Empty))
+            if (false)//app.IDnumber.Equals(string.Empty))
             {
                 CheckSignIn();
             }
@@ -96,21 +96,7 @@ namespace IndoorNavigation.ViewModels
 
             if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
             {
-                Console.WriteLine("Enter No IDnumber");
-                //var wantSignIn =
-                //    await mainPage
-                //    .DisplayAlert(GetResourceString("MESSAGE_STRING"),
-                //                  GetResourceString("ALERT_LOGIN_STRING"),
-                //                  GetResourceString("OK_STRING"),
-                //                  GetResourceString("CANCEL_STRING"));
-                //if (wantSignIn)
-                //    await mainPage.Navigation.PushAsync(new SignInPage());
-                //await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
-                //await mainPage.Navigation.PushModalAsync(new NavigationPage(new SignInPage()));
-                //else
-                //{
-                //    await mainPage.Navigation.PopAsync();
-                //}
+                Console.WriteLine("Enter No IDnumber");               
                 await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
             }
         }       
