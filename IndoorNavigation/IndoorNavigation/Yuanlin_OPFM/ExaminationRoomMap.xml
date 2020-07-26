@@ -1,5 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>
+
+  <!--<Department name='二樓門診' floor='2'>
+    <Destination name='復健科門診' displayname='復健科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='家醫科門診' displayname='家醫科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='心內科門診' displayname='心內科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='胸內科門診' displayname='胸內科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='感染科門診' displayname='感染科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='身心科門診' displayname='身心科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='腸胃科門診' displayname='腸胃科'     region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000022'/>
+    <Destination name='神經內科門診' displayname='神經內科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000023'/>
+    <Destination name='神經外科門診' displayname='神經外科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='胸腔外科門診' displayname='胸腔外科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='直腸外科門診' displayname='直腸外科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='門診衛教室' displayname='門診衛教室' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='一般外科門診' displayname='一般外科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='骨科門診' displayname='骨科'         region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='心臟外科門診' displayname='心臟外科' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='眼科門診' displayname='眼科'         region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000027'/>
+  </Department>
+  <Department name='地下一樓門診' floor='-1'>
+    <Destination name='社區健康課' displayname='社區健康課'             region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000010'/>
+    <Destination name='健康檢查門診' displayname='健康檢查'             region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000010'/>
+    <Destination name='腎臟內科門診' displayname='腎臟內科'             region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013'/>
+    <Destination name='過敏免疫風濕科門診' displayname='過敏免疫風濕科' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000010'/>
+    <Destination name='耳鼻喉科門診' displayname='耳鼻喉科'             region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000012'/>
+    <Destination name='血液腫瘤科門診' displayname='血液腫瘤科'         region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000009'/>
+  </Department>-->
+  
   <Department name='血液、糞便及尿液接收' floor='1'>
     <Destination name='B1接收櫃台' displayname='B1接收櫃台' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000005'/>
     <Destination name='2F接收櫃台' displayname='2F接收櫃台' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021'/>
@@ -14,32 +42,38 @@
   </Department>
   
   <Department name='內分泌科' floor='2'>
-    <Destination name='252診' displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
-  </Department>
+    <Destination name='內分泌科門診' displayname='門診'         region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+    <Destination name='252診'        displayname='甲狀腺超音波' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000025'/>
+  </Department> 
+  
   <Department name='放射科' floor='2'>
     <Destination name='放射區' displayname='放射業務' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000029' isfake='true'/>
   </Department>
-
+  
   <Department name='檢驗科' floor='2'>
     <Destination name='檢驗區' displayname='檢驗區' region_id='33333333-3333-3333-3333-333333333333' waypoint_id='00000000-0000-0000-0000-000000000021' isfake='true'/>
   </Department>
   
   <Department name='兒科' floor='-1'>
+    <Destination name='兒科門診' displayname='門診' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013'/>
     <Destination name='B09診' displayname='衛教' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013' isfake='true'/>
     <Destination name='B10診' displayname='處置及注射' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000013' isfake='true'/>
   </Department>
   
   <Department name='乳房外科' floor='-1'>
+    <Destination name='乳房外科門診' displayname='門診' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000009'/>
     <Destination name='B30診' displayname='超音波' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000009'/>
   </Department>
   
   <Department name='泌尿外科' floor='-1'>
     <Destination name='B51診' displayname='超音波' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000002'/>
     <Destination name='B52診' displayname='尿動力檢查' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000002'/>
-    <Destination name='B53診' displayname='門診' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000002'/>
+    <Destination name='泌尿外科門診' displayname='門診' region_id='11111111-1111-1111-1111-111111111111' waypoint_id='00000000-0000-0000-0000-000000000002'/>
   </Department>
   
   <Department name='婦產科' floor='5'>
+    <Destination name='婦產科門診' displayname='門診' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017'/>
+    <Destination name='子宮抹片特診' displayname='子宮抹片特診' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017'/>
     <Destination name='506診' displayname='產前衛教' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017' isfake='true'/>
   </Department>
 </navigation_graph>

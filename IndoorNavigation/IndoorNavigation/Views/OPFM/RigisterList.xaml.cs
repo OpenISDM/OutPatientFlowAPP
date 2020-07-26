@@ -701,6 +701,7 @@ namespace IndoorNavigation.Views.OPFM
                     app.lastFinished = null;
                     app.isRigistered = false;
                     app.getRigistered = false;
+                    app.roundRecord = null;
                     Buttonable(true);
                     OnAppearing();
                 }

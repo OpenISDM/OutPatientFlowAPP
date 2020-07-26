@@ -106,7 +106,10 @@ namespace IndoorNavigation.Views.PopUpPage
                 foreach (XmlNode room in examinationRooms)
                 {
                     AddExaminationItem item = new AddExaminationItem();
+                    
                     item.DisplayName = room.Attributes["displayname"].Value;
+
+                    Console.WriteLine("Parse name = " + item.DisplayName);
                     item._regionID =
                         new Guid(room.Attributes["region_id"].Value);
 
@@ -141,6 +144,41 @@ namespace IndoorNavigation.Views.PopUpPage
                 BackgroundColor = Color.FromHex("#3f51b5"),
                 HeightRequest = 1
             });
+
+            #region part of Suit Process Checkbox
+            HospitalProcessParse processParse = new HospitalProcessParse();
+
+            StackLayout processStackLayout = new StackLayout();
+
+            List<ProcessOption> processOptions =
+                processParse.GetProcessOption();
+
+
+
+            foreach (ProcessOption option in processOptions)
+            {
+                Console.WriteLine("Generate one time process box");
+                CheckBox optionBox = new CheckBox
+                {
+                    Key = int.Parse(option.processID),
+                    Text = option.processName,
+                    TextFontSize =
+                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                    Margin = new Thickness(0, -3),
+                    Type = CheckBox.CheckType.Box
+                };
+                processStackLayout.Children.Add(optionBox);
+                processBoxes.Add(optionBox);
+            }
+            mainStackLayout.Children.Add(processStackLayout);
+
+            //blue line for dividing every depart
+            mainStackLayout.Children.Add(new BoxView
+            {
+                BackgroundColor = Color.FromHex("#3f51b5"),
+                HeightRequest = 1
+            });
+            #endregion
 
             #region part of Examination Room
             foreach (string dptName in DepartmentList)
@@ -202,97 +240,63 @@ namespace IndoorNavigation.Views.PopUpPage
             #endregion
 
             #region part of Revisit checkbox
-            boxList = new List<CheckBox>();
-            outSideGrid = getGridLayout();
-            BoxLayout = new StackLayout();
+            //boxList = new List<CheckBox>();
+            //outSideGrid = getGridLayout();
+            //BoxLayout = new StackLayout();
 
-            key = 0;
-            DptNameLabel = new Label
-            {
-                Text =
-                    _resourceManager.GetString("REVISIT_STRING", currentLanguage),
-                FontSize =
-                    Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                VerticalTextAlignment =
-                    TextAlignment.Center,
+            //key = 0;
+            //DptNameLabel = new Label
+            //{
+            //    Text =
+            //        _resourceManager.GetString("REVISIT_STRING", currentLanguage),
+            //    FontSize =
+            //        Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+            //    VerticalTextAlignment =
+            //        TextAlignment.Center,
 
-                HorizontalTextAlignment =
-                    TextAlignment.Center,
-            };
+            //    HorizontalTextAlignment =
+            //        TextAlignment.Center,
+            //};
 
-            image = new Image
-            {
-                Source = $"Add_Item{PictureCount++}",
-                Aspect = Aspect.AspectFit,
-                WidthRequest = 80,
-                HeightRequest = 80,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center
-            };
-            foreach (RgRecord record in app._TmpRecords)
-            {
-                CheckBox box = new CheckBox
-                {
-                    Text = record.DptName,
-                    TextFontSize =
-                        Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
-                    Margin = new Thickness(0, -3),
-                    Key = key++,
-                    Type = CheckBox.CheckType.Check
-                };
-                boxList.Add(box);
-                BoxLayout.Children.Add(box);
-            }
-            outSideGrid.Children.Add(image, 0, 2, 0, 4);
-            outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
-            outSideGrid.Children.Add(
-                new ScrollView { Content = BoxLayout }, 2, 5, 0, 5
-            );
-            BoxesDict.Add("revisit", boxList);
-            mainStackLayout.Children.Add(outSideGrid);
+            //image = new Image
+            //{
+            //    Source = $"Add_Item{PictureCount++}",
+            //    Aspect = Aspect.AspectFit,
+            //    WidthRequest = 80,
+            //    HeightRequest = 80,
+            //    VerticalOptions = LayoutOptions.Center,
+            //    HorizontalOptions = LayoutOptions.Center
+            //};
+            //foreach (RgRecord record in app._TmpRecords)
+            //{
+            //    CheckBox box = new CheckBox
+            //    {
+            //        Text = record.DptName,
+            //        TextFontSize =
+            //            Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+            //        Margin = new Thickness(0, -3),
+            //        Key = key++,
+            //        Type = CheckBox.CheckType.Check
+            //    };
+            //    boxList.Add(box);
+            //    BoxLayout.Children.Add(box);
+            //}
+            //outSideGrid.Children.Add(image, 0, 2, 0, 4);
+            //outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
+            //outSideGrid.Children.Add(
+            //    new ScrollView { Content = BoxLayout }, 2, 5, 0, 5
+            //);
+            //BoxesDict.Add("revisit", boxList);
+            //mainStackLayout.Children.Add(outSideGrid);
 
-            mainStackLayout.Children.Add(new BoxView
-            {
-                BackgroundColor = Color.FromHex("#3f51b5"),
-                HeightRequest = 1
-            });
+            //mainStackLayout.Children.Add(new BoxView
+            //{
+            //    BackgroundColor = Color.FromHex("#3f51b5"),
+            //    HeightRequest = 1
+            //});
             #endregion
-
-            #region part of Suit Process Checkbox
-            HospitalProcessParse processParse = new HospitalProcessParse();
-
-            StackLayout processStackLayout = new StackLayout();
-
-            List<ProcessOption> processOptions =
-                processParse.GetProcessOption();
-
-
-
-            foreach (ProcessOption option in processOptions)
-            {
-                Console.WriteLine("Generate one time process box");
-                CheckBox optionBox = new CheckBox
-                {
-                    Key = int.Parse(option.processID),
-                    Text = option.processName,
-                    TextFontSize =
-                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
-                    Margin = new Thickness(0, -3),
-                    Type = CheckBox.CheckType.Box
-                };
-                processStackLayout.Children.Add(optionBox);
-                processBoxes.Add(optionBox);
-            }
-            mainStackLayout.Children.Add(processStackLayout);
-            #endregion
-            //blue line for dividing every depart
-            mainStackLayout.Children.Add(new BoxView
-            {
-                BackgroundColor = Color.FromHex("#3f51b5"),
-                HeightRequest = 1
-            });
+                      
         }
-
 
         //to generate Grid layout for CheckBox 
         private Grid getGridLayout()
@@ -352,7 +356,6 @@ namespace IndoorNavigation.Views.PopUpPage
                         _waypointID = items[box.Key]._waypointID,
                         _regionID = items[box.Key]._regionID,
                         _waypointName = items[box.Key]._waypointName,
-                        _floor = items[box.Key]._floor,
                         type = RecordType.AddItem,
                         DptName = dptName + "-" + items[box.Key].DisplayName,
                         _groupID = 0,
@@ -362,32 +365,32 @@ namespace IndoorNavigation.Views.PopUpPage
                 }
             }
 
-            foreach (CheckBox box in BoxesDict["revisit"])
-            {
+            //foreach (CheckBox box in BoxesDict["revisit"])
+            //{
 
-                if (box.IsChecked == false) continue;
-                var isDumplicate =
-                    app.records.Any(a => a.DptName ==
-                    (_resourceManager.GetString("REVISIT_STRING",
-                                                currentLanguage)
-                     + "-" + app._TmpRecords[box.Key].DptName) && !a.isAccept);
+            //    if (box.IsChecked == false) continue;
+            //    var isDumplicate =
+            //        app.records.Any(a => a.DptName ==
+            //        (_resourceManager.GetString("REVISIT_STRING",
+            //                                    currentLanguage)
+            //         + "-" + app._TmpRecords[box.Key].DptName) && !a.isAccept);
 
-                dumplicateCount++;
-                if (isDumplicate) continue;
-                app.records.Insert(index++, new RgRecord
-                {
-                    type = RecordType.AddItem,
-                    _waypointID = app._TmpRecords[box.Key]._waypointID,
-                    _regionID = app._TmpRecords[box.Key]._regionID,
-                    _waypointName = app._TmpRecords[box.Key]._waypointName,
-                    CareRoom = app._TmpRecords[box.Key].CareRoom,
-                    DptName =
-                        _resourceManager.GetString("REVISIT_STRING",
-                                                   currentLanguage)
-                        + "-" + app._TmpRecords[box.Key].DptName
-                });
-                count++;
-            }
+            //    dumplicateCount++;
+            //    if (isDumplicate) continue;
+            //    app.records.Insert(index++, new RgRecord
+            //    {
+            //        type = RecordType.AddItem,
+            //        _waypointID = app._TmpRecords[box.Key]._waypointID,
+            //        _regionID = app._TmpRecords[box.Key]._regionID,
+            //        _waypointName = app._TmpRecords[box.Key]._waypointName,
+            //        CareRoom = app._TmpRecords[box.Key].CareRoom,
+            //        DptName =
+            //            _resourceManager.GetString("REVISIT_STRING",
+            //                                       currentLanguage)
+            //            + "-" + app._TmpRecords[box.Key].DptName
+            //    });
+            //    count++;
+            //}
 
             foreach (CheckBox optionBox in processBoxes)
             {
