@@ -111,6 +111,7 @@ namespace IndoorNavigation
 
         protected override void OnStart()
         {
+            Console.WriteLine(">>OnStart");
             // App Center brings together multiple services commonly used by
             // mobile developers into an integrated cloud solution.
             // Developers use App Center to Build, Test.
@@ -127,12 +128,52 @@ namespace IndoorNavigation
             Utility._lbeaconScan = DependencyService.Get<LBeaconScan>();
             Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
+
+            //if (Preferences.Get("FirstTimeUsing",false))
+            if (!Current.Properties.ContainsKey("FirstTimeUsing"))
+            {
+                Console.WriteLine("FirstTime use");
+                InitialProperties();
+                //Preferences.Set("FirstTimeUsing", true);   
+                Current.Properties["Records"] = records;
+                Current.Properties["FinishCount"] = FinishCount;
+                Current.Properties["isRigistered"] = isRigistered;
+                Current.Properties["getRigistered"] = getRigistered;
+                Current.Properties["HaveCashier"] = HaveCashier;
+                Current.Properties["lastFinished"] = lastFinished;
+                Current.Properties["OrderDistrict"] = OrderDistrict;
+                Current.Properties["FirstTimeUsing"] = true;
+                Current.SavePropertiesAsync();
+            }
+            else
+            {
+                Console.WriteLine("Many time use.");
+                records = Current.Properties["Records"] as ObservableCollection<RgRecord>;
+
+                FinishCount = (int)Current.Properties["FinishCount"];
+                isRigistered = (bool)Current.Properties["isRigistered"];
+                getRigistered = (bool)Current.Properties["getRigistered"];
+                HaveCashier = (bool)Current.Properties["HaveCashier"];
+                lastFinished = Current.Properties["lastFinished"] as RgRecord;
+                OrderDistrict = Current.Properties["OrderDistrict"] as Dictionary<int, int>;
+
+                Console.WriteLine("Finish count = " + FinishCount);
+            }
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
             Console.WriteLine(">>OnSleep");
+            //StoreAllState();
+            Current.Properties["Records"] = records;
+            Current.Properties["FinishCount"] = FinishCount;
+            Current.Properties["isRigistered"] = isRigistered;
+            Current.Properties["getRigistered"] = getRigistered;
+            Current.Properties["HaveCashier"] = HaveCashier;
+            Current.Properties["lastFinished"] = lastFinished;
+            Current.Properties["OrderDistrict"] = OrderDistrict;
+            Current.SavePropertiesAsync();
             base.OnSleep();
         }
 
@@ -155,6 +196,22 @@ namespace IndoorNavigation
             {
                // _globalNavigatorPage.Abort();
             }
+        }
+
+        private void InitialProperties()
+        {
+           
+        }
+
+        private void StoreAllState()
+        {
+            Console.WriteLine("Call StoreAllState");
+            
+        }              
+  
+        private void RestoreAllState()
+        {
+           
         }
     }
 }
