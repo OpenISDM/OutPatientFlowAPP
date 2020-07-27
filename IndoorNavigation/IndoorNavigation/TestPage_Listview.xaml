@@ -4,21 +4,68 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"
+             xmlns:resources="clr-namespace:IndoorNavigation.Resources"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             xmlns:local="clr-namespace:IndoorNavigation"
              xmlns:inputkit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              xmlns:pb="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.ProgressBarView"
+             xmlns:local ="clr-namespace:IndoorNavigation.Views.Controls"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.TestPage_Listview">
-
+             x:Class="IndoorNavigation.TestPage_Listview"
+             Title="{x:Static resources:AppResources.ALL_STRING}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <ActivityIndicator IsRunning="False" x:Name="BusyView"/>
-            <!--<Button Text="start" Clicked="Button_Clicked"/>
-            <Button Text="Download Yunlin Graph" Clicked="Button_Clicked_1"/>
-            <Button Text="Download Lab Graph" Clicked="Button_Clicked_4"/>
-            <Button Text="Download CCH Graph" Clicked="Button_Clicked_3"/>
-            <Button Text="DeleteGraph" Clicked="Button_Clicked_2"/>-->
-        </StackLayout>
+        <ListView x:Name="TestListView" HasUnevenRows="True"
+                  SeparatorColor="#E4E4E4"
+                  SeparatorVisibility="Default"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <StackLayout Margin="10,0,10,0">
+                            <!--<StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding DptName, StringFormat='{0}'}"
+                                       FontSize="26"
+                                       TextColor="Black"
+                                       />
+                                <Button Text="{x:Static resources:AppResources.FINISH_STRING}" FontSize="Medium"/>
+                            </StackLayout>-->
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label x:Name="DptNameLab" Text="{Binding DptName, StringFormat='{0}'}"
+                                       FontSize="28" TextColor="Black" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="0" Grid.ColumnSpan="3"/>
+                                <Button x:Name="FinishBtn" Text="{x:Static resources:AppResources.FINISH_STRING}"
+                                        FontSize="Medium" VerticalOptions="CenterAndExpand"
+                                        BackgroundColor="#3f51b5"
+                                        TextColor="White"
+                                        Grid.Column="3"/>
+                            </Grid>
+                            <Label Text="{Binding CareRoom, StringFormat='{0}'}"
+                                   Margin="25,0,25,0"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Start"
+                                   Padding="0,5,0,5"
+                                   FontSize="22"
+                                   TextColor="Black"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
     </ContentPage.Content>
 </ContentPage>

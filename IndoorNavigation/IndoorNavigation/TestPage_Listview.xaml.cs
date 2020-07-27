@@ -13,24 +13,72 @@ using IndoorNavigation.Utilities;
 using Dijkstra.NET.Model;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models;
+using System.Collections.ObjectModel;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage_Listview : ContentPage
     {
-        CloudDownload _download;
+        #region To re-layout item
+        ObservableCollection<TestItem> source = 
+            new ObservableCollection<TestItem>();
+
+        public class TestItem
+        {
+            public string DptName { get; set; }
+            public string CareRoom { get; set; }
+        }
         public TestPage_Listview()
         {
             InitializeComponent();
-            HospitalProcessParse parse = new HospitalProcessParse();
 
-            parse.ParseProcess("大腸鏡檢查流程", "0");
-            //_download = new CloudDownload();
-            //Storage.CloudGenerateFile("Lab");
-            //Storage.CloudGenerateFile("Taipei_City_Hall");
+            LoadData();
+
+            TestListView.ItemsSource = source;
         }
+        private void LoadData()
+        {
+            source = new ObservableCollection<TestItem>();
 
+            source.Add(new TestItem
+            {
+                DptName = "復健科",
+                CareRoom = "門診"
+            });
+
+            source.Add(new TestItem
+            {
+                DptName = "檢體採檢接收",
+                CareRoom = "接收櫃台"
+            });
+
+            source.Add(new TestItem
+            {
+                DptName = "衛教中心",
+                CareRoom = "第一衛教中心"
+            });
+
+            source.Add(new TestItem
+            {
+                DptName = "檢體採檢接收",
+                CareRoom = "接收櫃台"
+            });
+        }
+        #endregion
+        #region _download Test
+        //CloudDownload _download;
+        //public TestPage_Listview()
+        //{
+        //    InitializeComponent();
+        //    HospitalProcessParse parse = new HospitalProcessParse();
+
+        //    //parse.ParseProcess("大腸鏡檢查流程", "0");
+        //    //_download = new CloudDownload();
+        //    //Storage.CloudGenerateFile("Lab");
+        //    //Storage.CloudGenerateFile("Taipei_City_Hall");
+        //}
+        #endregion
         #region Object to Xml implemenet
         //public TestPage_Listview()
         //{
