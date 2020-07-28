@@ -675,4 +675,10 @@
   <data name="SELECT_DUMPLICATE_CONTENT_STRING" xml:space="preserve">
     <value>Sorry! You select some duplicate process : {0}</value>
   </data>
+  <data name="ARE_YOU_SURE_TO_CLEAR_STRING" xml:space="preserve">
+    <value>Are you sure to clear all records?</value>
+  </data>
+  <data name="CLEAR_STRING" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

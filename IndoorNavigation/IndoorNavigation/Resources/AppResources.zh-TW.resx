@@ -675,4 +675,10 @@
   <data name="SELECT_DUMPLICATE_CONTENT_STRING" xml:space="preserve">
     <value>抱歉，您已選取重複的檢查流程 : {0}</value>
   </data>
+  <data name="ARE_YOU_SURE_TO_CLEAR_STRING" xml:space="preserve">
+    <value>確定要將所有紀錄清除嗎?</value>
+  </data>
+  <data name="CLEAR_STRING" xml:space="preserve">
+    <value>清除</value>
+  </data>
 </root>

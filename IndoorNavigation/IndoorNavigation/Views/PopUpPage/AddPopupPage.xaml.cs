@@ -490,6 +490,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     count++;
                 }
             }
+            Console.WriteLine("count after clinic = " + count);
 
             foreach (string dptName in DepartmentList)
             {
@@ -526,6 +527,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     count++;
                 }
             }
+            Console.WriteLine("count after examination = " + count);
 
             #region  part of revisit 
             //foreach (CheckBox box in BoxesDict["revisit"])
@@ -570,8 +572,8 @@ namespace IndoorNavigation.Views.PopUpPage
 
                         await PopupNavigation.Instance.PushAsync(new 
                             AlertDialogPopupPage(
-                            _resourceManager.GetString
-                            ("SELECT_DUMPLICATE_CONTENT_STRING",currentLanguage), 
+                            string.Format(_resourceManager.GetString
+                            ("SELECT_DUMPLICATE_CONTENT_STRING",currentLanguage), optionBox.Text), 
                             _resourceManager.GetString
                             ("OK_STRING", currentLanguage))
                        );
@@ -592,14 +594,16 @@ namespace IndoorNavigation.Views.PopUpPage
                     ((App)Application.Current).OrderDistrict
                         .Add(optionBox.Key,0);
                     //((App)Application.Current).records = SuitProcess;
+                    count++;
                 }
-                count++;
+               
             }
-
+            Console.WriteLine("count after process = " + count);
             #endregion
 
             if (count == 0)
             {
+                Console.WriteLine("Count = 0");
                 if (dumplicateCount == 0)
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage(_resourceManager.GetString
