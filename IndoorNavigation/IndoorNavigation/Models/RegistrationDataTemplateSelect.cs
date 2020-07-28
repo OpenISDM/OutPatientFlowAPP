@@ -11,6 +11,7 @@ namespace IndoorNavigation
         public DataTemplate NotCompleteTemplate { get; set; }
         public DataTemplate CompleteTemplate { get; set; }
         public DataTemplate YetNavigationTemplate { get; set; }
+        public DataTemplate AddItemDataTemplate { get; set; }
         //public DataTemplate NullTemplate { get; set; }
         protected override DataTemplate OnSelectTemplate
                                         (Object item, BindableObject container)
@@ -18,6 +19,8 @@ namespace IndoorNavigation
             var o = item as RgRecord;
             if (o.isAccept || o.type.Equals(RecordType.Invalid))
                 return CompleteTemplate;
+            if (o.type.Equals(RecordType.AddItem))
+                return AddItemDataTemplate;
 
             if (o.type.Equals(RecordType.Queryresult))
                 return YetNavigationTemplate;          

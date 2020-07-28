@@ -76,6 +76,7 @@ namespace IndoorNavigation.Models
                 string AdditionalRequire = "";
                 string CareRoom;
                 string RecordName;
+                string WaypointName;
                 int order = 0;
                 RecordType type;
                 #endregion
@@ -88,6 +89,8 @@ namespace IndoorNavigation.Models
                     XmlNode CareRoomXmlNode = recordNode.ChildNodes[0];
                     CareRoom = 
                         CareRoomXmlNode.Attributes["name"].Value;
+                    WaypointName =
+                        CareRoomXmlNode.Attributes["waypointName"].Value;
                     type = 
                         (RecordType)Enum.Parse(typeof(RecordType), 
                         CareRoomXmlNode.Attributes["type"].Value, 
@@ -138,12 +141,11 @@ namespace IndoorNavigation.Models
                     RgRecord processRecord = new RgRecord
                     {
                         OpeningHours = openingTimes,
-                        TitleName = RecordName,
                         CareRoom = CareRoom,
                         AdditionalMsg = AdditionalRequire,
                         type = type,
                         DptName = RecordName,
-                        _waypointName = CareRoom,
+                        _waypointName = WaypointName,
                         _regionID = point._regionID,
                         _waypointID = point._waypointID,
                         isComplete = isComplete,

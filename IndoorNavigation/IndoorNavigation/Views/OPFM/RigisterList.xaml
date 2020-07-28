@@ -121,9 +121,53 @@
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
+            <DataTemplate x:Key="AddItemTemplate">
+                <ViewCell>
+                    <StackLayout Margin="10,0,10,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
+                            <Label x:Name="DptNameLabel" 
+                                   Text="{Binding DptName, StringFormat='{0}'}" 
+                                   FontSize="28"
+                                   TextColor="Black"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Column="0" 
+                                   Grid.ColumnSpan="3"
+                                    />
+                            <Button x:Name="FinishButton" 
+                                    Text="{i18n:Translate FINISH_STRING}"
+                                    FontSize="Medium"
+                                    BackgroundColor="#3f51b5"
+                                    TextColor="White"
+                                    VerticalOptions="CenterAndExpand"
+                                    IsEnabled="{Binding isComplete}"
+                                    IsVisible="{Binding isComplete}"
+                                    CommandParameter="{Binding .}"
+                                    Clicked="YetFinishBtn_Clicked"
+                                    Grid.Column="3"
+                                    />
+                        </Grid>
+                        <Label x:Name="ToDoNameLabel"
+                               Text="{Binding _waypointName, StringFormat='{0}'}"
+                               Margin="25,0,25,0"
+                               VerticalOptions="Start"
+                               HorizontalOptions="Start"
+                               Padding="0,5,0,5"
+                               FontSize="22"
+                               TextColor="Black"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
             <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter"   
-						NotCompleteTemplate="{StaticResource NotComplete}" 
+						NotCompleteTemplate="{StaticResource NotComplete}"
+                        AddItemDataTemplate="{StaticResource AddItemTemplate}"
 						CompleteTemplate="{StaticResource Complete}" 
 						YetNavigationTemplate="{StaticResource YetNavigation}"/>
         </ResourceDictionary>
@@ -151,7 +195,8 @@
 
                 <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
                 <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
-                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}">
+                          VerticalScrollBarVisibility="Always" 
+                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}" SeparatorColor="#3f51b5">
 
                 </ListView>
             </Grid>
@@ -160,6 +205,14 @@
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.96,0.9,0.17,0.11" FontAttributes="Bold"
                     CornerRadius="30"
                     />
+            <Button x:Name="ShiftBtn" 
+                    Text="{i18n:Translate EXCHANGE_STRING}" 
+                    BackgroundColor="#3f51b5" 
+                    FontSize="Medium" 
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
+                    AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
             <!--<Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
                      AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->

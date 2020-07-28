@@ -67,8 +67,6 @@ namespace IndoorNavigation.Views.PopUpPage
             CrossMultilingual.Current.CurrentCultureInfo;
 
         bool isButtonPressed = false;
-        string _graphName;
-        bool AllFinished;
         Dictionary<string, List<CheckBox>> BoxesDict;
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
         Dictionary<string, List<AddExaminationItem>> _clinicItemDict;
@@ -77,7 +75,6 @@ namespace IndoorNavigation.Views.PopUpPage
         public AddPopupPage(string graphName)
         {
             InitializeComponent();
-            _graphName = graphName;
             BoxesDict =
                 new Dictionary<string, List<CheckBox>>();
 
@@ -470,8 +467,12 @@ namespace IndoorNavigation.Views.PopUpPage
                 {
                     if (!box.IsChecked) continue;
                     dumplicateCount++;
-                    bool isDuplicate = false;
-                    //app.records.Any(p=>(p.DptName == dptName + ""))
+                    bool isDuplicate =
+                        app.records.Any(p =>
+                        p._waypointName == items[box.Key]._waypointName &&
+                        p.DptName == items[box.Key].DisplayName &&
+                        p.isAccept == false
+                        );
                     if (isDuplicate) continue;
 
                     int order = 1;
@@ -483,7 +484,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         _regionID = items[box.Key]._regionID,
                         type = RecordType.AddItem,
                         _groupID=0,
-                        _waypointName =items[box.Key].DisplayName,
+                        _waypointName =items[box.Key]._waypointName,
                         DptName = items[box.Key].DisplayName
                     }) ;
                     count++;
@@ -501,8 +502,9 @@ namespace IndoorNavigation.Views.PopUpPage
                     dumplicateCount++;
                     var isDuplicate =
                         app.records.Any(p =>
-                        (p.DptName == dptName + "-" + items[box.Key].DisplayName) &&
-                         p.isAccept == false);
+                        (p.DptName == dptName && 
+                         p._waypointName == items[box.Key].DisplayName &&
+                         p.isAccept == false));
 
                     if (isDuplicate)
                         continue;
@@ -515,9 +517,9 @@ namespace IndoorNavigation.Views.PopUpPage
                     {
                         _waypointID = items[box.Key]._waypointID,
                         _regionID = items[box.Key]._regionID,
-                        _waypointName = items[box.Key]._waypointName,
+                        _waypointName = items[box.Key].DisplayName,
                         type = RecordType.AddItem,
-                        DptName = dptName + "-" + items[box.Key].DisplayName,
+                        DptName = dptName,//dptName + "-" + items[box.Key].DisplayName,
                         _groupID = 0,
                         order = order ++
                     });
