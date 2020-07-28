@@ -235,6 +235,7 @@ namespace IndoorNavigation
 
                 if (isAgree)
                 {
+                    ((App)Application.Current).OnStop();
                     System.Diagnostics.Process.GetCurrentProcess().Kill();
                 }
             });

@@ -50,6 +50,7 @@ using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using System.Collections.ObjectModel;
+using ZXing;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -70,7 +71,9 @@ namespace IndoorNavigation.Views.PopUpPage
         bool AllFinished;
         Dictionary<string, List<CheckBox>> BoxesDict;
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
+        Dictionary<string, List<AddExaminationItem>> _clinicItemDict;
         List<string> DepartmentList;
+        List<string> ClinicList;
         public AddPopupPage(string graphName)
         {
             InitializeComponent();
@@ -80,8 +83,12 @@ namespace IndoorNavigation.Views.PopUpPage
 
             DepartmentList =
                 new List<string>();
+            ClinicList =
+                new List<string>();
 
             _examinationItemDict =
+                new Dictionary<string, List<AddExaminationItem>>();
+            _clinicItemDict = 
                 new Dictionary<string, List<AddExaminationItem>>();
 
             LoadData();
@@ -92,13 +99,52 @@ namespace IndoorNavigation.Views.PopUpPage
             XmlDocument doc =
                 Storage.XmlReader("Yuanlin_OPFM.ExaminationRoomMap.xml");
 
-            XmlNodeList DepartmentLists =
-                doc.GetElementsByTagName("Department");
+            #region Clinics part
+            XmlNodeList ClinicNodeList = 
+                doc.SelectNodes("navigation_graph/Clinics/Department");
 
-            foreach (XmlNode department in DepartmentLists)
+            foreach (XmlNode clinicfloorNode in ClinicNodeList)
             {
+                XmlNodeList clinicsNodeList = clinicfloorNode.ChildNodes;
+
+                string clinicFloorName = clinicfloorNode.Attributes["name"].Value;
+                string clinicFloor = clinicfloorNode.Attributes["floor"].Value;
+
+                ClinicList.Add(clinicFloorName);
+                List<AddExaminationItem> items = new List<AddExaminationItem>();
+
+                foreach (XmlNode room in clinicsNodeList)
+                {
+                    Console.WriteLine("displayname = " + room.Attributes["displayname"].Value);
+                    AddExaminationItem item = new AddExaminationItem();
+
+                    item.DisplayName = room.Attributes["displayname"].Value;
+
+                    item._regionID = 
+                        new Guid(room.Attributes["region_id"].Value);
+
+                    item._waypointID = 
+                        new Guid(room.Attributes["waypoint_id"].Value);
+
+                    item._floor = clinicFloor;
+                    item.type = RecordType.AddItem;
+                    item._waypointName = room.Attributes["name"].Value;
+
+                    items.Add(item);
+                }
+                //ClinicList.Add(clinicFloorName);
+                _clinicItemDict.Add(clinicFloorName, items);
+            }
+            #endregion
+            #region Examination Part
+            XmlNodeList ExaminationDepartmentLists =
+                doc.SelectNodes("navigation_graph/Department");
+
+            foreach (XmlNode department in ExaminationDepartmentLists)
+            {                
                 XmlNodeList examinationRooms = department.ChildNodes;
                 string departName = department.Attributes["name"].Value;
+                Console.WriteLine("DepartName = " + departName);
                 string departmentFloor = department.Attributes["floor"].Value;
                 DepartmentList.Add(departName);
 
@@ -109,7 +155,6 @@ namespace IndoorNavigation.Views.PopUpPage
                     
                     item.DisplayName = room.Attributes["displayname"].Value;
 
-                    Console.WriteLine("Parse name = " + item.DisplayName);
                     item._regionID =
                         new Guid(room.Attributes["region_id"].Value);
 
@@ -124,7 +169,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 }
                 _examinationItemDict.Add(departName, items);
             }
+            #endregion
             GenerateBox();
+            Console.WriteLine("<<LoadData");
         }
 
         List<CheckBox> processBoxes = new List<CheckBox>();
@@ -132,6 +179,7 @@ namespace IndoorNavigation.Views.PopUpPage
         //for generate selection with input data, and make layout.
         private void GenerateBox()
         {
+            Console.WriteLine(">>GenerateBox");
             List<CheckBox> boxList;
             StackLayout BoxLayout;
             Label DptNameLabel;
@@ -144,7 +192,91 @@ namespace IndoorNavigation.Views.PopUpPage
                 BackgroundColor = Color.FromHex("#3f51b5"),
                 HeightRequest = 1
             });
+            #region part of Clinic checkbox
+     
+            Console.WriteLine("cliniclist count =" + ClinicList.Count);
+            foreach(string clinicfloorName in ClinicList)
+            {
+                outSideGrid = getGridLayout();
+                image = new Image
+                {
+                    Source = $"icon.png",
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 80,
+                    HeightRequest = 80,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center
+                };
 
+                DptNameLabel = new Label
+                {
+                    Text = clinicfloorName,
+                    FontSize =
+                        Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    VerticalTextAlignment =
+                        TextAlignment.Center,
+                    HorizontalTextAlignment =
+                        TextAlignment.Center
+                };                
+                boxList = new List<CheckBox>();
+                key = 0;
+
+                StackLayout CheckboxStackLayout = 
+                   new StackLayout {Orientation = StackOrientation.Horizontal };
+                StackLayout CheckboxInsideStackLayout = new StackLayout
+                {
+                    Padding = new Thickness(0, 0, 15, 0)
+                };
+                int CheckboxCount = 0;
+                foreach(AddExaminationItem item in _clinicItemDict[clinicfloorName])
+                {
+                    CheckBox box = new CheckBox
+                    {
+                        Text = item.DisplayName,
+                        TextFontSize =
+                         Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                        Margin = new Thickness(0, -3),
+                        Key = key++,
+                        Type = CheckBox.CheckType.Check
+                    };
+
+                    CheckboxInsideStackLayout.Children.Add(box);
+                    CheckboxCount++;
+
+                    if(CheckboxCount==3)
+                    {
+                        CheckboxStackLayout.Children.Add(CheckboxInsideStackLayout);
+                        CheckboxInsideStackLayout = new StackLayout 
+                        {
+                            Padding = new Thickness(0 ,0 ,15 ,0)
+                        };
+                        CheckboxCount = 0;
+                    }
+                    boxList.Add(box);
+                }
+
+                if (CheckboxCount != 0)
+                    CheckboxStackLayout.Children.Add(CheckboxInsideStackLayout);
+
+                ScrollView clinicScrollView = new ScrollView
+                {
+                    Content = CheckboxStackLayout,
+                    Orientation= ScrollOrientation.Horizontal
+                };
+                outSideGrid.Children.Add(image, 0, 2, 0, 4);
+                outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
+                outSideGrid.Children.Add(clinicScrollView, 2, 5, 0, 5);
+                BoxesDict.Add(clinicfloorName, boxList);
+                mainStackLayout.Children.Add(outSideGrid);
+
+                mainStackLayout.Children.Add(new BoxView
+                {
+                    BackgroundColor = Color.FromHex("#3f51b5"),
+                    HeightRequest = 1
+                });
+            }
+
+            #endregion
             #region part of Suit Process Checkbox
             HospitalProcessParse processParse = new HospitalProcessParse();
 
@@ -152,8 +284,6 @@ namespace IndoorNavigation.Views.PopUpPage
 
             List<ProcessOption> processOptions =
                 processParse.GetProcessOption();
-
-
 
             foreach (ProcessOption option in processOptions)
             {
@@ -184,7 +314,6 @@ namespace IndoorNavigation.Views.PopUpPage
             foreach (string dptName in DepartmentList)
             {
                 outSideGrid = getGridLayout();
-
                 image = new Image
                 {
                     Source = $"Add_Item{PictureCount++}",
@@ -295,7 +424,7 @@ namespace IndoorNavigation.Views.PopUpPage
             //    HeightRequest = 1
             //});
             #endregion
-                      
+            Console.WriteLine("<<GenerateBox");          
         }
 
         //to generate Grid layout for CheckBox 
@@ -330,6 +459,37 @@ namespace IndoorNavigation.Views.PopUpPage
                 (app.records.Count) :
                 (app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
+
+            foreach(string floorClinic in ClinicList)
+            {
+                List<AddExaminationItem> items = _clinicItemDict[floorClinic];
+
+                List<CheckBox> Boxes = BoxesDict[floorClinic];
+
+                foreach(CheckBox box in Boxes)
+                {
+                    if (!box.IsChecked) continue;
+                    dumplicateCount++;
+                    bool isDuplicate = false;
+                    //app.records.Any(p=>(p.DptName == dptName + ""))
+                    if (isDuplicate) continue;
+
+                    int order = 1;
+
+                    app.records.Add(new RgRecord
+                    {
+                        order = order,
+                        _waypointID = items[box.Key]._waypointID,
+                        _regionID = items[box.Key]._regionID,
+                        type = RecordType.AddItem,
+                        _groupID=0,
+                        _waypointName =items[box.Key].DisplayName,
+                        DptName = items[box.Key].DisplayName
+                    }) ;
+                    count++;
+                }
+            }
+
             foreach (string dptName in DepartmentList)
             {
                 List<AddExaminationItem> items = _examinationItemDict[dptName];
@@ -365,6 +525,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 }
             }
 
+            #region  part of revisit 
             //foreach (CheckBox box in BoxesDict["revisit"])
             //{
 
@@ -391,7 +552,8 @@ namespace IndoorNavigation.Views.PopUpPage
             //    });
             //    count++;
             //}
-
+            #endregion
+            #region
             foreach (CheckBox optionBox in processBoxes)
             {
                 Console.WriteLine(">>CheckBox optionBox in processBoxes");
@@ -431,6 +593,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 }
                 count++;
             }
+
+            #endregion
 
             if (count == 0)
             {

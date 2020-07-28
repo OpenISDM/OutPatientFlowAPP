@@ -158,12 +158,13 @@ namespace IndoorNavigation
         public void OnStop()
         {
             Console.WriteLine("Call Onstop");
+            OnSleep();
             if (_globalNavigatorPage != null)
             {
                // _globalNavigatorPage.Abort();
             }
         }
-
+        
         private void StoreAllState()
         {
             Console.WriteLine(">>StoreAllState");
