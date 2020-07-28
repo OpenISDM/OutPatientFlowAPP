@@ -122,8 +122,8 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="AddItemTemplate">
-                <ViewCell>
-                    <StackLayout Margin="10,0,10,0">
+                <ViewCell Tapped="ViewCell_Tapped">
+                    <StackLayout Margin="20,10,20,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -190,7 +190,7 @@
                     <RowDefinition Height="19*"/>
 
                 </Grid.RowDefinitions>
-                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" HorizontalOptions="StartAndExpand" 
+                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#fdfdfd" HorizontalOptions="StartAndExpand" 
                    VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Margin="5,0,5,0"/>
 
                 <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
@@ -211,6 +211,7 @@
                     FontSize="Medium" 
                     TextColor="White"
                     FontAttributes="Bold"
+                    Clicked="ShiftBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
                     AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>
             <!--<Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
@@ -219,9 +220,6 @@
             <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
                     TextColor="White"/>
-
-            <ActivityIndicator x:Name="BusyIndicator" Color="#3f51b5"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0.5,0.5,0.2,0.2"/>
-
         </AbsoluteLayout>
     </ContentPage.Content>
 </local:CustomToolbarContentPage>

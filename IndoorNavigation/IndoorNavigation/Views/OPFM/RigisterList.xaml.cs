@@ -21,6 +21,7 @@ using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Yuanlin_OPFM;
+using Xamarin.Essentials;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -28,6 +29,7 @@ namespace IndoorNavigation.Views.OPFM
     public partial class RigisterList : CustomToolbarContentPage
     {
         #region variable declaration
+
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
 
@@ -47,6 +49,7 @@ namespace IndoorNavigation.Views.OPFM
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
 
+        private List<RgRecord> _shiftTmpRecords = null;
         #endregion
 
         public RigisterList(string navigationGraphName)
@@ -66,6 +69,38 @@ namespace IndoorNavigation.Views.OPFM
             BindingContext = _viewmodel;
 
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Console.WriteLine(">>OnAppearing");
+            _viewmodel = new RegisterListViewModel(_navigationGraphName);
+
+            RefreshListView();
+
+            AddBtn.CornerRadius =
+                (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
+
+            if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
+                Buttonable(false);
+
+            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
+            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
+
+            if (app.lastFinished != null && !app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.lastFinished, ScrollToPosition.MakeVisible, false);
+            }
+            else if (app.HaveCashier)
+            {
+                RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, false);
+            }
+
+            isButtonPressed = false;
+            RefreshToolbarOptions();
+        }
+
+        #region Clinck Event
         /*this function is to push page to NavigatorPage */
         async private void RgListView_ItemTapped(object sender,
                                                  ItemTappedEventArgs e)
@@ -209,60 +244,30 @@ namespace IndoorNavigation.Views.OPFM
             ((ListView)sender).SelectedItem = null;
         }
 
-
-        private Week GetDayofWeek()
+        private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
         {
-            switch (DateTime.Now.DayOfWeek)
-            {
-                case DayOfWeek.Sunday:
-                    return Week.Sunday;
-                case DayOfWeek.Saturday:
-                    return Week.Saturday;
-                default:
-                    return Week.Workingday;
-            }
+            //if (ShiftTmp == null)
+            //{
+            //    ShiftTmp = e.Item as RgRecord;
+            //}
+            //else
+            //{
+            //    var o = e.Item as RgRecord;
+
+            //    int index1 = app.records.IndexOf(ShiftTmp as RgRecord);
+            //    int index2 = app.records.IndexOf(o as RgRecord);
+            //    //swap
+            //    app.records[index1] = o as RgRecord;
+            //    app.records[index2] = ShiftTmp as RgRecord;
+            //    // retrieve original function.
+            //    RgListView.ItemTapped -= RgListViewShift_ItemTapped;
+            //    RgListView.ItemTapped += RgListView_ItemTapped;
+            //    ShiftTmp = null;
+            //    ShiftButtonPressed = false;
+            //    Buttonable(true);
+            //}   
         }
-        private bool isCareRoomOpening(List<OpeningTime> openingTimes)
-        {
-            // TimeSpan compare function rule
-            // t1 < t2 return -1
-            // t1 = t2 return 0
-            // t1 > t2 return 1
-            if (openingTimes.Count <= 0) return true;
-
-            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
-            Week TodayOfWeekDay = GetDayofWeek();
-            Console.WriteLine("CurrentTimeSpan : " + CurrentTime);
-            Console.WriteLine("Week : " + TodayOfWeekDay);
-
-            foreach (OpeningTime openTime in openingTimes)
-            {
-                if (TodayOfWeekDay != openTime.dayOfWeek)
-                    continue;
-                int StartTimeCompare =
-                    TimeSpan.Compare(CurrentTime, openTime.startTime);
-                int EndTimeCompare =
-                    TimeSpan.Compare(openTime.endTime, CurrentTime);
-
-                if (StartTimeCompare == 1 && EndTimeCompare == 1)
-                {
-                    Console.WriteLine("Current, the room is available now");
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        //the function is to control the button whether it is visible 
-        private void Buttonable(bool enable)
-        {
-            AddBtn.IsEnabled = enable;
-            AddBtn.IsVisible = enable;
-            ShiftBtn.IsEnabled = enable;
-            ShiftBtn.IsVisible = enable;
-        }
-
+        
         //the function is a button event to add payment and medicine recieving 
         //route to listview
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
@@ -319,42 +324,7 @@ namespace IndoorNavigation.Views.OPFM
                 ScrollToPosition.MakeVisible, true);
             isButtonPressed = false;
         }
-
-        public void LoadCashierData()
-        {
-            CashierPosition = new Dictionary<Guid, DestinationItem>();
-            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
-            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
-            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
-            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
-            foreach (XmlNode node in CashiernodeList)
-            {
-                DestinationItem item = new DestinationItem();
-
-                item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-                item._floor = node.Attributes["floor"].Value;
-                item._waypointName = node.Attributes["name"].Value;
-
-                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
-
-                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            }
-
-            foreach (XmlNode node in PharmacyNodeList)
-            {
-                DestinationItem item = new DestinationItem();
-                item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-                item._floor = node.Attributes["floor"].Value;
-                item._waypointName = node.Attributes["name"].Value;
-
-                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            }
-
-            return;
-        }
-
+        
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
@@ -378,38 +348,29 @@ namespace IndoorNavigation.Views.OPFM
 
         }
 
-
-        // to refresh listview Template and check whether user have sign in or 
-        // not.
-        protected override void OnAppearing()
+        async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
-            base.OnAppearing();
-
-            Console.WriteLine(">>OnAppearing");
-            _viewmodel = new RegisterListViewModel(_navigationGraphName);
-
-            RefreshListView();
-
-            AddBtn.CornerRadius =
-                (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
-
-            if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
-                Buttonable(false);
-
-            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
-            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
-
-            if (app.lastFinished != null && !app.HaveCashier)
-            {
-                RgListView.ScrollTo(app.lastFinished, ScrollToPosition.MakeVisible, false);
-            }
-            else if (app.HaveCashier)
-            {
-                RgListView.ScrollTo(app.records[app.records.Count - 1], ScrollToPosition.MakeVisible, false);
-            }
-
-            isButtonPressed = false;
-            RefreshToolbarOptions();
+            //bool isCheck = Preferences.Get("isCheckedNeverShow", false);
+            //if (app.FinishCount + 1 >= app.records.Count - 1)
+            //{
+            //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(getResourceString("NO_SHIFT_STRING")));
+            //    return;
+            //}
+            //else
+            //{
+            //    if (!isCheck)
+            //    {
+            //        //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
+            //        await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(getResourceString("SHIFT_DESCRIPTION_STRING"),
+            //            getResourceString("OK_STRING"), "isCheckedNeverShow"));
+            //    }
+            //    RgListView.ItemTapped -= RgListView_ItemTapped;
+            //    RgListView.ItemTapped += RgListView_ShiftTapped;
+            //    ShiftButtonPressed = true;
+            //    Buttonable(false);
+            //}
+            //RgListView.ItemTapped -= RgListView_ItemTapped;
+            //RgListView.ItemTapped += RgListView_ShiftTapped;
         }
 
         // this function is a button event, which is to check user whether have 
@@ -493,13 +454,50 @@ namespace IndoorNavigation.Views.OPFM
                 RefreshListView();
             }
         }
+        #endregion
 
+        #region  For Get Value
+        public void LoadCashierData()
+        {
+            CashierPosition = new Dictionary<Guid, DestinationItem>();
+            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
+            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            foreach (XmlNode node in CashiernodeList)
+            {
+                DestinationItem item = new DestinationItem();
+
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+
+                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
+
+                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            foreach (XmlNode node in PharmacyNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+                item._regionID = new Guid(node.Attributes["region_id"].Value);
+                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+                item._floor = node.Attributes["floor"].Value;
+                item._waypointName = node.Attributes["name"].Value;
+
+                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            }
+
+            return;
+        }
         async private Task ReadXml()
         {
             //request.GetXMLBody();
             //await request.RequestData();          
             //await FakeHISRequest.RequestFakeHIS();
             RefreshListView();
+            await Task.CompletedTask;
         }
 
         private string getResourceString(string key)
@@ -515,7 +513,60 @@ namespace IndoorNavigation.Views.OPFM
             return resourceManager.GetString(key, currentLanguage);
         }
 
+        private Week GetDayofWeek()
+        {
+            switch (DateTime.Now.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return Week.Sunday;
+                case DayOfWeek.Saturday:
+                    return Week.Saturday;
+                default:
+                    return Week.Workingday;
+            }
+        }
+
+        private bool isCareRoomOpening(List<OpeningTime> openingTimes)
+        {
+            // TimeSpan compare function rule
+            // t1 < t2 return -1
+            // t1 = t2 return 0
+            // t1 > t2 return 1
+            if (openingTimes.Count <= 0) return true;
+
+            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
+            Week TodayOfWeekDay = GetDayofWeek();
+            Console.WriteLine("CurrentTimeSpan : " + CurrentTime);
+            Console.WriteLine("Week : " + TodayOfWeekDay);
+
+            foreach (OpeningTime openTime in openingTimes)
+            {
+                if (TodayOfWeekDay != openTime.dayOfWeek)
+                    continue;
+                int StartTimeCompare =
+                    TimeSpan.Compare(CurrentTime, openTime.startTime);
+                int EndTimeCompare =
+                    TimeSpan.Compare(openTime.endTime, CurrentTime);
+
+                if (StartTimeCompare == 1 && EndTimeCompare == 1)
+                {
+                    Console.WriteLine("Current, the room is available now");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        #endregion
+
         #region UI View Control
+        private void Buttonable(bool enable)
+        {
+            AddBtn.IsEnabled = enable;
+            AddBtn.IsVisible = enable;
+            ShiftBtn.IsEnabled = enable;
+            ShiftBtn.IsVisible = enable;
+        }
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
             if (lastCell != null)
@@ -528,12 +579,7 @@ namespace IndoorNavigation.Views.OPFM
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
             }
         }
-        public void BusyIndicatorShow(bool isBusy)
-        {
-            BusyIndicator.IsEnabled = isBusy;
-            BusyIndicator.IsRunning = isBusy;
-            BusyIndicator.IsVisible = isBusy;
-        }
+      
         private void RefreshListView()
         {
             isButtonPressed = false;
@@ -553,16 +599,14 @@ namespace IndoorNavigation.Views.OPFM
 
             RefreshListView();
         }
-
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
 
-            //BusyIndicatorShow(true);
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             Console.WriteLine("Register Finished");
             bool NetworkConnectAbility = true;
-                //wait NetworkSettings.CheckInternetConnect();
+
             if (NetworkConnectAbility)
             {
                 await ReadXml();
@@ -615,7 +659,6 @@ namespace IndoorNavigation.Views.OPFM
             ItemFinishFunction(record);
         }
         #endregion
-
 
         #region iOS secondary toolbaritem implement
 
@@ -787,5 +830,7 @@ namespace IndoorNavigation.Views.OPFM
         //    }
         //}
         #endregion
+
+       
     }
 }
