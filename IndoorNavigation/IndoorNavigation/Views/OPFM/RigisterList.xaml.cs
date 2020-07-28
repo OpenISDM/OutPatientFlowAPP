@@ -41,9 +41,9 @@ namespace IndoorNavigation.Views.OPFM
         private bool isButtonPressed = false;
         private ViewCell lastCell = null;
 
-        private INetworkSetting NetworkSettings;
+        //private INetworkSetting NetworkSettings;
 
-        private YunalinHttpRequestFake FakeHISRequest;
+        //private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
 
@@ -56,9 +56,9 @@ namespace IndoorNavigation.Views.OPFM
 
             _navigationGraphName = navigationGraphName;
 
-            FakeHISRequest = new YunalinHttpRequestFake();
+            //FakeHISRequest = new YunalinHttpRequestFake();
             _nameInformation = LoadXmlInformation(navigationGraphName);
-            NetworkSettings = DependencyService.Get<INetworkSetting>();
+            //NetworkSettings = DependencyService.Get<INetworkSetting>();
 
             PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
             PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
@@ -259,6 +259,8 @@ namespace IndoorNavigation.Views.OPFM
         {
             AddBtn.IsEnabled = enable;
             AddBtn.IsVisible = enable;
+            ShiftBtn.IsEnabled = enable;
+            ShiftBtn.IsVisible = enable;
         }
 
         //the function is a button event to add payment and medicine recieving 
@@ -383,6 +385,7 @@ namespace IndoorNavigation.Views.OPFM
         {
             base.OnAppearing();
 
+            Console.WriteLine(">>OnAppearing");
             _viewmodel = new RegisterListViewModel(_navigationGraphName);
 
             RefreshListView();
@@ -558,8 +561,8 @@ namespace IndoorNavigation.Views.OPFM
             //BusyIndicatorShow(true);
             await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
             Console.WriteLine("Register Finished");
-            bool NetworkConnectAbility =
-                await NetworkSettings.CheckInternetConnect();
+            bool NetworkConnectAbility = true;
+                //wait NetworkSettings.CheckInternetConnect();
             if (NetworkConnectAbility)
             {
                 await ReadXml();
@@ -577,7 +580,7 @@ namespace IndoorNavigation.Views.OPFM
                 PopupNavigation.Instance.PopAsync();
                 if (CheckWantToSetting)
                 {
-                    NetworkSettings.OpenSettingPage();
+                    //NetworkSettings.OpenSettingPage();
                     return;
                 }
                 else
@@ -643,9 +646,9 @@ namespace IndoorNavigation.Views.OPFM
             ToolbarItem ClearItem =
                 new ToolbarItem
                 {
-                    Text = "清除",
+                    Text = getResourceString("CLEAR_STRING"),
                     Command = ClearItemCommand,
-                    Order = ToolbarItemOrder.Secondary
+                    Order = ToolbarItemOrder.Primary,                    
                 };
             ToolbarItem TestItem =
                 new ToolbarItem
@@ -686,7 +689,7 @@ namespace IndoorNavigation.Views.OPFM
         private async Task ClearItemMethod()
         {
             Console.WriteLine("Clear item click");
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("確定要將所有紀錄清除嗎?", "清除", "不要", "ClearOrNot"));
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("ARE_YOU_SURE_TO_CLEAR_STRING"), getResourceString("CLEAR_STRING"), getResourceString("NO_STRING"), "ClearOrNot"));
 
             MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot", (MsgSender, MsgArgs) =>
             {
@@ -709,7 +712,9 @@ namespace IndoorNavigation.Views.OPFM
                 {
                     //do nothing;
                 }
+                MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot");
             });
+            
         }
         protected void OnToolbarItemAdded()
         {
