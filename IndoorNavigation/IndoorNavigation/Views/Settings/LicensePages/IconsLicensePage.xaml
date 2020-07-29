@@ -123,6 +123,26 @@
                         </Span>
                         <Span Text=" from www.onlinewebfonts.com&#10;"/>
                         <!--#endregion-->
+                        
+                        <!--#region Clinic Doctor-->
+                        <Span Text="&#10;Doctor icon from&#10;"/>
+                        <Span Text="www.flaticon.com/free-icon&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/free-icon"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region-->
+                        <Span Text="&#10;Examaination icon from&#10;"/>
+                        <Span Text="www.flaticon.com/free-icon&#10;" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/free-icon"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <!--#endregion-->
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

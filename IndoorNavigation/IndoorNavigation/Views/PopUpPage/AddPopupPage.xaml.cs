@@ -228,7 +228,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     TextFontSize =
                      Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
                     Margin = new Thickness(0, -3),
-                    Type = CheckBox.CheckType.Box
+                    Type = CheckBox.CheckType.Check
                 };
                 processStackLayout.Children.Add(optionBox);
                 processBoxes.Add(optionBox);

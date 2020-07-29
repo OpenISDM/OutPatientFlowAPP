@@ -10,6 +10,7 @@ using IndoorNavigation.Views.Navigation;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using IndoorNavigation.Models;
+using Xamarin.Forms;
 
 namespace IndoorNavigation
 {
@@ -18,6 +19,7 @@ namespace IndoorNavigation
         public string OpdDate { get; set; }
         public string DptName { get; set; }
         public string Shift { get; set; }
+        public Color selectedGroupColor { get; set; } = Color.Transparent;
         public string CareRoom { get; set; }
         public string DrName { get; set; }
         public string SeeSeq { get; set; }

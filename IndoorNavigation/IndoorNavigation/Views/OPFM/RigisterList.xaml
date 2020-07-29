@@ -123,7 +123,7 @@
             </DataTemplate>
             <DataTemplate x:Key="AddItemTemplate">
                 <ViewCell Tapped="ViewCell_Tapped">
-                    <StackLayout>
+                    <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <StackLayout Margin="10,5,10,5">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -169,7 +169,7 @@
             </DataTemplate>
             <DataTemplate x:Key="_NotComplete">
                 <ViewCell Height="60" Tapped="ViewCell_Tapped">
-                    <StackLayout>
+                    <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <Grid Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>

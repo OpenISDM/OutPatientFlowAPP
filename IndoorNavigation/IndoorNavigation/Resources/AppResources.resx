@@ -684,4 +684,7 @@
   <data name="COMBO_PROCESS_STRING" xml:space="preserve">
     <value>Combo Process</value>
   </data>
+  <data name="CANNOT_SHIFT_SAME_GROUP_STRING" xml:space="preserve">
+    <value>You cannot select the item in a same group.</value>
+  </data>
 </root>

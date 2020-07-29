@@ -22,6 +22,8 @@ using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Yuanlin_OPFM;
 using Xamarin.Essentials;
+using System.Collections.ObjectModel;
+using Plugin.Settings;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -42,13 +44,13 @@ namespace IndoorNavigation.Views.OPFM
         //to prevent button multi-tap from causing error
         private bool isButtonPressed = false;
         private ViewCell lastCell = null;
+        private bool ShiftButtonPressed = false;
 
         //private INetworkSetting NetworkSettings;
 
         //private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
-
         private List<RgRecord> _shiftTmpRecords = null;
         #endregion
 
@@ -102,6 +104,10 @@ namespace IndoorNavigation.Views.OPFM
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
         #endregion
 
         #region Clinck Event
@@ -146,8 +152,8 @@ namespace IndoorNavigation.Views.OPFM
 
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage(string.Format
-                        (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"), 
-                        BannerName), 
+                        (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"),
+                        BannerName),
                         getResourceString("OK_STRING")));
                 }
                 #region one way order distinct
@@ -229,7 +235,7 @@ namespace IndoorNavigation.Views.OPFM
                     if (!string.IsNullOrEmpty(record.AdditionalMsg))
                     {
                         await PopupNavigation.Instance.PushAsync
-                            (new AlertDialogPopupPage(record.AdditionalMsg, 
+                            (new AlertDialogPopupPage(record.AdditionalMsg,
                             getResourceString("OK_STRING")));
                     }
                     #endregion
@@ -247,29 +253,212 @@ namespace IndoorNavigation.Views.OPFM
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
         }
-
-        private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
+        private ObservableCollection<T> ToObservableCollection<T>(List<T> list)
         {
-            //if (ShiftTmp == null)
-            //{
-            //    ShiftTmp = e.Item as RgRecord;
-            //}
-            //else
-            //{
-            //    var o = e.Item as RgRecord;
+            ObservableCollection<T> result = new ObservableCollection<T>();
 
-            //    int index1 = app.records.IndexOf(ShiftTmp as RgRecord);
-            //    int index2 = app.records.IndexOf(o as RgRecord);
-            //    //swap
-            //    app.records[index1] = o as RgRecord;
-            //    app.records[index2] = ShiftTmp as RgRecord;
-            //    // retrieve original function.
-            //    RgListView.ItemTapped -= RgListViewShift_ItemTapped;
-            //    RgListView.ItemTapped += RgListView_ItemTapped;
-            //    ShiftTmp = null;
-            //    ShiftButtonPressed = false;
-            //    Buttonable(true);
-            //}   
+            foreach (T t in list)
+                result.Add(t);
+
+            return result;
+        }
+        private void swap<T>(ref List<T> list, int i, int j)
+        {
+            T tmp = list[i];
+            list[i] = list[j];
+            list[j] = tmp;
+            return;
+        }
+        private void swap<T>(ref T i,ref T j) 
+        {
+            T tmp = i;
+            i = j;
+            j = tmp;
+        }
+      
+        private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
+        {
+            //List<T> records = new List<T>();
+            Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
+            if ((first1 == last1 || first2 == last2))
+            {
+                //for ensure number 2 is one element.
+                if(first1==last1)
+                {
+                    swap(ref first1, ref first2);
+                    swap(ref last1, ref last2);
+                }
+                bool isFirst = (first2 == 0);
+                T tmpPosition = isFirst ? list[0] : (first2 < list.Count-1)? list[first2+1] : list[first2];
+
+                T tmp = list[first2];
+                List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
+
+                foreach(T t in tmperoryList)
+                {
+                    Console.WriteLine("Temproray list : "+((RgRecord)((object)t)).DptName);
+                }
+                list.RemoveAt(first2);
+
+               
+                list.Insert(first1, tmp);
+
+                //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
+                for(int i = 0; i < list.Count; i++)
+                {
+                    for(int j = 0; j < tmperoryList.Count; j++)
+                    {
+                        if(list[i].Equals(tmperoryList[j]))
+                        {
+                            list.RemoveAt(i);
+                        }
+                    }
+                }
+                foreach(T t in list)
+                {
+                    Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
+                }
+                if (isFirst)
+                {
+                    list.InsertRange(0, tmperoryList);
+                    Console.WriteLine("is First position(index =0)");
+                    foreach(T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+                else if (tmpPosition.Equals(tmp))
+                {
+                    list.AddRange(tmperoryList);
+                    Console.WriteLine("is Last position(index =count-1)");
+                    foreach (T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+                else
+                {
+                    list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
+                    Console.WriteLine("is middle position(index =1~count-2)");
+                    foreach (T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
+                {
+                    if (i <= last1 && j <= last2)
+                    {
+                        Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
+                        swap(ref list, i, j);
+                    }
+                    else if (i > last1)
+                    {
+                        Console.WriteLine("Current i is :" + i);
+                        T tmp = list[j];
+                        list.RemoveAt(j);
+
+                        if (i < list.Count())
+                            list.Insert(i, tmp);
+                        else
+                            list.Add(tmp);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Current j is : " + j);
+                        T tmp = list[i];
+                        list.RemoveAt(i);
+                        if (j < list.Count())
+                            list.Insert(j, tmp);
+                        else
+                            list.Add(tmp);
+                    }
+                }
+            }
+            //return records;
+        }
+        async private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
+        {
+            Console.WriteLine("_shiftTmpRecords is null : " + (_shiftTmpRecords == null));
+            #region First Tapped
+            if(_shiftTmpRecords == null)
+            {
+                var TappedItem = e.Item as RgRecord;
+                _shiftTmpRecords = new List<RgRecord>();
+
+                if(TappedItem._groupID != 0)
+                {
+                    foreach(RgRecord item in app.records)
+                    {
+                        if(TappedItem._groupID == item._groupID)
+                        {
+                            _shiftTmpRecords.Add(item);
+                            Console.WriteLine("Add to _shiftTmpRecords == " + item.DptName);
+                        }
+                    }
+                }
+                else
+                {
+                    _shiftTmpRecords.Add(TappedItem);
+                }                
+            }
+            #endregion
+
+            #region Second Tapped
+            else
+            {
+                var TappedItem = e.Item as RgRecord;
+
+                if(_shiftTmpRecords.Contains(TappedItem))
+                {
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage
+                        (getResourceString("CANNOT_SHIFT_SAME_GROUP_STRING"), 
+                        getResourceString("OK_STRING")));
+                    return;
+                }
+                else if (TappedItem._groupID != 0)
+                {
+                    List<RgRecord> _selectTmpRecord2 = 
+                        app.records.Where(p => p._groupID == TappedItem._groupID).Select(p=>
+                        {
+                            p.selectedGroupColor = Color.FromHex("#cdcdcd");
+                            return p;
+                        }).ToList();
+                    
+                    List<RgRecord> tmpRecord = app.records.ToList();
+
+                    int first1 = tmpRecord.IndexOf(_selectTmpRecord2[0]);
+                    int first2 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
+                    int last1 = tmpRecord.IndexOf(_selectTmpRecord2.Last());
+                    int last2 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
+                    swapRgRecord( ref tmpRecord, first1, last1, first2,last2);
+                    app.records = ToObservableCollection(tmpRecord);
+                }
+                else
+                {                   
+                    List<RgRecord> tmpRecord = app.records.ToList();
+
+                    int first1 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
+                    int first2 = tmpRecord.IndexOf(TappedItem);
+                    int last1 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
+                    int last2 = first2;
+
+                    swapRgRecord(ref tmpRecord, first1, last1, first2, last2);
+                    app.records = ToObservableCollection(tmpRecord);
+                }
+
+                //int index1 = app.records.IndexOf(_shiftTmpRecords[0]);                
+                RgListView.ItemTapped -= RgListView_ShiftTapped;
+                RgListView.ItemTapped += RgListView_ItemTapped;
+                _shiftTmpRecords = null;
+                RefreshListView();
+                Buttonable(true);
+            }
+            #endregion            
         }
         
         //the function is a button event to add payment and medicine recieving 
@@ -362,29 +551,32 @@ namespace IndoorNavigation.Views.OPFM
 
         async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
-            //bool isCheck = Preferences.Get("isCheckedNeverShow", false);
-            //if (app.FinishCount + 1 >= app.records.Count - 1)
-            //{
-            //    await PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage(getResourceString("NO_SHIFT_STRING")));
-            //    return;
-            //}
-            //else
-            //{
-            //    if (!isCheck)
-            //    {
-            //        //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
-            //        await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage(getResourceString("SHIFT_DESCRIPTION_STRING"),
-            //            getResourceString("OK_STRING"), "isCheckedNeverShow"));
-            //    }
-            //    RgListView.ItemTapped -= RgListView_ItemTapped;
-            //    RgListView.ItemTapped += RgListView_ShiftTapped;
-            //    ShiftButtonPressed = true;
-            //    Buttonable(false);
-            //}
-            //RgListView.ItemTapped -= RgListView_ItemTapped;
-            //RgListView.ItemTapped += RgListView_ShiftTapped;
-        }
+            bool isCheck = Preferences.Get("isCheckedNeverShow", false);
 
+            //I need to consider this statement
+            if (app.FinishCount + 1 >= app.records.Count - 1)
+            {
+                await PopupNavigation.Instance.PushAsync
+                    (new DisplayAlertPopupPage
+                    (getResourceString("NO_SHIFT_STRING")));
+                return;
+            }
+            else
+            {
+                if (!isCheck)
+                {
+                    //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
+                    await PopupNavigation.Instance.PushAsync
+                        (new ShiftAlertPopupPage
+                        (getResourceString("SHIFT_DESCRIPTION_STRING"),
+                        getResourceString("OK_STRING"), "isCheckedNeverShow"));
+                }
+                RgListView.ItemTapped -= RgListView_ItemTapped;
+                RgListView.ItemTapped += RgListView_ShiftTapped;
+                ShiftButtonPressed = true;
+                Buttonable(false);
+            }
+        }
         // this function is a button event, which is to check user whether have 
         // arrive at destination.
         async private void YetFinishBtn_Clicked(object sender, EventArgs e)
@@ -760,6 +952,7 @@ namespace IndoorNavigation.Views.OPFM
                     app.isRigistered = false;
                     app.getRigistered = false;
                     app.roundRecord = null;
+                    CrossSettings.Current.Clear();
                     Buttonable(true);
                     OnAppearing();
                 }

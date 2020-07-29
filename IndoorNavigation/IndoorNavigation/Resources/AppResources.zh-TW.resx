@@ -684,4 +684,7 @@
   <data name="COMBO_PROCESS_STRING" xml:space="preserve">
     <value>套裝流程</value>
   </data>
+  <data name="CANNOT_SHIFT_SAME_GROUP_STRING" xml:space="preserve">
+    <value>您不可以選取同一個群組的項目做排序。</value>
+  </data>
 </root>
