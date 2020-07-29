@@ -208,7 +208,9 @@ namespace IndoorNavigation.Views.PopUpPage
             };
             DptNameLabel = new Label
             {
-                Text = "套裝流程",
+                Text = 
+                _resourceManager.GetString("COMBO_PROCESS_STRING", 
+                currentLanguage),
                 FontSize =
                         Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 VerticalTextAlignment =

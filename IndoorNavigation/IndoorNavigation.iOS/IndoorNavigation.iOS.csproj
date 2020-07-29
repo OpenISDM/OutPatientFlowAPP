@@ -377,4 +377,19 @@
   <ItemGroup>
     <BundleResource Include="Resources\Lab11100008.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Clinic_1F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Clinic_2F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Clinic_3F.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Clinic_B1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ProcessExamination.png" />
+  </ItemGroup>
 </Project>

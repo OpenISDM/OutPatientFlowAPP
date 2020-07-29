@@ -681,4 +681,7 @@
   <data name="CLEAR_STRING" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="COMBO_PROCESS_STRING" xml:space="preserve">
+    <value>Combo Process</value>
+  </data>
 </root>

@@ -681,4 +681,7 @@
   <data name="CLEAR_STRING" xml:space="preserve">
     <value>清除</value>
   </data>
+  <data name="COMBO_PROCESS_STRING" xml:space="preserve">
+    <value>套裝流程</value>
+  </data>
 </root>
