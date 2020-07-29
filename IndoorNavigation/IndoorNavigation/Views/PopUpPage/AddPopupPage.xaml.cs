@@ -69,7 +69,7 @@ namespace IndoorNavigation.Views.PopUpPage
         bool isButtonPressed = false;
         Dictionary<string, List<CheckBox>> BoxesDict;
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
-        Dictionary<string, List<AddExaminationItem>> _clinicItemDict;
+        //Dictionary<string, List<AddExaminationItem>> _clinicItemDict;
         List<string> DepartmentList;
         List<string> ClinicList;
         public AddPopupPage(string graphName)
@@ -85,8 +85,8 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _examinationItemDict =
                 new Dictionary<string, List<AddExaminationItem>>();
-            _clinicItemDict = 
-                new Dictionary<string, List<AddExaminationItem>>();
+            //_clinicItemDict = 
+            //    new Dictionary<string, List<AddExaminationItem>>();
 
             LoadData();
         }
@@ -130,7 +130,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     items.Add(item);
                 }
                 //ClinicList.Add(clinicFloorName);
-                _clinicItemDict.Add(clinicFloorName, items);
+                _examinationItemDict.Add(clinicFloorName, items);
             }
             #endregion
             #region Examination Part
@@ -189,15 +189,76 @@ namespace IndoorNavigation.Views.PopUpPage
                 BackgroundColor = Color.FromHex("#3f51b5"),
                 HeightRequest = 1
             });
-            #region part of Clinic checkbox
-     
-            Console.WriteLine("cliniclist count =" + ClinicList.Count);
+
+            #region part of Suit Process Checkbox
+            HospitalProcessParse processParse = new HospitalProcessParse();
+
+            StackLayout processStackLayout = new StackLayout();
+            outSideGrid = getGridLayout();
+            List<ProcessOption> processOptions =
+                processParse.GetProcessOption();
+            image = new Image
+            {
+                Source = "ProcessExamination.png",
+                Aspect = Aspect.AspectFit,
+                WidthRequest = 80,
+                HeightRequest = 80,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center
+            };
+            DptNameLabel = new Label
+            {
+                Text = "套裝流程",
+                FontSize =
+                        Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                VerticalTextAlignment =
+                        TextAlignment.Center,
+                HorizontalTextAlignment =
+                        TextAlignment.Center
+            };
+            foreach (ProcessOption option in processOptions)
+            {
+                Console.WriteLine("Generate one time process box");
+                CheckBox optionBox = new CheckBox
+                {
+                    Key = int.Parse(option.processID),
+                    Text = option.processName,
+                    TextFontSize =
+                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
+                    Margin = new Thickness(0, -3),
+                    Type = CheckBox.CheckType.Box
+                };
+                processStackLayout.Children.Add(optionBox);
+                processBoxes.Add(optionBox);
+            }
+            ScrollView processScrollView = 
+                new ScrollView { 
+                    Content = processStackLayout, 
+                    Orientation= ScrollOrientation.Horizontal 
+                };
+            outSideGrid.Children.Add(image, 0, 2, 0, 4);
+            outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
+            outSideGrid.Children.Add(processScrollView, 2, 5, 0, 5);
+            mainStackLayout.Children.Add(outSideGrid);
+
+            //blue line for dividing every depart
+            mainStackLayout.Children.Add(new BoxView
+            {
+                BackgroundColor = Color.FromHex("#3f51b5"),
+                HeightRequest = 1
+            });
+            #endregion
+
+            #region part of Clinic checkbox 
             foreach(string clinicfloorName in ClinicList)
             {
                 outSideGrid = getGridLayout();
+                string Floor = clinicfloorName.Substring(0, 2);
+                Console.WriteLine("Floor : " + Floor);
+
                 image = new Image
                 {
-                    Source = $"icon.png",
+                    Source = $"Clinic_{Floor}.png",
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 80,
                     HeightRequest = 80,
@@ -225,7 +286,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     Padding = new Thickness(0, 0, 15, 0)
                 };
                 int CheckboxCount = 0;
-                foreach(AddExaminationItem item in _clinicItemDict[clinicfloorName])
+                foreach(AddExaminationItem item in _examinationItemDict[clinicfloorName])
                 {
                     CheckBox box = new CheckBox
                     {
@@ -273,39 +334,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 });
             }
 
-            #endregion
-            #region part of Suit Process Checkbox
-            HospitalProcessParse processParse = new HospitalProcessParse();
-
-            StackLayout processStackLayout = new StackLayout();
-
-            List<ProcessOption> processOptions =
-                processParse.GetProcessOption();
-
-            foreach (ProcessOption option in processOptions)
-            {
-                Console.WriteLine("Generate one time process box");
-                CheckBox optionBox = new CheckBox
-                {
-                    Key = int.Parse(option.processID),
-                    Text = option.processName,
-                    TextFontSize =
-                     Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
-                    Margin = new Thickness(0, -3),
-                    Type = CheckBox.CheckType.Box
-                };
-                processStackLayout.Children.Add(optionBox);
-                processBoxes.Add(optionBox);
-            }
-            mainStackLayout.Children.Add(processStackLayout);
-
-            //blue line for dividing every depart
-            mainStackLayout.Children.Add(new BoxView
-            {
-                BackgroundColor = Color.FromHex("#3f51b5"),
-                HeightRequest = 1
-            });
-            #endregion
+            #endregion            
 
             #region part of Examination Room
             foreach (string dptName in DepartmentList)
@@ -456,10 +485,50 @@ namespace IndoorNavigation.Views.PopUpPage
                 (app.records.Count) :
                 (app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
-
-            foreach(string floorClinic in ClinicList)
+            #region Part of Process combo
+            foreach (CheckBox optionBox in processBoxes)
             {
-                List<AddExaminationItem> items = _clinicItemDict[floorClinic];
+                Console.WriteLine(">>CheckBox optionBox in processBoxes");
+                if (optionBox.IsChecked)
+                {
+                    Console.WriteLine("Checked process Name : " + optionBox.Text);
+                    Console.WriteLine("Checked process Key : " + optionBox.Key);
+
+                    if (((App)Application.Current).OrderDistrict.ContainsKey(optionBox.Key))
+                    {
+                        Console.WriteLine("This item is dumplicate.");
+
+                        await PopupNavigation.Instance.PushAsync(new
+                            AlertDialogPopupPage(
+                            string.Format(_resourceManager.GetString
+                            ("SELECT_DUMPLICATE_CONTENT_STRING", currentLanguage), optionBox.Text),
+                            _resourceManager.GetString
+                            ("OK_STRING", currentLanguage))
+                       );
+                        return;
+                    }
+
+                    HospitalProcessParse parse = new HospitalProcessParse();
+                    ObservableCollection<RgRecord> SuitProcess =
+                        parse.ParseProcess(new ProcessOption
+                        {
+                            processID = optionBox.Key.ToString(),
+                            processName = optionBox.Text
+                        });
+                    foreach (RgRecord record in SuitProcess)
+                    {
+                        ((App)Application.Current).records.Add(record);
+                    }
+                    ((App)Application.Current).OrderDistrict
+                        .Add(optionBox.Key, 0);
+                    count++;
+                }
+            }
+            #endregion
+            #region Part of Clinic 
+            foreach (string floorClinic in ClinicList)
+            {
+                List<AddExaminationItem> items = _examinationItemDict[floorClinic];
 
                 List<CheckBox> Boxes = BoxesDict[floorClinic];
 
@@ -483,15 +552,16 @@ namespace IndoorNavigation.Views.PopUpPage
                         _waypointID = items[box.Key]._waypointID,
                         _regionID = items[box.Key]._regionID,
                         type = RecordType.AddItem,
-                        _groupID=0,
-                        _waypointName =items[box.Key]._waypointName,
-                        DptName = items[box.Key].DisplayName
+                        _groupID = 0,
+                        _waypointName = items[box.Key]._waypointName,
+                        DptName = items[box.Key].DisplayName,
+                        _subtitleName = items[box.Key]._waypointName
                     }) ;
                     count++;
                 }
             }
-            Console.WriteLine("count after clinic = " + count);
-
+            #endregion
+            #region Part of Examination
             foreach (string dptName in DepartmentList)
             {
                 List<AddExaminationItem> items = _examinationItemDict[dptName];
@@ -514,21 +584,22 @@ namespace IndoorNavigation.Views.PopUpPage
                         app.OrderDistrict.ContainsKey(0) ?
                         app.OrderDistrict[0] : 1;
 
-                    app.records.Insert(index++, new RgRecord
+                    //app.records.Insert(index++, new RgRecord
+                    app.records.Add(new RgRecord
                     {
                         _waypointID = items[box.Key]._waypointID,
                         _regionID = items[box.Key]._regionID,
-                        _waypointName = items[box.Key].DisplayName,
+                        _waypointName = items[box.Key]._waypointName,
+                        _subtitleName = items[box.Key].DisplayName,
                         type = RecordType.AddItem,
-                        DptName = dptName,//dptName + "-" + items[box.Key].DisplayName,
+                        DptName = dptName,
                         _groupID = 0,
                         order = order ++
                     });
                     count++;
                 }
             }
-            Console.WriteLine("count after examination = " + count);
-
+            #endregion
             #region  part of revisit 
             //foreach (CheckBox box in BoxesDict["revisit"])
             //{
@@ -557,49 +628,7 @@ namespace IndoorNavigation.Views.PopUpPage
             //    count++;
             //}
             #endregion
-            #region
-            foreach (CheckBox optionBox in processBoxes)
-            {
-                Console.WriteLine(">>CheckBox optionBox in processBoxes");
-                if (optionBox.IsChecked)
-                {
-                    Console.WriteLine("Checked process Name : " + optionBox.Text);
-                    Console.WriteLine("Checked process Key : " + optionBox.Key);
-
-                    if (((App)Application.Current).OrderDistrict.ContainsKey(optionBox.Key))
-                    {
-                        Console.WriteLine("This item is dumplicate.");
-
-                        await PopupNavigation.Instance.PushAsync(new 
-                            AlertDialogPopupPage(
-                            string.Format(_resourceManager.GetString
-                            ("SELECT_DUMPLICATE_CONTENT_STRING",currentLanguage), optionBox.Text), 
-                            _resourceManager.GetString
-                            ("OK_STRING", currentLanguage))
-                       );
-                        return;
-                    }
-
-                    HospitalProcessParse parse = new HospitalProcessParse();
-                    ObservableCollection<RgRecord> SuitProcess =
-                        parse.ParseProcess(new ProcessOption
-                        {
-                            processID = optionBox.Key.ToString(),
-                            processName = optionBox.Text
-                        });
-                    foreach (RgRecord record in SuitProcess)
-                    {
-                        ((App)Application.Current).records.Add(record);
-                    }
-                    ((App)Application.Current).OrderDistrict
-                        .Add(optionBox.Key,0);
-                    //((App)Application.Current).records = SuitProcess;
-                    count++;
-                }
-               
-            }
-            Console.WriteLine("count after process = " + count);
-            #endregion
+           
 
             if (count == 0)
             {

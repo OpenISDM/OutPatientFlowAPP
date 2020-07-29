@@ -143,6 +143,7 @@ namespace IndoorNavigation.Models
                         OpeningHours = openingTimes,
                         CareRoom = CareRoom,
                         AdditionalMsg = AdditionalRequire,
+                        _subtitleName = WaypointName,
                         type = type,
                         DptName = RecordName,
                         _waypointName = WaypointName,

@@ -1426,7 +1426,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Parking,
         Office,
         ConferenceRoom,
-        Stair
+        Stair,
+        Escalator
     }
 
     public enum waypointDecisionOrIgnore

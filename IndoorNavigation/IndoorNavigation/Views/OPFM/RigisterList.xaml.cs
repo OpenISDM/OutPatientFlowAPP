@@ -52,6 +52,7 @@ namespace IndoorNavigation.Views.OPFM
         private List<RgRecord> _shiftTmpRecords = null;
         #endregion
 
+        #region Page lifecycle
         public RigisterList(string navigationGraphName)
         {
             InitializeComponent();
@@ -80,6 +81,8 @@ namespace IndoorNavigation.Views.OPFM
 
             AddBtn.CornerRadius =
                 (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
+            ShiftBtn.CornerRadius =
+                (int)(Math.Min(ShiftBtn.Height, ShiftBtn.Width) / 2);
 
             if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 Buttonable(false);
@@ -99,6 +102,7 @@ namespace IndoorNavigation.Views.OPFM
             isButtonPressed = false;
             RefreshToolbarOptions();
         }
+        #endregion
 
         #region Clinck Event
         /*this function is to push page to NavigatorPage */
@@ -333,8 +337,16 @@ namespace IndoorNavigation.Views.OPFM
             isButtonPressed = true;
             PaymemtListBtn.IsEnabled = false;
             PaymemtListBtn.IsVisible = false;
+
+            IndicatorPopupPage isBusyPage = new IndicatorPopupPage();
+
+            await PopupNavigation.Instance.PushAsync(isBusyPage);
+
             await PopupNavigation.Instance.PushAsync
                 (new AddPopupPage(_navigationGraphName));
+
+            if(PopupNavigation.Instance.PopupStack.Contains(isBusyPage))
+                await PopupNavigation.Instance.RemovePageAsync(isBusyPage);
 
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel",
               (Messagesender, Messageargs) =>

@@ -123,7 +123,8 @@
             </DataTemplate>
             <DataTemplate x:Key="AddItemTemplate">
                 <ViewCell Tapped="ViewCell_Tapped">
-                    <StackLayout Margin="20,10,20,10">
+                    <StackLayout>
+                        <StackLayout Margin="10,5,10,5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -155,7 +156,7 @@
                                     />
                         </Grid>
                         <Label x:Name="ToDoNameLabel"
-                               Text="{Binding _waypointName, StringFormat='{0}'}"
+                               Text="{Binding _subtitleName, StringFormat='{0}'}"
                                Margin="25,0,25,0"
                                VerticalOptions="Start"
                                HorizontalOptions="Start"
@@ -163,10 +164,45 @@
                                FontSize="22"
                                TextColor="Black"/>
                     </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="_NotComplete">
+                <ViewCell Height="60" Tapped="ViewCell_Tapped">
+                    <StackLayout>
+                        <Grid Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="DptNameLab" 
+								   Text="{Binding DptName, StringFormat='{0}'}"
+                                   VerticalOptions="CenterAndExpand"
+								   FontSize="28"                                     
+								   TextColor="Black" 
+                                   Grid.Column="0" Grid.ColumnSpan="3"/>
+
+                            <Button x:Name="FinishBtn" 
+									Text="{i18n:Translate FINISH_STRING}" 									
+									FontSize="Medium" 
+                                    IsEnabled="{Binding isComplete}" 
+                                    IsVisible="{Binding isComplete}"
+									Clicked="YetFinishBtn_Clicked" 
+									CommandParameter="{Binding .}" 
+									TextColor="White" 
+									BackgroundColor="#3f51b5" 
+									BorderColor="#3f51b5"
+                                    Grid.Column="3"/>
+
+                        </Grid>
+                    </StackLayout>
                 </ViewCell>
             </DataTemplate>
             <local:RegistrationDataTemplateSelect x:Key="RegistrationDataTemplateSelecter"   
-						NotCompleteTemplate="{StaticResource NotComplete}"
+						NotCompleteTemplate="{StaticResource _NotComplete}"
                         AddItemDataTemplate="{StaticResource AddItemTemplate}"
 						CompleteTemplate="{StaticResource Complete}" 
 						YetNavigationTemplate="{StaticResource YetNavigation}"/>
@@ -190,8 +226,8 @@
                     <RowDefinition Height="19*"/>
 
                 </Grid.RowDefinitions>
-                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#fdfdfd" HorizontalOptions="StartAndExpand" 
-                   VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Margin="5,0,5,0"/>
+                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#f2e4e4" 
+                   VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Padding="5,0,5,0"/>
 
                 <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
                 <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"

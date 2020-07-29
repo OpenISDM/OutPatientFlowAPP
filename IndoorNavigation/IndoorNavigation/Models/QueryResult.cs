@@ -26,7 +26,7 @@ namespace IndoorNavigation
         public bool isAccept { get; set; }
         #region For Process Suit
         public int order { get; set; }
-        public string TitleName { get; set; }
+        public string _subtitleName { get; set; }
         public string AdditionalMsg { get; set; }
         public int _groupID { get; set; }
         public List<OpeningTime> OpeningHours { get; set; }
