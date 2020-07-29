@@ -89,8 +89,16 @@ namespace IndoorNavigation.Views.OPFM
             if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && app.HaveCashier;
-            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && app.HaveCashier;
+            PaymemtListBtn.IsEnabled = 
+                (app.FinishCount == app.records.Count) && 
+                (app.HaveCashier) && 
+                app.records.Count()>0 && 
+                !(app.records.Count()==1 && app.records[0].type== RecordType.Register);
+            PaymemtListBtn.IsVisible = 
+                (app.FinishCount == app.records.Count) && 
+                (app.HaveCashier) && 
+                app.records.Count() > 0 && 
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
             {
@@ -107,6 +115,14 @@ namespace IndoorNavigation.Views.OPFM
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+
+            if (ShiftButtonPressed)
+            {
+                RgListView.ItemTapped -= RgListView_ShiftTapped;
+                RgListView.ItemTapped += RgListView_ItemTapped;
+                _shiftTmpRecords = null;
+                ShiftButtonPressed = false;
+            }
         }
         #endregion
 
@@ -252,134 +268,7 @@ namespace IndoorNavigation.Views.OPFM
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
-        }
-        private ObservableCollection<T> ToObservableCollection<T>(List<T> list)
-        {
-            ObservableCollection<T> result = new ObservableCollection<T>();
-
-            foreach (T t in list)
-                result.Add(t);
-
-            return result;
-        }
-        private void swap<T>(ref List<T> list, int i, int j)
-        {
-            T tmp = list[i];
-            list[i] = list[j];
-            list[j] = tmp;
-            return;
-        }
-        private void swap<T>(ref T i,ref T j) 
-        {
-            T tmp = i;
-            i = j;
-            j = tmp;
-        }
-      
-        private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
-        {
-            //List<T> records = new List<T>();
-            Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
-            if ((first1 == last1 || first2 == last2))
-            {
-                //for ensure number 2 is one element.
-                if(first1==last1)
-                {
-                    swap(ref first1, ref first2);
-                    swap(ref last1, ref last2);
-                }
-                bool isFirst = (first2 == 0);
-                T tmpPosition = isFirst ? list[0] : (first2 < list.Count-1)? list[first2+1] : list[first2];
-
-                T tmp = list[first2];
-                List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
-
-                foreach(T t in tmperoryList)
-                {
-                    Console.WriteLine("Temproray list : "+((RgRecord)((object)t)).DptName);
-                }
-                list.RemoveAt(first2);
-
-               
-                list.Insert(first1, tmp);
-
-                //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
-                for(int i = 0; i < list.Count; i++)
-                {
-                    for(int j = 0; j < tmperoryList.Count; j++)
-                    {
-                        if(list[i].Equals(tmperoryList[j]))
-                        {
-                            list.RemoveAt(i);
-                        }
-                    }
-                }
-                foreach(T t in list)
-                {
-                    Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
-                }
-                if (isFirst)
-                {
-                    list.InsertRange(0, tmperoryList);
-                    Console.WriteLine("is First position(index =0)");
-                    foreach(T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-                else if (tmpPosition.Equals(tmp))
-                {
-                    list.AddRange(tmperoryList);
-                    Console.WriteLine("is Last position(index =count-1)");
-                    foreach (T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-                else
-                {
-                    list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
-                    Console.WriteLine("is middle position(index =1~count-2)");
-                    foreach (T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
-                {
-                    if (i <= last1 && j <= last2)
-                    {
-                        Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
-                        swap(ref list, i, j);
-                    }
-                    else if (i > last1)
-                    {
-                        Console.WriteLine("Current i is :" + i);
-                        T tmp = list[j];
-                        list.RemoveAt(j);
-
-                        if (i < list.Count())
-                            list.Insert(i, tmp);
-                        else
-                            list.Add(tmp);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Current j is : " + j);
-                        T tmp = list[i];
-                        list.RemoveAt(i);
-                        if (j < list.Count())
-                            list.Insert(j, tmp);
-                        else
-                            list.Add(tmp);
-                    }
-                }
-            }
-            //return records;
-        }
+        }      
         async private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
         {
             Console.WriteLine("_shiftTmpRecords is null : " + (_shiftTmpRecords == null));
@@ -423,11 +312,7 @@ namespace IndoorNavigation.Views.OPFM
                 else if (TappedItem._groupID != 0)
                 {
                     List<RgRecord> _selectTmpRecord2 = 
-                        app.records.Where(p => p._groupID == TappedItem._groupID).Select(p=>
-                        {
-                            p.selectedGroupColor = Color.FromHex("#cdcdcd");
-                            return p;
-                        }).ToList();
+                        app.records.Where(p => p._groupID == TappedItem._groupID).ToList();
                     
                     List<RgRecord> tmpRecord = app.records.ToList();
 
@@ -456,6 +341,7 @@ namespace IndoorNavigation.Views.OPFM
                 RgListView.ItemTapped += RgListView_ItemTapped;
                 _shiftTmpRecords = null;
                 RefreshListView();
+                RefreshToolbarOptions();
                 Buttonable(true);
             }
             #endregion            
@@ -540,8 +426,17 @@ namespace IndoorNavigation.Views.OPFM
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel",
               (Messagesender, Messageargs) =>
               {
-                  PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count && !app.HaveCashier;
-                  PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count && !app.HaveCashier;
+                  PaymemtListBtn.IsEnabled = 
+                  (app.FinishCount == app.records.Count) && 
+                  !app.HaveCashier &&
+                   app.records.Count() > 0 &&
+                !(app.records.Count() == 1 && 
+                app.records[0].type == RecordType.Register); ;
+                  PaymemtListBtn.IsVisible = 
+                  (app.FinishCount == app.records.Count) && 
+                  !app.HaveCashier&&
+                   app.records.Count() > 0 &&
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;
                   isButtonPressed = false;
                   MessagingCenter.Unsubscribe<AddPopupPage, bool>
                       (this, "isCancel");
@@ -549,12 +444,50 @@ namespace IndoorNavigation.Views.OPFM
 
         }
 
+        private bool CanBeShifted()
+        {
+            //int GroupCount = app.OrderDistrict.Keys.Where(p=> p!=0).Count();
+            int AddItemNotCompleteCount =
+                app.records.Where(p => !p.isAccept && p._groupID == 0).Count();
+
+            if (AddItemNotCompleteCount >= 2)
+                return true;
+
+            int GroupNotCompleteCount =
+                app.records.Where(p => p._groupID != 0 && !p.isAccept).Count();
+
+            if (AddItemNotCompleteCount >= 1 && GroupNotCompleteCount >= 1)
+                return true;
+            int currentGroupID = 0;
+            int TotalNotComplete = 0;
+            //foreach(KeyValuePair<int,int> pair in app.OrderDistrict)
+            foreach(RgRecord record in app.records)
+            {
+                if (record._groupID == 0) continue;
+                if (record._groupID != currentGroupID)
+                {
+                    Console.WriteLine("Current dptName = " + record.DptName + "Group ID =" + currentGroupID);
+                    Console.WriteLine("aaaaaaaaa");
+                    int CurrentGroupNotComplete =
+                        app.records.Where(p => p._groupID == record._groupID && !p.isAccept).Count();
+                    Console.WriteLine("CurrentGroupNotComplete = " + CurrentGroupNotComplete);
+                    if (CurrentGroupNotComplete > 0)
+                        TotalNotComplete++;
+
+                    currentGroupID = record._groupID;
+                }
+            }
+            Console.WriteLine("TotalNotComplete = " + TotalNotComplete);
+            if (TotalNotComplete>=2) return true;
+
+            return false;
+        }
         async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             bool isCheck = Preferences.Get("isCheckedNeverShow", false);
 
             //I need to consider this statement
-            if (app.FinishCount + 1 >= app.records.Count - 1)
+            if (!CanBeShifted())
             {
                 await PopupNavigation.Instance.PushAsync
                     (new DisplayAlertPopupPage
@@ -571,6 +504,19 @@ namespace IndoorNavigation.Views.OPFM
                         (getResourceString("SHIFT_DESCRIPTION_STRING"),
                         getResourceString("OK_STRING"), "isCheckedNeverShow"));
                 }
+                CancelShiftCommand = new Command(async() =>await CancelShiftItemMethod());
+                ToolbarItems.Clear();
+
+                ToolbarItem CancelShiftItem = new ToolbarItem
+                {
+                    Order = ToolbarItemOrder.Primary,
+                    Text = getResourceString("CANCEL_STRING"),
+                    Command = CancelShiftCommand
+                };
+
+                ToolbarItems.Add(CancelShiftItem);
+                OnToolbarItemAdded();
+
                 RgListView.ItemTapped -= RgListView_ItemTapped;
                 RgListView.ItemTapped += RgListView_ShiftTapped;
                 ShiftButtonPressed = true;
@@ -658,6 +604,18 @@ namespace IndoorNavigation.Views.OPFM
                 RefreshListView();
             }
         }
+
+        private ICommand CancelShiftCommand { get; set; }
+        async private Task CancelShiftItemMethod()
+        {
+            RgListView.ItemTapped += RgListView_ItemTapped;
+            RgListView.ItemTapped -= RgListView_ShiftTapped;
+            _shiftTmpRecords = null;
+
+            Buttonable(true);
+            RefreshToolbarOptions();
+            await Task.CompletedTask;
+        }
         #endregion
 
         #region  For Get Value
@@ -703,7 +661,133 @@ namespace IndoorNavigation.Views.OPFM
             RefreshListView();
             await Task.CompletedTask;
         }
+        private ObservableCollection<T> ToObservableCollection<T>(List<T> list)
+        {
+            ObservableCollection<T> result = new ObservableCollection<T>();
 
+            foreach (T t in list)
+                result.Add(t);
+
+            return result;
+        }
+        private void swap<T>(ref List<T> list, int i, int j)
+        {
+            T tmp = list[i];
+            list[i] = list[j];
+            list[j] = tmp;
+            return;
+        }
+        private void swap<T>(ref T i, ref T j)
+        {
+            T tmp = i;
+            i = j;
+            j = tmp;
+        }
+
+        private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
+        {
+            //List<T> records = new List<T>();
+            Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
+            if ((first1 == last1 || first2 == last2))
+            {
+                //for ensure number 2 is one element.
+                if (first1 == last1)
+                {
+                    swap(ref first1, ref first2);
+                    swap(ref last1, ref last2);
+                }
+                bool isFirst = (first2 == 0);
+                T tmpPosition = isFirst ? list[0] : (first2 < list.Count - 1) ? list[first2 + 1] : list[first2];
+
+                T tmp = list[first2];
+                List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
+
+                foreach (T t in tmperoryList)
+                {
+                    Console.WriteLine("Temproray list : " + ((RgRecord)((object)t)).DptName);
+                }
+                list.RemoveAt(first2);
+
+
+                list.Insert(first1, tmp);
+
+                //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
+                for (int i = 0; i < list.Count; i++)
+                {
+                    for (int j = 0; j < tmperoryList.Count; j++)
+                    {
+                        if (list[i].Equals(tmperoryList[j]))
+                        {
+                            list.RemoveAt(i);
+                        }
+                    }
+                }
+                foreach (T t in list)
+                {
+                    Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
+                }
+                if (isFirst)
+                {
+                    list.InsertRange(0, tmperoryList);
+                    Console.WriteLine("is First position(index =0)");
+                    foreach (T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+                else if (tmpPosition.Equals(tmp))
+                {
+                    list.AddRange(tmperoryList);
+                    Console.WriteLine("is Last position(index =count-1)");
+                    foreach (T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+                else
+                {
+                    list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
+                    Console.WriteLine("is middle position(index =1~count-2)");
+                    foreach (T t in list)
+                    {
+                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
+                {
+                    if (i <= last1 && j <= last2)
+                    {
+                        Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
+                        swap(ref list, i, j);
+                    }
+                    else if (i > last1)
+                    {
+                        Console.WriteLine("Current i is :" + i);
+                        T tmp = list[j];
+                        list.RemoveAt(j);
+
+                        if (i < list.Count())
+                            list.Insert(i, tmp);
+                        else
+                            list.Add(tmp);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Current j is : " + j);
+                        T tmp = list[i];
+                        list.RemoveAt(i);
+                        if (j < list.Count())
+                            list.Insert(j, tmp);
+                        else
+                            list.Add(tmp);
+                    }
+                }
+            }
+            //return records;
+        }
         private string getResourceString(string key)
         {
             string resourceId = "IndoorNavigation.Resources.AppResources";
@@ -989,53 +1073,6 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         #endregion
-
-        #region for scroll down events.
-        //int _lastItemAppearedIndex = 0;
-        //private void RgListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        //{
-        //    var currentIndex = app.records.IndexOf(e.Item as RgRecord);
-
-        //    if (currentIndex > _lastItemAppearedIndex)
-        //        Buttonable(true);
-        //    else
-        //        Buttonable(false);
-
-        //    _lastItemAppearedIndex = app.records.IndexOf(e.Item as RgRecord);
-        //}
-
-        //double previousScrollPosition = 0;
-        //private void RgListView_Scrolled(object sender, ScrolledEventArgs e)
-        //{
-        //    if (e.ScrollY == 0) return;
-
-        //    if (previousScrollPosition >= e.ScrollY)
-        //    {
-        //        Buttonable(true);
-        //        if (e.ScrollY == 0 || Convert.ToInt32(e.ScrollY) == 0)
-        //            previousScrollPosition = 0;
-        //    }
-
-        //    else
-        //    {
-        //        Buttonable(false);
-        //        previousScrollPosition = e.ScrollY;
-        //    }
-        //    previousScrollPosition = e.ScrollY;
-        //    if (previousScrollPosition < e.ScrollY)
-        //    {
-        //        Buttonable(false);
-        //        previousScrollPosition = e.ScrollY;
-        //    }
-        //    else if (previousScrollPosition >= e.sc)
-        //    {
-        //        Buttonable(true);
-        //        if (Convert.ToInt32(e.ScrollY) == 0)
-        //            previousScrollPosition = 0;
-        //    }
-        //}
-        #endregion
-
-       
+ 
     }
 }
