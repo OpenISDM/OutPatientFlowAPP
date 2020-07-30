@@ -1036,7 +1036,7 @@ namespace IndoorNavigation.Views.OPFM
                     app.isRigistered = false;
                     app.getRigistered = false;
                     app.roundRecord = null;
-                    CrossSettings.Current.Clear();
+                    OPPA_TmperorayStatus.ClearAllState();
                     Buttonable(true);
                     OnAppearing();
                 }

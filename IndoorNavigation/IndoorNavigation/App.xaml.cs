@@ -60,11 +60,11 @@ using System.Collections.ObjectModel;
 using Xamarin.Essentials;
 using System;
 using IndoorNavigation.Views.Navigation;
-using Prism.Navigation.Xaml;
-using IndoorNavigation.ViewModels.Navigation;
+
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Plugin.Settings;
+using IndoorNavigation.Utilities;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -90,6 +90,7 @@ namespace IndoorNavigation
         public bool isResume = false;
         public NavigatorPage _globalNavigatorPage = null;
         #endregion
+        public int count = 0;
 
         public Dictionary<int, int> OrderDistrict = new Dictionary<int, int>();
         public App()
@@ -130,7 +131,8 @@ namespace IndoorNavigation
             Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
 
-            RestoreAllState();
+            OPPA_TmperorayStatus.RestoreAllState();
+            //RestoreAllState();
            
         }
 
@@ -138,8 +140,8 @@ namespace IndoorNavigation
         {
             // Handle when your app sleeps
             Console.WriteLine(">>OnSleep");
-            StoreAllState();
-            
+            //StoreAllState();
+            OPPA_TmperorayStatus.StoreAllState();
             base.OnSleep();
         }
 
@@ -165,71 +167,71 @@ namespace IndoorNavigation
             }
         }
         
-        private void StoreAllState()
-        {
-            Console.WriteLine(">>StoreAllState");
-            Console.WriteLine("finished count =" + FinishCount);
-            Console.WriteLine("records count " + records.Count);
-            if ((FinishCount+1 == records.Count && lastFinished.type == RecordType.Exit) || records.Count==0)
-            {
-                Console.WriteLine("Call clear");
-                CrossSettings.Current.Clear();
-                return;
-            }
-            #region Records Part
-            string RecordJsonString = JsonConvert.SerializeObject(records);
-            CrossSettings.Current.AddOrUpdateValue("records", RecordJsonString);
-            #endregion
+        //private void StoreAllState()
+        //{
+        //    Console.WriteLine(">>StoreAllState");
+        //    Console.WriteLine("finished count =" + FinishCount);
+        //    Console.WriteLine("records count " + records.Count);
+        //    if ((FinishCount+1 == records.Count && lastFinished.type == RecordType.Exit) || records.Count==0)
+        //    {
+        //        Console.WriteLine("Call clear");
+        //        CrossSettings.Current.Clear();
+        //        return;
+        //    }
+        //    #region Records Part
+        //    string RecordJsonString = JsonConvert.SerializeObject(records);
+        //    CrossSettings.Current.AddOrUpdateValue("records", RecordJsonString);
+        //    #endregion
 
-            CrossSettings.Current.AddOrUpdateValue("FinishCount", FinishCount);
-            CrossSettings.Current.AddOrUpdateValue("isRigistered", isRigistered);
-            CrossSettings.Current.AddOrUpdateValue("getRigistered", getRigistered);
-            CrossSettings.Current.AddOrUpdateValue("HaveCashier", HaveCashier);
+        //    CrossSettings.Current.AddOrUpdateValue("FinishCount", FinishCount);
+        //    CrossSettings.Current.AddOrUpdateValue("isRigistered", isRigistered);
+        //    CrossSettings.Current.AddOrUpdateValue("getRigistered", getRigistered);
+        //    CrossSettings.Current.AddOrUpdateValue("HaveCashier", HaveCashier);
 
-            #region lastFinished Part
-            string lastFinishedJsonString = JsonConvert.SerializeObject(lastFinished);
-            CrossSettings.Current.AddOrUpdateValue("lastFinished", lastFinishedJsonString);
-            #endregion
+        //    #region lastFinished Part
+        //    string lastFinishedJsonString = JsonConvert.SerializeObject(lastFinished);
+        //    CrossSettings.Current.AddOrUpdateValue("lastFinished", lastFinishedJsonString);
+        //    #endregion
 
-            #region OrderDistrict Part
-            string OrderDistrictJsonString = JsonConvert.SerializeObject(OrderDistrict);
-            CrossSettings.Current.AddOrUpdateValue("OrderDistrict", OrderDistrictJsonString);
-            #endregion
-        }     
+        //    #region OrderDistrict Part
+        //    string OrderDistrictJsonString = JsonConvert.SerializeObject(OrderDistrict);
+        //    CrossSettings.Current.AddOrUpdateValue("OrderDistrict", OrderDistrictJsonString);
+        //    #endregion
+        //}     
 
-        private void RestoreAllState()
-        {
-            Console.WriteLine(">>RestoreAllState");
+        //private void RestoreAllState()
+        //{
+        //    Console.WriteLine(">>RestoreAllState");
 
-            #region Records Part
-            string RecordJsonString = CrossSettings.Current.GetValueOrDefault("records", string.Empty);
-            if (string.IsNullOrEmpty(RecordJsonString))
-                records = new ObservableCollection<RgRecord>();
-            else records = JsonConvert.DeserializeObject<ObservableCollection<RgRecord>>(RecordJsonString);
-            #endregion
+        //    #region Records Part
+        //    string RecordJsonString = CrossSettings.Current.GetValueOrDefault("records", string.Empty);
+        //    if (string.IsNullOrEmpty(RecordJsonString))
+        //        records = new ObservableCollection<RgRecord>();
+        //    else records = JsonConvert.DeserializeObject<ObservableCollection<RgRecord>>(RecordJsonString);
+        //    #endregion
 
-            FinishCount = CrossSettings.Current.GetValueOrDefault("FinishCount", 0);
-            isRigistered = CrossSettings.Current.GetValueOrDefault("isRigistered", false);
-            getRigistered = CrossSettings.Current.GetValueOrDefault("getRigistered", false);
-            HaveCashier = CrossSettings.Current.GetValueOrDefault("HaveCashier", false);
+        //    FinishCount = CrossSettings.Current.GetValueOrDefault("FinishCount", 0);
+        //    isRigistered = CrossSettings.Current.GetValueOrDefault("isRigistered", false);
+        //    getRigistered = CrossSettings.Current.GetValueOrDefault("getRigistered", false);
+        //    HaveCashier = CrossSettings.Current.GetValueOrDefault("HaveCashier", false);
 
-            #region  lastFinish Part
-            string lastFinishJsonString = CrossSettings.Current.GetValueOrDefault("lastFinished", string.Empty);
-            if (string.IsNullOrEmpty(lastFinishJsonString))
-                lastFinished = null;
-            else lastFinished = JsonConvert.DeserializeObject<RgRecord>(lastFinishJsonString);
-            #endregion
-            #region OrderDistrict Part
-            string OrderDistrictJsonString = 
-                CrossSettings.Current.GetValueOrDefault("OrderDistrict", string.Empty);
+        //    #region  lastFinish Part
+        //    string lastFinishJsonString = CrossSettings.Current.GetValueOrDefault("lastFinished", string.Empty);
+        //    if (string.IsNullOrEmpty(lastFinishJsonString))
+        //        lastFinished = null;
+        //    else lastFinished = JsonConvert.DeserializeObject<RgRecord>(lastFinishJsonString);
+        //    #endregion
+        //    #region OrderDistrict Part
+        //    string OrderDistrictJsonString = 
+        //        CrossSettings.Current.GetValueOrDefault("OrderDistrict", string.Empty);
 
-            if (string.IsNullOrEmpty(OrderDistrictJsonString))
-                OrderDistrict = new Dictionary<int, int>();
-            else
-                OrderDistrict = 
-                    JsonConvert.DeserializeObject<Dictionary<int, int>>(OrderDistrictJsonString);
-            #endregion 
-        }
+        //    if (string.IsNullOrEmpty(OrderDistrictJsonString))
+        //        OrderDistrict = new Dictionary<int, int>();
+        //    else
+        //        OrderDistrict = 
+        //            JsonConvert.DeserializeObject<Dictionary<int, int>>(OrderDistrictJsonString);
+        //    #endregion 
+        //}
        
     }
 }
