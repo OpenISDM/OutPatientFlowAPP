@@ -122,6 +122,7 @@ namespace IndoorNavigation.Views.OPFM
                 RgListView.ItemTapped += RgListView_ItemTapped;
                 _shiftTmpRecords = null;
                 ShiftButtonPressed = false;
+                ReturnWhiteBackground();
             }
         }
         #endregion
@@ -611,18 +612,7 @@ namespace IndoorNavigation.Views.OPFM
                 RefreshListView();
             }
         }
-
-        private ICommand CancelShiftCommand { get; set; }
-        async private Task CancelShiftItemMethod()
-        {
-            RgListView.ItemTapped += RgListView_ItemTapped;
-            RgListView.ItemTapped -= RgListView_ShiftTapped;
-            _shiftTmpRecords = null;
-
-            Buttonable(true);
-            RefreshToolbarOptions();
-            await Task.CompletedTask;
-        }
+        
         #endregion
 
         #region  For Get Value
@@ -1091,6 +1081,18 @@ namespace IndoorNavigation.Views.OPFM
                 MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot");
             });
             
+        }        
+        async private Task CancelShiftItemMethod()
+        {
+            RgListView.ItemTapped += RgListView_ItemTapped;
+            RgListView.ItemTapped -= RgListView_ShiftTapped;
+            _shiftTmpRecords = null;
+
+            Buttonable(true);
+            RefreshToolbarOptions();
+            ReturnWhiteBackground();
+
+            await Task.CompletedTask;
         }
         protected void OnToolbarItemAdded()
         {
@@ -1105,6 +1107,7 @@ namespace IndoorNavigation.Views.OPFM
         public ICommand InfoItemCommand { get; set; }
         public ICommand TestItemCommand { get; set; }
         public ICommand ClearItemCommand { get; set; }
+        private ICommand CancelShiftCommand { get; set; }
         public override Color CellBackgroundColor => Color.White;
         public override Color CellTextColor => Color.Black;
         public override Color MenuBackgroundColor => Color.White;
