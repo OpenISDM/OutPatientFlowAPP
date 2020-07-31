@@ -134,7 +134,7 @@ namespace IndoorNavigation
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
 
-            RefreshListView();
+            //RefreshListView();
         }
 
         private INetworkSetting setting;
@@ -295,8 +295,7 @@ namespace IndoorNavigation
                     Console.WriteLine("the return Args is :" + (bool)msgArgs);
                     if ((bool)msgArgs) Storage.DeleteBuildingGraph(item.sourcePath);
 
-                    _viewModel.RefreshListViewItem();
-                    RefreshListView();
+                    _viewModel.LoadNavigationGraph();
                     MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete");
                 });
             }
