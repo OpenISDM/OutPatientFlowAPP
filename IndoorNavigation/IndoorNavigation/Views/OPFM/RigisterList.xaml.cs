@@ -284,10 +284,12 @@ namespace IndoorNavigation.Views.OPFM
                     {
                         if(TappedItem._groupID == item._groupID)
                         {
+                            item.selectedGroupColor = Color.FromHex("FFFF88");
                             _shiftTmpRecords.Add(item);
                             Console.WriteLine("Add to _shiftTmpRecords == " + item.DptName);
                         }
                     }
+                    RefreshListView();
                 }
                 else
                 {
@@ -312,8 +314,12 @@ namespace IndoorNavigation.Views.OPFM
                 else if (TappedItem._groupID != 0)
                 {
                     List<RgRecord> _selectTmpRecord2 = 
-                        app.records.Where(p => p._groupID == TappedItem._groupID).ToList();
-                    
+                        app.records.Where(p => p._groupID == TappedItem._groupID)
+                        .Select(p=>
+                        {
+                            p.selectedGroupColor = Color.FromHex("FFFF88");
+                            return p;
+                        }).ToList();                    
                     List<RgRecord> tmpRecord = app.records.ToList();
 
                     int first1 = tmpRecord.IndexOf(_selectTmpRecord2[0]);
@@ -340,6 +346,7 @@ namespace IndoorNavigation.Views.OPFM
                 RgListView.ItemTapped -= RgListView_ShiftTapped;
                 RgListView.ItemTapped += RgListView_ItemTapped;
                 _shiftTmpRecords = null;
+                ReturnWhiteBackground();
                 RefreshListView();
                 RefreshToolbarOptions();
                 Buttonable(true);
@@ -686,9 +693,14 @@ namespace IndoorNavigation.Views.OPFM
 
         private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
         {
+            Console.WriteLine(">>Swap RgRecord");
             //List<T> records = new List<T>();
             Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
-            if ((first1 == last1 || first2 == last2))
+            if(first1 == last1 && first2 == last2)
+            {
+                swap(ref list, first1, first2);
+            }
+            else if ((first1 == last1 || first2 == last2))
             {
                 //for ensure number 2 is one element.
                 if (first1 == last1)
@@ -697,8 +709,8 @@ namespace IndoorNavigation.Views.OPFM
                     swap(ref last1, ref last2);
                 }
                 bool isFirst = (first2 == 0);
-                T tmpPosition = isFirst ? list[0] : (first2 < list.Count - 1) ? list[first2 + 1] : list[first2];
-
+                T tmpPosition = isFirst ? list[0] : ((first2 < list.Count - 1) ? list[first2 + 1] : list[first2]);                
+                Console.WriteLine("TmpPosition = " + ((RgRecord)(object)tmpPosition).DptName);
                 T tmp = list[first2];
                 List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
 
@@ -728,8 +740,8 @@ namespace IndoorNavigation.Views.OPFM
                 }
                 if (isFirst)
                 {
-                    list.InsertRange(0, tmperoryList);
                     Console.WriteLine("is First position(index =0)");
+                    list.InsertRange(0, tmperoryList);                    
                     foreach (T t in list)
                     {
                         Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
@@ -737,8 +749,8 @@ namespace IndoorNavigation.Views.OPFM
                 }
                 else if (tmpPosition.Equals(tmp))
                 {
-                    list.AddRange(tmperoryList);
                     Console.WriteLine("is Last position(index =count-1)");
+                    list.AddRange(tmperoryList);                    
                     foreach (T t in list)
                     {
                         Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
@@ -746,13 +758,36 @@ namespace IndoorNavigation.Views.OPFM
                 }
                 else
                 {
-                    list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
                     Console.WriteLine("is middle position(index =1~count-2)");
+                    Console.WriteLine("list count =" + list.Count);
+                    Console.WriteLine("list index = " + list.IndexOf(tmpPosition));
+                    if (list.IndexOf(tmpPosition) == -1)
+                    {
+                        list.InsertRange(list.IndexOf(tmp), tmperoryList);
+                    }
+                    else
+                    {
+                        list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
+                    }
                     foreach (T t in list)
                     {
                         Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
                     }
                 }
+            }         
+            else if (false)
+            {
+                List<T> rearrangeList = new List<T>();
+
+                if (first1 == last1)
+                {
+                    swap(ref first1, ref first2);
+                    swap(ref last1, ref last2);
+                }
+
+                
+
+                list = rearrangeList;
             }
             else
             {
@@ -787,6 +822,7 @@ namespace IndoorNavigation.Views.OPFM
                 }
             }
             //return records;
+            Console.WriteLine("<<Swap RgRecord");
         }
         private string getResourceString(string key)
         {
@@ -871,8 +907,16 @@ namespace IndoorNavigation.Views.OPFM
         private void RefreshListView()
         {
             isButtonPressed = false;
-            RgListView.ItemsSource = null;
+            RgListView.ItemsSource = null;                       
             RgListView.ItemsSource = app.records;
+        }
+        private void ReturnWhiteBackground()
+        {
+            app.records.All(p =>
+            {
+                p.selectedGroupColor = Color.Transparent;
+                return true;
+            });
         }
         #endregion
 

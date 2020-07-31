@@ -72,6 +72,8 @@ using System.Collections.ObjectModel;
 using static IndoorNavigation.Utilities.Storage;
 using System.Data.Common;
 using System.Threading;
+using System.Threading.Tasks;
+using Rg.Plugins.Popup.Pages;
 
 namespace IndoorNavigation
 {
@@ -102,7 +104,7 @@ namespace IndoorNavigation
         public MainPage()
         {
             InitializeComponent();
-
+            Console.WriteLine("Nameof (_viewModel) = " + nameof(_viewModel));
             NavigationPage.SetBackButtonTitle(this,
                                               _resourceManager
                                               .GetString("HOME_STRING",
@@ -130,7 +132,9 @@ namespace IndoorNavigation
                 Color.White;
 
             _viewModel = new MainPageViewModel();
-            BindingContext = _viewModel;            
+            BindingContext = _viewModel;
+
+            RefreshListView();
         }
 
         private INetworkSetting setting;
@@ -270,6 +274,43 @@ namespace IndoorNavigation
                 });
             }
         }
-        
+
+        async private void Item_Delete(object sender, EventArgs e) 
+        {
+            var item = (Location)((MenuItem)sender).CommandParameter;
+            if (item != null)
+            {
+
+                if (_viewModel.NavigationGraphFiles.Count() <= 1)
+                {
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("至少保留一個圖資吧!","OK"));
+                    return;
+                }
+
+                string deleteAlertString = string.Format("您確定要刪除{0}嗎?", item.UserNaming);
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(deleteAlertString,"沒錯","按錯了","ConfirmDelete"));
+
+                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete", (msgSender, msgArgs) =>
+                {
+                    Console.WriteLine("the return Args is :" + (bool)msgArgs);
+                    if ((bool)msgArgs) Storage.DeleteBuildingGraph(item.sourcePath);
+
+                    _viewModel.RefreshListViewItem();
+                    RefreshListView();
+                    MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete");
+                });
+            }
+        }
+
+        private void RefreshListView()
+        {
+            LocationListView.ItemsSource = null;
+            LocationListView.ItemsSource = _viewModel.NavigationGraphFiles;
+        }
+        async private void EditToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new EditLocationPage());
+            //throw new NotImplementedException();
+        }
     }
 }

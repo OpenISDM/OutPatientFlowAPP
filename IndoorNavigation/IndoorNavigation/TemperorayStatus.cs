@@ -78,6 +78,8 @@ namespace IndoorNavigation.Utilities
             string recordsJsonString =
                 JsonConvert.SerializeObject(app.records);
 
+            Console.WriteLine("recordJsonString parsing = " + recordsJsonString);
+
             string lastFinishedJsonString =
                 JsonConvert.SerializeObject(app.lastFinished);
 
@@ -97,10 +99,12 @@ namespace IndoorNavigation.Utilities
             Console.WriteLine(">>RestoreAllState");
 
             App app = (App)Application.Current;
+          
             app.FinishCount = FinishCount;
             app.isRigistered = isRigistered;
             app.getRigistered = getRigistered;
-            app.HaveCashier = HaveCashier;
+            app.HaveCashier = HaveCashier;            
+
             app.lastFinished = 
                 GetJsonObject<RgRecord>(lastFinished);
             app.records = 
@@ -112,6 +116,7 @@ namespace IndoorNavigation.Utilities
         }
         static private T GetJsonObject<T>(string jsonString) where T : class, new()
         {
+            Console.WriteLine("Json String = " + jsonString);
             if (string.IsNullOrEmpty(jsonString))
                 return new T();
             return JsonConvert.DeserializeObject<T>(jsonString);   

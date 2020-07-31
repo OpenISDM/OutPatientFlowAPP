@@ -18,18 +18,21 @@
     </ContentPage.Padding>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{i18n:Translate SETTING_STRING}" Priority="1" Order="Primary" 
+        <ToolbarItem Text="{i18n:Translate SETTING_STRING}" Priority="2" Order="Primary" 
                      Clicked="SettingBtn_Clicked"/>
+        <!--<ToolbarItem x:Name="EditToolbarItem" Text="編輯列表" Priority="1" 
+                     Order="Primary" Clicked="EditToolbarItem_Clicked"/>-->
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
+        <AbsoluteLayout>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
-            
-            <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+
+                <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                        Placeholder="{i18n:Translate SELECT_LOCATION_STRING}"
                        CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
@@ -37,21 +40,21 @@
                        VerticalOptions="StartAndExpand"
                        FontSize="Large"/>
             
-            <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+                <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
                       ItemsSource="{Binding NavigationGraphFiles}"
                       Margin="10, -8, 10,10" HasUnevenRows="true"
                       ItemTapped="Handle_ItemTapped"
                       SelectedItem="LocationListView_ItemSelected"
-                      IsPullToRefreshEnabled="true"
+                      IsPullToRefreshEnabled="true"                      
                       Refreshing="LocationListView_Refreshing">
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="ViewCell_Tapped">
-                            <!--<ViewCell.ContextActions>
+                            <ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
-                             </ViewCell.ContextActions>-->
+                             </ViewCell.ContextActions>
                             
                             <StackLayout Orientation="Horizontal"
                                          Padding="20, 20, 20, 1">
@@ -62,20 +65,30 @@
                                        VerticalOptions="Start"
                                        Scale="0.5"/>-->
                                 
-                                <Label Text="{Binding UserNaming}" 
-                                       HorizontalOptions="Start" 
-                                       VerticalOptions="Center"
+                                    <Label  Text="{Binding UserNaming}" 
+                                        HorizontalOptions="Start" 
+                                        VerticalOptions="Center"
                                        TextColor="#3F51B5" Margin="0, 0, 1, 10" 
-                                       FontSize="32"/>
-                                
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                                           FontSize="32"/>
+                                    
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 
-            </ListView>
+                </ListView>
             
-        </Grid>
+            </Grid>
+            <Button x:Name="AddNaviGraphButton"
+                    Text="新增"                    
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    BackgroundColor="#3f51b5"
+                    TextColor="White"
+                    CornerRadius="30"
+                    AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"/>
+        </AbsoluteLayout>
     </ContentPage.Content>
 
 </ContentPage>
