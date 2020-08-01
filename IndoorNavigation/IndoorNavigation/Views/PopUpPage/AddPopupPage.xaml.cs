@@ -236,7 +236,8 @@ namespace IndoorNavigation.Views.PopUpPage
             ScrollView processScrollView = 
                 new ScrollView { 
                     Content = processStackLayout, 
-                    Orientation= ScrollOrientation.Horizontal 
+                    Orientation= ScrollOrientation.Horizontal,
+                    HorizontalScrollBarVisibility= ScrollBarVisibility.Always
                 };
             outSideGrid.Children.Add(image, 0, 2, 0, 4);
             outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
@@ -321,7 +322,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 ScrollView clinicScrollView = new ScrollView
                 {
                     Content = CheckboxStackLayout,
-                    Orientation= ScrollOrientation.Horizontal
+                    Orientation= ScrollOrientation.Horizontal,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Always
                 };
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
