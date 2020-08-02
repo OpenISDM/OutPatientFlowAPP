@@ -687,4 +687,7 @@
   <data name="CANNOT_SHIFT_SAME_GROUP_STRING" xml:space="preserve">
     <value>You cannot select the item in a same group.</value>
   </data>
+  <data name="YOU_CANNOT_SWAP_THEM_STRING" xml:space="preserve">
+    <value>The combo process order can be disordered. So It can't be swap.</value>
+  </data>
 </root>

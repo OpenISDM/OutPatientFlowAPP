@@ -24,6 +24,8 @@ using IndoorNavigation.Yuanlin_OPFM;
 using Xamarin.Essentials;
 using System.Collections.ObjectModel;
 using Plugin.Settings;
+using System.Runtime.CompilerServices;
+using System.IO.MemoryMappedFiles;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -51,7 +53,8 @@ namespace IndoorNavigation.Views.OPFM
         //private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
-        private List<RgRecord> _shiftTmpRecords = null;
+        //private List<RgRecord> _shiftTmpRecords = null;
+        private RgRecord _shiftTmpRecord = null;
         #endregion
 
         #region Page lifecycle
@@ -120,7 +123,7 @@ namespace IndoorNavigation.Views.OPFM
             {
                 RgListView.ItemTapped -= RgListView_ShiftTapped;
                 RgListView.ItemTapped += RgListView_ItemTapped;
-                _shiftTmpRecords = null;
+                _shiftTmpRecord = null;
                 ShiftButtonPressed = false;
                 ReturnWhiteBackground();
             }
@@ -145,6 +148,7 @@ namespace IndoorNavigation.Views.OPFM
             {
                 if (app.OrderDistrict.ContainsKey(record._groupID) && !(app.OrderDistrict[record._groupID] == record.order || app.OrderDistrict[record._groupID] == record.order - 1)
                     || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))
+                //if (CanDoThisItem(record))
                 {
                     Console.WriteLine("please do something first");
                     string BannerName = "";
@@ -172,38 +176,7 @@ namespace IndoorNavigation.Views.OPFM
                         (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"),
                         BannerName),
                         getResourceString("OK_STRING")));
-                }
-                #region one way order distinct
-                //if ((app.lastFinished == null && 
-                //    !(record.order==0 || record.order==1))
-                //    || (app.lastFinished!=null && 
-                //    !(app.lastFinished.order == record.order 
-                //    || app.lastFinished.order == record.order-1 || 
-                //    record.order == 0)))
-                //{
-                //    Console.WriteLine("Please do something first thanks");
-                //    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(string.Format("請照著順序做完謝謝"), "OK"));
-                //    RefreshListView();
-                //    return;
-                //}
-                #endregion
-                #region For limit Pharmacy and Cashier
-                //if (record.type.Equals(RecordType.Pharmacy) &&
-                //   (app.lastFinished == null ||
-                //   !app.lastFinished.type.Equals(RecordType.Cashier)))
-                //{
-                //    await PopupNavigation.Instance.PushAsync
-                //        (new AlertDialogPopupPage
-                //            (getResourceString("PHARMACY_ALERT_STRING"),
-                //             getResourceString("OK_STRING")
-                //            )
-                //        );
-                //    RefreshListView();
-                //    ((ListView)sender).SelectedItem = null;
-                //    isButtonPressed = false;
-                //    return;
-                //}
-                #endregion
+                }               
                 #region if the clinic has open timing.
                 else if (record.OpeningHours != null &&
                     !isCareRoomOpening(record.OpeningHours))
@@ -269,92 +242,167 @@ namespace IndoorNavigation.Views.OPFM
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
+          
         }      
         async private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
         {
-            Console.WriteLine("_shiftTmpRecords is null : " + (_shiftTmpRecords == null));
-            #region First Tapped
-            if(_shiftTmpRecords == null)
-            {
-                var TappedItem = e.Item as RgRecord;
-                _shiftTmpRecords = new List<RgRecord>();
+            Console.WriteLine(">>RgListView_ShiftTapped");
 
-                if(TappedItem._groupID != 0)
-                {
-                    foreach(RgRecord item in app.records)
-                    {
-                        if(TappedItem._groupID == item._groupID)
-                        {
-                            item.selectedGroupColor = Color.FromHex("FFFF88");
-                            _shiftTmpRecords.Add(item);
-                            Console.WriteLine("Add to _shiftTmpRecords == " + item.DptName);
-                        }
-                    }
-                    RefreshListView();
-                }
-                else
-                {
-                    _shiftTmpRecords.Add(TappedItem);
-                }                
+            #region First Tapped
+            if(_shiftTmpRecord == null)
+            {
+                _shiftTmpRecord = e.Item as RgRecord;
             }
             #endregion
-
             #region Second Tapped
             else
             {
-                var TappedItem = e.Item as RgRecord;
-
-                if(_shiftTmpRecords.Contains(TappedItem))
+                var selectItem = e.Item as RgRecord;
+                //if(_shiftTmpRecord._groupID == selectItem._groupID && )
+                if (OrderIsHigher(_shiftTmpRecord, selectItem))
                 {
-                    await PopupNavigation.Instance.PushAsync
-                        (new AlertDialogPopupPage
-                        (getResourceString("CANNOT_SHIFT_SAME_GROUP_STRING"), 
-                        getResourceString("OK_STRING")));
-                    return;
-                }
-                else if (TappedItem._groupID != 0)
-                {
-                    List<RgRecord> _selectTmpRecord2 = 
-                        app.records.Where(p => p._groupID == TappedItem._groupID)
-                        .Select(p=>
-                        {
-                            p.selectedGroupColor = Color.FromHex("FFFF88");
-                            return p;
-                        }).ToList();                    
-                    List<RgRecord> tmpRecord = app.records.ToList();
+                    Console.WriteLine("Order is higher");
 
-                    int first1 = tmpRecord.IndexOf(_selectTmpRecord2[0]);
-                    int first2 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
-                    int last1 = tmpRecord.IndexOf(_selectTmpRecord2.Last());
-                    int last2 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
-                    swapRgRecord( ref tmpRecord, first1, last1, first2,last2);
-                    app.records = ToObservableCollection(tmpRecord);
+                    //swap(app.records, app.records.IndexOf(selectItem), app.records.IndexOf(_shiftTmpRecord));
+                    RgRecord tmp = selectItem;
+
+                    int index1 = app.records.IndexOf(selectItem);
+                    int index2 = app.records.IndexOf(_shiftTmpRecord);
+
+                    app.records[index1] = _shiftTmpRecord;
+                    app.records[index2] = selectItem;
                 }
                 else
-                {                   
-                    List<RgRecord> tmpRecord = app.records.ToList();
-
-                    int first1 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
-                    int first2 = tmpRecord.IndexOf(TappedItem);
-                    int last1 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
-                    int last2 = first2;
-
-                    swapRgRecord(ref tmpRecord, first1, last1, first2, last2);
-                    app.records = ToObservableCollection(tmpRecord);
+                {
+                    Console.WriteLine("Order is lower");
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("YOU_CANNOT_SWAP_THEM_STRING"), "OK"));
+                    _shiftTmpRecord = null;
+                    RefreshListView();
+                    ReturnWhiteBackground();
+                    return;
                 }
 
-                //int index1 = app.records.IndexOf(_shiftTmpRecords[0]);                
                 RgListView.ItemTapped -= RgListView_ShiftTapped;
                 RgListView.ItemTapped += RgListView_ItemTapped;
-                _shiftTmpRecords = null;
+                
+                _shiftTmpRecord = null;
+                ShiftButtonPressed = false;
                 ReturnWhiteBackground();
                 RefreshListView();
                 RefreshToolbarOptions();
                 Buttonable(true);
             }
-            #endregion            
+            #endregion
+            #region Group swap
+            //Console.WriteLine("_shiftTmpRecords is null : " + (_shiftTmpRecords == null));
+            //#region First Tapped
+            //if(_shiftTmpRecords == null)
+            //{
+            //    var TappedItem = e.Item as RgRecord;
+            //    _shiftTmpRecords = new List<RgRecord>();
+
+            //    if(TappedItem._groupID != 0)
+            //    {
+            //        foreach(RgRecord item in app.records)
+            //        {
+            //            if(TappedItem._groupID == item._groupID)
+            //            {
+            //                item.selectedGroupColor = Color.FromHex("FFFF88");
+            //                _shiftTmpRecords.Add(item);
+            //                Console.WriteLine("Add to _shiftTmpRecords == " + item.DptName);
+            //            }
+            //        }
+            //        RefreshListView();
+            //    }
+            //    else
+            //    {
+            //        _shiftTmpRecords.Add(TappedItem);
+            //    }                
+            //}
+            //#endregion
+
+            //#region Second Tapped
+            //else
+            //{
+            //    var TappedItem = e.Item as RgRecord;
+
+            //    if(_shiftTmpRecords.Contains(TappedItem))
+            //    {
+            //        await PopupNavigation.Instance.PushAsync
+            //            (new AlertDialogPopupPage
+            //            (getResourceString("CANNOT_SHIFT_SAME_GROUP_STRING"), 
+            //            getResourceString("OK_STRING")));
+            //        return;
+            //    }
+            //    else if (TappedItem._groupID != 0)
+            //    {
+            //        List<RgRecord> _selectTmpRecord2 = 
+            //            app.records.Where(p => p._groupID == TappedItem._groupID)
+            //            .Select(p=>
+            //            {
+            //                p.selectedGroupColor = Color.FromHex("FFFF88");
+            //                return p;
+            //            }).ToList();                    
+            //        List<RgRecord> tmpRecord = app.records.ToList();
+
+            //        int first1 = tmpRecord.IndexOf(_selectTmpRecord2[0]);
+            //        int first2 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
+            //        int last1 = tmpRecord.IndexOf(_selectTmpRecord2.Last());
+            //        int last2 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
+            //        swapRgRecord( ref tmpRecord, first1, last1, first2,last2);
+            //        app.records = ToObservableCollection(tmpRecord);
+            //    }
+            //    else
+            //    {                   
+            //        List<RgRecord> tmpRecord = app.records.ToList();
+
+            //        int first1 = tmpRecord.IndexOf(_shiftTmpRecords[0]);
+            //        int first2 = tmpRecord.IndexOf(TappedItem);
+            //        int last1 = tmpRecord.IndexOf(_shiftTmpRecords.Last());
+            //        int last2 = first2;
+
+            //        swapRgRecord(ref tmpRecord, first1, last1, first2, last2);
+            //        app.records = ToObservableCollection(tmpRecord);
+            //    }
+
+            //    //int index1 = app.records.IndexOf(_shiftTmpRecords[0]);                
+            //    RgListView.ItemTapped -= RgListView_ShiftTapped;
+            //    RgListView.ItemTapped += RgListView_ItemTapped;
+            //    _shiftTmpRecords = null;
+            //    ReturnWhiteBackground();
+            //    RefreshListView();
+            //    RefreshToolbarOptions();
+            //    Buttonable(true);
+            //}
+            //#endregion            
+            #endregion
         }
-        
+        private bool OrderIsHigher(RgRecord item1, RgRecord item2)
+        {
+            if (item1._groupID == 0 && item2._groupID == 0) return true;
+            int index1 = app.records.IndexOf(item1);
+            int index2 = app.records.IndexOf(item2);
+
+            List<RgRecord> tmp = app.records.ToList();
+
+            swap(ref tmp, index1, index2);
+
+            Dictionary<int, int> checkValue = new Dictionary<int, int>();
+            foreach(RgRecord record in tmp)
+            {
+                if (record._groupID == 0) continue;
+                if (!checkValue.ContainsKey(record._groupID))
+                {
+                    checkValue.Add(record._groupID, record.order);
+                    continue;
+                }
+
+                if (checkValue[record._groupID] > record.order) return false;
+                checkValue[record._groupID] = record.order;
+            }
+
+            return true;
+        }
         //the function is a button event to add payment and medicine recieving 
         //route to listview
         private void PaymemtListBtn_Clicked(object sender, EventArgs e)
@@ -475,7 +523,6 @@ namespace IndoorNavigation.Views.OPFM
                 if (record._groupID != currentGroupID)
                 {
                     Console.WriteLine("Current dptName = " + record.DptName + "Group ID =" + currentGroupID);
-                    Console.WriteLine("aaaaaaaaa");
                     int CurrentGroupNotComplete =
                         app.records.Where(p => p._groupID == record._groupID && !p.isAccept).Count();
                     Console.WriteLine("CurrentGroupNotComplete = " + CurrentGroupNotComplete);
@@ -498,8 +545,7 @@ namespace IndoorNavigation.Views.OPFM
             if (!CanBeShifted())
             {
                 await PopupNavigation.Instance.PushAsync
-                    (new DisplayAlertPopupPage
-                    (getResourceString("NO_SHIFT_STRING")));
+                   (new AlertDialogPopupPage(getResourceString("NO_SHIFT_SRING"), getResourceString("OK_STRING")));
                 return;
             }
             else
@@ -1086,7 +1132,7 @@ namespace IndoorNavigation.Views.OPFM
         {
             RgListView.ItemTapped += RgListView_ItemTapped;
             RgListView.ItemTapped -= RgListView_ShiftTapped;
-            _shiftTmpRecords = null;
+            _shiftTmpRecord = null;
 
             Buttonable(true);
             RefreshToolbarOptions();

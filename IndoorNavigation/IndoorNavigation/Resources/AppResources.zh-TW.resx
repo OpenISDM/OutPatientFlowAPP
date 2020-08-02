@@ -687,4 +687,7 @@
   <data name="CANNOT_SHIFT_SAME_GROUP_STRING" xml:space="preserve">
     <value>您不可以選取同一個群組的項目做排序。</value>
   </data>
+  <data name="YOU_CANNOT_SWAP_THEM_STRING" xml:space="preserve">
+    <value>套裝流程的順序無法被打亂，因此無法交換</value>
+  </data>
 </root>
