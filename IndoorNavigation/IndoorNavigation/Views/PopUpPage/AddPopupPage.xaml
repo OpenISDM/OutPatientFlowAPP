@@ -55,11 +55,15 @@
 				AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.7" 
 				AbsoluteLayout.LayoutFlags="All" 
 				CornerRadius="8">
-
-            <StackLayout  	VerticalOptions="Start" 
-							HorizontalOptions="Start">
-                <ScrollView VerticalScrollBarVisibility="Always">
-                    <StackLayout x:Name="mainStackLayout">
+           
+            <StackLayout>
+                <SearchBar x:Name="AddSearchBar"
+                       Placeholder="Search"
+                       TextChanged="AddSearchBar_TextChanged"
+                           VerticalOptions="StartAndExpand"                          
+                       />
+                <ScrollView VerticalScrollBarVisibility="Always" VerticalOptions="StartAndExpand">
+                    <StackLayout x:Name="mainStackLayout" VerticalOptions="StartAndExpand">
 
                     </StackLayout>
                 </ScrollView>

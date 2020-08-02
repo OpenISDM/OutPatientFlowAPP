@@ -67,16 +67,15 @@ namespace IndoorNavigation.Views.PopUpPage
             CrossMultilingual.Current.CurrentCultureInfo;
 
         bool isButtonPressed = false;
-        Dictionary<string, List<CheckBox>> BoxesDict;
+
         Dictionary<string, List<AddExaminationItem>> _examinationItemDict;
-        //Dictionary<string, List<AddExaminationItem>> _clinicItemDict;
         List<string> DepartmentList;
         List<string> ClinicList;
+        Dictionary<SearchBarKey,Grid> _allContentInAdd = new Dictionary<SearchBarKey, Grid>();
         public AddPopupPage(string graphName)
         {
             InitializeComponent();
-            BoxesDict =
-                new Dictionary<string, List<CheckBox>>();
+           
 
             DepartmentList =
                 new List<string>();
@@ -85,8 +84,6 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _examinationItemDict =
                 new Dictionary<string, List<AddExaminationItem>>();
-            //_clinicItemDict = 
-            //    new Dictionary<string, List<AddExaminationItem>>();
 
             LoadData();
         }
@@ -177,18 +174,15 @@ namespace IndoorNavigation.Views.PopUpPage
         private void GenerateBox()
         {
             Console.WriteLine(">>GenerateBox");
-            List<CheckBox> boxList;
             StackLayout BoxLayout;
             Label DptNameLabel;
+            String ImageSourcePath;
             Grid outSideGrid;
             Image image;
             int key = 0;
             int PictureCount = 1;
-            mainStackLayout.Children.Add(new BoxView
-            {
-                BackgroundColor = Color.FromHex("#3f51b5"),
-                HeightRequest = 1
-            });
+            List<string> clinicNames = new List<string>();
+            SearchBarKey keys;
 
             #region part of Suit Process Checkbox
             HospitalProcessParse processParse = new HospitalProcessParse();
@@ -221,6 +215,7 @@ namespace IndoorNavigation.Views.PopUpPage
             foreach (ProcessOption option in processOptions)
             {
                 Console.WriteLine("Generate one time process box");
+                clinicNames.Add(option.processName);
                 CheckBox optionBox = new CheckBox
                 {
                     Key = int.Parse(option.processID),
@@ -239,9 +234,16 @@ namespace IndoorNavigation.Views.PopUpPage
                     Orientation= ScrollOrientation.Horizontal,
                     HorizontalScrollBarVisibility= ScrollBarVisibility.Always
                 };
+
+            keys = new SearchBarKey
+            {
+                _clinicNameText = clinicNames,
+                _departNameLabelText = DptNameLabel.Text
+            };
             outSideGrid.Children.Add(image, 0, 2, 0, 4);
             outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
             outSideGrid.Children.Add(processScrollView, 2, 5, 0, 5);
+            _allContentInAdd.Add(keys, outSideGrid);
             mainStackLayout.Children.Add(outSideGrid);
 
             //blue line for dividing every depart
@@ -257,11 +259,14 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 outSideGrid = getGridLayout();
                 string Floor = clinicfloorName.Substring(0, 2);
+                clinicNames = new List<string>();
+
                 Console.WriteLine("Floor : " + Floor);
+                ImageSourcePath = $"Clinic_{Floor}.png";
 
                 image = new Image
                 {
-                    Source = $"Clinic_{Floor}.png",
+                    Source = ImageSourcePath,
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 80,
                     HeightRequest = 80,
@@ -279,9 +284,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     HorizontalTextAlignment =
                         TextAlignment.Center
                 };                
-                boxList = new List<CheckBox>();
+                //boxList = new List<CheckBox>();
                 key = 0;
-
                 StackLayout CheckboxStackLayout = 
                    new StackLayout {Orientation = StackOrientation.Horizontal };
                 StackLayout CheckboxInsideStackLayout = new StackLayout
@@ -300,7 +304,8 @@ namespace IndoorNavigation.Views.PopUpPage
                         Key = key++,
                         Type = CheckBox.CheckType.Check
                     };
-
+                    item._checkbox = box;
+                    clinicNames.Add(item.DisplayName);
                     CheckboxInsideStackLayout.Children.Add(box);
                     CheckboxCount++;
 
@@ -313,7 +318,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         };
                         CheckboxCount = 0;
                     }
-                    boxList.Add(box);
+                    //boxList.Add(box);
                 }
 
                 if (CheckboxCount != 0)
@@ -325,10 +330,16 @@ namespace IndoorNavigation.Views.PopUpPage
                     Orientation= ScrollOrientation.Horizontal,
                     HorizontalScrollBarVisibility = ScrollBarVisibility.Always
                 };
+                keys = new SearchBarKey
+                {
+                    _clinicNameText = clinicNames,
+                    _departNameLabelText = DptNameLabel.Text
+                };
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(clinicScrollView, 2, 5, 0, 5);
-                BoxesDict.Add(clinicfloorName, boxList);
+                //BoxesDict.Add(clinicfloorName, boxList);
+                _allContentInAdd.Add(keys, outSideGrid);
                 mainStackLayout.Children.Add(outSideGrid);
 
                 mainStackLayout.Children.Add(new BoxView
@@ -343,10 +354,12 @@ namespace IndoorNavigation.Views.PopUpPage
             #region part of Examination Room
             foreach (string dptName in DepartmentList)
             {
+                clinicNames = new List<string>();
                 outSideGrid = getGridLayout();
+                ImageSourcePath = $"Add_Item{PictureCount++}";
                 image = new Image
                 {
-                    Source = $"Add_Item{PictureCount++}",
+                    Source = ImageSourcePath,
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 80,
                     HeightRequest = 80,
@@ -365,12 +378,13 @@ namespace IndoorNavigation.Views.PopUpPage
                 };
 
                 BoxLayout = new StackLayout();
-                boxList = new List<CheckBox>();
+                //boxList = new List<CheckBox>();
                 key = 0;
                 foreach (AddExaminationItem item in _examinationItemDict[dptName])
                 {
                     CheckBox box = new CheckBox
                     {
+                        
                         Text = item.DisplayName,
                         TextFontSize =
                           Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
@@ -378,15 +392,21 @@ namespace IndoorNavigation.Views.PopUpPage
                         Key = key++,
                         Type = CheckBox.CheckType.Check
                     };
+                    clinicNames.Add(item.DisplayName);
+                    item._checkbox = box;
                     BoxLayout.Children.Add(box);
-                    boxList.Add(box);
+                    //boxList.Add(box);
                 }
-
+                keys = new SearchBarKey
+                {
+                    _departNameLabelText = DptNameLabel.Text,
+                    _clinicNameText = clinicNames
+                };
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(BoxLayout, 2, 5, 0, 5);
-
-                BoxesDict.Add(dptName, boxList);
+                _allContentInAdd.Add(keys, outSideGrid);
+                //BoxesDict.Add(dptName, boxList);
                 mainStackLayout.Children.Add(outSideGrid);
 
                 //blue line for dividing every depart
@@ -534,16 +554,16 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 List<AddExaminationItem> items = _examinationItemDict[floorClinic];
 
-                List<CheckBox> Boxes = BoxesDict[floorClinic];
+                //List<CheckBox> Boxes = BoxesDict[floorClinic];
 
-                foreach(CheckBox box in Boxes)
+                foreach(AddExaminationItem item in items)
                 {
-                    if (!box.IsChecked) continue;
+                    if (!item._checkbox.IsChecked) continue;
                     dumplicateCount++;
                     bool isDuplicate =
                         app.records.Any(p =>
-                        p._waypointName == items[box.Key]._waypointName &&
-                        p.DptName == items[box.Key].DisplayName &&
+                        p._waypointName ==item._waypointName &&
+                        p.DptName == item.DisplayName &&
                         p.isAccept == false
                         );
                     if (isDuplicate) continue;
@@ -553,13 +573,13 @@ namespace IndoorNavigation.Views.PopUpPage
                     app.records.Add(new RgRecord
                     {
                         order = order,
-                        _waypointID = items[box.Key]._waypointID,
-                        _regionID = items[box.Key]._regionID,
+                        _waypointID = item._waypointID,
+                        _regionID = item._regionID,
                         type = RecordType.AddItem,
                         _groupID = 0,
-                        _waypointName = items[box.Key]._waypointName,
-                        DptName = items[box.Key].DisplayName,
-                        _subtitleName = items[box.Key]._waypointName
+                        _waypointName = item._waypointName,
+                        DptName = item.DisplayName,
+                        _subtitleName = item._waypointName
                     }) ;
                     count++;
                 }
@@ -569,16 +589,16 @@ namespace IndoorNavigation.Views.PopUpPage
             foreach (string dptName in DepartmentList)
             {
                 List<AddExaminationItem> items = _examinationItemDict[dptName];
-                List<CheckBox> Boxes = BoxesDict[dptName];
+               // List<CheckBox> Boxes = BoxesDict[dptName];
 
-                foreach (CheckBox box in Boxes)
+                foreach (AddExaminationItem item in items)
                 {
-                    if (!box.IsChecked) continue;
+                    if (!item._checkbox.IsChecked) continue;
                     dumplicateCount++;
                     var isDuplicate =
                         app.records.Any(p =>
                         (p.DptName == dptName && 
-                         p._waypointName == items[box.Key].DisplayName &&
+                         p._waypointName == item.DisplayName &&
                          p.isAccept == false));
 
                     if (isDuplicate)
@@ -591,10 +611,10 @@ namespace IndoorNavigation.Views.PopUpPage
                     //app.records.Insert(index++, new RgRecord
                     app.records.Add(new RgRecord
                     {
-                        _waypointID = items[box.Key]._waypointID,
-                        _regionID = items[box.Key]._regionID,
-                        _waypointName = items[box.Key]._waypointName,
-                        _subtitleName = items[box.Key].DisplayName,
+                        _waypointID = item._waypointID,
+                        _regionID = item._regionID,
+                        _waypointName = item._waypointName,
+                        _subtitleName = item.DisplayName,
                         type = RecordType.AddItem,
                         DptName = dptName,
                         _groupID = 0,
@@ -655,11 +675,17 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private class AddExaminationItem : DestinationItem
         {
-            public string DisplayName;
+            public string DisplayName;      
+            public CheckBox _checkbox;
             public override string ToString() => DisplayName;
 
         };
 
+        private class SearchBarKey
+        {
+            public string _departNameLabelText { get; set; }
+            public List<string> _clinicNameText { get; set; }
+        }
 
         protected override bool OnBackButtonPressed()
         {
@@ -681,6 +707,52 @@ namespace IndoorNavigation.Views.PopUpPage
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             OnBackgroundClicked();
+        }
+
+        private void AddSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.NewTextValue))
+            {
+                mainStackLayout.Children.Clear();
+
+                _allContentInAdd.All(p =>
+                {
+                    mainStackLayout.Children.Add(p.Value);
+                    return true;
+                });
+            }
+            else
+            {
+                mainStackLayout.Children.Clear();
+
+                //var searchedGrid =
+                //    _allContentInAdd.Where(c => c.Key._clinicNameText.Where(p => p.Contains(e.NewTextValue)).Any() || c.Key._departNameLabelText.Contains(e.NewTextValue))
+                //    .Select(p =>
+                //    {
+                //        if()
+                //        return p;
+                //    });
+                
+                foreach(KeyValuePair<SearchBarKey, Grid> pair in _allContentInAdd)
+                {
+                    if (pair.Key._departNameLabelText.Contains(e.NewTextValue))
+                    {
+                        mainStackLayout.Children.Add(pair.Value);
+                        continue;
+                    }
+                    else 
+                    {
+                        foreach(string name in pair.Key._clinicNameText)
+                        {
+                            if (name.Contains(e.NewTextValue))
+                            {
+                                mainStackLayout.Children.Add(pair.Value);
+                            }
+                        }
+                    }
+                }
+
+            }
         }
     }
 }
