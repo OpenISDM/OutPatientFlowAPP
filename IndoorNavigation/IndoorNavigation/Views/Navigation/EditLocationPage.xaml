@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
              Title="編輯圖資">
-    <ContentPage.Resources>
+    <!--<ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="InstalledViewCell">
                 <ViewCell>
@@ -26,7 +27,7 @@
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -34,8 +35,25 @@
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
 
-            <SearchBar Grid.Row="0"/>
-            <ListView Grid.Row="1">
+            <SearchBar x:Name="AddNewSite" 
+                       Placeholder="Search" 
+                       FontSize="Large" 
+                       VerticalOptions="CenterAndExpand" 
+                       TextChanged="AddNewSite_TextChanged"  
+                       Grid.Row="0"/>
+            
+            <ListView x:Name="AddNewSiteListView" Grid.Row="1" ItemSelected="AddNewSiteListView_ItemSelected" ItemTapped="AddNewSiteListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,10,10,10">
+                                <Label x:Name="AddSiteLabel" 
+                                       Text="{Binding _displayNme}"                                                   
+                                       FontSize="Large"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
                 
             </ListView>
         </Grid>

@@ -123,6 +123,11 @@
             </DataTemplate>
             <DataTemplate x:Key="AddItemTemplate">
                 <ViewCell Tapped="ViewCell_Tapped">
+                    <ViewCell.Height>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="iOS" Value="90"/>
+                        </OnPlatform>
+                    </ViewCell.Height>
                     <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <StackLayout Margin="10,5,10,5">
                         <Grid>

@@ -311,5 +311,10 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new EditLocationPage());
             //throw new NotImplementedException();
         }
+
+        async private void AddNaviGraphButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new EditLocationPage());
+        }
     }
 }
