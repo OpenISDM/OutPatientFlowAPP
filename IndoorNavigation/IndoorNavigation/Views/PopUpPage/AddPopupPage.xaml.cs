@@ -51,6 +51,7 @@ using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using System.Collections.ObjectModel;
 using ZXing;
+using System.Threading.Tasks;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -88,7 +89,7 @@ namespace IndoorNavigation.Views.PopUpPage
             LoadData();
         }
 
-        private void LoadData()
+        async private void LoadData()
         {
             XmlDocument doc =
                 Storage.XmlReader("Yuanlin_OPFM.ExaminationRoomMap.xml");
@@ -165,13 +166,15 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             #endregion
             GenerateBox();
+
             Console.WriteLine("<<LoadData");
+            await Task.CompletedTask;
         }
 
         List<CheckBox> processBoxes = new List<CheckBox>();
 
         //for generate selection with input data, and make layout.
-        private void GenerateBox()
+        async private void GenerateBox()
         {
             Console.WriteLine(">>GenerateBox");
             StackLayout BoxLayout;
@@ -474,7 +477,8 @@ namespace IndoorNavigation.Views.PopUpPage
             //    HeightRequest = 1
             //});
             #endregion
-            Console.WriteLine("<<GenerateBox");          
+            Console.WriteLine("<<GenerateBox");
+            await Task.CompletedTask;
         }
 
         //to generate Grid layout for CheckBox 

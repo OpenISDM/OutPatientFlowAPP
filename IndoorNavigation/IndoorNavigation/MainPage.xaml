@@ -79,15 +79,16 @@
                 </ListView>
             
             </Grid>
-            <Button x:Name="AddNaviGraphButton"
+            <!--<Button x:Name="AddNaviGraphButton"
                     Text="新增"                    
                     FontAttributes="Bold"
+                    Clicked="AddNaviGraphButton_Clicked"
                     FontSize="Medium"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     BackgroundColor="#3f51b5"
                     TextColor="White"
                     CornerRadius="30"
-                    AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"/>
+                    AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"/>-->
         </AbsoluteLayout>
     </ContentPage.Content>
 
