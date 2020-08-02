@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
+             Title="編輯圖資">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="InstalledViewCell">
+                <ViewCell>
+                    
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="AvailableViewCell">
+                <ViewCell>
+                    
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ServerViewCell">
+                <ViewCell>
+
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <SearchBar Grid.Row="0"/>
+            <ListView Grid.Row="1">
+                
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

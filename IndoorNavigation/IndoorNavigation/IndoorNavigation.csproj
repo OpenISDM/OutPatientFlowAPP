@@ -39,7 +39,6 @@
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Navigation\" />
     <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
@@ -102,6 +101,9 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Views\Navigation\EditLocationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\PopUpPage\IndicatorPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
