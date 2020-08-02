@@ -698,10 +698,11 @@ namespace IndoorNavigation.Views.PopUpPage
             return base.OnBackgroundClicked();
         }
 
-        private void PopAddPage(bool isCancel)
+        async private void PopAddPage(bool isCancel)
         {
             MessagingCenter.Send(this, "isCancel", isCancel);
-            PopupNavigation.Instance.PopAsync();
+            //PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
         }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

@@ -76,7 +76,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 //page, then popup page stack is empty.
                 if (PopupNavigation.Instance.PopupStack.Count > 0)
                 {
-                    PopupNavigation.Instance.PopAsync();
+                    PopupNavigation.Instance.RemovePageAsync(this);
                     Console.WriteLine("Close the popup page by timer");
                 }
                 Console.WriteLine("Close the popup page by user");
@@ -85,7 +85,8 @@ namespace IndoorNavigation.Views.PopUpPage
         }
         async private void NoButton_Back()
         {
-            await PopupNavigation.Instance.PopAsync();
+            //await PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
         }
         #endregion
 
@@ -111,10 +112,12 @@ namespace IndoorNavigation.Views.PopUpPage
             buttonLayout.Children.Add(ConfirmBtn);
 
         }
-        private void TwoButton_Back()
+        async private void TwoButton_Back()
         {
-            PopupNavigation.Instance.PopAsync();
+            //PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, _message, false);
+           // await Task.CompletedTask;
         }
 
         #endregion
@@ -141,9 +144,10 @@ namespace IndoorNavigation.Views.PopUpPage
             _backClick();
         }
 
-        private void ConfirmPageClicked(Object sender, EventArgs args)
+        async private void ConfirmPageClicked(Object sender, EventArgs args)
         {
-            PopupNavigation.Instance.PopAsync();
+            //PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, _message, true);
         }
 
