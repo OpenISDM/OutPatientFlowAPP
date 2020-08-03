@@ -63,15 +63,15 @@ namespace IndoorNavigation.ViewModels
         private string _naviGraphName;
 
         public RegisterListViewModel() { }
-        //bool 
         public RegisterListViewModel(string navigationGraphName)
         {
             _naviGraphName = navigationGraphName;
-            if (false)//app.IDnumber.Equals(string.Empty))
-            {
-                CheckSignIn();
-            }
-            else if(!app.isRigistered)
+            //if (false)//app.IDnumber.Equals(string.Empty))
+            //{
+            //    CheckSignIn();
+            //}
+            //else 
+            if(!app.isRigistered)
             {
                 CheckRegister();
                 app.isRigistered = true;
@@ -86,20 +86,20 @@ namespace IndoorNavigation.ViewModels
             return _resourceManager.GetString(key, currentLanguage);
         }
 
-        public async void CheckSignIn()
-        {
-            string IDnum = 
-				Preferences.Get("ID_NUMBER_STRING", string.Empty);
+    //    public async void CheckSignIn()
+    //    {
+    //        string IDnum = 
+				//Preferences.Get("ID_NUMBER_STRING", string.Empty);
 				
-            string patientID = 
-				Preferences.Get("PATIENT_ID_STRING", string.Empty);				
+    //        string patientID = 
+				//Preferences.Get("PATIENT_ID_STRING", string.Empty);				
 
-            if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
-            {
-                Console.WriteLine("Enter No IDnumber");               
-                await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
-            }
-        }       
+    //        if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
+    //        {
+    //            Console.WriteLine("Enter No IDnumber");               
+    //            await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
+    //        }
+    //    }       
     }
 
 }

@@ -34,8 +34,7 @@ namespace IndoorNavigation.Models
             XmlDocument doc = Storage.XmlReader("DefineStructureOfProcess.xml");
 
             XmlNodeList processNodeList = doc.GetElementsByTagName("process");
-
-            int i = 0;
+    
             foreach(XmlNode processNode in processNodeList)
             {
                 ProcessOption option = new ProcessOption

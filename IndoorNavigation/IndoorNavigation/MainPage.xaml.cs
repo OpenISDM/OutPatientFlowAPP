@@ -31,7 +31,7 @@
  *      navigation indoors in areas covered by different indoor positioning 
  *      system (IPS) and outdoors covered by GPS.In particilar, it can rely on
  *      BeDIS (Building/environment Data and Information System) for indoor 
- *      positioning. This IPS provides a location beacon at every waypoint. The 
+ *      positioning. This IPS provides a location beacon at every waypoint. The
  *      beacon brocasts its own coordinates; Consequesntly, the navigator does 
  *      not need to continuously monitor its own position.
  *      This version makes use of Xamarin.Forms, which is a cross-platform UI 
@@ -174,7 +174,7 @@ namespace IndoorNavigation
                     Storage.LoadNavigationGraphXml(location.sourcePath);
 
                 if (Storage.CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckLocalVersion))
-                {
+                {                 
                     if (await DisplayAlert(
                         _resourceManager.GetString("UPDATE_MAP_STRING", _currentCulture),
                         location.UserNaming,
@@ -300,17 +300,7 @@ namespace IndoorNavigation
                 });
             }
         }
-
-        private void RefreshListView()
-        {
-            LocationListView.ItemsSource = null;
-            LocationListView.ItemsSource = _viewModel.NavigationGraphFiles;
-        }
-        async private void EditToolbarItem_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new EditLocationPage());
-            //throw new NotImplementedException();
-        }
+            
 
         async private void AddNaviGraphButton_Clicked(object sender, EventArgs e)
         {

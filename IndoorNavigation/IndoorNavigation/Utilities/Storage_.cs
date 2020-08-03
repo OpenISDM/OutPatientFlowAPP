@@ -17,6 +17,7 @@ using System.Linq;
 using System.Globalization;
 using System.Security.Authentication;
 using Dijkstra.NET.Model;
+using IndoorNavigation.Views.Navigation;
 /*
 note :
 1. We need to define the stroage path first
@@ -309,7 +310,6 @@ namespace IndoorNavigation.Utilities
                 string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");
 
                 EmbeddedStoring(sourceNaviGraph, sinkNaviGraph);
-                Console.WriteLine("aaaaaaaaaaa");
                 foreach (string language in _resources._languages)
                 {
                     string sourceInfomation = $"Resources.{sourceName}.{sourceName}_info_{language}.xml";
@@ -318,9 +318,8 @@ namespace IndoorNavigation.Utilities
                     Console.WriteLine("sourceFD : " + sourceFDFile);
 
                     string sinkInformationPath = Path.Combine(_informationFolder, $"{sourceName}_info_{language}.xml");
-                    Console.WriteLine("bbbbbbbbbbbbbbbbb");
+  
                     string sinkFDPath = Path.Combine(_firstDirectionInstuctionFolder, $"{sourceName}_FD_{language}.xml");
-                    Console.WriteLine("ccccccccccc");
                     EmbeddedStoring(sourceInfomation, sinkInformationPath);
                     EmbeddedStoring(sourceFDFile, sinkFDPath);
                 }
@@ -426,7 +425,7 @@ namespace IndoorNavigation.Utilities
                     break;
             }
             StoreGraphStatus();
-        }
+        }        
         static private void GraphResourceParse()
         {
             Console.WriteLine(">>GraphResourceParse");
@@ -495,8 +494,11 @@ namespace IndoorNavigation.Utilities
                 case AccessGraphOperate.CheckLocalVersion:
                     {
                         Console.WriteLine(">>CheckVersionNumber -> local");
+                        Console.WriteLine("installed version : " + currentVersion);
+                        
                         if (_localResources.ContainsKey(fileName) && _localResources[fileName]._currentVersion > currentVersion)
                         {
+                            Console.WriteLine("local resource version : " + _localResources[fileName]._currentVersion);
                             return true;
                         }
 
@@ -521,10 +523,8 @@ namespace IndoorNavigation.Utilities
 
         public class GraphResources
         {
-
             public Dictionary<string, GraphInfo> _graphResources { get; set; }
             public List<string> _languages { get; set; }
-
             public GraphResources()
             {
                 _graphResources = new Dictionary<string, GraphInfo>();
@@ -539,6 +539,14 @@ namespace IndoorNavigation.Utilities
                 _displayNames = new Dictionary<string, string>();
             }
             public Dictionary<string, string> _displayNames { get; set; }
+            public string _displayName { 
+                get
+                {
+                    return _displayNames[_currentCulture.Name];
+                }
+                private set { }
+            }
+            public SiteSourceFrom _siteSourceFrom { get; set; }
             public string _graphName { get; set; }
             public double _currentVersion { get; set; }
             public override string ToString() => _displayNames[_currentCulture.Name];
@@ -548,6 +556,11 @@ namespace IndoorNavigation.Utilities
         public class Utf8StringWriter : StringWriter
         {
             public override Encoding Encoding { get { return Encoding.UTF8; } }
+        }
+        public enum SiteSourceFrom
+        {
+            Local = 0,
+            Server
         }
 
         public enum AccessGraphOperate

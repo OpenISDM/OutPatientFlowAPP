@@ -87,8 +87,8 @@
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     BackgroundColor="#3f51b5"
                     TextColor="White"
-                    CornerRadius="30"
-                    AbsoluteLayout.LayoutBounds="0.95,0.95,60,60"/>
+                    CornerRadius="35"
+                    AbsoluteLayout.LayoutBounds="0.96,0.9,70,70"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 
