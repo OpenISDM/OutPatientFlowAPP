@@ -7,27 +7,6 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
              Title="編輯圖資">
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="InstalledViewCell">
-                <ViewCell>
-                    
-                </ViewCell>
-            </DataTemplate>
-
-            <DataTemplate x:Key="AvailableViewCell">
-                <ViewCell>
-                    
-                </ViewCell>
-            </DataTemplate>
-
-            <DataTemplate x:Key="ServerViewCell">
-                <ViewCell>
-
-                </ViewCell>
-            </DataTemplate>
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -38,18 +17,27 @@
             <SearchBar x:Name="AddNewSite" 
                        Placeholder="Search" 
                        FontSize="Large" 
-                       VerticalOptions="CenterAndExpand" 
+                       VerticalOptions="StartAndExpand" 
                        TextChanged="AddNewSite_TextChanged"  
                        Grid.Row="0"/>
             
-            <ListView x:Name="AddNewSiteListView" Grid.Row="1" ItemSelected="AddNewSiteListView_ItemSelected" ItemTapped="AddNewSiteListView_ItemTapped">
+            <ListView x:Name="AddNewSiteListView" Margin="10,-8,10,10"
+                      Grid.Row="1" 
+                      ItemSelected="AddNewSiteListView_ItemSelected" 
+                      HasUnevenRows="True"
+                      ItemTapped="AddNewSiteListView_ItemTapped"
+                      IsPullToRefreshEnabled="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="10,10,10,10">
+                            <StackLayout Padding="20,20,20,1">
                                 <Label x:Name="AddSiteLabel" 
-                                       Text="{Binding _displayNme}"                                                   
-                                       FontSize="Large"/>
+                                       HorizontalOptions="Start"
+                                       TextColor="#3f51b5"
+                                       VerticalOptions="Center"
+                                       Text="{Binding _displayNme}"  
+                                       Margin="0,0,1,10"
+                                       FontSize="32"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
