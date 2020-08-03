@@ -84,10 +84,10 @@ namespace IndoorNavigation.Views.OPFM
 
             RefreshListView();
 
-            AddBtn.CornerRadius =
-                (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
-            ShiftBtn.CornerRadius =
-                (int)(Math.Min(ShiftBtn.Height, ShiftBtn.Width) / 2);
+            //AddBtn.CornerRadius =
+            //    (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
+            //ShiftBtn.CornerRadius =
+            //    (int)(Math.Min(ShiftBtn.Height, ShiftBtn.Width) / 2);
 
             if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 Buttonable(false);
@@ -463,6 +463,7 @@ namespace IndoorNavigation.Views.OPFM
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
+            Console.WriteLine("isButtonPressed when tapped the button : " + isButtonPressed);
             if (isButtonPressed) return;
 
             isButtonPressed = true;
@@ -487,17 +488,19 @@ namespace IndoorNavigation.Views.OPFM
                   !app.HaveCashier &&
                    app.records.Count() > 0 &&
                 !(app.records.Count() == 1 && 
-                app.records[0].type == RecordType.Register); ;
+                app.records[0].type == RecordType.Register) ;
+
                   PaymemtListBtn.IsVisible = 
                   (app.FinishCount == app.records.Count) && 
                   !app.HaveCashier&&
                    app.records.Count() > 0 &&
-                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;
-                  isButtonPressed = false;
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;                  
+
+                  Console.WriteLine("isButtonPressed in messagingCenter :" + isButtonPressed);
                   MessagingCenter.Unsubscribe<AddPopupPage, bool>
                       (this, "isCancel");
               });
-
+            isButtonPressed = false;
         }
 
         private bool CanBeShifted()
@@ -545,7 +548,7 @@ namespace IndoorNavigation.Views.OPFM
             if (!CanBeShifted())
             {
                 await PopupNavigation.Instance.PushAsync
-                   (new AlertDialogPopupPage(getResourceString("NO_SHIFT_SRING"), getResourceString("OK_STRING")));
+                   (new AlertDialogPopupPage(getResourceString("NO_SHIFT_STRING"), getResourceString("OK_STRING")));
                 return;
             }
             else
@@ -704,15 +707,8 @@ namespace IndoorNavigation.Views.OPFM
             RefreshListView();
             await Task.CompletedTask;
         }
-        private ObservableCollection<T> ToObservableCollection<T>(List<T> list)
-        {
-            ObservableCollection<T> result = new ObservableCollection<T>();
 
-            foreach (T t in list)
-                result.Add(t);
-
-            return result;
-        }
+        
         private void swap<T>(ref List<T> list, int i, int j)
         {
             T tmp = list[i];
@@ -720,146 +716,136 @@ namespace IndoorNavigation.Views.OPFM
             list[j] = tmp;
             return;
         }
-        private void swap<T>(ref T i, ref T j)
-        {
-            T tmp = i;
-            i = j;
-            j = tmp;
-        }
+        #region group swap function
+        //private void swap<T>(ref T i, ref T j)
+        //{
+        //    T tmp = i;
+        //    i = j;
+        //    j = tmp;
+        //}
 
-        private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
-        {
-            Console.WriteLine(">>Swap RgRecord");
-            //List<T> records = new List<T>();
-            Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
-            if(first1 == last1 && first2 == last2)
-            {
-                swap(ref list, first1, first2);
-            }
-            else if ((first1 == last1 || first2 == last2))
-            {
-                //for ensure number 2 is one element.
-                if (first1 == last1)
-                {
-                    swap(ref first1, ref first2);
-                    swap(ref last1, ref last2);
-                }
-                bool isFirst = (first2 == 0);
-                T tmpPosition = isFirst ? list[0] : ((first2 < list.Count - 1) ? list[first2 + 1] : list[first2]);                
-                Console.WriteLine("TmpPosition = " + ((RgRecord)(object)tmpPosition).DptName);
-                T tmp = list[first2];
-                List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
+        
+        //private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
+        //{
+        //    Console.WriteLine(">>Swap RgRecord");
+        //    //List<T> records = new List<T>();
+        //    Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
+        //    if(first1 == last1 && first2 == last2)
+        //    {
+        //        swap(ref list, first1, first2);
+        //    }
+        //    else if ((first1 == last1 || first2 == last2))
+        //    {
+        //        //for ensure number 2 is one element.
+        //        if (first1 == last1)
+        //        {
+        //            swap(ref first1, ref first2);
+        //            swap(ref last1, ref last2);
+        //        }
+        //        bool isFirst = (first2 == 0);
+        //        T tmpPosition = isFirst ? list[0] : ((first2 < list.Count - 1) ? list[first2 + 1] : list[first2]);                
+        //        Console.WriteLine("TmpPosition = " + ((RgRecord)(object)tmpPosition).DptName);
+        //        T tmp = list[first2];
+        //        List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
 
-                foreach (T t in tmperoryList)
-                {
-                    Console.WriteLine("Temproray list : " + ((RgRecord)((object)t)).DptName);
-                }
-                list.RemoveAt(first2);
+        //        foreach (T t in tmperoryList)
+        //        {
+        //            Console.WriteLine("Temproray list : " + ((RgRecord)((object)t)).DptName);
+        //        }
+        //        list.RemoveAt(first2);
 
 
-                list.Insert(first1, tmp);
+        //        list.Insert(first1, tmp);
 
-                //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
-                for (int i = 0; i < list.Count; i++)
-                {
-                    for (int j = 0; j < tmperoryList.Count; j++)
-                    {
-                        if (list[i].Equals(tmperoryList[j]))
-                        {
-                            list.RemoveAt(i);
-                        }
-                    }
-                }
-                foreach (T t in list)
-                {
-                    Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
-                }
-                if (isFirst)
-                {
-                    Console.WriteLine("is First position(index =0)");
-                    list.InsertRange(0, tmperoryList);                    
-                    foreach (T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-                else if (tmpPosition.Equals(tmp))
-                {
-                    Console.WriteLine("is Last position(index =count-1)");
-                    list.AddRange(tmperoryList);                    
-                    foreach (T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("is middle position(index =1~count-2)");
-                    Console.WriteLine("list count =" + list.Count);
-                    Console.WriteLine("list index = " + list.IndexOf(tmpPosition));
-                    if (list.IndexOf(tmpPosition) == -1)
-                    {
-                        list.InsertRange(list.IndexOf(tmp), tmperoryList);
-                    }
-                    else
-                    {
-                        list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
-                    }
-                    foreach (T t in list)
-                    {
-                        Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-                    }
-                }
-            }         
-            else if (false)
-            {
-                List<T> rearrangeList = new List<T>();
+        //        //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
+        //        for (int i = 0; i < list.Count; i++)
+        //        {
+        //            for (int j = 0; j < tmperoryList.Count; j++)
+        //            {
+        //                if (list[i].Equals(tmperoryList[j]))
+        //                {
+        //                    list.RemoveAt(i);
+        //                }
+        //            }
+        //        }
+        //        foreach (T t in list)
+        //        {
+        //            Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
+        //        }
+        //        if (isFirst)
+        //        {
+        //            Console.WriteLine("is First position(index =0)");
+        //            list.InsertRange(0, tmperoryList);                    
+        //            foreach (T t in list)
+        //            {
+        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+        //            }
+        //        }
+        //        else if (tmpPosition.Equals(tmp))
+        //        {
+        //            Console.WriteLine("is Last position(index =count-1)");
+        //            list.AddRange(tmperoryList);                    
+        //            foreach (T t in list)
+        //            {
+        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("is middle position(index =1~count-2)");
+        //            Console.WriteLine("list count =" + list.Count);
+        //            Console.WriteLine("list index = " + list.IndexOf(tmpPosition));
+        //            if (list.IndexOf(tmpPosition) == -1)
+        //            {
+        //                list.InsertRange(list.IndexOf(tmp), tmperoryList);
+        //            }
+        //            else
+        //            {
+        //                list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
+        //            }
+        //            foreach (T t in list)
+        //            {
+        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
+        //            }
+        //        }
+        //    }                   
+        //    else
+        //    {
+        //        for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
+        //        {
+        //            if (i <= last1 && j <= last2)
+        //            {
+        //                Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
+        //                swap(ref list, i, j);
+        //            }
+        //            else if (i > last1)
+        //            {
+        //                Console.WriteLine("Current i is :" + i);
+        //                T tmp = list[j];
+        //                list.RemoveAt(j);
 
-                if (first1 == last1)
-                {
-                    swap(ref first1, ref first2);
-                    swap(ref last1, ref last2);
-                }
+        //                if (i < list.Count())
+        //                    list.Insert(i, tmp);
+        //                else
+        //                    list.Add(tmp);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("Current j is : " + j);
+        //                T tmp = list[i];
+        //                list.RemoveAt(i);
+        //                if (j < list.Count())
+        //                    list.Insert(j, tmp);
+        //                else
+        //                    list.Add(tmp);
+        //            }
+        //        }
+        //    }
+        //    //return records;
+        //    Console.WriteLine("<<Swap RgRecord");
+        //}
+        #endregion
 
-                
-
-                list = rearrangeList;
-            }
-            else
-            {
-                for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
-                {
-                    if (i <= last1 && j <= last2)
-                    {
-                        Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
-                        swap(ref list, i, j);
-                    }
-                    else if (i > last1)
-                    {
-                        Console.WriteLine("Current i is :" + i);
-                        T tmp = list[j];
-                        list.RemoveAt(j);
-
-                        if (i < list.Count())
-                            list.Insert(i, tmp);
-                        else
-                            list.Add(tmp);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Current j is : " + j);
-                        T tmp = list[i];
-                        list.RemoveAt(i);
-                        if (j < list.Count())
-                            list.Insert(j, tmp);
-                        else
-                            list.Add(tmp);
-                    }
-                }
-            }
-            //return records;
-            Console.WriteLine("<<Swap RgRecord");
-        }
         private string getResourceString(string key)
         {
             string resourceId = "IndoorNavigation.Resources.AppResources";
