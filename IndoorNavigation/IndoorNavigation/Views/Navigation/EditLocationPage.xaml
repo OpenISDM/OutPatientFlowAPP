@@ -6,7 +6,7 @@
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
-             Title="編輯圖資">
+             Title="新增圖資">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
                                        HorizontalOptions="Start"
                                        TextColor="#3f51b5"
                                        VerticalOptions="Center"
-                                       Text="{Binding _displayNme}"  
+                                       Text="{Binding _displayName}"  
                                        Margin="0,0,1,10"
                                        FontSize="32"/>
                             </StackLayout>
