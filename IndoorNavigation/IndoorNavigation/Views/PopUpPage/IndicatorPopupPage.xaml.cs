@@ -17,5 +17,10 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
