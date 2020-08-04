@@ -95,6 +95,7 @@
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CareRoomMapp.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CashierStation.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\ElevatorsMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExitMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\PostBody.json" />
@@ -163,6 +164,7 @@
     <None Remove="Resources\Map_Version.xml" />
     <None Remove="Yuanlin_OPFM\CareRoomMapp.xml" />
     <None Remove="Yuanlin_OPFM\CashierStation.xml" />
+    <None Remove="Yuanlin_OPFM\ElevatorsMap.xml" />
     <None Remove="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <None Remove="Yuanlin_OPFM\ExitMap.xml" />
     <None Remove="Yuanlin_OPFM\PostBody.json" />

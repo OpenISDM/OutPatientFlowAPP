@@ -26,23 +26,23 @@ using System.Collections.ObjectModel;
 using Plugin.Settings;
 using System.Runtime.CompilerServices;
 using System.IO.MemoryMappedFiles;
+using Dijkstra.NET.Model;
 
 namespace IndoorNavigation.Views.OPFM
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RigisterList : CustomToolbarContentPage
     {
-        #region variable declaration
-
+        #region variable declaration        
         RegisterListViewModel _viewmodel;
         private string _navigationGraphName;
 
         private XMLInformation _nameInformation;
         private App app = (App)Application.Current;
-
+        private Guid allF_Guid = new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
         Dictionary<Guid, DestinationItem> CashierPosition;
         Dictionary<Guid, DestinationItem> PharmacyPostition;
-
+        Dictionary<Guid, DestinationItem> ElevatorPosition;
         //to prevent button multi-tap from causing error
         private bool isButtonPressed = false;
         private ViewCell lastCell = null;
@@ -71,7 +71,7 @@ namespace IndoorNavigation.Views.OPFM
 
             PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
             PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
-            LoadCashierData();
+            LoadPositionData();
             BindingContext = _viewmodel;
 
         }
@@ -229,6 +229,37 @@ namespace IndoorNavigation.Views.OPFM
                             getResourceString("OK_STRING")));
                     }
                     #endregion
+
+                    #region If destination is out of range, like CCH 3F、5F
+
+                    
+                    if(record._regionID.Equals(allF_Guid) && record._waypointID.Equals(allF_Guid))
+                    {
+                        Console.WriteLine("This range of item haven't been supported now");
+
+                        //do select waypoint in elevator.
+                        await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(
+                            "該樓層不在導航範圍內，\n因此將帶您到電梯廳，\n並搭電梯前往。" +
+                            "\n結束後請回到B1~2F樓層，將能繼續使用導航。", "確定"));
+                        DestinationItem ElevatorItem;
+                        try
+                        {
+                            ElevatorItem = 
+                                ElevatorPosition[app.lastFinished._regionID];
+                        }
+                        catch 
+                        {
+                            ElevatorItem = ElevatorPosition.First().Value;
+                        }
+
+                        record._regionID = ElevatorItem._regionID;
+                        record._waypointID = ElevatorItem._waypointID;
+                        record._waypointName = ElevatorItem._waypointName;
+                    }
+
+                    #endregion
+                    Console.WriteLine("ggggggggggggggggg" + record._regionID);
+                    Console.WriteLine("fffffffffffffffff" + record._waypointName);
                     await Navigation.PushAsync
                         (new NavigatorPage(_navigationGraphName,
                                            record._regionID,
@@ -665,10 +696,13 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         #region  For Get Value
-        public void LoadCashierData()
+        public void LoadPositionData()
         {
             CashierPosition = new Dictionary<Guid, DestinationItem>();
             PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+            ElevatorPosition = new Dictionary<Guid, DestinationItem>();
+
+            #region Load Cashier and Pharmacy position
             XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
             XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
             XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
@@ -696,7 +730,24 @@ namespace IndoorNavigation.Views.OPFM
 
                 PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
             }
+            #endregion
 
+            #region Load Elevator
+            doc = Storage.XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
+            XmlNodeList ElevatorNodeList = doc.GetElementsByTagName("elevator");
+
+            foreach(XmlNode elevatorNode in ElevatorNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+
+                item._regionID = new Guid(elevatorNode.Attributes["region_id"].Value);
+                item._waypointID = new Guid(elevatorNode.Attributes["waypoint_id"].Value);
+                item._floor = elevatorNode.Attributes["floor"].Value;
+                item._waypointName = elevatorNode.Attributes["name"].Value;
+
+                ElevatorPosition.Add(item._regionID, item);
+            }
+            #endregion
             return;
         }
         async private Task ReadXml()

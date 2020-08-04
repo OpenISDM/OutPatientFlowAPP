@@ -69,11 +69,7 @@ namespace IndoorNavigation.Models
 
                 _clinicsPositions
                 .Add(destinationNode.Attributes["name"].Value,
-                     new RegionWaypointPoint(Rguid, Dguid));
-
-                //       Console.WriteLine($"ID={destinationNode.Attributes["id"].Value}," 
-                //+$"Name={destinationNode.Attributes["name"].Value}," 
-                //+$"Region id={Rguid.ToString()}");               
+                     new RegionWaypointPoint(Rguid, Dguid));                         
             }
         }
         public Guid GetRegionID(string key)

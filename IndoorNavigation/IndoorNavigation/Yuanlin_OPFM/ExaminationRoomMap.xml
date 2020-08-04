@@ -53,7 +53,8 @@
   </Department>-->
    <Clinics>
     <Department name='3F各科門診' floor='3F'>
-        <Destination name='麻醉評估 - 301診' displayname='麻醉科' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017'/>
+        <Destination name='麻醉評估 - 301診' displayname='麻醉科' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' 
+                     waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'/>
     </Department>
      
     <Department name='2F各科門診' floor='2F'>
@@ -127,9 +128,12 @@
   </Department>
   
   <Department name='婦產科' floor='5'>
-    <Destination name='婦產科 - 門診' displayname='門診' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017'/>
-    <Destination name='子宮抹片特診 - 502診' displayname='子宮抹片特診' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017'/>
-    <Destination name='產前衛教 - 506診' displayname='產前衛教' region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017' isfake='true'/>
+    <Destination name='婦產科 - 門診' displayname='門診' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' 
+                 waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'/>
+    <Destination name='子宮抹片特診 - 502診' displayname='子宮抹片特診' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' 
+                 waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'/>
+    <Destination name='產前衛教 - 506診' displayname='產前衛教' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' 
+                 waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' isfake='true'/>
   </Department>
 </navigation_graph>
 <!--note 
