@@ -38,51 +38,61 @@ namespace IndoorNavigation.Views.Navigation
 
         async private Task LoadData()
         {
+            CloudDownload _download = new CloudDownload();
             INetworkSetting networkSetting = 
                 DependencyService.Get<INetworkSetting>();
-            CloudDownload _serverDownload = new CloudDownload();
-
             _allNewSiteItems = new List<GraphInfo>();
 
+            IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
+
+            await PopupNavigation.Instance.PushAsync(busyPopupPage);
             bool isConnectable = await networkSetting.CheckInternetConnect();
 
             if (isConnectable)
             {
-                string SupportList = 
-                    _serverDownload.Download
-                    (_serverDownload.getSupportListUrl());
+                string SupportResourceXmlString = 
+                    _download.Download(_download.getSupportListUrl());
 
-                if (!string.IsNullOrEmpty(SupportList))
+                try
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(SupportList);
-                    Dictionary<string, GraphInfo> _serverResource = 
-                        GraphInfoReader(doc);
+                    XmlDocument xmlDoc = new XmlDocument();
 
-                    foreach(KeyValuePair<string,GraphInfo> pair in _serverResource)
+                    xmlDoc.LoadXml(SupportResourceXmlString);
+
+                    _serverResources = GraphInfoReader(xmlDoc);
+
+                    _serverResources.All(p =>
                     {
-                        Console.WriteLine("Pair key : " + pair.Key);
-                        Console.WriteLine("Pair Value : " + pair.Value._displayName);
+                        Console.WriteLine("Current add : " + p.Key);
+                        Console.WriteLine("Current add : " + 
+                            p.Value._displayName);
 
-                        pair.Value._siteSourceFrom = SiteSourceFrom.Server;
-                        _allNewSiteItems.Add(pair.Value);
-                    }
-                        
+                        _allNewSiteItems.Add(p.Value);
+                        return true;
+                    });
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine("Parsing SupportList error : " 
+                        + exc.Message);
+
+                    //show error string.
+                    await Navigation.PopAsync();
                 }
 
-                _localResources.All(p =>
+                finally
                 {
-                    p.Value._siteSourceFrom = SiteSourceFrom.Local;
-                    _allNewSiteItems.Add(p.Value);
-                    return true;
-                });
+                    await PopupNavigation.Instance.RemovePageAsync
+                        (busyPopupPage);
+                }
             }
-            else
+            else // if no network available
             {
-                //show please check network.
-            }
-
-            await Task.CompletedTask;
+                await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
+                //show toast told user that server no response or no network.
+                //await Navigation.PopAsync();
+            } // if no network available
+            await Task.CompletedTask;            
         }
                  
         private void LoadFakeData()
@@ -173,6 +183,8 @@ namespace IndoorNavigation.Views.Navigation
             }); ;
             AddNewSiteListView.ItemsSource = _allNewSiteItems;
         }
+
+        #region View Event define
         private void AddNewSite_TextChanged(object sender, 
             TextChangedEventArgs e)
         {
@@ -201,75 +213,100 @@ namespace IndoorNavigation.Views.Navigation
         {           
             if(e.Item is GraphInfo selectedItem)
             {
-                await PopupNavigation.Instance
-                    .PushAsync(new AlertDialogPopupPage
-                    (string.Format("您要下載的是 : {0}", 
-                    selectedItem._displayName), 
-                    "沒錯", 
-                    "不是", 
-                    "Doyouwant to download it"));
-                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this,
-                    "Doyouwant to download it", async (MsgSender, MsgArgs) => 
+                if (isOlderVersion(selectedItem))
+                {
+                    await PopupNavigation.Instance
+                       .PushAsync(new AlertDialogPopupPage
+                       (string.Format("現有版本大於或等於伺服器上的版本，是否要繼續下載? : {0}",
+                       selectedItem._displayName),
+                       "沒錯",
+                       "不是",
+                       "Version is older"));
+
+                    MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
+                        (this, "Version is older",async(MsgSender, MsgArgs) =>
+                     {
+                         if ((bool)MsgArgs)
+                         {
+                             await DownloadSiteFile(selectedItem);
+                         }
+
+                         MessagingCenter
+                         .Unsubscribe<AlertDialogPopupPage, bool>
+                         (this, "Version is older");
+                     });
+                }
+                else 
+                {
+                    await PopupNavigation.Instance
+                        .PushAsync(new AlertDialogPopupPage
+                        (string.Format("您要下載的是 : {0}",
+                        selectedItem._displayName),
+                        "沒錯",
+                        "不是",
+                        "Doyouwant to download it"));
+
+                    MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this,
+                    "Doyouwant to download it", async (MsgSender, MsgArgs) =>
                     {
-                        Console.WriteLine("Get the msg : Doyouwant to download it");
                         if ((bool)MsgArgs)
                         {
-                            //Check version first then download.
-
-                            // start to download.
-                            IndicatorPopupPage busyPage = 
-                                new IndicatorPopupPage();
-
-                            await PopupNavigation.Instance
-                            .PushAsync(busyPage);
-
-                            switch (selectedItem._siteSourceFrom)
-                            {
-                                case SiteSourceFrom.Local:
-                                    Console.WriteLine("Download Local");
-                                    EmbeddedGenerateFile
-                                    (selectedItem._graphName);
-                                    break;
-                                case SiteSourceFrom.Server:
-                                    try
-                                    {
-                                        Console.WriteLine("Download Server");
-                                        CloudGenerateFile
-                                        (selectedItem._graphName);
-                                    } catch (Exception exc)
-                                    {
-                                        Console.WriteLine
-                                        ("Error - server download : " 
-                                        + exc.Message);
-                                        await PopupNavigation.Instance.RemovePageAsync(busyPage);
-                                        await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("aaaa","OK"));
-                                        MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>
-                       (this, "Doyouwant to download it");
-                                        return;
-                                    }
-                                    break;
-
-                            }
-
-                            //CloudGenerateFile(selectedItem._graphName);
-                            //EmbeddedGenerateFile(selectedItem._graphName);
-                            await PopupNavigation.Instance
-                            .RemovePageAsync(busyPage);
-
-                            await PopupNavigation.Instance.PushAsync
-                            (new AlertDialogPopupPage("下載成功", "OK"));
+                            await DownloadSiteFile(selectedItem);
                         }
                         MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>
                         (this, "Doyouwant to download it");
                     });
+                }                
                 RefreshListView();
             }          
         }
-
+        #endregion
         private void RefreshListView()
         {
             AddNewSiteListView.ItemsSource = null;
             AddNewSiteListView.ItemsSource = _allNewSiteItems;
+        }
+
+        async private Task DownloadSiteFile(GraphInfo selectedItem)
+        {
+            IndicatorPopupPage busyPage =
+                                new IndicatorPopupPage();
+
+            await PopupNavigation.Instance
+            .PushAsync(busyPage);
+
+            try
+            {
+                Console.WriteLine("Download from server");
+                CloudGenerateFile(selectedItem._graphName);
+                await PopupNavigation.Instance.PushAsync
+                    (new AlertDialogPopupPage("Download success", "Ok"));
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("Download error - "
+                    + exc.Message);
+                await PopupNavigation.Instance.PushAsync
+                    (new AlertDialogPopupPage("download error", "Ok"));
+            }
+
+            await PopupNavigation.Instance
+            .RemovePageAsync(busyPage);
+
+            await Task.CompletedTask;
+        }
+        private bool isOlderVersion(GraphInfo selectedItem)
+        {
+            if(_resources._graphResources.ContainsKey(selectedItem._graphName)
+                &&
+                selectedItem._currentVersion<=
+                _resources._graphResources[selectedItem._graphName]
+                ._currentVersion)
+            {
+                return true;
+            }
+            return false;
+            //throw new NotImplementedException();
         }
     }
     #region Classes and Enums    

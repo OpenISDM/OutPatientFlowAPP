@@ -74,6 +74,7 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Rg.Plugins.Popup.Pages;
+using System.Net.Http.Headers;
 
 namespace IndoorNavigation
 {
@@ -142,27 +143,27 @@ namespace IndoorNavigation
 
         async void SettingBtn_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            setting = DependencyService.Get<INetworkSetting>();
-            bool Connectable = await setting.CheckInternetConnect();
+            //await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            //setting = DependencyService.Get<INetworkSetting>();
+            //bool Connectable = await setting.CheckInternetConnect();
 
-            if (Connectable)
-            {
-                //it will be a xml format
-                string SupportList = _download.Download(_download.getSupportListUrl());
-                Console.WriteLine("SupporList context : " + SupportList);                
-                if (!string.IsNullOrEmpty(SupportList))
-                {
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(SupportList);
-                    Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
-                    _serverResources = SupportListDict;
-                }
-            }
+            //if (Connectable)
+            //{
+            //    //it will be a xml format
+            //    string SupportList = _download.Download(_download.getSupportListUrl());
+            //    Console.WriteLine("SupporList context : " + SupportList);                
+            //    if (!string.IsNullOrEmpty(SupportList))
+            //    {
+            //        XmlDocument doc = new XmlDocument();
+            //        doc.LoadXml(SupportList);
+            //        Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
+            //        _serverResources = SupportListDict;
+            //    }
+            //}
 
             await Navigation.PushAsync(new SettingTableViewPage());
 
-            await PopupNavigation.Instance.PopAllAsync();
+            //await PopupNavigation.Instance.PopAllAsync();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -173,18 +174,21 @@ namespace IndoorNavigation
                 NavigationGraph navigationGraph =
                     Storage.LoadNavigationGraphXml(location.sourcePath);
 
-                if (Storage.CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckLocalVersion))
-                {                 
-                    if (await DisplayAlert(
-                        _resourceManager.GetString("UPDATE_MAP_STRING", _currentCulture),
-                        location.UserNaming,
-                        _resourceManager.GetString("OK_STRING", _currentCulture),
-                        _resourceManager.GetString("CANCEL_STRING", _currentCulture))
-                    )
-                    {
-                        EmbeddedGenerateFile(location.sourcePath);
-                    }
-                }                
+                //this place will implement the check server side resource.
+                #region To check Version Number at local
+                //if (CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckLocalVersion))
+                //{                 
+                //    if (await DisplayAlert(
+                //        _resourceManager.GetString("UPDATE_MAP_STRING", _currentCulture),
+                //        location.UserNaming,
+                //        _resourceManager.GetString("OK_STRING", _currentCulture),
+                //        _resourceManager.GetString("CANCEL_STRING", _currentCulture))
+                //    )
+                //    {
+                //        EmbeddedGenerateFile(location.sourcePath);
+                //    }
+                //}    
+                #endregion
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;
@@ -304,7 +308,11 @@ namespace IndoorNavigation
 
         async private void AddNaviGraphButton_Clicked(object sender, EventArgs e)
         {
+            IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
+            await PopupNavigation.Instance.PushAsync(busyPopupPage);
             await Navigation.PushAsync(new EditLocationPage());
+
+            await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
         }
     }
 }
