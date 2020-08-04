@@ -65,6 +65,11 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using IndoorNavigation.Utilities;
+using IndoorNavigation.Modules.Utilities;
+using static IndoorNavigation.Utilities.Storage;
+using System.Xml;
+using System.Linq;
+using System.Diagnostics;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -111,6 +116,47 @@ namespace IndoorNavigation
             MainPage = new NavigationPage(new MainPage());
         }
 
+        //async private void CheckNetwork()
+        //{
+        //    if(!(Connectivity.NetworkAccess == NetworkAccess.Internet))
+        //    {
+        //        Console.WriteLine("There is no network.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("I have network lol.");
+        //        return;
+        //    }
+        //}
+
+
+        async private void LoadSupportList()
+        {
+            CloudDownload _download = new CloudDownload();
+
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                string SupportResourceXmlString =
+                    _download.Download(_download.getSupportListUrl());
+
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+
+                    xmlDoc.LoadXml(SupportResourceXmlString);
+
+                    _serverResources = GraphInfoReader(xmlDoc);
+
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine("Parsing SupportList error : "
+                        + exc.Message);
+
+                }
+            }
+        }
+
         protected override void OnStart()
         {
             Console.WriteLine(">>OnStart");
@@ -133,7 +179,20 @@ namespace IndoorNavigation
 
             OPPA_TmperorayStatus.RestoreAllState();
             //RestoreAllState();
-           
+            //var second = TimeSpan.FromSeconds(1);
+            //Xamarin.Forms.Device.StartTimer(second, () =>
+            //{
+            //    CheckNetwork();
+            //    return true;
+            //});
+            Stopwatch sw = new Stopwatch();
+            sw.Reset();
+
+            sw.Start();
+            LoadSupportList();
+            sw.Stop();
+
+            Console.WriteLine("Download the support List time : " + sw.Elapsed.TotalSeconds.ToString());
         }
 
         protected override void OnSleep()
