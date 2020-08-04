@@ -14,7 +14,7 @@ using IndoorNavigation.Models;
 [assembly:Xamarin.Forms.Dependency(typeof(NetworkSetting))]
 namespace IndoorNavigation.iOS
 {
-    class NetworkSetting:INetworkSetting
+    public class NetworkSetting:INetworkSetting
     {
         public NetworkSetting() { }
         public void OpenSettingPage()
@@ -37,7 +37,7 @@ namespace IndoorNavigation.iOS
                 string Checkurl = "https://www.google.com/";
                 HttpWebRequest CheckConnectRequest = (HttpWebRequest)WebRequest.Create(Checkurl);
 
-                CheckConnectRequest.Timeout = 5000;
+                CheckConnectRequest.Timeout = 3000;
                 WebResponse CheckConnectResponse = CheckConnectRequest.GetResponse();
 
                 CheckConnectResponse.Close();
@@ -49,6 +49,30 @@ namespace IndoorNavigation.iOS
             {
                 return Task.FromResult(false);
             }
+        }
+
+        public Task<bool> CheckWebSiteAvailable(string url)
+        {
+            try
+            {
+                HttpWebRequest request = 
+                    (HttpWebRequest)WebRequest.CreateHttp(url);
+
+                request.Timeout = 3000;
+                WebResponse response = request.GetResponse();
+
+                response.Close();
+                request.Abort();
+                return Task.FromResult(true);
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("CheckWebSiteAvailable - error: " 
+                    + exc.Message);
+
+                return Task.FromResult(false);
+            }
+            //throw new NotImplementedException();
         }
     }
 }

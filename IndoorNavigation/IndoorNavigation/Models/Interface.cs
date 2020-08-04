@@ -98,6 +98,7 @@ namespace IndoorNavigation.Models
     public interface INetworkSetting
     {
         Task<bool> CheckInternetConnect();
+        Task<bool> CheckWebSiteAvailable(string url);
         void OpenSettingPage();
     }
     #endregion

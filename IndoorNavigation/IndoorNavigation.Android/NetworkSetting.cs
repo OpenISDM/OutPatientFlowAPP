@@ -20,6 +20,7 @@ namespace IndoorNavigation.Droid
     public class NetworkSetting:INetworkSetting
     {
         public NetworkSetting() { }
+   
         public void OpenSettingPage()
         {
             Console.WriteLine("Enter openSettingPage function");
@@ -40,10 +41,11 @@ namespace IndoorNavigation.Droid
                 string CheckUrl = "https://www.google.com/";
                 HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
 
-                iNetRequest.Timeout = 2000;
+                iNetRequest.Timeout = 3000;
                 WebResponse iNetResponse = iNetRequest.GetResponse();
 
                 iNetResponse.Close();
+                iNetRequest.Abort();
                 //Console.WriteLine("The network is all fine.");
                 //PopupNavigation.Instance.PushAsync(new DisplayAlertPopupPage("the network is work fine now."));
                 return Task.FromResult(true);
@@ -51,7 +53,32 @@ namespace IndoorNavigation.Droid
             catch
             {
                 return Task.FromResult(false);
+            }           
+                
+        }
+
+        public Task<bool> CheckWebSiteAvailable(string url)
+        {
+            try
+            {
+                HttpWebRequest request = 
+                    (HttpWebRequest)WebRequest.CreateHttp(url);
+                request.Timeout = 3000;
+
+                WebResponse response = request.GetResponse();
+
+                response.Close();
+                request.Abort();
+
+                return Task.FromResult(true);
+            } 
+            catch (Exception exc)
+            {
+                Console.WriteLine("CheckWebSiteAvailable error - " 
+                    + exc.Message);
+                return Task.FromResult(false);
             }
+            //throw new NotImplementedException();
         }
     }
 }
