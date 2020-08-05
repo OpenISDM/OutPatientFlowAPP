@@ -472,7 +472,7 @@
     <value>2.0.1079</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
-    <value>按下確定來更新圖資</value>
+    <value>這個地方有能使用的新地圖，請問要更新嗎?</value>
   </data>
   <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
     <value>員林基督教醫院</value>
@@ -658,7 +658,7 @@
     <value>{0}，然後{1}，走約{2}公尺</value>
   </data>
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
-    <value>手機端的檔案比雲端上的檔案是同樣版本甚至是更新的，請問要繼續下載嗎?</value>
+    <value>現有的檔案比雲端上的檔案是同樣版本甚至是更新的版本，請問要繼續下載嗎?</value>
   </data>
   <data name="TEST_STRING" xml:space="preserve">
     <value>測試用字串</value>
@@ -689,5 +689,14 @@
   </data>
   <data name="YOU_CANNOT_SWAP_THEM_STRING" xml:space="preserve">
     <value>套裝流程的順序無法被打亂，因此無法交換</value>
+  </data>
+  <data name="DOWNLOAD_CHECK_STRING" xml:space="preserve">
+    <value>您要下載的是 : {0}</value>
+  </data>
+  <data name="INFO_STRING" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="UPDATE_STRING" xml:space="preserve">
+    <value>更新</value>
   </data>
 </root>

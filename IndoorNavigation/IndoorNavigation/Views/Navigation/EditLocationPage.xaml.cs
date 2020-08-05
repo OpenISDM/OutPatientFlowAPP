@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Views.PopUpPage;
 using Rg.Plugins.Popup.Services;
-using System.Threading;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Utilities;
-using Dijkstra.NET.Model;
 using System.Xml;
+using Xamarin.Essentials;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.Navigation
 {
@@ -21,6 +20,13 @@ namespace IndoorNavigation.Views.Navigation
     public partial class EditLocationPage : ContentPage
     {
         List<GraphInfo> _allNewSiteItems;
+        const string _resourceId =
+            "IndoorNavigation.Resources.AppResources";
+
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId,
+                                typeof(TranslateExtension).GetTypeInfo()
+                                .Assembly);
 
         public EditLocationPage()
         {
@@ -37,12 +43,7 @@ namespace IndoorNavigation.Views.Navigation
             //LoadFakeData();
             _allNewSiteItems = new List<GraphInfo>();
             LoadData(xmlDocument);
-            RefreshListView();
-            //Device.BeginInvokeOnMainThread(async () =>
-            //{
-            //    await LoadData();
-            //    RefreshListView();
-            //});
+            RefreshListView();           
         }
 
         private void LoadData()
@@ -73,14 +74,14 @@ namespace IndoorNavigation.Views.Navigation
         {
             AddNewSiteListView.BeginRefresh();
             if (string.IsNullOrEmpty(e.NewTextValue))
-            {
-                //AddNewSiteListView.ItemsSource = listviewItemSources;
+            {                
                 RefreshListView();
             }
             else
             {
                 AddNewSiteListView.ItemsSource=
-                    _allNewSiteItems.Where(p => p._displayName.Contains(e.NewTextValue));                
+                    _allNewSiteItems.Where
+                    (p => p._displayName.Contains(e.NewTextValue));                
             }
             AddNewSiteListView.EndRefresh();
         }                
@@ -92,7 +93,8 @@ namespace IndoorNavigation.Views.Navigation
             AddNewSiteListView.SelectedItem = null;
         }
 
-        async private void AddNewSiteListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        async private void AddNewSiteListView_ItemTapped(object sender, 
+            ItemTappedEventArgs e)
         {           
             if(e.Item is GraphInfo selectedItem)
             {
@@ -100,14 +102,13 @@ namespace IndoorNavigation.Views.Navigation
                 {
                     await PopupNavigation.Instance
                        .PushAsync(new AlertDialogPopupPage
-                       (string.Format("現有版本大於或等於伺服器上的版本，是否要繼續下載? : {0}",
-                       selectedItem._displayName),
-                       "沒錯",
-                       "不是",
-                       "Version is older"));
+                       (GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
+                       GetResourceString("YES_STRING"),
+                       GetResourceString("NO_STRING"),
+                       "VersionIsOlder"));
 
                     MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
-                        (this, "Version is older",async(MsgSender, MsgArgs) =>
+                        (this, "VersionIsOlder",async(MsgSender, MsgArgs) =>
                      {
                          if ((bool)MsgArgs)
                          {
@@ -123,14 +124,15 @@ namespace IndoorNavigation.Views.Navigation
                 {
                     await PopupNavigation.Instance
                         .PushAsync(new AlertDialogPopupPage
-                        (string.Format("您要下載的是 : {0}",
-                        selectedItem._displayName),
-                        "沒錯",
-                        "不是",
-                        "Doyouwant to download it"));
+                        (string.Format(
+                            GetResourceString("DOWNLOAD_CHECK_STRING"),
+                            selectedItem._displayName),
+                        GetResourceString("YES_STRING"),
+                        GetResourceString("NO_STRING"),
+                        "DoYouWantToDownloadIt"));
 
                     MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this,
-                    "Doyouwant to download it", async (MsgSender, MsgArgs) =>
+                    "DoYouWantToDownloadIt", async (MsgSender, MsgArgs) =>
                     {
                         if ((bool)MsgArgs)
                         {
@@ -155,9 +157,7 @@ namespace IndoorNavigation.Views.Navigation
             IndicatorPopupPage busyPage =
                                 new IndicatorPopupPage();
 
-            await PopupNavigation.Instance
-            .PushAsync(busyPage);
-
+            await PopupNavigation.Instance.PushAsync(busyPage);
             try
             {
                 Console.WriteLine("Download from server");
@@ -169,8 +169,55 @@ namespace IndoorNavigation.Views.Navigation
             {
                 Console.WriteLine("Download error - "
                     + exc.Message);
-                await PopupNavigation.Instance.PushAsync
-                    (new AlertDialogPopupPage("download error", "Ok"));
+                if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                {
+                    INetworkSetting setting =
+                        DependencyService.Get<INetworkSetting>();
+
+                    await PopupNavigation.Instance.PushAsync
+                                   (new AlertDialogPopupPage
+                                   (GetResourceString("BAD_NETWORK_STRING"),
+                                   GetResourceString("GO_TO_SETTING")
+                                   , GetResourceString("NO_STRING"), 
+                                   "GoToSettingInEdit"));
+                    MessagingCenter.Subscribe
+                        <AlertDialogPopupPage, bool>
+                        (this, "GoToSettingInEdit", (msgSender, msgArgs) =>
+                        {
+                            if ((bool)msgArgs)
+                            {
+                                setting =
+                                DependencyService
+                                .Get<INetworkSetting>();
+
+                                setting.OpenSettingPage();
+                            }
+
+                            MessagingCenter.Unsubscribe
+                            <AlertDialogPopupPage, bool>
+                            (this, "GoToSettingInAdd");
+                        });
+                }
+                else
+                {
+                    await PopupNavigation.Instance.PushAsync
+                             (new AlertDialogPopupPage
+                             (GetResourceString("HAPPEND_ERROR_STRING"), 
+                             GetResourceString("RETRY_STRING"),
+                             GetResourceString("NO_STRING"), 
+                             "WantRetryInEdit"));
+                    MessagingCenter.Subscribe
+                        <AlertDialogPopupPage, bool>
+                        (this, "WantRetryInEdit", async (msgSender, msgArgs) =>
+                        {
+                            if ((bool)msgArgs)
+                                await DownloadSiteFile(selectedItem);
+
+                            MessagingCenter.Unsubscribe
+                                    <AlertDialogPopupPage, bool>
+                                    (this, "WantRetryInEdit");
+                        });
+                }
             }
 
             await PopupNavigation.Instance
@@ -190,8 +237,10 @@ namespace IndoorNavigation.Views.Navigation
             }
             return false;
         }
-    }
-    #region Classes and Enums    
-   
-    #endregion
+
+        private string GetResourceString(string key)
+        {
+            return _resourceManager.GetString(key, _currentCulture);
+        }
+    }  
 }

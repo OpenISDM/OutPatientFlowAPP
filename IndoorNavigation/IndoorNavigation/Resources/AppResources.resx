@@ -472,7 +472,7 @@
     <value>2.0.1079</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
-    <value>Press OK to update Map</value>
+    <value>This building has a new verion map available, would you want to update it?</value>
   </data>
   <data name="YUANLIN_CHRISTIAN_HOSPITAL_STRING" xml:space="preserve">
     <value>Yuanlin Christian Hospital</value>
@@ -689,5 +689,14 @@
   </data>
   <data name="YOU_CANNOT_SWAP_THEM_STRING" xml:space="preserve">
     <value>The combo process order can be disordered. So It can't be swap.</value>
+  </data>
+  <data name="DOWNLOAD_CHECK_STRING" xml:space="preserve">
+    <value>The map that you want to download is : {0}</value>
+  </data>
+  <data name="INFO_STRING" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="UPDATE_STRING" xml:space="preserve">
+    <value>update</value>
   </data>
 </root>
