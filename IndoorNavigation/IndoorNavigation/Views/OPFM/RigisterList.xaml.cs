@@ -69,8 +69,15 @@ namespace IndoorNavigation.Views.OPFM
             _nameInformation = LoadXmlInformation(navigationGraphName);
             //NetworkSettings = DependencyService.Get<INetworkSetting>();
 
-            PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
-            PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
+            PaymemtListBtn.IsEnabled = 
+                app.records.Count() > 0 &&
+                (app.FinishCount == app.records.Count) &&
+                (app.HaveCashier) &&
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+            PaymemtListBtn.IsVisible = app.records.Count() > 0 &&
+                (app.FinishCount == app.records.Count) &&
+                (app.HaveCashier) &&
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             LoadPositionData();
             BindingContext = _viewmodel;
 
@@ -92,15 +99,15 @@ namespace IndoorNavigation.Views.OPFM
             if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
                 Buttonable(false);
 
-            PaymemtListBtn.IsEnabled = 
+            PaymemtListBtn.IsEnabled =
+                app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) && 
-                (app.HaveCashier) && 
-                app.records.Count()>0 && 
+                (app.HaveCashier) &&                  
                 !(app.records.Count()==1 && app.records[0].type== RecordType.Register);
-            PaymemtListBtn.IsVisible = 
+            PaymemtListBtn.IsVisible =
+                app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) && 
-                (app.HaveCashier) && 
-                app.records.Count() > 0 && 
+                (app.HaveCashier) &&                 
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
