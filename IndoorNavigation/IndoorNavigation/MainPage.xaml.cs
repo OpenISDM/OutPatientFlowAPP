@@ -482,8 +482,8 @@ namespace IndoorNavigation
             ToolbarItem NewSiteToolbarItem = new ToolbarItem
             {
                 Text = 
-                    _resourceManager.GetString("ADD_STRING",currentLanguage),
-                Command=AddSiteCommand,
+                    _resourceManager.GetString("NEW_STRING",currentLanguage),
+                Command =AddSiteCommand,
                 Order = ToolbarItemOrder.Primary
             };
 
