@@ -62,14 +62,10 @@ using System;
 using IndoorNavigation.Views.Navigation;
 
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Plugin.Settings;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Modules.Utilities;
 using static IndoorNavigation.Utilities.Storage;
 using System.Xml;
-using System.Linq;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -115,7 +111,8 @@ namespace IndoorNavigation
                 Current.Properties["LanguagePicker"] = "English";
             }
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = 
+                new NavigationPage(new MainPage() as CustomToolbarContentPage);
         }
 
         //async private void CheckNetwork()

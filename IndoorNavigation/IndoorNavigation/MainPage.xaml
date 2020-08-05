@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<local:CustomToolbarContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
@@ -17,12 +17,12 @@
         </OnPlatform>
     </ContentPage.Padding>
     
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Text="{i18n:Translate SETTING_STRING}" Order="Secondary" 
                      Clicked="SettingBtn_Clicked"/>
         <ToolbarItem x:Name="EditToolbarItem" Text="新增" Priority="1" 
                      Order="Primary" Clicked="AddNaviGraphButton_Clicked"/>
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
     
     <ContentPage.Content>
         <AbsoluteLayout>
@@ -92,4 +92,4 @@
         </AbsoluteLayout>
     </ContentPage.Content>
 
-</ContentPage>
+</local:CustomToolbarContentPage>

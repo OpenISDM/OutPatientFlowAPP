@@ -57,29 +57,22 @@ using System.Reflection;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using System.IO;
-using System.Collections.Generic;
 using Rg.Plugins.Popup.Services;
 using System.Globalization;
-using Newtonsoft.Json;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
-using Prism.Modularity;
 using System.Linq;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
-using System.Collections.ObjectModel;
 using static IndoorNavigation.Utilities.Storage;
-using System.Data.Common;
-using System.Threading;
 using System.Threading.Tasks;
-using Rg.Plugins.Popup.Pages;
-using System.Net.Http.Headers;
+using System.Windows.Input;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : ContentPage
+    public partial class MainPage : CustomToolbarContentPage
     {
         MainPageViewModel _viewModel;
         internal static readonly string _versionRoute =
@@ -89,8 +82,8 @@ namespace IndoorNavigation
             "IndoorNavigation.Resources.AppResources";
 
         internal static readonly string _versionRouteInPhone
-             = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.
-                            LocalApplicationData), "Version");
+             = Path.Combine(Environment.GetFolderPath
+                 (Environment.SpecialFolder.LocalApplicationData), "Version");
 
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId,
@@ -134,7 +127,7 @@ namespace IndoorNavigation
 
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
-
+            RefreshToolbarOptions();
             //RefreshListView();
         }
 
@@ -391,8 +384,7 @@ namespace IndoorNavigation
         }
             
 
-        async private void AddNaviGraphButton_Clicked(object sender, 
-            EventArgs e)
+        async private Task AddSiteItemMethod()
         {
             IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
             _download = new CloudDownload();
@@ -456,10 +448,10 @@ namespace IndoorNavigation
                                "WantRetryInAdd"));
                     MessagingCenter.Subscribe
                         <AlertDialogPopupPage, bool>
-                        (this, "WantRetryInAdd", (msgSender, msgArgs) =>
+                        (this, "WantRetryInAdd", async (msgSender, msgArgs) =>
                         {
                             if((bool)msgArgs)
-                                AddNaviGraphButton_Clicked(sender, e);                           
+                                await AddSiteItemMethod();                           
 
                             MessagingCenter.Unsubscribe
                                     <AlertDialogPopupPage, bool>
@@ -469,5 +461,63 @@ namespace IndoorNavigation
             }          
            
         }
+
+        #region iOS SecondToolBarItem Attributes
+
+        public ICommand SettingCommand { get; set; }
+        public ICommand AddSiteCommand { get; set; }
+        private void RefreshToolbarOptions()
+        {
+            ToolbarItems.Clear();
+            SettingCommand = new Command(async () =>await SettingItemMethod());
+            AddSiteCommand = new Command(async () =>await AddSiteItemMethod());
+            ToolbarItem SettingItem = new ToolbarItem
+            {
+                Text = 
+                _resourceManager.GetString("SETTING_STRING", currentLanguage),
+                Command = SettingCommand,
+                Order = ToolbarItemOrder.Secondary
+            };
+
+            ToolbarItem NewSiteToolbarItem = new ToolbarItem
+            {
+                Text = 
+                    _resourceManager.GetString("ADD_STRING",currentLanguage),
+                Command=AddSiteCommand,
+                Order = ToolbarItemOrder.Primary
+            };
+
+            ToolbarItems.Add(SettingItem);
+            ToolbarItems.Add(NewSiteToolbarItem);
+            OnToolbarItemAdded();
+        }
+        async private Task SettingItemMethod()
+        {
+            Console.WriteLine(">>SettingItemMethod");
+
+            await Navigation.PushAsync(new SettingTableViewPage());
+
+            await Task.CompletedTask;
+        }
+
+        protected void OnToolbarItemAdded()
+        {
+            Console.WriteLine("call onToolbarItemAdded");
+            EventHandler e = ToolbarItemAdded;
+            e?.Invoke(this, new EventArgs());
+        }
+
+        public override event EventHandler ToolbarItemAdded;
+        public override Color CellBackgroundColor => Color.White;
+        public override Color CellTextColor => Color.Black;
+        public override Color MenuBackgroundColor => Color.White;
+        public override float RowHeight => 56;
+        public override Color ShadowColor => Color.Black;
+        public override float ShadowOpacity => 0.3f;
+        public override float ShadowRadius => 5.0f;
+        public override float ShadowOffsetDimension => 5.0f;
+        public override float TableWidth => 250;
+        #endregion
+
     }
 }
