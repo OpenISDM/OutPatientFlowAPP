@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Security.Authentication;
 using Dijkstra.NET.Model;
 using IndoorNavigation.Views.Navigation;
+using System.Net;
 /*
 note :
 1. We need to define the stroage path first
@@ -388,7 +389,13 @@ namespace IndoorNavigation.Utilities
                         Console.WriteLine(">>AddLocal");
                         if (!_resources._graphResources.ContainsKey(fileName))
                         {
-                            _resources._graphResources.Add(fileName, _localResources[fileName]);
+                            _resources._graphResources
+                                .Add(fileName, _localResources[fileName]);
+                        }
+                        else
+                        {
+                            _resources._graphResources[fileName] = 
+                                _localResources[fileName];
                         }
                         break;
                     }
@@ -399,7 +406,13 @@ namespace IndoorNavigation.Utilities
                         {
                             //I use local to test it could work or not, the second parameter will be server document.
                             //_resources._graphResources.Add(fileName, _localResources[fileName]);
-                            _resources._graphResources.Add(fileName, _serverResources[fileName]);
+                            _resources._graphResources
+                                .Add(fileName, _serverResources[fileName]);
+                        }
+                        else
+                        {
+                            _resources._graphResources[fileName] =
+                                _serverResources[fileName];
                         }
                         break;
                     }
