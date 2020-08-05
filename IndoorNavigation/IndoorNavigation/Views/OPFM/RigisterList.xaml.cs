@@ -1,6 +1,5 @@
 ﻿using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.ViewModels;
 using IndoorNavigation.Views.Navigation;
@@ -20,13 +19,8 @@ using System.Linq;
 using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
-using IndoorNavigation.Yuanlin_OPFM;
 using Xamarin.Essentials;
-using System.Collections.ObjectModel;
-using Plugin.Settings;
-using System.Runtime.CompilerServices;
-using System.IO.MemoryMappedFiles;
-using Dijkstra.NET.Model;
+
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -39,7 +33,9 @@ namespace IndoorNavigation.Views.OPFM
 
         private XMLInformation _nameInformation;
         private App app = (App)Application.Current;
-        private Guid allF_Guid = new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
+        private Guid allF_Guid = 
+            new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
+
         Dictionary<Guid, DestinationItem> CashierPosition;
         Dictionary<Guid, DestinationItem> PharmacyPostition;
         Dictionary<Guid, DestinationItem> ElevatorPosition;
@@ -580,6 +576,8 @@ namespace IndoorNavigation.Views.OPFM
         }
         async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
             bool isCheck = Preferences.Get("isCheckedNeverShow", false);
 
             //I need to consider this statement
@@ -587,6 +585,7 @@ namespace IndoorNavigation.Views.OPFM
             {
                 await PopupNavigation.Instance.PushAsync
                    (new AlertDialogPopupPage(getResourceString("NO_SHIFT_STRING"), getResourceString("OK_STRING")));
+                isButtonPressed = false ;
                 return;
             }
             else
@@ -617,6 +616,8 @@ namespace IndoorNavigation.Views.OPFM
                 ShiftButtonPressed = true;
                 Buttonable(false);
             }
+
+            isButtonPressed = false;
         }
         // this function is a button event, which is to check user whether have 
         // arrive at destination.
@@ -1143,6 +1144,9 @@ namespace IndoorNavigation.Views.OPFM
         }
         private async Task ClearItemMethod()
         {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
             Console.WriteLine("Clear item click");
             await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("ARE_YOU_SURE_TO_CLEAR_STRING"), getResourceString("CLEAR_STRING"), getResourceString("NO_STRING"), "ClearOrNot"));
 
@@ -1170,7 +1174,7 @@ namespace IndoorNavigation.Views.OPFM
                 }
                 MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot");
             });
-            
+            isButtonPressed = false;
         }        
         async private Task CancelShiftItemMethod()
         {

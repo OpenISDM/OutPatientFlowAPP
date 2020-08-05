@@ -106,19 +106,19 @@ namespace IndoorNavigation.Views.Settings
         public SettingTableViewPage()
         {
             InitializeComponent();
-            AddMapItems();
+            //AddMapItems();
             VersionTracking.Track();
 
-            if (_serverResources != null)
-            {
-                _connectable = true;
+            //if (_serverResources != null)
+            //{
+            //    _connectable = true;
 
-                foreach (KeyValuePair<string, GraphInfo> pair in _serverResources)
-                {
-                    Console.WriteLine("String value is : " + pair.Key);
-                    _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
-                }
-            }
+            //    foreach (KeyValuePair<string, GraphInfo> pair in _serverResources)
+            //    {
+            //        Console.WriteLine("String value is : " + pair.Key);
+            //        _downloadMap.Add(pair.Value._displayNames[_currentCulture.Name]);
+            //    }
+            //}
 
             //_downloadPage._event.DownloadPopUpPageEventHandler +=
             //    async delegate (object sender, EventArgs e) { await HandleDownloadPageAsync(sender, e); };
@@ -128,7 +128,7 @@ namespace IndoorNavigation.Views.Settings
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
-            ReloadNaviGraphItems();
+            //ReloadNaviGraphItems();
 
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             _languageItems.Add(_resourceManager.GetString("CHINESE_STRING", currentLanguage));
@@ -149,29 +149,29 @@ namespace IndoorNavigation.Views.Settings
             VersionNumberCell.Title = VersionTracking.CurrentVersion;
         }
 
-        private void AddMapItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _chooseMap.Clear();
+        //private void AddMapItems()
+        //{
+        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
+        //    _chooseMap.Clear();
 
-            foreach (Location location in Storage.GetLocalGraphNames())
-            {
-                _chooseMap.Add(location.UserNaming);
-            }
-        }
-        private void ReloadNaviGraphItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+        //    foreach (Location location in Storage.GetLocalGraphNames())
+        //    {
+        //        _chooseMap.Add(location.UserNaming);
+        //    }
+        //}
+        //private void ReloadNaviGraphItems()
+        //{
+        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
 
-            _cleanNaviGraphItems.Clear();
-            _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
+        //    _cleanNaviGraphItems.Clear();
+        //    _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
 
-            foreach (var installedName in Storage.GetAllNaviGraphName())
-            {
-                _cleanNaviGraphItems.Add(installedName.UserNaming);
-                Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
-            }
-        }
+        //    foreach (var installedName in Storage.GetAllNaviGraphName())
+        //    {
+        //        _cleanNaviGraphItems.Add(installedName.UserNaming);
+        //        Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
+        //    }
+        //}
         #endregion
 
         #region Tapped Event
@@ -271,7 +271,7 @@ namespace IndoorNavigation.Views.Settings
             Console.WriteLine("Current Culture is : " + CultureInfo.CurrentCulture.Name);
             AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
             Storage._currentCulture = AppResources.Culture;
-            AddMapItems();
+            //AddMapItems();
 
             await Navigation.PushAsync(new MainPage());
         }
