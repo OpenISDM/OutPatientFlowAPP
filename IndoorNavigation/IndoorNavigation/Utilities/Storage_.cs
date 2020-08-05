@@ -379,7 +379,8 @@ namespace IndoorNavigation.Utilities
         }
         #endregion
         #region Update
-        static private void UpdateGraphList(string fileName, AccessGraphOperate operate)
+        static private void UpdateGraphList(string fileName, 
+            AccessGraphOperate operate)
         {
             Console.WriteLine(">>UpdateGraphList");
             switch (operate)
@@ -403,9 +404,7 @@ namespace IndoorNavigation.Utilities
                     {
                         Console.WriteLine(">>AddServer");
                         if (!_resources._graphResources.ContainsKey(fileName))
-                        {
-                            //I use local to test it could work or not, the second parameter will be server document.
-                            //_resources._graphResources.Add(fileName, _localResources[fileName]);
+                        {                            
                             _resources._graphResources
                                 .Add(fileName, _serverResources[fileName]);
                         }
@@ -499,7 +498,9 @@ namespace IndoorNavigation.Utilities
             Console.WriteLine("<<StoreGraphStatus");
         }
 
-        static public bool CheckVersionNumber(string fileName, double currentVersion, AccessGraphOperate operate)
+        static public bool CheckVersionNumber(string fileName, 
+            double currentVersion, 
+            AccessGraphOperate operate)
         {
             Console.WriteLine(">>CheckVersionNumber, Operate : " + operate);
             switch (operate)
@@ -509,9 +510,12 @@ namespace IndoorNavigation.Utilities
                         Console.WriteLine(">>CheckVersionNumber -> local");
                         Console.WriteLine("installed version : " + currentVersion);
                         
-                        if (_localResources.ContainsKey(fileName) && _localResources[fileName]._currentVersion > currentVersion)
+                        if (_localResources.ContainsKey(fileName) && 
+                            _localResources[fileName]._currentVersion > 
+                            currentVersion)
                         {
-                            Console.WriteLine("local resource version : " + _localResources[fileName]._currentVersion);
+                            Console.WriteLine("local resource version : " + 
+                                _localResources[fileName]._currentVersion);
                             return true;
                         }
 
@@ -555,7 +559,14 @@ namespace IndoorNavigation.Utilities
             public string _displayName { 
                 get
                 {
-                    return _displayNames[_currentCulture.Name];
+                    try
+                    {
+                        return _displayNames[_currentCulture.Name];
+                    }
+                    catch
+                    {
+                        return _displayNames.First().Value;
+                    }
                 }
                 private set { }
             }
