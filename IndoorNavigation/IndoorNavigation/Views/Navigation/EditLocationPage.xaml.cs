@@ -163,7 +163,10 @@ namespace IndoorNavigation.Views.Navigation
                 Console.WriteLine("Download from server");
                 CloudGenerateFile(selectedItem._graphName);
                 await PopupNavigation.Instance.PushAsync
-                    (new AlertDialogPopupPage("Download success", "Ok"));
+                    (new AlertDialogPopupPage(GetResourceString
+                    ("DOWNLOAD_SUCCESS_STRING"), 
+                    GetResourceString
+                    ("OK_STRING")));
             }
             catch (Exception exc)
             {
