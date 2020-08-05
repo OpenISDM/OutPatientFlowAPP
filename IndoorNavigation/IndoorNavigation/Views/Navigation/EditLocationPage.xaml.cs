@@ -25,164 +25,47 @@ namespace IndoorNavigation.Views.Navigation
         public EditLocationPage()
         {
             InitializeComponent();
+            _allNewSiteItems = new List<GraphInfo>();
+            LoadData();
+            RefreshListView();
+        }
+        public EditLocationPage(XmlDocument xmlDocument)
+        {
+            InitializeComponent();
 
             //When constructor run, we need to load the site item first.            
             //LoadFakeData();
-
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await LoadData();
-                RefreshListView();
-            });
+            _allNewSiteItems = new List<GraphInfo>();
+            LoadData(xmlDocument);
+            RefreshListView();
+            //Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    await LoadData();
+            //    RefreshListView();
+            //});
         }
 
-        async private Task LoadData()
+        private void LoadData()
         {
-            CloudDownload _download = new CloudDownload();
-            INetworkSetting networkSetting = 
-                DependencyService.Get<INetworkSetting>();
-            _allNewSiteItems = new List<GraphInfo>();
-
-            IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
-
-            await PopupNavigation.Instance.PushAsync(busyPopupPage);
-            bool isConnectable = await networkSetting.CheckInternetConnect();
-
-            if (isConnectable)
+            if (_serverResources != null)
             {
-                string SupportResourceXmlString = 
-                    _download.Download(_download.getSupportListUrl());
-
-                try
+                _serverResources.All(p =>
                 {
-                    XmlDocument xmlDoc = new XmlDocument();
-
-                    xmlDoc.LoadXml(SupportResourceXmlString);
-
-                    _serverResources = GraphInfoReader(xmlDoc);
-
-                    _serverResources.All(p =>
-                    {
-                        Console.WriteLine("Current add : " + p.Key);
-                        Console.WriteLine("Current add : " + 
-                            p.Value._displayName);
-
-                        _allNewSiteItems.Add(p.Value);
-                        return true;
-                    });
-                }
-                catch(Exception exc)
-                {
-                    Console.WriteLine("Parsing SupportList error : " 
-                        + exc.Message);
-
-                    //show error string.
-                    await Navigation.PopAsync();
-                }
-
-                finally
-                {
-                    await PopupNavigation.Instance.RemovePageAsync
-                        (busyPopupPage);
-                }
+                    _allNewSiteItems.Add(p.Value);
+                    return true;
+                });
             }
-            else // if no network available
-            {
-                await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
-                //show toast told user that server no response or no network.
-                //await Navigation.PopAsync();
-            } // if no network available
-            await Task.CompletedTask;            
         }
-                 
-        private void LoadFakeData()
+        private void LoadData(XmlDocument doc)
         {
-            _allNewSiteItems = new List<GraphInfo>();
+            _serverResources = GraphInfoReader(doc);
 
-            _allNewSiteItems.Add(new GraphInfo
+            _serverResources.All(p =>
             {
-                _graphName = "Lab",
-                _currentVersion = 2222,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "Lab" },
-                    {"zh-TW", "實驗場域" }
-                }
+                _allNewSiteItems.Add(p.Value);
+                return true;
             });
-
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                //isSelected = false,
-                _graphName="aaaa",              
-                _currentVersion =11,
-                _displayNames= new Dictionary<string, string>()
-                {
-                    {"en-US", "aaaa" },
-                    {"zh-TW", "欸欸欸欸" }
-                }
-                
-            }); ;
-
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                //isSelected = false,
-                _graphName="bbbb",
-                _currentVersion=22,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "BBBB" },
-                    {"zh-TW","逼逼逼逼"  }
-                }
-            }) ;
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                //isSelected = false,
-                _graphName = "aaaa",
-                _currentVersion = 11,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "aaaa" },
-                    {"zh-TW", "欸欸欸欸" }
-                }
-
-            }); 
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                //isSelected = false,
-                _graphName = "aaaa",
-                _currentVersion = 11,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "aaaa" },
-                    {"zh-TW", "欸欸欸欸" }
-                }
-
-            }); 
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                _graphName = "aaaa",
-                _currentVersion = 11,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "aaaa" },
-                    {"zh-TW", "欸欸欸欸" }
-                }
-
-            }); 
-            _allNewSiteItems.Add(new GraphInfo
-            {
-                //isSelected = false,
-                _graphName = "aaaa",
-                _currentVersion = 11,
-                _displayNames = new Dictionary<string, string>()
-                {
-                    {"en-US", "aaaa" },
-                    {"zh-TW", "欸欸欸欸" }
-                }
-
-            }); ;
-            AddNewSiteListView.ItemsSource = _allNewSiteItems;
-        }
+        }        
 
         #region View Event define
         private void AddNewSite_TextChanged(object sender, 
@@ -306,7 +189,6 @@ namespace IndoorNavigation.Views.Navigation
                 return true;
             }
             return false;
-            //throw new NotImplementedException();
         }
     }
     #region Classes and Enums    

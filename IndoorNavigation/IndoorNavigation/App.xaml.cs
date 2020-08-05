@@ -70,6 +70,8 @@ using static IndoorNavigation.Utilities.Storage;
 using System.Xml;
 using System.Linq;
 using System.Diagnostics;
+using System.Threading.Tasks;
+
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
 {
@@ -136,11 +138,11 @@ namespace IndoorNavigation
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                string SupportResourceXmlString =
-                    _download.Download(_download.getSupportListUrl());
-
                 try
                 {
+                    string SupportResourceXmlString =
+                    _download.Download(_download.getSupportListUrl());
+                
                     XmlDocument xmlDoc = new XmlDocument();
 
                     xmlDoc.LoadXml(SupportResourceXmlString);
@@ -152,9 +154,10 @@ namespace IndoorNavigation
                 {
                     Console.WriteLine("Parsing SupportList error : "
                         + exc.Message);
-
+                    _serverResources = null;
                 }
             }
+            await Task.CompletedTask;
         }
 
         protected override void OnStart()
@@ -185,14 +188,14 @@ namespace IndoorNavigation
             //    CheckNetwork();
             //    return true;
             //});
-            Stopwatch sw = new Stopwatch();
-            sw.Reset();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Reset();
 
-            sw.Start();
+            //sw.Start();
             LoadSupportList();
-            sw.Stop();
+            //sw.Stop();
 
-            Console.WriteLine("Download the support List time : " + sw.Elapsed.TotalSeconds.ToString());
+            //Console.WriteLine("Download the support List time : " + sw.Elapsed.TotalSeconds.ToString());
         }
 
         protected override void OnSleep()
@@ -224,73 +227,6 @@ namespace IndoorNavigation
             {
                // _globalNavigatorPage.Abort();
             }
-        }
-        
-        //private void StoreAllState()
-        //{
-        //    Console.WriteLine(">>StoreAllState");
-        //    Console.WriteLine("finished count =" + FinishCount);
-        //    Console.WriteLine("records count " + records.Count);
-        //    if ((FinishCount+1 == records.Count && lastFinished.type == RecordType.Exit) || records.Count==0)
-        //    {
-        //        Console.WriteLine("Call clear");
-        //        CrossSettings.Current.Clear();
-        //        return;
-        //    }
-        //    #region Records Part
-        //    string RecordJsonString = JsonConvert.SerializeObject(records);
-        //    CrossSettings.Current.AddOrUpdateValue("records", RecordJsonString);
-        //    #endregion
-
-        //    CrossSettings.Current.AddOrUpdateValue("FinishCount", FinishCount);
-        //    CrossSettings.Current.AddOrUpdateValue("isRigistered", isRigistered);
-        //    CrossSettings.Current.AddOrUpdateValue("getRigistered", getRigistered);
-        //    CrossSettings.Current.AddOrUpdateValue("HaveCashier", HaveCashier);
-
-        //    #region lastFinished Part
-        //    string lastFinishedJsonString = JsonConvert.SerializeObject(lastFinished);
-        //    CrossSettings.Current.AddOrUpdateValue("lastFinished", lastFinishedJsonString);
-        //    #endregion
-
-        //    #region OrderDistrict Part
-        //    string OrderDistrictJsonString = JsonConvert.SerializeObject(OrderDistrict);
-        //    CrossSettings.Current.AddOrUpdateValue("OrderDistrict", OrderDistrictJsonString);
-        //    #endregion
-        //}     
-
-        //private void RestoreAllState()
-        //{
-        //    Console.WriteLine(">>RestoreAllState");
-
-        //    #region Records Part
-        //    string RecordJsonString = CrossSettings.Current.GetValueOrDefault("records", string.Empty);
-        //    if (string.IsNullOrEmpty(RecordJsonString))
-        //        records = new ObservableCollection<RgRecord>();
-        //    else records = JsonConvert.DeserializeObject<ObservableCollection<RgRecord>>(RecordJsonString);
-        //    #endregion
-
-        //    FinishCount = CrossSettings.Current.GetValueOrDefault("FinishCount", 0);
-        //    isRigistered = CrossSettings.Current.GetValueOrDefault("isRigistered", false);
-        //    getRigistered = CrossSettings.Current.GetValueOrDefault("getRigistered", false);
-        //    HaveCashier = CrossSettings.Current.GetValueOrDefault("HaveCashier", false);
-
-        //    #region  lastFinish Part
-        //    string lastFinishJsonString = CrossSettings.Current.GetValueOrDefault("lastFinished", string.Empty);
-        //    if (string.IsNullOrEmpty(lastFinishJsonString))
-        //        lastFinished = null;
-        //    else lastFinished = JsonConvert.DeserializeObject<RgRecord>(lastFinishJsonString);
-        //    #endregion
-        //    #region OrderDistrict Part
-        //    string OrderDistrictJsonString = 
-        //        CrossSettings.Current.GetValueOrDefault("OrderDistrict", string.Empty);
-
-        //    if (string.IsNullOrEmpty(OrderDistrictJsonString))
-        //        OrderDistrict = new Dictionary<int, int>();
-        //    else
-        //        OrderDistrict = 
-        //            JsonConvert.DeserializeObject<Dictionary<int, int>>(OrderDistrictJsonString);
-        //    #endregion 
-        //}
-       
+        }                     
     }
 }

@@ -166,6 +166,87 @@ namespace IndoorNavigation
             //await PopupNavigation.Instance.PopAllAsync();
         }
 
+        async private void CheckVersionAndUpdate(Location location, NavigationGraph navigationGraph)
+        {
+            if (_serverResources != null &&
+                  CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckCloudVersion))
+            {
+                bool WantUpdate = await DisplayAlert("問題", 
+                    "此地方有能使用的新地圖，請問要更新嗎?", 
+                    "是的", 
+                    "不要");
+
+                if (WantUpdate)
+                {
+                    IndicatorPopupPage busyPage = new IndicatorPopupPage();
+
+                    await PopupNavigation.Instance.PushAsync(busyPage);
+
+                    try
+                    {
+                        CloudGenerateFile(location.sourcePath);
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine("updated error - " +
+                            exc.Message);
+                        await PopupNavigation.Instance.RemovePageAsync(busyPage);
+                        //show no network page or server not response error.
+
+                        if(Connectivity.NetworkAccess == NetworkAccess.Internet)
+                        {
+                            await PopupNavigation.Instance.PushAsync
+                                (new AlertDialogPopupPage
+                                ("伺服器似乎沒有回應，請問是否要重試?", "重試", 
+                                "否","WantRetry"));
+                            MessagingCenter.Subscribe
+                                <AlertDialogPopupPage, bool>
+                                (this, "WantRetry", (msgSender, msgArgs) =>
+                            {
+                                if ((bool)msgArgs) 
+                                    CheckVersionAndUpdate
+                                    (location, navigationGraph);
+
+                                MessagingCenter.Unsubscribe
+                                <AlertDialogPopupPage, bool>
+                                (this, "WantRetry");
+                            });
+                        }
+                        else
+                        {
+                            await PopupNavigation.Instance.PushAsync
+                                (new AlertDialogPopupPage
+                                ("目前沒有網路連線，請問是否要前往設定開啟網路?", "去設定", "否", "GoToSetting"));
+                            MessagingCenter.Subscribe
+                                <AlertDialogPopupPage, bool>
+                                (this, "GoToSetting", (msgSender, msgArgs) =>
+                                {
+                                    if ((bool)msgArgs)
+                                    { 
+                                        setting = 
+                                        DependencyService
+                                        .Get<INetworkSetting>();
+
+                                        setting.OpenSettingPage();
+
+                                        CheckVersionAndUpdate
+                                        (location, navigationGraph);
+                                    }
+                                    
+                                    MessagingCenter.Unsubscribe
+                                    <AlertDialogPopupPage, bool>
+                                    (this, "GoToSetting");
+                                });
+                        }
+                    }
+
+                    if(PopupNavigation.Instance.PopupStack.Contains(busyPage))
+                        await PopupNavigation.Instance.RemovePageAsync
+                            (busyPage);
+                }
+            }
+
+        }
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -175,6 +256,8 @@ namespace IndoorNavigation
                     Storage.LoadNavigationGraphXml(location.sourcePath);
 
                 //this place will implement the check server side resource.
+
+                CheckVersionAndUpdate(location, navigationGraph);
                 #region To check Version Number at local
                 //if (CheckVersionNumber(location.sourcePath, navigationGraph.GetVersion(), AccessGraphOperate.CheckLocalVersion))
                 //{                 
@@ -309,10 +392,71 @@ namespace IndoorNavigation
         async private void AddNaviGraphButton_Clicked(object sender, EventArgs e)
         {
             IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
-            await PopupNavigation.Instance.PushAsync(busyPopupPage);
-            await Navigation.PushAsync(new EditLocationPage());
+            _download = new CloudDownload();
 
-            await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
+            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                setting = DependencyService.Get<INetworkSetting>();
+
+                await PopupNavigation.Instance.PushAsync
+                               (new AlertDialogPopupPage
+                               ("目前沒有網路連線，請問是否要前往設定開啟網路?"
+                               , "去設定", "否", "GoToSettingInAdd"));
+                MessagingCenter.Subscribe
+                    <AlertDialogPopupPage, bool>
+                    (this, "GoToSettingInAdd", (msgSender, msgArgs) =>
+                    {
+                        if ((bool)msgArgs)
+                        {
+                            setting =
+                            DependencyService
+                            .Get<INetworkSetting>();
+
+                            setting.OpenSettingPage();
+                        }
+
+                        MessagingCenter.Unsubscribe
+                        <AlertDialogPopupPage, bool>
+                        (this, "GoToSettingInAdd");
+                    });
+            }
+            else if (_serverResources != null) 
+            {
+                Console.WriteLine("_serverResource != null");
+                await Navigation.PushAsync(new EditLocationPage());
+            }
+            else if(Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                Console.WriteLine("The network is fine");
+                await PopupNavigation.Instance.PushAsync(busyPopupPage);
+                try
+                {
+                    string SupportResourceXmlString =
+                        _download.Download(_download.getSupportListUrl());
+
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(SupportResourceXmlString);
+                }
+                catch
+                {
+                    await PopupNavigation.Instance.PushAsync
+                               (new AlertDialogPopupPage
+                               ("伺服器似乎沒有回應，請問是否要重試?", "重試",
+                               "否", "WantRetryInAdd"));
+                    MessagingCenter.Subscribe
+                        <AlertDialogPopupPage, bool>
+                        (this, "WantRetryInAdd", (msgSender, msgArgs) =>
+                        {
+                            if((bool)msgArgs)
+                                AddNaviGraphButton_Clicked(sender, e);                           
+
+                            MessagingCenter.Unsubscribe
+                                    <AlertDialogPopupPage, bool>
+                                    (this, "WantRetryInAdd");
+                        });
+                }
+            }          
+           
         }
     }
 }
