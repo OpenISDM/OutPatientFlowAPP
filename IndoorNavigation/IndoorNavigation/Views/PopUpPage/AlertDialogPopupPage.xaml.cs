@@ -46,6 +46,7 @@ namespace IndoorNavigation.Views.PopUpPage
     {
         delegate void Background_BackButtonClickEvent();
         Background_BackButtonClickEvent _backClick;
+        bool isButtonClicked = false;
 
         Style ButtonStyle = new Style(typeof(Button))
         {
@@ -85,7 +86,6 @@ namespace IndoorNavigation.Views.PopUpPage
         }
         async private void NoButton_Back()
         {
-            //await PopupNavigation.Instance.PopAsync();
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
         #endregion
@@ -113,8 +113,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
         }
         async private void TwoButton_Back()
-        {
-            //PopupNavigation.Instance.PopAsync();
+        {           
             await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, _message, false);
            // await Task.CompletedTask;
@@ -141,12 +140,17 @@ namespace IndoorNavigation.Views.PopUpPage
 
         private void CancelPageClicked(Object sender, EventArgs args)
         {
+            if (isButtonClicked) return;
+            isButtonClicked = true;
+
             _backClick();
         }
 
         async private void ConfirmPageClicked(Object sender, EventArgs args)
         {
-            //PopupNavigation.Instance.PopAsync();
+            if (isButtonClicked) return;
+            isButtonClicked = true;
+
             await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, _message, true);
         }
