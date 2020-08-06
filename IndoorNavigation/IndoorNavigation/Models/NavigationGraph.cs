@@ -1331,7 +1331,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 #endregion
 
                 #region Get the instruction after leaving the elevator.               
-                instruction._turnDirection = TurnDirection.FirstDirection;
+                instruction._nextDirection = TurnDirection.FirstDirection;
                 WaypointEdge nextWaypointEdge =
                     GetWaypointEdgeInRegion(nextRegionID,
                     nextWaypointID,

@@ -126,7 +126,7 @@
                     <ViewCell.Height>
                         <OnPlatform x:TypeArguments="x:Double">
                             <On Platform="iOS" Value="90"/>
-                        </OnPlatform>
+                        </OnPlatform> 
                     </ViewCell.Height>
                     <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <StackLayout Margin="10,5,10,5">
@@ -249,7 +249,7 @@
             <Button x:Name="ShiftBtn" 
                     Text="{i18n:Translate EXCHANGE_STRING}" 
                     BackgroundColor="#3f51b5" 
-                    FontSize="Medium" 
+                    FontSize="Small" 
                     TextColor="White"
                     FontAttributes="Bold"
                     Clicked="ShiftBtn_Clicked"
@@ -258,7 +258,9 @@
             <!--<Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
                      AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
                     Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->
-            <Button x:Name="PaymemtListBtn" FontSize="Large" Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  Clicked="PaymemtListBtn_Clicked"
+            <Button x:Name="PaymemtListBtn" FontSize="Large" 
+                    Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  
+                    Clicked="PaymemtListBtn_Clicked"
                     AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
                     TextColor="White"/>
         </AbsoluteLayout>

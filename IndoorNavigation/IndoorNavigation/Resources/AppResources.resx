@@ -487,7 +487,7 @@
     <value>There is no clinic have been completed, so revisit couldn't be add.</value>
   </data>
   <data name="EXCHANGE_STRING" xml:space="preserve">
-    <value>EXC</value>
+    <value>Swap</value>
   </data>
   <data name="NEW_STRING" xml:space="preserve">
     <value>Add</value>
