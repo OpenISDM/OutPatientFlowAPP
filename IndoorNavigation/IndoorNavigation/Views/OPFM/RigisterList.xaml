@@ -249,7 +249,7 @@
             <Button x:Name="ShiftBtn" 
                     Text="{i18n:Translate EXCHANGE_STRING}" 
                     BackgroundColor="#3f51b5" 
-                    FontSize="Small" 
+                    FontSize="Medium" 
                     TextColor="White"
                     FontAttributes="Bold"
                     Clicked="ShiftBtn_Clicked"
