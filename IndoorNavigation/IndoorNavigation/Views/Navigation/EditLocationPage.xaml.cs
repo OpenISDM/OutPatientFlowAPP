@@ -108,7 +108,7 @@ namespace IndoorNavigation.Views.Navigation
                        "VersionIsOlder"));
 
                     MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
-                        (this, "VersionIsOlder",async(MsgSender, MsgArgs) =>
+                        (this, "VersionIsOlder", async(MsgSender, MsgArgs) =>
                      {
                          if ((bool)MsgArgs)
                          {
@@ -117,7 +117,7 @@ namespace IndoorNavigation.Views.Navigation
 
                          MessagingCenter
                          .Unsubscribe<AlertDialogPopupPage, bool>
-                         (this, "Version is older");
+                         (this, "VersionIsOlder");
                      });
                 }
                 else 
@@ -139,7 +139,7 @@ namespace IndoorNavigation.Views.Navigation
                             await DownloadSiteFile(selectedItem);
                         }
                         MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>
-                        (this, "Doyouwant to download it");
+                        (this, "DoYouWantToDownloadIt");
                     });
                 }                
                 RefreshListView();
@@ -198,7 +198,7 @@ namespace IndoorNavigation.Views.Navigation
 
                             MessagingCenter.Unsubscribe
                             <AlertDialogPopupPage, bool>
-                            (this, "GoToSettingInAdd");
+                            (this, "GoToSettingInEdit");
                         });
                 }
                 else
