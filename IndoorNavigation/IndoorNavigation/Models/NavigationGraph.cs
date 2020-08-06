@@ -965,10 +965,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 !isSameFloor(nextnextRegionID,nextRegionID))
             {
                 GetCombineInstruction(
+                    currentRegionID,
+                    currentWaypointID,
                     nextRegionID, 
                     nextWaypointID, 
                     nextnextRegionID, 
-                    nextnextWaypointID, 
+                    nextnextWaypointID,
+                    avoidConnectionTypes,
+                    true,
                     ref information
                     );
             }
@@ -981,11 +985,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 if(!isSameFloor(currentRegionID,nextRegionID))
                 {
                     return GetCombineInstruction(
-                        currentRegionID, 
-                        currentRegionID, 
+                        currentRegionID,
+                        currentWaypointID,
                         nextRegionID, 
                         nextWaypointID, 
-                        ref information
+                        nextnextRegionID, 
+                        nextnextWaypointID,
+                        avoidConnectionTypes,
+                        false,
+                        ref information                        
                         );
                 }
 
@@ -1271,24 +1279,94 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             return TurnDirection.Down;
         }
-
+        private bool isEmptyGuid(Guid guid)
+        {
+            return guid.Equals(Guid.Empty);
+        }
         private InstructionInformation GetCombineInstruction(
             Guid currentRegionID,
             Guid currentWaypointID,
             Guid nextRegionID,
-            Guid nextWaypointID, 
+            Guid nextWaypointID,
+            Guid nextnextRegionID,
+            Guid nextnextWaypointID,
+            ConnectionType[] avoidConnectionTypes,
+            bool flag,
             ref InstructionInformation instruction)
         {
-            instruction._turnDirection = 
-                GetTurnUpDownDirection(currentRegionID, nextRegionID);
+            // to show instruction "please take elevator to 2F"
+            if (flag)
+            {
+                instruction._turnDirection = 
+                    GetTurnUpDownDirection(nextRegionID, nextnextRegionID);
 
-            return instruction;
+                RegionEdge currentEdge =
+                    GetRegionEdgeMostNearSourceWaypoint(nextRegionID, 
+                    nextWaypointID, 
+                    nextnextRegionID, 
+                    avoidConnectionTypes);
+                instruction._connectionType = currentEdge._connectionType;
+                instruction._distance = Convert.ToInt32(currentEdge._distance);
+                instruction._regionName = _regions[nextnextRegionID]._name;
+                return instruction;
+            }
+            //to show instruction "please take elevator to 2F then turn right"
+            else
+            {
+                instruction._regionName =
+                   _regions[nextRegionID]._name;
+                #region To get elevator edge instructions first
+                instruction._turnDirection =
+                    GetTurnUpDownDirection(currentRegionID, nextRegionID);                
+
+                RegionEdge currentRegionEdge =
+                    GetRegionEdgeMostNearSourceWaypoint(currentRegionID, 
+                    currentWaypointID, 
+                    nextRegionID, 
+                    avoidConnectionTypes);
+
+                instruction._connectionType = currentRegionEdge._connectionType;
+                instruction._distance = 
+                    Convert.ToInt32(currentRegionEdge._distance);
+                #endregion
+
+                #region Get the instruction after leaving the elevator.               
+                instruction._turnDirection = TurnDirection.FirstDirection;
+                WaypointEdge nextWaypointEdge =
+                    GetWaypointEdgeInRegion(nextRegionID,
+                    nextWaypointID,
+                    nextnextWaypointID,
+                    avoidConnectionTypes);
+
+                instruction._relatedDirectionOfFirstDirection = 
+                    nextWaypointEdge._direction;
+
+                instruction._distance = 
+                    Convert.ToInt32(nextWaypointEdge._distance);
+                #endregion
+
+                return instruction;
+            }
+            
         }
 
+        private TurnDirection GetTurnDirection(int preDirection, 
+            int currentDirection)
+        {
+            if (currentDirection - preDirection >= 0)
+            {                
+                return  (TurnDirection)(currentDirection - preDirection);
+            }
+            else
+            {
+                return (TurnDirection)(currentDirection - preDirection + 8);
+            }
+        }
+        
         public InstructionInformation GetInstructionInformation(
             int currentNavigationStep,
             Guid currentRegionID,
-            Guid currentWaypointID,
+            Guid currentWaypointID, 
             Guid previousRegionID,
             Guid previousWaypointID,
             Guid nextRegionID,
