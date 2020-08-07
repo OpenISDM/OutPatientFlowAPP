@@ -1,4 +1,10 @@
 ﻿
 Note : 
 	if pull this repository from github, 
-	please remeber to check Picture document name in .csproj is equal to document name in folder (upper or lower).
+	please remeber to check Picture document name in .csproj is equal to document name in folder (the captial character is upper or lower).
+
+
+8/7
+	- 如果終點就是next-next point ，有可能會出現 "下手扶梯，直走約0公尺"，之類的語句
+	- 要修正該功能的語句(增加一個新的Resource，供查詢)
+	- 下周一開始實作每個方向show 圖片
