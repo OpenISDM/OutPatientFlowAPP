@@ -58,6 +58,7 @@ using System.Resources;
 using System.Timers;
 using Xamarin.Forms;
 using static IndoorNavigation.Modules.Session;
+using static IndoorNavigation.Utilities.Storage;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -82,8 +83,8 @@ namespace IndoorNavigation.ViewModels.Navigation
         private XMLInformation _xmlInformation;
         private Guid _destinationID;
         private NavigationModule _navigationModule;
-        private PhoneInformation phoneInformation = new PhoneInformation();
-        private Timer _watchdog = new Timer();        
+        private CultureInfo currentLanguage =
+            CrossMultilingual.Current.CurrentCultureInfo;
         #endregion
 
         #region Private Data Binding
@@ -109,7 +110,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       XMLInformation informationXML)
 
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             _firsrDirectionInstructionScaleVale = 1;
             _destinationID = destinationWaypointID;
             DestinationWaypointName = destinationWaypointName;
@@ -160,7 +160,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             Console.WriteLine(">> DisplayInstructions");
             NavigationInstruction instruction =
                 (args as Session.NavigationEventArgs)._nextInstruction;
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string currentStepImage;
             string currentStepLabel;
 
@@ -296,7 +295,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                     out int location,
                                     out int instructionValue)
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            //var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             string connectionTypeString = "";
             string nextWaypointName = instruction._nextWaypointName;
             InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
@@ -309,8 +308,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             stepImage = "";
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
-            nextRegionName =
-                _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
+            //nextRegionName =
+            //    _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
             switch (instruction._information._turnDirection)
             {
 
@@ -471,16 +470,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         string specialString =
                             _firstDirectionInstruction.GetSpecialString
                             (instruction._currentWaypointGuid,
-                            instruction._nextWaypointGuid);
-                        //string specialString=
-                        //    _firstDirectionInstruction.GetSpecialString
-                        //    (((App)Application.Current)._specialGuid);
-                        //stepLabel = string.Format(initialDirectionString, 
-                        //    specialString, 
-                        //    Environment.NewLine, 
-                        //    instructionDirection, 
-                        //    Environment.NewLine, 
-                        //    instruction._turnDirectionDistance) ;
+                            instruction._nextWaypointGuid);                      
                         string tmpString = "";
                         stepLabel =
                             string.Format(_resourceManager
@@ -504,17 +494,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                 tmpString += Environment.NewLine;
                             }
                         }
-                        stepLabel = tmpString;
-                        //foreach(char ch in stepLabel)
-                        // {
-                        //     if( ch.Equals("，") || 
-                        //         ch.Equals(",") || 
-                        //         ch.Equals("."))
-                        //     {
-                        //         stepLabel.Insert(stepLabel.IndexOf(ch), "\r\n");
-                        //     }
-                        // }
-
+                        stepLabel = tmpString;                        
                         InstructionLabVerticalOption =
                             LayoutOptions.StartAndExpand;
                         location = 3;
@@ -658,13 +638,20 @@ namespace IndoorNavigation.ViewModels.Navigation
                             stepImage = "Stairs_up";
                             break;
                     }
-                    stepLabel = string.Format(
-                        _resourceManager.GetString(
-                            "DIRECTION_UP_STRING",
-                            currentLanguage),
-                            connectionTypeString,
-                            Environment.NewLine,
-                            nextRegionName);
+                    stepLabel = SwitchCombineInstruction(instruction,
+                        //instruction._information,
+                                _resourceManager.GetString(
+                                "DIRECTION_DOWN_STRING",
+                                _currentCulture),
+                                connectionTypeString,
+                                nextRegionName);
+                    //stepLabel = string.Format(
+                    //    _resourceManager.GetString(
+                    //        "DIRECTION_UP_STRING",
+                    //        currentLanguage),
+                    //        connectionTypeString,
+                    //        Environment.NewLine,
+                    //        nextRegionName);
 
                     break;
 
@@ -698,14 +685,14 @@ namespace IndoorNavigation.ViewModels.Navigation
                             stepImage = "Stairs_down";
                             break;
                     }
-
-                    stepLabel = string.Format(
-                        _resourceManager.GetString(
-                            "DIRECTION_DOWN_STRING",
-                            currentLanguage),
-                            connectionTypeString,
-                            Environment.NewLine,
-                            nextRegionName);
+                    stepLabel = SwitchCombineInstruction(instruction,
+                        //instruction._information, 
+                                _resourceManager.GetString(
+                                "DIRECTION_DOWN_STRING",
+                                _currentCulture), 
+                                connectionTypeString, 
+                                nextRegionName);
+                        
 
                     break;
                 default:
@@ -715,14 +702,142 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
+        private string SwitchCombineInstruction
+            (NavigationInstruction instruction,
+            string DownOrUp, 
+            string connectionType,
+            string nextRegionName)
+        {
+            string instructionString = "";
+            switch (instruction._information._nextDirection)
+            {
+                case TurnDirection.Null:
+                {
+                    return string.Format(
+                              DownOrUp,
+                              connectionType,
+                              Environment.NewLine,
+                              nextRegionName);
+                }
+                case TurnDirection.FirstDirection:
+                    {
+                        int _turnDirection = 
+                            (int)instruction._information
+                            ._relatedDirectionOfFirstDirection;
+
+                        int _fD_direction =
+                            (int)_firstDirectionInstruction.returnDirection
+                            (instruction._nextWaypointGuid);
+
+                        if (_fD_direction > _turnDirection)
+                            _turnDirection =
+                                (_turnDirection + 8) - _fD_direction;
+                        else
+                            _turnDirection = _turnDirection - _fD_direction;
+
+                        int directionFaceOrBack = 
+                            _firstDirectionInstruction.returnFaceOrBack
+                            (instruction._nextWaypointGuid);
+
+                        if(directionFaceOrBack == _initialBackDirection)
+                        {
+                            if (_turnDirection < 4)
+                                _turnDirection += 4;
+                            else
+                                _turnDirection -= 4;
+                        }
+                        
+
+                        CardinalDirection turnDirection =
+                            (CardinalDirection)_turnDirection;
+                            //instruction.._relatedDirectionOfFirstDirection;
+                        Console.WriteLine("turn Direction = " + turnDirection.ToString());
+                        string instructionDirection="";
+                        switch(turnDirection){
+                            case CardinalDirection.North:
+                                {
+                                    instructionDirection =
+                                        _resourceManager.GetString(
+                                        "GO_STRAIGHT_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.Northeast:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "GO_RIGHT_FRONT_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.East:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_RIGHT_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.Southeast:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_RIGHT_REAR_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.South:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_BACK_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.Southwest:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_LEFT_REAR_STRING",
+                                        currentLanguage);
+
+                                    break;
+                                }
+                            case CardinalDirection.West:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_LEFT_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            case CardinalDirection.Northwest:
+                                {
+                                    instructionDirection=
+                                        _resourceManager.GetString(
+                                        "TURN_LEFT_FRONT_STRING",
+                                        currentLanguage);
+                                    break;
+                                }
+                            
+                        }
+
+
+                        return string.Format(DownOrUp, connectionType, Environment.NewLine, nextRegionName) + string.Format(_resourceManager.GetString("DIRECTION_INITIAIL_CROSS_REGION_STRING",currentLanguage),instructionDirection,
+                            Environment.NewLine, Environment.NewLine, instruction._information._distance);
+                        //return string.Format("搭手扶梯到一樓後，請背向手扶梯後向右轉，並直走約20公尺");
+                    }
+                default:
+                    return instructionString;
+            }
+        }
+
         /// <summary>
         /// Gets the navigation status event.
         /// </summary>
         private void GetNavigationResultEvent(object sender, EventArgs args)
         {
             Console.WriteLine("recevied event raised from NavigationModule");
-            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-
             DisplayInstructions(args);
         }
 
