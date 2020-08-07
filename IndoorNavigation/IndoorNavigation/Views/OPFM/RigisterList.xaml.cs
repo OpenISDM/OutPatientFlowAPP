@@ -98,12 +98,12 @@ namespace IndoorNavigation.Views.OPFM
             PaymemtListBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) && 
-                (app.HaveCashier) &&                  
+                (!app.HaveCashier) &&                  
                 !(app.records.Count()==1 && app.records[0].type== RecordType.Register);
             PaymemtListBtn.IsVisible =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) && 
-                (app.HaveCashier) &&                 
+                (!app.HaveCashier) &&                 
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
