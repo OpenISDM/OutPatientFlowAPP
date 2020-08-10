@@ -75,6 +75,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
 
+        #region Nest structures and classes
         public class Navigraph
         {
             public Guid _regionID { get; set; }
@@ -114,10 +115,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public CardinalDirection _direction { get; set; }
             public ConnectionType _connectionType { get; set; }
             public double _distance { get; set; }
-
-            public string picture1to2 { get; set; }
-            public string picture2to1 { get; set; }
+            public string _picture12 { get; set; }
+            public string _picture21 { get; set; }
         }
+        #endregion
 
         public NavigationGraph(XmlDocument xmlDocument) {
             Console.WriteLine(">> NavigationGraph");
@@ -196,41 +197,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("lon : " + waypoint._lon);
 
                     waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
-                    Console.WriteLine("lat : " + waypoint._lat);
-
-                    //string stringCategory = xmlWaypointElement.GetAttribute("category");
-
-                    //string[] parseCategory = stringCategory.Split(';');
-                    //waypoint._category = new List<CategoryType>();
-                    //foreach(string category in parseCategory)
-                    //{
-                    //    waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
-                    //                             category,
-                    //                             false));
-                    //    Console.WriteLine("category : " + category);
-                    //}
+                    Console.WriteLine("lat : " + waypoint._lat);                    
 
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
                                                  xmlWaypointElement.GetAttribute("category"),
-                                                 false);
-
-
-                    //fill data into _waypointsByCategory structure
-
-                    //foreach (CategoryType categoryTypein in waypoint._category)
-                    //{
-                    //    if (!region._waypointsByCategory.ContainsKey(categoryTypein))
-                    //    {
-                    //        List<Waypoint> tempList = new List<Waypoint>();
-                    //        tempList.Add(waypoint);
-                    //        region._waypointsByCategory.Add(categoryTypein, tempList);
-                    //    }
-                    //    else
-                    //    {
-                    //        region._waypointsByCategory[categoryTypein].Add(waypoint);
-                    //    }
-                    //}
+                                                 false);                                       
 
                     if (!region._waypointsByCategory.ContainsKey(waypoint._category))
                     {
@@ -288,9 +260,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 regionEdge._connectionType =
                     (ConnectionType)Enum.Parse(typeof(ConnectionType),
-                                               xmlElement.GetAttribute("connection_type"),
-                                               false);
-                Console.WriteLine("connection_type : " + regionEdge._connectionType);
+                    xmlElement.GetAttribute("connection_type"),
+                    false);
+                Console.WriteLine("connection_type : " + 
+                    regionEdge._connectionType);
 
                 // calculate the distance of this edge
                 regionEdge._distance = 0;
@@ -301,15 +274,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     regionEdge._distance = distanceElevator;
                 }
-                else if (ConnectionType.Escalator == regionEdge._connectionType)
+                else if (ConnectionType.Escalator == 
+                    regionEdge._connectionType)
                 {
                     regionEdge._distance = distanceEscalator;
                 }
-                else if (ConnectionType.Stair == regionEdge._connectionType)
+                else if (ConnectionType.Stair == 
+                         regionEdge._connectionType)
                 {
                     regionEdge._distance = distanceStair;
                 }
-                else if (ConnectionType.NormalHallway == regionEdge._connectionType)
+                else if (ConnectionType.NormalHallway == 
+                         regionEdge._connectionType)
                 {
                     bool foundNode1 = false;
                     double node1Lon = 0;
@@ -317,7 +293,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     bool foundNode2 = false;
                     double node2Lon = 0;
                     double node2Lat = 0;
-                    foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in
+                    foreach (KeyValuePair<CategoryType, List<Waypoint>> 
+                        categoryItem in 
                         _regions[regionEdge._region1]._waypointsByCategory) {
 
                         foreach (Waypoint waypoint in categoryItem.Value) {
@@ -387,6 +364,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     }
                 }                
             }
+
             #region read navigraph block of BuildingName.xml
             // Read all <navigraph> blocks within <navigraphs>
             Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/<navigraph>");
@@ -435,20 +413,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("lon : " + waypoint._lon);
 
                     waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
-                    Console.WriteLine("lat : " + waypoint._lat);
-
-
-                    //string stringCategory = xmlWaypointElement.GetAttribute("category");
-
-                    //string[] parseCategory = stringCategory.Split(';');
-                    //waypoint._category = new List<CategoryType>();
-                    //foreach (string category in parseCategory)
-                    //{
-                    //    waypoint._category.Add((CategoryType)Enum.Parse(typeof(CategoryType),
-                    //                             category,
-                    //                             false));
-                    //    Console.WriteLine("category : " + category);
-                    //}
+                    Console.WriteLine("lat : " + waypoint._lat);                 
 
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
@@ -494,6 +459,28 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                       xmlEdgeElement.GetAttribute("direction"),
                                                       false);
                     Console.WriteLine("direction : " + waypointEdge._direction);
+
+                    #region
+                    if (xmlEdgeElement.HasAttribute("picture12") && 
+                        !string.IsNullOrEmpty
+                        (xmlEdgeElement.GetAttribute("picture12"))) 
+                    {
+                        Console.WriteLine("AAAAA");
+                        waypointEdge._picture12 =
+                            xmlEdgeElement.GetAttribute("picture12");
+                    }
+                    Console.WriteLine("picture12 : " + waypointEdge._picture12);
+
+                    if(xmlEdgeElement.HasAttribute("picture21") && 
+                        !string.IsNullOrEmpty
+                        (xmlEdgeElement.GetAttribute("picture21")))
+                    {
+                        Console.WriteLine("bbbbbbbb");
+                        waypointEdge._picture21 =
+                            xmlEdgeElement.GetAttribute("picture21");
+                    }
+                    Console.WriteLine("picture21 : " + waypointEdge._picture21);
+                    #endregion
 
                     waypointEdge._connectionType =
                         (ConnectionType)Enum.Parse(typeof(ConnectionType),
@@ -726,12 +713,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return regionEdgeItem;
         }
 
-        private WaypointEdge GetWaypointEdgeInRegion(Guid regionID,
-                                                     Guid sourceWaypoindID,
-                                                     Guid sinkWaypointID,
-                                                     ConnectionType[] avoidConnectionTypes)
+        private Tuple<WaypointEdge,string> GetWaypointEdgeInRegion
+            (Guid regionID,
+             Guid sourceWaypoindID,
+             Guid sinkWaypointID,
+             ConnectionType[] avoidConnectionTypes)
         {
             WaypointEdge waypointEdge = new WaypointEdge();
+            string pictureDirection = "";
 
             Tuple<Guid, Guid> edgeKeyFromNode1 =
                 new Tuple<Guid, Guid>(sourceWaypoindID, sinkWaypointID);
@@ -741,14 +730,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             if (_navigraphs[regionID]._edges.ContainsKey(edgeKeyFromNode1))
             {
-                // XML file contains (W1, W2) and the query input is (W1, W2) as well.
+                // XML file contains (W1, W2) and the query input is 
+                // (W1, W2) as well.
                 waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode1];
+                pictureDirection = 
+                    _navigraphs[regionID]._edges[edgeKeyFromNode1]._picture12;
             }
             else if (_navigraphs[regionID]._edges.ContainsKey(edgeKeyFromNode2))
             {
                 // XML file contains (W1, W2) but the query string is (W2, W1).
                 waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
-
+                pictureDirection =
+                    _navigraphs[regionID]._edges[edgeKeyFromNode2]._picture21;
                 if (System.Convert.ToInt32(waypointEdge._direction) + 4 < 8)
                 {
                     waypointEdge._direction = (CardinalDirection)
@@ -761,8 +754,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 
             }
-            return waypointEdge;
+            return new Tuple<WaypointEdge, string>
+                (waypointEdge, pictureDirection);
         }
+
 
         public int GetDistanceOfLongHallway(RegionWaypointPoint currentGuid, int nextStep, List<RegionWaypointPoint> allRoute, ConnectionType[] avoidConnectionType)
         {
@@ -789,7 +784,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else
                 {
-                    WaypointEdge waypointEdge = GetWaypointEdgeInRegion(allRoute[i]._regionID, allRoute[i]._waypointID,allRoute[i+1]._waypointID, avoidConnectionType);
+                    WaypointEdge waypointEdge = 
+                        GetWaypointEdgeInRegion(allRoute[i]._regionID, 
+                        allRoute[i]._waypointID,allRoute[i+1]._waypointID, 
+                        avoidConnectionType).Item1;
 
                     distance = distance + System.Convert.ToInt32(waypointEdge._distance);
 
@@ -799,8 +797,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     }
                     else
                     {
-                        WaypointEdge currentWaypointEdge = GetWaypointEdgeInRegion(allRoute[i]._regionID, allRoute[i]._waypointID, allRoute[i + 1]._waypointID, avoidConnectionType);
-                        WaypointEdge nextWaypointEdge = GetWaypointEdgeInRegion(allRoute[i+1]._regionID, allRoute[i+1]._waypointID, allRoute[i + 2]._waypointID, avoidConnectionType);
+                        WaypointEdge currentWaypointEdge = 
+                            GetWaypointEdgeInRegion(allRoute[i]._regionID, 
+                            allRoute[i]._waypointID, 
+                            allRoute[i + 1]._waypointID, 
+                            avoidConnectionType).Item1;
+
+                        WaypointEdge nextWaypointEdge = 
+                            GetWaypointEdgeInRegion(allRoute[i+1]._regionID, 
+                            allRoute[i+1]._waypointID, 
+                            allRoute[i + 2]._waypointID, 
+                            avoidConnectionType).Item1;
+
                         if (currentWaypointEdge._direction != nextWaypointEdge._direction)
                         {
                             break;
@@ -951,338 +959,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             {
                 return false;
             }
-        }
-
-        //public InstructionInformation GetInstructionInformation(
-        //    int currentNavigationStep,
-        //    Guid previousRegionID, Guid previousWaypointID,
-        //    Guid currentRegionID, Guid currentWaypointID,
-        //    Guid nextRegionID, Guid nextWaypointID,
-        //    Guid nextnextRegionID, Guid nextnextWaypointID,
-        //    ConnectionType[] avoidConnectionTypes
-        //    )
-        //{
-        //    Console.WriteLine("previous regionid ={0}, waypoint id={1}", previousRegionID, previousWaypointID);
-        //    Console.WriteLine("current regionid ={0}, waypoint id={1}", currentRegionID, currentWaypointID);
-        //    Console.WriteLine("next regionid= {0}, waypoint id={1}", nextRegionID, nextWaypointID);
-        //    Console.WriteLine("next next regionid={0}, waypoint id={1}", nextnextRegionID, nextnextWaypointID);
-        //    InstructionInformation information = new InstructionInformation();
-        //    information._floor = _regions[nextRegionID]._floor;
-        //    information._regionName = _regions[nextRegionID]._name;
-
-        //    // special case that user is next to a elevator or escalator.
-        //    // Just tell the user go here and say next step is.
-        //    if (!isSameRegion(nextnextRegionID, nextRegionID) &&
-        //        !isSameFloor(nextnextRegionID,nextRegionID))
-        //    {
-        //        Console.WriteLine("Show please take elevator to 1F");
-        //        //information._regionName = _regions[nextnextRegionID]._name;
-        //        return GetCombineInstruction(
-        //            currentRegionID,
-        //            currentWaypointID,
-        //            nextRegionID, 
-        //            nextWaypointID, 
-        //            nextnextRegionID, 
-        //            nextnextWaypointID,
-        //            avoidConnectionTypes,
-        //            true                
-        //            );
-        //    }
-
-        //    // currentWaypoint is at different region from nextWaypoint.
-        //    else if (!isSameRegion(currentRegionID,nextRegionID)) 
-        //    {
-        //        Console.WriteLine("show Please take elevator to 1F then turn right.");
-        //        // special case that user has already gone up or down by 
-        //        // elevator or escaltor.
-        //        if(!isSameFloor(currentRegionID,nextRegionID))
-        //        {
-        //            return GetCombineInstruction(
-        //                currentRegionID,
-        //                currentWaypointID,
-        //                nextRegionID, 
-        //                nextWaypointID, 
-        //                nextnextRegionID, 
-        //                nextnextWaypointID,
-        //                avoidConnectionTypes,
-        //                false                       
-        //                );
-        //        }
-
-        //        // nextregion is a sane floor like NTUH Yunlin old building 
-        //        // and new building
-        //        else
-        //        {
-        //            // initial step, if user stand at portal type waypoint,
-        //            // user will go down or go strange.
-        //            if(currentNavigationStep == 0)
-        //            { 
-        //                information._turnDirection = 
-        //                    TurnDirection.FirstDirection;
-
-        //                RegionEdge currentEdge =
-        //                    GetRegionEdgeMostNearSourceWaypoint
-        //                    (currentRegionID,
-        //                     currentWaypointID,
-        //                     nextRegionID,
-        //                     avoidConnectionTypes);
-
-        //                information._relatedDirectionOfFirstDirection = 
-        //                    currentEdge._direction;
-
-        //                information._connectionType = 
-        //                    currentEdge._connectionType;
-
-        //                information._distance = 
-        //                    Convert.ToInt32(currentEdge._distance);                                                
-        //            }
-        //            else 
-        //            {
-        //                if (!isSameRegion(previousRegionID,currentRegionID))
-        //                {
-        //                    if (!isSameFloor(previousRegionID, currentRegionID))
-        //                    {
-        //                        if(!isSameRegion(currentRegionID, nextnextRegionID))
-        //                        {
-        //                            information._turnDirection = TurnDirection.FirstDirection;
-        //                            RegionEdge regionEdge = GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
-        //                                                        currentWaypointID,
-        //                                                        nextRegionID,
-        //                                                        avoidConnectionTypes);
-        //                            information._connectionType = regionEdge._connectionType;
-        //                            information._distance = System.Convert.ToInt32(regionEdge._distance);
-
-        //                            information._relatedDirectionOfFirstDirection = regionEdge._direction;
-        //                        }
-        //                        else 
-        //                        {
-        //                            information._turnDirection = TurnDirection.FirstDirection;
-        //                            WaypointEdge currentEdge =
-        //                                GetWaypointEdgeInRegion(currentRegionID,
-        //                                                        currentWaypointID,
-        //                                                        nextWaypointID,
-        //                                                        avoidConnectionTypes);
-        //                            information._connectionType = currentEdge._connectionType;
-        //                            information._relatedDirectionOfFirstDirection = currentEdge._direction;
-        //                            information._distance = System.Convert
-        //                                                    .ToInt32(currentEdge._distance);
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        // previousWaypoint and currentWaypoint are on the same floor
-        //                        RegionEdge prevEdge =
-        //                            GetRegionEdgeMostNearSourceWaypoint(previousRegionID,
-        //                                                                previousWaypointID,
-        //                                                                currentRegionID,
-        //                                                                avoidConnectionTypes);
-        //                        CardinalDirection prevEdgeDirection = prevEdge._direction;
-
-        //                        RegionEdge currentEdge =
-        //                            GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
-        //                                                                currentWaypointID,
-        //                                                                nextRegionID,
-        //                                                                avoidConnectionTypes);
-        //                        CardinalDirection currentEdgeDirection = currentEdge._direction;
-
-        //                        int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
-        //                        int currentDirection =
-        //                            System.Convert.ToInt32(currentEdgeDirection);
-
-        //                        if (currentDirection - prevDirection >= 0)
-        //                        {
-        //                            information._turnDirection =
-        //                                (TurnDirection)(currentDirection - prevDirection);
-        //                        }
-        //                        else
-        //                        {
-        //                            information._turnDirection =
-        //                                (TurnDirection)(currentDirection - prevDirection + 8);
-        //                        }
-        //                        information._connectionType = currentEdge._connectionType;
-        //                        information._distance =
-        //                            System.Convert.ToInt32(currentEdge._distance);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    // previousWaypoint and currentWaypoint are in the same region
-        //                    WaypointEdge prevEdge =
-        //                        GetWaypointEdgeInRegion(previousRegionID,
-        //                                                previousWaypointID,
-        //                                                currentWaypointID,
-        //                                                avoidConnectionTypes);
-        //                    CardinalDirection prevEdgeDirection = prevEdge._direction;
-
-        //                    RegionEdge currentEdge =
-        //                        GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
-        //                                                            currentWaypointID,
-        //                                                            nextRegionID,
-        //                                                            avoidConnectionTypes);
-        //                    CardinalDirection currentEdgeDirection = currentEdge._direction;
-
-        //                    int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
-        //                    int currentDirection = System.Convert.ToInt32(currentEdgeDirection);
-
-        //                    if (currentDirection - prevDirection >= 0)
-        //                    {
-        //                        information._turnDirection =
-        //                            (TurnDirection)(currentDirection - prevDirection);
-        //                    }
-        //                    else
-        //                    {
-        //                        information._turnDirection =
-        //                            (TurnDirection)(currentDirection - prevDirection + 8);
-        //                    }
-        //                    information._connectionType = currentEdge._connectionType;
-        //                    information._distance =
-        //                        System.Convert.ToInt32(currentEdge._distance);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //inital step
-        //        if(currentNavigationStep == 0) 
-        //        {
-        //            // first waypoint from the beginning
-        //            // need to refine the turndirection in this case
-        //            information._turnDirection = TurnDirection.FirstDirection;
-
-        //            WaypointEdge currentEdge = 
-        //                GetWaypointEdgeInRegion(currentRegionID,
-        //                                        currentWaypointID,
-        //                                        nextWaypointID,
-        //                                        avoidConnectionTypes);
-        //            information._connectionType = 
-        //                currentEdge._connectionType;
-
-        //            information._relatedDirectionOfFirstDirection = 
-        //                currentEdge._direction;
-        //            information._distance = 
-        //                Convert.ToInt32(currentEdge._distance);
-        //        }
-        //        else
-        //        {
-        //            if (isSameRegion(currentRegionID,previousRegionID)) 
-        //            {
-        //                if(!isSameFloor(previousRegionID, currentRegionID))
-        //                {
-        //                    information._turnDirection = 
-        //                        TurnDirection.FirstDirection;
-
-        //                    WaypointEdge currentEdge =
-        //                        GetWaypointEdgeInRegion(currentRegionID,
-        //                                                currentWaypointID,
-        //                                                nextWaypointID,
-        //                                                avoidConnectionTypes);
-        //                    information._connectionType = 
-        //                        currentEdge._connectionType;
-        //                    information._relatedDirectionOfFirstDirection = 
-        //                        currentEdge._direction;
-        //                    information._distance = System.Convert
-        //                                            .ToInt32
-        //                                            (currentEdge._distance);
-        //                }
-        //                else
-        //                {
-        //                    // previousWaypoint and currentWaypoint are on 
-        //                    // the same floor
-        //                    RegionEdge prevEdge =
-        //                        GetRegionEdgeMostNearSourceWaypoint
-        //                        (previousRegionID,
-        //                         previousWaypointID,
-        //                         currentRegionID,
-        //                         avoidConnectionTypes);
-
-        //                    CardinalDirection prevEdgeDirection = 
-        //                        prevEdge._direction;
-
-        //                    WaypointEdge currentEdge =
-        //                        GetWaypointEdgeInRegion(currentRegionID,
-        //                                                currentWaypointID,
-        //                                                nextWaypointID,
-        //                                                avoidConnectionTypes);
-
-        //                    CardinalDirection currentEdgeDirection = 
-        //                        currentEdge._direction;
-
-        //                    int prevDirection = 
-        //                        Convert.ToInt32(prevEdgeDirection);
-
-        //                    int currentDirection = 
-        //                        Convert.ToInt32(currentEdgeDirection);
-
-        //                    if (currentDirection - prevDirection >= 0)
-        //                    {
-        //                        information._turnDirection =
-        //                            (TurnDirection)
-        //                            (currentDirection - prevDirection);
-        //                    }
-        //                    else
-        //                    {
-        //                        information._turnDirection =
-        //                            (TurnDirection)
-        //                            (currentDirection - prevDirection + 8);
-        //                    }
-        //                    information._connectionType = 
-        //                        currentEdge._connectionType;
-        //                    information._distance =
-        //                        Convert.ToInt32(currentEdge._distance);
-        //                }
-        //            }
-        //            //normal case, same floor, same region.
-        //            else 
-        //            {
-        //                Console.WriteLine("previous = current case");
-        //                // currentWaypoint and nextWaypoint are in the same region
-        //                // previousWaypoint and currentWaypoint are in the same region
-
-        //                WaypointEdge prevEdge = 
-        //                    GetWaypointEdgeInRegion(previousRegionID,
-        //                                            previousWaypointID,
-        //                                            currentWaypointID,
-        //                                            avoidConnectionTypes);
-        //                CardinalDirection prevEdgeDirection = 
-        //                    prevEdge._direction;
-
-        //                WaypointEdge currentEdge =
-        //                    GetWaypointEdgeInRegion(currentRegionID,
-        //                                            currentWaypointID,
-        //                                            nextWaypointID,
-        //                                            avoidConnectionTypes);
-        //                CardinalDirection currentEdgeDirection = 
-        //                    currentEdge._direction;
-
-        //                int prevDirection = 
-        //                    Convert.ToInt32(prevEdgeDirection);
-
-        //                int currentDirection = 
-        //                    Convert.ToInt32(currentEdgeDirection);
-
-        //                if (currentDirection - prevDirection >= 0)
-        //                {
-        //                    information._turnDirection =
-        //                        (TurnDirection)
-        //                        (currentDirection - prevDirection);
-        //                }
-        //                else
-        //                {
-        //                    information._turnDirection =
-        //                        (TurnDirection)
-        //                        (currentDirection - prevDirection + 8);
-        //                }
-        //                information._connectionType = 
-        //                    currentEdge._connectionType;
-        //                information._distance = 
-        //                    Convert.ToInt32(currentEdge._distance);
-        //            }
-        //        }
-        //    }
-        //    return information;
-        //}
-
+        }       
 
         private TurnDirection GetTurnUpDownDirection(Guid region1, Guid region2)
         {
@@ -1338,7 +1015,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     instruction._regionName = _regions[nextRegionID]._name;
 
                     instruction._turnDirection = 
-                        GetTurnUpDownDirection(currentRegionID, nextRegionID);z`
+                        GetTurnUpDownDirection(currentRegionID, nextRegionID);
 
                     instruction._connectionType = 
                         currentEdge._connectionType;
@@ -1370,7 +1047,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         GetWaypointEdgeInRegion(nextRegionID,
                         nextWaypointID,
                         nextnextWaypointID,
-                        avoidConnectionTypes);
+                        avoidConnectionTypes).Item1;
 
                     Console.WriteLine("direction = " + nextWaypointEdge._direction);
                     Console.WriteLine("nextWaypoint ID = " + nextWaypointID);
@@ -1503,7 +1180,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                         GetWaypointEdgeInRegion(currentRegionID,
                                                                 currentWaypointID,
                                                                 nextWaypointID,
-                                                                avoidConnectionTypes);
+                                                                avoidConnectionTypes).Item1;
                                     information._connectionType = currentEdge._connectionType;
                                     information._relatedDirectionOfFirstDirection = currentEdge._direction;
 
@@ -1562,7 +1239,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 GetWaypointEdgeInRegion(previousRegionID,
                                                         previousWaypointID,
                                                         currentWaypointID,
-                                                        avoidConnectionTypes);
+                                                        avoidConnectionTypes).Item1;
                             CardinalDirection prevEdgeDirection = prevEdge._direction;
 
                             RegionEdge currentEdge =
@@ -1605,7 +1282,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     WaypointEdge currentEdge = GetWaypointEdgeInRegion(currentRegionID,
                                                                        currentWaypointID,
                                                                        nextWaypointID,
-                                                                       avoidConnectionTypes);
+                                                                       avoidConnectionTypes).Item1;
                     information._connectionType = currentEdge._connectionType;
                     information._relatedDirectionOfFirstDirection = currentEdge._direction;
                     information._distance = System.Convert
@@ -1631,7 +1308,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 GetWaypointEdgeInRegion(currentRegionID,
                                                         currentWaypointID,
                                                         nextWaypointID,
-                                                        avoidConnectionTypes);
+                                                        avoidConnectionTypes).Item1;
                             information._connectionType = currentEdge._connectionType;
                             information._relatedDirectionOfFirstDirection = currentEdge._direction;
                             information._distance = System.Convert
@@ -1651,7 +1328,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 GetWaypointEdgeInRegion(currentRegionID,
                                                         currentWaypointID,
                                                         nextWaypointID,
-                                                        avoidConnectionTypes);
+                                                        avoidConnectionTypes).Item1;
                             CardinalDirection currentEdgeDirection = currentEdge._direction;
 
                             int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
@@ -1678,18 +1355,20 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         // currentWaypoint and nextWaypoint are in the same region
                         // previousWaypoint and currentWaypoint are in the same region
 
-                        WaypointEdge prevEdge = GetWaypointEdgeInRegion(previousRegionID,
-                                                                        previousWaypointID,
-                                                                        currentWaypointID,
-                                                                        avoidConnectionTypes);
+                        WaypointEdge prevEdge = GetWaypointEdgeInRegion
+                            (previousRegionID,
+                             previousWaypointID,
+                             currentWaypointID,
+                             avoidConnectionTypes).Item1;
                         CardinalDirection prevEdgeDirection = prevEdge._direction;
                        
                         WaypointEdge currentEdge =
                             GetWaypointEdgeInRegion(currentRegionID,
-                                                    currentWaypointID,
-                                                    nextWaypointID,
-                                                    avoidConnectionTypes);
-                        CardinalDirection currentEdgeDirection = currentEdge._direction;
+                                                  currentWaypointID,
+                                                  nextWaypointID,
+                                                  avoidConnectionTypes).Item1;
+                        CardinalDirection currentEdgeDirection = 
+                            currentEdge._direction;
 
                         int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
                         int currentDirection = System.Convert.ToInt32(currentEdgeDirection);
@@ -1829,6 +1508,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         }
     }
 
+
+    #region Enums and Structures
     public struct InstructionInformation {
         public TurnDirection _turnDirection { get; set; }
         public TurnDirection _nextDirection { get; set; }
@@ -1837,6 +1518,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public int _floor { get; set; }
         public string _regionName { get; set; }
         public int _distance { get; set; }
+        public string _directionPicture { get; set; }
     }
 
     public enum LocationType
@@ -1862,6 +1544,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
     public enum TurnDirection
     {
+        Null= -2,  // for Portal type combination instruction.
         FirstDirection = -1, // Exception: used only in the first step
         Forward = 0,
         Forward_Right,
@@ -1872,8 +1555,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Left,
         Forward_Left,
         Up,
-        Down,
-        Null
+        Down
     }
 
     public enum IPSType
@@ -1922,4 +1604,5 @@ namespace IndoorNavigation.Models.NavigaionLayer
         DecisionWaypoint,
         IgnoreWaypoint
     }
+    #endregion
 }
