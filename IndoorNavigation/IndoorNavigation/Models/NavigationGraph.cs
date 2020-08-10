@@ -1301,17 +1301,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
             ConnectionType[] avoidConnectionTypes,
             bool flag)
         {
+            Console.WriteLine("nextnext = {0}, {1}", nextnextRegionID, nextnextWaypointID);
             InstructionInformation instruction = new InstructionInformation();
             // to show instruction "please take elevator to 2F"
             if (flag)
             {
-                instruction._turnDirection = 
+                instruction._turnDirection =
                     GetTurnUpDownDirection(nextRegionID, nextnextRegionID);
 
                 RegionEdge currentEdge =
-                    GetRegionEdgeMostNearSourceWaypoint(nextRegionID, 
-                    nextWaypointID, 
-                    nextnextRegionID, 
+                    GetRegionEdgeMostNearSourceWaypoint(nextRegionID,
+                    nextWaypointID,
+                    nextnextRegionID,
                     avoidConnectionTypes);
                 instruction._connectionType = currentEdge._connectionType;
                 instruction._distance = Convert.ToInt32(currentEdge._distance);
@@ -1324,42 +1325,65 @@ namespace IndoorNavigation.Models.NavigaionLayer
             //to show instruction "please take elevator to 2F then turn right"
             else
             {
-                instruction._regionName =
-                   _regions[nextRegionID]._name;
-                #region To get elevator edge instructions first
-                instruction._turnDirection =
-                    GetTurnUpDownDirection(currentRegionID, nextRegionID);                
+                if (isEmptyGuid(nextnextWaypointID) &&
+                    isEmptyGuid(nextnextRegionID))
+                {
+                    Console.WriteLine("nextnext is null");
+                    RegionEdge currentEdge = 
+                        GetRegionEdgeMostNearSourceWaypoint(currentRegionID, 
+                        currentWaypointID, 
+                        nextRegionID, 
+                        avoidConnectionTypes);
 
-                RegionEdge currentRegionEdge =
-                    GetRegionEdgeMostNearSourceWaypoint(currentRegionID, 
-                    currentWaypointID, 
-                    nextRegionID, 
-                    avoidConnectionTypes);
+                    instruction._regionName = _regions[nextRegionID]._name;
 
-                instruction._connectionType = currentRegionEdge._connectionType;
-                instruction._distance = 
-                    Convert.ToInt32(currentRegionEdge._distance);
-                #endregion
+                    instruction._turnDirection = 
+                        GetTurnUpDownDirection(currentRegionID, nextRegionID);z`
 
-                #region Get the instruction after leaving the elevator.               
-                instruction._nextDirection = TurnDirection.FirstDirection;
-                WaypointEdge nextWaypointEdge =
-                    GetWaypointEdgeInRegion(nextRegionID,
-                    nextWaypointID,
-                    nextnextWaypointID,
-                    avoidConnectionTypes);
+                    instruction._connectionType = 
+                        currentEdge._connectionType;
+                    instruction._nextDirection = TurnDirection.Null;
 
-                Console.WriteLine("direction = " + nextWaypointEdge._direction);
-                Console.WriteLine("nextWaypoint ID = " + nextWaypointID);
-                Console.WriteLine("nextnextWaypoint ID = " + nextnextWaypointID);
-                instruction._relatedDirectionOfFirstDirection = 
-                    nextWaypointEdge._direction;
+                    return instruction;
+                }
+                else {
+                    instruction._regionName =
+                       _regions[nextRegionID]._name;
+                    #region To get elevator edge instructions first
+                    instruction._turnDirection =
+                        GetTurnUpDownDirection(currentRegionID, nextRegionID);
 
-                instruction._distance = 
-                    Convert.ToInt32(nextWaypointEdge._distance);
-                #endregion
+                    RegionEdge currentRegionEdge =
+                        GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
+                        currentWaypointID,
+                        nextRegionID,
+                        avoidConnectionTypes);
 
-                return instruction;
+                    instruction._connectionType = currentRegionEdge._connectionType;
+                    instruction._distance =
+                        Convert.ToInt32(currentRegionEdge._distance);
+                    #endregion
+
+                    #region Get the instruction after leaving the elevator.               
+                    instruction._nextDirection = TurnDirection.FirstDirection;
+                    WaypointEdge nextWaypointEdge =
+                        GetWaypointEdgeInRegion(nextRegionID,
+                        nextWaypointID,
+                        nextnextWaypointID,
+                        avoidConnectionTypes);
+
+                    Console.WriteLine("direction = " + nextWaypointEdge._direction);
+                    Console.WriteLine("nextWaypoint ID = " + nextWaypointID);
+                    Console.WriteLine("nextnextWaypoint ID = " + nextnextWaypointID);
+                    instruction._relatedDirectionOfFirstDirection =
+                        nextWaypointEdge._direction;
+
+                    instruction._distance =
+                        Convert.ToInt32(nextWaypointEdge._distance);
+                    #endregion
+
+                    return instruction;
+                } 
             }
             
         }
@@ -1416,6 +1440,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 if (!isSameFloor(currentRegionID, nextRegionID))
                 {
+                    Console.WriteLine("2F escalator to 1F elevator case");
                     return GetCombineInstruction(
                         currentRegionID,
                         currentWaypointID,
