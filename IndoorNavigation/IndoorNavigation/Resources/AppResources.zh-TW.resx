@@ -699,4 +699,11 @@
   <data name="UPDATE_STRING" xml:space="preserve">
     <value>更新</value>
   </data>
+  <data name="DIRECTION_DOWN_COMBINE_DIRECTION_STRING" xml:space="preserve">
+    <value>{0}下樓{1}前往{2},{3}然後{4},{5}直走約{6}公尺</value>
+    <comment>{搭手扶梯}下樓{\n}前往{1樓}{\n}然後{右轉}{\n}直走約{24}公尺</comment>
+  </data>
+  <data name="DIRECTION_UP_COMBINE_DIRECTION_STRING" xml:space="preserve">
+    <value>{0}上樓{1}前往{2},{3}然後{4},{5}直走約{6}公尺</value>
+  </data>
 </root>

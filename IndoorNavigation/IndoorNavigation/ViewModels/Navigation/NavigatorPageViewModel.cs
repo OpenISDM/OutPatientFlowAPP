@@ -295,7 +295,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                                     out int location,
                                     out int instructionValue)
         {
-            //var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
+            Console.WriteLine("PictureDirection = " + 
+                instruction._information._directionPicture);
             string connectionTypeString = "";
             string nextWaypointName = instruction._nextWaypointName;
             InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
@@ -823,8 +824,38 @@ namespace IndoorNavigation.ViewModels.Navigation
                         }
 
 
-                        return string.Format(DownOrUp, connectionType, Environment.NewLine, nextRegionName) + string.Format(_resourceManager.GetString("DIRECTION_INITIAIL_CROSS_REGION_STRING",currentLanguage),instructionDirection,
-                            Environment.NewLine, Environment.NewLine, instruction._information._distance);
+                        if (instruction._information._turnDirection == TurnDirection.Up)
+                        {
+                            return string.Format(_resourceManager
+                                .GetString
+                                ("DIRECTION_UP_COMBINE_DIRECTION_STRING"
+                                , currentLanguage),
+                                 connectionType,
+                                 Environment.NewLine,
+                                 nextRegionName,
+                                 Environment.NewLine,
+                                 instructionDirection,
+                                 Environment.NewLine,
+                                 instruction._information._distance
+                                );
+                        }
+                        else
+                        {
+                            return string.Format(_resourceManager
+                                .GetString
+                                ("DIRECTION_DOWN_COMBINE_DIRECTION_STRING",
+                                currentLanguage),
+                                connectionType,
+                                Environment.NewLine,
+                                nextRegionName,
+                                Environment.NewLine,
+                                instructionDirection,
+                                Environment.NewLine,
+                                instruction._information._distance);
+                        }
+
+                        //return string.Format(DownOrUp, connectionType, Environment.NewLine, nextRegionName) + string.Format(_resourceManager.GetString("DIRECTION_INITIAIL_CROSS_REGION_STRING", currentLanguage), instructionDirection,
+                        //    Environment.NewLine, Environment.NewLine, instruction._information._distance);
                         //return string.Format("搭手扶梯到一樓後，請背向手扶梯後向右轉，並直走約20公尺");
                     }
                 default:

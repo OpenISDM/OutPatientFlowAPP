@@ -699,4 +699,14 @@
   <data name="UPDATE_STRING" xml:space="preserve">
     <value>update</value>
   </data>
+  <data name="DIRECTION_DOWN_COMBINE_DIRECTION_STRING" xml:space="preserve">
+    <value>Take {0} go downstairs{1}to{2}.{3}Then{4},{5}and go straight about {6} m.</value>
+    <comment>Take {Escalator} go downstairs{\n}to {1F}{\n}Then {turn right}{\n}and go straight about {24} m</comment>
+  </data>
+  <data name="DIRECTION_UP_COMBINE_DIRECTION_STRING" xml:space="preserve">
+    <value>Take {0} go upstairs{1}to{2}.{3}Then{4},{5}and go straight about {6} m.</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
 </root>
