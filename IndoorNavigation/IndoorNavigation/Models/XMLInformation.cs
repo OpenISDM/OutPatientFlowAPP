@@ -48,19 +48,35 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private string _buildingName;
         public XMLInformation(XmlDocument fileName)
         {
-            XmlNode buildingName =fileName.SelectSingleNode("navigation_graph");
-            XmlElement buildingElement = (XmlElement)buildingName;
-            _buildingName = buildingElement.GetAttribute("building_name");
+            XmlNode buildingName =
+                fileName.SelectSingleNode("navigation_graph");
 
-            XmlNodeList xmlRegion = fileName.SelectNodes("navigation_graph/regions/region");
-            XmlNodeList xmlWaypoint = fileName.SelectNodes("navigation_graph/waypoints/waypoint");
-            returnWaypointName = new Dictionary<Guid, string>();
-            returnRegionName = new Dictionary<Guid, string>();
+            XmlElement buildingElement = 
+                (XmlElement)buildingName;
+
+            _buildingName = 
+                buildingElement.GetAttribute("building_name");
+
+            XmlNodeList xmlRegion = 
+                fileName.SelectNodes("navigation_graph/regions/region");
+
+            XmlNodeList xmlWaypoint = 
+                fileName.SelectNodes("navigation_graph/waypoints/waypoint");
+
+            returnWaypointName = 
+                new Dictionary<Guid, string>();
+
+            returnRegionName = 
+                new Dictionary<Guid, string>();
+
             foreach (XmlNode xmlNode in xmlRegion)
             {
                 string name = "";
-                Guid RegionGuid = new Guid();
-                XmlElement xmlElement = (XmlElement)xmlNode;
+                Guid RegionGuid = 
+                    new Guid();
+                XmlElement xmlElement = 
+                    (XmlElement)xmlNode;
+
                 name = xmlElement.GetAttribute("name").ToString();
                 RegionGuid = new Guid(xmlElement.GetAttribute("id"));
                 returnRegionName.Add(RegionGuid,name);
