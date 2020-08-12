@@ -9,6 +9,8 @@ namespace IndoorNavigation.iOS
     {
         public bool DoesImageExist(string image)
         {
+            if (string.IsNullOrEmpty(image)) return false;
+
             var x = UIImage.FromBundle(image);
             return x != null;
         }

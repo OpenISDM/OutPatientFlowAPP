@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 using Android.App;
 using IndoorNavigation.Droid;
 using IndoorNavigation.Models;
@@ -11,13 +12,17 @@ namespace IndoorNavigation.Droid
     {
         public bool DoesImageExist(string image)
         {
+            if (string.IsNullOrEmpty(image)) return false;
+
             var context = Android.App.Application.Context;
             var resources = context.Resources;
             var name = Path.GetFileNameWithoutExtension(image);
-            int resourceID = resources.GetIdentifier(name.ToLower(), "drawable",
+           
+            int resourceId = 
+                resources.GetIdentifier(name.ToLower(), "drawable", 
                 context.PackageName);
 
-            return resourceID != 0;
+            return resourceId != 0;
         }
     }
 }
