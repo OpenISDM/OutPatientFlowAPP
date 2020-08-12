@@ -49,22 +49,38 @@
       <waypoint id="00000000-0000-0000-0000-000000000012" name="耳鼻喉科" type="terminal" lat="23.9631567777" lon="120.5669559999" category="Clinics"/>
       <waypoint id="00000000-0000-0000-0000-000000000013" name="兒科" type="terminal" lat="23.962990472222" lon="120.5669559999" category="Clinics"/>
       
-      <edge node1="00000000-0000-0000-0000-000000000001" node2="00000000-0000-0000-0000-000000000002" bi_direction="2" source="" direction="2" picture12="123" pictrue21="456" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000002" node2="00000000-0000-0000-0000-000000000003" bi_direction="2" source="" direction="4" picture12="789" pictrue21="1111" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000003" node2="00000000-0000-0000-0000-000000000004" bi_direction="2" source="" direction="2" picture12="2222" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000003" node2="00000000-0000-0000-0000-000000000006" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000001" node2="00000000-0000-0000-0000-000000000002" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000002" node2="00000000-0000-0000-0000-000000000003" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000003" node2="00000000-0000-0000-0000-000000000004" bi_direction="2" source="" direction="2" picture12="CCH11100304" pictrue21="CCH11100403" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000003" node2="00000000-0000-0000-0000-000000000006" bi_direction="2" source="" direction="4" picture12="CCH11100306" pictrue21="CCH11100603" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000004" node2="00000000-0000-0000-0000-000000000005" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000005" node2="00000000-0000-0000-0000-000000000008" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-000000000007" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-000000000009" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-000000000009" bi_direction="2" source="" direction="4" picture12="CCH11100609" pictrue21="CCH11100906" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000007" node2="00000000-0000-0000-0000-000000000008" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000007" node2="00000000-0000-0000-0000-000000000010" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000004" node2="00000000-0000-0000-0000-000000000007" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000008" node2="00000000-0000-0000-0000-000000000011" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-000000000010" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-000000000013" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-000000000013" bi_direction="2" source="" direction="4" picture12="CCH11100913" pictrue21="CCH11101309" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000010" node2="00000000-0000-0000-0000-000000000011" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000012" node2="00000000-0000-0000-0000-000000000013" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <beacons beacon_numbers="13">
         <beacon uuid="00000014-0000-0000-5200-000000017500" waypoint_ids="00000000-0000-0000-0000-000000000001" threshold="-55"/>
         <beacon uuid="00000014-0000-0000-7500-000000016700" waypoint_ids="00000000-0000-0000-0000-000000000002" threshold="-55"/>
@@ -89,13 +105,21 @@
       <waypoint id="00000000-0000-0000-0000-000000000017" name="手扶梯" type="portal" lat="23.962368833333" lon="120.567259999999" category="Others"/>
       <waypoint id="00000000-0000-0000-0000-000000000018" name="手扶梯" type="portal" lat="23.962584305555" lon="120.567176444444" category="Others"/>
       <waypoint id="00000000-0000-0000-0000-000000000019" name="領藥處" type="terminal" lat="23.962368833333" lon="120.567176444444" category="Pharmacy"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000014" node2="00000000-0000-0000-0000-000000000015" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000015" node2="00000000-0000-0000-0000-000000000028" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000028" node2="00000000-0000-0000-0000-000000000016" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000015" node2="00000000-0000-0000-0000-000000000028" bi_direction="2" source="" direction="4" picture12="CCH22201528" pictrue21="CCH22201528" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000028" node2="00000000-0000-0000-0000-000000000016" bi_direction="2" source="" direction="4" picture12="CCH22202816" pictrue21="CCH22201628" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-000000000017" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000017" node2="00000000-0000-0000-0000-000000000019" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000018" node2="00000000-0000-0000-0000-000000000019" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <beacons beacon_numbers="7">
         <beacon uuid="00000015-0000-0000-5900-000000017500" waypoint_ids="00000000-0000-0000-0000-000000000014" threshold="-55"/>
         <beacon uuid="00000015-0000-0000-5900-000000015800" waypoint_ids="00000000-0000-0000-0000-000000000015" threshold="-55"/>
@@ -116,20 +140,33 @@
       <waypoint id="00000000-0000-0000-0000-000000000026" name="2F批價掛號櫃台" type="terminal" lat="23.962826111" lon="120.5670988611" category="Cashier"/>
       <waypoint id="00000000-0000-0000-0000-000000000027" name="眼科" type="terminal" lat="23.9627333222" lon="120.5670988611" category="Clinics"/>
       <waypoint id="00000000-0000-0000-0000-000000000029" name="放射區" type="terminal" lat="23.9629125" lon="120.5674171944" category="ExaminationRoom"/>
-      <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000021" bi_direction="2" source="" direction="2" picture12="aaaaa" pictrue21="bbbbb" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000023" bi_direction="2" source="" direction="4" picture12="ddddd" pictrue21="ccccc" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000021" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000023" bi_direction="2" source="" direction="4" picture12="CCH33302023" pictrue21="CCH33302320" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000029" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000029" node2="00000000-0000-0000-0000-000000000021" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000029" node2="00000000-0000-0000-0000-000000000023" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000022" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000022" bi_direction="2" source="" direction="2" picture12="CCH33302122" pictrue21="CCH33302221" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="4" picture12="CCH33302124" pictrue21="CCH33302421" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-000000000025" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000023" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-000000000025" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-000000000025" bi_direction="2" source="" direction="2" picture12="CCH33302425" pictrue21="CCH33302524" connection_type="NormalHallway"/>
+      
+      <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="CCH33302426" pictrue21="CCH33302624" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-000000000027" bi_direction="2" source="" direction="4" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000026" node2="00000000-0000-0000-0000-000000000027" bi_direction="2" source="" direction="2" picture12="" pictrue21="" connection_type="NormalHallway"/>
+      
       <beacons beacon_numbers="9">
         <beacon uuid="00000016-0000-0000-9300-000000016000" waypoint_ids="00000000-0000-0000-0000-000000000020;00000000-0000-0000-0000-000000000029" threshold="-53"/>
         <beacon uuid="00000016-0000-0001-3100-000000015300" waypoint_ids="00000000-0000-0000-0000-000000000021" threshold="-53"/>
