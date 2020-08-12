@@ -72,6 +72,11 @@ namespace IndoorNavigation.Models
         NavigationEvent _event { get; }
     }
 
+    public interface IImageChecker
+    {
+        bool DoesImageExist(string image);
+    }
+
     public interface IQrCodeDecoder
     {
         Task<string> ScanAsync();
