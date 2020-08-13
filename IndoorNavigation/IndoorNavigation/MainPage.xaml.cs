@@ -135,28 +135,8 @@ namespace IndoorNavigation
         private CloudDownload _download = new CloudDownload();
 
         async void SettingBtn_Clicked(object sender, EventArgs e)
-        {
-            //await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-            //setting = DependencyService.Get<INetworkSetting>();
-            //bool Connectable = await setting.CheckInternetConnect();
-
-            //if (Connectable)
-            //{
-            //    //it will be a xml format
-            //    string SupportList = _download.Download(_download.getSupportListUrl());
-            //    Console.WriteLine("SupporList context : " + SupportList);                
-            //    if (!string.IsNullOrEmpty(SupportList))
-            //    {
-            //        XmlDocument doc = new XmlDocument();
-            //        doc.LoadXml(SupportList);
-            //        Dictionary<string, GraphInfo> SupportListDict = Storage.GraphInfoReader(doc);
-            //        _serverResources = SupportListDict;
-            //    }
-            //}
-
+        {            
             await Navigation.PushAsync(new SettingTableViewPage());
-
-            //await PopupNavigation.Instance.PopAllAsync();
         }
         
         async private void CheckVersionAndUpdate(Location location, 
@@ -265,8 +245,15 @@ namespace IndoorNavigation
                     Storage.LoadNavigationGraphXml(location.sourcePath);
 
                 //this place will implement the check server side resource.
+                //if(CheckVersionNumber(location.sourcePath, 
+                //    navigationGraph.GetVersion(), 
+                //    AccessGraphOperate.CheckLocalVersion))
+                //{
+                //    bool WantToUpdate = await DisplayAlert("info", "有更新版本，是否要更新?", "是", "否");
 
-                CheckVersionAndUpdate(location, navigationGraph);               
+                //    if (WantToUpdate) EmbeddedGenerateFile(location.sourcePath);
+                //}
+                CheckVersionAndUpdate(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;
