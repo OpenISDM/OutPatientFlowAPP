@@ -44,6 +44,7 @@
  *
  */
 
+using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Resources.Helpers;
@@ -100,7 +101,13 @@ namespace IndoorNavigation.ViewModels.Navigation
         private string _destinationWaypointName;
         private string _progressBar;
         private double _navigationProgress;
-        private LayoutOptions _instructionLabVerticalOption;
+        private LayoutOptions _instructionLabVerticalOption;       
+        private bool _stepImageIsVisible;
+
+        private int _fdPictureHeightScaleValue;
+        private int _fdPictureHeightSpanValue;
+        private int _instructionWidthScaleValue;
+        private int _instructionWidthSpanValue;
         #endregion
 
         public NavigatorPageViewModel(string navigationGraphName,
@@ -110,12 +117,20 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       XMLInformation informationXML)
 
         {
+            Console.WriteLine(">> NavigatorPageViewModel constructor");
             _firsrDirectionInstructionScaleVale = 1;
             _destinationID = destinationWaypointID;
             DestinationWaypointName = destinationWaypointName;
             CurrentStepImage = "waittingscan.gif";
             isPlaying = true;
+            StepImgIsVisible = true;
             InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
+
+            FDPictureHeightScaleValue = 2;
+            FDPictureHeightSpanValue = 3;
+            InstructionWidthScaleValue = 1;
+            InstructionWidthSpanValue = 2;
+            InstructionLocationValue = 1;
 
             _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
@@ -124,7 +139,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                                                      destinationRegionID,
                                                      destinationWaypointID);
             _navigationModule._event._eventHandler += GetNavigationResultEvent;
-            const string resourceId = "IndoorNavigation.Resources.AppResources";
+            const string resourceId = 
+                "IndoorNavigation.Resources.AppResources";
+
             _resourceManager =
                 new ResourceManager(resourceId,
                                     typeof(TranslateExtension)
@@ -140,7 +157,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             _navigationGraph = Storage.LoadNavigationGraphXml(navigationGraphName);
 
             _xmlInformation = informationXML;
-
+            Console.WriteLine("<< NavigatorPageViewModel constructor");
         }
 
         public void Stop()
@@ -171,7 +188,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             switch ((args as Session.NavigationEventArgs)._result)
             {
                 case NavigationResult.Run:
-                    {
+                    {                        
                         SetInstruction(instruction,
                                        out currentStepLabel,
                                        out currentStepImage,
@@ -181,10 +198,10 @@ namespace IndoorNavigation.ViewModels.Navigation
                                        out instructionScale);
                         CurrentStepLabel = currentStepLabel;
                         CurrentStepImage = currentStepImage + ".png";
-                        FirstDirectionPicture = firstDirectionPicture;
-                        InstructionLocationValue = locationValue;
+                        FirstDirectionPicture = firstDirectionPicture;                        
                         RotationValue = rotationValue;
                         InstructionScaleValue = instructionScale;
+                        InstructionLocationValue = locationValue;
                         isPlaying = false;
                         CurrentWaypointName =
                             _xmlInformation.GiveWaypointName(instruction
@@ -298,8 +315,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             Console.WriteLine("PictureDirection = " + 
                 instruction._information._directionPicture);
             string connectionTypeString = "";
+            StepImgIsVisible = true;
             string nextWaypointName = instruction._nextWaypointName;
-            InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
             nextWaypointName =
                 _xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
             string nextRegionName = instruction._information._regionName;
@@ -309,8 +326,45 @@ namespace IndoorNavigation.ViewModels.Navigation
             stepImage = "";
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
+
+            #region  For Layout Changed
+            FDPictureHeightScaleValue = 2;
+            FDPictureHeightSpanValue = 3;
+            InstructionWidthScaleValue = 1;
+            InstructionWidthSpanValue = 2;
+            #endregion
+
+            IImageChecker checker = DependencyService.Get<IImageChecker>();
+
             //nextRegionName =
             //    _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
+
+            if (checker.DoesImageExist
+                (instruction._information._directionPicture))
+            {
+                Console.WriteLine(">> direction picture is not null");
+
+                #region Layout Binding
+                location = 1;
+                FDPictureHeightScaleValue = 1;
+                FDPictureHeightSpanValue = 4;
+                InstructionWidthScaleValue = 0;
+                InstructionWidthSpanValue = 3;
+                //InstructionLabVerticalOption = LayoutOptions.StartAndExpand;
+                #endregion
+
+                StepImgIsVisible = false;
+                stepLabel = 
+                    "請依循圖片方向前進.";
+
+                stepImage = 
+                    null;
+
+                firstDirectionImage = 
+                    instruction._information._directionPicture;
+
+                return;
+            }
             switch (instruction._information._turnDirection)
             {
 
@@ -895,6 +949,27 @@ namespace IndoorNavigation.ViewModels.Navigation
             });
         }
 
+        public int FDPictureHeightSpanValue
+        {
+            get { return _fdPictureHeightSpanValue; }
+            set { SetProperty(ref _fdPictureHeightSpanValue, value); }
+        }
+        public int FDPictureHeightScaleValue
+        {
+            get { return _fdPictureHeightScaleValue; }
+            set { SetProperty(ref _fdPictureHeightScaleValue, value); }
+        }
+        public int InstructionWidthSpanValue
+        {
+            get { return _instructionWidthSpanValue; }
+            set { SetProperty(ref _instructionWidthSpanValue, value); }
+        }
+        public int InstructionWidthScaleValue
+        {
+            get { return _instructionWidthScaleValue; }
+            set { SetProperty(ref _instructionWidthScaleValue, value); }
+        }
+
         public LayoutOptions InstructionLabVerticalOption
         {
             get { return _instructionLabVerticalOption; }
@@ -978,9 +1053,14 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             get
             {
-                //Console.WriteLine("first Direction picture = " + _firstDirectionPicture);
-                return string.Format("{0}.png", _firstDirectionPicture);
-                //return _firstDirectiionPicture;
+                if (!string.IsNullOrEmpty(_firstDirectionPicture) &&
+                    _firstDirectionPicture.EndsWith(".jpg"))
+                    return _firstDirectionPicture;
+                else if (!string.IsNullOrEmpty(_firstDirectionPicture) &&
+                    _firstDirectionPicture.EndsWith(".png"))
+
+                    return _firstDirectionPicture;
+                return string.Format("{0}.png", _firstDirectionPicture);                
             }
 
             set
@@ -1048,6 +1128,12 @@ namespace IndoorNavigation.ViewModels.Navigation
             {
                 SetProperty(ref _navigationProgress, value);
             }
+        }
+
+        public bool StepImgIsVisible
+        {
+            get { return _stepImageIsVisible; }
+            set { SetProperty(ref _stepImageIsVisible, value); }
         }
         #endregion
 

@@ -92,14 +92,16 @@
                 <Image x:Name="InstructionImg" 
                        Grid.Row="0" Grid.Column="0" 
                        Grid.RowSpan="2" 
+                       IsVisible="{Binding StepImgIsVisible}"
                        Source="{Binding CurrentStepImage}" 
                        IsAnimationPlaying="{Binding isPlaying}"/>
 
                 <Label x:Name="InstructionLab" 
                        Text="{Binding CurrentStepLabel}" 
-                       Grid.Row="0" Grid.Column="1" 
+                       Grid.Row="0"  
                        Grid.RowSpan="{Binding InstructionLocationValue}" 
-                       Grid.ColumnSpan="2" 
+                       Grid.Column="{Binding InstructionWidthScaleValue}"
+                       Grid.ColumnSpan="{Binding InstructionWidthSpanValue}" 
                        LineBreakMode="WordWrap" FontSize="28" 
                        VerticalOptions="{Binding InstructionLabVerticalOption}" 
                        HorizontalOptions="FillAndExpand" 
@@ -118,8 +120,8 @@
                 <Label x:Name="ProgressTextValue" Text="{Binding ProgressBar}" HorizontalOptions="EndAndExpand" FontSize="Large"
                        Grid.Row="4" Grid.Column="2" />
 
-                <Image x:Name="FirstDirectionImg" Source="{Binding FirstDirectionPicture}" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" 
-                       VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="Fill"/>
+                <Image x:Name="FirstDirectionImg" Source="{Binding FirstDirectionPicture}" Grid.Row="{Binding FDPictureHeightScaleValue}" Grid.RowSpan="{Binding FDPictureHeightSpanValue}" Grid.Column="0" Grid.ColumnSpan="3" 
+                        Aspect="Fill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
 
 
                 <Button x:Name="FinishButton" Text="{i18n:Translate RETURN_STRING}"

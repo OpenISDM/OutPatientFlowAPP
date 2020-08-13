@@ -70,7 +70,7 @@ namespace IndoorNavigation.Views.Navigation
                                                     destinationRegionID,
                                                     destinationWaypointID,
                                                     destinationWaypointName,
-                                                    informationXML);
+                                                    informationXML);    
             BindingContext = _viewModel;
 
             Console.WriteLine("<< NavigatorPage constructor");
@@ -82,12 +82,7 @@ namespace IndoorNavigation.Views.Navigation
 
             base.OnDisappearing();
         }
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            //CurrentInstructionImage.Source = "waittingscan.gif";
-            //_viewModel.CurrentStepImage = "waittingscan.gif";
-        }
+       
         async private void FinishButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
