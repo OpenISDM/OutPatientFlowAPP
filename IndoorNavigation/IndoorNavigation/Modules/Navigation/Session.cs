@@ -85,7 +85,7 @@ namespace IndoorNavigation.Modules
             new Dictionary<Guid, Region>();
 
         private IPSModules _iPSModules;
-        private const int _tooCLoseDistance = 1;
+        private const int _tooCLoseDistance = 8;
 
         #region wait for test variable
         private bool _DetectWrongWaypoint = true;
