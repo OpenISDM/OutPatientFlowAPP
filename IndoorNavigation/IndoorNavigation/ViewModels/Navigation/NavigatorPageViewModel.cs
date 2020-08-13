@@ -350,12 +350,12 @@ namespace IndoorNavigation.ViewModels.Navigation
                 FDPictureHeightSpanValue = 4;
                 InstructionWidthScaleValue = 0;
                 InstructionWidthSpanValue = 3;
-                //InstructionLabVerticalOption = LayoutOptions.StartAndExpand;
                 #endregion
 
                 StepImgIsVisible = false;
-                stepLabel = 
-                    "請依循圖片方向前進.";
+                stepLabel =
+                    _resourceManager
+                    .GetString("PLEASE_FOLLOW_PICTURE_STRING",currentLanguage);
 
                 stepImage = 
                     null;

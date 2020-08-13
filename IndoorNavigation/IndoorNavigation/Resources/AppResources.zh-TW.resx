@@ -706,4 +706,7 @@
   <data name="DIRECTION_UP_COMBINE_DIRECTION_STRING" xml:space="preserve">
     <value>{0}上樓{1}前往{2},{3}然後{4},{5}直走約{6}公尺</value>
   </data>
+  <data name="PLEASE_FOLLOW_PICTURE_STRING" xml:space="preserve">
+    <value>請朝著圖片方向前進</value>
+  </data>
 </root>
