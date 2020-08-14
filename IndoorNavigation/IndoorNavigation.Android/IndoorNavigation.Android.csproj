@@ -289,8 +289,6 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable\login_icon_navigation.png" />
-    <AndroidResource Include="Resources\drawable\splash_screen.jpg" />
-    <AndroidResource Include="Resources\drawable\splash_screen_3.jpg" />
     <AndroidResource Include="Resources\drawable\splash_screen_2.jpg" />
     <AndroidResource Include="Resources\drawable\tracking_button.png" />
     <AndroidResource Include="Resources\drawable\navigation_button.png" />
@@ -535,6 +533,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\CCH33302624.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_screen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="_ResolveSatellitePaths" DependsOnTargets="_ResolveAssemblies">
