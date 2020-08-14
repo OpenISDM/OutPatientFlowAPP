@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+    <ImageView
+        android:id="@+id/LogoImg"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon"/>
+    <TextView
+        android:id="@+id/AppNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="#616265"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/LogoImg"
+        android:layout_marginTop="110dp"
+        android:textSize="36dp"
+        android:text="Seeing-I-Go"/>
+    <TextView
+        android:id="@+id/SloganText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#616265"        
+        android:layout_alignTop="@+id/AppNameText"
+        android:layout_marginTop="45dp"
+        android:text="Bring you to everywhere"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/IncorpoNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#616265"
+        android:text="©2020 BiDaE Technology, Incorporated"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true" 
+        />
+</RelativeLayout>

@@ -128,6 +128,7 @@
     <Compile Include="Services\TableSource.cs" />
     <Compile Include="TextToSpeech.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
+    <InterfaceDefinition Include="SplashScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

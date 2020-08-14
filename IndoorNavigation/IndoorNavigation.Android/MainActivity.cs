@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace IndoorNavigation.Droid
 {
-    [Activity(Label = "帶路機", Icon = "@mipmap/icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "帶路機", Icon = "@mipmap/icon", /*Theme = "@style/splashscreen", MainLauncher = true, */ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
