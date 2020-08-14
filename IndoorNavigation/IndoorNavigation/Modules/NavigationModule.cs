@@ -126,8 +126,18 @@ namespace IndoorNavigation.Modules
             _event.OnEventCall(args);
         }
 
-        public void Stop() {
+        public void onStop() {
             _session.CloseSession();
+        }
+
+        public void onPause()
+        {
+            _session.PauseSession();
+        }
+
+        public void onResume()
+        {
+            _session.ResumeSession();
         }
 
         #region IDisposable Support

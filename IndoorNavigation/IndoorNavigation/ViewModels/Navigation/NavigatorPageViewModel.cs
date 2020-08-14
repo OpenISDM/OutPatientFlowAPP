@@ -163,7 +163,17 @@ namespace IndoorNavigation.ViewModels.Navigation
         public void Stop()
         {
 
-            _navigationModule.Stop();
+            _navigationModule.onStop();
+        }
+
+        public void onPause()
+        {
+            _navigationModule.onPause();
+        }
+
+        public void onResume()
+        {
+            _navigationModule.onResume();
         }
 
         /// <summary>

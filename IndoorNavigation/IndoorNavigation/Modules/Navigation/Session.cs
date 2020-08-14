@@ -50,6 +50,7 @@ namespace IndoorNavigation.Modules
 {
     public class Session
     {
+        #region Attributes and Objects
         private int _nextWaypointStep;
 
         private List<RegionWaypointPoint> _waypointsOnRoute =
@@ -57,7 +58,8 @@ namespace IndoorNavigation.Modules
 
         private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
             _waypointsOnWrongWay =
-                new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+                new Dictionary<RegionWaypointPoint,
+                    List<RegionWaypointPoint>>();
 
         private Graph<Guid, string> _graphRegionGraph =
             new Graph<Guid, string>();
@@ -81,7 +83,11 @@ namespace IndoorNavigation.Modules
         private ManualResetEventSlim _nextWaypointEvent =
             new ManualResetEventSlim(false);
 
+        private ManualResetEventSlim _pauseThreadEvent =
+            new ManualResetEventSlim(true);
+
         public NavigationEvent _event { get; private set; }
+
         private Dictionary<Guid, Region> _regiongraphs =
             new Dictionary<Guid, Region>();
 
@@ -92,6 +98,7 @@ namespace IndoorNavigation.Modules
         private int TmpCurrentProgress = 0;
         private int TmpTotalProgress = 0;
         private bool _DetectWrongWaypoint = true;
+        #endregion
         #endregion
 
         public Session(NavigationGraph navigationGraph,
@@ -152,7 +159,7 @@ namespace IndoorNavigation.Modules
                    !(_currentRegionID.Equals(_destinationRegionID) &&
                      _currentWaypointID.Equals(_destinationWaypointID)))
             {
-
+                _pauseThreadEvent.Wait();
                 Console.WriteLine("Continue to navigate to next step, current" +
                                 "location {0}/{1}",
                                   _currentRegionID, _currentWaypointID);
@@ -404,6 +411,7 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("---- InvokeIPSWork ----");
             while (true == _isKeepDetection)
             {
+                _pauseThreadEvent.Wait();
                 Thread.Sleep(500);
                 _iPSModules.OpenBeconScanning();
             }
@@ -1394,24 +1402,32 @@ namespace IndoorNavigation.Modules
 
         public void PauseSession()
         {
+            Console.WriteLine(">>Pause Session");
+            _pauseThreadEvent.Reset();
+        }
 
+        public void ResumeSession()
+        {
+            Console.WriteLine(">>ResumeSession");
+            _pauseThreadEvent.Set();
+            _nextWaypointEvent.Reset();
         }
 
         public void CloseSession()
         {
             _isKeepDetection = false;
             _nextWaypointStep = -1;
+
+
             _iPSModules.Close();
-            //_IPSClient.Stop();
             _nextWaypointEvent.Dispose();
+            _pauseThreadEvent.Dispose();
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
-            _waypointsOnWrongWay =
-                new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
-
-            _waypointsOnRoute = new List<RegionWaypointPoint>();
-
-            _iPSModules._event._eventHandler -= new EventHandler(CheckArrivedWaypoint);
+            _waypointsOnWrongWay.Clear();
+            _waypointsOnRoute.Clear();
+            _iPSModules._event._eventHandler -= 
+                new EventHandler(CheckArrivedWaypoint);
         }
 
         #region define class and enum

@@ -62,7 +62,11 @@ namespace IndoorNavigation.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
-        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+
+        App xamarinApp = new App();
+
+        public override bool FinishedLaunching(UIApplication app, 
+            NSDictionary options)
         {
             Rg.Plugins.Popup.Popup.Init();
 
@@ -72,11 +76,19 @@ namespace IndoorNavigation.iOS
             AiForms.Renderers.iOS.SettingsViewInit.Init();
             AiForms.Effects.iOS.Effects.Init();
 
-            LoadApplication(new App());
+            LoadApplication(xamarinApp);
+
             app.StatusBarStyle = UIStatusBarStyle.LightContent;
             Plugin.InputKit.Platforms.iOS.Config.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void WillTerminate(UIApplication uiApplication)
+        {
+            base.WillTerminate(uiApplication);
+
+            xamarinApp.OnStop();
         }
     }
 }

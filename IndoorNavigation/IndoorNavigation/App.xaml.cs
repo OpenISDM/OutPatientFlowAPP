@@ -113,21 +113,7 @@ namespace IndoorNavigation
 
             MainPage = 
                 new NavigationPage(new MainPage() as CustomToolbarContentPage);
-        }
-
-        //async private void CheckNetwork()
-        //{
-        //    if(!(Connectivity.NetworkAccess == NetworkAccess.Internet))
-        //    {
-        //        Console.WriteLine("There is no network.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("I have network lol.");
-        //        return;
-        //    }
-        //}
-
+        }        
 
         async private void LoadSupportList()
         {
@@ -177,29 +163,14 @@ namespace IndoorNavigation
             Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
 
-            OPPA_TmperorayStatus.RestoreAllState();
-            //RestoreAllState();
-            //var second = TimeSpan.FromSeconds(1);
-            //Xamarin.Forms.Device.StartTimer(second, () =>
-            //{
-            //    CheckNetwork();
-            //    return true;
-            //});
-            //Stopwatch sw = new Stopwatch();
-            //sw.Reset();
-
-            //sw.Start();
-            LoadSupportList();
-            //sw.Stop();
-
-            //Console.WriteLine("Download the support List time : " + sw.Elapsed.TotalSeconds.ToString());
+            OPPA_TmperorayStatus.RestoreAllState();            
+            LoadSupportList();            
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
             Console.WriteLine(">>OnSleep");
-            //StoreAllState();
             OPPA_TmperorayStatus.StoreAllState();
             base.OnSleep();
         }
@@ -209,11 +180,8 @@ namespace IndoorNavigation
             // Handle when your app resumes
             Console.WriteLine(">>OnResume");
             base.OnResume();
-
-            isResume = true;
         }
 
-        // This is for Android for onDestroy.
         // If we don't implement it, the thread will not be destroyed and stuck
         // here.
         public void OnStop()

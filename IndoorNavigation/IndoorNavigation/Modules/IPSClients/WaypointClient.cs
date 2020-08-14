@@ -140,9 +140,9 @@ namespace IndoorNavigation.Modules.IPSClients
                         {
                             if (beacon.UUID.Equals(beaconGuid))
                             {
-                                Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
-                                waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
-                                beaconGuid);
+                                //Console.WriteLine("Matched waypoint: {0} by detected Beacon {1}",
+                                //waypointBeaconsMapping._WaypointIDAndRegionID._waypointID,
+                                //beaconGuid);
                                 if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
                                 {
                                     watch.Stop();
@@ -167,10 +167,10 @@ namespace IndoorNavigation.Modules.IPSClients
             IEnumerable<BeaconSignalModel> signals =
             (e as BeaconScanEventArgs)._signals;
 
-            foreach (BeaconSignalModel signal in signals)
-            {
-                Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
-            }
+            //foreach (BeaconSignalModel signal in signals)
+            //{
+            //    Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
+            //}
 
             lock (_bufferLock)
                 _beaconSignalBuffer.AddRange(signals);

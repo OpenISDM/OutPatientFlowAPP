@@ -16,6 +16,8 @@ namespace IndoorNavigation.Droid
     {
         internal static MainActivity Instance { get; private set; }
 
+        App xamarinApp;
+
         protected override void OnCreate(Bundle bundle)
         {
             Instance = this;
@@ -37,11 +39,7 @@ namespace IndoorNavigation.Droid
                     Manifest.Permission.WriteExternalStorage
                 }, 0);
             }
-
-            //if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
-            //{
-            //    ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.WriteExternalStorage }, 0);
-            //}
+            
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
@@ -51,7 +49,10 @@ namespace IndoorNavigation.Droid
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
-            LoadApplication(new App());
+
+            xamarinApp = new App();
+            LoadApplication(xamarinApp);
+
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
 
             //Finish();
@@ -75,6 +76,12 @@ namespace IndoorNavigation.Droid
 
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void OnStop()
+        {
+            xamarinApp.OnStop();
+            base.OnStop();
         }
     }
 }
