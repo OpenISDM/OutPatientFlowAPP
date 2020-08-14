@@ -289,7 +289,7 @@ namespace IndoorNavigation.Modules
                                 _currentRegionID, _currentWaypointID,
                                 _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
                                 _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
-                                new Guid(),
+                                new Guid(), 
                                 new Guid(),
                                 _avoidConnectionTypes
                             );
@@ -740,9 +740,9 @@ namespace IndoorNavigation.Modules
             #endregion
 
             #region For Calculate progress 
-            TmpTotalProgress = 
-                _waypointsOnRoute.Count + TmpCurrentProgress - 
-                TmpTotalProgress;
+            TmpTotalProgress = _waypointsOnRoute.Count + TmpCurrentProgress;
+                //_waypointsOnRoute.Count + TmpCurrentProgress - 
+                //TmpTotalProgress;
             #endregion
 
             #region Display Result
@@ -991,8 +991,12 @@ namespace IndoorNavigation.Modules
                     {
                         tempProgress = 0;
                     }
-                    navigationInstruction._progressBar = tempProgress + " / "
-                                                         + tempProgress;
+                    //navigationInstruction._progressBar = tempProgress + " / "
+                    //                                     + tempProgress;
+                    navigationInstruction._progressBar =
+                        string.Format("{0}/{1}", TmpTotalProgress,
+                        TmpTotalProgress);
+
                     _accumulateStraightDistance = 0;
                     _event.OnEventCall(new NavigationEventArgs
                     {
@@ -1008,8 +1012,11 @@ namespace IndoorNavigation.Modules
                     _currentWaypointID.Equals(_destinationWaypointID))
                 {
                     int tempProgress = _waypointsOnRoute.Count() - 1;
-                    navigationInstruction._progressBar = tempProgress + " / "
-                                                        + tempProgress;
+                    //navigationInstruction._progressBar = tempProgress + " / "
+                    //                                    + tempProgress;
+                    navigationInstruction._progressBar =
+                        string.Format("{0}/{1}", TmpTotalProgress, 
+                        TmpTotalProgress);
                     Console.WriteLine("---- [case: arrived destination] .... ");
                     _accumulateStraightDistance = 0;
 
