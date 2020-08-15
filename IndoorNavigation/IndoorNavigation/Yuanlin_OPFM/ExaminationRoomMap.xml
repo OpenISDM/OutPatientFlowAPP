@@ -51,6 +51,28 @@
   <Department name='眼科' floor=''>
     <Destination name='' displayname='' region_id='' waypoionnt_id=''/>
   </Department>-->
+  <OtherDestination>   
+    <Department name='Cashier and Register'>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+    </Department>    
+    <Departement name='Pharmacy'>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+    </Departement>
+    <Department name='Exit'>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+      <Destination name='' displayname='' region_id=''
+                   waypoint_id=''/>
+    </Department>
+  </OtherDestination> 
    <Clinics>
     <Department name='3F各科門診' floor='3F'>
         <Destination name='麻醉評估 - 301診' displayname='麻醉科' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' 

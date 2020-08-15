@@ -574,6 +574,16 @@ namespace IndoorNavigation.Views.OPFM
 
             return false;
         }
+
+        private void ListviewItem_Delete(object sender, EventArgs args)
+        {
+            var item = (RgRecord)((MenuItem)sender).CommandParameter;
+
+            if(item != null && app.records.Contains(item))
+            {
+                app.records.Remove(item);
+            }
+        }
         async private void ShiftBtn_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;

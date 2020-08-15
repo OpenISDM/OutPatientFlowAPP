@@ -128,6 +128,10 @@
                             <On Platform="iOS" Value="90"/>
                         </OnPlatform> 
                     </ViewCell.Height>
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="ListviewItem_Delete" CommandParameter="{Binding .}"
+                                  Text="Delete" IsDestructive="True"/>
+                    </ViewCell.ContextActions>
                     <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <StackLayout Margin="10,5,10,5">
                         <Grid>
@@ -174,6 +178,10 @@
             </DataTemplate>
             <DataTemplate x:Key="_NotComplete">
                 <ViewCell Height="60" Tapped="ViewCell_Tapped">
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="ListviewItem_Delete" CommandParameter="{Binding .}"
+                                  Text="Delete" IsDestructive="True"/>
+                    </ViewCell.ContextActions>
                     <StackLayout BackgroundColor="{Binding selectedGroupColor}">
                         <Grid Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
                             <Grid.ColumnDefinitions>

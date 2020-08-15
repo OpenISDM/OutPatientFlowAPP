@@ -55,6 +55,7 @@ using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
+using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
