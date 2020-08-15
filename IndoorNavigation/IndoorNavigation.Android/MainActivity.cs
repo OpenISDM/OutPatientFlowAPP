@@ -15,45 +15,46 @@ namespace IndoorNavigation.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
-
+        
         App xamarinApp;
 
         protected override void OnCreate(Bundle bundle)
         {
             Instance = this;
             //show splash screen
-            base.Window.RequestFeature(WindowFeatures.ActionBar);
-            Thread.Sleep(600);
+            //base.Window.RequestFeature(WindowFeatures.ActionBar);
+            //Thread.Sleep(600);
 
             base.SetTheme(Resource.Style.MainTheme);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-           
+
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
             {
-                ActivityCompat.RequestPermissions(this, new String[] { 
-                    Manifest.Permission.AccessCoarseLocation, 
+                ActivityCompat.RequestPermissions(this, new String[] {
+                    Manifest.Permission.AccessCoarseLocation,
                     Manifest.Permission.AccessFineLocation,
                     Manifest.Permission.WriteExternalStorage
                 }, 0);
             }
-            
+
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Rg.Plugins.Popup.Popup.Init(this, bundle);
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(this.Application);
 
+            global::Xamarin.Forms.Forms.Init(this, bundle);
             xamarinApp = new App();
             LoadApplication(xamarinApp);
 
-            Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
+            //Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 0, 160, 204));
 
             //Finish();
         }

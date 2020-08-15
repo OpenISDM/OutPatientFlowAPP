@@ -112,7 +112,7 @@ namespace IndoorNavigation
             }
 
             MainPage = 
-                new NavigationPage(new MainPage() as CustomToolbarContentPage);
+                new NavigationPage(new MainPage());
         }        
 
         async private void LoadSupportList()

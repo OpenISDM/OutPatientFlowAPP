@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace IndoorNavigation.Droid
 {
     [Activity(Theme = "@android:style/Theme.NoTitleBar", MainLauncher = true, 
-        Immersive = true, ScreenOrientation = ScreenOrientation.Portrait)]
+        NoHistory =true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class splashscreenActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
