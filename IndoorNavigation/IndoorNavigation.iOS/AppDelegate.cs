@@ -63,7 +63,7 @@ namespace IndoorNavigation.iOS
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
 
-        App xamarinApp = new App();
+        App xamarinApp; //= new App();
 
         public override bool FinishedLaunching(UIApplication app, 
             NSDictionary options)
@@ -75,7 +75,7 @@ namespace IndoorNavigation.iOS
 
             AiForms.Renderers.iOS.SettingsViewInit.Init();
             AiForms.Effects.iOS.Effects.Init();
-
+            xamarinApp = new App();
             LoadApplication(xamarinApp);
 
             app.StatusBarStyle = UIStatusBarStyle.LightContent;

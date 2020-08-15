@@ -437,9 +437,11 @@ namespace IndoorNavigation
                         <AlertDialogPopupPage, bool>
                         (this, "WantRetryInAdd", async (msgSender, msgArgs) =>
                         {
-                            if((bool)msgArgs)
-                                await AddSiteItemMethod();                           
-
+                            if ((bool)msgArgs)
+                                await AddSiteItemMethod();
+                            else
+                                await PopupNavigation.Instance.
+                                RemovePageAsync(busyPopupPage);
                             MessagingCenter.Unsubscribe
                                     <AlertDialogPopupPage, bool>
                                     (this, "WantRetryInAdd");
