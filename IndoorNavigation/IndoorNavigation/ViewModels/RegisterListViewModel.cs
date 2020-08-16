@@ -86,6 +86,11 @@ namespace IndoorNavigation.ViewModels
             return _resourceManager.GetString(key, currentLanguage);
         }
 
+        async private void ShowSelectPurposePage()
+        {
+            //show select purpose page
+            throw new NotImplementedException();
+        }
     //    public async void CheckSignIn()
     //    {
     //        string IDnum = 

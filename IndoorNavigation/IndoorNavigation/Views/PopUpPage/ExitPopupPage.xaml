@@ -60,12 +60,14 @@
 							HorizontalOptions="FillAndExpand" 
 							Margin="10,0,10,0"
                             >
-                    <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="StartAndExpand" Margin="5,0,5,0"/>
-                    <!--<StackLayout Padding="5,0">
-                        <input:RadioButtonGroupView x:Name="ExitRadioGroup" HorizontalOptions="CenterAndExpand">
-                        </input:RadioButtonGroupView>
-                    </StackLayout>-->
+                    <input:RadioButtonGroupView x:Name="ExitRadioGroup" 
+                                                HorizontalOptions="StartAndExpand" 
+                                                Margin="5,0,5,0"/>
                 </ScrollView>
+                <!--<StackLayout Orientation="Horizontal">
+                    <Button x:Name="ExitCancel" IsVisible="false"/>
+                </StackLayout>-->
+                <!--<Button x:Name="ExitCancel" IsVisible="false"/>-->
                 <Button x:Name="ExitPopup" 
 						Text="{i18n:Translate OK_STRING}" 
 						Clicked="ExitPopup_Clicked"

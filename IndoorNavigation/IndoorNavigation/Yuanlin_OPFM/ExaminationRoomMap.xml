@@ -53,24 +53,24 @@
   </Department>-->
   <OtherDestination>   
     <Department name='Cashier and Register'>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
+      <Destination name='B1批價' displayname='B1批價' region_id='11111111-1111-1111-1111-111111111111'
+                   waypoint_id='00000000-0000-0000-0000-000000000004'/>
+      <Destination name='1F批價' displayname='1F批價' region_id='22222222-2222-2222-2222-222222222222'
+                   waypoint_id='00000000-0000-0000-0000-000000000016'/>
+      <Destination name='2F批價' displayname='B1批價' region_id='33333333-3333-3333-3333-333333333333'
+                   waypoint_id='00000000-0000-0000-0000-000000000026'/>
     </Department>    
     <Departement name='Pharmacy'>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
+      <Destination name='領藥處' displayname='領藥處' region_id='22222222-2222-2222-2222-222222222222'
+                   waypoint_id='00000000-0000-0000-0000-000000000019'/>
     </Departement>
     <Department name='Exit'>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
-      <Destination name='' displayname='' region_id=''
-                   waypoint_id=''/>
+      <Destination name='前門出口' displayname='前門出口' region_id='22222222-2222-2222-2222-222222222222'
+                   waypoint_id='00000000-0000-0000-0000-000000000018'/>
+      <Destination name='側門出口' displayname='側門出口' region_id='22222222-2222-2222-2222-222222222222'
+                   waypoint_id='00000000-0000-0000-0000-000000000014'/>
+      <Destination name='停車場梯廳' displayname='停車場梯廳' region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'
+                   waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'/>
     </Department>
   </OtherDestination> 
    <Clinics>

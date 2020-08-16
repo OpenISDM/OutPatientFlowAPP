@@ -261,8 +261,6 @@ namespace IndoorNavigation.Views.OPFM
                     }
 
                     #endregion
-                    Console.WriteLine("ggggggggggggggggg" + record._regionID);
-                    Console.WriteLine("fffffffffffffffff" + record._waypointName);
                     await Navigation.PushAsync
                         (new NavigatorPage(_navigationGraphName,
                                            record._regionID,
