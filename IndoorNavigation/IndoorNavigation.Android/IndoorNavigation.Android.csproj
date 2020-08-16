@@ -216,6 +216,10 @@
       <Generator>
       </Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\splash_screen.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\drawable\Taipei_City_Hall11100206.png">
       <SubType>
       </SubType>
@@ -534,9 +538,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\CCH33302624.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_screen.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\splashscreen.axml">
