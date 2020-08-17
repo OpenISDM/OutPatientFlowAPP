@@ -88,6 +88,14 @@ namespace IndoorNavigation.Modules.IPSClients
                     rssiOption = -2;
                 }
             }
+            if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
+            {
+                rssiOption =
+                    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+            }
+
+            Console.WriteLine("rssi option in ibeaconClient =" + rssiOption);
+
 
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._ibeaconScan.StartScan();
@@ -95,7 +103,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void DetectWaypoints()
         {
-    
+            Console.WriteLine(">>In DetectWaypoints IBeacon");
             List<BeaconSignalModel> removeSignalBuffer =
                 new List<BeaconSignalModel>();
             
@@ -266,6 +274,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     return;
                 }
             }
+            Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)

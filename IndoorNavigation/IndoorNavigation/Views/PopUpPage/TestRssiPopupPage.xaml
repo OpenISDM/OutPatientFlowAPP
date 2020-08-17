@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:inputkit ="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.PopUpPage.TestRssiPopupPage">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+            <Frame x:Name="AddFrame" 
+			       BackgroundColor="White" 			  
+			       CornerRadius="8"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="FillAndExpand" 
+                   Margin="15,0,15,0">
+                <StackLayout>
+                    <inputkit:AdvancedSlider x:Name="RSSIAdjustmentSlider"
+                                             MaxValue="20" 
+                                             MinValue="-20"
+                                             StepValue="1"
+                                             ValueSuffix="dbm"
+                                             Title="Choose your RSSI"
+                                             MaxValueSuffix="dbm"
+                                             MinValueSuffix="dbm"
+                                             TextColor="#3f51b5"/>
+
+                    <BoxView BackgroundColor="Transparent" HeightRequest="10"/>
+
+                    <StackLayout Orientation="Horizontal" 
+                                 HorizontalOptions="EndAndExpand"
+                                 VerticalOptions="EndAndExpand">
+                        <Button x:Name="CancelBtn" 
+                                Text="Cancel" 
+                                Clicked="CancelBtn_Clicked"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="EndAndExpand"
+                                TextColor="#3f51b5"
+                                BackgroundColor="White"/>
+
+                        <Button x:Name="ConfirmBtn" 
+                                Text="Confirm" 
+                                Clicked="ConfirmBtn_Clicked"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="EndAndExpand"
+                                TextColor="#3f51b5"
+                                BackgroundColor="White"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</pages:PopupPage>

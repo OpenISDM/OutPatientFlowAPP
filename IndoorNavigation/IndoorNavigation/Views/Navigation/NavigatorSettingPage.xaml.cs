@@ -42,8 +42,11 @@
  *
  */
 using IndoorNavigation.Resources.Helpers;
+using IndoorNavigation.Views.PopUpPage;
 using Plugin.Multilingual;
 using Prism.Commands;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -64,9 +67,7 @@ namespace IndoorNavigation.Views.Navigation
 		const string _resourceId = "IndoorNavigation.Resources.AppResources";
 		ResourceManager _resourceManager =
 			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        //Application.Current.Properties["StrongRssi"] = new object ();
-        //Application.Current.Properties["MediumRssi"] = new object ();
-        //Application.Current.Properties["WeakRssi"] = new object ();
+        
 		public NavigatorSettingPage()
         {
             InitializeComponent();
@@ -204,5 +205,11 @@ namespace IndoorNavigation.Views.Navigation
 
         }
 
+        async private void RssiPicker_Tapped(object sender, EventArgs e)
+        {
+            Console.WriteLine(">> Tapped RssiItem");
+
+            await PopupNavigation.Instance.PushAsync(new TestRssiPopupPage());
+        }
     }
 }

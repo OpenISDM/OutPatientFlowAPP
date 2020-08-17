@@ -91,6 +91,15 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
             }
 
+
+            if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
+            {
+                rssiOption =
+                    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+            }
+
+            Console.WriteLine("rssi option in LbeaconClient =" + rssiOption);
+
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._lbeaconScan.StartScan();
         }
@@ -99,7 +108,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         {
  
-            Console.WriteLine(">> In DetectWaypoints");
+            Console.WriteLine(">> In DetectWaypoints LBeacon");
             //Utility._beaconScan.StartScan();
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
@@ -116,8 +125,10 @@ namespace IndoorNavigation.Modules.IPSClients
                     watch.Stop();
                     watch.Reset();
                     watch.Start();
-                    Utility._ibeaconScan.StopScan();
-                    Utility._ibeaconScan.StartScan();
+                    Utility._lbeaconScan.StopScan();
+                    Utility._lbeaconScan.StartScan();
+                    //Utility._ibeaconScan.StopScan();
+                    //Utility._ibeaconScan.StartScan();
 
                 }
 
@@ -159,18 +170,13 @@ namespace IndoorNavigation.Modules.IPSClients
                     }
                 }
             }
-            Console.WriteLine("<< In DetectWaypoints");
+            Console.WriteLine("<< In DetectWaypoints LBeacon");
         }
 
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             IEnumerable<BeaconSignalModel> signals =
-            (e as BeaconScanEventArgs)._signals;
-
-            //foreach (BeaconSignalModel signal in signals)
-            //{
-            //    Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
-            //}
+            (e as BeaconScanEventArgs)._signals;          
 
             lock (_bufferLock)
                 _beaconSignalBuffer.AddRange(signals);

@@ -18,6 +18,13 @@ namespace IndoorNavigation.Utilities
             get => AppSettings.GetValueOrDefault(nameof(FinishCount), 0);
             set => AppSettings.AddOrUpdateValue(nameof(FinishCount), value);
         }
+
+        public static int RssiOption
+        {
+            get { return 
+                    AppSettings.GetValueOrDefault(nameof(RssiOption), 0); }
+            set { AppSettings.AddOrUpdateValue(nameof(RssiOption), 0); }
+        }
         public static bool isRigistered
         {
             get => AppSettings.GetValueOrDefault(nameof(isRigistered), false);

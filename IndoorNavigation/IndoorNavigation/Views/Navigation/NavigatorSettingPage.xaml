@@ -58,8 +58,15 @@
             </sv:Section>
             
             <sv:Section Title="{i18n:Translate RSSI_OPTION_STRING}">
-                <sv:TextPickerCell x:Name="OptionPicker" Title="{i18n:Translate RSSI_OPTION_STRING}" 
-                                   Items="{Binding _chooseRssi}" SelectedCommand="{Binding _changeRssiCommand}"/>
+                <sv:TextPickerCell x:Name="OptionPicker"
+                                   Title="{i18n:Translate RSSI_OPTION_STRING}" 
+                                   Items="{Binding _chooseRssi}" 
+                                   SelectedCommand=
+                                   "{Binding _changeRssiCommand}"/>
+                
+                <sv:TextPickerCell x:Name="RssiSlidePicker"
+                                   Title="{i18n:Translate TEST_STRING}"
+                                   Tapped="RssiPicker_Tapped"/>
             </sv:Section>
             
         </sv:SettingsView>
