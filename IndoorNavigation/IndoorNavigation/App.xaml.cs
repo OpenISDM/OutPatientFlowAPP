@@ -67,6 +67,7 @@ using IndoorNavigation.Modules.Utilities;
 using static IndoorNavigation.Utilities.Storage;
 using System.Xml;
 using System.Threading.Tasks;
+using System.Linq;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace IndoorNavigation
@@ -92,6 +93,7 @@ namespace IndoorNavigation
         #region for fix and new functions
         public bool isResume = false;
         public NavigatorPage _globalNavigatorPage = null;
+        private NavigationPage navigationPage;
         #endregion
         public int count = 0;
 
@@ -111,8 +113,9 @@ namespace IndoorNavigation
                 Current.Properties["LanguagePicker"] = "English";
             }
 
-            MainPage = 
-                new NavigationPage(new MainPage());
+            navigationPage = new NavigationPage(new MainPage());
+            MainPage =
+                navigationPage;
         }        
 
         async private void LoadSupportList()
@@ -171,6 +174,14 @@ namespace IndoorNavigation
         {
             // Handle when your app sleeps
             Console.WriteLine(">>OnSleep");
+            
+            if(_globalNavigatorPage != null &&
+                navigationPage.Navigation.NavigationStack.Last()
+                == _globalNavigatorPage)
+            {
+                _globalNavigatorPage.OnPause();
+            }
+
             OPPA_TmperorayStatus.StoreAllState();
             base.OnSleep();
         }
@@ -179,6 +190,16 @@ namespace IndoorNavigation
         {
             // Handle when your app resumes
             Console.WriteLine(">>OnResume");
+            Console.WriteLine("current page == navigatorpage :" +
+                (navigationPage.Navigation.NavigationStack.Last() == 
+                _globalNavigatorPage));
+
+            if(_globalNavigatorPage!= null && 
+                navigationPage.Navigation.NavigationStack.Last() ==
+                _globalNavigatorPage)
+            {
+                _globalNavigatorPage.Resume();
+            }
             base.OnResume();
         }
 
@@ -190,7 +211,7 @@ namespace IndoorNavigation
             OnSleep();
             if (_globalNavigatorPage != null)
             {
-               // _globalNavigatorPage.Abort();
+                _globalNavigatorPage.OnStop();
             }
         }                     
     }

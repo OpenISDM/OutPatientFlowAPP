@@ -68,6 +68,7 @@ namespace IndoorNavigation.Views.Navigation
         public ResourceManager _resourceManager;
 
         public ObservableCollection<string> _items { get; set; }
+        private App app;
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
         private XMLInformation _nameInformation;
         public DestinationPickPage(string navigationGraphName, CategoryType category)
@@ -83,7 +84,8 @@ namespace IndoorNavigation.Views.Navigation
             PhoneInformation phoneInformation = new PhoneInformation();
             _navigationGraph = Storage.LoadNavigationGraphXml(_navigationGraphName);
             _nameInformation = Storage.LoadXmlInformation(_navigationGraphName);
-           
+            app = (App)Application.Current;
+
             NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
 
             foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
@@ -128,13 +130,21 @@ namespace IndoorNavigation.Views.Navigation
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
+                app._globalNavigatorPage = 
+                    new NavigatorPage(_navigationGraphName,
+                                      destination._regionID,
+                                      destination._waypointID,
+                                      destination._waypointName,
+                                      _nameInformation);
 
-                await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                                                             destination._regionID,
-                                                             destination._waypointID,
-                                                             destination._waypointName,
-                                                             _nameInformation
-                                                             ));
+
+                await Navigation.PushAsync(app._globalNavigatorPage);
+                //await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+                //                                             destination._regionID,
+                //                                             destination._waypointID,
+                //                                             destination._waypointName,
+                //                                             _nameInformation
+                //                                             ));
             }
 
             //Deselect Item

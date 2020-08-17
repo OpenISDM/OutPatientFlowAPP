@@ -79,11 +79,11 @@ namespace IndoorNavigation.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override void OnStop()
+        protected override void OnDestroy()
         {
             xamarinApp.OnStop();
-            base.OnStop();
-        }
+            base.OnDestroy();
+        }      
     }
 }
 

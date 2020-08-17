@@ -203,12 +203,22 @@ namespace IndoorNavigation.Views.OPFM
                             if ((bool)MsgArgs)
                             {
                                 await PopupNavigation.Instance.PopAllAsync();
+
+                                app._globalNavigatorPage = 
+                                    new NavigatorPage(
+                                        _navigationGraphName,
+                                        record._regionID,
+                                        record._waypointID,
+                                        record._waypointName,
+                                        _nameInformation);
                                 await Navigation.PushAsync
-                                    (new NavigatorPage(_navigationGraphName,
-                                               record._regionID,
-                                               record._waypointID,
-                                               record._waypointName,
-                                            _nameInformation));
+                                    (app._globalNavigatorPage);
+                                //await Navigation.PushAsync
+                                //    (new NavigatorPage(_navigationGraphName,
+                                //               record._regionID,
+                                //               record._waypointID,
+                                //               record._waypointName,
+                                //            _nameInformation));
                                 record.isComplete = true;
                             }
                             else
@@ -261,13 +271,20 @@ namespace IndoorNavigation.Views.OPFM
                     }
 
                     #endregion
-                    await Navigation.PushAsync
-                        (new NavigatorPage(_navigationGraphName,
+                    app._globalNavigatorPage =
+                        new NavigatorPage(_navigationGraphName,
                                            record._regionID,
                                            record._waypointID,
                                            record._waypointName,
-                                           _nameInformation)
-                        );
+                                           _nameInformation);
+                    await Navigation.PushAsync(app._globalNavigatorPage);
+                    //await Navigation.PushAsync
+                    //    (new NavigatorPage(_navigationGraphName,
+                    //                       record._regionID,
+                    //                       record._waypointID,
+                    //                       record._waypointName,
+                    //                       _nameInformation)
+                    //    );
                     record.isComplete = true;
                 }
 

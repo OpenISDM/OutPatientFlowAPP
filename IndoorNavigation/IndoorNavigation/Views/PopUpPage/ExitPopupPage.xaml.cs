@@ -56,6 +56,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
+using System.Net.Http.Headers;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -196,7 +197,14 @@ namespace IndoorNavigation.Views.PopUpPage
                         DptName = radioName,
                         order=order
                     });
-                    await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, ExitItems[radioName]._regionID, ExitItems[radioName]._waypointID, radioName, _nameInformation)); ;
+                    app._globalNavigatorPage = 
+                        new NavigatorPage(_navigationGraphName, 
+                        ExitItems[radioName]._regionID, 
+                        ExitItems[radioName]._waypointID, 
+                        radioName, 
+                        _nameInformation);
+                    await Navigation.PushAsync(app._globalNavigatorPage);
+                    //await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, ExitItems[radioName]._regionID, ExitItems[radioName]._waypointID, radioName, _nameInformation)); ;
                     await PopupNavigation.Instance.PopAsync();
                     return;
                 }

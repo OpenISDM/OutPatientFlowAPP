@@ -1403,25 +1403,52 @@ namespace IndoorNavigation.Modules
         public void PauseSession()
         {
             Console.WriteLine(">>Pause Session");
-            _pauseThreadEvent.Reset();
+            try
+            {
+                _pauseThreadEvent.Reset();
+                return;
+            }catch(Exception exc)
+            {
+                Console.WriteLine("_pauseThreadEvent error - " +
+                    exc.Message);
+                return;
+            }
         }
 
         public void ResumeSession()
         {
             Console.WriteLine(">>ResumeSession");
-            _pauseThreadEvent.Set();
-            _nextWaypointEvent.Reset();
+            try
+            {
+                _pauseThreadEvent.Set();
+                _nextWaypointEvent.Reset();
+                return;
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("ResuemSession error - " +
+                    exc.Message);
+                return;
+            }
         }
 
         public void CloseSession()
         {
+            try 
+            {
+                _nextWaypointEvent.Dispose();
+                _pauseThreadEvent.Dispose();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("CloseSession error - " +
+                    exc.Message);
+            }
+
             _isKeepDetection = false;
             _nextWaypointStep = -1;
-
-
             _iPSModules.Close();
-            _nextWaypointEvent.Dispose();
-            _pauseThreadEvent.Dispose();
+          
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
             _waypointsOnWrongWay.Clear();

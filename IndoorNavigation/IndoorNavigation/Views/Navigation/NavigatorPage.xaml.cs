@@ -75,16 +75,36 @@ namespace IndoorNavigation.Views.Navigation
 
             Console.WriteLine("<< NavigatorPage constructor");
         }  
+        //protected override void OnDisappearing()
+        //{
+        //    _viewModel.onPause();            
+        //    base.OnDisappearing();
+        //}
+        public void OnPause()
+        {
+            _viewModel.onPause();
+        }
+
         protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _viewModel.onPause();
+        }
+
+        public void Resume()
+        {
+            _viewModel.onResume();
+        }
+
+        public void OnStop()
         {
             _viewModel.Stop();
             _viewModel.Dispose();
-
-            base.OnDisappearing();
         }
-       
+
         async private void FinishButton_Clicked(object sender, EventArgs e)
         {
+            //_viewModel.Stop();
             await Navigation.PopAsync();
         }
     }

@@ -105,11 +105,17 @@ namespace IndoorNavigation.Views.PopUpPage
                 order = order++
             };
 
-            await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+            app._globalNavigatorPage = new NavigatorPage(_navigationGraphName,
                 record._regionID,
                 record._waypointID,
                 record._waypointName,
-                _XmlInfo));
+                _XmlInfo);
+            await Navigation.PushAsync(app._globalNavigatorPage);
+            //await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
+            //    record._regionID,
+            //    record._waypointID,
+            //    record._waypointName,
+            //    _XmlInfo));
             await PopupNavigation.Instance.PopAllAsync();
             app.records.Add(record);
             //app.records.Add(new RgRecord {type=RecordType.NULL});
