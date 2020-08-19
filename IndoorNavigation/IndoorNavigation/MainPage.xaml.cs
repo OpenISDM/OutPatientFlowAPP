@@ -460,6 +460,9 @@ namespace IndoorNavigation
             ToolbarItems.Clear();
             SettingCommand = new Command(async () =>await SettingItemMethod());
             AddSiteCommand = new Command(async () =>await AddSiteItemMethod());
+
+            TestItemCommand = new Command(async () => await TestItemMethod());
+
             ToolbarItem SettingItem = new ToolbarItem
             {
                 Text = 
@@ -476,8 +479,16 @@ namespace IndoorNavigation
                 Order = ToolbarItemOrder.Primary
             };
 
+            ToolbarItem TestToolbarItem = new ToolbarItem
+            {
+                Text = "Test",
+                Command = TestItemCommand,
+                Order = ToolbarItemOrder.Secondary
+            };
+
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
+            ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -508,5 +519,16 @@ namespace IndoorNavigation
         public override float TableWidth => 250;
         #endregion
 
+        #region TestItem 
+
+        public ICommand TestItemCommand { get; set; }
+
+        async private Task TestItemMethod()
+        {
+            await Navigation.PushAsync(new TestPage());
+            await Task.CompletedTask;
+        }
+
+        #endregion
     }
 }
