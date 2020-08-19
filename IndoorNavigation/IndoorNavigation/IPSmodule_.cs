@@ -7,7 +7,7 @@ using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.IPSClients;
 using Prism.Navigation.Xaml;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Modules
 {
     public class IPSmodule_ : IDisposable
     {
@@ -69,13 +69,15 @@ namespace IndoorNavigation
             }
         }        
 
-        // interface for Session to access to add
-        // the function is a little bit dumplicate.
-        public void AddMonitorWaypoint(Guid regionID, Guid waypointID)
+        // interface for Session to access IPSmodule.
+        // Maybe we can use it to control which IPStype need to open or close.
+        public void AddMonitorBeacon(Guid regionID, Guid waypointID)
         {
             IPSType type = _navigationGraph.GetRegionIPSType(regionID);
 
             AddMonitorBeaconList(type, regionID, new List<Guid> {waypointID});
+
+            OpenIPSClint(type);
         }
 
         private List<WaypointBeaconsMapping> GetBeaconWaypointMapping(
@@ -124,10 +126,7 @@ namespace IndoorNavigation
 
                 AddMonitorBeaconList(type, regionID, waypointIDs);
             }
-        }
-
-
-        
+        }        
 
         public void StartAllExistClient()
         {
@@ -144,16 +143,39 @@ namespace IndoorNavigation
             }
         }
 
+        private void CloseAllActiveClient()
+        {
+            Console.WriteLine(">>IPSmodule : CloseAllActiveClient ");
+
+            foreach(KeyValuePair<IPSType, IpsClient> pair in
+                _multiClients)
+            {
+                if (pair.Value.ContainType)
+                {
+                    pair.Value.ContainType = false;
+                    pair.Value._monitorMappings.Clear();
+                    pair.Value.client.Stop();
+                    pair.Value.client._event._eventHandler -=
+                        new EventHandler(PassMatchedWaypointEvent);
+                }
+            }
+
+            Console.WriteLine("<<IPSmodule : CloseAllActiveClient ");
+        }
         private void OpenIPSClint(IPSType type)
         {
-            _multiClients[type].client._event._eventHandler +=
-                new EventHandler(PassMatchedWaypointEvent);
-            _multiClients[type].ContainType = true;
+            if (!_multiClients[type].ContainType)
+            {
+                _multiClients[type].client._event._eventHandler +=
+                    new EventHandler(PassMatchedWaypointEvent);
+                _multiClients[type].ContainType = true;
+            }
         }
 
         public void PassMatchedWaypointEvent(Object sender, EventArgs args)
         {
-            CleanMappingBeaconList();
+            //CleanMappingBeaconList();
+            CloseAllActiveClient();
             _event.OnEventCall(new WaypointSignalEventArgs
             {
                 _detectedRegionWaypoint = (args as WaypointSignalEventArgs)
@@ -162,19 +184,24 @@ namespace IndoorNavigation
 
         }
 
-        public void CleanMappingBeaconList()
-        {
-            foreach(KeyValuePair<IPSType, IpsClient> pair in
-                _multiClients)
-            {
-                pair.Value._monitorMappings.Clear();
-            }
-        }
+        //public void CleanMappingBeaconList()
+        //{
+        //    foreach(KeyValuePair<IPSType, IpsClient> pair in
+        //        _multiClients)
+        //    {
+        //        pair.Value._monitorMappings.Clear();
+        //    }
+        //}
 
-        public void Close()
-        {
-
-        }
+        //public void Close()
+        //{
+        //    foreach(KeyValuePair<IPSType, IpsClient> pair in _multiClients)
+        //    {
+        //        pair.Value._monitorMappings.Clear();
+        //        pair.Value.client.Stop();
+        //        pair.Value.ContainType = false;
+        //    }
+        //}
 
         public class IpsClient
         {
