@@ -102,7 +102,13 @@
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="TestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Navigation\EditLocationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PopUpPage\AutoAdjustPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PopUpPage\DownloadSitePopupPage.xaml">
