@@ -50,14 +50,22 @@ namespace IndoorNavigation.Views.PopUpPage
             naviGraphName = _naviGraphName;
             _navigationGraph = LoadNavigationGraphXml(naviGraphName);
             _ipsModules = new IPSModules(_navigationGraph);
-            
 
+            _ipsModules._event._eventHandler +=
+                new EventHandler(StartToScanPosition);
         }
 
         //To know where user is.
-        private void StartToScanPosition()
+        private void StartToScanPosition(object sender, EventArgs args)
         {
 
+
+            //if get where user is then remove the delegate
+
+            _ipsModules._event._eventHandler -= 
+                new EventHandler(StartToScanPosition);
+
+            
         }
 
         //To scan current beacon rssi
