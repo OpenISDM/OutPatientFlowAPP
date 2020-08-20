@@ -6,6 +6,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.IPSClients;
 using Prism.Navigation.Xaml;
+using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules
 {
@@ -194,6 +195,12 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        public void SetRssiOption(int rssiOption)
+        {
+            Application.Current.Properties["RSSI_Test_Adjustment"] =
+                rssiOption;
+        }
+
         public void PassMatchedWaypointEvent(Object sender, EventArgs args)
         {
             Console.WriteLine(">>IPSmodule : PassMatchedWaypointEvent");
@@ -250,5 +257,24 @@ namespace IndoorNavigation.Modules
         {
             throw new NotImplementedException();
         }
+
+
+        #region  For Rssi auto adjustment
+
+        public void OpenRssiScaning() 
+        {
+
+        }
+
+        public void PassScanRssiValue(Object sender, EventArgs args)
+        {
+            Console.WriteLine(">> IPSmodule : Pass RssiResult");
+
+            _event.OnEventCall(new WaypointRssiEventArgs
+            {
+                _rssiOption = (args as WaypointRssiEventArgs)._rssiOption
+            }) ;
+        }
+        #endregion
     }
 }
