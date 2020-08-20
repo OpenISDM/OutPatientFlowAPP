@@ -18,6 +18,7 @@ namespace IndoorNavigation.Modules
         public NavigationEvent _event { get; private set; }
         public IPSmodule_(NavigationGraph navigationGraph)
         {
+            Console.WriteLine(">>IPSmodule : Constructor");
             _navigationGraph = navigationGraph;
 
             _multiClients = new Dictionary<IPSType, IpsClient>();
@@ -54,6 +55,7 @@ namespace IndoorNavigation.Modules
             Guid regionID,
             List<Guid> waypointIDs)
         {
+            Console.WriteLine(">>IPSmodule : AddMonittorBeaconList");
             try
             {
                 _multiClients[type].ContainType = true;
@@ -73,6 +75,7 @@ namespace IndoorNavigation.Modules
         // Maybe we can use it to control which IPStype need to open or close.
         public void AddMonitorBeacon(Guid regionID, Guid waypointID)
         {
+            Console.WriteLine("IPSmodule : AddMonitorBeacon ");
             IPSType type = _navigationGraph.GetRegionIPSType(regionID);
 
             AddMonitorBeaconList(type, regionID, new List<Guid> {waypointID});
@@ -83,6 +86,7 @@ namespace IndoorNavigation.Modules
         private List<WaypointBeaconsMapping> GetBeaconWaypointMapping(
             Guid regionID, List<Guid> waypointIDs)
         {
+            Console.WriteLine(">>IPSmodule : GetBeaconWaypointMapping");
             List<WaypointBeaconsMapping> BeaconWaypointMapping =
                 new List<WaypointBeaconsMapping>();
 
@@ -117,6 +121,7 @@ namespace IndoorNavigation.Modules
         }
         public void InitialStep_DetectAllBeacon(List<Guid> regionIDs)
         {
+            Console.WriteLine(">>IPSmoudle : InitialStep_DetectAllBeacon");
             foreach (Guid regionID in regionIDs)
             {
                 IPSType type = _navigationGraph.GetRegionIPSType(regionID);
@@ -130,6 +135,7 @@ namespace IndoorNavigation.Modules
 
         public void StartAllExistClient()
         {
+            Console.WriteLine(">>IPSmodule : StartAllExistClient");
             foreach (KeyValuePair<IPSType, IpsClient> pair in
                 _multiClients)
             {
@@ -164,6 +170,7 @@ namespace IndoorNavigation.Modules
         }
         private void OpenIPSClint(IPSType type)
         {
+            Console.WriteLine(">>IPSmodule : OpenIPSClint");
             if (!_multiClients[type].ContainType)
             {
                 _multiClients[type].client._event._eventHandler +=
@@ -172,8 +179,24 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        //To pass monitor beacon list to PS client.
+        public void SetMonitorBeaconList()
+        {
+            Console.WriteLine(">>IPSmodule : SetMonitorBeaconList");
+            foreach(KeyValuePair<IPSType, IpsClient> pair in _multiClients)
+            {
+                if (pair.Value.ContainType)
+                {
+                    pair.Value.client.SetWaypointList(
+                        pair.Value._monitorMappings
+                        );
+                }
+            }
+        }
+
         public void PassMatchedWaypointEvent(Object sender, EventArgs args)
         {
+            Console.WriteLine(">>IPSmodule : PassMatchedWaypointEvent");
             //CleanMappingBeaconList();
             CloseAllActiveClient();
             _event.OnEventCall(new WaypointSignalEventArgs
@@ -184,6 +207,18 @@ namespace IndoorNavigation.Modules
 
         }
 
+        public void OpenBeaconScanning()
+        {
+            Console.WriteLine("IPSmoudle : OpenBeaconScanning");
+
+            foreach(KeyValuePair<IPSType, IpsClient> pair in _multiClients)
+            {
+                if (pair.Value.ContainType)
+                {
+                    pair.Value.client.DetectWaypoints();
+                }
+            }
+        }
         //public void CleanMappingBeaconList()
         //{
         //    foreach(KeyValuePair<IPSType, IpsClient> pair in
