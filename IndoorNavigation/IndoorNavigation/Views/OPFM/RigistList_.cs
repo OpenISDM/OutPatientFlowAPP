@@ -39,20 +39,14 @@
 //        private Guid allF_Guid =
 //            new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
 
-//        Dictionary<Guid, DestinationItem> CashierPosition;
-//        Dictionary<Guid, DestinationItem> PharmacyPostition;
 //        Dictionary<Guid, DestinationItem> ElevatorPosition;
 //        //to prevent button multi-tap from causing error
 //        private bool isButtonPressed = false;
 //        private ViewCell lastCell = null;
 //        private bool ShiftButtonPressed = false;
 
-//        //private INetworkSetting NetworkSettings;
-
-//        //private YunalinHttpRequestFake FakeHISRequest;
 //        delegate void MulitItemFinish(RgRecord FinishRecord);
 //        MulitItemFinish _multiItemFinish;
-//        //private List<RgRecord> _shiftTmpRecords = null;
 //        private RgRecord _shiftTmpRecord = null;
 //        #endregion
 
@@ -264,8 +258,7 @@
 //                    }
 
 //                    #endregion
-//                    Console.WriteLine("ggggggggggggggggg" + record._regionID);
-//                    Console.WriteLine("fffffffffffffffff" + record._waypointName);
+
 //                    await Navigation.PushAsync
 //                        (new NavigatorPage(_navigationGraphName,
 //                                           record._regionID,
@@ -500,7 +493,6 @@
 //        /*to show popup page for add route to listview*/
 //        async private void AddBtn_Clicked(object sender, EventArgs e)
 //        {
-//            Console.WriteLine("isButtonPressed when tapped the button : " + isButtonPressed);
 //            if (isButtonPressed) return;
 
 //            isButtonPressed = true;
@@ -676,15 +668,7 @@
 //                    }
 //                }
 //                int index = app.records.IndexOf(FinishBtnClickItem);
-//                //for (int i = 0; i < app.records.Count; i++)
-//                //{
-//                //    if (!app.records[i].isAccept &&
-//                //        app.records[i].order == FinishBtnClickItem.order &&
-//                //        app.records[i]._groupID == app.records[i]._groupID)
-//                //    {
-//                //        return;
-//                //    }
-//                //}
+
 //                if (app.OrderDistrict.ContainsKey(FinishBtnClickItem._groupID))
 //                {
 //                    app.OrderDistrict[FinishBtnClickItem._groupID] = FinishBtnClickItem.order;
@@ -719,38 +703,38 @@
 //        #region  For Get Value
 //        public void LoadPositionData()
 //        {
-//            CashierPosition = new Dictionary<Guid, DestinationItem>();
-//            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+//            //CashierPosition = new Dictionary<Guid, DestinationItem>();
+//            //PharmacyPostition = new Dictionary<Guid, DestinationItem>();
 //            ElevatorPosition = new Dictionary<Guid, DestinationItem>();
-
+//            XmlDocument doc;
 //            #region Load Cashier and Pharmacy position
-//            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
-//            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
-//            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
-//            foreach (XmlNode node in CashiernodeList)
-//            {
-//                DestinationItem item = new DestinationItem();
+//            //XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+//            //XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
+//            //XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+//            //foreach (XmlNode node in CashiernodeList)
+//            //{
+//            //    DestinationItem item = new DestinationItem();
 
-//                item._regionID = new Guid(node.Attributes["region_id"].Value);
-//                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-//                item._floor = node.Attributes["floor"].Value;
-//                item._waypointName = node.Attributes["name"].Value;
+//            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
+//            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+//            //    item._floor = node.Attributes["floor"].Value;
+//            //    item._waypointName = node.Attributes["name"].Value;
 
-//                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
+//            //    Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
 
-//                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
-//            }
+//            //    CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+//            //}
 
-//            foreach (XmlNode node in PharmacyNodeList)
-//            {
-//                DestinationItem item = new DestinationItem();
-//                item._regionID = new Guid(node.Attributes["region_id"].Value);
-//                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-//                item._floor = node.Attributes["floor"].Value;
-//                item._waypointName = node.Attributes["name"].Value;
+//            //foreach (XmlNode node in PharmacyNodeList)
+//            //{
+//            //    DestinationItem item = new DestinationItem();
+//            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
+//            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+//            //    item._floor = node.Attributes["floor"].Value;
+//            //    item._waypointName = node.Attributes["name"].Value;
 
-//                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
-//            }
+//            //    PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
+//            //}
 //            #endregion
 
 //            #region Load Elevator
@@ -788,135 +772,6 @@
 //            list[j] = tmp;
 //            return;
 //        }
-//        #region group swap function
-//        //private void swap<T>(ref T i, ref T j)
-//        //{
-//        //    T tmp = i;
-//        //    i = j;
-//        //    j = tmp;
-//        //}
-
-
-//        //private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
-//        //{
-//        //    Console.WriteLine(">>Swap RgRecord");
-//        //    //List<T> records = new List<T>();
-//        //    Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
-//        //    if(first1 == last1 && first2 == last2)
-//        //    {
-//        //        swap(ref list, first1, first2);
-//        //    }
-//        //    else if ((first1 == last1 || first2 == last2))
-//        //    {
-//        //        //for ensure number 2 is one element.
-//        //        if (first1 == last1)
-//        //        {
-//        //            swap(ref first1, ref first2);
-//        //            swap(ref last1, ref last2);
-//        //        }
-//        //        bool isFirst = (first2 == 0);
-//        //        T tmpPosition = isFirst ? list[0] : ((first2 < list.Count - 1) ? list[first2 + 1] : list[first2]);                
-//        //        Console.WriteLine("TmpPosition = " + ((RgRecord)(object)tmpPosition).DptName);
-//        //        T tmp = list[first2];
-//        //        List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
-
-//        //        foreach (T t in tmperoryList)
-//        //        {
-//        //            Console.WriteLine("Temproray list : " + ((RgRecord)((object)t)).DptName);
-//        //        }
-//        //        list.RemoveAt(first2);
-
-
-//        //        list.Insert(first1, tmp);
-
-//        //        //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
-//        //        for (int i = 0; i < list.Count; i++)
-//        //        {
-//        //            for (int j = 0; j < tmperoryList.Count; j++)
-//        //            {
-//        //                if (list[i].Equals(tmperoryList[j]))
-//        //                {
-//        //                    list.RemoveAt(i);
-//        //                }
-//        //            }
-//        //        }
-//        //        foreach (T t in list)
-//        //        {
-//        //            Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
-//        //        }
-//        //        if (isFirst)
-//        //        {
-//        //            Console.WriteLine("is First position(index =0)");
-//        //            list.InsertRange(0, tmperoryList);                    
-//        //            foreach (T t in list)
-//        //            {
-//        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-//        //            }
-//        //        }
-//        //        else if (tmpPosition.Equals(tmp))
-//        //        {
-//        //            Console.WriteLine("is Last position(index =count-1)");
-//        //            list.AddRange(tmperoryList);                    
-//        //            foreach (T t in list)
-//        //            {
-//        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-//        //            }
-//        //        }
-//        //        else
-//        //        {
-//        //            Console.WriteLine("is middle position(index =1~count-2)");
-//        //            Console.WriteLine("list count =" + list.Count);
-//        //            Console.WriteLine("list index = " + list.IndexOf(tmpPosition));
-//        //            if (list.IndexOf(tmpPosition) == -1)
-//        //            {
-//        //                list.InsertRange(list.IndexOf(tmp), tmperoryList);
-//        //            }
-//        //            else
-//        //            {
-//        //                list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
-//        //            }
-//        //            foreach (T t in list)
-//        //            {
-//        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-//        //            }
-//        //        }
-//        //    }                   
-//        //    else
-//        //    {
-//        //        for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
-//        //        {
-//        //            if (i <= last1 && j <= last2)
-//        //            {
-//        //                Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
-//        //                swap(ref list, i, j);
-//        //            }
-//        //            else if (i > last1)
-//        //            {
-//        //                Console.WriteLine("Current i is :" + i);
-//        //                T tmp = list[j];
-//        //                list.RemoveAt(j);
-
-//        //                if (i < list.Count())
-//        //                    list.Insert(i, tmp);
-//        //                else
-//        //                    list.Add(tmp);
-//        //            }
-//        //            else
-//        //            {
-//        //                Console.WriteLine("Current j is : " + j);
-//        //                T tmp = list[i];
-//        //                list.RemoveAt(i);
-//        //                if (j < list.Count())
-//        //                    list.Insert(j, tmp);
-//        //                else
-//        //                    list.Add(tmp);
-//        //            }
-//        //        }
-//        //    }
-//        //    //return records;
-//        //    Console.WriteLine("<<Swap RgRecord");
-//        //}
-//        #endregion
 
 //        private string getResourceString(string key)
 //        {
@@ -1246,7 +1101,15 @@
 //            //show select exit popup page. 
 //            await PopupNavigation.Instance.PushAsync
 //                (new ExitPopupPage(_navigationGraphName));
-//            //remember to implement cancel messagingcenter            
+//            //remember to implement cancel messagingcenter  
+
+//            MessagingCenter.Subscribe<ExitPopupPage, bool>(this, "ExitCancel",
+//                (MsgSender, MsgArgs) =>
+//                {
+//                    MessagingCenter.Unsubscribe<ExitPopupPage, bool>
+//                    (this, "ExitCancel");
+//                });
+
 //            isButtonPressed = false;
 //        }
 
