@@ -99,6 +99,7 @@
     <EmbeddedResource Include="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExitMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\PostBody.json" />
+    <EmbeddedResource Include="Yuanlin_OPFM\PurposeOptions.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <None Remove="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <None Remove="Yuanlin_OPFM\ExitMap.xml" />
     <None Remove="Yuanlin_OPFM\PostBody.json" />
+    <None Remove="Yuanlin_OPFM\PurposeOptions.xml" />
     <None Remove="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>

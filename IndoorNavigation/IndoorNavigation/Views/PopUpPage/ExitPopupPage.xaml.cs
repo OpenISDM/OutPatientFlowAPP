@@ -32,31 +32,21 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using System.Collections.ObjectModel;
-using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using Plugin.Multilingual;
 using System.Globalization;
-
 using System.Xml;
-using IndoorNavigation.Modules.Utilities;
-using Plugin.InputKit.Shared.Controls;
 using IndoorNavigation.Views.Navigation;
-using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
-using System.Net.Http.Headers;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -74,25 +64,13 @@ namespace IndoorNavigation.Views.PopUpPage
         //ExitPopupViewModel _viewmodel;
         CultureInfo currentLanguage =
             CrossMultilingual.Current.CurrentCultureInfo;
-
         private XMLInformation _nameInformation;
-        private PhoneInformation phoneInformation;
-
 
         public ExitPopupPage(string navigationGraphName)
         {
             InitializeComponent();
-            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             _navigationGraphName = navigationGraphName;
-            phoneInformation = new PhoneInformation();
-
-            _nameInformation = LoadXmlInformation(_navigationGraphName);
-            //_nameInformation = NavigraphStorage.LoadInformationML
-            //    (phoneInformation.GiveCurrentMapName(_navigationGraphName) +
-            //    "_info_" +
-            //    phoneInformation.GiveCurrentLanguage() +
-            //    ".xml");
-
+            _nameInformation = LoadXmlInformation(_navigationGraphName);         
             LoadData();
             setRadioButton();
         }
