@@ -116,6 +116,7 @@ namespace IndoorNavigation.Models
         void SetWaypointList(List<WaypointBeaconsMapping> WaypointList);
         void Stop();
 
+        void OnRestart();
         NavigationEvent _event { get; }
     }
 

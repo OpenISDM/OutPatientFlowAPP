@@ -10,13 +10,13 @@
         <StackLayout>
             <Frame BackgroundColor="White">
                 <StackLayout>
-                    <Label x:Name="AdjustLab"/>
+                    <Label x:Name="AdjustLab" FontSize="Large"/>
                     <!--show first use or it will start to auto adjust.
                         If your think it is still not stable, user can
                         auto adjust again or manual adjust.
                     -->
                     <StackLayout>
-                        <Button x:Name="AdjustBtn" Text="開始調整"/>
+                        <Button x:Name="AdjustBtn" Text="OK" Clicked="AdjustBtn_Clicked"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>

@@ -72,7 +72,7 @@ namespace IndoorNavigation.Modules.IPSClients
             rssiOption = 0;
             _bufferLock = new object();
             watch.Start();
-        }
+        }        
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
@@ -171,9 +171,12 @@ namespace IndoorNavigation.Modules.IPSClients
             }
             Console.WriteLine("<< In DetectWaypoints LBeacon");
         }
-
+        
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
+            Console.WriteLine(">>In DetectWaypoint LBeacon Rssi");
+            Console.WriteLine("mapping cotent : " + mapping._Beacons[0]);
+            Console.WriteLine("mapping aaa " + mapping._WaypointIDAndRegionID._waypointID);
             List<BeaconSignalModel> removeSignalBuffer =
            new List<BeaconSignalModel>();
 
@@ -199,12 +202,14 @@ namespace IndoorNavigation.Modules.IPSClients
                     { return y.RSSI.CompareTo(x.RSSI); });
                 foreach(BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
+                    //Console.WriteLine("beacon threshold " + beacon.UUID);
                     foreach(Guid beaconGuid in mapping._Beacons)
-                    {
+                    {                       
                         if (beacon.UUID.Equals(beaconGuid) &&
                             beacon.RSSI > 
                             mapping._BeaconThreshold[beacon.UUID] - rssiOption)
                         {
+                            Console.WriteLine("Mapping!");
                             WatchReset();
                             _event.OnEventCall(new WaypointRssiEventArgs
                             {
@@ -212,11 +217,12 @@ namespace IndoorNavigation.Modules.IPSClients
                                 _BeaconThreshold = 
                                     mapping._BeaconThreshold[beacon.UUID]
                             });
+                            return;
                         }
                     }
                 }               
             }
-            Console.WriteLine("<< In DetectWaypoints LBeacon");
+            Console.WriteLine("<< In DetectWaypoint LBeacon Rssi");
         }
 
         private void WatchReset()
@@ -224,6 +230,14 @@ namespace IndoorNavigation.Modules.IPSClients
             watch.Stop();
             watch.Reset();
             watch.Start();
+        }
+
+        public void OnRestart()
+        {
+            watch.Start();
+            Utility._lbeaconScan.StartScan();
+            Utility._lbeaconScan._event._eventHandler += 
+                _beaconScanEventHandler;
         }
         private void HandleBeaconScan(object sender, EventArgs e)
         {

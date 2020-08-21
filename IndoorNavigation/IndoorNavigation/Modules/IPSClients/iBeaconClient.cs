@@ -61,10 +61,14 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("In Ibeacon Type");
 
             _event = new NavigationEvent();
+            Console.WriteLine("aaaaaaaa");
             Utility._ibeaconScan = DependencyService.Get<IBeaconScan>();
+            Console.WriteLine("bbbbbbbbbb:");
             _bufferLock = new object();
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
+            Console.WriteLine("cccccccccc");
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
+            Console.WriteLine("ddddddddddddddd");
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
             
@@ -280,6 +284,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
             //I have no idea to implement it now.
+            Console.WriteLine("DetectWaypointRssi in IBeacon");
         }
         private void HandleBeaconScan(object sender, EventArgs e)
         {
@@ -296,6 +301,13 @@ namespace IndoorNavigation.Modules.IPSClients
 
         }
 
+        public void OnRestart()
+        {
+            watch.Start();
+            Utility._ibeaconScan.StartScan();
+            Utility._ibeaconScan._event._eventHandler += 
+                _beaconScanEventHandler;
+        }
         public void Stop()
         {
             _bufferLock = new object();

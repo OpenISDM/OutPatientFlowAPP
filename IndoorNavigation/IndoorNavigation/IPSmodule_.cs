@@ -21,6 +21,8 @@ namespace IndoorNavigation.Modules
 
             _multiClients = new Dictionary<IPSType, IpsClient>();
 
+            _event = new NavigationEvent();
+
             #region LBeacon part Initial
             _multiClients.Add(IPSType.LBeacon,
                 new IpsClient
@@ -289,12 +291,16 @@ namespace IndoorNavigation.Modules
         {
             _rssiMapping = GetSingleBeaconMapping(regionID, waypointID);
             _rssiIPStype = _navigationGraph.GetRegionIPSType(regionID);
+            _multiClients[_rssiIPStype].client._event._eventHandler +=
+                PassScanRssiValue;
         }
 
         public void OpenRssiScaning() 
-        {          
+        {
+            _multiClients[_rssiIPStype].client.OnRestart();
             _multiClients[_rssiIPStype].client
                 .DetectWaypointRssi(_rssiMapping);
+           
         }
         public void PassScanRssiValue(Object sender, EventArgs args)
         {
