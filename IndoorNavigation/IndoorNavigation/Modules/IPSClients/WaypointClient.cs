@@ -45,6 +45,8 @@ using System.Collections.Generic;
 using IndoorNavigation.Models;
 using Xamarin.Forms;
 using IndoorNavigation.Models.NavigaionLayer;
+using System.Reflection;
+using Xamarin.Essentials;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
@@ -193,7 +195,8 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (var obsoleteBeaconSignal in removeSignalBuffer)
                     _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
                
-                _beaconSignalBuffer.Sort((x, y) => { return y.RSSI.CompareTo(x.RSSI); });
+                _beaconSignalBuffer.Sort((x, y) => 
+                    { return y.RSSI.CompareTo(x.RSSI); });
                 foreach(BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach(Guid beaconGuid in mapping._Beacons)
@@ -205,7 +208,9 @@ namespace IndoorNavigation.Modules.IPSClients
                             WatchReset();
                             _event.OnEventCall(new WaypointRssiEventArgs
                             {
-                                _rssiOption = beacon.RSSI
+                                _scanBeaconRssi = beacon.RSSI,
+                                _BeaconThreshold = 
+                                    mapping._BeaconThreshold[beacon.UUID]
                             });
                         }
                     }
@@ -248,6 +253,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
     public class WaypointRssiEventArgs : EventArgs
     {
-        public int _rssiOption { get; set; }
+        public int _scanBeaconRssi { get; set; }
+        public int _BeaconThreshold { get; set; }
     }
 }

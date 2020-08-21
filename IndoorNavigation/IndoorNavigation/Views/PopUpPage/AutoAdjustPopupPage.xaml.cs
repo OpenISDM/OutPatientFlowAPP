@@ -37,16 +37,15 @@ namespace IndoorNavigation.Views.PopUpPage
         //current waypoint
         private Guid _currentWaypointID;
         private Guid _currentRegionID;
-        //current waypoint threshold
-        private int _threshold;
-        private IPSModules _ipsModules;
+        private int _currentBeaconRssi;     
+        private IPSmodule_ _ipsModules;
         private string naviGraphName;
         private NavigationGraph _navigationGraph;
 
         private bool _isKeepDetection = true;
         private Thread _detectWaypointThread;
         private Thread _detectPositionControllThread;
-
+        private List<int> _AllRssiList;
         private ManualResetEventSlim _detectThreadEvent;
         
         #endregion
@@ -57,7 +56,8 @@ namespace IndoorNavigation.Views.PopUpPage
             naviGraphName = _naviGraphName;
             _navigationGraph = LoadNavigationGraphXml(naviGraphName);
             _detectThreadEvent = new ManualResetEventSlim(false);
-            _ipsModules = new IPSModules(_navigationGraph);
+            _ipsModules = new IPSmodule_(_navigationGraph);
+            _AllRssiList = new List<int>();
 
             _currentRegionID = new Guid();
             _currentWaypointID = new Guid();
@@ -67,6 +67,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _detectWaypointThread = new Thread(() => InvokeIPSWork());
             _detectPositionControllThread = new Thread(() => ScanPosition());
+
+            _detectPositionControllThread.Start();
+            _detectWaypointThread.Start();
         }
 
         private bool isEmptyGuid(Guid guid)
@@ -77,7 +80,7 @@ namespace IndoorNavigation.Views.PopUpPage
         //to detect where user is.
         private void ScanPosition()
         {
-            _ipsModules.AtStarting_ReadALLIPSType
+            _ipsModules.InitialStep_DetectAllBeacon
                 (_navigationGraph.GetAllRegionIDs());
 
             _detectThreadEvent.Wait();
@@ -90,11 +93,15 @@ namespace IndoorNavigation.Views.PopUpPage
                 ScanPosition();                
             }
 
+            _isKeepDetection = false;
+
+            DetectPositionThreshold();
+
+            SetRssiOption();
             //Show result and remove delegate.
             _ipsModules._event._eventHandler -=
                 new EventHandler(DetecWaypointResult);
-        }
-       
+        }           
 
         private void DetecWaypointResult(object sender, EventArgs args)
         {
@@ -108,19 +115,47 @@ namespace IndoorNavigation.Views.PopUpPage
                     signalArgs._detectedRegionWaypoint
                     ._waypointID;
 
-                _ipsModules.CloseStartAllExistClient();
+                _ipsModules.CloseAllActiveClient();
             }else if(args is WaypointRssiEventArgs RssiArgs)
             {
-
+                _currentBeaconRssi = RssiArgs._BeaconThreshold;
+                _AllRssiList.Add(RssiArgs._scanBeaconRssi);
             }
             _detectThreadEvent.Set();
+        }
+
+        private void SetRssiOption()
+        {
+
+            _AllRssiList.Sort();
+
+            int count = _AllRssiList.Count;
+            int mid = count / 2;
+            int midian = count % 2 != 0 ?
+                (int)_AllRssiList[mid] :
+                (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
+
+            Application.Current.Properties["RSSI_Test_Adjustment"] = 
+                (int)_currentBeaconRssi - midian;
+
+            //return ((_AllRssiList.Count % 2 != 0) ? 
+            //    (int)_AllRssiList[mid] : 
+            //    (int)((_AllRssiList[mid] + _AllRssiList[mid+1])/2));
         }
 
         //To scan current beacon rssi
         private void DetectPositionThreshold()
         {
+            _ipsModules.SetRssiMonitor(_currentRegionID, _currentWaypointID);
 
-        }
+            Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
+            {               
+                //_detectThreadEvent.Wait();
+                _ipsModules.OpenRssiScaning();        
+                return false;
+            });
+
+        }        
 
         private void Stop()
         {
@@ -133,7 +168,7 @@ namespace IndoorNavigation.Views.PopUpPage
             while(_isKeepDetection == true)
             {
                 //keep detection.
-                _ipsModules.OpenBeconScanning();
+                _ipsModules.OpenBeaconScanning();
             }
         }
     }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Security.Cryptography.X509Certificates;
 using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.IPSClients;
-using Prism.Navigation.Xaml;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules
@@ -15,7 +13,6 @@ namespace IndoorNavigation.Modules
         private NavigationGraph _navigationGraph;
 
         private Dictionary<IPSType, IpsClient> _multiClients;
-
         public NavigationEvent _event { get; private set; }
         public IPSmodule_(NavigationGraph navigationGraph)
         {
@@ -84,6 +81,36 @@ namespace IndoorNavigation.Modules
             OpenIPSClint(type);
         }
 
+        private WaypointBeaconsMapping GetSingleBeaconMapping(Guid regionID,
+            Guid waypointID)
+        {
+            Console.WriteLine(">>IPSmodule : GetSingleBeaconMapping");
+
+            List<Guid> beaconIDs =
+                _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion(
+                    regionID, waypointID);
+
+            Dictionary<Guid, int> beaconThresholdMapping =
+                new Dictionary<Guid, int>();
+
+            foreach(Guid beaconID in beaconIDs)
+            {
+                beaconThresholdMapping.Add(beaconID,
+                    _navigationGraph.GetBeaconRSSIThreshold(regionID, beaconID)
+                    );
+            }
+
+            return new WaypointBeaconsMapping
+            {
+                _Beacons = beaconIDs,
+                _BeaconThreshold = beaconThresholdMapping,
+                _WaypointIDAndRegionID = new RegionWaypointPoint
+                {
+                    _regionID = regionID,
+                    _waypointID = waypointID
+                }
+            };
+        }
         private List<WaypointBeaconsMapping> GetBeaconWaypointMapping(
             Guid regionID, List<Guid> waypointIDs)
         {
@@ -93,29 +120,31 @@ namespace IndoorNavigation.Modules
 
             foreach (Guid waypointID in waypointIDs)
             {
-                List<Guid> beaconIDs =
-                    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
-                    (regionID, waypointID);
+                BeaconWaypointMapping.Add
+                    (GetSingleBeaconMapping(regionID, waypointID));
+                //List<Guid> beaconIDs =
+                //    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
+                //    (regionID, waypointID);
 
-                Dictionary<Guid, int> beaconThresholdMapping =
-                    new Dictionary<Guid, int>();
+                //Dictionary<Guid, int> beaconThresholdMapping =
+                //    new Dictionary<Guid, int>();
 
-                foreach (Guid beaconID in beaconIDs)
-                {
-                    beaconThresholdMapping.Add(
-                        beaconID,
-                        _navigationGraph.GetBeaconRSSIThreshold
-                            (regionID, beaconID)
-                        );
-                }
+                //foreach (Guid beaconID in beaconIDs)
+                //{
+                //    beaconThresholdMapping.Add(
+                //        beaconID,
+                //        _navigationGraph.GetBeaconRSSIThreshold
+                //            (regionID, beaconID)
+                //        );
+                //}
 
-                BeaconWaypointMapping.Add(new WaypointBeaconsMapping
-                {
-                    _Beacons = beaconIDs,
-                    _BeaconThreshold = beaconThresholdMapping,
-                    _WaypointIDAndRegionID =
-                        new RegionWaypointPoint(regionID, waypointID)
-                });
+                //BeaconWaypointMapping.Add(new WaypointBeaconsMapping
+                //{
+                //    _Beacons = beaconIDs,
+                //    _BeaconThreshold = beaconThresholdMapping,
+                //    _WaypointIDAndRegionID =
+                //        new RegionWaypointPoint(regionID, waypointID)
+                //});
             }
 
             return BeaconWaypointMapping;
@@ -133,7 +162,6 @@ namespace IndoorNavigation.Modules
                 AddMonitorBeaconList(type, regionID, waypointIDs);
             }
         }        
-
         public void StartAllExistClient()
         {
             Console.WriteLine(">>IPSmodule : StartAllExistClient");
@@ -149,8 +177,7 @@ namespace IndoorNavigation.Modules
                 }
             }
         }
-
-        private void CloseAllActiveClient()
+        public void CloseAllActiveClient()
         {
             Console.WriteLine(">>IPSmodule : CloseAllActiveClient ");
 
@@ -193,13 +220,7 @@ namespace IndoorNavigation.Modules
                         );
                 }
             }
-        }
-
-        public void SetRssiOption(int rssiOption)
-        {
-            Application.Current.Properties["RSSI_Test_Adjustment"] =
-                rssiOption;
-        }
+        }        
 
         public void PassMatchedWaypointEvent(Object sender, EventArgs args)
         {
@@ -261,19 +282,25 @@ namespace IndoorNavigation.Modules
 
         #region  For Rssi auto adjustment
 
-        public void OpenRssiScaning() 
-        {
+        WaypointBeaconsMapping _rssiMapping;
+        IPSType _rssiIPStype;
 
+        public void SetRssiMonitor(Guid regionID, Guid waypointID)
+        {
+            _rssiMapping = GetSingleBeaconMapping(regionID, waypointID);
+            _rssiIPStype = _navigationGraph.GetRegionIPSType(regionID);
         }
 
+        public void OpenRssiScaning() 
+        {          
+            _multiClients[_rssiIPStype].client
+                .DetectWaypointRssi(_rssiMapping);
+        }
         public void PassScanRssiValue(Object sender, EventArgs args)
         {
             Console.WriteLine(">> IPSmodule : Pass RssiResult");
 
-            _event.OnEventCall(new WaypointRssiEventArgs
-            {
-                _rssiOption = (args as WaypointRssiEventArgs)._rssiOption
-            }) ;
+            _event.OnEventCall(args as WaypointRssiEventArgs) ;
         }
         #endregion
     }

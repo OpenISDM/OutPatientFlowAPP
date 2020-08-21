@@ -112,6 +112,7 @@ namespace IndoorNavigation.Models
     public interface IIPSClient
     {
         void DetectWaypoints();
+        void DetectWaypointRssi(WaypointBeaconsMapping mapping);
         void SetWaypointList(List<WaypointBeaconsMapping> WaypointList);
         void Stop();
 

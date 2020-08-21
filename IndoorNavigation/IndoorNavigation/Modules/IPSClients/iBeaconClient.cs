@@ -277,6 +277,10 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
 
+        public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
+        {
+            //I have no idea to implement it now.
+        }
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             IEnumerable<BeaconSignalModel> signals =
