@@ -124,9 +124,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
                 {
-                    watch.Stop();
-                    watch.Reset();
-                    watch.Start();
+                    WatchReset();
                     Utility._lbeaconScan.StopScan();
                     Utility._lbeaconScan.StartScan();                   
                 }
@@ -155,9 +153,7 @@ namespace IndoorNavigation.Modules.IPSClients
                                 //beaconGuid);
                                 if (beacon.RSSI > (waypointBeaconsMapping._BeaconThreshold[beacon.UUID]-rssiOption))
                                 {
-                                    watch.Stop();
-                                    watch.Reset();
-                                    watch.Start();
+                                    WatchReset();
                                     _event.OnEventCall(new WaypointSignalEventArgs
                                     {
                                         _detectedRegionWaypoint = waypointBeaconsMapping._WaypointIDAndRegionID
@@ -188,9 +184,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
                 {
-                    watch.Stop();
-                    watch.Reset();
-                    watch.Start();
+                    WatchReset();
                     Utility._lbeaconScan.StopScan();
                     Utility._lbeaconScan.StartScan();
                 }
@@ -207,9 +201,9 @@ namespace IndoorNavigation.Modules.IPSClients
                     {                       
                         if (beacon.UUID.Equals(beaconGuid) &&
                             beacon.RSSI > 
-                            mapping._BeaconThreshold[beacon.UUID] - rssiOption)
+                            mapping._BeaconThreshold[beacon.UUID])
                         {
-                            Console.WriteLine("Mapping!");
+                            Console.WriteLine("Mapping LBeacon!");
                             WatchReset();
                             _event.OnEventCall(new WaypointRssiEventArgs
                             {

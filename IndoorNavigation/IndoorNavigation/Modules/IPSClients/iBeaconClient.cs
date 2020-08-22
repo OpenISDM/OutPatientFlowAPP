@@ -40,6 +40,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules.IPSClients
@@ -129,9 +130,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 
                 if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
                 {
-                    watch.Stop();
-                    watch.Reset();
-                    watch.Start();
+                    WatchReset();
                     Utility._ibeaconScan.StopScan();
                     Utility._ibeaconScan.StartScan();
 
@@ -267,9 +266,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 if(haveThing==true)
                 {
-                    watch.Stop();
-                    watch.Reset();
-                    watch.Start();
+                    WatchReset();
                     Console.WriteLine("Matched IBeacon");
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
@@ -283,9 +280,72 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
-            //I have no idea to implement it now.
-            Console.WriteLine("DetectWaypointRssi in IBeacon");
+            Console.WriteLine(">>In DetectWaypoints IBeacon");
+            List<BeaconSignalModel> removeSignalBuffer =
+                new List<BeaconSignalModel>();
+
+            lock (_bufferLock)
+            {
+                removeSignalBuffer.AddRange(
+                   _beaconSignalBuffer.Where(c =>
+                   c.Timestamp < DateTime.Now.AddMilliseconds(-1500)));
+
+                foreach (var obsoleteBeaconSignal in removeSignalBuffer)
+                    _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+
+                Dictionary<RegionWaypointPoint, List<BeaconSignal>> 
+                    scannedData = 
+                    new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
+
+                Dictionary<RegionWaypointPoint, int> signalAvgValue = 
+                    new Dictionary<RegionWaypointPoint, int>();
+
+                Dictionary<RegionWaypointPoint, List<BeaconSignal>> 
+                    correctData = 
+                    new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
+
+
+                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
+                {
+                    WatchReset();
+                    Utility._ibeaconScan.StopScan();
+                    Utility._ibeaconScan.StartScan();
+
+                }                
+
+
+                foreach(BeaconSignalModel singalModel in _beaconSignalBuffer)
+                {
+                    foreach(Guid beaconGuid in mapping._Beacons)
+                    {
+                        if (singalModel.UUID.Equals(beaconGuid) &&
+                            singalModel.RSSI> 
+                            mapping._BeaconThreshold[singalModel.UUID])
+                        {
+                            Console.WriteLine("Mapping iBeacon!");
+
+                            WatchReset();
+                            _event.OnEventCall(new WaypointRssiEventArgs
+                            {
+                                _scanBeaconRssi = singalModel.RSSI,
+                                _BeaconThreshold =
+                                    mapping._BeaconThreshold[singalModel.UUID]
+                            });
+                            return;
+                        }
+                    }
+                }                
+            }
+            Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
+
+        private void WatchReset()
+        {
+            watch.Stop();
+            watch.Reset();
+            watch.Start();
+        }
+
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             IEnumerable<BeaconSignalModel> signals =
