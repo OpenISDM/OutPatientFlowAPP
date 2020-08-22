@@ -123,30 +123,7 @@ namespace IndoorNavigation.Modules
             foreach (Guid waypointID in waypointIDs)
             {
                 BeaconWaypointMapping.Add
-                    (GetSingleBeaconMapping(regionID, waypointID));
-                //List<Guid> beaconIDs =
-                //    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
-                //    (regionID, waypointID);
-
-                //Dictionary<Guid, int> beaconThresholdMapping =
-                //    new Dictionary<Guid, int>();
-
-                //foreach (Guid beaconID in beaconIDs)
-                //{
-                //    beaconThresholdMapping.Add(
-                //        beaconID,
-                //        _navigationGraph.GetBeaconRSSIThreshold
-                //            (regionID, beaconID)
-                //        );
-                //}
-
-                //BeaconWaypointMapping.Add(new WaypointBeaconsMapping
-                //{
-                //    _Beacons = beaconIDs,
-                //    _BeaconThreshold = beaconThresholdMapping,
-                //    _WaypointIDAndRegionID =
-                //        new RegionWaypointPoint(regionID, waypointID)
-                //});
+                    (GetSingleBeaconMapping(regionID, waypointID));             
             }
 
             return BeaconWaypointMapping;
@@ -188,6 +165,7 @@ namespace IndoorNavigation.Modules
             {
                 if (pair.Value.ContainType)
                 {
+                    //Console.WriteLine("Contains type : " + pair.Key);
                     pair.Value.ContainType = false;
                     pair.Value._monitorMappings.Clear();
                     pair.Value.client.Stop();
@@ -293,6 +271,7 @@ namespace IndoorNavigation.Modules
             _rssiIPStype = _navigationGraph.GetRegionIPSType(regionID);
             _multiClients[_rssiIPStype].client._event._eventHandler +=
                 PassScanRssiValue;
+            _multiClients[_rssiIPStype].ContainType = true;           
         }
 
         public void OpenRssiScaning() 

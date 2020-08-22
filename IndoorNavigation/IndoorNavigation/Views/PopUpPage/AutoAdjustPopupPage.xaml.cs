@@ -98,8 +98,11 @@ namespace IndoorNavigation.Views.PopUpPage
             Console.WriteLine("現在位置 : " + _navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID));
             _isKeepDetection = false;
 
+            _ipsModules.CloseAllActiveClient();
+
             DetectPositionThreshold();
 
+            //SetRssiOption();
             //SetRssiOption();
             //Show result and remove delegate.
             //_ipsModules._event._eventHandler -=
@@ -144,7 +147,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             Application.Current.Properties["RSSI_Test_Adjustment"] = 
                 (int)_currentBeaconRssi - midian;
-          
+            Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
         }
 
         //To scan current beacon rssi
@@ -161,12 +164,13 @@ namespace IndoorNavigation.Views.PopUpPage
                 _ipsModules.OpenRssiScaning();        
                 if(count++ == 70)
                 {
+                    SetRssiOption();
                     _ipsModules.CloseAllActiveClient();
                     return false;
                 }                
                 return true;
             });
-
+            Console.WriteLine("<<DetectPositionThreshold");
         }        
 
         private void Stop()
