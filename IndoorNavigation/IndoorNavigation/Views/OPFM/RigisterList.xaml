@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:CustomToolbarContentPage 
+<local:CustomToolbarContentPage
              xmlns:local="clr-namespace:IndoorNavigation"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                xmlns:aiforms="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
             Title="{i18n:Translate NAVIGATION_LIST_STRING}"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.OPFM.RigisterList">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label">
+            <Style TargetType = "Label" >
                 <Setter Property="TextColor" 
 						Value="Black"/>
 
-                <Setter Property="FontSize" 
-						Value="22"/>
+                <Setter Property = "FontSize"
+                        Value="22"/>
             </Style>
             <DataTemplate x:Key="YetNavigation">
                 <!--to show haven't started schedule view cell-->
-                <ViewCell Tapped="ViewCell_Tapped">
-                    <ViewCell.Height>
+                <ViewCell Tapped = "ViewCell_Tapped" >
+                    <ViewCell.Height >
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS" Value="170"/>
+                            <On Platform = "iOS" Value="170"/>
                         </OnPlatform>
                     </ViewCell.Height>
                     <StackLayout>
-                        <StackLayout Orientation="Horizontal" 
-									 Margin="10,0,10,0" 
+                        <StackLayout Orientation = "Horizontal"
+
+                                     Margin="10,0,10,0" 
 									 VerticalOptions="CenterAndExpand">
 
                             <Label x:Name="DPTNAME" 
@@ -54,8 +54,9 @@
 									BackgroundColor="#3f51b5" 
 									FontAttributes="Bold"/>
                         </StackLayout>
-                        <StackLayout Orientation="Vertical" 
-									 VerticalOptions="CenterAndExpand" 
+                        <StackLayout Orientation = "Vertical"
+
+                                     VerticalOptions="CenterAndExpand" 
 									 Margin="25,0,25,0">
 
                             <Label x:Name="DptTimeText" 
@@ -79,10 +80,11 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="NotComplete">
-                <ViewCell Tapped="ViewCell_Tapped" Height="60">
+                <ViewCell Tapped = "ViewCell_Tapped" Height="60">
                     <StackLayout >
-                        <StackLayout Orientation="Horizontal" 
-									 VerticalOptions="CenterAndExpand" 
+                        <StackLayout Orientation = "Horizontal"
+
+                                     VerticalOptions="CenterAndExpand" 
 									 Margin="10,0,10,0">
 
                             <Label x:Name="DptName" 
@@ -110,9 +112,10 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="Complete">
-                <ViewCell IsEnabled="False" 
-						  Height="60">
-                    <StackLayout BackgroundColor="#e0e0e0">
+                <ViewCell IsEnabled = "False"
+
+                          Height="60">
+                    <StackLayout BackgroundColor = "#e0e0e0" >
                         <Label Text="{Binding DptName}" 
 							   FontSize="26" 
 							   TextColor="#c0c0c0" 
@@ -122,28 +125,29 @@
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="AddItemTemplate">
-                <ViewCell Tapped="ViewCell_Tapped">
-                    <ViewCell.Height>
+                <ViewCell Tapped = "ViewCell_Tapped" >
+                    <ViewCell.Height >
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS" Value="90"/>
-                        </OnPlatform> 
+                            <On Platform = "iOS" Value="90"/>
+                        </OnPlatform>
                     </ViewCell.Height>
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="ListviewItem_Delete" CommandParameter="{Binding .}"
+                        <MenuItem Clicked="ListviewItem_Delete" 
+                                  CommandParameter="{Binding .}"
                                   Text="Delete" IsDestructive="True"/>
                     </ViewCell.ContextActions>
-                    <StackLayout BackgroundColor="{Binding selectedGroupColor}">
+                    <StackLayout BackgroundColor = "{Binding selectedGroupColor}" >
                         <StackLayout Margin="10,5,10,5">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width = "*" />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width = "*" />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width = "*" />
+                                </Grid.ColumnDefinitions >
 
-                            <Label x:Name="DptNameLabel" 
+                                <Label x:Name="DptNameLabel" 
                                    Text="{Binding DptName, StringFormat='{0}'}" 
                                    FontSize="28"
                                    TextColor="Black"
@@ -151,7 +155,7 @@
                                    Grid.Column="0" 
                                    Grid.ColumnSpan="3"
                                     />
-                            <Button x:Name="FinishButton" 
+                                <Button x:Name="FinishButton" 
                                     Text="{i18n:Translate FINISH_STRING}"
                                     FontSize="Medium"
                                     BackgroundColor="#3f51b5"
@@ -163,8 +167,8 @@
                                     Clicked="YetFinishBtn_Clicked"
                                     Grid.Column="3"
                                     />
-                        </Grid>
-                        <Label x:Name="ToDoNameLabel"
+                            </Grid>
+                            <Label x:Name="ToDoNameLabel"
                                Text="{Binding _subtitleName, StringFormat='{0}'}"
                                Margin="25,0,25,0"
                                VerticalOptions="Start"
@@ -172,25 +176,25 @@
                                Padding="0,5,0,5"
                                FontSize="22"
                                TextColor="Black"/>
-                    </StackLayout>
+                        </StackLayout>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="_NotComplete">
-                <ViewCell Height="60" Tapped="ViewCell_Tapped">
+                <ViewCell Height = "60" Tapped="ViewCell_Tapped">
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="ListviewItem_Delete" CommandParameter="{Binding .}"
+                        <MenuItem Clicked = "ListviewItem_Delete" CommandParameter="{Binding .}"
                                   Text="Delete" IsDestructive="True"/>
                     </ViewCell.ContextActions>
-                    <StackLayout BackgroundColor="{Binding selectedGroupColor}">
+                    <StackLayout BackgroundColor = "{Binding selectedGroupColor}" >
                         <Grid Margin="10,0,10,0" VerticalOptions="CenterAndExpand">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width = "*" />
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width = "*" />
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                                <ColumnDefinition Width = "*" />
+                            </Grid.ColumnDefinitions >
                             <Label x:Name="DptNameLab" 
 								   Text="{Binding DptName, StringFormat='{0}'}"
                                    VerticalOptions="CenterAndExpand"
@@ -225,52 +229,61 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 20, 0, 0" />
-                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform = "iOS" Value="0, 20, 0, 0" />
+                <On Platform = "Android" Value="0, 0, 0, 0" />
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
     <ContentPage.Content>
         <AbsoluteLayout x:Name="RigisterListAbsoluteLayout">
-            <!--<controls:FloatingActionButton x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}" FontSize="Default" TextColor=""/>-->
             <Grid x:Name="RigistListGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height = "*" />
                     <RowDefinition Height="19*"/>
 
                 </Grid.RowDefinitions>
-                <Label  Text="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#f2e4e4" 
+                <Label Text ="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#f2e4e4" 
                    VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Padding="5,0,5,0"/>
 
-                <!--  <BoxView BackgroundColor="#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
-                <ListView Grid.Row="1" x:Name="RgListView" HasUnevenRows="True" ItemTapped="RgListView_ItemTapped"
-                          VerticalScrollBarVisibility="Always" 
-                          ItemTemplate="{StaticResource RegistrationDataTemplateSelecter}" SeparatorColor="#3f51b5">
+                <!--  <BoxView BackgroundColor = "#3f51b5" HeightRequest="1" VerticalOptions="StartAndExpand" Grid.Row="1"/>-->
+                <ListView Grid.Row="1" x:Name= "RgListView" HasUnevenRows= "True" ItemTapped= "RgListView_ItemTapped"
+                          VerticalScrollBarVisibility= "Always"
+                          ItemTemplate= "{StaticResource RegistrationDataTemplateSelecter}" SeparatorColor= "#3f51b5">
 
-                </ListView>
-            </Grid>
-            <Button BackgroundColor="#3f51b5" x:Name="AddBtn" Text="{i18n:Translate NEW_STRING}"
-                    FontSize="Medium" TextColor="White" Clicked="AddBtn_Clicked" 
-                    AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.96,0.9,70,70" FontAttributes="Bold"
-                    CornerRadius="35"
+                </ListView >
+            </Grid >
+            <Button BackgroundColor= "#3f51b5"
+                    x:Name= "AddBtn"
+                    Text= "{i18n:Translate NEW_STRING}"
+                    FontSize= "Medium"
+                    TextColor= "White"
+                    Clicked= "AddBtn_Clicked"
+                    AbsoluteLayout.LayoutFlags= "PositionProportional"
+                    AbsoluteLayout.LayoutBounds= "0.96,0.9,70,70"
+                    FontAttributes= "Bold"
+                    CornerRadius= "35"
                     />
-            <Button x:Name="ShiftBtn" 
-                    Text="{i18n:Translate EXCHANGE_STRING}" 
-                    BackgroundColor="#3f51b5" 
-                    FontSize="Medium" 
+            <Button x:Name="ShiftBtn"
+                    Text="{i18n:Translate EXCHANGE_STRING}"
+                    BackgroundColor= "#3f51b5"
+                    FontSize="Medium"
                     TextColor="White"
-                    FontAttributes="Bold"
-                    Clicked="ShiftBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="PositionProportional" CornerRadius="35"
-                    AbsoluteLayout.LayoutBounds="0.96,0.74,70,70"/>
-            <!--<Button x:Name="ShiftBtn" Text="{i18n:Translate EXCHANGE_STRING}" BackgroundColor="#3f51b5" FontSize="Medium" TextColor="White" FontAttributes="Bold"
-                     AbsoluteLayout.LayoutFlags="All" CornerRadius="30"
-                    Clicked="ShiftBtn_Clicked" AbsoluteLayout.LayoutBounds="0.96,0.77,0.17,0.11"/>-->
-            <Button x:Name="PaymemtListBtn" FontSize="Large" 
-                    Text="{i18n:Translate PAYMENT_MEDICINE_STRING}"  
-                    Clicked="PaymemtListBtn_Clicked"
-                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,0.1" BorderColor="#3f51b5" BackgroundColor="#3f51b5" 
-                    TextColor="White"/>
-        </AbsoluteLayout>
-    </ContentPage.Content>
+                    FontAttributes= "Bold"
+                    Clicked= "ShiftBtn_Clicked"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    CornerRadius="35"
+                    AbsoluteLayout.LayoutBounds= "0.96,0.74,70,70"/>
+
+
+            <Button x:Name="ExitAddBtn" FontSize="Large"
+                    Text="離開醫院"
+                    Clicked= "ExitAddBtn_Clicked"
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0,1,1,0.1"
+                    BorderColor= "#3f51b5"
+                    BackgroundColor="#3f51b5"
+                    TextColor= "White"/>
+            <!--Text = "{i18n:Translate PAYMENT_MEDICINE_STRING}"-->
+        </AbsoluteLayout >
+    </ContentPage.Content >
 </local:CustomToolbarContentPage>

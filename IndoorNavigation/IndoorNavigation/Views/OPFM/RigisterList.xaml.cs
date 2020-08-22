@@ -20,7 +20,7 @@ using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
-
+using System.Net.Http.Headers;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -33,23 +33,17 @@ namespace IndoorNavigation.Views.OPFM
 
         private XMLInformation _nameInformation;
         private App app = (App)Application.Current;
-        private Guid allF_Guid = 
+        private Guid allF_Guid =
             new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
 
-        Dictionary<Guid, DestinationItem> CashierPosition;
-        Dictionary<Guid, DestinationItem> PharmacyPostition;
         Dictionary<Guid, DestinationItem> ElevatorPosition;
         //to prevent button multi-tap from causing error
         private bool isButtonPressed = false;
         private ViewCell lastCell = null;
         private bool ShiftButtonPressed = false;
 
-        //private INetworkSetting NetworkSettings;
-
-        //private YunalinHttpRequestFake FakeHISRequest;
         delegate void MulitItemFinish(RgRecord FinishRecord);
         MulitItemFinish _multiItemFinish;
-        //private List<RgRecord> _shiftTmpRecords = null;
         private RgRecord _shiftTmpRecord = null;
         #endregion
 
@@ -65,12 +59,12 @@ namespace IndoorNavigation.Views.OPFM
             _nameInformation = LoadXmlInformation(navigationGraphName);
             //NetworkSettings = DependencyService.Get<INetworkSetting>();
 
-            PaymemtListBtn.IsEnabled = 
+            ExitAddBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
                 (app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
-            PaymemtListBtn.IsVisible = app.records.Count() > 0 &&
+            ExitAddBtn.IsVisible = app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
                 (app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
@@ -92,18 +86,18 @@ namespace IndoorNavigation.Views.OPFM
             //ShiftBtn.CornerRadius =
             //    (int)(Math.Min(ShiftBtn.Height, ShiftBtn.Width) / 2);
 
-            if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
+            if (app.HaveCashier && !ExitAddBtn.IsEnabled)
                 Buttonable(false);
 
-            PaymemtListBtn.IsEnabled =
+            ExitAddBtn.IsEnabled =
                 app.records.Count() > 0 &&
-                (app.FinishCount == app.records.Count) && 
-                (!app.HaveCashier) &&                  
-                !(app.records.Count()==1 && app.records[0].type== RecordType.Register);
-            PaymemtListBtn.IsVisible =
+                (app.FinishCount == app.records.Count) &&
+                (!app.HaveCashier) &&
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+            ExitAddBtn.IsVisible =
                 app.records.Count() > 0 &&
-                (app.FinishCount == app.records.Count) && 
-                (!app.HaveCashier) &&                 
+                (app.FinishCount == app.records.Count) &&
+                (!app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
@@ -179,7 +173,7 @@ namespace IndoorNavigation.Views.OPFM
                         (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"),
                         BannerName),
                         getResourceString("OK_STRING")));
-                }               
+                }
                 #region if the clinic has open timing.
                 else if (record.OpeningHours != null &&
                     !isCareRoomOpening(record.OpeningHours))
@@ -203,22 +197,12 @@ namespace IndoorNavigation.Views.OPFM
                             if ((bool)MsgArgs)
                             {
                                 await PopupNavigation.Instance.PopAllAsync();
-
-                                app._globalNavigatorPage = 
-                                    new NavigatorPage(
-                                        _navigationGraphName,
-                                        record._regionID,
-                                        record._waypointID,
-                                        record._waypointName,
-                                        _nameInformation);
                                 await Navigation.PushAsync
-                                    (app._globalNavigatorPage);
-                                //await Navigation.PushAsync
-                                //    (new NavigatorPage(_navigationGraphName,
-                                //               record._regionID,
-                                //               record._waypointID,
-                                //               record._waypointName,
-                                //            _nameInformation));
+                                    (new NavigatorPage(_navigationGraphName,
+                                               record._regionID,
+                                               record._waypointID,
+                                               record._waypointName,
+                                            _nameInformation));
                                 record.isComplete = true;
                             }
                             else
@@ -245,8 +229,8 @@ namespace IndoorNavigation.Views.OPFM
 
                     #region If destination is out of range, like CCH 3F、5F
 
-                    
-                    if(record._regionID.Equals(allF_Guid) && record._waypointID.Equals(allF_Guid))
+
+                    if (record._regionID.Equals(allF_Guid) && record._waypointID.Equals(allF_Guid))
                     {
                         Console.WriteLine("This range of item haven't been supported now");
 
@@ -257,10 +241,10 @@ namespace IndoorNavigation.Views.OPFM
                         DestinationItem ElevatorItem;
                         try
                         {
-                            ElevatorItem = 
+                            ElevatorItem =
                                 ElevatorPosition[app.lastFinished._regionID];
                         }
-                        catch 
+                        catch
                         {
                             ElevatorItem = ElevatorPosition.First().Value;
                         }
@@ -271,34 +255,28 @@ namespace IndoorNavigation.Views.OPFM
                     }
 
                     #endregion
-                    app._globalNavigatorPage =
-                        new NavigatorPage(_navigationGraphName,
+
+                    await Navigation.PushAsync
+                        (new NavigatorPage(_navigationGraphName,
                                            record._regionID,
                                            record._waypointID,
                                            record._waypointName,
-                                           _nameInformation);
-                    await Navigation.PushAsync(app._globalNavigatorPage);
-                    //await Navigation.PushAsync
-                    //    (new NavigatorPage(_navigationGraphName,
-                    //                       record._regionID,
-                    //                       record._waypointID,
-                    //                       record._waypointName,
-                    //                       _nameInformation)
-                    //    );
+                                           _nameInformation)
+                        );
                     record.isComplete = true;
                 }
 
             }
             RefreshListView();
             ((ListView)sender).SelectedItem = null;
-          
-        }      
+
+        }
         async private void RgListView_ShiftTapped(object sender, ItemTappedEventArgs e)
         {
             Console.WriteLine(">>RgListView_ShiftTapped");
 
             #region First Tapped
-            if(_shiftTmpRecord == null)
+            if (_shiftTmpRecord == null)
             {
                 _shiftTmpRecord = e.Item as RgRecord;
             }
@@ -333,7 +311,7 @@ namespace IndoorNavigation.Views.OPFM
 
                 RgListView.ItemTapped -= RgListView_ShiftTapped;
                 RgListView.ItemTapped += RgListView_ItemTapped;
-                
+
                 _shiftTmpRecord = null;
                 ShiftButtonPressed = false;
                 ReturnWhiteBackground();
@@ -437,7 +415,7 @@ namespace IndoorNavigation.Views.OPFM
             swap(ref tmp, index1, index2);
 
             Dictionary<int, int> checkValue = new Dictionary<int, int>();
-            foreach(RgRecord record in tmp)
+            foreach (RgRecord record in tmp)
             {
                 if (record._groupID == 0) continue;
                 if (!checkValue.ContainsKey(record._groupID))
@@ -454,70 +432,69 @@ namespace IndoorNavigation.Views.OPFM
         }
         //the function is a button event to add payment and medicine recieving 
         //route to listview
-        private void PaymemtListBtn_Clicked(object sender, EventArgs e)
-        {
-            Buttonable(false);
-            if (isButtonPressed) return;
-            isButtonPressed = true;
-            PaymemtListBtn.IsEnabled = false;
-            PaymemtListBtn.IsVisible = false;
-            app.HaveCashier = true;
-            DestinationItem cashier, pharmacy;
-            try
-            {
-                cashier = CashierPosition[app.lastFinished._regionID];
-            }
-            catch
-            {
-                cashier = CashierPosition.First().Value;
-            }
-            try
-            {
-                pharmacy = PharmacyPostition[app.lastFinished._regionID];
-            }
-            catch
-            {
-                pharmacy = PharmacyPostition.First().Value;
-            }
+        //private void PaymemtListBtn_Clicked(object sender, EventArgs e)
+        //{
+        //    Buttonable(false);
+        //    if (isButtonPressed) return;
+        //    isButtonPressed = true;
+        //    ExitAddBtn.IsEnabled = false;
+        //    ExitAddBtn.IsVisible = false;
+        //    app.HaveCashier = true;
+        //    DestinationItem cashier, pharmacy;
+        //    try
+        //    {
+        //        cashier = CashierPosition[app.lastFinished._regionID];
+        //    }
+        //    catch
+        //    {
+        //        cashier = CashierPosition.First().Value;
+        //    }
+        //    try
+        //    {
+        //        pharmacy = PharmacyPostition[app.lastFinished._regionID];
+        //    }
+        //    catch
+        //    {
+        //        pharmacy = PharmacyPostition.First().Value;
+        //    }
 
-            int order =
-                app.OrderDistrict.ContainsKey(0) ? app.OrderDistrict[0] : 0;
+        //    int order =
+        //        app.OrderDistrict.ContainsKey(0) ? app.OrderDistrict[0] : 0;
 
-            app.records.Add(new RgRecord
-            {
-                _waypointID = cashier._waypointID,
-                _regionID = cashier._regionID,
-                _waypointName = cashier._waypointName,
-                type = RecordType.Cashier,
-                DptName = cashier._waypointName,
-                order = order + 1,
-                _groupID = 0
-            });
-            app.records.Add(new RgRecord
-            {
-                _waypointID = pharmacy._waypointID,
-                _regionID = pharmacy._regionID,
-                _waypointName = pharmacy._waypointName,
-                type = RecordType.Pharmacy,
-                DptName = pharmacy._waypointName,
-                order = order + 2,
-                _groupID = 0
-            });
+        //    app.records.Add(new RgRecord
+        //    {
+        //        _waypointID = cashier._waypointID,
+        //        _regionID = cashier._regionID,
+        //        _waypointName = cashier._waypointName,
+        //        type = RecordType.Cashier,
+        //        DptName = cashier._waypointName,
+        //        order = order + 1,
+        //        _groupID = 0
+        //    });
+        //    app.records.Add(new RgRecord
+        //    {
+        //        _waypointID = pharmacy._waypointID,
+        //        _regionID = pharmacy._regionID,
+        //        _waypointName = pharmacy._waypointName,
+        //        type = RecordType.Pharmacy,
+        //        DptName = pharmacy._waypointName,
+        //        order = order + 2,
+        //        _groupID = 0
+        //    });
 
-            RgListView.ScrollTo(app.records[app.records.Count - 1],
-                ScrollToPosition.MakeVisible, true);
-            isButtonPressed = false;
-        }
-        
+        //    RgListView.ScrollTo(app.records[app.records.Count - 1],
+        //        ScrollToPosition.MakeVisible, true);
+        //    isButtonPressed = false;
+        //}
+
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
         {
-            Console.WriteLine("isButtonPressed when tapped the button : " + isButtonPressed);
             if (isButtonPressed) return;
 
             isButtonPressed = true;
-            PaymemtListBtn.IsEnabled = false;
-            PaymemtListBtn.IsVisible = false;
+            ExitAddBtn.IsEnabled = false;
+            ExitAddBtn.IsVisible = false;
 
             IndicatorPopupPage isBusyPage = new IndicatorPopupPage();
 
@@ -526,24 +503,24 @@ namespace IndoorNavigation.Views.OPFM
             await PopupNavigation.Instance.PushAsync
                 (new AddPopupPage(_navigationGraphName));
 
-            if(PopupNavigation.Instance.PopupStack.Contains(isBusyPage))
+            if (PopupNavigation.Instance.PopupStack.Contains(isBusyPage))
                 await PopupNavigation.Instance.RemovePageAsync(isBusyPage);
 
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel",
               (Messagesender, Messageargs) =>
               {
-                  PaymemtListBtn.IsEnabled = 
-                  (app.FinishCount == app.records.Count) && 
+                  ExitAddBtn.IsEnabled =
+                  (app.FinishCount == app.records.Count) &&
                   !app.HaveCashier &&
                    app.records.Count() > 0 &&
-                !(app.records.Count() == 1 && 
-                app.records[0].type == RecordType.Register) ;
+                !(app.records.Count() == 1 &&
+                app.records[0].type == RecordType.Register);
 
-                  PaymemtListBtn.IsVisible = 
-                  (app.FinishCount == app.records.Count) && 
-                  !app.HaveCashier&&
+                  ExitAddBtn.IsVisible =
+                  (app.FinishCount == app.records.Count) &&
+                  !app.HaveCashier &&
                    app.records.Count() > 0 &&
-                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;                  
+                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;
 
                   Console.WriteLine("isButtonPressed in messagingCenter :" + isButtonPressed);
                   MessagingCenter.Unsubscribe<AddPopupPage, bool>
@@ -569,7 +546,7 @@ namespace IndoorNavigation.Views.OPFM
             int currentGroupID = 0;
             int TotalNotComplete = 0;
             //foreach(KeyValuePair<int,int> pair in app.OrderDistrict)
-            foreach(RgRecord record in app.records)
+            foreach (RgRecord record in app.records)
             {
                 if (record._groupID == 0) continue;
                 if (record._groupID != currentGroupID)
@@ -585,7 +562,7 @@ namespace IndoorNavigation.Views.OPFM
                 }
             }
             Console.WriteLine("TotalNotComplete = " + TotalNotComplete);
-            if (TotalNotComplete>=2) return true;
+            if (TotalNotComplete >= 2) return true;
 
             return false;
         }
@@ -594,7 +571,7 @@ namespace IndoorNavigation.Views.OPFM
         {
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
 
-            if(item != null && app.records.Contains(item))
+            if (item != null && app.records.Contains(item))
             {
                 app.records.Remove(item);
             }
@@ -610,7 +587,7 @@ namespace IndoorNavigation.Views.OPFM
             {
                 await PopupNavigation.Instance.PushAsync
                    (new AlertDialogPopupPage(getResourceString("NO_SHIFT_STRING"), getResourceString("OK_STRING")));
-                isButtonPressed = false ;
+                isButtonPressed = false;
                 return;
             }
             else
@@ -623,7 +600,7 @@ namespace IndoorNavigation.Views.OPFM
                         (getResourceString("SHIFT_DESCRIPTION_STRING"),
                         getResourceString("OK_STRING"), "isCheckedNeverShow"));
                 }
-                CancelShiftCommand = new Command(async() =>await CancelShiftItemMethod());
+                CancelShiftCommand = new Command(async () => await CancelShiftItemMethod());
                 ToolbarItems.Clear();
 
                 ToolbarItem CancelShiftItem = new ToolbarItem
@@ -672,7 +649,7 @@ namespace IndoorNavigation.Views.OPFM
                 if (app.FinishCount == app.records.Count &&
                 app.lastFinished.type != RecordType.Register)
                 {
-                    if (app.HaveCashier && !PaymemtListBtn.IsEnabled)
+                    if (app.HaveCashier && !ExitAddBtn.IsEnabled)
                     {
                         await DisplayAlert(getResourceString("MESSAGE_STRING"),
                                     getResourceString("FINISH_SCHEDULE_STRING"),
@@ -683,20 +660,12 @@ namespace IndoorNavigation.Views.OPFM
                     }
                     else if (!app.HaveCashier)
                     {
-                        PaymemtListBtn.IsEnabled = true;
-                        PaymemtListBtn.IsVisible = true;
+                        ExitAddBtn.IsEnabled = true;
+                        ExitAddBtn.IsVisible = true;
                     }
                 }
                 int index = app.records.IndexOf(FinishBtnClickItem);
-                //for (int i = 0; i < app.records.Count; i++)
-                //{
-                //    if (!app.records[i].isAccept &&
-                //        app.records[i].order == FinishBtnClickItem.order &&
-                //        app.records[i]._groupID == app.records[i]._groupID)
-                //    {
-                //        return;
-                //    }
-                //}
+
                 if (app.OrderDistrict.ContainsKey(FinishBtnClickItem._groupID))
                 {
                     app.OrderDistrict[FinishBtnClickItem._groupID] = FinishBtnClickItem.order;
@@ -713,7 +682,7 @@ namespace IndoorNavigation.Views.OPFM
                         && app.records[i]._groupID == FinishBtnClickItem._groupID)
                         break;
 
-                    if (app.records[i].order == FinishBtnClickItem.order && app.records[i]._groupID == FinishBtnClickItem._groupID 
+                    if (app.records[i].order == FinishBtnClickItem.order && app.records[i]._groupID == FinishBtnClickItem._groupID
                         && (!app.records[i].isAccept && app.records[i].isComplete))
                         break;
                     if ((app.records[i].order <= FinishBtnClickItem.order + 1) &&
@@ -725,51 +694,51 @@ namespace IndoorNavigation.Views.OPFM
                 RefreshListView();
             }
         }
-        
+
         #endregion
 
         #region  For Get Value
         public void LoadPositionData()
         {
-            CashierPosition = new Dictionary<Guid, DestinationItem>();
-            PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+            //CashierPosition = new Dictionary<Guid, DestinationItem>();
+            //PharmacyPostition = new Dictionary<Guid, DestinationItem>();
             ElevatorPosition = new Dictionary<Guid, DestinationItem>();
-
+            XmlDocument doc;
             #region Load Cashier and Pharmacy position
-            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
-            XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
-            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
-            foreach (XmlNode node in CashiernodeList)
-            {
-                DestinationItem item = new DestinationItem();
+            //XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
+            //XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
+            //XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
+            //foreach (XmlNode node in CashiernodeList)
+            //{
+            //    DestinationItem item = new DestinationItem();
 
-                item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-                item._floor = node.Attributes["floor"].Value;
-                item._waypointName = node.Attributes["name"].Value;
+            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
+            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+            //    item._floor = node.Attributes["floor"].Value;
+            //    item._waypointName = node.Attributes["name"].Value;
 
-                Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
+            //    Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
 
-                CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            }
+            //    CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            //}
 
-            foreach (XmlNode node in PharmacyNodeList)
-            {
-                DestinationItem item = new DestinationItem();
-                item._regionID = new Guid(node.Attributes["region_id"].Value);
-                item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-                item._floor = node.Attributes["floor"].Value;
-                item._waypointName = node.Attributes["name"].Value;
+            //foreach (XmlNode node in PharmacyNodeList)
+            //{
+            //    DestinationItem item = new DestinationItem();
+            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
+            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
+            //    item._floor = node.Attributes["floor"].Value;
+            //    item._waypointName = node.Attributes["name"].Value;
 
-                PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            }
+            //    PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
+            //}
             #endregion
 
             #region Load Elevator
             doc = Storage.XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
             XmlNodeList ElevatorNodeList = doc.GetElementsByTagName("elevator");
 
-            foreach(XmlNode elevatorNode in ElevatorNodeList)
+            foreach (XmlNode elevatorNode in ElevatorNodeList)
             {
                 DestinationItem item = new DestinationItem();
 
@@ -792,7 +761,7 @@ namespace IndoorNavigation.Views.OPFM
             await Task.CompletedTask;
         }
 
-        
+
         private void swap<T>(ref List<T> list, int i, int j)
         {
             T tmp = list[i];
@@ -800,135 +769,6 @@ namespace IndoorNavigation.Views.OPFM
             list[j] = tmp;
             return;
         }
-        #region group swap function
-        //private void swap<T>(ref T i, ref T j)
-        //{
-        //    T tmp = i;
-        //    i = j;
-        //    j = tmp;
-        //}
-
-        
-        //private void swapRgRecord<T>(ref List<T> list, int first1, int last1, int first2, int last2)
-        //{
-        //    Console.WriteLine(">>Swap RgRecord");
-        //    //List<T> records = new List<T>();
-        //    Console.WriteLine("first1 ={0}, last1 ={1}, first2={2}, last2={3}", first1, last1, first2, last2);
-        //    if(first1 == last1 && first2 == last2)
-        //    {
-        //        swap(ref list, first1, first2);
-        //    }
-        //    else if ((first1 == last1 || first2 == last2))
-        //    {
-        //        //for ensure number 2 is one element.
-        //        if (first1 == last1)
-        //        {
-        //            swap(ref first1, ref first2);
-        //            swap(ref last1, ref last2);
-        //        }
-        //        bool isFirst = (first2 == 0);
-        //        T tmpPosition = isFirst ? list[0] : ((first2 < list.Count - 1) ? list[first2 + 1] : list[first2]);                
-        //        Console.WriteLine("TmpPosition = " + ((RgRecord)(object)tmpPosition).DptName);
-        //        T tmp = list[first2];
-        //        List<T> tmperoryList = list.GetRange(first1, last1 - first1 + 1);
-
-        //        foreach (T t in tmperoryList)
-        //        {
-        //            Console.WriteLine("Temproray list : " + ((RgRecord)((object)t)).DptName);
-        //        }
-        //        list.RemoveAt(first2);
-
-
-        //        list.Insert(first1, tmp);
-
-        //        //list.RemoveRange(list.IndexOf(tmperoryList[0]), tmperoryList.Count());
-        //        for (int i = 0; i < list.Count; i++)
-        //        {
-        //            for (int j = 0; j < tmperoryList.Count; j++)
-        //            {
-        //                if (list[i].Equals(tmperoryList[j]))
-        //                {
-        //                    list.RemoveAt(i);
-        //                }
-        //            }
-        //        }
-        //        foreach (T t in list)
-        //        {
-        //            Console.WriteLine("After Remove range : " + ((RgRecord)(object)t).DptName);
-        //        }
-        //        if (isFirst)
-        //        {
-        //            Console.WriteLine("is First position(index =0)");
-        //            list.InsertRange(0, tmperoryList);                    
-        //            foreach (T t in list)
-        //            {
-        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-        //            }
-        //        }
-        //        else if (tmpPosition.Equals(tmp))
-        //        {
-        //            Console.WriteLine("is Last position(index =count-1)");
-        //            list.AddRange(tmperoryList);                    
-        //            foreach (T t in list)
-        //            {
-        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("is middle position(index =1~count-2)");
-        //            Console.WriteLine("list count =" + list.Count);
-        //            Console.WriteLine("list index = " + list.IndexOf(tmpPosition));
-        //            if (list.IndexOf(tmpPosition) == -1)
-        //            {
-        //                list.InsertRange(list.IndexOf(tmp), tmperoryList);
-        //            }
-        //            else
-        //            {
-        //                list.InsertRange(list.IndexOf(tmpPosition), tmperoryList);
-        //            }
-        //            foreach (T t in list)
-        //            {
-        //                Console.WriteLine("After Add Range : " + ((RgRecord)((object)t)).DptName);
-        //            }
-        //        }
-        //    }                   
-        //    else
-        //    {
-        //        for (int i = first1, j = first2; i <= last1 || j <= last2; i++, j++)
-        //        {
-        //            if (i <= last1 && j <= last2)
-        //            {
-        //                Console.WriteLine("i&j< last, i = {0}, j={1}", i, j);
-        //                swap(ref list, i, j);
-        //            }
-        //            else if (i > last1)
-        //            {
-        //                Console.WriteLine("Current i is :" + i);
-        //                T tmp = list[j];
-        //                list.RemoveAt(j);
-
-        //                if (i < list.Count())
-        //                    list.Insert(i, tmp);
-        //                else
-        //                    list.Add(tmp);
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("Current j is : " + j);
-        //                T tmp = list[i];
-        //                list.RemoveAt(i);
-        //                if (j < list.Count())
-        //                    list.Insert(j, tmp);
-        //                else
-        //                    list.Add(tmp);
-        //            }
-        //        }
-        //    }
-        //    //return records;
-        //    Console.WriteLine("<<Swap RgRecord");
-        //}
-        #endregion
 
         private string getResourceString(string key)
         {
@@ -1009,11 +849,11 @@ namespace IndoorNavigation.Views.OPFM
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
             }
         }
-      
+
         private void RefreshListView()
         {
             isButtonPressed = false;
-            RgListView.ItemsSource = null;                       
+            RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
         }
         private void ReturnWhiteBackground()
@@ -1129,7 +969,7 @@ namespace IndoorNavigation.Views.OPFM
                 {
                     Text = getResourceString("CLEAR_STRING"),
                     Command = ClearItemCommand,
-                    Order = ToolbarItemOrder.Primary,                    
+                    Order = ToolbarItemOrder.Primary,
                 };
             ToolbarItem TestItem =
                 new ToolbarItem
@@ -1151,8 +991,8 @@ namespace IndoorNavigation.Views.OPFM
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
                 (this, "isReset", (msgSender, msgArgs) =>
                 {
-                    PaymemtListBtn.IsEnabled = app.FinishCount == app.records.Count;
-                    PaymemtListBtn.IsVisible = app.FinishCount == app.records.Count;
+                    ExitAddBtn.IsEnabled = app.FinishCount == app.records.Count;
+                    ExitAddBtn.IsVisible = app.FinishCount == app.records.Count;
 
                     Buttonable(true);
                     MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>
@@ -1200,7 +1040,7 @@ namespace IndoorNavigation.Views.OPFM
                 MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot");
             });
             isButtonPressed = false;
-        }        
+        }
         async private Task CancelShiftItemMethod()
         {
             RgListView.ItemTapped += RgListView_ItemTapped;
@@ -1239,6 +1079,38 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         #endregion
- 
+
+        #region New Process of OPPA
+
+        async private void ExitAddBtn_Clicked(object sender, EventArgs e)
+        {
+
+            Buttonable(false);
+
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
+            ExitAddBtn.IsVisible = false;
+            ExitAddBtn.IsEnabled = false;
+
+            app.HaveCashier = true;
+
+            //show select exit popup page. 
+            await PopupNavigation.Instance.PushAsync
+                (new ExitPopupPage(_navigationGraphName));
+            //remember to implement cancel messagingcenter  
+
+            MessagingCenter.Subscribe<ExitPopupPage, bool>(this, "ExitCancel",
+                (MsgSender, MsgArgs) =>
+                {
+                    MessagingCenter.Unsubscribe<ExitPopupPage, bool>
+                    (this, "ExitCancel");
+                });
+
+            isButtonPressed = false;
+        }
+
+
+        #endregion
     }
 }

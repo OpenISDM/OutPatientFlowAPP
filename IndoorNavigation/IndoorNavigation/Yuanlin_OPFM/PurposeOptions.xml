@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Purposes hospital="Yuanlin_Christian_Hospital" version="1.000">
-  <Purpose id="1" access_name="大腸鏡檢查" />
-  <Purpose id="2" access_name="手術前檢查" />
-  <Purpose id="3" access_name="例行看診" />
-  <Purpose id="4" access_name="看診" />  
-  <Purpose id="5" access_name="探病(?)" />  
+  <Purpose id="0" access_name="例行看診" />
+  <Purpose id="0" access_name="看診" />  
+  <Purpose id="1" access_name="大腸鏡檢查流程" />
+  <Purpose id="2" access_name="手術流程" />
 </Purposes>

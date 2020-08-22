@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Services;
@@ -11,6 +8,8 @@ using Rg.Plugins.Popup.Pages;
 using System.Xml;
 using static IndoorNavigation.Utilities.Storage;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
+using IndoorNavigation.Models;
+
 namespace IndoorNavigation.Views.PopUpPage
 
 {
@@ -49,13 +48,13 @@ namespace IndoorNavigation.Views.PopUpPage
                 option.id =
                     int.Parse(purposeNode.Attributes["id"].Value);
                 //this part I would like to consider add it or not.
-                if (purposeNode.HasChildNodes)
-                {
-                    foreach(XmlNode purposeChild in purposeNode.ChildNodes)
-                    {
-
-                    }
-                }
+                //if (purposeNode.HasChildNodes)
+                //{
+                //    foreach(XmlNode purposeChild in purposeNode.ChildNodes)
+                //    {
+                        
+                //    }
+                //}
 
                 options.Add(option.OptionName, option);
             }            
@@ -65,9 +64,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private void SetRadioButton()
         {
             foreach (KeyValuePair<string, PurposeOption> pair in options)
-            {
-                Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                
+            {                
                 RadioButton raido = new RadioButton
                 {
                     Text = pair.Key,
@@ -94,13 +91,36 @@ namespace IndoorNavigation.Views.PopUpPage
                 {
                     //add Content to it.
 
+                    if(options[optionButton.Text].id != 0)
+                    {
+                        HospitalProcessParse processParse = 
+                            new HospitalProcessParse();
+
+                        List<RgRecord> processes=
+                            processParse.ParseProcess(
+                                new ProcessOption
+                                {
+                                    processID = 
+                                        options[optionButton.Text].id
+                                        .ToString(),
+                                    processName = optionButton.Text
+                                }).ToList();
+
+                        foreach(RgRecord process in processes)
+                        {
+                            ((App)Application.Current).records.Add(process);
+                        }
+                    }                                        
                     await PopupNavigation.Instance.RemovePageAsync(this);
+
+                    await PopupNavigation.Instance.PushAsync
+                        (new AskRegisterPopupPage(_naviGraphName));
                     return;
                 }
-            }                             
+            }
 
             //show please select one.
-
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請選一個目的。", "確定"));
             isButtonClick = false;
         }
 

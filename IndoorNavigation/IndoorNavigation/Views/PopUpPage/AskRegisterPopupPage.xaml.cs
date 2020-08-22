@@ -41,7 +41,6 @@ namespace IndoorNavigation.Views.PopUpPage
         public AskRegisterPopupPage(string navigraphName)
         {
             InitializeComponent();
-            //BackgroundColor = Color.FromRgba(150, 150, 150, 70);
 
             _navigationGraphName = navigraphName;
             _XmlInfo = LoadXmlInformation(navigraphName);
@@ -82,7 +81,7 @@ namespace IndoorNavigation.Views.PopUpPage
         async private void RegisterOKBtn_Clicked(object sender, EventArgs e)
         {
             if (ButtonLock) return;
-            ResetAllState();
+            //ResetAllState();
             ButtonLock = true;
             app.getRigistered = true;
             int order =
@@ -137,14 +136,16 @@ namespace IndoorNavigation.Views.PopUpPage
         //HttpRequest request = new HttpRequest();
         YunalinHttpRequestFake FakeHISRequest = new YunalinHttpRequestFake();
         async private Task CancelorClickBack()
+        //private void CancelorClickBack()
         {
-            ResetAllState();
+            //ResetAllState();
             app.getRigistered = false;
 
             //await FakeHISRequest.RequestFakeHIS();
             //request.GetXMLBody();
             //await request.RequestData();
-            MessagingCenter.Send(this, "isReset", true);
+            //MessagingCenter.Send(this, "isReset", true);
+            await Task.CompletedTask;
         }
 
         private void ResetAllState()

@@ -79,7 +79,8 @@ namespace IndoorNavigation.ViewModels
         }
         async public void CheckRegister()
         {
-		   await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage(_naviGraphName));                       
+            //await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage(_naviGraphName));                       
+            await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage(_naviGraphName));
         }               
         private string GetResourceString(string key)
         {
