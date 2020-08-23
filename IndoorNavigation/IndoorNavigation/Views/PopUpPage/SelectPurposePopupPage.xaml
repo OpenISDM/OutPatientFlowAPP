@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  xmlns:input ="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.PopUpPage.SelectPurposePopupPage">
@@ -15,7 +16,10 @@
                Margin="15,0,15,0"
                CornerRadius="8">
             <StackLayout>
-                <Label x:Name="SelectPurposeLab"/>
+                <Label x:Name="SelectPurposeLab" Text="請選擇您來醫院的目的。"
+                       FontSize="32"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="CenterAndExpand"/>
 
                 <ScrollView VerticalOptions="Start"
                             HorizontalOptions="FillAndExpand"
@@ -25,9 +29,20 @@
                                                 Margin="5,0,5,0"/>
                     
                 </ScrollView>
-                <Button x:Name="SelectPurposeBtn" 
-                        Text="OK_STRING" 
-                        Clicked="SelectPurposeBtn_Clicked"/>
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="EndAndExpand"
+                             HorizontalOptions="EndAndExpand">
+                    <Button x:Name="CancelSelectBtn"
+                            Text="{i18n:Translate CANCEL_STRING}"
+                            HorizontalOptions="End"
+                            Clicked="CancelSelectBtn_Clicked"
+                            VerticalOptions="End"/>
+                    <Button x:Name="ConfirmSelectBtn"
+                            Text="{i18n:Translate OK_STRING}"
+                            Clicked="SelectPurposeBtn_Clicked"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"/>
+                </StackLayout>
             </StackLayout>
         </Frame>
     </StackLayout>

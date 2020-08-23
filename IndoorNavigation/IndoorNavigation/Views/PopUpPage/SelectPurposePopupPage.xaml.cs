@@ -9,6 +9,7 @@ using System.Xml;
 using static IndoorNavigation.Utilities.Storage;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 using IndoorNavigation.Models;
+using Rg.Plugins.Popup.Extensions;
 
 namespace IndoorNavigation.Views.PopUpPage
 
@@ -136,6 +137,16 @@ namespace IndoorNavigation.Views.PopUpPage
             // return false, if you don't want the page to pop when user 
             // click background.
             return false;
+        }
+
+        async private void CancelSelectBtn_Clicked(object sender, EventArgs e)
+        {
+            Page page = Application.Current.MainPage;
+
+            ((App)Application.Current).isRigistered = false;
+
+            await page.Navigation.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
         }
     }
     public class PurposeOption

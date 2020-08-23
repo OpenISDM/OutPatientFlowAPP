@@ -62,11 +62,11 @@ namespace IndoorNavigation.Views.OPFM
             ExitAddBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
-                (app.HaveCashier) &&
+                //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             ExitAddBtn.IsVisible = app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
-                (app.HaveCashier) &&
+                //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             LoadPositionData();
             BindingContext = _viewmodel;
@@ -79,26 +79,27 @@ namespace IndoorNavigation.Views.OPFM
             Console.WriteLine(">>OnAppearing");
             _viewmodel = new RegisterListViewModel(_navigationGraphName);
 
-            RefreshListView();
-
-            //AddBtn.CornerRadius =
-            //    (int)(Math.Min(AddBtn.Height, AddBtn.Width) / 2);
-            //ShiftBtn.CornerRadius =
-            //    (int)(Math.Min(ShiftBtn.Height, ShiftBtn.Width) / 2);
+            RefreshListView();           
 
             if (app.HaveCashier && !ExitAddBtn.IsEnabled)
                 Buttonable(false);
 
-            ExitAddBtn.IsEnabled =
-                app.records.Count() > 0 &&
-                (app.FinishCount == app.records.Count) &&
-                (!app.HaveCashier) &&
-                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
-            ExitAddBtn.IsVisible =
-                app.records.Count() > 0 &&
-                (app.FinishCount == app.records.Count) &&
-                (!app.HaveCashier) &&
-                !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+            ExitAddBtn.IsEnabled = app.records.Count > 0 &&
+                app.FinishCount == app.records.Count &&
+                !   (app.records.Count == 1 && 
+                    app.records[0].type == RecordType.Register);
+                //app.records.Count() > 0 &&
+                //(app.FinishCount == app.records.Count) &&
+                //(!app.HaveCashier) &&
+                //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+            ExitAddBtn.IsVisible = app.records.Count > 0 &&
+                app.FinishCount == app.records.Count &&
+                !(app.records.Count == 1 &&
+                    app.records[0].type == RecordType.Register);
+            //app.records.Count() > 0 &&
+            //(app.FinishCount == app.records.Count) &&
+            //(!app.HaveCashier) &&
+            //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
             {
@@ -567,13 +568,18 @@ namespace IndoorNavigation.Views.OPFM
             return false;
         }
 
-        private void ListviewItem_Delete(object sender, EventArgs args)
+        async private void ListviewItem_Delete(object sender, EventArgs args)
         {
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
-
-            if (item != null && app.records.Contains(item))
+          
+            if (item != null)
             {
-                app.records.Remove(item);
+                if(item.type == RecordType.Exit || item._groupID !=0)
+                {
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("這個項目無法被刪除", "確定"));
+                }
+                else if(app.records.Contains(item))
+                    app.records.Remove(item);
             }
         }
         async private void ShiftBtn_Clicked(object sender, EventArgs e)
@@ -645,24 +651,28 @@ namespace IndoorNavigation.Views.OPFM
                         break;
                 }
                 _multiItemFinish(FinishBtnClickItem);
-
+                Console.WriteLine("Current Finish count : " + app.FinishCount);
+                
                 if (app.FinishCount == app.records.Count &&
-                app.lastFinished.type != RecordType.Register)
+                app.lastFinished.type != RecordType.Register &&
+                app.lastFinished.type != RecordType.Exit)
                 {
-                    if (app.HaveCashier && !ExitAddBtn.IsEnabled)
-                    {
-                        await DisplayAlert(getResourceString("MESSAGE_STRING"),
-                                    getResourceString("FINISH_SCHEDULE_STRING"),
-                                    getResourceString("OK_STRING"));
+                    ExitAddBtn.IsEnabled = true;
+                    ExitAddBtn.IsVisible = true;
+                    //if (app.HaveCashier && !ExitAddBtn.IsEnabled)
+                    //{
+                    //    await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                    //                getResourceString("FINISH_SCHEDULE_STRING"),
+                    //                getResourceString("OK_STRING"));
 
-                        await PopupNavigation.Instance.PushAsync
-                            (new ExitPopupPage(_navigationGraphName));
-                    }
-                    else if (!app.HaveCashier)
-                    {
-                        ExitAddBtn.IsEnabled = true;
-                        ExitAddBtn.IsVisible = true;
-                    }
+                    //    await PopupNavigation.Instance.PushAsync
+                    //        (new ExitPopupPage(_navigationGraphName));
+                    //}
+                    //else if (!app.HaveCashier)
+                    //{
+                    //    ExitAddBtn.IsEnabled = true;
+                    //    ExitAddBtn.IsVisible = true;
+                    //}
                 }
                 int index = app.records.IndexOf(FinishBtnClickItem);
 
@@ -880,8 +890,8 @@ namespace IndoorNavigation.Views.OPFM
         async private void RegisterFinish(RgRecord record)
         {
             //this part might happend bugs
-
-            await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
+            IndicatorPopupPage busyPage = new IndicatorPopupPage();
+            await PopupNavigation.Instance.PushAsync(busyPage);
             Console.WriteLine("Register Finished");
             bool NetworkConnectAbility = true;
 
@@ -890,6 +900,7 @@ namespace IndoorNavigation.Views.OPFM
                 await ReadXml();
                 Console.WriteLine("ReadXml finished");
                 ItemFinishFunction(record);
+                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請將掛號的內容加入清單中，謝謝", "確定"));
             }
             else
             {
@@ -913,7 +924,8 @@ namespace IndoorNavigation.Views.OPFM
             }
 
             //BusyIndicatorShow(false);
-            await PopupNavigation.Instance.PopAsync();
+            //await PopupNavigation.Instance.PopAsync();
+            await PopupNavigation.Instance.RemovePageAsync(busyPage);
         }
         async private void ExitFinish(RgRecord record)
         {
@@ -1024,6 +1036,7 @@ namespace IndoorNavigation.Views.OPFM
                     app.records.Clear();
                     app._TmpRecords.Clear();
                     app.OrderDistrict.Clear();
+                    app.FinishCount = 0;
                     app.HaveCashier = false;
                     app.lastFinished = null;
                     app.isRigistered = false;
