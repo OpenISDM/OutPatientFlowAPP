@@ -62,8 +62,7 @@ namespace IndoorNavigation.Modules
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
 
-        private EventHandler _navigationResultEventHandler;
-        private PhoneInformation _phoneInfomation;
+        private EventHandler _navigationResultEventHandler;        
         public NavigationEvent _event { get; private set; }
 
         public NavigationModule(string navigationGraphName,
@@ -71,7 +70,7 @@ namespace IndoorNavigation.Modules
                                 Guid destinationWaypointID)
         {
             _event = new NavigationEvent();
-            _phoneInfomation = new PhoneInformation();
+
             _navigationGraphName = navigationGraphName;
             _destinationRegionID = destinationRegionID;
             _destinationWaypointID = destinationWaypointID;

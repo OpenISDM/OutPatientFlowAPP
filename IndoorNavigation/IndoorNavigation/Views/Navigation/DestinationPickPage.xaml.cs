@@ -81,7 +81,6 @@ namespace IndoorNavigation.Views.Navigation
             _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
-            PhoneInformation phoneInformation = new PhoneInformation();
             _navigationGraph = Storage.LoadNavigationGraphXml(_navigationGraphName);
             _nameInformation = Storage.LoadXmlInformation(_navigationGraphName);
             app = (App)Application.Current;

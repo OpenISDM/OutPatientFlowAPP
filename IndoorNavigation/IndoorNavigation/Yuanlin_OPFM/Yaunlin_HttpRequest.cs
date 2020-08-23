@@ -48,6 +48,8 @@ using Plugin.Multilingual;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
+
 namespace IndoorNavigation.Models
 {
     class HttpRequest
@@ -79,8 +81,8 @@ namespace IndoorNavigation.Models
                 taiwanCalendar.GetYear(app.RgDate)
                 + app.RgDate.ToString("MMdd");
 
-            XmlDocument doc =
-                NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+            XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
+                //NavigraphStorage.XmlReader("Yuanlin_OPFM.RequestBody.xml");
 
             XmlNodeList xmlNodeList = doc.GetElementsByTagName("hs:Document");
 
