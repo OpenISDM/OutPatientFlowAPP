@@ -8,17 +8,38 @@
              x:Class="IndoorNavigation.Views.PopUpPage.AutoAdjustPopupPage">
     <ContentPage.Content>
         <StackLayout>
-            <Frame BackgroundColor="White">
+            <Frame BackgroundColor="White"
+                   x:Name="AutoAdjustFrame"
+                   CornerRadius="8"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="15,0,15,0">
                 <StackLayout>
+                    <Label x:Name="CurrentPositionLabel"
+                           Text="目前位置 : 未知"
+                           FontSize="32"/>
+
+                    <Label x:Name="DetectSignalLabel"
+                           Text="偵測訊號中..."
+                           FontSize="Large"/>
+                    <Image x:Name="ScanningImage" Source="waittingscan.gif"
+                           IsAnimationPlaying="True"
+                           />
+                    <Button x:Name="CancelBtn" Text="取消" FontSize="Medium"
+                            Clicked="CancelBtn_Clicked"
+                            HorizontalOptions="EndAndExpand"
+                            VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+                <!--<StackLayout>
                     <Label x:Name="AdjustLab" FontSize="Large"/>
-                    <!--show first use or it will start to auto adjust.
+                    --><!--show first use or it will start to auto adjust.
                         If your think it is still not stable, user can
                         auto adjust again or manual adjust.
-                    -->
+                    --><!--
                     <StackLayout>
                         <Button x:Name="AdjustBtn" Text="OK" Clicked="AdjustBtn_Clicked"/>
                     </StackLayout>
-                </StackLayout>
+                </StackLayout>-->
             </Frame>
         </StackLayout>
     </ContentPage.Content>

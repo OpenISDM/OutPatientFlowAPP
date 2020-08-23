@@ -199,5 +199,10 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
+
+        async private void CancelBtn_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.RemovePageAsync(this);
+        }
     }
 }
