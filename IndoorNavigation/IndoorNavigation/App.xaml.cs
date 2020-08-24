@@ -166,7 +166,7 @@ namespace IndoorNavigation
             Utility._textToSpeech = DependencyService.Get<ITextToSpeech>();
             //Utility.SignalProcess = new SignalProcessModule();
 
-            OPPA_TmperorayStatus.RestoreAllState();            
+            TmperorayStatus.RestoreAllState();            
             LoadSupportList();            
         }
 
@@ -182,7 +182,7 @@ namespace IndoorNavigation
                 _globalNavigatorPage.OnPause();
             }
 
-            OPPA_TmperorayStatus.StoreAllState();
+            TmperorayStatus.StoreAllState();
             base.OnSleep();
         }
 

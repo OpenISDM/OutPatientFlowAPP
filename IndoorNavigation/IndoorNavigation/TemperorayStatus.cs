@@ -9,10 +9,18 @@ using System.Collections.ObjectModel;
 
 namespace IndoorNavigation.Utilities
 {    
-    public static class OPPA_TmperorayStatus
+    public static class TmperorayStatus
     {
         private static ISettings AppSettings => CrossSettings.Current;
         #region Attributes Get-Set define
+
+        public static bool FirstTimeUse
+        {
+            //get => AppSettings.GetValueOrDefault(nameof(FirstTimeUse), false);
+            get => false;
+            set => AppSettings.AddOrUpdateValue(nameof(FirstTimeUse), value);
+        }
+
         public static int FinishCount
         {
             get => AppSettings.GetValueOrDefault(nameof(FinishCount), 0);
@@ -121,7 +129,8 @@ namespace IndoorNavigation.Utilities
 
             Console.WriteLine("<<RestoreAllState");
         }
-        static private T GetJsonObject<T>(string jsonString) where T : class, new()
+        static private T GetJsonObject<T>(string jsonString) 
+            where T : class, new()
         {
             Console.WriteLine("Json String = " + jsonString);
             if (string.IsNullOrEmpty(jsonString))

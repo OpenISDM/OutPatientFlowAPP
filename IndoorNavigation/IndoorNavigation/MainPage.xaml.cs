@@ -68,7 +68,7 @@ using Location = IndoorNavigation.ViewModels.Location;
 using static IndoorNavigation.Utilities.Storage;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using static IndoorNavigation.Utilities.TmperorayStatus;
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -242,8 +242,23 @@ namespace IndoorNavigation
             if (e.Item is Location location)
             {
                 NavigationGraph navigationGraph =
-                    Storage.LoadNavigationGraphXml(location.sourcePath);
+                    LoadNavigationGraphXml(location.sourcePath);
 
+                if (!FirstTimeUse)
+                {
+                    Console.WriteLine("it's first Time use!");
+
+                    AlertDialogPopupPage alertPage =
+                        new AlertDialogPopupPage("歡迎使用，即將開啟訊號自動校正", "確定");
+
+                    bool isReturn = await alertPage.show();
+
+                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("歡迎使用，即將開啟訊號自動校正", "確定"));
+
+                    await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage(location.sourcePath));
+                }
+
+                #region
                 //this place will implement the check server side resource.
                 //if(CheckVersionNumber(location.sourcePath, 
                 //    navigationGraph.GetVersion(), 
@@ -253,6 +268,8 @@ namespace IndoorNavigation
 
                 //    if (WantToUpdate) EmbeddedGenerateFile(location.sourcePath);
                 //}
+                #endregion
+
                 CheckVersionAndUpdate(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
@@ -369,32 +386,35 @@ namespace IndoorNavigation
                 });
             }
         }
-            
 
+
+
+
+        #region iOS SecondToolBarItem Attributes
         async private Task AddSiteItemMethod()
         {
             IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
             _download = new CloudDownload();
 
-            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 setting = DependencyService.Get<INetworkSetting>();
 
                 await PopupNavigation.Instance.PushAsync
                                (new AlertDialogPopupPage
                                (_resourceManager.GetString
-                               ("BAD_NETWORK_STRING", currentLanguage), 
+                               ("BAD_NETWORK_STRING", currentLanguage),
                                _resourceManager.GetString
-                               ("GO_TO_SETTING", currentLanguage), 
+                               ("GO_TO_SETTING", currentLanguage),
                                _resourceManager.GetString
-                               ("NO_STRING", currentLanguage), 
+                               ("NO_STRING", currentLanguage),
                                "GoToSettingInAdd"));
                 MessagingCenter.Subscribe
                     <AlertDialogPopupPage, bool>
                     (this, "GoToSettingInAdd", (msgSender, msgArgs) =>
                     {
                         if ((bool)msgArgs)
-                        {                            
+                        {
                             setting.OpenSettingPage();
                         }
 
@@ -403,14 +423,14 @@ namespace IndoorNavigation
                         (this, "GoToSettingInAdd");
                     });
             }
-            else if (_serverResources != null) 
+            else if (_serverResources != null)
             {
                 Console.WriteLine("_serverResource != null");
                 await PopupNavigation.Instance.PushAsync(busyPopupPage);
                 await Navigation.PushAsync(new EditLocationPage());
                 await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
             }
-            else if(Connectivity.NetworkAccess == NetworkAccess.Internet)
+            else if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 Console.WriteLine("The network is fine");
                 await PopupNavigation.Instance.PushAsync(busyPopupPage);
@@ -427,11 +447,11 @@ namespace IndoorNavigation
                     await PopupNavigation.Instance.PushAsync
                                (new AlertDialogPopupPage
                                (_resourceManager.GetString
-                               ("HAPPEND_ERROR_STRING",currentLanguage), 
+                               ("HAPPEND_ERROR_STRING", currentLanguage),
                                _resourceManager.GetString
                                ("RETRY_STRING", currentLanguage),
                                _resourceManager.GetString
-                               ("NO_STRING", currentLanguage), 
+                               ("NO_STRING", currentLanguage),
                                "WantRetryInAdd"));
                     MessagingCenter.Subscribe
                         <AlertDialogPopupPage, bool>
@@ -447,12 +467,9 @@ namespace IndoorNavigation
                                     (this, "WantRetryInAdd");
                         });
                 }
-            }          
-           
+            }
+
         }
-
-        #region iOS SecondToolBarItem Attributes
-
         public ICommand SettingCommand { get; set; }
         public ICommand AddSiteCommand { get; set; }
         private void RefreshToolbarOptions()
@@ -525,7 +542,9 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            await Navigation.PushAsync(new TestPage());
+            //await Navigation.PushAsync(new TestPage());
+            //await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage("Lab"));
+            await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("Taipei_City_Hall"));
             await Task.CompletedTask;
         }
 

@@ -11,7 +11,7 @@ using Rg.Plugins.Popup.Pages;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
-using static IndoorNavigation.Utilities.OPPA_TmperorayStatus;
+using static IndoorNavigation.Utilities.TmperorayStatus;
 using System.Threading;
 using System.Net.Http.Headers;
 using IndoorNavigation.Modules.IPSClients;

@@ -39,6 +39,8 @@ using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Extensions;
+
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -63,6 +65,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     Value=Color.Transparent}
             }
         };
+
+        TaskCompletionSource<bool> _tcs = null;
 
         #region for no button view that it will be closed by page itself   
         public AlertDialogPopupPage(string context)
@@ -143,6 +147,8 @@ namespace IndoorNavigation.Views.PopUpPage
             if (isButtonClicked) return;
             isButtonClicked = true;
 
+            _tcs?.SetResult(false);
+
             _backClick();
         }
 
@@ -164,6 +170,14 @@ namespace IndoorNavigation.Views.PopUpPage
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             _backClick();
+        }
+
+        public async Task<bool> show()
+        {
+            _tcs = new TaskCompletionSource<bool>();
+            await Navigation.PushPopupAsync(this);
+
+            return await _tcs.Task;
         }
         #endregion
     }
