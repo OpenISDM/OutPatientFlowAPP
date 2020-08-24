@@ -94,6 +94,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private string _currentStepLabelName = " ";
         private string _currentStepImageName;
         private string _firstDirectionPicture;
+        private string _naviGraphName;
         private int _firstDirectionRotationValue;
         private int _firsrDirectionInstructionScaleVale;
         private int _instructionLocation;
@@ -147,6 +148,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                                     typeof(TranslateExtension)
                                     .GetTypeInfo().Assembly);
 
+            _naviGraphName = navigationGraphName;
+
             CurrentWaypointName =
                 _resourceManager.GetString("NULL_STRING", currentLanguage);
             CurrentStepLabel =
@@ -162,7 +165,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         public void Stop()
         {
-
             _navigationModule.onStop();
         }
 
@@ -950,7 +952,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                 {
                     tempMainPage.Navigation.RemovePage(tempMainPage.Navigation.NavigationStack[PageIndex]);
                 }
-                await tempMainPage.Navigation.PushAsync(new NavigatorSettingPage(), true);
+                await tempMainPage.Navigation.PushAsync
+                    (new NavigatorSettingPage(_naviGraphName), true);
                 await tempMainPage.DisplayAlert(
                     _resourceManager.GetString("WARN_STRING", currentLanguage),
                     _resourceManager.GetString
