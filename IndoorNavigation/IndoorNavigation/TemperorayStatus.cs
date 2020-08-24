@@ -16,8 +16,8 @@ namespace IndoorNavigation.Utilities
 
         public static bool FirstTimeUse
         {
-            //get => AppSettings.GetValueOrDefault(nameof(FirstTimeUse), false);
-            get => false;
+            get => AppSettings.GetValueOrDefault(nameof(FirstTimeUse), false);
+            //get => false;
             set => AppSettings.AddOrUpdateValue(nameof(FirstTimeUse), value);
         }
 

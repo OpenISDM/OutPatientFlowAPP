@@ -265,7 +265,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         Key = key++
                     };
                     BoxLayout.Children.Add(box);
-
+                    item._checkbox = box;
                 }
 
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
@@ -599,6 +599,39 @@ namespace IndoorNavigation.Views.PopUpPage
                 (app.records.Count) :
                 (app.records.IndexOf(app.roundRecord) + 1);
             int dumplicateCount = 0;
+
+            #region Part of Others
+            foreach (string otherItemName in OtherItemList) 
+            {
+                List<AddExaminationItem> items = 
+                    _examinationItemDict[otherItemName];
+
+                foreach(AddExaminationItem item in items)
+                {
+                    if (!item._checkbox.IsChecked) continue;
+
+                    bool isDuplicate =
+                        app.records.Any(p => p._waypointName == item._waypointName &&
+                        p.isAccept == false && p.DptName == item._waypointName);
+
+                    dumplicateCount++;
+                    if (isDuplicate) continue;
+
+                    app.records.Add(new RgRecord
+                    {
+                        order = 1,
+                        _groupID = 0,
+                        type = item.type,
+                        _waypointID = item._waypointID,
+                        _regionID = item._regionID,
+                        _waypointName = item._waypointName,
+                        DptName = item._waypointName
+                    });
+                    count++;
+                }
+            }
+            #endregion
+
             #region Part of Process combo
             foreach (CheckBox optionBox in processBoxes)
             {
@@ -643,12 +676,10 @@ namespace IndoorNavigation.Views.PopUpPage
             foreach (string floorClinic in ClinicList)
             {
                 List<AddExaminationItem> items = _examinationItemDict[floorClinic];
-
-                //List<CheckBox> Boxes = BoxesDict[floorClinic];
-
                 foreach(AddExaminationItem item in items)
                 {
                     if (!item._checkbox.IsChecked) continue;
+
                     dumplicateCount++;
                     bool isDuplicate =
                         app.records.Any(p =>

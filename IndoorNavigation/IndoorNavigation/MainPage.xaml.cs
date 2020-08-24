@@ -261,9 +261,10 @@ namespace IndoorNavigation
                         new AutoAdjustPopupPage(location.sourcePath);
 
                     isReturn = await autoAdjustPage.Show();
-                    //await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage(location.sourcePath));
 
+                    Console.WriteLine("aaaaaaaaa");
                     FirstTimeUse = true;
+                    Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
 
                 #region
