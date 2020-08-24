@@ -3,6 +3,7 @@
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:i18n ="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.PopUpPage.AutoAdjustPopupPage">
@@ -15,20 +16,31 @@
                    HorizontalOptions="FillAndExpand"
                    Margin="15,0,15,0">
                 <StackLayout>
-                    <Label x:Name="CurrentPositionLabel"
-                           Text="目前位置 : 未知"
-                           FontSize="32"/>
-
-                    <Label x:Name="DetectSignalLabel"
-                           Text="偵測訊號中..."
-                           FontSize="Large"/>
-                    <Image x:Name="ScanningImage" Source="waittingscan.gif"
-                           IsAnimationPlaying="True"
-                           />
-                    <Button x:Name="CancelBtn" Text="取消" FontSize="Medium"
+                    <StackLayout x:Name="AutoAdjustLayout">
+                        <Label Text="請至任意路口，按下開始" FontSize="Large"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="FillAndExpand">
+                        <Button x:Name="StartBtn" 
+                                Text="Start" 
+                                FontSize="Medium"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="End"
+                                Clicked="StartBtn_Clicked"/>
+                        
+                        <Button x:Name="CancelBtn"
+                                Text="Cancel"
+                                FontSize="Medium"
+                                HorizontalOptions="EndAndExpand"
+                                IsVisible="false"
+                                VerticalOptions="End"
+                                Clicked="CancelBtn_Clicked"/>
+                    </StackLayout>
+                        
+                    <!--<Button x:Name="CancelBtn" Text="取消" FontSize="Medium"
                             Clicked="CancelBtn_Clicked"
                             HorizontalOptions="EndAndExpand"
-                            VerticalOptions="EndAndExpand"/>
+                            VerticalOptions="EndAndExpand"/>-->
                 </StackLayout>
                 <!--<StackLayout>
                     <Label x:Name="AdjustLab" FontSize="Large"/>

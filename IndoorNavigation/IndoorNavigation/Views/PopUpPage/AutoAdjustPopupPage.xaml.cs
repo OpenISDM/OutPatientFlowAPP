@@ -16,6 +16,8 @@ using System.Threading;
 using System.Net.Http.Headers;
 using IndoorNavigation.Modules.IPSClients;
 using Rg.Plugins.Popup.Services;
+using MvvmHelpers;
+using IndoorNavigation.Resources;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -47,8 +49,10 @@ namespace IndoorNavigation.Views.PopUpPage
         private Thread _detectWaypointThread;
         private Thread _detectPositionControllThread;
         private List<int> _AllRssiList;
+        private XMLInformation _nameInformation;
         private ManualResetEventSlim _detectThreadEvent;
-        
+
+        string _currentPosition = AppResources.CURRENT_LOCATION_STRING;
         #endregion
         public AutoAdjustPopupPage(string _naviGraphName)
         {
@@ -60,18 +64,25 @@ namespace IndoorNavigation.Views.PopUpPage
             _ipsModules = new IPSmodule_(_navigationGraph);
             _AllRssiList = new List<int>();
 
+            _nameInformation = LoadXmlInformation(_naviGraphName);
+
             _currentRegionID = new Guid();
             _currentWaypointID = new Guid();
-            Console.WriteLine("eeeeeeeeeeeeeeee");
+
             _ipsModules._event._eventHandler +=
                 new EventHandler(DetecWaypointResult);
-            Console.WriteLine("qqqqqqqqqqqqq");
+            
             _detectWaypointThread = new Thread(() => InvokeIPSWork());
-            _detectPositionControllThread = new Thread(() => ScanPosition());
+            _detectPositionControllThread = new Thread(() => ScanPosition());          
 
-            _detectPositionControllThread.Start();
-            _detectWaypointThread.Start();
             Console.WriteLine("<<AutoAdjustPopupPage : Constructor");
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+
         }
 
         private bool isEmptyGuid(Guid guid)
@@ -93,20 +104,23 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 _detectThreadEvent.Reset();
                 ScanPosition();                
-            }           
+            }
+
+            // Console.WriteLine("現在位置 : " + _navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID));
             
-            Console.WriteLine("現在位置 : " + _navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID));
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                string currentPosition =
+                    _nameInformation.GiveWaypointName(_currentWaypointID);
+                SetScanRssiView(currentPosition);
+            });
+
             _isKeepDetection = false;
 
             _ipsModules.CloseAllActiveClient();
 
-            DetectPositionThreshold();
-
-            //SetRssiOption();
-            //SetRssiOption();
-            //Show result and remove delegate.
-            //_ipsModules._event._eventHandler -=
-            //    new EventHandler(DetecWaypointResult);
+            DetectPositionThreshold();         
         }           
 
       
@@ -176,8 +190,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private void Stop()
         {
             //if onSleep, need to handle it?
-        }        
-        
+        }                
         
         private void InvokeIPSWork()
         {
@@ -195,14 +208,70 @@ namespace IndoorNavigation.Views.PopUpPage
             _isKeepDetection = false;
             _ipsModules.CloseAllActiveClient();
         }
-        async private void AdjustBtn_Clicked(object sender, EventArgs e)
-        {
-            await PopupNavigation.Instance.RemovePageAsync(this);
-        }
 
+        #region Click event function
         async private void CancelBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
+
+        private void StartBtn_Clicked(object sender, EventArgs e)
+        {
+            SetStartScanView();
+
+            // start to scan position
+            _detectPositionControllThread.Start();
+            _detectWaypointThread.Start();
+        }
+
+        private void SetStartScanView()
+        {
+            #region control button show
+            StartBtn.IsVisible = false;
+            CancelBtn.IsVisible = true;
+            #endregion
+
+            AutoAdjustLayout.Children.Clear();
+
+            AutoAdjustLayout.Children.Add(new Label
+            {
+                Text="正在偵測位置",
+                FontSize = 32
+            });
+
+            AutoAdjustLayout.Children.Add(new Image
+            {
+                Source = "waittingscan.gif",
+                IsAnimationPlaying = true
+            });
+        }
+
+        private void SetScanRssiView(string currentPosition)
+        {
+            AutoAdjustLayout.Children.Clear();
+
+            AutoAdjustLayout.Children.Add(new Label
+            {
+                //show current position.
+                Text = string.Format(AppResources.CURRENT_LOCATION_STRING,
+                currentPosition),
+                FontSize = 32
+            });
+
+            AutoAdjustLayout.Children.Add(new Label
+            {
+                Text = "正在校正訊號",
+                Margin = new Thickness(10,0,10,0),
+                FontSize = 28
+            });
+
+            AutoAdjustLayout.Children.Add(new Image
+            {
+                Source = "waittingscan.gif",
+                IsAnimationPlaying = true
+            });
+        }
+        #endregion
     }
+
 }
