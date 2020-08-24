@@ -157,6 +157,8 @@ namespace IndoorNavigation.Views.PopUpPage
             if (isButtonClicked) return;
             isButtonClicked = true;
 
+
+            _tcs?.SetResult(true);
             await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, _message, true);
         }
@@ -175,8 +177,7 @@ namespace IndoorNavigation.Views.PopUpPage
         public async Task<bool> show()
         {
             _tcs = new TaskCompletionSource<bool>();
-            await Navigation.PushPopupAsync(this);
-
+            await Navigation.PushPopupAsync(this);            
             return await _tcs.Task;
         }
         #endregion
