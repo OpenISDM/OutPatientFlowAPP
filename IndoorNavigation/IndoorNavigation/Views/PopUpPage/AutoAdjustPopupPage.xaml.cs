@@ -18,6 +18,7 @@ using IndoorNavigation.Modules.IPSClients;
 using Rg.Plugins.Popup.Services;
 using MvvmHelpers;
 using IndoorNavigation.Resources;
+using Rg.Plugins.Popup.Extensions;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -52,6 +53,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private XMLInformation _nameInformation;
         private ManualResetEventSlim _detectThreadEvent;
 
+        private TaskCompletionSource<bool> _tcs = null;
         string _currentPosition = AppResources.CURRENT_LOCATION_STRING;
         #endregion
         public AutoAdjustPopupPage(string _naviGraphName)
@@ -158,9 +160,8 @@ namespace IndoorNavigation.Views.PopUpPage
             int midian = count % 2 != 0 ?
                 (int)_AllRssiList[mid] :
                 (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
-
-            Application.Current.Properties["RSSI_Test_Adjustment"] = 
-                (int)_currentBeaconRssi - midian;
+         
+            RssiOption = (int)_currentBeaconRssi - midian;
             Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
         }
 
@@ -180,18 +181,29 @@ namespace IndoorNavigation.Views.PopUpPage
                 {
                     SetRssiOption();
                     _ipsModules.CloseAllActiveClient();
+                    Device.BeginInvokeOnMainThread(async() =>
+                    {
+                        //show finish scan page                     
+                        await PopupNavigation.Instance.RemovePageAsync(this);
+
+                        AlertDialogPopupPage alertPage =
+                            new AlertDialogPopupPage
+                            (AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
+                            AppResources.OK_STRING);
+
+                        bool isReturn = await alertPage.show();
+
+                        _tcs?.SetResult(true);
+                    });
+
+                    
                     return false;
                 }                
                 return true;
             });
             Console.WriteLine("<<DetectPositionThreshold");
         }        
-
-        private void Stop()
-        {
-            //if onSleep, need to handle it?
-        }                
-        
+       
         private void InvokeIPSWork()
         {
             while(_isKeepDetection == true)
@@ -212,6 +224,7 @@ namespace IndoorNavigation.Views.PopUpPage
         #region Click event function
         async private void CancelBtn_Clicked(object sender, EventArgs e)
         {
+            _tcs?.SetResult(false);
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
 
@@ -260,7 +273,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text = "正在校正訊號",
+                Text = AppResources.SCAN_RSSI_NOW_STRING,
                 Margin = new Thickness(10,0,10,0),
                 FontSize = 28
             });
@@ -270,6 +283,14 @@ namespace IndoorNavigation.Views.PopUpPage
                 Source = "waittingscan.gif",
                 IsAnimationPlaying = true
             });
+        }
+
+        async public Task<bool> Show()
+        {
+            _tcs = new TaskCompletionSource<bool>();
+
+            await Navigation.PushPopupAsync(this);
+            return await _tcs.Task;
         }
         #endregion
     }

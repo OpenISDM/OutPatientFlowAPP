@@ -710,12 +710,30 @@
     <value>請朝著圖片方向前進</value>
   </data>
   <data name="AUTO_ADJUST_STRING" xml:space="preserve">
-    <value>自動調整</value>
+    <value>自動校正</value>
   </data>
   <data name="MANUAL_ADJUST_STRING" xml:space="preserve">
-    <value>手動調整</value>
+    <value>手動校正</value>
   </data>
   <data name="UNKNOWN_STRING" xml:space="preserve">
     <value>未知</value>
+  </data>
+  <data name="NO_SINGNAL_TAP_START_STRING" xml:space="preserve">
+    <value>請到任意路口，並按下開始，將會開始自動校正</value>
+  </data>
+  <data name="START_STRING" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
+    <value>校正完成!
+若是訊號過快或是過慢，
+您可以到偏好設定頁，
+再次校正。</value>
+  </data>
+  <data name="SCAN_RSSI_NOW_STRING" xml:space="preserve">
+    <value>正在校正訊號...</value>
+  </data>
+  <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
+    <value>歡迎使用，即將開啟訊號自動校正</value>
   </data>
 </root>

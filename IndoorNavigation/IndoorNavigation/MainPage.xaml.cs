@@ -69,6 +69,8 @@ using static IndoorNavigation.Utilities.Storage;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static IndoorNavigation.Utilities.TmperorayStatus;
+using IndoorNavigation.Resources;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -249,13 +251,19 @@ namespace IndoorNavigation
                     Console.WriteLine("it's first Time use!");
 
                     AlertDialogPopupPage alertPage =
-                        new AlertDialogPopupPage("歡迎使用，即將開啟訊號自動校正", "確定");
+                        new AlertDialogPopupPage
+                        (AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
+                        AppResources.OK_STRING);
 
                     bool isReturn = await alertPage.show();
 
-                    //PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("歡迎使用，即將開啟訊號自動校正", "確定"));
+                    AutoAdjustPopupPage autoAdjustPage =
+                        new AutoAdjustPopupPage(location.sourcePath);
 
-                    await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage(location.sourcePath));
+                    isReturn = await autoAdjustPage.Show();
+                    //await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage(location.sourcePath));
+
+                    FirstTimeUse = true;
                 }
 
                 #region
@@ -505,7 +513,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            ToolbarItems.Add(TestToolbarItem);
+            //ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -545,6 +553,7 @@ namespace IndoorNavigation
             //await Navigation.PushAsync(new TestPage());
             //await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage("Lab"));
             await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("Taipei_City_Hall"));
+            //await PopupNavigation.Instance.PushAsync(new DownloadPopUpPage());
             await Task.CompletedTask;
         }
 

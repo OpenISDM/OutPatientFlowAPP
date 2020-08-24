@@ -706,9 +706,6 @@
   <data name="DIRECTION_UP_COMBINE_DIRECTION_STRING" xml:space="preserve">
     <value>Take {0} go upstairs{1}to{2}.{3}Then{4},{5}and go straight about {6} m.</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="PLEASE_FOLLOW_PICTURE_STRING" xml:space="preserve">
     <value>Please move towards the picture direction.</value>
   </data>
@@ -720,5 +717,24 @@
   </data>
   <data name="UNKNOWN_STRING" xml:space="preserve">
     <value>Unkwown</value>
+  </data>
+  <data name="NO_SIGNAL_TAP_START_STRING" xml:space="preserve">
+    <value>Please go to any intersection, and tap start button to start auto adjustment.</value>
+  </data>
+  <data name="START_STRING" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
+    <value>FINISH_REGULATION!
+IF the signal is too slow or too fast,
+you can go to preference page,
+regulate again. Thanks!</value>
+  </data>
+  <data name="SCAN_RSSI_NOW_STRING" xml:space="preserve">
+    <value>Scaning signal...</value>
+  </data>
+  <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
+    <value>Welcome to use the app!
+It's starting to auto regulate signal now.</value>
   </data>
 </root>

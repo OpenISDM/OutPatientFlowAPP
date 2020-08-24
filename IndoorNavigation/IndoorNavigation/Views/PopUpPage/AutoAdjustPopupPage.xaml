@@ -17,41 +17,28 @@
                    Margin="15,0,15,0">
                 <StackLayout>
                     <StackLayout x:Name="AutoAdjustLayout">
-                        <Label Text="請至任意路口，按下開始" FontSize="Large"/>
+                        <Label Text="{i18n:Translate NO_SINGNAL_TAP_START_STRING}" 
+                               FontSize="Large"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="FillAndExpand">
                         <Button x:Name="StartBtn" 
-                                Text="Start" 
+                                Text="{i18n:Translate START_STRING}" 
                                 FontSize="Medium"
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="End"
                                 Clicked="StartBtn_Clicked"/>
                         
                         <Button x:Name="CancelBtn"
-                                Text="Cancel"
+                                Text="{i18n:Translate CANCEL_STRING}"
                                 FontSize="Medium"
                                 HorizontalOptions="EndAndExpand"
                                 IsVisible="false"
                                 VerticalOptions="End"
                                 Clicked="CancelBtn_Clicked"/>
                     </StackLayout>
-                        
-                    <!--<Button x:Name="CancelBtn" Text="取消" FontSize="Medium"
-                            Clicked="CancelBtn_Clicked"
-                            HorizontalOptions="EndAndExpand"
-                            VerticalOptions="EndAndExpand"/>-->
+                                          
                 </StackLayout>
-                <!--<StackLayout>
-                    <Label x:Name="AdjustLab" FontSize="Large"/>
-                    --><!--show first use or it will start to auto adjust.
-                        If your think it is still not stable, user can
-                        auto adjust again or manual adjust.
-                    --><!--
-                    <StackLayout>
-                        <Button x:Name="AdjustBtn" Text="OK" Clicked="AdjustBtn_Clicked"/>
-                    </StackLayout>
-                </StackLayout>-->
             </Frame>
         </StackLayout>
     </ContentPage.Content>
