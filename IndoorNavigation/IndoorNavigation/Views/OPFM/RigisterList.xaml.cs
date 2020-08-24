@@ -1016,7 +1016,8 @@ namespace IndoorNavigation.Views.OPFM
         private async Task InfoItemMethod()
         {
             Console.WriteLine("Preference item click");
-            await Navigation.PushAsync(new NavigatorSettingPage());
+            await Navigation.PushAsync
+                (new NavigatorSettingPage(_navigationGraphName));
             await Task.CompletedTask;
         }
         private async Task ClearItemMethod()

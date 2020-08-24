@@ -59,21 +59,25 @@ namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
-        
+
         public IList _chooseRssi { get; } = new ObservableCollection<string>();
         public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
         public IList _voiceSearchItems { get; } =
             new ObservableCollection<string>(new List<string> { "中文", "英文" });
-		const string _resourceId = "IndoorNavigation.Resources.AppResources";
-		ResourceManager _resourceManager =
-			new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-        
-		public NavigatorSettingPage()
+        const string _resourceId = "IndoorNavigation.Resources.AppResources";
+        ResourceManager _resourceManager =
+            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
+
+        private string _naviGraphName;
+
+        public NavigatorSettingPage(string naviGraphName)
         {
             InitializeComponent();
             AddItems();
 
             BindingContext = this;
+
+            _naviGraphName = naviGraphName;
 
             switch (Device.RuntimePlatform)
             {
@@ -88,7 +92,7 @@ namespace IndoorNavigation.Views.Navigation
                 default:
                     break;
             }
-            
+
             // Restore the status of route options
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
@@ -97,7 +101,7 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
 
-            if(Application.Current.Properties.ContainsKey("StrongRssi"))
+            if (Application.Current.Properties.ContainsKey("StrongRssi"))
             {
                 if ((bool)Application.Current.Properties["StrongRssi"] == true)
                 {
@@ -112,7 +116,7 @@ namespace IndoorNavigation.Views.Navigation
                     OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
                 }
             }
-            
+
         }
 
         private async void HandleChangeRssi()
@@ -122,19 +126,19 @@ namespace IndoorNavigation.Views.Navigation
                 case "Strong":
                 case "強":
                     Application.Current.Properties["StrongRssi"] = true;
-					Application.Current.Properties["MediumRssi"] = false;
-					Application.Current.Properties["WeakRssi"] = false;
+                    Application.Current.Properties["MediumRssi"] = false;
+                    Application.Current.Properties["WeakRssi"] = false;
                     break;
                 case "Weak":
                 case "弱":
-					Application.Current.Properties["StrongRssi"] = false;
-					Application.Current.Properties["MediumRssi"] = false;
-					Application.Current.Properties["WeakRssi"] = true;
+                    Application.Current.Properties["StrongRssi"] = false;
+                    Application.Current.Properties["MediumRssi"] = false;
+                    Application.Current.Properties["WeakRssi"] = true;
                     break;
                 case "Medium":
                 case "中":
-					Application.Current.Properties["StrongRssi"] = false;
-					Application.Current.Properties["MediumRssi"] = true;
+                    Application.Current.Properties["StrongRssi"] = false;
+                    Application.Current.Properties["MediumRssi"] = true;
                     Application.Current.Properties["WeakRssi"] = false;
                     break;
             }
@@ -146,35 +150,35 @@ namespace IndoorNavigation.Views.Navigation
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;
             Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
             Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
-			if (OptionPicker.SelectedItem != null)
-			{
-				Device.BeginInvokeOnMainThread(async () =>
-				{	
-					switch (OptionPicker.SelectedItem.ToString().Trim())
-					{
-						case "Strong":
-						case "強":
-							Application.Current.Properties["StrongRssi"] = true;
-							Application.Current.Properties["MediumRssi"] = false;
-							Application.Current.Properties["WeakRssi"] = false;
-							break;
-						case "Medium":
-						case "中":
+            if (OptionPicker.SelectedItem != null)
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    switch (OptionPicker.SelectedItem.ToString().Trim())
+                    {
+                        case "Strong":
+                        case "強":
+                            Application.Current.Properties["StrongRssi"] = true;
+                            Application.Current.Properties["MediumRssi"] = false;
+                            Application.Current.Properties["WeakRssi"] = false;
+                            break;
+                        case "Medium":
+                        case "中":
                             Application.Current.Properties["StrongRssi"] = false;
                             Application.Current.Properties["MediumRssi"] = true;
                             Application.Current.Properties["WeakRssi"] = false;
                             break;
-						case "Weak":
-						case "弱":
+                        case "Weak":
+                        case "弱":
                             Application.Current.Properties["StrongRssi"] = false;
                             Application.Current.Properties["MediumRssi"] = false;
                             Application.Current.Properties["WeakRssi"] = true;
                             break;
-					}
-					await Application.Current.SavePropertiesAsync();
-				});
-			}
-			base.OnDisappearing();
+                    }
+                    await Application.Current.SavePropertiesAsync();
+                });
+            }
+            base.OnDisappearing();
         }
 
         private void AddItems()
@@ -211,5 +215,14 @@ namespace IndoorNavigation.Views.Navigation
 
             await PopupNavigation.Instance.PushAsync(new TestRssiPopupPage());
         }
+
+        async private void AutoAdjust_Tapped(object sender, EventArgs e)
+        {
+            Console.WriteLine(">> Tapped AutoAdjust");
+
+            await PopupNavigation.Instance.PushAsync
+                (new AutoAdjustPopupPage(_naviGraphName));
+        }
+
     }
 }

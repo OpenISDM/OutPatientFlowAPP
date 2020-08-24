@@ -107,7 +107,8 @@ namespace IndoorNavigation.Views.Navigation
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NavigatorSettingPage());
+            await Navigation.PushAsync
+                (new NavigatorSettingPage(_navigationGraphName));
         }
 
         async void BathroomList_Clicked(object sender, EventArgs e)

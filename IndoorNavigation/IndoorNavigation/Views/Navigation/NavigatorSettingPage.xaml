@@ -64,9 +64,14 @@
                                    SelectedCommand=
                                    "{Binding _changeRssiCommand}"/>
                 
-                <sv:TextPickerCell x:Name="RssiSlidePicker"
+                <sv:CommandCell x:Name="RssiSlidePicker"
                                    Title="{i18n:Translate TEST_STRING}"
                                    Tapped="RssiPicker_Tapped"/>
+
+                <sv:CommandCell x:Name="AutoAdjustPicker"
+                                Title="自動調整"
+                                Tapped="AutoAdjust_Tapped"/>
+
             </sv:Section>
             
         </sv:SettingsView>
