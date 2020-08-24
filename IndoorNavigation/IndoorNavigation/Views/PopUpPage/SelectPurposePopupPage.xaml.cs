@@ -47,16 +47,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 option.OptionName = 
                     purposeNode.Attributes["access_name"].Value;
                 option.id =
-                    int.Parse(purposeNode.Attributes["id"].Value);
-                //this part I would like to consider add it or not.
-                //if (purposeNode.HasChildNodes)
-                //{
-                //    foreach(XmlNode purposeChild in purposeNode.ChildNodes)
-                //    {
-                        
-                //    }
-                //}
-
+                    int.Parse(purposeNode.Attributes["id"].Value);                
                 options.Add(option.OptionName, option);
             }            
         }
@@ -111,7 +102,11 @@ namespace IndoorNavigation.Views.PopUpPage
                         {
                             ((App)Application.Current).records.Add(process);
                         }
+
+                        ((App)Application.Current).OrderDistrict
+                            .Add(options[optionButton.Text].id, 0);
                     }                                        
+                    
                     await PopupNavigation.Instance.RemovePageAsync(this);
 
                     await PopupNavigation.Instance.PushAsync
