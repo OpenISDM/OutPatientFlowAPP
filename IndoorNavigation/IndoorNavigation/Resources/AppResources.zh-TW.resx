@@ -709,4 +709,13 @@
   <data name="PLEASE_FOLLOW_PICTURE_STRING" xml:space="preserve">
     <value>請朝著圖片方向前進</value>
   </data>
+  <data name="AUTO_ADJUST_STRING" xml:space="preserve">
+    <value>自動調整</value>
+  </data>
+  <data name="MANUAL_ADJUST_STRING" xml:space="preserve">
+    <value>手動調整</value>
+  </data>
+  <data name="UNKNOWN_STRING" xml:space="preserve">
+    <value>未知</value>
+  </data>
 </root>

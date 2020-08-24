@@ -712,4 +712,13 @@
   <data name="PLEASE_FOLLOW_PICTURE_STRING" xml:space="preserve">
     <value>Please move towards the picture direction.</value>
   </data>
+  <data name="AUTO_ADJUST_STRING" xml:space="preserve">
+    <value>Auto Adjust</value>
+  </data>
+  <data name="MANUAL_ADJUST_STRING" xml:space="preserve">
+    <value>Manual Adjust</value>
+  </data>
+  <data name="UNKNOWN_STRING" xml:space="preserve">
+    <value>Unkwown</value>
+  </data>
 </root>
