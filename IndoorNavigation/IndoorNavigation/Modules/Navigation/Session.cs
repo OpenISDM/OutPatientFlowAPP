@@ -91,7 +91,7 @@ namespace IndoorNavigation.Modules
         private Dictionary<Guid, Region> _regiongraphs =
             new Dictionary<Guid, Region>();
 
-        private IPSModules _iPSModules;
+        private IPSmodule_ _iPSModules;
         private const int _tooCLoseDistance = 8;
 
         #region wait for test variable
@@ -123,7 +123,10 @@ namespace IndoorNavigation.Modules
             _regiongraphs = _navigationGraph.GetRegions();
             _nextWaypointStep = -1;
             _isKeepDetection = true;
-            _iPSModules = new IPSModules(_navigationGraph);
+
+            //_iPSModules = new IPSModules(_navigationGraph);
+            _iPSModules = new IPSmodule_(_navigationGraph);
+
             _iPSModules._event._eventHandler +=
                 new EventHandler(CheckArrivedWaypoint);
 
@@ -176,7 +179,9 @@ namespace IndoorNavigation.Modules
                                       _destinationWaypointID);
 
                     _isKeepDetection = false;
-                    _iPSModules.Close();
+
+                    //_iPSModules.Close();
+                    _iPSModules.CloseAllActiveClient();
                     break;
                 }
 
@@ -353,22 +358,24 @@ namespace IndoorNavigation.Modules
             if (nextStep == -1)
             {
 
-                List<Guid> allRegionIDs = new List<Guid>();
-                allRegionIDs = _navigationGraph.GetAllRegionIDs();
+                List<Guid> allRegionIDs = 
+                    _navigationGraph.GetAllRegionIDs();
 
-                _iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
+                //_iPSModules.AtStarting_ReadALLIPSType(allRegionIDs);
+                _iPSModules.InitialStep_DetectAllBeacon(allRegionIDs);
             }
             else
             {
                 Console.WriteLine("NavigateProgram");
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
-                _iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID,
-                                                           checkPoint._regionID,
-                                                           _nextWaypointStep);
-                _iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID,
-                                                        checkPoint._waypointID);
-
+                //_iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID,
+                //                                           checkPoint._regionID,
+                //                                           _nextWaypointStep);
+                //_iPSModules.AddNextWaypointInterestedGuid(checkPoint._regionID,
+                //                                        checkPoint._waypointID);
+                _iPSModules.AddMonitorBeacon
+                    (checkPoint._regionID, checkPoint._waypointID);
 
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
                 {
@@ -376,10 +383,15 @@ namespace IndoorNavigation.Modules
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID ==
                         _currentRegionID)
                     {
-                        _iPSModules
-                        .AddNextNextWaypointInterestedGuid
-                        (_waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                         _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
+                        //_iPSModules
+                        //.AddNextNextWaypointInterestedGuid
+                        //(_waypointsOnRoute[_nextWaypointStep + 1]._regionID,
+                        // _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
+                        _iPSModules.AddMonitorBeacon
+                            (_waypointsOnRoute[_nextWaypointStep + 1]
+                            ._regionID,
+                            _waypointsOnRoute[_nextWaypointStep + 1]
+                            ._waypointID);
                     }
                 }
 
@@ -395,9 +407,11 @@ namespace IndoorNavigation.Modules
                             [_waypointsOnRoute[_nextWaypointStep - 1]])
                         {
 
-                            _iPSModules
-                            .AddWrongWaypointInterestedGuid(items._regionID,
-                                                            items._waypointID);
+                            //_iPSModules
+                            //.AddWrongWaypointInterestedGuid(items._regionID,
+                            //                                items._waypointID);
+                            _iPSModules.AddMonitorBeacon(items._regionID,
+                                items._waypointID);
                         }
                     }
                 }
@@ -413,7 +427,8 @@ namespace IndoorNavigation.Modules
             {
                 _pauseThreadEvent.Wait();
                 Thread.Sleep(500);
-                _iPSModules.OpenBeconScanning();
+                //_iPSModules.OpenBeconScanning();
+                _iPSModules.OpenBeaconScanning();
             }
         }
 
@@ -984,11 +999,13 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("current Waypoint : " + _currentWaypointID);
                 _accumulateStraightDistance = 0;
 
-                _iPSModules.CloseStartAllExistClient();
-                _iPSModules
-                .CompareToCurrentAndNextIPSType(_currentRegionID,
-                                                _currentRegionID,
-                                                _nextWaypointStep);
+                //_iPSModules.CloseStartAllExistClient();
+                _iPSModules.CloseAllActiveClient();
+                //_iPSModules
+                //.CompareToCurrentAndNextIPSType(_currentRegionID,
+                //                                _currentRegionID,
+                //                                _nextWaypointStep);
+                
 
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))
@@ -1447,8 +1464,8 @@ namespace IndoorNavigation.Modules
 
             _isKeepDetection = false;
             _nextWaypointStep = -1;
-            _iPSModules.Close();
-          
+            //_iPSModules.Close();
+            _iPSModules.CloseAllActiveClient();
             _waypointDetectionThread.Abort();
             _navigationControllerThread.Abort();
             _waypointsOnWrongWay.Clear();
