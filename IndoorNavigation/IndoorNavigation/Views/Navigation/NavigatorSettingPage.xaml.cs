@@ -101,47 +101,47 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
 
-            if (Application.Current.Properties.ContainsKey("StrongRssi"))
-            {
-                if ((bool)Application.Current.Properties["StrongRssi"] == true)
-                {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-                }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-                {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-                }
-                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-                {
-                    OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-                }
-            }
+            //if (Application.Current.Properties.ContainsKey("StrongRssi"))
+            //{
+            //    if ((bool)Application.Current.Properties["StrongRssi"] == true)
+            //    {
+            //        OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            //    }
+            //    else if ((bool)Application.Current.Properties["MediumRssi"] == true)
+            //    {
+            //        OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            //    }
+            //    else if ((bool)Application.Current.Properties["WeakRssi"] == true)
+            //    {
+            //        OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
+            //    }
+            //}
 
         }
 
         private async void HandleChangeRssi()
         {
-            switch (OptionPicker.SelectedItem.ToString().Trim())
-            {
-                case "Strong":
-                case "強":
-                    Application.Current.Properties["StrongRssi"] = true;
-                    Application.Current.Properties["MediumRssi"] = false;
-                    Application.Current.Properties["WeakRssi"] = false;
-                    break;
-                case "Weak":
-                case "弱":
-                    Application.Current.Properties["StrongRssi"] = false;
-                    Application.Current.Properties["MediumRssi"] = false;
-                    Application.Current.Properties["WeakRssi"] = true;
-                    break;
-                case "Medium":
-                case "中":
-                    Application.Current.Properties["StrongRssi"] = false;
-                    Application.Current.Properties["MediumRssi"] = true;
-                    Application.Current.Properties["WeakRssi"] = false;
-                    break;
-            }
+            //switch (OptionPicker.SelectedItem.ToString().Trim())
+            //{
+            //    case "Strong":
+            //    case "強":
+            //        Application.Current.Properties["StrongRssi"] = true;
+            //        Application.Current.Properties["MediumRssi"] = false;
+            //        Application.Current.Properties["WeakRssi"] = false;
+            //        break;
+            //    case "Weak":
+            //    case "弱":
+            //        Application.Current.Properties["StrongRssi"] = false;
+            //        Application.Current.Properties["MediumRssi"] = false;
+            //        Application.Current.Properties["WeakRssi"] = true;
+            //        break;
+            //    case "Medium":
+            //    case "中":
+            //        Application.Current.Properties["StrongRssi"] = false;
+            //        Application.Current.Properties["MediumRssi"] = true;
+            //        Application.Current.Properties["WeakRssi"] = false;
+            //        break;
+            //}
         }
 
         protected override void OnDisappearing()
@@ -150,34 +150,34 @@ namespace IndoorNavigation.Views.Navigation
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;
             Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
             Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
-            if (OptionPicker.SelectedItem != null)
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    switch (OptionPicker.SelectedItem.ToString().Trim())
-                    {
-                        case "Strong":
-                        case "強":
-                            Application.Current.Properties["StrongRssi"] = true;
-                            Application.Current.Properties["MediumRssi"] = false;
-                            Application.Current.Properties["WeakRssi"] = false;
-                            break;
-                        case "Medium":
-                        case "中":
-                            Application.Current.Properties["StrongRssi"] = false;
-                            Application.Current.Properties["MediumRssi"] = true;
-                            Application.Current.Properties["WeakRssi"] = false;
-                            break;
-                        case "Weak":
-                        case "弱":
-                            Application.Current.Properties["StrongRssi"] = false;
-                            Application.Current.Properties["MediumRssi"] = false;
-                            Application.Current.Properties["WeakRssi"] = true;
-                            break;
-                    }
-                    await Application.Current.SavePropertiesAsync();
-                });
-            }
+            //if (OptionPicker.SelectedItem != null)
+            //{
+            //    Device.BeginInvokeOnMainThread(async () =>
+            //    {
+            //        switch (OptionPicker.SelectedItem.ToString().Trim())
+            //        {
+            //            case "Strong":
+            //            case "強":
+            //                Application.Current.Properties["StrongRssi"] = true;
+            //                Application.Current.Properties["MediumRssi"] = false;
+            //                Application.Current.Properties["WeakRssi"] = false;
+            //                break;
+            //            case "Medium":
+            //            case "中":
+            //                Application.Current.Properties["StrongRssi"] = false;
+            //                Application.Current.Properties["MediumRssi"] = true;
+            //                Application.Current.Properties["WeakRssi"] = false;
+            //                break;
+            //            case "Weak":
+            //            case "弱":
+            //                Application.Current.Properties["StrongRssi"] = false;
+            //                Application.Current.Properties["MediumRssi"] = false;
+            //                Application.Current.Properties["WeakRssi"] = true;
+            //                break;
+            //        }
+            //        await Application.Current.SavePropertiesAsync();
+            //    });
+            //}
             base.OnDisappearing();
         }
 

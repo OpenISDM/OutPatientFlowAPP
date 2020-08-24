@@ -75,11 +75,7 @@ namespace IndoorNavigation.Views.Navigation
 
             Console.WriteLine("<< NavigatorPage constructor");
         }  
-        //protected override void OnDisappearing()
-        //{
-        //    _viewModel.onPause();            
-        //    base.OnDisappearing();
-        //}
+        
         public void OnPause()
         {
             _viewModel.onPause();
