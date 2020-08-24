@@ -151,9 +151,16 @@ namespace IndoorNavigation.Views.PopUpPage
             return false;
             // Return false if you don't want to close this popup page when a 
             // background of the popup page is clicked
+        }        
+
+        async private void ExitCancelBtn_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.RemovePageAsync(this);
+            MessagingCenter.Send(this, "ExitCancel", false);
+                
         }
 
-        async private void ExitPopup_Clicked(object sender, EventArgs e)
+        async private void ExitConfirmBtn_Clicked(object sender, EventArgs e)
         {
             foreach (RadioButton radio in ExitRadioGroup.Children)
             {
@@ -173,16 +180,15 @@ namespace IndoorNavigation.Views.PopUpPage
                         _floor = ExitItems[radioName]._floor,
                         isComplete = true,
                         DptName = radioName,
-                        order=order
+                        order = order
                     });
-                    app._globalNavigatorPage = 
-                        new NavigatorPage(_navigationGraphName, 
-                        ExitItems[radioName]._regionID, 
-                        ExitItems[radioName]._waypointID, 
-                        radioName, 
+                    app._globalNavigatorPage =
+                        new NavigatorPage(_navigationGraphName,
+                        ExitItems[radioName]._regionID,
+                        ExitItems[radioName]._waypointID,
+                        radioName,
                         _nameInformation);
-                    await Navigation.PushAsync(app._globalNavigatorPage);
-                    //await Navigation.PushAsync(new NavigatorPage(_navigationGraphName, ExitItems[radioName]._regionID, ExitItems[radioName]._waypointID, radioName, _nameInformation)); ;
+                    await Navigation.PushAsync(app._globalNavigatorPage);                    
                     await PopupNavigation.Instance.PopAsync();
                     return;
                 }
@@ -194,6 +200,8 @@ namespace IndoorNavigation.Views.PopUpPage
                                                 currentLanguage),
                      _resourceManager.GetString("OK_STRING",
                                                 currentLanguage));
+
+            MessagingCenter.Send(this, "ExitCancel",true);
         }
     }
 }

@@ -512,18 +512,16 @@ namespace IndoorNavigation.Views.OPFM
               {
                   ExitAddBtn.IsEnabled =
                   (app.FinishCount == app.records.Count) &&
-                  !app.HaveCashier &&
+                  //!app.HaveCashier &&
                    app.records.Count() > 0 &&
                 !(app.records.Count() == 1 &&
                 app.records[0].type == RecordType.Register);
 
                   ExitAddBtn.IsVisible =
                   (app.FinishCount == app.records.Count) &&
-                  !app.HaveCashier &&
+                  //!app.HaveCashier &&
                    app.records.Count() > 0 &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register); ;
-
-                  Console.WriteLine("isButtonPressed in messagingCenter :" + isButtonPressed);
                   MessagingCenter.Unsubscribe<AddPopupPage, bool>
                       (this, "isCancel");
               });
@@ -629,7 +627,7 @@ namespace IndoorNavigation.Views.OPFM
         }
         // this function is a button event, which is to check user whether have 
         // arrive at destination.
-        async private void YetFinishBtn_Clicked(object sender, EventArgs e)
+        private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
             var o = (Button)sender;
             var FinishBtnClickItem = o.CommandParameter as RgRecord;
@@ -1117,6 +1115,13 @@ namespace IndoorNavigation.Views.OPFM
             MessagingCenter.Subscribe<ExitPopupPage, bool>(this, "ExitCancel",
                 (MsgSender, MsgArgs) =>
                 {
+                    if (!(bool)MsgArgs)
+                    {
+                        app.HaveCashier = false;
+                        Buttonable(true);
+                        ExitAddBtn.IsEnabled = true;
+                        ExitAddBtn.IsVisible = true;
+                    }
                     MessagingCenter.Unsubscribe<ExitPopupPage, bool>
                     (this, "ExitCancel");
                 });

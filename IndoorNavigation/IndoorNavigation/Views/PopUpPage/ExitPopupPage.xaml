@@ -64,16 +64,29 @@
                                                 HorizontalOptions="StartAndExpand" 
                                                 Margin="5,0,5,0"/>
                 </ScrollView>
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="EndAndExpand"
+                             HorizontalOptions="EndAndExpand">
+                    <Button x:Name="ExitCancelBtn" 
+                            Text="{i18n:Translate CANCEL_STRING}"
+                            Clicked="ExitCancelBtn_Clicked"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"/>
+                    <Button x:Name="ExitConfirmBtn"
+                            Text="{i18n:Translate OK_STRING}"
+                            Clicked="ExitConfirmBtn_Clicked"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"/>
+                </StackLayout>
                 <!--<StackLayout Orientation="Horizontal">
                     <Button x:Name="ExitCancel" IsVisible="false"/>
                 </StackLayout>-->
                 <!--<Button x:Name="ExitCancel" IsVisible="false"/>-->
-                <Button x:Name="ExitPopup" 
+                <!--<Button x:Name="ExitPopup" 
 						Text="{i18n:Translate OK_STRING}" 
 						Clicked="ExitPopup_Clicked"
 						HorizontalOptions="End" 
-						VerticalOptions="End"/>
-
+						VerticalOptions="End"/>-->
             </StackLayout>
         </Frame>
     </StackLayout>
