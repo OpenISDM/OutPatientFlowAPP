@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 
+using static IndoorNavigation.Utilities.TmperorayStatus;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,9 +25,11 @@ namespace IndoorNavigation.Views.PopUpPage
                 Console.WriteLine("current value = " +
                     Application.Current.Properties["RSSI_Test_Adjustment"]);
 
+                //RSSIAdjustmentSlider.Value =
+                //  Convert.ToDouble(Application.Current.Properties
+                //  ["RSSI_Test_Adjustment"]);
                 RSSIAdjustmentSlider.Value =
-                  Convert.ToDouble(Application.Current.Properties
-                  ["RSSI_Test_Adjustment"]);
+                    Convert.ToDouble(RssiOption);
             }
         }
 
@@ -38,6 +41,9 @@ namespace IndoorNavigation.Views.PopUpPage
             Application.Current.Properties["RSSI_Test_Adjustment"]
                 = (int)(RSSIAdjustmentSlider.Value);
 
+            RssiOption = (int)(RSSIAdjustmentSlider.Value);
+            Console.WriteLine("RssiSlider value : " + RSSIAdjustmentSlider.Value);
+            Console.WriteLine("Current Rssi option : " + RssiOption);
             await PopupNavigation.Instance.PopAllAsync();
         }
 

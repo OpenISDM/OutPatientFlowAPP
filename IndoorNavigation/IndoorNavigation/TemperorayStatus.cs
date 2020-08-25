@@ -13,26 +13,22 @@ namespace IndoorNavigation.Utilities
     {
         private static ISettings AppSettings => CrossSettings.Current;
         #region Attributes Get-Set define
-
         public static bool FirstTimeUse
         {
             get => AppSettings.GetValueOrDefault(nameof(FirstTimeUse), false);
             //get => false;
             set => AppSettings.AddOrUpdateValue(nameof(FirstTimeUse), value);
         }
-
         public static int FinishCount
         {
             get => AppSettings.GetValueOrDefault(nameof(FinishCount), 0);
             set => AppSettings.AddOrUpdateValue(nameof(FinishCount), value);
         }
-
         public static int RssiOption
         {
-            get { return 
-                    AppSettings.GetValueOrDefault(nameof(RssiOption), 0); }
-            set { AppSettings.AddOrUpdateValue(nameof(RssiOption), 0); }
-        }
+            get => AppSettings.GetValueOrDefault(nameof(RssiOption), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(RssiOption), value);
+        }       
         public static bool isRigistered
         {
             get => AppSettings.GetValueOrDefault(nameof(isRigistered), false);

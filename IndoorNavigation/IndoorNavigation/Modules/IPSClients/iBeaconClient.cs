@@ -40,6 +40,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Models;
+using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -76,31 +77,10 @@ namespace IndoorNavigation.Modules.IPSClients
             watch.Start();
         }
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
-        {
-            
-            if (Application.Current.Properties.ContainsKey("StrongRssi"))
-            {
-                if ((bool)Application.Current.Properties["StrongRssi"] == true)
-                {
-                    rssiOption = 5;
-                }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-                {
-                    rssiOption = 0;
-                }
-                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-                {
-                    rssiOption = -2;
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
-            {
-                rssiOption =
-                    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
-            }
+        {           
+            rssiOption = TmperorayStatus.RssiOption;
 
             Console.WriteLine("rssi option in ibeaconClient =" + rssiOption);
-
 
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._ibeaconScan.StartScan();

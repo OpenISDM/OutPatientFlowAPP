@@ -47,6 +47,7 @@ using Xamarin.Forms;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Reflection;
 using Xamarin.Essentials;
+using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
@@ -76,42 +77,27 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            
-            if (Application.Current.Properties.ContainsKey("StrongRssi"))
-            {
-                if ((bool)Application.Current.Properties["StrongRssi"] == true)
-                {
-                    rssiOption = 5;
-                }
-                else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-                {
-                    rssiOption = -5;
-                }
-                else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-                {
-                    rssiOption = 0;
-                }
-            }
-
+            Console.WriteLine(">>WaypointClient : SetWaypointList");           
 
             if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
             {
-                rssiOption =
-                    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+                //rssiOption =
+                //    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+                rssiOption = TmperorayStatus.RssiOption;
             }
 
             Console.WriteLine("rssi option in LbeaconClient =" + rssiOption);
 
             this._waypointBeaconsList = waypointBeaconsList;
             Utility._lbeaconScan.StartScan();
+            Console.WriteLine("<<WaypointClient : SetWaypointList");
         }
 
         public void DetectWaypoints()
-
         {
  
             Console.WriteLine(">> In DetectWaypoints LBeacon");
-            //Utility._beaconScan.StartScan();
+           
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
             new List<BeaconSignalModel>();
