@@ -378,12 +378,20 @@ namespace IndoorNavigation
 
                 if (_viewModel.NavigationGraphFiles.Count() <= 1)
                 {
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("至少保留一個圖資吧!","OK"));
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage
+                        (AppResources.AT_LEAST_ONE_STRING,
+                        AppResources.OK_STRING));
                     return;
                 }
 
-                string deleteAlertString = string.Format("您確定要刪除{0}嗎?", item.UserNaming);
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(deleteAlertString,"沒錯","按錯了","ConfirmDelete"));
+                await PopupNavigation.Instance.PushAsync
+                    (new AlertDialogPopupPage
+                    (string.Format(
+                        AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
+                        item.UserNaming),
+                        AppResources.YES_STRING,
+                        AppResources.NO_STRING,"ConfirmDelete"));
 
                 MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete", (msgSender, msgArgs) =>
                 {
@@ -467,10 +475,16 @@ namespace IndoorNavigation
                         (this, "WantRetryInAdd", async (msgSender, msgArgs) =>
                         {
                             if ((bool)msgArgs)
-                                await AddSiteItemMethod();
-                            else
+                            {
                                 await PopupNavigation.Instance.
                                 RemovePageAsync(busyPopupPage);
+                                await AddSiteItemMethod();
+                            }
+                            else
+                            {
+                                await PopupNavigation.Instance.
+                                RemovePageAsync(busyPopupPage);
+                            }
                             MessagingCenter.Unsubscribe
                                     <AlertDialogPopupPage, bool>
                                     (this, "WantRetryInAdd");

@@ -21,6 +21,7 @@ using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
 using System.Net.Http.Headers;
+using IndoorNavigation.Resources;
 
 namespace IndoorNavigation.Views.OPFM
 {
@@ -196,8 +197,7 @@ namespace IndoorNavigation.Views.OPFM
                             Console.WriteLine("Get Subscribe string");
 
                             if ((bool)MsgArgs)
-                            {
-                                await PopupNavigation.Instance.PopAllAsync();
+                            {                                
                                 await Navigation.PushAsync
                                     (new NavigatorPage(_navigationGraphName,
                                                record._regionID,
@@ -205,12 +205,7 @@ namespace IndoorNavigation.Views.OPFM
                                                record._waypointName,
                                             _nameInformation));
                                 record.isComplete = true;
-                            }
-                            else
-                            {
-                                //isButtonPressed = false;
-                                await PopupNavigation.Instance.PopAllAsync();
-                            }
+                            }                            
                             MessagingCenter
                             .Unsubscribe<AlertDialogPopupPage, bool>
                             (this, "Still go to careroom");
@@ -236,9 +231,10 @@ namespace IndoorNavigation.Views.OPFM
                         Console.WriteLine("This range of item haven't been supported now");
 
                         //do select waypoint in elevator.
-                        await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(
-                            "該樓層不在導航範圍內，\n因此將帶您到電梯廳，\n並搭電梯前往。" +
-                            "\n結束後請回到B1~2F樓層，將能繼續使用導航。", "確定"));
+                        await PopupNavigation.Instance.PushAsync
+                            (new AlertDialogPopupPage(
+                            AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING, 
+                            AppResources.OK_STRING));
                         DestinationItem ElevatorItem;
                         try
                         {
@@ -574,7 +570,10 @@ namespace IndoorNavigation.Views.OPFM
             {
                 if(item.type == RecordType.Exit || item._groupID !=0)
                 {
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("這個項目無法被刪除", "確定"));
+                    await PopupNavigation.Instance.PushAsync
+                        (new AlertDialogPopupPage
+                        (AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
+                        AppResources.OK_STRING));
                 }
                 else if(app.records.Contains(item))
                     app.records.Remove(item);
@@ -898,7 +897,10 @@ namespace IndoorNavigation.Views.OPFM
                 await ReadXml();
                 Console.WriteLine("ReadXml finished");
                 ItemFinishFunction(record);
-                await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請將掛號的內容加入清單中，謝謝", "確定"));
+                await PopupNavigation.Instance.PushAsync
+                    (new AlertDialogPopupPage
+                    (AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
+                    AppResources.OK_STRING));
             }
             else
             {

@@ -141,9 +141,6 @@
   <data name="DOWNLOAD_MAP_STRING" xml:space="preserve">
     <value>下載地圖資訊</value>
   </data>
-  <data name="DELETE_MAP_STRING" xml:space="preserve">
-    <value>刪除圖資</value>
-  </data>
   <data name="VOICE_TEST_STRING" xml:space="preserve">
     <value>語音測試</value>
   </data>
@@ -212,12 +209,6 @@
   </data>
   <data name="FLASH_STRING" xml:space="preserve">
     <value>打光</value>
-  </data>
-  <data name="CHOOSE_MAP_STRING" xml:space="preserve">
-    <value>--請選擇圖資--</value>
-  </data>
-  <data name="ALL_STRING" xml:space="preserve">
-    <value>--全部--</value>
   </data>
   <data name="WARN_STRING" xml:space="preserve">
     <value>警告</value>
@@ -411,9 +402,6 @@
   <data name="MEDIUM_STRING" xml:space="preserve">
     <value>中 </value>
   </data>
-  <data name="WEAK_STRING" xml:space="preserve">
-    <value>弱 </value>
-  </data>
   <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
     <value>請只打開一個選項 </value>
   </data>
@@ -467,9 +455,6 @@
   </data>
   <data name="VERSION_STRING" xml:space="preserve">
     <value>版本</value>
-  </data>
-  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1079</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>這個地方有能使用的新地圖，請問要更新嗎?</value>
@@ -609,9 +594,6 @@
   <data name="ELEVATOR_TO_FLOOR_STRING" xml:space="preserve">
     <value>搭電梯前往{0}樓</value>
   </data>
-  <data name="REVISIT_STRING" xml:space="preserve">
-    <value>回診</value>
-  </data>
   <data name="CASHIER_SHOULD_SELECT_ONE_STRING" xml:space="preserve">
     <value>批價與領藥都要選擇一個</value>
   </data>
@@ -658,7 +640,7 @@
     <value>{0}，然後{1}，走約{2}公尺</value>
   </data>
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
-    <value>現有的檔案比雲端上的檔案是同樣版本甚至是更新的版本，請問要繼續下載嗎?</value>
+    <value>現有的檔案比雲端上的檔案是同樣版本或是更新的版本，請問要繼續下載嗎?</value>
   </data>
   <data name="TEST_STRING" xml:space="preserve">
     <value>測試用字串</value>
@@ -741,5 +723,24 @@
   </data>
   <data name="PLEASE_SELECT_YOUR_PURPOSE_STRING" xml:space="preserve">
     <value>選擇您來醫院的目的</value>
+  </data>
+  <data name="AT_LEAST_ONE_STRING" xml:space="preserve">
+    <value>請至少保留一個圖資!</value>
+  </data>
+  <data name="DO_YOU_WANT_TO_DELETE_IS_STRING" xml:space="preserve">
+    <value>您確定要刪除{0}嗎?</value>
+  </data>
+  <data name="PLEASE_ADD_RECORD_TO_LIST_STRING" xml:space="preserve">
+    <value>請將掛號的內容加入清單中，謝謝</value>
+  </data>
+  <data name="THIS_ITEM_CANT_BE_REMOVE_STRING" xml:space="preserve">
+    <value>這個項目無法被刪除</value>
+  </data>
+  <data name="WILL_BRING_YOU_TO_ELEVATOR_STRING" xml:space="preserve">
+    <value>該樓層不在導航範圍內，
+因此將帶您到電梯，
+並搭電梯前往。
+結束後請回到B1~2F樓層，
+就能繼續使用導航。</value>
   </data>
 </root>

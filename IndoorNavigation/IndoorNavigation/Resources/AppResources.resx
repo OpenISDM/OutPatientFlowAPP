@@ -175,7 +175,7 @@
     <value>Feedback</value>
   </data>
   <data name="ABOUT_BIDAE_STRING" xml:space="preserve">
-    <value>About BiDaETechnology Inc.</value>
+    <value>About BiDaE Technology Inc.</value>
   </data>
   <data name="PREFERENCES_STRING" xml:space="preserve">
     <value>Preferences</value>
@@ -212,12 +212,6 @@
   </data>
   <data name="FLASH_STRING" xml:space="preserve">
     <value>flash</value>
-  </data>
-  <data name="CHOOSE_MAP_STRING" xml:space="preserve">
-    <value>--Please Choose Map--</value>
-  </data>
-  <data name="ALL_STRING" xml:space="preserve">
-    <value>--All--</value>
   </data>
   <data name="WARN_STRING" xml:space="preserve">
     <value>Warning</value>
@@ -411,9 +405,6 @@
   <data name="MEDIUM_STRING" xml:space="preserve">
     <value>Medium </value>
   </data>
-  <data name="WEAK_STRING" xml:space="preserve">
-    <value>Weak </value>
-  </data>
   <data name="PLEASE_CONTROL_RSSI_OPTION_STRING" xml:space="preserve">
     <value>Please just open one option</value>
   </data>
@@ -467,9 +458,6 @@
   </data>
   <data name="VERSION_STRING" xml:space="preserve">
     <value>Version</value>
-  </data>
-  <data name="CURRENT_VERSION_STRING" xml:space="preserve">
-    <value>2.0.1079</value>
   </data>
   <data name="UPDATE_MAP_STRING" xml:space="preserve">
     <value>This building has a new verion map available, would you want to update it?</value>
@@ -737,10 +725,29 @@ regulate again. Thanks!</value>
     <value>Welcome to use the app!
 It's starting to auto regulate signal now.</value>
   </data>
+  <data name="AT_LEAST_ONE_STRING" xml:space="preserve">
+    <value>Please keep it have at least  one navigation graph.</value>
+  </data>
+  <data name="DO_YOU_WANT_TO_DELETE_IS_STRING" xml:space="preserve">
+    <value>Are you sure to delete {0} ?</value>
+  </data>
+  <data name="PLEASE_ADD_RECORD_TO_LIST_STRING" xml:space="preserve">
+    <value>Please add the records that you registered, thanks.</value>
+  </data>
   <data name="PLEASE_SELECT_OPTION_STRING" xml:space="preserve">
     <value>Please select your purpose.</value>
   </data>
   <data name="PLEASE_SELECT_YOUR_PURPOSE_STRING" xml:space="preserve">
     <value>Please select why you come to the hospital.</value>
+  </data>
+  <data name="THIS_ITEM_CANT_BE_REMOVE_STRING" xml:space="preserve">
+    <value>This item can't be removed</value>
+  </data>
+  <data name="WILL_BRING_YOU_TO_ELEVATOR_STRING" xml:space="preserve">
+    <value>This floor hasn't been supported indoor navigation,
+it will brings you to elevator, 
+and please get here by elevator.
+Then please go back B1~2F,
+you can use indoor navigation.</value>
   </data>
 </root>
