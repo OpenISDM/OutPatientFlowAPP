@@ -108,7 +108,6 @@ namespace IndoorNavigation.Views.PopUpPage
                 ScanPosition();                
             }
 
-            // Console.WriteLine("現在位置 : " + _navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID));
             
 
             Device.BeginInvokeOnMainThread(() =>

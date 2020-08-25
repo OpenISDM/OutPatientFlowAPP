@@ -149,29 +149,7 @@ namespace IndoorNavigation.Views.Settings
             VersionNumberCell.Title = VersionTracking.CurrentVersion;
         }
 
-        //private void AddMapItems()
-        //{
-        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
-        //    _chooseMap.Clear();
-
-        //    foreach (Location location in Storage.GetLocalGraphNames())
-        //    {
-        //        _chooseMap.Add(location.UserNaming);
-        //    }
-        //}
-        //private void ReloadNaviGraphItems()
-        //{
-        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
-
-        //    _cleanNaviGraphItems.Clear();
-        //    _cleanNaviGraphItems.Add(_resourceManager.GetString("ALL_STRING", ci));
-
-        //    foreach (var installedName in Storage.GetAllNaviGraphName())
-        //    {
-        //        _cleanNaviGraphItems.Add(installedName.UserNaming);
-        //        Console.WriteLine("_cleanNaviGraph items : " + installedName.UserNaming);
-        //    }
-        //}
+     
         #endregion
 
         #region Tapped Event
@@ -305,117 +283,6 @@ namespace IndoorNavigation.Views.Settings
 
             base.OnDisappearing();
         }
-
-        //private async Task HandleCLeanMapAsync()
-        //{
-        //    var ci = CrossMultilingual.Current.CurrentCultureInfo;
-        //    try
-        //    {
-        //        if (CleanMapPicker.SelectedItem.ToString() == _resourceManager.GetString("ALL_STRING", ci))
-        //        {
-        //            if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-        //                                   _resourceManager.GetString("ASK_IF_CANCEL_ALL_MAP_STRING", ci),
-        //                                   _resourceManager.GetString("OK_STRING", ci),
-        //                                   _resourceManager.GetString("CANCEL_STRING", ci)))
-        //            {
-        //                // Cancel All Map                        
-        //                Storage.DeleteAllGraphFiles();
-        //                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
-        //                                   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
-        //                                   _resourceManager.GetString("OK_STRING", ci));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (await DisplayAlert(_resourceManager.GetString("WARN_STRING", ci),
-        //                                   string.Format(_resourceManager.GetString("ASK_IF_CANCEL_MAP_STRING", ci) + _resourceManager.GetString("MAP_STRING", ci) + ":{0}？", CleanMapPicker.SelectedItem),
-        //                                   _resourceManager.GetString("OK_STRING", ci),
-        //                                   _resourceManager.GetString("CANCEL_STRING", ci)))
-
-        //            {
-        //                // Delete selected map
-
-        //                string Key =
-        //                    Storage._resources._graphResources
-        //                    .First(o => o.Value._displayNames[CrossMultilingual.Current.CurrentCultureInfo.Name]
-        //                    == CleanMapPicker.SelectedItem.ToString())
-        //                    .Key;
-        //                Storage.DeleteBuildingGraph(Key);
-        //                await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", ci),
-        //                                   _resourceManager.GetString("SUCCESSFULLY_DELETE_STRING", ci),
-        //                                   _resourceManager.GetString("OK_STRING", ci));
-        //            }
-        //        }
-
-        //    }
-        //    catch
-        //    {
-        //        await DisplayAlert(_resourceManager.GetString("ERROR_STRING", ci),
-        //                           _resourceManager.GetString("ERROR_TO_DELETE_STRING", ci),
-        //                           _resourceManager.GetString("OK_STRING", ci));
-        //    }
-
-        //    CleanMapPicker.SelectedItem = "";
-        //    ReloadNaviGraphItems();
-        //}
-
-        //for embedded data download;
-        //private void HandleChooseMap()
-        //{
-        //    string selectItem = OptionPicker.SelectedItem.ToString().Trim();
-        //    string Key =
-        //        Storage._localResources.First(x => x.Value._displayNames[Storage._currentCulture.Name] == selectItem).Key;
-        //    Storage.EmbeddedGenerateFile(Key);
-
-        //    ReloadNaviGraphItems();
-
-        //}
-
-        #endregion
-
-        #region Beta Functions                     
-        ////for Server data Download
-        //async private void ChooseDownloadMap()
-        //{
-        //    Console.WriteLine(">>ChoosDownloadMap");
-        //    string selectItem = _serverResources.First(o => o.Value._displayNames[_currentCulture.Name] == DownloadFromServer.SelectedItem.ToString()).Key;
-        //    Console.WriteLine("SelectItem  :  " + selectItem);
-
-        //    if (_resources._graphResources.ContainsKey(selectItem) &&
-        //        _serverResources[selectItem]._currentVersion <= _resources._graphResources[selectItem]._currentVersion)
-        //    {
-        //        if (!await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING", _currentCulture),
-        //                                _resourceManager.GetString("ASK_STILL_DOWNLOAD_STRING", _currentCulture),
-        //                                _resourceManager.GetString("DOWNLOAD_STRING", _currentCulture),
-        //                                _resourceManager.GetString("CANCEL_STRING", _currentCulture))
-        //            )
-        //        {
-        //            return;
-        //        }
-        //    }
-        //    await PopupNavigation.Instance.PushAsync(new IndicatorPopupPage());
-        //    try
-        //    {
-        //        CloudGenerateFile(selectItem);                
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        Console.WriteLine("Error message : " + exc.Message);
-        //        await PopupNavigation.Instance.PopAsync();
-        //        await DisplayAlert(
-        //            _resourceManager.GetString("MESSAGE_STRING",_currentCulture), 
-        //            _resourceManager.GetString("DOWNLOAD_FAIL_STRING",_currentCulture), 
-        //            _resourceManager.GetString("OK_STRING",_currentCulture)
-        //        );
-        //        return;
-        //    }
-        //    await DisplayAlert(
-        //        _resourceManager.GetString("MESSAGE_STRING",_currentCulture), 
-        //        _resourceManager.GetString("DOWNLOAD_SUCCESS_STRING",_currentCulture), 
-        //        _resourceManager.GetString("OK_STRING",_currentCulture)
-        //     );
-        //    await PopupNavigation.Instance.PopAsync();
-        //}
 
         #endregion
 
