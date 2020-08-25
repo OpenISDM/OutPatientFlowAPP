@@ -252,7 +252,10 @@ namespace IndoorNavigation
 
                     AlertDialogPopupPage alertPage =
                         new AlertDialogPopupPage
-                        (AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
+                        (_resourceManager.GetString
+                        ("WELCOME_USE_START_TO_ADJUST_STRING", 
+                        currentLanguage),
+                            //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
                     bool isReturn = await alertPage.show();
@@ -380,7 +383,9 @@ namespace IndoorNavigation
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (AppResources.AT_LEAST_ONE_STRING,
+                        (_resourceManager.GetString("AT_LEAST_ONE_STRING", 
+                        currentLanguage),
+                            //AppResources.AT_LEAST_ONE_STRING,
                         AppResources.OK_STRING));
                     return;
                 }
@@ -388,7 +393,9 @@ namespace IndoorNavigation
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage
                     (string.Format(
-                        AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
+                        //AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
+                        _resourceManager.GetString
+                        ("DO_YOU_WANT_TO_DELETE_IS_STRING",currentLanguage),
                         item.UserNaming),
                         AppResources.YES_STRING,
                         AppResources.NO_STRING,"ConfirmDelete"));

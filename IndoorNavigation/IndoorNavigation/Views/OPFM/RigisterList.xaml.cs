@@ -233,7 +233,8 @@ namespace IndoorNavigation.Views.OPFM
                         //do select waypoint in elevator.
                         await PopupNavigation.Instance.PushAsync
                             (new AlertDialogPopupPage(
-                            AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING, 
+                        getResourceString("WILL_BRING_YOU_TO_ELEVATOR_STRING"),
+                            //AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING, 
                             AppResources.OK_STRING));
                         DestinationItem ElevatorItem;
                         try
@@ -572,7 +573,8 @@ namespace IndoorNavigation.Views.OPFM
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
+                        (getResourceString("THIS_ITEM_CANT_BE_REMOVE_STRING"),
+                            //AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
                         AppResources.OK_STRING));
                 }
                 else if(app.records.Contains(item))
@@ -899,7 +901,8 @@ namespace IndoorNavigation.Views.OPFM
                 ItemFinishFunction(record);
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage
-                    (AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
+                    (getResourceString("PLEASE_ADD_RECORD_TO_LIST_STRING"),
+                        //AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
                     AppResources.OK_STRING));
             }
             else

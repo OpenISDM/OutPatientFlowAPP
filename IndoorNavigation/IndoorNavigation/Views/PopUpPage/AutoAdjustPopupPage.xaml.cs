@@ -19,6 +19,11 @@ using Rg.Plugins.Popup.Services;
 using MvvmHelpers;
 using IndoorNavigation.Resources;
 using Rg.Plugins.Popup.Extensions;
+using System.Globalization;
+using Plugin.Multilingual;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -187,7 +192,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
                         AlertDialogPopupPage alertPage =
                             new AlertDialogPopupPage
-                            (AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
+                            (
+                                getResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
+                                //AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
                             AppResources.OK_STRING);
 
                         bool isReturn = await alertPage.show();
@@ -212,7 +219,19 @@ namespace IndoorNavigation.Views.PopUpPage
                 _ipsModules.OpenBeaconScanning();
             }
         }
+        private string getResourceString(string key)
+        {
+            string resourceId = "IndoorNavigation.Resources.AppResources";
+            
+            CultureInfo currentLanguage =
+                CrossMultilingual.Current.CurrentCultureInfo;
+            ResourceManager resourceManager =
+                new ResourceManager(resourceId,
+                                    typeof(TranslateExtension)
+                                    .GetTypeInfo().Assembly);
 
+            return resourceManager.GetString(key, currentLanguage);
+        }
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
@@ -272,7 +291,8 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text = AppResources.SCAN_RSSI_NOW_STRING,
+                Text=getResourceString("SCAN_RSSI_NOW_STRING"),
+                //Text = AppResources.SCAN_RSSI_NOW_STRING,
                 Margin = new Thickness(10,0,10,0),
                 FontSize = 28
             });

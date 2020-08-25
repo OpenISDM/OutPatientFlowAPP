@@ -11,6 +11,11 @@ using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 using IndoorNavigation.Models;
 using Rg.Plugins.Popup.Extensions;
 using IndoorNavigation.Resources;
+using System.Globalization;
+using IndoorNavigation.Resources.Helpers;
+using System.Resources;
+using Plugin.Multilingual;
+using System.Reflection;
 
 namespace IndoorNavigation.Views.PopUpPage
 
@@ -117,7 +122,8 @@ namespace IndoorNavigation.Views.PopUpPage
             //show please select one.
             await PopupNavigation.Instance.PushAsync
                 (new AlertDialogPopupPage(
-                    AppResources.PLEASE_SELECT_OPTION_STRING, 
+                    getResourceString("PLEASE_SELECT_OPTION_STRING"),
+                    //AppResources.PLEASE_SELECT_OPTION_STRING, 
                     AppResources.OK_STRING));
             isButtonClick = false;
         }
@@ -144,6 +150,18 @@ namespace IndoorNavigation.Views.PopUpPage
 
             await page.Navigation.PopAsync();
             await PopupNavigation.Instance.RemovePageAsync(this);
+        }
+        private string getResourceString(string key)
+        {
+            string resourceId = "IndoorNavigation.Resources.AppResources";
+            CultureInfo currentLanguage =
+                CrossMultilingual.Current.CurrentCultureInfo;
+            ResourceManager resourceManager =
+                new ResourceManager(resourceId,
+                                    typeof(TranslateExtension)
+                                    .GetTypeInfo().Assembly);
+
+            return resourceManager.GetString(key, currentLanguage);
         }
     }
     public class PurposeOption

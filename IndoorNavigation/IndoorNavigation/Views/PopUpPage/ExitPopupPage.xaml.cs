@@ -210,7 +210,10 @@ namespace IndoorNavigation.Views.PopUpPage
 
                         await PopupNavigation.Instance.PushAsync
                             (new AlertDialogPopupPage
-                            (AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING,
+                            (_resourceManager.GetString
+                            ("WILL_BRING_YOU_TO_ELEVATOR_STRING"
+                            , currentLanguage),
+                                //AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING,
                             AppResources.OK_STRING));
 
                         DestinationItem elevatorItem;
