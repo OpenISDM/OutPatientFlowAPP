@@ -47,6 +47,8 @@ using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
+using System.Linq;
+using IndoorNavigation.Resources;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -65,6 +67,8 @@ namespace IndoorNavigation.Views.PopUpPage
         CultureInfo currentLanguage =
             CrossMultilingual.Current.CurrentCultureInfo;
         private XMLInformation _nameInformation;
+
+        private Dictionary<Guid, DestinationItem> ElevatorPosition;
 
         public ExitPopupPage(string navigationGraphName)
         {
@@ -101,6 +105,32 @@ namespace IndoorNavigation.Views.PopUpPage
             catch (Exception exc)
             {
                 Console.WriteLine(exc.StackTrace);
+            }
+        }
+        private Guid _allF_Guid =
+            new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
+
+        private void LoadElevator()
+        {
+            ElevatorPosition = new Dictionary<Guid, DestinationItem>();
+            XmlDocument doc = XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
+
+            doc = Storage.XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
+            XmlNodeList ElevatorNodeList = doc.GetElementsByTagName("elevator");
+
+            foreach (XmlNode elevatorNode in ElevatorNodeList)
+            {
+                DestinationItem item = new DestinationItem();
+
+                item._regionID = 
+                    new Guid(elevatorNode.Attributes["region_id"].Value);
+                item._waypointID = 
+                    new Guid(elevatorNode.Attributes["waypoint_id"].Value);
+
+                item._floor = elevatorNode.Attributes["floor"].Value;
+                item._waypointName = elevatorNode.Attributes["name"].Value;
+
+                ElevatorPosition.Add(item._regionID, item);
             }
         }
 
@@ -170,26 +200,73 @@ namespace IndoorNavigation.Views.PopUpPage
                     int order =
                        app.OrderDistrict.ContainsKey(0) ?
                        app.OrderDistrict[0] : 0;
-                    //app.records.Insert(app.FinishCount, new RgRecord
+                    DestinationItem item = ExitItems[radioName];
+
+                    if (item._regionID == _allF_Guid &&
+                        item._waypointID == _allF_Guid)
+                    {
+                        LoadElevator();
+                        Console.WriteLine("this range of item haven't been supported now.");
+
+                        await PopupNavigation.Instance.PushAsync
+                            (new AlertDialogPopupPage
+                            (AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING,
+                            AppResources.OK_STRING));
+
+                        DestinationItem elevatorItem;
+
+                        try
+                        {
+                            elevatorItem = ElevatorPosition[app.lastFinished._regionID];
+                        }
+                        catch
+                        {
+                            elevatorItem = ElevatorPosition.First().Value;
+                        }
+
+                        app.records.Add(new RgRecord
+                        {
+                            _waypointName = elevatorItem._waypointName,
+                            _regionID = elevatorItem._regionID,
+                            _waypointID = elevatorItem._waypointID,
+                            isComplete = true,
+                            DptName = radioName,
+                            _groupID = 0,
+                            type = RecordType.Exit
+                        });
+
+                        app._globalNavigatorPage = new NavigatorPage
+                            (_navigationGraphName, 
+                             elevatorItem._regionID,
+                             elevatorItem._waypointID, 
+                             elevatorItem._waypointName, 
+                             _nameInformation);
+                        Page page = Application.Current.MainPage;
+                        await PopupNavigation.Instance.RemovePageAsync(this);
+                        await page.Navigation.PushAsync
+                            (app._globalNavigatorPage);
+                        return;
+                    }
+
                     app.records.Add(new RgRecord
                     {
                         _waypointName = radioName,
                         type = RecordType.Exit,
-                        _regionID = ExitItems[radioName]._regionID,
-                        _waypointID = ExitItems[radioName]._waypointID,
-                        _floor = ExitItems[radioName]._floor,
+                        _regionID = item._regionID,
+                        _waypointID = item._waypointID,
+                        _floor = item._floor,
                         isComplete = true,
                         DptName = radioName,
                         order = order
                     });
                     app._globalNavigatorPage =
                         new NavigatorPage(_navigationGraphName,
-                        ExitItems[radioName]._regionID,
-                        ExitItems[radioName]._waypointID,
+                        item._regionID,
+                        item._waypointID,
                         radioName,
                         _nameInformation);
-                    await Navigation.PushAsync(app._globalNavigatorPage);                    
-                    await PopupNavigation.Instance.PopAsync();
+                    await Navigation.PushAsync(app._globalNavigatorPage);
+                    await PopupNavigation.Instance.RemovePageAsync(this);                    
                     return;
                 }
             }

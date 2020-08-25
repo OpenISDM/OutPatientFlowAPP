@@ -460,4 +460,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\CCH33302624.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Pharmacy_OPPA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Exit_OPPA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Cashier_OPPA.png" />
+  </ItemGroup>
 </Project>
