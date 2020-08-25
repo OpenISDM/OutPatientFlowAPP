@@ -652,8 +652,8 @@ namespace IndoorNavigation.Views.OPFM
                 Console.WriteLine("Current Finish count : " + app.FinishCount);
                 
                 if (app.FinishCount == app.records.Count &&
-                app.lastFinished.type != RecordType.Register &&
-                app.lastFinished.type != RecordType.Exit)
+                (app.lastFinished.type != RecordType.Register ||
+                (app.lastFinished.type != RecordType.Exit && app.HaveCashier)))
                 {
                     ExitAddBtn.IsEnabled = true;
                     ExitAddBtn.IsVisible = true;
@@ -927,13 +927,16 @@ namespace IndoorNavigation.Views.OPFM
         }
         async private void ExitFinish(RgRecord record)
         {
-            string HopeString =
-                $"{Storage.GetDisplayName(_navigationGraphName)}" +
-                $"\n{getResourceString("HOPE_STRING")}";
-            await PopupNavigation.Instance.PushAsync
-                (new AlertDialogPopupPage(HopeString));
-            await Navigation.PopAsync();
-            app.FinishCount--;
+            if (app.HaveCashier)
+            {
+                string HopeString =
+                  $"{Storage.GetDisplayName(_navigationGraphName)}" +
+                  $"\n{getResourceString("HOPE_STRING")}";
+                await PopupNavigation.Instance.PushAsync
+                    (new AlertDialogPopupPage(HopeString));
+                await Navigation.PopAsync();
+                app.FinishCount--;
+            }
 
             ItemFinishFunction(record);
         }
