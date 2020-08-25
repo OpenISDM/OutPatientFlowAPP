@@ -736,4 +736,10 @@
   <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
     <value>歡迎使用，即將開啟訊號自動校正</value>
   </data>
+  <data name="PLEASE_SELECT_OPTION_STRING" xml:space="preserve">
+    <value>請選一個目的</value>
+  </data>
+  <data name="PLEASE_SELECT_YOUR_PURPOSE_STRING" xml:space="preserve">
+    <value>選擇您來醫院的目的</value>
+  </data>
 </root>

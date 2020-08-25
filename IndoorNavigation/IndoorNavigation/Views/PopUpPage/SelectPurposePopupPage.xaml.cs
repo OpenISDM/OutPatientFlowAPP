@@ -10,6 +10,7 @@ using static IndoorNavigation.Utilities.Storage;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 using IndoorNavigation.Models;
 using Rg.Plugins.Popup.Extensions;
+using IndoorNavigation.Resources;
 
 namespace IndoorNavigation.Views.PopUpPage
 
@@ -36,8 +37,6 @@ namespace IndoorNavigation.Views.PopUpPage
         private void LoadPurposeOption()
         {
             XmlDocument doc = XmlReader(_documentPath);
-
-            //XmlNodeList PurposeNodeList = doc.GetElementsByTagName("Purpose");
             XmlNodeList PurposeNodeList = doc.SelectNodes("Purposes/Purpose");
             Console.WriteLine("purpose node list child count : " + PurposeNodeList.Count);
             foreach(XmlNode purposeNode in PurposeNodeList)
@@ -116,7 +115,10 @@ namespace IndoorNavigation.Views.PopUpPage
             }
 
             //show please select one.
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage("請選一個目的。", "確定"));
+            await PopupNavigation.Instance.PushAsync
+                (new AlertDialogPopupPage(
+                    AppResources.PLEASE_SELECT_OPTION_STRING, 
+                    AppResources.OK_STRING));
             isButtonClick = false;
         }
 

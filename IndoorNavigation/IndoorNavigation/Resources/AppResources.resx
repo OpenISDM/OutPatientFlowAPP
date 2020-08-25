@@ -737,4 +737,10 @@ regulate again. Thanks!</value>
     <value>Welcome to use the app!
 It's starting to auto regulate signal now.</value>
   </data>
+  <data name="PLEASE_SELECT_OPTION_STRING" xml:space="preserve">
+    <value>Please select your purpose.</value>
+  </data>
+  <data name="PLEASE_SELECT_YOUR_PURPOSE_STRING" xml:space="preserve">
+    <value>Please select why you come to the hospital.</value>
+  </data>
 </root>

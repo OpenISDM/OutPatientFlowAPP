@@ -38,7 +38,7 @@
 	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleLocalizations</key>
 	<array>
-		<string>en</string>
+		<string>en_US</string>
 		<string>zh_TW</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>

@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:resources="clr-namespace:IndoorNavigation.Resources"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  xmlns:input ="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
@@ -16,14 +17,17 @@
                Margin="15,0,15,0"
                CornerRadius="8">
             <StackLayout>
-                <Label x:Name="SelectPurposeLab" Text="請選擇您來醫院的目的。"
+                <Label x:Name="SelectPurposeLab" 
+                       Text="{x:Static resources:AppResources.PLEASE_SELECT_YOUR_PURPOSE_STRING}"
                        FontSize="32"
                        HorizontalOptions="FillAndExpand"
                        VerticalOptions="CenterAndExpand"/>
 
                 <ScrollView VerticalOptions="Start"
                             HorizontalOptions="FillAndExpand"
-                            Margin="10,0,10,0">
+                            Margin="15,0,10,0"
+                            MinimumHeightRequest="150"
+                            HeightRequest="180">
                     <input:RadioButtonGroupView x:Name="PurposeRadioGroup"
                                                 HorizontalOptions="StartAndExpand"
                                                 Margin="5,0,5,0"/>
