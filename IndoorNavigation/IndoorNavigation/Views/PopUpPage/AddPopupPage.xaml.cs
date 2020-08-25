@@ -52,6 +52,7 @@ using IndoorNavigation.Models;
 using System.Collections.ObjectModel;
 using ZXing;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -233,10 +234,12 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 BoxLayout = new StackLayout();
                 outSideGrid = getGridLayout();
+                clinicNames = new List<string>();
                 key = 0;
                 image = new Image
                 {
-                    Source = "",
+                    Source = _examinationItemDict[otherItemName].First()
+                    .type.ToString() + "_OPPA",
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 80,
                     HeightRequest = 80,
@@ -266,22 +269,33 @@ namespace IndoorNavigation.Views.PopUpPage
                     };
                     BoxLayout.Children.Add(box);
                     item._checkbox = box;
+                    clinicNames.Add(item.DisplayName);
                 }
 
+                keys = new SearchBarKey
+                {
+                    _departNameLabelText = otherItemName,
+                    _clinicNameText = clinicNames
+                };
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(BoxLayout, 2, 5, 0, 5);
 
                 mainStackLayout.Children.Add(outSideGrid);
-                mainStackLayout.Children.Add
-                    (getColorLine(Color.FromHex("#3f51b5")));
-                
+                mainStackLayout.Children.Add(new BoxView
+                {
+                    HeightRequest = 1,
+                    Color = Color.FromHex("#3f51b5")
+                });
+                //mainStackLayout.Children.Add
+                //    (getColorLine(Color.FromHex("#3f51b5")));
+                _allContentInAdd.Add(keys, outSideGrid);
             }
             #endregion
 
             #region part of Suit Process Checkbox
             HospitalProcessParse processParse = new HospitalProcessParse();
-
+            clinicNames = new List<string>();
             StackLayout processStackLayout = new StackLayout();
             outSideGrid = getGridLayout();
             List<ProcessOption> processOptions =
@@ -342,9 +356,13 @@ namespace IndoorNavigation.Views.PopUpPage
             mainStackLayout.Children.Add(outSideGrid);
 
             //blue line for dividing every depart
-            mainStackLayout.Children.Add
-                (getColorLine(Color.FromHex("#3f51b5")));
-
+            //mainStackLayout.Children.Add
+            //    (getColorLine(Color.FromHex("#3f51b5")));
+            mainStackLayout.Children.Add(new BoxView
+            {
+                HeightRequest=1,
+                Color = Color.FromHex("#3f51b5")
+            });
            
             #endregion
 
@@ -436,8 +454,12 @@ namespace IndoorNavigation.Views.PopUpPage
                 _allContentInAdd.Add(keys, outSideGrid);
                 mainStackLayout.Children.Add(outSideGrid);
 
-                mainStackLayout.Children.Add
-                    (getColorLine(Color.FromHex("#3f51b5")));
+                //mainStackLayout.Children.Add
+                //    (getColorLine(Color.FromHex("#3f51b5")));
+                mainStackLayout.Children.Add(new BoxView{
+                    HeightRequest=1,
+                    Color = Color.FromHex("#3f51b5")
+                });
             }
 
             #endregion            
@@ -473,8 +495,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 foreach (AddExaminationItem item in _examinationItemDict[dptName])
                 {
                     CheckBox box = new CheckBox
-                    {
-                        
+                    {                    
                         Text = item.DisplayName,
                         TextFontSize =
                           Device.GetNamedSize(NamedSize.Large, typeof(CheckBox)),
@@ -499,8 +520,13 @@ namespace IndoorNavigation.Views.PopUpPage
                 mainStackLayout.Children.Add(outSideGrid);
 
                 //blue line for dividing every depart
-                mainStackLayout.Children.Add
-                    (getColorLine(Color.FromHex("#3f51b5")));
+                //mainStackLayout.Children.Add
+                //    (getColorLine(Color.FromHex("#3f51b5")));
+                mainStackLayout.Children.Add(new BoxView
+                {
+                    HeightRequest = 1,
+                    Color = Color.FromHex("#3f51b5")
+                });
             }
             #endregion
 

@@ -2,5 +2,5 @@
 <navigation_graph country='Taiwan' city_county='Yuanlin' industry_service='hospital' owner_organization='BeDI' building_name='Yuanlin_Christian_Hospital' version='1.0'>
   <exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000018' name='前門出口' floor='1'/>
   <exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000014' name='側門出口' floor='1'/>
-  <!--<exit region_id='22222222-2222-2222-2222-222222222222' waypoint_id='00000000-0000-0000-0000-000000000017' name='停車場梯廳' floor='-2'/>--><!--this is fake-->
+  <exit region_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' waypoint_id='FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF' name='停車場梯廳' floor='-2'/><!--this is fake-->
 </navigation_graph>
