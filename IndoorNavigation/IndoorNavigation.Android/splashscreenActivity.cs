@@ -34,9 +34,9 @@ namespace IndoorNavigation.Droid
         //    startupWork.Start();
         //}
 
-        //public override void OnBackPressed()
-        //{            
-        //}
+        public override void OnBackPressed()
+        {
+        }
 
         //async void SimulateStartUp()
         //{
