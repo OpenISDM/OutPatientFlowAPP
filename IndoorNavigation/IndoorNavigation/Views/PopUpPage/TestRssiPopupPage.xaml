@@ -20,13 +20,31 @@
                     <inputkit:AdvancedSlider x:Name="RSSIAdjustmentSlider"
                                              MaxValue="20" 
                                              MinValue="-20"
-                                             StepValue="1"
-                                             ValueSuffix="dbm"
+                                             StepValue="1"                                            
+                                             DisplayMinMaxValue="True"
+                                             
                                              Title="Choose your RSSI"
-                                             MaxValueSuffix="dbm"
-                                             MinValueSuffix="dbm"
+                                             MaxValueSuffix="強"
+                                             MinValueSuffix="弱"
                                              TextColor="#3f51b5"/>
 
+                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="弱" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout>
+                            <Slider />
+                        </StackLayout>
+                        <Label Text="強" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="弱" Grid.Column="0" HorizontalTextAlignment="Center"/>
+                        <Slider Grid.Column="1" ThumbColor="#3f51b5" BackgroundColor="White" MaximumTrackColor="#c0c0c0" MinimumTrackColor="#3f51b5"/>
+                        <Label Text="強" Grid.Column="2" HorizontalTextAlignment="Center"/>
+                    </Grid>
                     <BoxView BackgroundColor="Transparent" HeightRequest="10"/>
 
                     <StackLayout Orientation="Horizontal" 
