@@ -20,6 +20,12 @@
                         <Label Text="{i18n:Translate NO_SINGNAL_TAP_START_STRING}" 
                                FontSize="Large"/>
                     </StackLayout>
+
+                    <ProgressBar x:Name="AutoAdjustProgressBar"
+                                 VerticalOptions="CenterAndExpand"
+                                 FlowDirection="LeftToRight"
+                                 Progress="0.2"
+                                 />
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="FillAndExpand">
                         <Button x:Name="StartBtn" 

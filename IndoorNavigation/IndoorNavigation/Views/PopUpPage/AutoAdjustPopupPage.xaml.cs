@@ -91,7 +91,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
 
         }
-
+        private double value = 0.2;
         private bool isEmptyGuid(Guid guid)
         {
             return Guid.Empty.Equals(guid);
@@ -180,7 +180,10 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 //_detectThreadEvent.Wait();
                 Console.WriteLine(">>StartTimer, count : " + count);
-                _ipsModules.OpenRssiScaning();        
+                _ipsModules.OpenRssiScaning();
+
+                //AutoAdjustProgressBar.SetValue()
+                AutoAdjustProgressBar.ProgressTo(0.1, 250, Easing.Linear);
                 if(count++ == 70)
                 {
                     SetRssiOption();
@@ -275,8 +278,10 @@ namespace IndoorNavigation.Views.PopUpPage
                 Source = "waittingscan.gif",
                 IsAnimationPlaying = true
             });
-        }
 
+            
+        }
+       
         private void SetScanRssiView(string currentPosition)
         {
             AutoAdjustLayout.Children.Clear();
