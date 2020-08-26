@@ -91,7 +91,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
 
         }
-        private double value = 0.2;
+        private double ProgressValue = 0.66;
         private bool isEmptyGuid(Guid guid)
         {
             return Guid.Empty.Equals(guid);
@@ -183,8 +183,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 _ipsModules.OpenRssiScaning();
 
                 //AutoAdjustProgressBar.SetValue()
-                AutoAdjustProgressBar.ProgressTo(0.1, 250, Easing.Linear);
-                if(count++ == 70)
+                AutoAdjustProgressBar.ProgressTo(++ProgressValue, 250, Easing.Linear);
+                if(count++ == 33)
                 {
                     SetRssiOption();
                     _ipsModules.CloseAllActiveClient();
@@ -279,6 +279,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 IsAnimationPlaying = true
             });
 
+            AutoAdjustProgressBar.ProgressTo(0.33, 250, Easing.Linear);
             
         }
        
@@ -307,6 +308,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 Source = "waittingscan.gif",
                 IsAnimationPlaying = true
             });
+
+            AutoAdjustProgressBar.ProgressTo(0.66, 250, Easing.Linear);
         }
 
         async public Task<bool> Show()
