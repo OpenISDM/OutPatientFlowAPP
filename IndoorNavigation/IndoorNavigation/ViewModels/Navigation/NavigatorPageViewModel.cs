@@ -346,10 +346,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             InstructionWidthSpanValue = 2;
             #endregion
 
-            IImageChecker checker = DependencyService.Get<IImageChecker>();
-
-            //nextRegionName =
-            //    _xmlInformation.GiveRegionName(instruction._nextRegionGuid);
+            IImageChecker checker = DependencyService.Get<IImageChecker>();            
 
             if (checker.DoesImageExist
                 (instruction._information._directionPicture))
@@ -708,7 +705,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                     stepLabel = SwitchCombineInstruction(instruction,
                         //instruction._information,
                                 _resourceManager.GetString(
-                                "DIRECTION_DOWN_STRING",
+                                "DIRECTION_UP_STRING",
                                 _currentCulture),
                                 connectionTypeString,
                                 nextRegionName);
