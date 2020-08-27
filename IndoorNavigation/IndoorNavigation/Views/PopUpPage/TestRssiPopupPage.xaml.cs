@@ -19,18 +19,21 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             InitializeComponent();
 
-            if (Application.Current.Properties
-                .ContainsKey("RSSI_Test_Adjustment"))
-            {
-                Console.WriteLine("current value = " +
-                    Application.Current.Properties["RSSI_Test_Adjustment"]);
 
-                //RSSIAdjustmentSlider.Value =
-                //  Convert.ToDouble(Application.Current.Properties
-                //  ["RSSI_Test_Adjustment"]);
-                RSSIAdjustmentSlider.Value =
-                    Convert.ToDouble(RssiOption);
-            }
+            Console.WriteLine("current value = " +
+                RssiOption);
+            RSSIAdjustmentSlider.Value =
+                Convert.ToDouble(RssiOption);
+
+            //if (Application.Current.Properties
+            //    .ContainsKey("RSSI_Test_Adjustment"))
+            //{
+            //    Console.WriteLine("current value = " +
+            //        Application.Current.Properties["RSSI_Test_Adjustment"]);
+                
+            //    RSSIAdjustmentSlider.Value =
+            //        Convert.ToDouble(RssiOption);
+            //}
         }
 
         async private void ConfirmBtn_Clicked(object sender, EventArgs e)
