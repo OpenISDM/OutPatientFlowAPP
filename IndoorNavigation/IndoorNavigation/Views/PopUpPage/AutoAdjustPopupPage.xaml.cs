@@ -181,9 +181,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 //_detectThreadEvent.Wait();
                 Console.WriteLine(">>StartTimer, count : " + count);
                 _ipsModules.OpenRssiScaning();
-
+                ProgressValue += 0.01;
                 //AutoAdjustProgressBar.SetValue()
-                AutoAdjustProgressBar.ProgressTo(++ProgressValue, 250, Easing.Linear);
+                AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
                 if(count++ == 33)
                 {
                     SetRssiOption();

@@ -23,8 +23,7 @@
 
                     <ProgressBar x:Name="AutoAdjustProgressBar"
                                  VerticalOptions="CenterAndExpand"
-                                 FlowDirection="LeftToRight"
-                                 Progress="0.2"
+                                 FlowDirection="LeftToRight"                               
                                  />
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="FillAndExpand">
