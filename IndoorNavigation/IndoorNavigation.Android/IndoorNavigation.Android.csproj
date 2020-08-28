@@ -470,6 +470,23 @@
     <AndroidResource Include="Resources\drawable\ProcessExamination.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\layout\splashscreen.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_screen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Pharmacy_OPPA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Exit_OPPA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Cashier_OPPA.png" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable\CCH11100304.png" />
   </ItemGroup>
   <ItemGroup>
@@ -536,21 +553,19 @@
     <AndroidResource Include="Resources\drawable\CCH33302624.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\splashscreen.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\CCH11100302.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_screen.png" />
+    <AndroidResource Include="Resources\drawable\CCH11100704.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Pharmacy_OPPA.png" />
+    <AndroidResource Include="Resources\drawable\CCH11100706.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Exit_OPPA.png" />
+    <AndroidResource Include="Resources\drawable\CCH11100708.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Cashier_OPPA.png" />
+    <AndroidResource Include="Resources\drawable\CCH11100710.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="_ResolveSatellitePaths" DependsOnTargets="_ResolveAssemblies">
