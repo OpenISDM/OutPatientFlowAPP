@@ -283,6 +283,17 @@ namespace IndoorNavigation.Views.PopUpPage
             
         }
        
+        private void SetAskPositionCorrect()
+        {
+            AutoAdjustLayout.Children.Clear();
+
+            AutoAdjustLayout.Children.Add(
+                new Label
+                {
+                    Text="目前位置 : "
+                });
+        }
+
         private void SetScanRssiView(string currentPosition)
         {
             AutoAdjustLayout.Children.Clear();
