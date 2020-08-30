@@ -9,12 +9,14 @@ using Rg.Plugins.Popup.Services;
 using static IndoorNavigation.Utilities.TmperorayStatus;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Rg.Plugins.Popup.Extensions;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestRssiPopupPage : PopupPage
     {
+        private TaskCompletionSource<bool> _tcs = null;
         public TestRssiPopupPage()
         {
             InitializeComponent();
@@ -47,12 +49,24 @@ namespace IndoorNavigation.Views.PopUpPage
             RssiOption = (int)(RSSIAdjustmentSlider.Value);
             Console.WriteLine("RssiSlider value : " + RSSIAdjustmentSlider.Value);
             Console.WriteLine("Current Rssi option : " + RssiOption);
-            await PopupNavigation.Instance.PopAllAsync();
+            
+            await PopupNavigation.Instance.RemovePageAsync(this);
+            _tcs?.SetResult(false);
         }
 
         async private void CancelBtn_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PopAllAsync();
+            await PopupNavigation.Instance.RemovePageAsync(this);
+            _tcs?.SetResult(false);
+        }
+
+        async public Task<bool> show()
+        {
+            _tcs = new TaskCompletionSource<bool>();
+
+            await Navigation.PushPopupAsync(this);
+
+            return await _tcs.Task;
         }
     }
 } 

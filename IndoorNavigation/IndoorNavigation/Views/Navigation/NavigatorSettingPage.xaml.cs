@@ -42,6 +42,7 @@
  *
  */
 using IndoorNavigation.Resources.Helpers;
+using IndoorNavigation.Utilities;
 using IndoorNavigation.Views.PopUpPage;
 using Plugin.Multilingual;
 using Prism.Commands;
@@ -117,9 +118,10 @@ namespace IndoorNavigation.Views.Navigation
             //    }
             //}
 
+            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
         }
 
-        private async void HandleChangeRssi()
+        private void HandleChangeRssi()
         {
             //switch (OptionPicker.SelectedItem.ToString().Trim())
             //{
@@ -212,16 +214,25 @@ namespace IndoorNavigation.Views.Navigation
         async private void RssiPicker_Tapped(object sender, EventArgs e)
         {
             Console.WriteLine(">> Tapped RssiItem");
+        
+            TestRssiPopupPage page = new TestRssiPopupPage();
 
-            await PopupNavigation.Instance.PushAsync(new TestRssiPopupPage());
+            await page.show();
+
+            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
         }
 
         async private void AutoAdjust_Tapped(object sender, EventArgs e)
         {
             Console.WriteLine(">> Tapped AutoAdjust");
 
-            await PopupNavigation.Instance.PushAsync
-                (new AutoAdjustPopupPage(_naviGraphName));
+            AutoAdjustPopupPage page = new AutoAdjustPopupPage(_naviGraphName);
+
+            await page.Show();
+
+            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
+            //await PopupNavigation.Instance.PushAsync
+            //    (new AutoAdjustPopupPage(_naviGraphName));
         }
 
     }
