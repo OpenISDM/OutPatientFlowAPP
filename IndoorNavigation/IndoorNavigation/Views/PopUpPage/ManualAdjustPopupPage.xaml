@@ -8,28 +8,22 @@
              x:Class="IndoorNavigation.Views.PopUpPage.ManualAdjustPopupPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Padding="0,20,0,20">
-            <Frame HorizontalOptions="FillAndExpand" Margin="15,0,15,0">
+            <Frame HorizontalOptions="FillAndExpand" Margin="15,0,15,0" CornerRadius="8">
                 <StackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Slider x:Name="ManualSlider"
-                                Maximum="15"
-                                Minimum="-15"
-                                DragStarted="ManualSlider_DragStarted"
-                                DragCompleted="ManualSlider_DragCompleted"
-                                MaximumTrackColor="#c0c0c0"
-                                MinimumTrackColor="#3f51b5"                                
-                                Grid.Column="1"/>
-                        <Button x:Name="StepperAddBtn" Text="+" Clicked="StepperAddBtn_Clicked" 
-                                Grid.Column="2"/>
-                        <Button x:Name="StepperCutBtn" Text="-" Clicked="StepperCutBtn_Clicked" 
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="StepperCutBtn" Text="減弱" Clicked="StepperCutBtn_Clicked" 
                                 Grid.Column="0"/>
-                    </Grid>
-                                      
+                        <Label x:Name="ManualRssiLabel" 
+                               FontSize="Large" 
+                               HorizontalOptions="CenterAndExpand"                               
+                               FontAttributes="Bold" 
+                               TextColor="#3f51b5" 
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               Grid.Column="1"/>
+                        <Button x:Name="StepperAddBtn" Text="增強" Clicked="StepperAddBtn_Clicked"                                
+                                Grid.Column="2"/>
+                    </StackLayout>
                     <Button x:Name="ConfirmBtn" Text="確定" HorizontalOptions="EndAndExpand" Clicked="ConfirmBtn_Clicked"/>
                 </StackLayout>
             </Frame>

@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 
 using Rg.Plugins.Popup.Pages;
 using IndoorNavigation.Utilities;
+using Rg.Plugins.Popup.Services;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -17,10 +18,8 @@ namespace IndoorNavigation.Views.PopUpPage
     {
         public ManualAdjustPopupPage()
         {
-            InitializeComponent();
-
-            //ManualSlider.Value = TmperorayStatus.RssiOption;
-            ManualSlider.Value = TmperorayStatus.RssiOption;
+            InitializeComponent();           
+            ManualRssiLabel.Text = TmperorayStatus.RssiOption.ToString();
         }
 
         private void StepperAddBtn_Clicked(object sender, EventArgs e)
@@ -29,7 +28,7 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 TmperorayStatus.RssiOption += 1;
 
-                ManualSlider.Value = TmperorayStatus.RssiOption;
+                ManualRssiLabel.Text = TmperorayStatus.RssiOption.ToString();
             }
         }
 
@@ -38,23 +37,17 @@ namespace IndoorNavigation.Views.PopUpPage
             if(TmperorayStatus.RssiOption -1 >= -15)
             {
                 TmperorayStatus.RssiOption -= 1;
-                ManualSlider.Value = TmperorayStatus.RssiOption;
+                ManualRssiLabel.Text = TmperorayStatus.RssiOption.ToString();
             }
         }
 
-        private void ConfirmBtn_Clicked(object sender, EventArgs e)
+        async private void ConfirmBtn_Clicked(object sender, EventArgs e)
         {
-
+            await PopupNavigation.Instance.RemovePageAsync(this);
         }
 
-        private void ManualSlider_DragStarted(object sender, EventArgs e)
-        {
-            ManualSlider.Value = TmperorayStatus.RssiOption;
-        }
+      
 
-        private void ManualSlider_DragCompleted(object sender, EventArgs e)
-        {
-            ManualSlider.Value = TmperorayStatus.RssiOption;
-        }
+        
     }
 }
