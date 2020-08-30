@@ -708,7 +708,7 @@
   </data>
   <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
     <value>校正完成!
-若是訊號過快或是過慢，
+若訊號過快或過慢，
 您可以到偏好設定頁，
 再次校正。</value>
   </data>
