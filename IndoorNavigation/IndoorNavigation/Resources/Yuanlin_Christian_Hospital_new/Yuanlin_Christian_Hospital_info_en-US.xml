@@ -23,7 +23,7 @@
 		<waypoint id='00000000-0000-0000-0000-000000000015' name='Store'/>
 		<waypoint id='00000000-0000-0000-0000-000000000016' name='Hall'/>
 		<waypoint id='00000000-0000-0000-0000-000000000017' name='Escalator'/>
-		<waypoint id='00000000-0000-0000-0000-000000000018' name='Front Door'/>
+		<waypoint id='00000000-0000-0000-0000-000000000018' name='1F Cashier/Registration'/>
 		<waypoint id='00000000-0000-0000-0000-000000000019' name='Pharmacy'/>
 		<waypoint id='00000000-0000-0000-0000-000000000020' name='Escalator'/>
 		<waypoint id='00000000-0000-0000-0000-000000000021' name='Blood collection'/>
@@ -35,5 +35,7 @@
 		<waypoint id='00000000-0000-0000-0000-000000000027' name='Ophthalmology'/>
     <waypoint id='00000000-0000-0000-0000-000000000028' name='Family Mart'/>
     <waypoint id='00000000-0000-0000-0000-000000000029' name='Radiology'/>
+      <waypoint id='00000000-0000-0000-0000-000000000030' name='Escalator' />
+      <waypoint id='00000000-0000-0000-0000-000000000031' name='Escalator'/>
     </waypoints>
 </navigation_graph>
