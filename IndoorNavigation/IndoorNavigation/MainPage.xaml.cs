@@ -577,7 +577,8 @@ namespace IndoorNavigation
             //await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage("Lab"));
             //await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("Taipei_City_Hall"));
             //await PopupNavigation.Instance.PushAsync(new DownloadPopUpPage());
-            await PopupNavigation.Instance.PushAsync(new ManualAdjustPopupPage());
+            //await PopupNavigation.Instance.PushAsync(new ManualAdjustPopupPage());
+            await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("CCH_Debug"));
             await Task.CompletedTask;
         }
 

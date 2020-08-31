@@ -59,6 +59,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private XMLInformation _nameInformation;
         private ManualResetEventSlim _detectThreadEvent;
         private ManualResetEventSlim _askCorrectEvent;
+        private ManualResetEventSlim _startToScanRssi;
         private bool _positionIsCorrect = false;
 
         private TaskCompletionSource<bool> _tcs = null;
@@ -72,7 +73,8 @@ namespace IndoorNavigation.Views.PopUpPage
             _navigationGraph = LoadNavigationGraphXml(naviGraphName);
 
             _detectThreadEvent = new ManualResetEventSlim(false);
-            _askCorrectEvent = new ManualResetEventSlim(true);
+            _askCorrectEvent = new ManualResetEventSlim(false);
+            _startToScanRssi = new ManualResetEventSlim(false);
 
             _ipsModules = new IPSmodule_(_navigationGraph);
             _AllRssiList = new List<int>();
@@ -120,16 +122,26 @@ namespace IndoorNavigation.Views.PopUpPage
                 ScanPosition();
             }
 
+            Console.WriteLine("Detect waypointID : " + _currentWaypointID);
+            Console.WriteLine("Detect regionID :" + _currentRegionID);
+
+            Device.BeginInvokeOnMainThread(() => SetCheckPositionCorrect());
+
             _askCorrectEvent.Wait();
 
             if (!_positionIsCorrect)
             {
-                _detectThreadEvent.Reset();
-                ScanPosition();                
-                _askCorrectEvent.Reset();
-                SetStartScanView();
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _detectThreadEvent.Reset();
+                    ScanPosition();
+                    _askCorrectEvent.Reset();
+                    SetStartScanView();                                           
+                });
             }
-
+            Console.WriteLine("AAAAAAAAAAAAAA");
+            _startToScanRssi.Wait();
+            Console.WriteLine("jjjjjjjjjjjjjjjj");
             Device.BeginInvokeOnMainThread(() =>
             {
                 string currentPosition =
@@ -274,12 +286,7 @@ namespace IndoorNavigation.Views.PopUpPage
         }
 
         private void SetStartScanView()
-        {
-            #region control button show
-            //StartBtn.IsVisible = false;
-            CancelBtn.IsVisible = true;
-            #endregion
-
+        {            
             AutoAdjustLayout.Children.Clear();
 
             AutoAdjustLayout.Children.Add(new Label
@@ -302,11 +309,17 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             AutoAdjustLayout.Children.Clear();
 
+            CancelBtn.IsVisible = true;
+
+            ConfirmBtn.Clicked -= StartBtn_Clicked;
+            ConfirmBtn.Clicked += CheckPositionCorrectBtn_Clicked;
+
+            CancelBtn.Clicked += CheckPositionWrongBtn_Clicked;
             AutoAdjustLayout.Children.Add(
                 new Label
                 {
-                    Text = "目前位置 : "
-                });
+                    Text = "目前位置 : " + _navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID)
+                }) ;
         }
 
         private void CheckPositionCorrectBtn_Clicked(object sender, 
@@ -316,7 +329,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _positionIsCorrect = true;
             _askCorrectEvent.Set();
-            
+            _startToScanRssi.Set();
             Console.WriteLine("<<CheckPositionCorrect");
         }
 

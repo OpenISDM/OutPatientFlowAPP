@@ -33,15 +33,20 @@
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="End"
                                 Clicked="StartBtn_Clicked"/>-->
-                        
+
                         <Button x:Name="CancelBtn"
                                 Text="{i18n:Translate CANCEL_STRING}"
                                 FontSize="Medium"
                                 HorizontalOptions="EndAndExpand"
                                 IsVisible="false"
+                                VerticalOptions="End"/> 
+                        <Button x:Name="ConfirmBtn"
+                                Text="{i18n:Translate OK_STRING}"
+                                FontSize="Medium"
+                                HorizontalOptions="EndAndExpand"
+                                IsVisible="true"
                                 VerticalOptions="End"
-                                Clicked="CancelBtn_Clicked"/>
-                        
+                                Clicked="StartBtn_Clicked"/>
                     </StackLayout>
                                           
                 </StackLayout>
