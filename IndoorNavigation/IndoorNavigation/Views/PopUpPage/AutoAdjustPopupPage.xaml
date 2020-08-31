@@ -26,7 +26,8 @@
                                  FlowDirection="LeftToRight"                               
                                  />
                     <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="FillAndExpand">
+                                 HorizontalOptions="EndAndExpand" 
+                                 VerticalOptions="EndAndExpand">
 
                         <Button x:Name="CancelBtn"
                                 Text="{i18n:Translate CANCEL_STRING}"

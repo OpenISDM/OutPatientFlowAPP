@@ -112,10 +112,7 @@ namespace IndoorNavigation.Views.PopUpPage
         #endregion
 
 
-
-        int count = 0;
-
-        //to detect where user is.
+        #region scan position and rssi functions
         private void ThreadWork()
         {
             while (_isKeepDetection)
@@ -142,8 +139,6 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 if (!_positionIsCorrect)
                 {
-                    Console.WriteLine("count = " + count++);
-
                     Device.BeginInvokeOnMainThread(() => SetStartScanView());
 
                     _detectThreadEvent.Reset();
@@ -163,8 +158,6 @@ namespace IndoorNavigation.Views.PopUpPage
             _ipsModules.CloseAllActiveClient();
             DetectPositionThreshold();
         }
-
-
 
         private void DetecWaypointResult(object sender, EventArgs args)
         {
@@ -189,9 +182,7 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             _detectThreadEvent.Set();
             Console.WriteLine("<<DetectWaypointResult");
-        }
-
-       
+        }       
 
         //To scan current beacon rssi
         private void DetectPositionThreshold()
@@ -248,11 +239,12 @@ namespace IndoorNavigation.Views.PopUpPage
                 Console.WriteLine("<<InvokeIPSWork");
             }
         }
-        
-       
+        #endregion
+
 
         async private void CancelBtn_Clicked(object sender, EventArgs e)
         {
+            ConfirmBtn.Clicked -= CancelBtn_Clicked;
             _tcs?.SetResult(false);
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
@@ -261,8 +253,8 @@ namespace IndoorNavigation.Views.PopUpPage
         private void StartBtn_Clicked(object sender, EventArgs e)
         {
             SetStartScanView();
-
             // start to scan position
+            ConfirmBtn.Clicked -= StartBtn_Clicked;
             _detectPositionControllThread.Start();
             _detectWaypointThread.Start();
         }
@@ -270,6 +262,12 @@ namespace IndoorNavigation.Views.PopUpPage
         private void SetStartScanView()
         {            
             AutoAdjustLayout.Children.Clear();
+
+            #region Button Control
+            //ConfirmBtn.Clicked -= StartBtn_Clicked;
+            ConfirmBtn.Clicked += CancelBtn_Clicked;
+            ConfirmBtn.Text = "取消";
+            #endregion
 
             AutoAdjustLayout.Children.Add(new Label
             {
@@ -291,9 +289,10 @@ namespace IndoorNavigation.Views.PopUpPage
         private void SetCheckPositionCorrect()
         {
             AutoAdjustLayout.Children.Clear();
-           
+
+
             #region ConfirmButton
-            ConfirmBtn.Clicked -= StartBtn_Clicked;
+            ConfirmBtn.Clicked -= CancelBtn_Clicked;
             ConfirmBtn.Clicked += CheckPositionCorrectBtn_Clicked;
             ConfirmBtn.Text = "正確";
             #endregion
@@ -321,6 +320,7 @@ namespace IndoorNavigation.Views.PopUpPage
             _positionIsCorrect = true;
             _askCorrectEvent.Set();
             _startToScanRssi.Set();
+            ConfirmBtn.Clicked -= CheckPositionCorrectBtn_Clicked;
             Console.WriteLine("<<CheckPositionCorrect");
         }
 
@@ -330,6 +330,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _positionIsCorrect = false;
             _askCorrectEvent.Set();
+            CancelBtn.Clicked -= CheckPositionWrongBtn_Clicked;
             Console.WriteLine("<<CheckWrongPositionWrong");
         }
 
@@ -338,6 +339,12 @@ namespace IndoorNavigation.Views.PopUpPage
         #region  RssiScan View and Functions
         private void SetScanRssiView(string currentPosition)
         {
+            #region Button control
+            //ConfirmBtn.Clicked -= CheckPositionCorrectBtn_Clicked;
+            ConfirmBtn.Clicked += CancelBtn_Clicked;
+            ConfirmBtn.Text = "取消";
+            #endregion
+
             AutoAdjustLayout.Children.Clear();
 
             AutoAdjustLayout.Children.Add(new Label
@@ -409,6 +416,7 @@ namespace IndoorNavigation.Views.PopUpPage
             await Navigation.PushPopupAsync(this);
             return await _tcs.Task;
         }
+        
         #endregion
     }
 
