@@ -24,6 +24,7 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -46,7 +47,7 @@ namespace IndoorNavigation.Views.PopUpPage
         //current waypoint
         private Guid _currentWaypointID;
         private Guid _currentRegionID;
-        private int _currentBeaconRssi;     
+        private int _currentBeaconRssi;
         private IPSmodule_ _ipsModules;
         private string naviGraphName;
         private NavigationGraph _navigationGraph;
@@ -57,9 +58,11 @@ namespace IndoorNavigation.Views.PopUpPage
         private List<int> _AllRssiList;
         private XMLInformation _nameInformation;
         private ManualResetEventSlim _detectThreadEvent;
+        private ManualResetEventSlim _askCorrectEvent;
+        private bool _positionIsCorrect = false;
 
         private TaskCompletionSource<bool> _tcs = null;
-        string _currentPosition = AppResources.CURRENT_LOCATION_STRING;
+
         #endregion
         public AutoAdjustPopupPage(string _naviGraphName)
         {
@@ -67,7 +70,10 @@ namespace IndoorNavigation.Views.PopUpPage
             Console.WriteLine(">>AutoAdjustPopupPage : Constructor");
             naviGraphName = _naviGraphName;
             _navigationGraph = LoadNavigationGraphXml(naviGraphName);
+
             _detectThreadEvent = new ManualResetEventSlim(false);
+            _askCorrectEvent = new ManualResetEventSlim(true);
+
             _ipsModules = new IPSmodule_(_navigationGraph);
             _AllRssiList = new List<int>();
 
@@ -78,9 +84,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _ipsModules._event._eventHandler +=
                 new EventHandler(DetecWaypointResult);
-            
+
             _detectWaypointThread = new Thread(() => InvokeIPSWork());
-            _detectPositionControllThread = new Thread(() => ScanPosition());          
+            _detectPositionControllThread = new Thread(() => ScanPosition());
 
             Console.WriteLine("<<AutoAdjustPopupPage : Constructor");
         }
@@ -91,6 +97,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
 
         }
+
         private double ProgressValue = 0.66;
         private bool isEmptyGuid(Guid guid)
         {
@@ -106,14 +113,22 @@ namespace IndoorNavigation.Views.PopUpPage
             _detectThreadEvent.Wait();
 
             //if we don't know where user is.
-            if(isEmptyGuid(_currentRegionID) &&
+            if (isEmptyGuid(_currentRegionID) &&
                 isEmptyGuid(_currentWaypointID))
             {
                 _detectThreadEvent.Reset();
-                ScanPosition();                
+                ScanPosition();
             }
 
-            
+            _askCorrectEvent.Wait();
+
+            if (!_positionIsCorrect)
+            {
+                _detectThreadEvent.Reset();
+                ScanPosition();                
+                _askCorrectEvent.Reset();
+                SetStartScanView();
+            }
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -126,10 +141,10 @@ namespace IndoorNavigation.Views.PopUpPage
 
             _ipsModules.CloseAllActiveClient();
 
-            DetectPositionThreshold();         
-        }           
+            DetectPositionThreshold();
+        }
 
-      
+
 
         private void DetecWaypointResult(object sender, EventArgs args)
         {
@@ -144,7 +159,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     ._waypointID;
 
                 _ipsModules.CloseAllActiveClient();
-            }else if(args is WaypointRssiEventArgs RssiArgs)
+            } else if (args is WaypointRssiEventArgs RssiArgs)
             {
                 _currentBeaconRssi = RssiArgs._BeaconThreshold;
                 _AllRssiList.Add(RssiArgs._scanBeaconRssi);
@@ -164,8 +179,8 @@ namespace IndoorNavigation.Views.PopUpPage
             int midian = count % 2 != 0 ?
                 (int)_AllRssiList[mid] :
                 (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
-         
-            RssiOption = (int)_currentBeaconRssi - midian;
+
+            RssiOption = ((int)_currentBeaconRssi - midian) + 2;
             Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
         }
 
@@ -184,11 +199,11 @@ namespace IndoorNavigation.Views.PopUpPage
                 ProgressValue += 0.01;
                 //AutoAdjustProgressBar.SetValue()
                 AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
-                if(count++ == 33)
+                if (count++ == 33)
                 {
                     SetRssiOption();
                     _ipsModules.CloseAllActiveClient();
-                    Device.BeginInvokeOnMainThread(async() =>
+                    Device.BeginInvokeOnMainThread(async () =>
                     {
                         //show finish scan page                     
                         await PopupNavigation.Instance.RemovePageAsync(this);
@@ -197,7 +212,7 @@ namespace IndoorNavigation.Views.PopUpPage
                             new AlertDialogPopupPage
                             (
                                 getResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
-                                //AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
+                            //AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
                             AppResources.OK_STRING);
 
                         bool isReturn = await alertPage.show();
@@ -205,17 +220,17 @@ namespace IndoorNavigation.Views.PopUpPage
                         _tcs?.SetResult(true);
                     });
 
-                    
+
                     return false;
-                }                
+                }
                 return true;
             });
             Console.WriteLine("<<DetectPositionThreshold");
-        }        
-       
+        }
+
         private void InvokeIPSWork()
         {
-            while(_isKeepDetection == true)
+            while (_isKeepDetection == true)
             {
                 //keep detection.
                 Thread.Sleep(500);
@@ -225,7 +240,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private string getResourceString(string key)
         {
             string resourceId = "IndoorNavigation.Resources.AppResources";
-            
+
             CultureInfo currentLanguage =
                 CrossMultilingual.Current.CurrentCultureInfo;
             ResourceManager resourceManager =
@@ -261,7 +276,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private void SetStartScanView()
         {
             #region control button show
-            StartBtn.IsVisible = false;
+            //StartBtn.IsVisible = false;
             CancelBtn.IsVisible = true;
             #endregion
 
@@ -269,7 +284,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text="正在偵測位置",
+                Text = "正在偵測位置",
                 FontSize = 32
             });
 
@@ -280,18 +295,38 @@ namespace IndoorNavigation.Views.PopUpPage
             });
 
             AutoAdjustProgressBar.ProgressTo(0.33, 250, Easing.Linear);
-            
+
         }
-       
-        private void SetAskPositionCorrect()
+
+        private void SetCheckPositionCorrect()
         {
             AutoAdjustLayout.Children.Clear();
 
             AutoAdjustLayout.Children.Add(
                 new Label
                 {
-                    Text="目前位置 : "
+                    Text = "目前位置 : "
                 });
+        }
+
+        private void CheckPositionCorrectBtn_Clicked(object sender, 
+            EventArgs e)
+        {
+            Console.WriteLine(">>CheckPositionCorrect");
+
+            _positionIsCorrect = true;
+            _askCorrectEvent.Set();
+            
+            Console.WriteLine("<<CheckPositionCorrect");
+        }
+
+        private void CheckPositionWrongBtn_Clicked(object sender, EventArgs e)
+        {
+            Console.WriteLine(">>CheckWrongPositionWrong");
+
+            _positionIsCorrect = false;
+            _askCorrectEvent.Set();
+            Console.WriteLine("<<CheckWrongPositionWrong");
         }
 
         private void SetScanRssiView(string currentPosition)
