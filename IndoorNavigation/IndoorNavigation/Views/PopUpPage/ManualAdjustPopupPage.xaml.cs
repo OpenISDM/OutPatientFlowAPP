@@ -10,12 +10,16 @@ using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
 using IndoorNavigation.Utilities;
 using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Extensions;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ManualAdjustPopupPage : PopupPage
     {
+
+        TaskCompletionSource<bool> _tcs = null;
+        private bool isDoubleClick = false;
         public ManualAdjustPopupPage()
         {
             InitializeComponent();           
@@ -28,7 +32,9 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 TmperorayStatus.RssiOption += 1;
 
-                ManualRssiLabel.Text = TmperorayStatus.RssiOption.ToString();
+                ManualRssiLabel.Text =
+                    //string.Format("靈敏度 : {0}", TmperorayStatus.RssiOption);
+                    TmperorayStatus.RssiOption.ToString();
             }
         }
 
@@ -37,17 +43,35 @@ namespace IndoorNavigation.Views.PopUpPage
             if(TmperorayStatus.RssiOption -1 >= -15)
             {
                 TmperorayStatus.RssiOption -= 1;
-                ManualRssiLabel.Text = TmperorayStatus.RssiOption.ToString();
+                ManualRssiLabel.Text =
+                    //string.Format("靈敏度 : {0}", TmperorayStatus.RssiOption);
+                    TmperorayStatus.RssiOption.ToString();
             }
         }
 
         async private void ConfirmBtn_Clicked(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.RemovePageAsync(this);
+            if (isDoubleClick) return;
+            isDoubleClick = true;
+
+            await PopupNavigation.Instance.RemovePageAsync(this);           
+            _tcs?.SetResult(true);
         }
 
-      
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _tcs?.SetResult(true);
+        }
 
+
+        async public Task<bool> show() 
+        {
+            _tcs = new TaskCompletionSource<bool>();
+
+            await Navigation.PushPopupAsync(this);
+            return await _tcs.Task;
+        }
         
     }
 }
