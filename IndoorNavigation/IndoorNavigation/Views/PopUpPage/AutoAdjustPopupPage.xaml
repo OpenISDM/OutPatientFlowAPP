@@ -27,12 +27,6 @@
                                  />
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="FillAndExpand">
-                        <!--<Button x:Name="StartBtn" 
-                                Text="{i18n:Translate START_STRING}" 
-                                FontSize="Medium"
-                                HorizontalOptions="CenterAndExpand"
-                                VerticalOptions="End"
-                                Clicked="StartBtn_Clicked"/>-->
 
                         <Button x:Name="CancelBtn"
                                 Text="{i18n:Translate CANCEL_STRING}"

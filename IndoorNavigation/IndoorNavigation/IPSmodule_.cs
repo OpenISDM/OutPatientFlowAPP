@@ -153,6 +153,7 @@ namespace IndoorNavigation.Modules
                         new EventHandler(PassMatchedWaypointEvent);
                     pair.Value.client.SetWaypointList
                         (pair.Value._monitorMappings);
+                    pair.Value.client.OnRestart();
                 }
             }
         }

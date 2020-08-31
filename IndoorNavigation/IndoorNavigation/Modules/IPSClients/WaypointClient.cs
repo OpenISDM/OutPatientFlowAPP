@@ -231,7 +231,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void Stop()
         {
-            _bufferLock = new object();
+            //_bufferLock = new object();
             Utility._lbeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
             _waypointBeaconsList.Clear();

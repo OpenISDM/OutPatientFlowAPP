@@ -63,14 +63,14 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("In Ibeacon Type");
 
             _event = new NavigationEvent();
-            Console.WriteLine("aaaaaaaa");
+            //Console.WriteLine("aaaaaaaa");
             Utility._ibeaconScan = DependencyService.Get<IBeaconScan>();
-            Console.WriteLine("bbbbbbbbbb:");
+            //Console.WriteLine("bbbbbbbbbb:");
             _bufferLock = new object();
             _beaconScanEventHandler = new EventHandler(HandleBeaconScan);
-            Console.WriteLine("cccccccccc");
+           // Console.WriteLine("cccccccccc");
             Utility._ibeaconScan._event._eventHandler += _beaconScanEventHandler;
-            Console.WriteLine("ddddddddddddddd");
+            //Console.WriteLine("ddddddddddddddd");
             _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
             
