@@ -723,7 +723,10 @@ regulate again. Thanks!</value>
   </data>
   <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
     <value>Welcome to use the app!
-It's starting to auto regulate signal now.</value>
+Because the signal sensitivity of mobile 
+is not alway the same. 
+So, It need to do regulate process.
+Press confirm to start to auto regulate signal.</value>
   </data>
   <data name="AT_LEAST_ONE_STRING" xml:space="preserve">
     <value>Please keep it have at least  one navigation graph.</value>
@@ -749,5 +752,10 @@ it will brings you to elevator,
 and please get here by elevator.
 Then please go back B1~2F,
 you can use indoor navigation.</value>
+  </data>
+  <data name="DETECT_POSITION_CLOSE_TO_STRING" xml:space="preserve">
+    <value>Detected position : {0}.
+Please be closed to {1} as much as possible.
+Press confirm to start regulate signal.</value>
   </data>
 </root>

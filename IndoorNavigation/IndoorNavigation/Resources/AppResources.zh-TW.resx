@@ -716,7 +716,10 @@
     <value>正在校正訊號...</value>
   </data>
   <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
-    <value>歡迎使用，即將開啟訊號自動校正</value>
+    <value>歡迎使用，
+由於各款手機訊號靈敏度不同，
+因此需要做校正的動作。
+按下確定開啟訊號自動校正</value>
   </data>
   <data name="PLEASE_SELECT_OPTION_STRING" xml:space="preserve">
     <value>請選一個目的</value>
@@ -742,5 +745,10 @@
 並搭電梯前往。
 結束後請回到B1~2F樓層，
 就能繼續使用導航。</value>
+  </data>
+  <data name="DETECT_POSITION_CLOSE_TO_STRING" xml:space="preserve">
+    <value>偵測到地點 : {0},
+請盡量靠近(1)的路口。
+接下來請按下確定開始校正訊號。</value>
   </data>
 </root>

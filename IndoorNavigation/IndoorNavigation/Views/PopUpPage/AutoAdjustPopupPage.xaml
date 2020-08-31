@@ -29,12 +29,12 @@
                                  HorizontalOptions="EndAndExpand" 
                                  VerticalOptions="EndAndExpand">
 
-                        <Button x:Name="CancelBtn"
+                        <!--<Button x:Name="CancelBtn"
                                 Text="{i18n:Translate CANCEL_STRING}"
                                 FontSize="Medium"
                                 HorizontalOptions="EndAndExpand"
                                 IsVisible="false"
-                                VerticalOptions="End"/> 
+                                VerticalOptions="End"/>--> 
                         <Button x:Name="ConfirmBtn"
                                 Text="{i18n:Translate OK_STRING}"
                                 FontSize="Medium"
