@@ -40,6 +40,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Services;
 using Rg.Plugins.Popup.Extensions;
+using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -140,6 +141,40 @@ namespace IndoorNavigation.Views.PopUpPage
         }
         #endregion
 
+        #region
+        public AlertDialogPopupPage(string context, string confirm,string cancel)
+        {
+            InitializeComponent();
+            TempMessage.Text = context;
+            _backClick = TwoButton_Back_new;
+
+            Button ConfirmButton =
+                new Button { Style = ButtonStyle, Text = confirm };
+            Button CancelButton =
+                new Button { Style = ButtonStyle, Text = cancel };
+            CancelButton.Clicked += CancelPageClicked;
+            ConfirmButton.Clicked += ConfirmPageClicked_new;
+
+            buttonLayout.Children.Add(CancelButton);
+            buttonLayout.Children.Add(ConfirmButton);
+        }
+
+        async private void TwoButton_Back_new()
+        {
+            await PopupNavigation.Instance.RemovePageAsync(this);
+        }
+
+        async private void ConfirmPageClicked_new(object sender, EventArgs e)
+        {
+            if (isButtonClicked) return;
+            isButtonClicked = true;
+
+            _tcs?.SetResult(true);
+            await PopupNavigation.Instance.RemovePageAsync(this);
+            isButtonClicked = false;
+        }
+        #endregion
+
         #region common code
 
         private void CancelPageClicked(Object sender, EventArgs args)
@@ -183,3 +218,4 @@ namespace IndoorNavigation.Views.PopUpPage
         #endregion
     }
 }
+
