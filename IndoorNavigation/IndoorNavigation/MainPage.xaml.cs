@@ -138,40 +138,40 @@ namespace IndoorNavigation
         private CloudDownload _download = new CloudDownload();
 
         async void SettingBtn_Clicked(object sender, EventArgs e)
-        {            
+        {
             await Navigation.PushAsync(new SettingTableViewPage());
         }
-          
-        async private void CheckVersionAndUpdate_(Location location, 
+
+        async private void CheckVersionAndUpdate_(Location location,
             NavigationGraph navigationGraph)
         {
-            if(_serverResources!=null && 
+            if (_serverResources != null &&
                 CheckVersionNumber(location.sourcePath,
-                navigationGraph.GetVersion(), 
+                navigationGraph.GetVersion(),
                 AccessGraphOperate.CheckCloudVersion))
             {
                 AlertDialogPopupPage page = new AlertDialogPopupPage
                     (GetResourceString("UPDATE_MAP_STRING"),
                     GetResourceString("OK_STRING"),
-                    GetResourceString("NO_STRING"));
+                    GetResourceString("CANCEL_STRING"));
 
                 IndicatorPopupPage busyPage = new IndicatorPopupPage();
 
                 bool wantToUpdate = await page.show();
 
-                if(wantToUpdate)
+                if (wantToUpdate)
                 {
                     await PopupNavigation.Instance.PushAsync(busyPage);
 
                     try { CloudGenerateFile(location.sourcePath); }
-                    catch(Exception exc)
+                    catch (Exception exc)
                     {
                         Console.WriteLine("updated error - " + exc.Message);
 
                         await PopupNavigation.Instance.RemovePageAsync
                             (busyPage);
 
-                        if(Connectivity.NetworkAccess == 
+                        if (Connectivity.NetworkAccess ==
                             NetworkAccess.Internet)
                         {
                             Console.WriteLine("network is fine but error");
@@ -180,13 +180,13 @@ namespace IndoorNavigation
                                 new AlertDialogPopupPage(
                                     GetResourceString("HAPPEND_ERROR_STRING"),
                                     GetResourceString("OK_STRING"),
-                                    GetResourceString("NO_STRING"));
+                                    GetResourceString("CANCEL_STRING"));
 
                             bool WantRetry = await noResponsePage.show();
 
                             if (WantRetry)
                             {
-                                CheckVersionAndUpdate_(location, 
+                                CheckVersionAndUpdate_(location,
                                     navigationGraph);
                             }
                         }
@@ -196,7 +196,7 @@ namespace IndoorNavigation
                                 new AlertDialogPopupPage(
                                     GetResourceString("BAD_NETWORK_STRING"),
                                     GetResourceString("OK_STRING"),
-                                    GetResourceString("NO_STRING"));
+                                    GetResourceString("CANCEL_STRING"));
 
                             bool wantRetry = await noNetworkPage.show();
 
@@ -204,7 +204,7 @@ namespace IndoorNavigation
                             {
                                 setting.OpenSettingPage();
 
-                                CheckVersionAndUpdate_(location, 
+                                CheckVersionAndUpdate_(location,
                                     navigationGraph);
                             }
                         }
@@ -233,9 +233,9 @@ namespace IndoorNavigation
                     AlertDialogPopupPage alertPage =
                         new AlertDialogPopupPage
                         (_resourceManager.GetString
-                        ("WELCOME_USE_START_TO_ADJUST_STRING", 
+                        ("WELCOME_USE_START_TO_ADJUST_STRING",
                         currentLanguage),
-                            //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
+                        //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
                     bool isFinishProcess = await alertPage.show();
@@ -245,11 +245,11 @@ namespace IndoorNavigation
 
                     isFinishProcess = await autoAdjustPage.Show();
 
-                    
+
                     FirstTimeUse = isFinishProcess;
                     Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
-               
+
                 CheckVersionAndUpdate_(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
@@ -341,7 +341,7 @@ namespace IndoorNavigation
             }
         }
 
-        async private void Item_Delete(object sender, EventArgs e) 
+        async private void Item_Delete(object sender, EventArgs e)
         {
             var item = (Location)((MenuItem)sender).CommandParameter;
             if (item != null)
@@ -351,9 +351,9 @@ namespace IndoorNavigation
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (_resourceManager.GetString("AT_LEAST_ONE_STRING", 
+                        (_resourceManager.GetString("AT_LEAST_ONE_STRING",
                         currentLanguage),
-                            //AppResources.AT_LEAST_ONE_STRING,
+                        //AppResources.AT_LEAST_ONE_STRING,
                         AppResources.OK_STRING));
                     return;
                 }
@@ -363,10 +363,10 @@ namespace IndoorNavigation
                     (string.Format(
                         //AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
                         _resourceManager.GetString
-                        ("DO_YOU_WANT_TO_DELETE_IS_STRING",currentLanguage),
+                        ("DO_YOU_WANT_TO_DELETE_IS_STRING", currentLanguage),
                         item.UserNaming),
                         AppResources.YES_STRING,
-                        AppResources.NO_STRING,"ConfirmDelete"));
+                        AppResources.NO_STRING, "ConfirmDelete"));
 
                 MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete", (msgSender, msgArgs) =>
                 {
@@ -383,98 +383,72 @@ namespace IndoorNavigation
 
 
         #region iOS SecondToolBarItem Attributes
-        async private Task AddSiteItemMethod()
-        {
-            IndicatorPopupPage busyPopupPage = new IndicatorPopupPage();
-            _download = new CloudDownload();
 
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+        async private Task AddSiteItemMethod_()
+        {
+            IndicatorPopupPage busyPage = new IndicatorPopupPage();
+
+            if(Connectivity.NetworkAccess != NetworkAccess.Internet) 
             {
                 setting = DependencyService.Get<INetworkSetting>();
 
-                await PopupNavigation.Instance.PushAsync
-                               (new AlertDialogPopupPage
-                               (_resourceManager.GetString
-                               ("BAD_NETWORK_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("GO_TO_SETTING", currentLanguage),
-                               _resourceManager.GetString
-                               ("NO_STRING", currentLanguage),
-                               "GoToSettingInAdd"));
-                MessagingCenter.Subscribe
-                    <AlertDialogPopupPage, bool>
-                    (this, "GoToSettingInAdd", (msgSender, msgArgs) =>
-                    {
-                        if ((bool)msgArgs)
-                        {
-                            setting.OpenSettingPage();
-                        }
+                AlertDialogPopupPage noNetworkPage = new AlertDialogPopupPage(
+                    GetResourceString("BAD_NETWORK_STRING"),
+                    GetResourceString("OK_STRING"),
+                    GetResourceString("CANCEL_STRING"));
+                bool wantToSetting = await noNetworkPage.show();
 
-                        MessagingCenter.Unsubscribe
-                        <AlertDialogPopupPage, bool>
-                        (this, "GoToSettingInAdd");
-                    });
+                if (wantToSetting)
+                {
+                    setting.OpenSettingPage();
+                }
             }
-            else if (_serverResources != null)
-            {
-                Console.WriteLine("_serverResource != null");
-                await PopupNavigation.Instance.PushAsync(busyPopupPage);
-                await Navigation.PushAsync(new EditLocationPage());
-                await PopupNavigation.Instance.RemovePageAsync(busyPopupPage);
-            }
-            else if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            else if(Connectivity.NetworkAccess == NetworkAccess.Internet) 
             {
                 Console.WriteLine("The network is fine");
-                await PopupNavigation.Instance.PushAsync(busyPopupPage);
+
+                await PopupNavigation.Instance.PushAsync(busyPage);
+
+                _download = new CloudDownload();
                 try
                 {
-                    string SupportResourceXmlString =
+                    string supportXmlString =
                         _download.Download(_download.getSupportListUrl());
 
                     XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(SupportResourceXmlString);
+                    doc.LoadXml(supportXmlString);
+                    _serverResources = GraphInfoReader(doc);
+
+                    await Navigation.PushAsync(new EditLocationPage());
                 }
-                catch
+                catch(Exception exc)
                 {
-                    await PopupNavigation.Instance.PushAsync
-                               (new AlertDialogPopupPage
-                               (_resourceManager.GetString
-                               ("HAPPEND_ERROR_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("RETRY_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("NO_STRING", currentLanguage),
-                               "WantRetryInAdd"));
-                    MessagingCenter.Subscribe
-                        <AlertDialogPopupPage, bool>
-                        (this, "WantRetryInAdd", async (msgSender, msgArgs) =>
-                        {
-                            if ((bool)msgArgs)
-                            {
-                                await PopupNavigation.Instance.
-                                RemovePageAsync(busyPopupPage);
-                                await AddSiteItemMethod();
-                            }
-                            else
-                            {
-                                await PopupNavigation.Instance.
-                                RemovePageAsync(busyPopupPage);
-                            }
-                            MessagingCenter.Unsubscribe
-                                    <AlertDialogPopupPage, bool>
-                                    (this, "WantRetryInAdd");
-                        });
+                    Console.WriteLine("Enter add site error - " + exc.Message);
+                    AlertDialogPopupPage noResponsePage =
+                        new AlertDialogPopupPage
+                        (GetResourceString("HAPPEND_ERROR_STRING"), 
+                        GetResourceString("OK_STRING"), 
+                        GetResourceString("CANCEL_STRING"));
+
+                    bool wantRetry = await noResponsePage.show();
+
+                    if (wantRetry)
+                        await AddSiteItemMethod_();
+                }
+                finally
+                {
+                    await PopupNavigation.Instance.RemovePageAsync(busyPage);
                 }
             }
-
         }
+        
         public ICommand SettingCommand { get; set; }
         public ICommand AddSiteCommand { get; set; }
         private void RefreshToolbarOptions()
         {
             ToolbarItems.Clear();
             SettingCommand = new Command(async () =>await SettingItemMethod());
-            AddSiteCommand = new Command(async () =>await AddSiteItemMethod());
+            AddSiteCommand = new Command(async () =>await AddSiteItemMethod_());
 
             TestItemCommand = new Command(async () => await TestItemMethod());
 
@@ -540,7 +514,8 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("CCH_Debug"));
+            await PopupNavigation.Instance.PushAsync
+                (new AutoAdjustPopupPage("CCH_Debug"));
             await Task.CompletedTask;
         }
 
