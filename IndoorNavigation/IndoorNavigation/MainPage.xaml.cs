@@ -77,35 +77,16 @@ namespace IndoorNavigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : CustomToolbarContentPage
     {
-        MainPageViewModel _viewModel;
-        internal static readonly string _versionRoute =
-            "IndoorNavigation.Resources.Map_Version.xml";
-
-        const string _resourceId =
-            "IndoorNavigation.Resources.AppResources";
-
-        internal static readonly string _versionRouteInPhone
-             = Path.Combine(Environment.GetFolderPath
-                 (Environment.SpecialFolder.LocalApplicationData), "Version");
-
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId,
-                                typeof(TranslateExtension).GetTypeInfo()
-                                .Assembly);
-
+        MainPageViewModel _viewModel;                 
         ViewCell lastCell = null;
-        bool isButtonPressed = false; //to prevent multi-click
-        CultureInfo currentLanguage =
-            CrossMultilingual.Current.CurrentCultureInfo;
+        bool isButtonPressed = false; //to prevent multi-click       
 
         public MainPage()
         {
             InitializeComponent();
-            Console.WriteLine("Nameof (_viewModel) = " + nameof(_viewModel));
+
             NavigationPage.SetBackButtonTitle(this,
-                                              _resourceManager
-                                              .GetString("HOME_STRING",
-                                                         currentLanguage));
+                GetResourceString("HOME_STRING"));
             NavigationPage.SetHasBackButton(this, false);
 
             switch (Device.RuntimePlatform)
@@ -232,9 +213,8 @@ namespace IndoorNavigation
 
                     AlertDialogPopupPage alertPage =
                         new AlertDialogPopupPage
-                        (_resourceManager.GetString
-                        ("WELCOME_USE_START_TO_ADJUST_STRING",
-                        currentLanguage),
+                        (GetResourceString
+                        ("WELCOME_USE_START_TO_ADJUST_STRING"),
                         //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
@@ -260,9 +240,9 @@ namespace IndoorNavigation
 
                         case "hospital":
                             if (location.UserNaming ==
-                                _resourceManager
-                                .GetString("YUANLIN_CHRISTIAN_HOSPITAL_STRING",
-                                           currentLanguage))
+                                GetResourceString
+                                ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
+
                                 await PopupNavigation.Instance
                                       .PushAsync(new SelectTwoWayPopupPage
                                       (location));
@@ -294,14 +274,10 @@ namespace IndoorNavigation
             {
                 bool isAgree =
                     await DisplayAlert
-                        (_resourceManager
-                         .GetString("MESSAGE_STRING", currentLanguage),
-                         _resourceManager
-                         .GetString("ASK_LEAVE_APP_STRING", currentLanguage),
-                         _resourceManager
-                         .GetString("LEAVE_STRING", currentLanguage),
-                         _resourceManager
-                         .GetString("CANCEL_STRING", currentLanguage));
+                        (GetResourceString("MESSAGE_STRING"),
+                         GetResourceString("ASK_LEAVE_APP_STRING"),
+                         GetResourceString("LEAVE_STRING"),
+                         GetResourceString("CANCEL_STRING"));
 
                 if (isAgree)
                 {
@@ -351,8 +327,7 @@ namespace IndoorNavigation
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (_resourceManager.GetString("AT_LEAST_ONE_STRING",
-                        currentLanguage),
+                        (GetResourceString("AT_LEAST_ONE_STRING"),
                         //AppResources.AT_LEAST_ONE_STRING,
                         AppResources.OK_STRING));
                     return;
@@ -362,8 +337,7 @@ namespace IndoorNavigation
                     (new AlertDialogPopupPage
                     (string.Format(
                         //AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
-                        _resourceManager.GetString
-                        ("DO_YOU_WANT_TO_DELETE_IS_STRING", currentLanguage),
+                        GetResourceString("DO_YOU_WANT_TO_DELETE_IS_STRING"),
                         item.UserNaming),
                         AppResources.YES_STRING,
                         AppResources.NO_STRING, "ConfirmDelete"));
@@ -378,9 +352,6 @@ namespace IndoorNavigation
                 });
             }
         }
-
-
-
 
         #region iOS SecondToolBarItem Attributes
 
@@ -454,16 +425,14 @@ namespace IndoorNavigation
 
             ToolbarItem SettingItem = new ToolbarItem
             {
-                Text = 
-                _resourceManager.GetString("SETTING_STRING", currentLanguage),
+                Text = GetResourceString("SETTING_STRING"),
                 Command = SettingCommand,
                 Order = ToolbarItemOrder.Secondary
             };
 
             ToolbarItem NewSiteToolbarItem = new ToolbarItem
             {
-                Text = 
-                    _resourceManager.GetString("NEW_STRING",currentLanguage),
+                Text = GetResourceString("NEW_STRING"),
                 Command =AddSiteCommand,
                 Order = ToolbarItemOrder.Primary
             };
