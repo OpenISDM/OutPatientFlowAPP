@@ -32,7 +32,6 @@
     <LangVersion>7.1</LangVersion>
     <CodesignKey>iPhone Developer: Chun Yu Lai (262MR7SY5M)</CodesignKey>
     <MtouchFloat32>true</MtouchFloat32>
-    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -71,8 +70,6 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
-    <CodesignExtraArgs>--optimize=experimental-xforms-product-type</CodesignExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
