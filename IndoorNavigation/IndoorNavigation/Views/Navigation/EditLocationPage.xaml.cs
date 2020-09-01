@@ -151,7 +151,7 @@ namespace IndoorNavigation.Views.Navigation
             AddNewSiteListView.ItemsSource = null;
             AddNewSiteListView.ItemsSource = _allNewSiteItems;
         }
-
+        
         async private Task DownloadSiteFile(GraphInfo selectedItem)
         {
             IndicatorPopupPage busyPage =

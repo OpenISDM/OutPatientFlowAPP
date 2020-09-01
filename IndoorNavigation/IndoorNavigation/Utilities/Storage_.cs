@@ -361,6 +361,9 @@ namespace IndoorNavigation.Utilities
         {
             CloudDownload _clouddownload = new CloudDownload();
             string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));
+            
+            ValidateDownloadString(sourceNaviGraph);
+
             string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");
             Console.WriteLine("SinkNaviGraph path : " + sinkNaviGraph);
             CloudStoring(sourceNaviGraph, sinkNaviGraph);
@@ -378,11 +381,31 @@ namespace IndoorNavigation.Utilities
                     Console.WriteLine("Sink FirstDirection path : " + sinkFD);
                     Console.WriteLine("Sink InformationXml path : " + sinkInfo);
 
+                    ValidateDownloadString(sourceFD);
+                    ValidateDownloadString(sourceInfo);
+
                     CloudStoring(sourceFD, sinkFD);
                     CloudStoring(sourceInfo, sinkInfo);
                 }
             }
             UpdateGraphList(sourceName, AccessGraphOperate.AddServer);
+        }
+
+        static private void ValidateDownloadString(string downloadString)
+        {
+            XmlDocument doc = new XmlDocument();
+
+            try
+            {
+                doc.LoadXml(downloadString);                
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("validateDownloadString error - " +
+                    exc.Message);
+
+                throw exc;
+            }
         }
         static private void CloudStoring(string Context, string sinkRoute)
         {
@@ -538,7 +561,10 @@ namespace IndoorNavigation.Utilities
                 case AccessGraphOperate.CheckCloudVersion:
                     {
                         Console.WriteLine(">>CheckVersionNumber -> Cloud");
-                        if (_serverResources != null && _serverResources.ContainsKey(fileName) && _serverResources[fileName]._currentVersion > currentVersion)
+                        if (_serverResources != null && 
+                            _serverResources.ContainsKey(fileName) && 
+                            _serverResources[fileName]._currentVersion > 
+                            currentVersion)
                             return true;
                         return false;
                     }

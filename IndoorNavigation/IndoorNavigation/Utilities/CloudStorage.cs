@@ -65,6 +65,7 @@ namespace IndoorNavigation.Modules.Utilities
             {
                 Console.WriteLine("Download Error : " + exc.Message + ", url : " + url);
                 ContextString = "";
+                throw exc;
             }
             finally
             {
