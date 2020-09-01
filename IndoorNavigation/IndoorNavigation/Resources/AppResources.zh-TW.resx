@@ -748,7 +748,7 @@
   </data>
   <data name="DETECT_POSITION_CLOSE_TO_STRING" xml:space="preserve">
     <value>偵測到地點 : {0},
-請盡量靠近(1)的路口。
-接下來請按下確定開始校正訊號。</value>
+請盡量靠近{1}的路口。
+接下來請按下確定繼續。</value>
   </data>
 </root>

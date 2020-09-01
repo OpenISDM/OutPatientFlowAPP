@@ -214,8 +214,9 @@ namespace IndoorNavigation.Views.Navigation
         async private void RssiPicker_Tapped(object sender, EventArgs e)
         {
             Console.WriteLine(">> Tapped RssiItem");
-        
-            TestRssiPopupPage page = new TestRssiPopupPage();
+
+            //TestRssiPopupPage page = new TestRssiPopupPage();
+            ManualAdjustPopupPage page = new ManualAdjustPopupPage();
 
             await page.show();
 

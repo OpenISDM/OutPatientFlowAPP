@@ -55,7 +55,7 @@ namespace IndoorNavigation.Views.PopUpPage
             isDoubleClick = true;
 
             await PopupNavigation.Instance.RemovePageAsync(this);           
-            _tcs?.SetResult(true);
+            //_tcs?.SetResult(true);
         }
 
         protected override void OnDisappearing()

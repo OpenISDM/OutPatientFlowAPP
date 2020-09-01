@@ -107,13 +107,7 @@ namespace IndoorNavigation.Views.PopUpPage
             base.OnAppearing();
 
 
-        }
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            _isKeepDetection = false;
-            _ipsModules.CloseAllActiveClient();
-        }
+        }       
 
         protected override bool OnBackButtonPressed()
         {
@@ -227,6 +221,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
                         bool isReturn = await alertPage.show();
 
+                        _isKeepDetection = false;
+                        _ipsModules.CloseAllActiveClient();
+
                         _tcs?.SetResult(true);
                     });
 
@@ -256,6 +253,10 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             ConfirmBtn.Clicked -= CancelBtn_Clicked;
             RssiOption = TmpRssiOption;
+
+            _isKeepDetection = false;
+            _ipsModules.CloseAllActiveClient();
+
             _tcs?.SetResult(false);
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
@@ -421,3 +422,5 @@ namespace IndoorNavigation.Views.PopUpPage
     }
 
 }
+
+

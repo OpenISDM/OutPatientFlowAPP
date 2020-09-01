@@ -259,15 +259,15 @@ namespace IndoorNavigation
                             //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
-                    bool isReturn = await alertPage.show();
+                    bool isFinishProcess = await alertPage.show();
 
                     AutoAdjustPopupPage autoAdjustPage =
                         new AutoAdjustPopupPage(location.sourcePath);
 
-                    isReturn = await autoAdjustPage.Show();
+                    isFinishProcess = await autoAdjustPage.Show();
 
-                    Console.WriteLine("aaaaaaaaa");
-                    FirstTimeUse = true;
+                    
+                    FirstTimeUse = isFinishProcess;
                     Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
 
@@ -536,7 +536,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            ToolbarItems.Add(TestToolbarItem);
+            //ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -573,11 +573,6 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            //await Navigation.PushAsync(new TestPage());
-            //await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage("Lab"));
-            //await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("Taipei_City_Hall"));
-            //await PopupNavigation.Instance.PushAsync(new DownloadPopUpPage());
-            //await PopupNavigation.Instance.PushAsync(new ManualAdjustPopupPage());
             await PopupNavigation.Instance.PushAsync(new AutoAdjustPopupPage("CCH_Debug"));
             await Task.CompletedTask;
         }
