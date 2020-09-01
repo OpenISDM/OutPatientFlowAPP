@@ -213,6 +213,8 @@ namespace IndoorNavigation
             {
                 _globalNavigatorPage.OnStop();
             }
+
+            
         }                     
     }
 }

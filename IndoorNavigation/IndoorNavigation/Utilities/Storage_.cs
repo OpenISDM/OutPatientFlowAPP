@@ -21,6 +21,7 @@ using IndoorNavigation.Views.Navigation;
 using System.Net;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
+using Prism.Navigation.Xaml;
 /*
 note :
 1. We need to define the stroage path first
@@ -360,8 +361,7 @@ namespace IndoorNavigation.Utilities
         static public void CloudGenerateFile(string sourceName)
         {
             CloudDownload _clouddownload = new CloudDownload();
-            string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));
-            
+            string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));            
             ValidateDownloadString(sourceNaviGraph);
 
             string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");

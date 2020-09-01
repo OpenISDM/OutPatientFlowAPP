@@ -226,7 +226,7 @@ namespace IndoorNavigation.Views.Navigation
             await PopupNavigation.Instance
             .RemovePageAsync(busyPage);
 
-            await Task.CompletedTask;
+            await Task.CompletedTask;            
         }
         private bool isOlderVersion(GraphInfo selectedItem)
         {
@@ -245,5 +245,6 @@ namespace IndoorNavigation.Views.Navigation
         {
             return _resourceManager.GetString(key, _currentCulture);
         }
+        
     }  
 }
