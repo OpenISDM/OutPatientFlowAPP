@@ -141,104 +141,83 @@ namespace IndoorNavigation
         {            
             await Navigation.PushAsync(new SettingTableViewPage());
         }
-        
-        async private void CheckVersionAndUpdate(Location location, 
+          
+        async private void CheckVersionAndUpdate_(Location location, 
             NavigationGraph navigationGraph)
         {
-            if (_serverResources != null &&
-                  CheckVersionNumber(location.sourcePath, 
-                  navigationGraph.GetVersion(), 
-                  AccessGraphOperate.CheckCloudVersion))
+            if(_serverResources!=null && 
+                CheckVersionNumber(location.sourcePath,
+                navigationGraph.GetVersion(), 
+                AccessGraphOperate.CheckCloudVersion))
             {
-                bool WantUpdate = 
-                    await DisplayAlert(
-                        _resourceManager.GetString
-                        ("INFO_STRING",currentLanguage), 
-                    _resourceManager.GetString("UPDATE_MAP_STRING",currentLanguage), 
-                    _resourceManager.GetString("UPDATE_STRING",currentLanguage),
-                    _resourceManager.GetString("NO_STRING",currentLanguage));
+                AlertDialogPopupPage page = new AlertDialogPopupPage
+                    (GetResourceString("UPDATE_MAP_STRING"),
+                    GetResourceString("OK_STRING"),
+                    GetResourceString("NO_STRING"));
 
-                if (WantUpdate)
+                IndicatorPopupPage busyPage = new IndicatorPopupPage();
+
+                bool wantToUpdate = await page.show();
+
+                if(wantToUpdate)
                 {
-                    IndicatorPopupPage busyPage = new IndicatorPopupPage();
-
                     await PopupNavigation.Instance.PushAsync(busyPage);
 
-                    try
+                    try { CloudGenerateFile(location.sourcePath); }
+                    catch(Exception exc)
                     {
-                        CloudGenerateFile(location.sourcePath);
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("updated error - " +
-                            exc.Message);
-                        await PopupNavigation.Instance.RemovePageAsync(busyPage);
-                        //show no network page or server not response error.
+                        Console.WriteLine("updated error - " + exc.Message);
 
-                        if(Connectivity.NetworkAccess == NetworkAccess.Internet)
+                        await PopupNavigation.Instance.RemovePageAsync
+                            (busyPage);
+
+                        if(Connectivity.NetworkAccess == 
+                            NetworkAccess.Internet)
                         {
-                            await PopupNavigation.Instance.PushAsync
-                                (new AlertDialogPopupPage
-                                (_resourceManager.GetString
-                               ("HAPPEND_ERROR_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("RETRY_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("NO_STRING", currentLanguage), "WantRetry"));
-                            MessagingCenter.Subscribe
-                                <AlertDialogPopupPage, bool>
-                                (this, "WantRetry", (msgSender, msgArgs) =>
-                            {
-                                if ((bool)msgArgs) 
-                                    CheckVersionAndUpdate
-                                    (location, navigationGraph);
+                            Console.WriteLine("network is fine but error");
 
-                                MessagingCenter.Unsubscribe
-                                <AlertDialogPopupPage, bool>
-                                (this, "WantRetry");
-                            });
+                            AlertDialogPopupPage noResponsePage =
+                                new AlertDialogPopupPage(
+                                    GetResourceString("HAPPEND_ERROR_STRING"),
+                                    GetResourceString("OK_STRING"),
+                                    GetResourceString("NO_STRING"));
+
+                            bool WantRetry = await noResponsePage.show();
+
+                            if (WantRetry)
+                            {
+                                CheckVersionAndUpdate_(location, 
+                                    navigationGraph);
+                            }
                         }
                         else
                         {
-                            await PopupNavigation.Instance.PushAsync
-                                (new AlertDialogPopupPage
-                                (_resourceManager.GetString
-                               ("BAD_NETWORK_STRING", currentLanguage),
-                               _resourceManager.GetString
-                               ("GO_TO_SETTING", currentLanguage),
-                               _resourceManager.GetString
-                               ("NO_STRING", currentLanguage),  
-                               "GoToSetting"));
-                            MessagingCenter.Subscribe
-                                <AlertDialogPopupPage, bool>
-                                (this, "GoToSetting", (msgSender, msgArgs) =>
-                                {
-                                    if ((bool)msgArgs)
-                                    { 
-                                        setting = 
-                                        DependencyService
-                                        .Get<INetworkSetting>();
+                            AlertDialogPopupPage noNetworkPage =
+                                new AlertDialogPopupPage(
+                                    GetResourceString("BAD_NETWORK_STRING"),
+                                    GetResourceString("OK_STRING"),
+                                    GetResourceString("NO_STRING"));
 
-                                        setting.OpenSettingPage();
+                            bool wantRetry = await noNetworkPage.show();
 
-                                        CheckVersionAndUpdate
-                                        (location, navigationGraph);
-                                    }
-                                    
-                                    MessagingCenter.Unsubscribe
-                                    <AlertDialogPopupPage, bool>
-                                    (this, "GoToSetting");
-                                });
+                            if (wantRetry)
+                            {
+                                setting.OpenSettingPage();
+
+                                CheckVersionAndUpdate_(location, 
+                                    navigationGraph);
+                            }
                         }
                     }
 
-                    if(PopupNavigation.Instance.PopupStack.Contains(busyPage))
+                    if (PopupNavigation.Instance.PopupStack.Contains(busyPage))
                         await PopupNavigation.Instance.RemovePageAsync
                             (busyPage);
                 }
-            }
 
+            }
         }
+
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
@@ -270,20 +249,8 @@ namespace IndoorNavigation
                     FirstTimeUse = isFinishProcess;
                     Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
-
-                #region
-                //this place will implement the check server side resource.
-                //if(CheckVersionNumber(location.sourcePath, 
-                //    navigationGraph.GetVersion(), 
-                //    AccessGraphOperate.CheckLocalVersion))
-                //{
-                //    bool WantToUpdate = await DisplayAlert("info", "有更新版本，是否要更新?", "是", "否");
-
-                //    if (WantToUpdate) EmbeddedGenerateFile(location.sourcePath);
-                //}
-                #endregion
-
-                CheckVersionAndUpdate(location, navigationGraph);
+               
+                CheckVersionAndUpdate_(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;

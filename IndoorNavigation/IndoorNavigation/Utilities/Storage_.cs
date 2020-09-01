@@ -19,6 +19,8 @@ using System.Security.Authentication;
 using Dijkstra.NET.Model;
 using IndoorNavigation.Views.Navigation;
 using System.Net;
+using System.Resources;
+using IndoorNavigation.Resources.Helpers;
 /*
 note :
 1. We need to define the stroage path first
@@ -46,6 +48,12 @@ namespace IndoorNavigation.Utilities
         internal static readonly string _informationFolder
              = Path.Combine(_LocalData, "Information");
 
+
+        private static readonly string _resourceID = 
+            "IndoorNavigation.Resources.AppResources";
+        private static ResourceManager _resourceManager =
+            new ResourceManager(_resourceID, 
+                typeof(TranslateExtension).GetTypeInfo().Assembly);
 
         private static object _fileLock = new object();
         public static GraphResources _resources;
@@ -246,6 +254,11 @@ namespace IndoorNavigation.Utilities
             xmlDocument.LoadXml(xmlContent);
 
             return xmlDocument;
+        }
+
+        public static string GetResourceString(string key)
+        {
+            return _resourceManager.GetString(key, _currentCulture);
         }
         #endregion
 
