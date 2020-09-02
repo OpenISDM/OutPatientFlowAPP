@@ -23,6 +23,7 @@
   <waypoint id="00000000-0000-0000-0000-000000000028" Landmark = "Front Door" RelatedDirection = "4" FaceOrBack = "0"/>
   <waypoint id="00000000-0000-0000-0000-000000000030" Landmark = "Front Door" RelatedDirection="0" FaceOrBack="1"/>
   <waypoint id="00000000-0000-0000-0000-000000000031" Landmark = "Escalator" RelatedDirection="0" FaceOrBack="1"/>
+  <waypoint id="00000000-0000-0000-0000-000000000032" Landmark = "toilet" RelatedDirection="0" FaceOrBack="0"/>
   <!--2F-->
   <waypoint id="00000000-0000-0000-0000-000000000020" Landmark = "Escalator" RelatedDirection = "4" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000021" Landmark = "Elevator Hall" RelatedDirection = "4" FaceOrBack = "0"/>
@@ -33,4 +34,5 @@
   <waypoint id="00000000-0000-0000-0000-000000000026" Landmark = "Cashier/Registration" RelatedDirection = "4" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000027" Landmark = "Ophthalmology" RelatedDirection = "2" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000029" Landmark = "Escalator" RelatedDirection="4" FaceOrBack="1"/>
+  <waypoint id="00000000-0000-0000-0000-000000000033" Landmark = "Surgery" RelatedDirection = "2" FaceOrBack = "1"/>
 </first_direction_XML>
