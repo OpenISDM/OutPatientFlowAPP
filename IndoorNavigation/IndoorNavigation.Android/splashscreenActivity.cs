@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IndoorNavigation.Droid
 {
-    [Activity(Theme = "@style/splashscreen", MainLauncher = true, 
+    [Activity(Theme = "@style/splashscreen", /*MainLauncher = true, */
      ScreenOrientation = ScreenOrientation.Portrait)]
     public class splashscreenActivity : AppCompatActivity
     {
@@ -24,25 +24,11 @@ namespace IndoorNavigation.Droid
             Intent intent = new Intent(this, typeof(MainActivity));
             StartActivity(intent);
             Finish();
-        }
-
-
-        //protected override void OnResume()
-        //{
-        //    base.OnResume();
-        //    Task startupWork = new Task(() => { SimulateStartUp(); });
-        //    startupWork.Start();
-        //}
+        }     
 
         public override void OnBackPressed()
         {
         }
-
-        //async void SimulateStartUp()
-        //{
-        //    await Task.Delay(3000);
-        //    StartActivity(new Intent(Application.Context, 
-        //        typeof(MainActivity)));
-        //}
+       
     }
 }
