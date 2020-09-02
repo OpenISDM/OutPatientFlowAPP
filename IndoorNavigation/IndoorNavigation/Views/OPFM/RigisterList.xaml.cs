@@ -56,10 +56,7 @@ namespace IndoorNavigation.Views.OPFM
 
             _navigationGraphName = navigationGraphName;
 
-            //FakeHISRequest = new YunalinHttpRequestFake();
             _nameInformation = LoadXmlInformation(navigationGraphName);
-            //NetworkSettings = DependencyService.Get<INetworkSetting>();
-
             ExitAddBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
@@ -80,19 +77,19 @@ namespace IndoorNavigation.Views.OPFM
             Console.WriteLine(">>OnAppearing");
             _viewmodel = new RegisterListViewModel(_navigationGraphName);
 
-            RefreshListView();           
+            RefreshListView();
 
             if (app.HaveCashier && !ExitAddBtn.IsEnabled)
                 Buttonable(false);
 
             ExitAddBtn.IsEnabled = app.records.Count > 0 &&
                 app.FinishCount == app.records.Count &&
-                !   (app.records.Count == 1 && 
+                !(app.records.Count == 1 &&
                     app.records[0].type == RecordType.Register);
-                //app.records.Count() > 0 &&
-                //(app.FinishCount == app.records.Count) &&
-                //(!app.HaveCashier) &&
-                //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+            //app.records.Count() > 0 &&
+            //(app.FinishCount == app.records.Count) &&
+            //(!app.HaveCashier) &&
+            //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             ExitAddBtn.IsVisible = app.records.Count > 0 &&
                 app.FinishCount == app.records.Count &&
                 !(app.records.Count == 1 &&
@@ -197,7 +194,7 @@ namespace IndoorNavigation.Views.OPFM
                             Console.WriteLine("Get Subscribe string");
 
                             if ((bool)MsgArgs)
-                            {                                
+                            {
                                 await Navigation.PushAsync
                                     (new NavigatorPage(_navigationGraphName,
                                                record._regionID,
@@ -205,7 +202,7 @@ namespace IndoorNavigation.Views.OPFM
                                                record._waypointName,
                                             _nameInformation));
                                 record.isComplete = true;
-                            }                            
+                            }
                             MessagingCenter
                             .Unsubscribe<AlertDialogPopupPage, bool>
                             (this, "Still go to careroom");
@@ -566,18 +563,18 @@ namespace IndoorNavigation.Views.OPFM
         async private void ListviewItem_Delete(object sender, EventArgs args)
         {
             var item = (RgRecord)((MenuItem)sender).CommandParameter;
-          
+
             if (item != null)
             {
-                if(item.type == RecordType.Exit || item._groupID !=0)
+                if (item.type == RecordType.Exit || item._groupID != 0)
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
                         (getResourceString("THIS_ITEM_CANT_BE_REMOVE_STRING"),
-                            //AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
+                        //AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
                         AppResources.OK_STRING));
                 }
-                else if(app.records.Contains(item))
+                else if (app.records.Contains(item))
                     app.records.Remove(item);
             }
         }
@@ -651,7 +648,7 @@ namespace IndoorNavigation.Views.OPFM
                 }
                 _multiItemFinish(FinishBtnClickItem);
                 Console.WriteLine("Current Finish count : " + app.FinishCount);
-                
+
                 if (app.FinishCount == app.records.Count &&
                 (app.lastFinished.type != RecordType.Register ||
                 (app.lastFinished.type != RecordType.Exit && app.HaveCashier)))
@@ -902,7 +899,7 @@ namespace IndoorNavigation.Views.OPFM
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage
                     (getResourceString("PLEASE_ADD_RECORD_TO_LIST_STRING"),
-                        //AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
+                    //AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
                     AppResources.OK_STRING));
             }
             else
@@ -1101,7 +1098,6 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         #region New Process of OPPA
-
         async private void ExitAddBtn_Clicked(object sender, EventArgs e)
         {
 
@@ -1135,6 +1131,99 @@ namespace IndoorNavigation.Views.OPFM
                 });
 
             isButtonPressed = false;
+        }
+        #endregion
+
+
+        #region old constraint of OPPA
+
+        Dictionary<Guid, DestinationItem> CashierPosition;
+        Dictionary<Guid, DestinationItem> PharmacyPosition;
+
+        private void LoadCashierPosition()
+        {
+            CashierPosition = new Dictionary<Guid, DestinationItem>();
+            PharmacyPosition = new Dictionary<Guid, DestinationItem>();
+
+            XmlDocument doc = XmlReader("");
+
+            XmlNodeList CashierNodeList = doc.GetElementsByTagName("");
+            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("");
+
+            DestinationItem item;
+
+            foreach(XmlNode cashierNode in CashierNodeList) 
+            {
+                item = new DestinationItem();
+
+                item._regionID = 
+                    new Guid(cashierNode.Attributes["region_id"].Value);
+
+                item._waypointID = 
+                    new Guid(cashierNode.Attributes["waypoint_id"].Value);
+
+                item._floor = cashierNode.Attributes["floor"].Value;
+                item._waypointName = cashierNode.Attributes["name"].Value;
+
+                CashierPosition.Add(item._regionID, item);
+            }
+            foreach(XmlNode pharmacyNode in PharmacyNodeList) 
+            {
+                item = new DestinationItem();
+
+                item._regionID = 
+                    new Guid(pharmacyNode.Attributes["region_id"].Value);
+                item._waypointID = 
+                    new Guid(pharmacyNode.Attributes["waypoint_id"].Value);
+
+                item._floor = pharmacyNode.Attributes["floor"].Value;
+                item._waypointName = pharmacyNode.Attributes["name"].Value;
+
+                PharmacyPosition.Add(item._regionID, item);
+            }
+            return;
+        }
+
+        private void PharmacyBtn_Clicked(object sender, EventArgs e)
+        {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
+            LoadCashierPosition();
+
+            DestinationItem cashier, pharmacy;
+
+            try { cashier = CashierPosition[app.lastFinished._regionID]; }
+            catch { cashier = CashierPosition.First().Value; }
+
+            try { pharmacy = PharmacyPosition[app.lastFinished._regionID]; } 
+            catch { pharmacy = PharmacyPosition.First().Value; }
+
+            app.records.Add(new RgRecord 
+            {
+                _waypointID = cashier._waypointID,
+                _regionID = cashier._regionID,
+                _waypointName = cashier._waypointName,
+                type = RecordType.Cashier,
+                DptName = cashier._waypointName,
+                _groupID = 1,
+                order=0
+            });
+            app.records.Add(new RgRecord 
+            {
+                _waypointID = pharmacy._waypointID,
+                _regionID = pharmacy._regionID,
+                _waypointName = pharmacy._waypointName,
+                type = RecordType.Pharmacy,
+                DptName = pharmacy._waypointName,
+                _groupID =1,
+                order=1
+            });
+
+            RgListView.ScrollTo(app.records[app.records.Count - 1],
+                ScrollToPosition.MakeVisible, true);
+            isButtonPressed = false;
+            throw new NotImplementedException();
         }
 
 
