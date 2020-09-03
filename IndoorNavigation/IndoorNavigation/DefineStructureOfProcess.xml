@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <processes hospitalname="Yuanlin_Christ_Hospital" version="1.0000">
-  <process name="大腸鏡檢查流程" id="1">
+  <process name="大腸鏡檢查流程" id="2">
     <records>
       <record name="批價">
         <CareRoom name="批價" waypointName="一樓批價" type="Cashier" order="1"/>
@@ -32,7 +32,7 @@
       </record>
     </records>
   </process>
-  <process name="手術流程" id="2">
+  <process name="手術流程" id="3">
     <records>
       <record name="批價">
         <CareRoom name="批價" waypointName="批價" type="Cashier" order="1"/>

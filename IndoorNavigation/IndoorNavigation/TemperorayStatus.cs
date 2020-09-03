@@ -29,6 +29,14 @@ namespace IndoorNavigation.Utilities
             get => AppSettings.GetValueOrDefault(nameof(RssiOption), 0);
             set => AppSettings.AddOrUpdateValue(nameof(RssiOption), value);
         }       
+
+        public static int PurposeOptionID
+        {
+            get => AppSettings.GetValueOrDefault(nameof(PurposeOptionID), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(PurposeOptionID), 
+                value);
+        }
+
         public static bool isRigistered
         {
             get => AppSettings.GetValueOrDefault(nameof(isRigistered), false);
@@ -143,6 +151,7 @@ namespace IndoorNavigation.Utilities
             records = string.Empty;
             OrderDistrict = string.Empty;
             lastFinished = string.Empty;
+            PurposeOptionID = 0;
             Console.WriteLine("<<ClearAllState");
         }
     }    

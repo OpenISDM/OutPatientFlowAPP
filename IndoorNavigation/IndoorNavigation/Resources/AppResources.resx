@@ -758,4 +758,7 @@ you can use indoor navigation.</value>
 Please be closed to {1} as much as possible.
 Press confirm to start regulate signal.</value>
   </data>
+  <data name="EXIT_HOSPITAL_STRING" xml:space="preserve">
+    <value>Exit hospital</value>
+  </data>
 </root>

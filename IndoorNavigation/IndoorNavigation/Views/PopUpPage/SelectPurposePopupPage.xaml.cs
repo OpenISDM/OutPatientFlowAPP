@@ -16,7 +16,7 @@ using IndoorNavigation.Resources.Helpers;
 using System.Resources;
 using Plugin.Multilingual;
 using System.Reflection;
-
+using static IndoorNavigation.Utilities.TmperorayStatus;
 namespace IndoorNavigation.Views.PopUpPage
 
 {
@@ -79,13 +79,15 @@ namespace IndoorNavigation.Views.PopUpPage
 
             if (isButtonClick) return;
 
-            isButtonClick = true;
+            isButtonClick = true;         
 
             foreach(RadioButton optionButton in PurposeRadioGroup.Children)
             {
                 if (optionButton.IsChecked)
                 {
                     //add Content to it.
+
+                    PurposeOptionID = options[optionButton.Text].id;
 
                     if(options[optionButton.Text].id != 0)
                     {
@@ -112,6 +114,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     }                                        
                     
                     await PopupNavigation.Instance.RemovePageAsync(this);
+
+                    
 
                     await PopupNavigation.Instance.PushAsync
                         (new AskRegisterPopupPage(_naviGraphName));

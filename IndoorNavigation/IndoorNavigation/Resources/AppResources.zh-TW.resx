@@ -751,4 +751,7 @@
 請盡量靠近{1}的路口。
 接下來請按下確定繼續。</value>
   </data>
+  <data name="EXIT_HOSPITAL_STRING" xml:space="preserve">
+    <value>離開醫院</value>
+  </data>
 </root>

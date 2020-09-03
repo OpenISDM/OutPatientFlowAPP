@@ -1223,10 +1223,27 @@ namespace IndoorNavigation.Views.OPFM
             RgListView.ScrollTo(app.records[app.records.Count - 1],
                 ScrollToPosition.MakeVisible, true);
             isButtonPressed = false;
-            throw new NotImplementedException();
         }
 
+        private void SetPharmacyBtn()
+        {
+            Button PharmacyBtn = new Button
+            {
+                Text = AppResources.PAYMENT_MEDICINE_STRING
+            };
 
+            PharmacyBtn.Clicked += PharmacyBtn_Clicked;
+        }
+
+        private void SetExitBtn()
+        {
+            Button ExitBtn = new Button
+            {
+                Text=AppResources.EXIT_HOSPITAL_STRING
+            };
+
+            ExitBtn.Clicked += ExitAddBtn_Clicked;
+        }
         #endregion
     }
 }
