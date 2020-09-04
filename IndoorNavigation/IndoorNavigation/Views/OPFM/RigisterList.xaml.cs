@@ -79,7 +79,7 @@ namespace IndoorNavigation.Views.OPFM
 
             RefreshListView();
 
-            if (app.HaveCashier && !LeaveHospitalBtn.IsEnabled)
+            if (app.HaveCashier && !LeaveHospitalBtn.IsVisible)
                 Buttonable(false);
 
             LeaveHospitalBtn.IsEnabled = app.records.Count > 0 &&
@@ -625,7 +625,7 @@ namespace IndoorNavigation.Views.OPFM
         }
         // this function is a button event, which is to check user whether have 
         // arrive at destination.
-        private void YetFinishBtn_Clicked(object sender, EventArgs e)
+        async private void YetFinishBtn_Clicked(object sender, EventArgs e)
         {
             var o = (Button)sender;
             var FinishBtnClickItem = o.CommandParameter as RgRecord;
@@ -653,25 +653,30 @@ namespace IndoorNavigation.Views.OPFM
                 (app.lastFinished.type != RecordType.Register ||
                 (app.lastFinished.type != RecordType.Exit && app.HaveCashier)))
                 {
-                    LeaveHospitalBtn.IsEnabled = true;
-                    LeaveHospitalBtn.IsVisible = true;
-                    //if (app.HaveCashier && !LeaveHospitalBtn.IsEnabled)
-                    //{
-                    //    await DisplayAlert(getResourceString("MESSAGE_STRING"),
-                    //                getResourceString("FINISH_SCHEDULE_STRING"),
-                    //                getResourceString("OK_STRING"));
+                    //LeaveHospitalBtn.IsEnabled = true;
+                    //LeaveHospitalBtn.IsVisible = true;
+                    Console.WriteLine("iiiiiiiiiiiiiiiiiiii");
+                    Console.WriteLine("app.havecashier = " + app.HaveCashier);
+                    Console.WriteLine("button isenable = " + LeaveHospitalBtn.IsVisible);
+                    if (app.HaveCashier && !LeaveHospitalBtn.IsVisible)
+                    {
+                        Console.WriteLine("WWWWWWWWWWWWWWWWW");
+                        await DisplayAlert(getResourceString("MESSAGE_STRING"),
+                                    getResourceString("FINISH_SCHEDULE_STRING"),
+                                    getResourceString("OK_STRING"));
 
-                    //    await PopupNavigation.Instance.PushAsync
-                    //        (new ExitPopupPage(_navigationGraphName));
-                    //}
-                    //else if (!app.HaveCashier)
-                    //{
-                    //    LeaveHospitalBtn.IsEnabled = true;
-                    //    LeaveHospitalBtn.IsVisible = true;
-                    //}
+                        await PopupNavigation.Instance.PushAsync
+                            (new ExitPopupPage(_navigationGraphName));
+                    }
+                    else if (!app.HaveCashier)
+                    {
+                        LeaveHospitalBtn.IsEnabled = true;
+                        LeaveHospitalBtn.IsVisible = true;
+                    }
                 }
                 int index = app.records.IndexOf(FinishBtnClickItem);
 
+                #region To check finish-able items
                 if (app.OrderDistrict.ContainsKey(FinishBtnClickItem._groupID))
                 {
                     app.OrderDistrict[FinishBtnClickItem._groupID] = FinishBtnClickItem.order;
@@ -697,6 +702,7 @@ namespace IndoorNavigation.Views.OPFM
                         app.records[i].isComplete = true;
                     }
                 }
+                #endregion
                 RefreshListView();
             }
         }
@@ -1102,41 +1108,7 @@ namespace IndoorNavigation.Views.OPFM
 
         #endregion
 
-        #region New Process of OPPA
-        async private void ExitAddBtn_Clicked(object sender, EventArgs e)
-        {
-
-            Buttonable(false);
-
-            if (isButtonPressed) return;
-            isButtonPressed = true;
-
-            LeaveHospitalBtn.IsVisible = false;
-            LeaveHospitalBtn.IsEnabled = false;
-
-            app.HaveCashier = true;
-
-            //show select exit popup page. 
-            await PopupNavigation.Instance.PushAsync
-                (new ExitPopupPage(_navigationGraphName));
-            //remember to implement cancel messagingcenter  
-
-            MessagingCenter.Subscribe<ExitPopupPage, bool>(this, "ExitCancel",
-                (MsgSender, MsgArgs) =>
-                {
-                    if (!(bool)MsgArgs)
-                    {
-                        app.HaveCashier = false;
-                        Buttonable(true);
-                        LeaveHospitalBtn.IsEnabled = true;
-                        LeaveHospitalBtn.IsVisible = true;
-                    }
-                    MessagingCenter.Unsubscribe<ExitPopupPage, bool>
-                    (this, "ExitCancel");
-                });
-
-            isButtonPressed = false;
-        }       
+        #region New Process of OPPA       
 
         #region old constraint of OPPA
 
@@ -1234,24 +1206,14 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         public ICommand LeaveHospitalCommand { get; set; }
-
         private void SetPharmacyBtn()
-        {
-            //LeaveHospitalBtn.Clicked += PharmacyBtn_Clicked;
-            //LeaveHospitalBtn.Clicked = new EventHandler(PharmacyBtn_Clicked);
+        {            
             LeaveHospitalCommand = 
-                new Command(async () => await PharmacyMethod());
+                new Command(() => PharmacyMethod());
             
             LeaveHospitalBtn.Text = AppResources.PAYMENT_MEDICINE_STRING;
-            LeaveHospitalBtn.Command = LeaveHospitalCommand;
-            //Button PharmacyBtn = new Button
-            //{
-            //    FontSize = 
-            //        Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-            //    Command = SignInCommand
-            //}
+            LeaveHospitalBtn.Command = LeaveHospitalCommand;            
         }
-
         private void SetExitBtn()
         {
             //LeaveHospitalBtn.Clicked += ExitAddBtn_Clicked;
@@ -1262,11 +1224,15 @@ namespace IndoorNavigation.Views.OPFM
             LeaveHospitalBtn.Command = LeaveHospitalCommand;
             LeaveHospitalBtn.Text = AppResources.EXIT_HOSPITAL_STRING;
         }
-
-        private async Task PharmacyMethod()
+        private void PharmacyMethod()
         {
             if (isButtonPressed) return;
             isButtonPressed = true;
+
+
+            LeaveHospitalBtn.IsVisible = false;
+            LeaveHospitalBtn.IsEnabled = false;
+            app.HaveCashier = true;            
 
             LoadCashierPosition();
 
@@ -1286,7 +1252,7 @@ namespace IndoorNavigation.Views.OPFM
                 type = RecordType.Cashier,
                 DptName = cashier._waypointName,
                 _groupID = 1,
-                order = 0
+                order = 1
             });
             app.records.Add(new RgRecord
             {
@@ -1296,15 +1262,15 @@ namespace IndoorNavigation.Views.OPFM
                 type = RecordType.Pharmacy,
                 DptName = pharmacy._waypointName,
                 _groupID = 1,
-                order = 1
+                order = 2
             });
 
             RgListView.ScrollTo(app.records[app.records.Count - 1],
                 ScrollToPosition.MakeVisible, true);
-            isButtonPressed = false;
-            await Task.CompletedTask;
-        }
 
+            Buttonable(false);
+            isButtonPressed = false;    
+        }
         private async Task ExitBtnMethod()
         {
             Buttonable(false);
