@@ -142,9 +142,10 @@ namespace IndoorNavigation.Views.OPFM
             #endregion           
             if (e.Item is RgRecord record)
             {
-                if (app.OrderDistrict.ContainsKey(record._groupID) && !(app.OrderDistrict[record._groupID] == record.order || app.OrderDistrict[record._groupID] == record.order - 1)
-                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))
-                //if (CanDoThisItem(record))
+                if (app.OrderDistrict.ContainsKey(record._groupID) && 
+                    !(app.OrderDistrict[record._groupID] == record.order || 
+                    app.OrderDistrict[record._groupID] == record.order - 1)
+                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))               
                 {
                     Console.WriteLine("please do something first");
                     string BannerName = "";
@@ -169,9 +170,9 @@ namespace IndoorNavigation.Views.OPFM
 
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage(string.Format
-                        (getResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"),
+                        (GetResourceString("PLEASE_DO_SOMETHING_FIRST_STRING"),
                         BannerName),
-                        getResourceString("OK_STRING")));
+                        GetResourceString("OK_STRING")));
                 }
                 #region if the clinic has open timing.
                 else if (record.OpeningHours != null &&
@@ -182,9 +183,9 @@ namespace IndoorNavigation.Views.OPFM
 
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (getResourceString("AVAILABLE_CLINICS_NOW_STRING"),
-                        getResourceString("GO_STRING"),
-                       getResourceString("NO_STRING"),
+                        (GetResourceString("AVAILABLE_CLINICS_NOW_STRING"),
+                        GetResourceString("GO_STRING"),
+                       GetResourceString("NO_STRING"),
                         "Still go to careroom"));
 
                     MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
@@ -216,7 +217,7 @@ namespace IndoorNavigation.Views.OPFM
                     {
                         await PopupNavigation.Instance.PushAsync
                             (new AlertDialogPopupPage(record.AdditionalMsg,
-                            getResourceString("OK_STRING")));
+                            GetResourceString("OK_STRING")));
                     }
                     #endregion
 
@@ -230,7 +231,7 @@ namespace IndoorNavigation.Views.OPFM
                         //do select waypoint in elevator.
                         await PopupNavigation.Instance.PushAsync
                             (new AlertDialogPopupPage(
-                        getResourceString("WILL_BRING_YOU_TO_ELEVATOR_STRING"),
+                        GetResourceString("WILL_BRING_YOU_TO_ELEVATOR_STRING"),
                             //AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING, 
                             AppResources.OK_STRING));
                         DestinationItem ElevatorItem;
@@ -297,7 +298,7 @@ namespace IndoorNavigation.Views.OPFM
                 else
                 {
                     Console.WriteLine("Order is lower");
-                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("YOU_CANNOT_SWAP_THEM_STRING"), "OK"));
+                    await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(GetResourceString("YOU_CANNOT_SWAP_THEM_STRING"), "OK"));
                     _shiftTmpRecord = null;
                     RefreshListView();
                     ReturnWhiteBackground();
@@ -352,8 +353,8 @@ namespace IndoorNavigation.Views.OPFM
             //    {
             //        await PopupNavigation.Instance.PushAsync
             //            (new AlertDialogPopupPage
-            //            (getResourceString("CANNOT_SHIFT_SAME_GROUP_STRING"), 
-            //            getResourceString("OK_STRING")));
+            //            (GetResourceString("CANNOT_SHIFT_SAME_GROUP_STRING"), 
+            //            GetResourceString("OK_STRING")));
             //        return;
             //    }
             //    else if (TappedItem._groupID != 0)
@@ -424,63 +425,7 @@ namespace IndoorNavigation.Views.OPFM
             }
 
             return true;
-        }
-        //the function is a button event to add payment and medicine recieving 
-        //route to listview
-        //private void PaymemtListBtn_Clicked(object sender, EventArgs e)
-        //{
-        //    Buttonable(false);
-        //    if (isButtonPressed) return;
-        //    isButtonPressed = true;
-        //    LeaveHospitalBtn.IsEnabled = false;
-        //    LeaveHospitalBtn.IsVisible = false;
-        //    app.HaveCashier = true;
-        //    DestinationItem cashier, pharmacy;
-        //    try
-        //    {
-        //        cashier = CashierPosition[app.lastFinished._regionID];
-        //    }
-        //    catch
-        //    {
-        //        cashier = CashierPosition.First().Value;
-        //    }
-        //    try
-        //    {
-        //        pharmacy = PharmacyPostition[app.lastFinished._regionID];
-        //    }
-        //    catch
-        //    {
-        //        pharmacy = PharmacyPostition.First().Value;
-        //    }
-
-        //    int order =
-        //        app.OrderDistrict.ContainsKey(0) ? app.OrderDistrict[0] : 0;
-
-        //    app.records.Add(new RgRecord
-        //    {
-        //        _waypointID = cashier._waypointID,
-        //        _regionID = cashier._regionID,
-        //        _waypointName = cashier._waypointName,
-        //        type = RecordType.Cashier,
-        //        DptName = cashier._waypointName,
-        //        order = order + 1,
-        //        _groupID = 0
-        //    });
-        //    app.records.Add(new RgRecord
-        //    {
-        //        _waypointID = pharmacy._waypointID,
-        //        _regionID = pharmacy._regionID,
-        //        _waypointName = pharmacy._waypointName,
-        //        type = RecordType.Pharmacy,
-        //        DptName = pharmacy._waypointName,
-        //        order = order + 2,
-        //        _groupID = 0
-        //    });
-
-        //    RgListView.ScrollTo(app.records[app.records.Count - 1],
-        //        ScrollToPosition.MakeVisible, true);
-        //    isButtonPressed = false;
-        //}
+        }      
 
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
@@ -570,7 +515,7 @@ namespace IndoorNavigation.Views.OPFM
                 {
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
-                        (getResourceString("THIS_ITEM_CANT_BE_REMOVE_STRING"),
+                        (GetResourceString("THIS_ITEM_CANT_BE_REMOVE_STRING"),
                         //AppResources.THIS_ITEM_CANT_BE_REMOVE_STRING, 
                         AppResources.OK_STRING));
                 }
@@ -588,7 +533,7 @@ namespace IndoorNavigation.Views.OPFM
             if (!CanBeShifted())
             {
                 await PopupNavigation.Instance.PushAsync
-                   (new AlertDialogPopupPage(getResourceString("NO_SHIFT_STRING"), getResourceString("OK_STRING")));
+                   (new AlertDialogPopupPage(GetResourceString("NO_SHIFT_STRING"), GetResourceString("OK_STRING")));
                 isButtonPressed = false;
                 return;
             }
@@ -599,8 +544,8 @@ namespace IndoorNavigation.Views.OPFM
                     //await PopupNavigation.Instance.PushAsync(new ShiftAlertPopupPage());
                     await PopupNavigation.Instance.PushAsync
                         (new ShiftAlertPopupPage
-                        (getResourceString("SHIFT_DESCRIPTION_STRING"),
-                        getResourceString("OK_STRING"), "isCheckedNeverShow"));
+                        (GetResourceString("SHIFT_DESCRIPTION_STRING"),
+                        GetResourceString("OK_STRING"), "isCheckedNeverShow"));
                 }
                 CancelShiftCommand = new Command(async () => await CancelShiftItemMethod());
                 ToolbarItems.Clear();
@@ -608,7 +553,7 @@ namespace IndoorNavigation.Views.OPFM
                 ToolbarItem CancelShiftItem = new ToolbarItem
                 {
                     Order = ToolbarItemOrder.Primary,
-                    Text = getResourceString("CANCEL_STRING"),
+                    Text = GetResourceString("CANCEL_STRING"),
                     Command = CancelShiftCommand
                 };
 
@@ -653,17 +598,11 @@ namespace IndoorNavigation.Views.OPFM
                 (app.lastFinished.type != RecordType.Register ||
                 (app.lastFinished.type != RecordType.Exit && app.HaveCashier)))
                 {
-                    //LeaveHospitalBtn.IsEnabled = true;
-                    //LeaveHospitalBtn.IsVisible = true;
-                    Console.WriteLine("iiiiiiiiiiiiiiiiiiii");
-                    Console.WriteLine("app.havecashier = " + app.HaveCashier);
-                    Console.WriteLine("button isenable = " + LeaveHospitalBtn.IsVisible);
                     if (app.HaveCashier && !LeaveHospitalBtn.IsVisible)
                     {
-                        Console.WriteLine("WWWWWWWWWWWWWWWWW");
-                        await DisplayAlert(getResourceString("MESSAGE_STRING"),
-                                    getResourceString("FINISH_SCHEDULE_STRING"),
-                                    getResourceString("OK_STRING"));
+                        await DisplayAlert(GetResourceString("MESSAGE_STRING"),
+                                    GetResourceString("FINISH_SCHEDULE_STRING"),
+                                    GetResourceString("OK_STRING"));
 
                         await PopupNavigation.Instance.PushAsync
                             (new ExitPopupPage(_navigationGraphName));
@@ -772,8 +711,6 @@ namespace IndoorNavigation.Views.OPFM
             RefreshListView();
             await Task.CompletedTask;
         }
-
-
         private void swap<T>(ref List<T> list, int i, int j)
         {
             T tmp = list[i];
@@ -781,20 +718,6 @@ namespace IndoorNavigation.Views.OPFM
             list[j] = tmp;
             return;
         }
-
-        private string getResourceString(string key)
-        {
-            string resourceId = "IndoorNavigation.Resources.AppResources";
-            CultureInfo currentLanguage =
-                CrossMultilingual.Current.CurrentCultureInfo;
-            ResourceManager resourceManager =
-                new ResourceManager(resourceId,
-                                    typeof(TranslateExtension)
-                                    .GetTypeInfo().Assembly);
-
-            return resourceManager.GetString(key, currentLanguage);
-        }
-
         private Week GetDayofWeek()
         {
             switch (DateTime.Now.DayOfWeek)
@@ -807,7 +730,6 @@ namespace IndoorNavigation.Views.OPFM
                     return Week.Workingday;
             }
         }
-
         private bool isCareRoomOpening(List<OpeningTime> openingTimes)
         {
             // TimeSpan compare function rule
@@ -909,17 +831,17 @@ namespace IndoorNavigation.Views.OPFM
                 ItemFinishFunction(record);
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage
-                    (getResourceString("PLEASE_ADD_RECORD_TO_LIST_STRING"),
+                    (GetResourceString("PLEASE_ADD_RECORD_TO_LIST_STRING"),
                     //AppResources.PLEASE_ADD_RECORD_TO_LIST_STRING, 
                     AppResources.OK_STRING));
             }
             else
             {
                 var CheckWantToSetting =
-                    await DisplayAlert(getResourceString("MESSAGE_STRING"),
-                                       getResourceString("BAD_NETWORK_STRING"),
-                                       getResourceString("OK_STRING"),
-                                       getResourceString("NO_STRING"));
+                    await DisplayAlert(GetResourceString("MESSAGE_STRING"),
+                                       GetResourceString("BAD_NETWORK_STRING"),
+                                       GetResourceString("OK_STRING"),
+                                       GetResourceString("NO_STRING"));
                 //BusyIndicatorShow(false);
                 PopupNavigation.Instance.PopAsync();
                 if (CheckWantToSetting)
@@ -944,7 +866,7 @@ namespace IndoorNavigation.Views.OPFM
             {
                 string HopeString =
                   $"{Storage.GetDisplayName(_navigationGraphName)}" +
-                  $"\n{getResourceString("HOPE_STRING")}";
+                  $"\n{GetResourceString("HOPE_STRING")}";
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage(HopeString));
                 await Navigation.PopAsync();
@@ -978,7 +900,7 @@ namespace IndoorNavigation.Views.OPFM
             ToolbarItem SignInItem =
                 new ToolbarItem
                 {
-                    Text = getResourceString("ACCOUNT_STRING"),
+                    Text = GetResourceString("ACCOUNT_STRING"),
                     Command = SignInCommand,
                     Order = ToolbarItemOrder.Secondary
                 };
@@ -986,14 +908,14 @@ namespace IndoorNavigation.Views.OPFM
             ToolbarItem InfoItem =
                 new ToolbarItem
                 {
-                    Text = getResourceString("PREFERENCES_STRING"),
+                    Text = GetResourceString("PREFERENCES_STRING"),
                     Command = InfoItemCommand,
                     Order = ToolbarItemOrder.Secondary
                 };
             ToolbarItem ClearItem =
                 new ToolbarItem
                 {
-                    Text = getResourceString("CLEAR_STRING"),
+                    Text = GetResourceString("CLEAR_STRING"),
                     Command = ClearItemCommand,
                     Order = ToolbarItemOrder.Primary,
                 };
@@ -1040,7 +962,7 @@ namespace IndoorNavigation.Views.OPFM
             isButtonPressed = true;
 
             Console.WriteLine("Clear item click");
-            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(getResourceString("ARE_YOU_SURE_TO_CLEAR_STRING"), getResourceString("CLEAR_STRING"), getResourceString("NO_STRING"), "ClearOrNot"));
+            await PopupNavigation.Instance.PushAsync(new AlertDialogPopupPage(GetResourceString("ARE_YOU_SURE_TO_CLEAR_STRING"), GetResourceString("CLEAR_STRING"), GetResourceString("NO_STRING"), "ClearOrNot"));
 
             MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ClearOrNot", (MsgSender, MsgArgs) =>
             {
@@ -1162,47 +1084,6 @@ namespace IndoorNavigation.Views.OPFM
             }
             return;
         }
-
-        private void PharmacyBtn_Clicked(object sender, EventArgs e)
-        {
-            if (isButtonPressed) return;
-            isButtonPressed = true;
-
-            LoadCashierPosition();
-
-            DestinationItem cashier, pharmacy;
-
-            try { cashier = CashierPosition[app.lastFinished._regionID]; }
-            catch { cashier = CashierPosition.First().Value; }
-
-            try { pharmacy = PharmacyPosition[app.lastFinished._regionID]; }
-            catch { pharmacy = PharmacyPosition.First().Value; }
-
-            app.records.Add(new RgRecord
-            {
-                _waypointID = cashier._waypointID,
-                _regionID = cashier._regionID,
-                _waypointName = cashier._waypointName,
-                type = RecordType.Cashier,
-                DptName = cashier._waypointName,
-                _groupID = 1,
-                order = 0
-            });
-            app.records.Add(new RgRecord
-            {
-                _waypointID = pharmacy._waypointID,
-                _regionID = pharmacy._regionID,
-                _waypointName = pharmacy._waypointName,
-                type = RecordType.Pharmacy,
-                DptName = pharmacy._waypointName,
-                _groupID = 1,
-                order = 1
-            });
-
-            RgListView.ScrollTo(app.records[app.records.Count - 1],
-                ScrollToPosition.MakeVisible, true);
-            isButtonPressed = false;
-        }
         #endregion
 
         public ICommand LeaveHospitalCommand { get; set; }
@@ -1216,8 +1097,6 @@ namespace IndoorNavigation.Views.OPFM
         }
         private void SetExitBtn()
         {
-            //LeaveHospitalBtn.Clicked += ExitAddBtn_Clicked;
-
             LeaveHospitalCommand = 
                 new Command(async () => await ExitBtnMethod());
 
