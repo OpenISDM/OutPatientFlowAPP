@@ -40,12 +40,14 @@
                             Text="{i18n:Translate CANCEL_STRING}"
                             HorizontalOptions="End"
                             Clicked="CancelSelectBtn_Clicked"
-                            VerticalOptions="End"/>
+                            VerticalOptions="End"
+                            />
                     <Button x:Name="ConfirmSelectBtn"
                             Text="{i18n:Translate OK_STRING}"
                             Clicked="SelectPurposeBtn_Clicked"
                             HorizontalOptions="End"
-                            VerticalOptions="End"/>
+                            VerticalOptions="End"
+                            />
                 </StackLayout>
             </StackLayout>
         </Frame>

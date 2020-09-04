@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="DefineStructureOfProcess.xml" />
+    <None Remove="Legal.txt" />
     <None Remove="Resources\AppResources.English" />
     <None Remove="Resources\GraphResource.xml" />
     <None Remove="Resources\Lab\Lab_FD_en-US.xml" />

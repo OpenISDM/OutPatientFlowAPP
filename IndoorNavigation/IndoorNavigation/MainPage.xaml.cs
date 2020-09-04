@@ -123,7 +123,7 @@ namespace IndoorNavigation
             await Navigation.PushAsync(new SettingTableViewPage());
         }
 
-        async private void CheckVersionAndUpdate_(Location location,
+        async private Task CheckVersionAndUpdate_(Location location,
             NavigationGraph navigationGraph)
         {
             if (_serverResources != null &&
@@ -167,7 +167,7 @@ namespace IndoorNavigation
 
                             if (WantRetry)
                             {
-                                CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate_(location,
                                     navigationGraph);
                             }
                         }
@@ -185,7 +185,7 @@ namespace IndoorNavigation
                             {
                                 setting.OpenSettingPage();
 
-                                CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate_(location,
                                     navigationGraph);
                             }
                         }
@@ -197,6 +197,7 @@ namespace IndoorNavigation
                 }
 
             }
+            await Task.CompletedTask;
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -230,7 +231,7 @@ namespace IndoorNavigation
                     Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
 
-                CheckVersionAndUpdate_(location, navigationGraph);
+                await CheckVersionAndUpdate_(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
                     isButtonPressed = true;

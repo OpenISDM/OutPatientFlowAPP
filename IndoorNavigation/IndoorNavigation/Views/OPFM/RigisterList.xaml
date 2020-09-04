@@ -275,9 +275,7 @@
                     AbsoluteLayout.LayoutBounds= "0.96,0.74,70,70"/>
 
 
-            <Button x:Name="ExitAddBtn" FontSize="Large"
-                    Text="離開醫院"
-                    Clicked= "ExitAddBtn_Clicked"
+            <Button x:Name="LeaveHospitalBtn" FontSize="Large"                                       
                     AbsoluteLayout.LayoutFlags="All"
                     AbsoluteLayout.LayoutBounds="0,1,1,0.1"
                     BorderColor= "#3f51b5"

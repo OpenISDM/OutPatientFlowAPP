@@ -20,9 +20,8 @@ using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
-using System.Net.Http.Headers;
 using IndoorNavigation.Resources;
-
+using static IndoorNavigation.Utilities.TmperorayStatus;
 namespace IndoorNavigation.Views.OPFM
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -38,6 +37,7 @@ namespace IndoorNavigation.Views.OPFM
             new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
 
         Dictionary<Guid, DestinationItem> ElevatorPosition;
+
         //to prevent button multi-tap from causing error
         private bool isButtonPressed = false;
         private ViewCell lastCell = null;
@@ -57,12 +57,12 @@ namespace IndoorNavigation.Views.OPFM
             _navigationGraphName = navigationGraphName;
 
             _nameInformation = LoadXmlInformation(navigationGraphName);
-            ExitAddBtn.IsEnabled =
+            LeaveHospitalBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
                 //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
-            ExitAddBtn.IsVisible = app.records.Count() > 0 &&
+            LeaveHospitalBtn.IsVisible = app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
                 //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
@@ -79,10 +79,10 @@ namespace IndoorNavigation.Views.OPFM
 
             RefreshListView();
 
-            if (app.HaveCashier && !ExitAddBtn.IsEnabled)
+            if (app.HaveCashier && !LeaveHospitalBtn.IsEnabled)
                 Buttonable(false);
 
-            ExitAddBtn.IsEnabled = app.records.Count > 0 &&
+            LeaveHospitalBtn.IsEnabled = app.records.Count > 0 &&
                 app.FinishCount == app.records.Count &&
                 !(app.records.Count == 1 &&
                     app.records[0].type == RecordType.Register);
@@ -90,7 +90,7 @@ namespace IndoorNavigation.Views.OPFM
             //(app.FinishCount == app.records.Count) &&
             //(!app.HaveCashier) &&
             //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
-            ExitAddBtn.IsVisible = app.records.Count > 0 &&
+            LeaveHospitalBtn.IsVisible = app.records.Count > 0 &&
                 app.FinishCount == app.records.Count &&
                 !(app.records.Count == 1 &&
                     app.records[0].type == RecordType.Register);
@@ -432,8 +432,8 @@ namespace IndoorNavigation.Views.OPFM
         //    Buttonable(false);
         //    if (isButtonPressed) return;
         //    isButtonPressed = true;
-        //    ExitAddBtn.IsEnabled = false;
-        //    ExitAddBtn.IsVisible = false;
+        //    LeaveHospitalBtn.IsEnabled = false;
+        //    LeaveHospitalBtn.IsVisible = false;
         //    app.HaveCashier = true;
         //    DestinationItem cashier, pharmacy;
         //    try
@@ -488,8 +488,8 @@ namespace IndoorNavigation.Views.OPFM
             if (isButtonPressed) return;
 
             isButtonPressed = true;
-            ExitAddBtn.IsEnabled = false;
-            ExitAddBtn.IsVisible = false;
+            LeaveHospitalBtn.IsEnabled = false;
+            LeaveHospitalBtn.IsVisible = false;
 
             IndicatorPopupPage isBusyPage = new IndicatorPopupPage();
 
@@ -504,14 +504,14 @@ namespace IndoorNavigation.Views.OPFM
             MessagingCenter.Subscribe<AddPopupPage, bool>(this, "isCancel",
               (Messagesender, Messageargs) =>
               {
-                  ExitAddBtn.IsEnabled =
+                  LeaveHospitalBtn.IsEnabled =
                   (app.FinishCount == app.records.Count) &&
                   //!app.HaveCashier &&
                    app.records.Count() > 0 &&
                 !(app.records.Count() == 1 &&
                 app.records[0].type == RecordType.Register);
 
-                  ExitAddBtn.IsVisible =
+                  LeaveHospitalBtn.IsVisible =
                   (app.FinishCount == app.records.Count) &&
                   //!app.HaveCashier &&
                    app.records.Count() > 0 &&
@@ -653,9 +653,9 @@ namespace IndoorNavigation.Views.OPFM
                 (app.lastFinished.type != RecordType.Register ||
                 (app.lastFinished.type != RecordType.Exit && app.HaveCashier)))
                 {
-                    ExitAddBtn.IsEnabled = true;
-                    ExitAddBtn.IsVisible = true;
-                    //if (app.HaveCashier && !ExitAddBtn.IsEnabled)
+                    LeaveHospitalBtn.IsEnabled = true;
+                    LeaveHospitalBtn.IsVisible = true;
+                    //if (app.HaveCashier && !LeaveHospitalBtn.IsEnabled)
                     //{
                     //    await DisplayAlert(getResourceString("MESSAGE_STRING"),
                     //                getResourceString("FINISH_SCHEDULE_STRING"),
@@ -666,8 +666,8 @@ namespace IndoorNavigation.Views.OPFM
                     //}
                     //else if (!app.HaveCashier)
                     //{
-                    //    ExitAddBtn.IsEnabled = true;
-                    //    ExitAddBtn.IsVisible = true;
+                    //    LeaveHospitalBtn.IsEnabled = true;
+                    //    LeaveHospitalBtn.IsVisible = true;
                     //}
                 }
                 int index = app.records.IndexOf(FinishBtnClickItem);
@@ -861,6 +861,11 @@ namespace IndoorNavigation.Views.OPFM
             isButtonPressed = false;
             RgListView.ItemsSource = null;
             RgListView.ItemsSource = app.records;
+
+            if (PurposeOptionID == 1)
+                SetPharmacyBtn();
+            else
+                SetExitBtn();
         }
         private void ReturnWhiteBackground()
         {
@@ -1006,8 +1011,8 @@ namespace IndoorNavigation.Views.OPFM
             MessagingCenter.Subscribe<AskRegisterPopupPage, bool>
                 (this, "isReset", (msgSender, msgArgs) =>
                 {
-                    ExitAddBtn.IsEnabled = app.FinishCount == app.records.Count;
-                    ExitAddBtn.IsVisible = app.FinishCount == app.records.Count;
+                    LeaveHospitalBtn.IsEnabled = app.FinishCount == app.records.Count;
+                    LeaveHospitalBtn.IsVisible = app.FinishCount == app.records.Count;
 
                     Buttonable(true);
                     MessagingCenter.Unsubscribe<AskRegisterPopupPage, bool>
@@ -1106,8 +1111,8 @@ namespace IndoorNavigation.Views.OPFM
             if (isButtonPressed) return;
             isButtonPressed = true;
 
-            ExitAddBtn.IsVisible = false;
-            ExitAddBtn.IsEnabled = false;
+            LeaveHospitalBtn.IsVisible = false;
+            LeaveHospitalBtn.IsEnabled = false;
 
             app.HaveCashier = true;
 
@@ -1123,17 +1128,15 @@ namespace IndoorNavigation.Views.OPFM
                     {
                         app.HaveCashier = false;
                         Buttonable(true);
-                        ExitAddBtn.IsEnabled = true;
-                        ExitAddBtn.IsVisible = true;
+                        LeaveHospitalBtn.IsEnabled = true;
+                        LeaveHospitalBtn.IsVisible = true;
                     }
                     MessagingCenter.Unsubscribe<ExitPopupPage, bool>
                     (this, "ExitCancel");
                 });
 
             isButtonPressed = false;
-        }
-        #endregion
-
+        }       
 
         #region old constraint of OPPA
 
@@ -1145,21 +1148,25 @@ namespace IndoorNavigation.Views.OPFM
             CashierPosition = new Dictionary<Guid, DestinationItem>();
             PharmacyPosition = new Dictionary<Guid, DestinationItem>();
 
-            XmlDocument doc = XmlReader("");
+            XmlDocument doc = XmlReader("Yuanlin_OPFM.CashierStation.xml");
 
-            XmlNodeList CashierNodeList = doc.GetElementsByTagName("");
-            XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("");
+            XmlNodeList CashierNodeList = 
+                doc.GetElementsByTagName("Cashierstation");
+
+            XmlNodeList PharmacyNodeList = 
+                doc.GetElementsByTagName("Pharmacystation");
+
 
             DestinationItem item;
 
-            foreach(XmlNode cashierNode in CashierNodeList) 
+            foreach (XmlNode cashierNode in CashierNodeList)
             {
                 item = new DestinationItem();
 
-                item._regionID = 
+                item._regionID =
                     new Guid(cashierNode.Attributes["region_id"].Value);
 
-                item._waypointID = 
+                item._waypointID =
                     new Guid(cashierNode.Attributes["waypoint_id"].Value);
 
                 item._floor = cashierNode.Attributes["floor"].Value;
@@ -1167,13 +1174,13 @@ namespace IndoorNavigation.Views.OPFM
 
                 CashierPosition.Add(item._regionID, item);
             }
-            foreach(XmlNode pharmacyNode in PharmacyNodeList) 
+            foreach (XmlNode pharmacyNode in PharmacyNodeList)
             {
                 item = new DestinationItem();
 
-                item._regionID = 
+                item._regionID =
                     new Guid(pharmacyNode.Attributes["region_id"].Value);
-                item._waypointID = 
+                item._waypointID =
                     new Guid(pharmacyNode.Attributes["waypoint_id"].Value);
 
                 item._floor = pharmacyNode.Attributes["floor"].Value;
@@ -1196,10 +1203,10 @@ namespace IndoorNavigation.Views.OPFM
             try { cashier = CashierPosition[app.lastFinished._regionID]; }
             catch { cashier = CashierPosition.First().Value; }
 
-            try { pharmacy = PharmacyPosition[app.lastFinished._regionID]; } 
+            try { pharmacy = PharmacyPosition[app.lastFinished._regionID]; }
             catch { pharmacy = PharmacyPosition.First().Value; }
 
-            app.records.Add(new RgRecord 
+            app.records.Add(new RgRecord
             {
                 _waypointID = cashier._waypointID,
                 _regionID = cashier._regionID,
@@ -1207,42 +1214,130 @@ namespace IndoorNavigation.Views.OPFM
                 type = RecordType.Cashier,
                 DptName = cashier._waypointName,
                 _groupID = 1,
-                order=0
+                order = 0
             });
-            app.records.Add(new RgRecord 
+            app.records.Add(new RgRecord
             {
                 _waypointID = pharmacy._waypointID,
                 _regionID = pharmacy._regionID,
                 _waypointName = pharmacy._waypointName,
                 type = RecordType.Pharmacy,
                 DptName = pharmacy._waypointName,
-                _groupID =1,
-                order=1
+                _groupID = 1,
+                order = 1
             });
 
             RgListView.ScrollTo(app.records[app.records.Count - 1],
                 ScrollToPosition.MakeVisible, true);
             isButtonPressed = false;
         }
+        #endregion
+
+        public ICommand LeaveHospitalCommand { get; set; }
 
         private void SetPharmacyBtn()
         {
-            Button PharmacyBtn = new Button
-            {
-                Text = AppResources.PAYMENT_MEDICINE_STRING
-            };
-
-            PharmacyBtn.Clicked += PharmacyBtn_Clicked;
+            //LeaveHospitalBtn.Clicked += PharmacyBtn_Clicked;
+            //LeaveHospitalBtn.Clicked = new EventHandler(PharmacyBtn_Clicked);
+            LeaveHospitalCommand = 
+                new Command(async () => await PharmacyMethod());
+            
+            LeaveHospitalBtn.Text = AppResources.PAYMENT_MEDICINE_STRING;
+            LeaveHospitalBtn.Command = LeaveHospitalCommand;
+            //Button PharmacyBtn = new Button
+            //{
+            //    FontSize = 
+            //        Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+            //    Command = SignInCommand
+            //}
         }
 
         private void SetExitBtn()
         {
-            Button ExitBtn = new Button
-            {
-                Text=AppResources.EXIT_HOSPITAL_STRING
-            };
+            //LeaveHospitalBtn.Clicked += ExitAddBtn_Clicked;
 
-            ExitBtn.Clicked += ExitAddBtn_Clicked;
+            LeaveHospitalCommand = 
+                new Command(async () => await ExitBtnMethod());
+
+            LeaveHospitalBtn.Command = LeaveHospitalCommand;
+            LeaveHospitalBtn.Text = AppResources.EXIT_HOSPITAL_STRING;
+        }
+
+        private async Task PharmacyMethod()
+        {
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
+            LoadCashierPosition();
+
+            DestinationItem cashier, pharmacy;
+
+            try { cashier = CashierPosition[app.lastFinished._regionID]; }
+            catch { cashier = CashierPosition.First().Value; }
+
+            try { pharmacy = PharmacyPosition[app.lastFinished._regionID]; }
+            catch { pharmacy = PharmacyPosition.First().Value; }
+
+            app.records.Add(new RgRecord
+            {
+                _waypointID = cashier._waypointID,
+                _regionID = cashier._regionID,
+                _waypointName = cashier._waypointName,
+                type = RecordType.Cashier,
+                DptName = cashier._waypointName,
+                _groupID = 1,
+                order = 0
+            });
+            app.records.Add(new RgRecord
+            {
+                _waypointID = pharmacy._waypointID,
+                _regionID = pharmacy._regionID,
+                _waypointName = pharmacy._waypointName,
+                type = RecordType.Pharmacy,
+                DptName = pharmacy._waypointName,
+                _groupID = 1,
+                order = 1
+            });
+
+            RgListView.ScrollTo(app.records[app.records.Count - 1],
+                ScrollToPosition.MakeVisible, true);
+            isButtonPressed = false;
+            await Task.CompletedTask;
+        }
+
+        private async Task ExitBtnMethod()
+        {
+            Buttonable(false);
+
+            if (isButtonPressed) return;
+            isButtonPressed = true;
+
+            LeaveHospitalBtn.IsVisible = false;
+            LeaveHospitalBtn.IsEnabled = false;
+
+            app.HaveCashier = true;
+
+            //show select exit popup page. 
+            await PopupNavigation.Instance.PushAsync
+                (new ExitPopupPage(_navigationGraphName));
+            //remember to implement cancel messagingcenter  
+
+            MessagingCenter.Subscribe<ExitPopupPage, bool>(this, "ExitCancel",
+                (MsgSender, MsgArgs) =>
+                {
+                    if (!(bool)MsgArgs)
+                    {
+                        app.HaveCashier = false;
+                        Buttonable(true);
+                        LeaveHospitalBtn.IsEnabled = true;
+                        LeaveHospitalBtn.IsVisible = true;
+                    }
+                    MessagingCenter.Unsubscribe<ExitPopupPage, bool>
+                    (this, "ExitCancel");
+                });
+
+            isButtonPressed = false;
+            await Task.CompletedTask;
         }
         #endregion
     }
