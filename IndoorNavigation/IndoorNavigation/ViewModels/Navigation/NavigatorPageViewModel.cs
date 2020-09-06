@@ -240,21 +240,19 @@ namespace IndoorNavigation.ViewModels.Navigation
                     }
                 case NavigationResult.AdjustRoute:
                     {
-                        Console.WriteLine("Get a wrong way.");
-
-                        //CurrentStepLabel =
-                        //    _resourceManager.GetString("DIRECTION_WRONG_WAY_STRING",
-                        //                               currentLanguage);
-                        //CurrentStepImage = "waittingscan.gif";
-                        //isPlaying = true;
-                        //Utility._textToSpeech.Speak(
-                        //    CurrentStepLabel,
-                        //    _resourceManager.GetString("CULTURE_VERSION_STRING",
-                        //                               currentLanguage));
+                        Console.WriteLine("Get a wrong way.");                        
                         break;
                     }
                 case NavigationResult.Arrival:
                     {
+                        #region  For default Layout
+                        FDPictureHeightScaleValue = 2;
+                        FDPictureHeightSpanValue = 3;
+                        InstructionWidthScaleValue = 1;
+                        InstructionWidthSpanValue = 2;
+                        InstructionLocationValue = 2;
+                        #endregion
+
                         CurrentWaypointName =
                           _xmlInformation.GiveWaypointName(_destinationID);
                         CurrentStepLabel =
@@ -339,7 +337,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
 
-            #region  For Layout Changed
+            #region  For default Layout
             FDPictureHeightScaleValue = 2;
             FDPictureHeightSpanValue = 3;
             InstructionWidthScaleValue = 1;
@@ -353,7 +351,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             {
                 Console.WriteLine(">> direction picture is not null");
 
-                #region Layout Binding
+                #region Direction Picture Layout Change
                 location = 1;
                 FDPictureHeightScaleValue = 1;
                 FDPictureHeightSpanValue = 4;
@@ -708,14 +706,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                 "DIRECTION_UP_STRING",
                                 _currentCulture),
                                 connectionTypeString,
-                                nextRegionName);
-                    //stepLabel = string.Format(
-                    //    _resourceManager.GetString(
-                    //        "DIRECTION_UP_STRING",
-                    //        currentLanguage),
-                    //        connectionTypeString,
-                    //        Environment.NewLine,
-                    //        nextRegionName);
+                                nextRegionName);                    
 
                     break;
 
@@ -749,8 +740,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             stepImage = "Stairs_down";
                             break;
                     }
-                    stepLabel = SwitchCombineInstruction(instruction,
-                        //instruction._information, 
+                    stepLabel = SwitchCombineInstruction(instruction, 
                                 _resourceManager.GetString(
                                 "DIRECTION_DOWN_STRING",
                                 _currentCulture), 
@@ -915,11 +905,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                 instructionDirection,
                                 Environment.NewLine,
                                 instruction._information._distance);
-                        }
-
-                        //return string.Format(DownOrUp, connectionType, Environment.NewLine, nextRegionName) + string.Format(_resourceManager.GetString("DIRECTION_INITIAIL_CROSS_REGION_STRING", currentLanguage), instructionDirection,
-                        //    Environment.NewLine, Environment.NewLine, instruction._information._distance);
-                        //return string.Format("搭手扶梯到一樓後，請背向手扶梯後向右轉，並直走約20公尺");
+                        }                        
                     }
                 default:
                     return instructionString;
