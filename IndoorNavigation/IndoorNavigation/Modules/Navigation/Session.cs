@@ -252,15 +252,7 @@ namespace IndoorNavigation.Modules
                         _navigationGraph
                         .GetWaypointNameInRegion(_waypointsOnRoute[1]._regionID,
                                               _waypointsOnRoute[1]._waypointID);
-
-                    //int tempRoute = _waypointsOnRoute.Count() - 1;
-                    //_accumulateStraightDistance = 0;
-                    //navigationInstruction._progress = 0;
-                    //navigationInstruction._progressBar = "0 / " + tempRoute;
-                    //int NewTotalProgress = 
-                    //    TmpOriginRouteCount + 
-                    //    _waypointsOnRoute.Count - 
-                    //    TmpFinishRouteCount;
+                   
 
                     navigationInstruction._progress =
                         TmpCurrentProgress / --TmpTotalProgress;
@@ -1393,10 +1385,10 @@ namespace IndoorNavigation.Modules
             _accumulateStraightDistance = 0;
             _DetectWrongWaypoint = false;
             Console.WriteLine("---- [case: wrong waypoint] .... ");
-            _event.OnEventCall(new NavigationEventArgs
-            {
-                _result = NavigationResult.AdjustRoute
-            });
+            //_event.OnEventCall(new NavigationEventArgs
+            //{
+            //    _result = NavigationResult.AdjustRoute
+            //});
             Console.WriteLine("Adjust Route");
         }
 

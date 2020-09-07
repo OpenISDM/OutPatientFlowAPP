@@ -100,14 +100,7 @@ namespace IndoorNavigation.Views.PopUpPage
             _detectPositionControllThread = new Thread(() => ThreadWork());//ScanPosition());
 
             Console.WriteLine("<<AutoAdjustPopupPage : Constructor");
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-
-        }       
+        }      
 
         protected override bool OnBackButtonPressed()
         {
@@ -139,21 +132,11 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 Device.BeginInvokeOnMainThread(() => SetCheckPositionCorrect());
 
-                _askCorrectEvent.Wait();
-
-                //if (!_positionIsCorrect)
-                //{
-                //    Device.BeginInvokeOnMainThread(() => SetStartScanView());
-
-                //    _detectThreadEvent.Reset();
-                //    //_askCorrectEvent.Reset();
-
-                //    _currentRegionID = Guid.Empty;
-                //    _currentWaypointID = Guid.Empty;
-                //    continue;
-                //}
+                _askCorrectEvent.Wait();               
                 break;
             }
+
+            _isKeepDetection = false;
 
             string currentPosition =
                 _nameInformation.GiveWaypointName(_currentWaypointID);
@@ -307,13 +290,7 @@ namespace IndoorNavigation.Views.PopUpPage
             ConfirmBtn.Clicked -= CancelBtn_Clicked;
             ConfirmBtn.Clicked += CheckPositionCorrectBtn_Clicked;
             ConfirmBtn.Text = "確定";
-            #endregion
-
-            #region CancelButton
-            //CancelBtn.IsVisible = true;
-            //CancelBtn.Clicked += CheckPositionWrongBtn_Clicked;
-            //CancelBtn.Text = "錯誤";
-            #endregion
+            #endregion          
 
             string _positionName = _nameInformation.GiveWaypointName(_currentWaypointID);
             AutoAdjustLayout.Children.Add(
