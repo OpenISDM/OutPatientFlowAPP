@@ -412,25 +412,25 @@
     <value>Go Straight</value>
   </data>
   <data name="TURN_RIGHT_STRING" xml:space="preserve">
-    <value>Turn Right</value>
+    <value>turn right</value>
   </data>
   <data name="TURN_LEFT_STRING" xml:space="preserve">
-    <value>Turn Left</value>
+    <value>turn left</value>
   </data>
   <data name="TURN_BACK_STRING" xml:space="preserve">
-    <value>Turn Back</value>
+    <value>turn back</value>
   </data>
   <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>Turn Right Front</value>
+    <value>turn forward right</value>
   </data>
   <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
-    <value>Turn Right Rear</value>
+    <value>turn backward right</value>
   </data>
   <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>Turn Left Front</value>
+    <value>turn forward left </value>
   </data>
   <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
-    <value>Turn Left Rear</value>
+    <value>turn backward left</value>
   </data>
   <data name="LAB_STRING" xml:space="preserve">
     <value>Lab</value>
@@ -695,7 +695,7 @@
     <value>Take {0} go upstairs{1}to{2}.{3}Then{4},{5}and go straight about {6} m.</value>
   </data>
   <data name="PLEASE_FOLLOW_PICTURE_STRING" xml:space="preserve">
-    <value>Please move towards the picture direction.</value>
+    <value>Please go in the direction of the arrow.</value>
   </data>
   <data name="AUTO_ADJUST_STRING" xml:space="preserve">
     <value>Auto Adjust</value>
@@ -760,5 +760,23 @@ Press confirm to start regulate signal.</value>
   </data>
   <data name="EXIT_HOSPITAL_STRING" xml:space="preserve">
     <value>Exit hospital</value>
+  </data>
+  <data name="DIRECTION_BACK_STRAIGHT_STRING" xml:space="preserve">
+    <value>Turns your back toward {0}.
+Then go straight for about {1}m</value>
+  </data>
+  <data name="DIRECTION_BACL_TURN_STRING" xml:space="preserve">
+    <value>Turn your back toward {0}.
+Turn {1} and 
+then go about {2} m.</value>
+  </data>
+  <data name="DIRECTION_FACE_STRAIGHT_STRING" xml:space="preserve">
+    <value>Go straight in the direction of {0}
+for about {1} m.</value>
+  </data>
+  <data name="DIRECTION_FACE_TURN_STRING" xml:space="preserve">
+    <value>Face {0}.
+Turn {1} and
+then go about {2} m.</value>
   </data>
 </root>
