@@ -2,19 +2,19 @@
   <waypoint id="00000000-0000-0000-0000-000000000001" Landmark = "the toilet" RelatedDirection = "6" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000002" Landmark = "the Hall" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id="00000000-0000-0000-0000-000000000003" Landmark = "the Hall" RelatedDirection = "4" FaceOrBack = "0"/>
-	<waypoint id="00000000-0000-0000-0000-000000000004" Landmark = "the Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000004" Landmark = "Cashier/Registration" RelatedDirection = "0" FaceOrBack = "1"/>
 	<waypoint id="00000000-0000-0000-0000-000000000005" Landmark = "Laboratory" RelatedDirection = "0" FaceOrBack = "1"/>
 	<waypoint id="00000000-0000-0000-0000-000000000006" Landmark = "Dentistry" RelatedDirection = "6" FaceOrBack = "1" />
 	<waypoint id="00000000-0000-0000-0000-000000000007" Landmark = "Escalator" RelatedDirection = "4" FaceOrBack = "1"/>
 	<waypoint id="00000000-0000-0000-0000-000000000008" Landmark = "Escalator" RelatedDirection = "6" FaceOrBack = "0"/>
 	<waypoint id="00000000-0000-0000-0000-000000000009" Landmark = "Breast center" RelatedDirection = "6" FaceOrBack = "1"/>
-	<waypoint id="00000000-0000-0000-0000-000000000010" Landmark = "Health Check Center" RelatedDirection = "4" FaceOrBack = "0"/>
-	<waypoint id="00000000-0000-0000-0000-000000000011" Landmark = "Side Door" RelatedDirection = "2" FaceOrBack = "1"/>
-	<waypoint id="00000000-0000-0000-0000-000000000012" Landmark = "Corridor" RelatedDirection = "6" FaceOrBack = "1"/>
-	<waypoint id="00000000-0000-0000-0000-000000000013" Landmark = "Hall" RelatedDirection = "0" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000010" Landmark = "Department of Community Health" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000011" Landmark = "Chemotherapy" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000012" Landmark = "Pediatrics" RelatedDirection = "4" FaceOrBack = "1"/>
+	<waypoint id="00000000-0000-0000-0000-000000000013" Landmark = "Otolaryngology" RelatedDirection = "4" FaceOrBack = "1"/>
   
-	<waypoint id="00000000-0000-0000-0000-000000000014" Landmark = "Hall" RelatedDirection = "0" FaceOrBack = "1"/>
-	<waypoint id="00000000-0000-0000-0000-000000000015" Landmark = "Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000014" Landmark = "the Hall" RelatedDirection = "4" FaceOrBack = "0"/>
+	<waypoint id="00000000-0000-0000-0000-000000000015" Landmark = "the Hall" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id="00000000-0000-0000-0000-000000000016" Landmark = "Front Door" RelatedDirection = "4" FaceOrBack = "0"/>
 	<waypoint id="00000000-0000-0000-0000-000000000017" Landmark = "Escalator" RelatedDirection = "0" FaceOrBack = "1"/>
 	<waypoint id="00000000-0000-0000-0000-000000000018" Landmark = "Front Door" RelatedDirection = "0" FaceOrBack = "0"/>
