@@ -6,7 +6,7 @@
 		<region id='33333333-3333-3333-3333-333333333333' name='2nd Floor'/>	
 	</regions>
     <waypoints>
-        <waypoint id='00000000-0000-0000-0000-000000000001' name='Toilet'/>
+        <waypoint id='00000000-0000-0000-0000-000000000001' name='B1 Toilet'/>
         <waypoint id='00000000-0000-0000-0000-000000000002' name='Urology'/>
         <waypoint id='00000000-0000-0000-0000-000000000003' name='Corridor'/>
         <waypoint id='00000000-0000-0000-0000-000000000004' name='B1 Cashier/Registration'/>
@@ -35,5 +35,7 @@
 		<waypoint id='00000000-0000-0000-0000-000000000027' name='Ophthalmology'/>
     <waypoint id='00000000-0000-0000-0000-000000000028' name='Family Mart'/>
     <waypoint id='00000000-0000-0000-0000-000000000029' name='Radiology'/>
+      <waypoint id='00000000-0000-0000-0000-000000000030' name='1F toilet'/>
+      <waypoint id='00000000-0000-0000-0000-000000000031' name='2F toilet'/>
     </waypoints>
 </navigation_graph>

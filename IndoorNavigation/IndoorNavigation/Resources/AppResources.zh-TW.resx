@@ -409,22 +409,22 @@
     <value>向前走</value>
   </data>
   <data name="TURN_RIGHT_STRING" xml:space="preserve">
-    <value>右</value>
+    <value>向右轉</value>
   </data>
   <data name="TURN_LEFT_STRING" xml:space="preserve">
-    <value>左</value>
+    <value>向左轉</value>
   </data>
   <data name="TURN_BACK_STRING" xml:space="preserve">
-    <value>後</value>
+    <value>向後轉</value>
   </data>
   <data name="TURN_RIGHT_FRONT_STRING" xml:space="preserve">
-    <value>右前方</value>
+    <value>向右前方轉</value>
   </data>
   <data name="TURN_RIGHT_REAR_STRING" xml:space="preserve">
-    <value>右後方</value>
+    <value>向右後方轉</value>
   </data>
   <data name="TURN_LEFT_FRONT_STRING" xml:space="preserve">
-    <value>左前方</value>
+    <value>向左前方轉</value>
   </data>
   <data name="GO_LEFT_REAR_STRING" xml:space="preserve">
     <value>向左後方轉</value>
@@ -634,7 +634,7 @@
     <value>下載成功</value>
   </data>
   <data name="TURN_LEFT_REAR_STRING" xml:space="preserve">
-    <value>左後方</value>
+    <value>向左後方轉</value>
   </data>
   <data name="SPECIAL_INSTRUCTION_STRING" xml:space="preserve">
     <value>{0}，然後{1}，走約{2}公尺</value>
@@ -760,7 +760,7 @@
   </data>
   <data name="DIRECTION_BACL_TURN_STRING" xml:space="preserve">
     <value>背向{0}，
-向{1}轉，
+{1}，
 然後直走約{2}公尺</value>
   </data>
   <data name="DIRECTION_FACE_STRAIGHT_STRING" xml:space="preserve">
@@ -769,7 +769,7 @@
   </data>
   <data name="DIRECTION_FACE_TURN_STRING" xml:space="preserve">
     <value>面向{0}，
-向{1}轉，
+{1}，
 然後直走約{2}公尺</value>
   </data>
 </root>

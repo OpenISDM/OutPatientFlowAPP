@@ -314,6 +314,11 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
+        //private int GetTurnDirection(int FaceOrBack, int )
+        //{
+
+        //}
+
         private void SetInstruction(NavigationInstruction instruction,
                                     out string stepLabel,
                                     out string stepImage,
@@ -377,15 +382,14 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                 case TurnDirection.FirstDirection:
                     #region first direction part
+
                     string firstDirection_Landmark =
                         _firstDirectionInstruction
                         .returnLandmark(instruction._currentWaypointGuid);
 
-                    CardinalDirection firstDirection_Direction =
-                        _firstDirectionInstruction
+                    int faceDirection = (int)_firstDirectionInstruction
                         .returnDirection(instruction._currentWaypointGuid);
 
-                    int faceDirection = (int)firstDirection_Direction;
                     int turnDirection =
                         (int)instruction._information
                              ._relatedDirectionOfFirstDirection;
@@ -410,7 +414,6 @@ namespace IndoorNavigation.ViewModels.Navigation
                         initialDirectionString = _resourceManager.GetString(
                         "DIRECTION_INITIAIL_FACE_STRING",
                         currentLanguage);
-
                     }
                     else if (directionFaceorBack == _initialBackDirection)
                     {
@@ -432,14 +435,9 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                     CardinalDirection cardinalDirection =
                         (CardinalDirection)turnDirection;
+                    #region
                     switch (cardinalDirection)
-                    {
-                        case CardinalDirection.North:
-                            instructionDirection = _resourceManager.GetString(
-                            "GO_STRAIGHT_STRING",
-                            currentLanguage);
-                            stepImageString = "Arrow_up";
-                            break;
+                    {                        
                         case CardinalDirection.Northeast:
                             instructionDirection = _resourceManager.GetString(
                             "GO_RIGHT_FRONT_STRING",
@@ -482,7 +480,15 @@ namespace IndoorNavigation.ViewModels.Navigation
                             currentLanguage);
                             stepImageString = "Arrow_frontleft";
                             break;
+
+                        case CardinalDirection.North:
+                            instructionDirection = _resourceManager.GetString(
+                            "GO_STRAIGHT_STRING",
+                            currentLanguage);
+                            stepImageString = "Arrow_up";
+                            break;
                     }
+                    #endregion
                     if (instruction._previousRegionGuid != Guid.Empty &&
                         instruction._previousRegionGuid !=
                         instruction._currentRegionGuid)
@@ -566,13 +572,54 @@ namespace IndoorNavigation.ViewModels.Navigation
                     else
                     {
 
-                        stepLabel = string.Format(
-                            initialDirectionString,
-                            firstDirection_Landmark,
-                            Environment.NewLine,
-                            instructionDirection,
-                            Environment.NewLine,
-                            instruction._turnDirectionDistance);
+                        //stepLabel = string.Format(
+                        //    initialDirectionString,
+                        //    firstDirection_Landmark,
+                        //    Environment.NewLine,
+                        //    instructionDirection,
+                        //    Environment.NewLine,
+                        //    instruction._turnDirectionDistance);
+                        if (directionFaceorBack == _initialFaceDirection)
+                        {
+                            if (cardinalDirection == CardinalDirection.North) 
+                            {
+                                stepLabel = 
+                                    string.Format(GetResourceString
+                                    ("DIRECTION_FACE_STRAIGHT_STRING"), 
+                                    firstDirection_Landmark, 
+                                    instruction._turnDirectionDistance);
+                            }
+                            else 
+                            {
+                                stepLabel =
+                                    string.Format(GetResourceString
+                                    ("DIRECTION_FACE_TURN_STRING"),
+                                    firstDirection_Landmark,
+                                    instructionDirection,
+                                    instruction._turnDirectionDistance);
+                            }
+                        }
+                        else  //(directionFaceorBack == _initialBackDirection) 
+                        {
+                            if(cardinalDirection == CardinalDirection.North)
+                            {
+                                stepLabel = 
+                                    string.Format(GetResourceString
+                                    ("DIRECTION_BACK_STRAIGHT_STRING"),
+                                    firstDirection_Landmark,
+                                    instruction._turnDirectionDistance);
+                            }
+                            else
+                            {
+                                stepLabel =
+                                    string.Format(GetResourceString
+                                    ("DIRECTION_BACL_TURN_STRING"),
+                                    firstDirection_Landmark,
+                                    instructionDirection,
+                                    instruction._turnDirectionDistance);
+                            }
+                        }
+
 
                         stepImage = stepImageString;
                         break;
