@@ -1101,7 +1101,9 @@ namespace IndoorNavigation.Views.OPFM
                 new Command(async () => await ExitBtnMethod());
 
             LeaveHospitalBtn.Command = LeaveHospitalCommand;
-            LeaveHospitalBtn.Text = AppResources.EXIT_HOSPITAL_STRING;
+            LeaveHospitalBtn.Text =
+                GetResourceString("EXIT_HOSPITAL_STRING");
+                //AppResources.EXIT_HOSPITAL_STRING;
         }
         private void PharmacyMethod()
         {

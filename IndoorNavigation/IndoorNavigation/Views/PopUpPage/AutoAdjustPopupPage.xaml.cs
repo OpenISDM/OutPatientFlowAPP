@@ -296,7 +296,9 @@ namespace IndoorNavigation.Views.PopUpPage
             AutoAdjustLayout.Children.Add(
                 new Label
                 {
-                    Text = string.Format(AppResources.DETECT_POSITION_CLOSE_TO_STRING, _positionName,_positionName),
+                    //Text = string.Format(AppResources.DETECT_POSITION_CLOSE_TO_STRING, _positionName,_positionName),
+                    Text = string.Format(GetResourceString("DETECT_POSITION_CLOSE_TO_STRING"),
+                    _positionName, _positionName),
                     //_navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID),
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                     TextColor = Color.FromHex("#3f51b5")

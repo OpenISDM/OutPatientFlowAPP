@@ -18,7 +18,7 @@
                CornerRadius="8">
             <StackLayout>
                 <Label x:Name="SelectPurposeLab" 
-                       Text="{x:Static resources:AppResources.PLEASE_SELECT_YOUR_PURPOSE_STRING}"
+                       Text="{i18n:Translate PLEASE_SELECT_YOUR_PURPOSE_STRING}"
                        FontSize="32"
                        HorizontalOptions="FillAndExpand"
                        VerticalOptions="CenterAndExpand"/>
