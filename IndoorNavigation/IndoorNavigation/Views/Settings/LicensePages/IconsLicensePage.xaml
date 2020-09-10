@@ -134,7 +134,7 @@
                         </Span>
                         <!--#endregion-->
                         
-                        <!--#region-->
+                        <!--#region Examination Process-->
                         <Span Text="&#10;Examaination icon from&#10;"/>
                         <Span Text="www.flaticon.com/free-icon&#10;" TextColor="Blue">
                             <Span.GestureRecognizers>
@@ -142,6 +142,39 @@
                                                       CommandParameter="https://www.flaticon.com/free-icon"/>
                             </Span.GestureRecognizers>
                         </Span>
+                        <!--#endregion-->
+                        
+                        <!--#region Exit-->
+                        <Span Text="&#10;Exit icon made by "/>
+                        <Span Text="Freepik" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;"/>
+                        <!--#endregion-->
+                        
+                        <!--#region Pharmacy-->
+                        <Span Text="&#10;Pharmacy icon made by "/>
+                        <Span Text="Freepik" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;"/>
+                        <!--#endregion-->
+                        
+                        <!--#region Cashier-->
+                        <Span Text="&#10;Cashier icon made by "/>
+                        <Span Text="Freepik" TextColor="Blue">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding HyperlinkClickCommand}"
+                                                      CommandParameter="https://www.flaticon.com/authors/freepik/"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                        <Span Text=" from www.flaticon.com&#10;"/>
                         <!--#endregion-->
                     </FormattedString>
                 </Label.FormattedText>
