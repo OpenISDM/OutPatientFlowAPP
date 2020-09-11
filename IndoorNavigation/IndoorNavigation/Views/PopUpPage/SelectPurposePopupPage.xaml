@@ -19,6 +19,7 @@
             <StackLayout>
                 <Label x:Name="SelectPurposeLab" 
                        Text="{i18n:Translate PLEASE_SELECT_YOUR_PURPOSE_STRING}"
+                       TextColor="Black"
                        FontSize="32"
                        HorizontalOptions="FillAndExpand"
                        VerticalOptions="CenterAndExpand"/>

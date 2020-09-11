@@ -65,6 +65,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 {
                     Text = pair.Key,
                     TextFontSize = 28,
+                    TextColor = Color.Black,
                     CircleColor = Color.FromRgb(63, 81, 181),
                     HorizontalOptions = LayoutOptions.StartAndExpand,
                     VerticalOptions = LayoutOptions.StartAndExpand
