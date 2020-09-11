@@ -53,13 +53,16 @@ namespace IndoorNavigation.Modules.IPSClients
 {
     class WaypointClient : IIPSClient
     {
-        private List<WaypointBeaconsMapping> _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+        private List<WaypointBeaconsMapping> _waypointBeaconsList = 
+            new List<WaypointBeaconsMapping>();
 
         private object _bufferLock;// = new object();
         private readonly EventHandler _beaconScanEventHandler;
         private const int _clockResetTime = 90000;
         public NavigationEvent _event { get; private set; }
-        private List<BeaconSignalModel> _beaconSignalBuffer = new List<BeaconSignalModel>();
+        private List<BeaconSignalModel> _beaconSignalBuffer = 
+            new List<BeaconSignalModel>();
+
         private int rssiOption;
         private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
@@ -77,15 +80,15 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
-            Console.WriteLine(">>WaypointClient : SetWaypointList");           
+            Console.WriteLine(">>WaypointClient : SetWaypointList");
 
-            if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
-            {
-                //rssiOption =
-                //    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
-                rssiOption = TmperorayStatus.RssiOption;
-            }
-
+            //if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
+            //{
+            //    //rssiOption =
+            //    //    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
+            //    rssiOption = TmperorayStatus.RssiOption;
+            //}
+            rssiOption = TmperorayStatus.RssiOption;
             Console.WriteLine("rssi option in LbeaconClient =" + rssiOption);
 
             this._waypointBeaconsList = waypointBeaconsList;
