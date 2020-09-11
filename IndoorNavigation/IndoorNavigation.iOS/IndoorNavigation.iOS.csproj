@@ -177,14 +177,30 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281242x2688%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28828x1792%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281125x2436%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281242x2208%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28750x1334%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28640x960%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28640x1136%29.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28320x480%29.png" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281242x2688%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28828x1792%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281125x2436%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%281242x2208%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28750x1334%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28640x960%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28640x1136%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28320x480%29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

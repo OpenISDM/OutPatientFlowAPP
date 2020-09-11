@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using IndoorNavigation.Modules;
 using IndoorNavigation.Modules.IPSClients;
 using IndoorNavigation.Models;
+using Xamarin.Essentials;
 
 namespace IndoorNavigation
 {
@@ -20,26 +21,28 @@ namespace IndoorNavigation
         {
             InitializeComponent();
 
-            waypointClient = new WaypointClient();
-
-
-            waypointClient
-                .SetWaypointList(new List<Models.WaypointBeaconsMapping>());
+          
         }
-
-        bool isStart = true;
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            if (isStart)
+            GetLocation();
+        }
+
+        async private void GetLocation()
+        {
+            try
             {
-                waypointClient.Stop();
-                isStart = false;
+                var location = await Geolocation.GetLocationAsync();
+
+                if (location != null)
+                {
+                    Console.WriteLine("lat ={0}, lon={1}, alt={2}", location.Longitude, location.Latitude, location.Altitude);
+                }
             }
-            else
+            catch(Exception exc)
             {
-                waypointClient.SetWaypointList(new List<WaypointBeaconsMapping>());
-                isStart = true;
+                Console.WriteLine("Gps error - " + exc.Message);
             }
         }
     }

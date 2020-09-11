@@ -81,13 +81,7 @@ namespace IndoorNavigation.Modules.IPSClients
         public void SetWaypointList(List<WaypointBeaconsMapping> waypointBeaconsList)
         {
             Console.WriteLine(">>WaypointClient : SetWaypointList");
-
-            //if (Application.Current.Properties.ContainsKey("RSSI_Test_Adjustment"))
-            //{
-            //    //rssiOption =
-            //    //    (int)Application.Current.Properties["RSSI_Test_Adjustment"];
-            //    rssiOption = TmperorayStatus.RssiOption;
-            //}
+           
             rssiOption = TmperorayStatus.RssiOption;
             Console.WriteLine("rssi option in LbeaconClient =" + rssiOption);
 

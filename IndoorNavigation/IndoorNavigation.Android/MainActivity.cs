@@ -42,8 +42,8 @@ namespace IndoorNavigation.Droid
 
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
-            Rg.Plugins.Popup.Popup.Init(this, bundle);
-
+            Xamarin.Essentials.Platform.Init(this, bundle);
+            Rg.Plugins.Popup.Popup.Init(this, bundle);           
 
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
@@ -74,7 +74,7 @@ namespace IndoorNavigation.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
