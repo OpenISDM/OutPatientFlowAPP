@@ -8,6 +8,7 @@ using Android.Views;
 using Plugin.Permissions;
 using System;
 using System.Threading;
+using Plugin.CurrentActivity;
 
 namespace IndoorNavigation.Droid
 {
@@ -43,8 +44,9 @@ namespace IndoorNavigation.Droid
             Plugin.InputKit.Platforms.Droid.Config.Init(this, bundle);
             Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             Xamarin.Essentials.Platform.Init(this, bundle);
-            Rg.Plugins.Popup.Popup.Init(this, bundle);           
+            Rg.Plugins.Popup.Popup.Init(this, bundle);
 
+            CrossCurrentActivity.Current.Init(this, bundle);
             var a = new AiForms.Renderers.Droid.PickerCellRenderer();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();

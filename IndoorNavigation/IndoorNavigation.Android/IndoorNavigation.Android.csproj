@@ -52,6 +52,7 @@
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidDexTool>d8</AndroidDexTool>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -63,6 +64,9 @@
   <ItemGroup>
     <PackageReference Include="Monkey.Robotics">
       <Version>0.5.2</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Plugin.Multilingual">
       <Version>1.0.2</Version>
@@ -100,6 +104,7 @@
     <Compile Include="BeaconScanForIBeacon.cs" />
     <Compile Include="ImageChecker.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MainApplication.cs" />
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
