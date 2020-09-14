@@ -349,8 +349,9 @@ namespace IndoorNavigation.ViewModels.Navigation
             InstructionWidthSpanValue = 2;
             #endregion
 
-            IImageChecker checker = DependencyService.Get<IImageChecker>();            
+            IImageChecker checker = DependencyService.Get<IImageChecker>();
 
+            Console.WriteLine("Picture name : " + instruction._information._directionPicture);
             if (checker.DoesImageExist
                 (instruction._information._directionPicture))
             {
@@ -931,11 +932,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                                 ("DIRECTION_UP_COMBINE_DIRECTION_STRING"
                                 , currentLanguage),
                                  connectionType,
-                                 Environment.NewLine,
                                  nextRegionName,
-                                 Environment.NewLine,
-                                 instructionDirection,
-                                 Environment.NewLine,
+                                 nextRegionName,
+                                 instructionDirection,                            
                                  instruction._information._distance
                                 );
                         }
@@ -946,11 +945,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                                 ("DIRECTION_DOWN_COMBINE_DIRECTION_STRING",
                                 currentLanguage),
                                 connectionType,
-                                Environment.NewLine,
+                                nextRegionName,   
                                 nextRegionName,
-                                Environment.NewLine,
                                 instructionDirection,
-                                Environment.NewLine,
                                 instruction._information._distance);
                         }                        
                     }
