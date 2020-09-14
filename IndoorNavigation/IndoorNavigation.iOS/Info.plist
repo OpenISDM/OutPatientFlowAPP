@@ -23,7 +23,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM.OPFM</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.1098</string>
+	<string>2.0.1101</string>
 	<key>CFBundleName</key>
 	<string>IndoorNavigation</string>
 	<key>NSCameraUsageDescription</key>
@@ -55,9 +55,9 @@
 	<string>contactsDescription</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This app need to access bluetooth to get beacon signal always.</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Fill in a reason why your app needs access to location.</string>
-  <key>MinimumOSVersion</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Fill in a reason why your app needs access to location.</string>
+	<key>MinimumOSVersion</key>
 	<string>12.2</string>
 	<key>CFBundleDisplayName</key>
 	<string>帶路機</string>
