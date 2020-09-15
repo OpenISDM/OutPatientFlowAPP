@@ -465,7 +465,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         !string.IsNullOrEmpty
                         (xmlEdgeElement.GetAttribute("picture12"))) 
                     {
-                        Console.WriteLine("AAAAA");
                         waypointEdge._picture12 =
                             xmlEdgeElement.GetAttribute("picture12");
                     }
@@ -754,6 +753,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 
             }
+            Console.WriteLine("pictrue Direction = " + pictureDirection);
             return new Tuple<WaypointEdge, string>
                 (waypointEdge, pictureDirection);
         }
@@ -1312,6 +1312,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         currentEdge._direction;
                     information._distance = 
                         Convert.ToInt32(currentEdge._distance);
+                    Console.WriteLine("initial picture " + WaypointEdgeTuple.Item2);
                     information._directionPicture = WaypointEdgeTuple.Item2;
                 }
                 else
@@ -1339,6 +1340,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 WaypointEdgeTuple.Item1;
                             information._connectionType = 
                                 currentEdge._connectionType;
+                            information._directionPicture = 
+                                WaypointEdgeTuple.Item2;
+
                             information._relatedDirectionOfFirstDirection = 
                                 currentEdge._direction;
                             information._distance = 
@@ -1380,6 +1384,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             information._connectionType = currentEdge._connectionType;
                             information._distance =
                                 Convert.ToInt32(currentEdge._distance);
+
+                            Console.WriteLine("Tuple = " + WaypointEdgeTuple.Item2);
                             information._directionPicture = 
                                 WaypointEdgeTuple.Item2;
                         }
@@ -1423,6 +1429,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             currentEdge._connectionType;
                         information._distance = 
                             Convert.ToInt32(currentEdge._distance);
+                        Console.WriteLine("Tuple item2 = " + WaypointEdgeTuple.Item2);
                         information._directionPicture =
                             WaypointEdgeTuple.Item2;
                     }
