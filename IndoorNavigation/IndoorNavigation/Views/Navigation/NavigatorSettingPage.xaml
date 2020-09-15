@@ -64,18 +64,18 @@
                                    SelectedCommand=
                                    "{Binding _changeRssiCommand}"/>-->
                 
-                <!--<sv:CommandCell x:Name="RssiSlidePicker"
+                <sv:CommandCell x:Name="RssiSlidePicker"
                                    Title="{i18n:Translate MANUAL_ADJUST_STRING}"
-                                   Tapped="RssiPicker_Tapped"/>-->
+                                   Tapped="RssiPicker_Tapped"/>
 
                 <sv:CommandCell x:Name="AutoAdjustPicker"
                                 Title="{i18n:Translate AUTO_ADJUST_STRING}"
                                 Tapped="AutoAdjust_Tapped"/>
 
             </sv:Section>
-            <!--<sv:Section Title="Debug mode">
+            <sv:Section Title="Debug mode">
                 <sv:LabelCell x:Name="CurrentRssiLabel"/>
-            </sv:Section>-->
+            </sv:Section>
         </sv:SettingsView>
         
     </ContentPage.Content>
