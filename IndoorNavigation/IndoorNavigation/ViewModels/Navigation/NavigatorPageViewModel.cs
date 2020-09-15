@@ -264,7 +264,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         ProgressBar = instruction._progressBar;
                         isPlaying = false;
                         isFinished = true;
-
+                        StepImgIsVisible = true;
                         Utility._textToSpeech.Speak(
                             CurrentStepLabel,
                             _resourceManager.GetString("CULTURE_VERSION_STRING",
