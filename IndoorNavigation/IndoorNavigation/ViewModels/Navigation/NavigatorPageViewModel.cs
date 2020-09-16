@@ -312,12 +312,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         break;
                     }
             }
-        }
-
-        //private int GetTurnDirection(int FaceOrBack, int )
-        //{
-
-        //}
+        }      
 
         private void SetInstruction(NavigationInstruction instruction,
                                     out string stepLabel,

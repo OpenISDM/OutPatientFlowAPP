@@ -64,7 +64,7 @@ namespace IndoorNavigation.Views.PopUpPage
         //private ManualResetEventSlim _startToScanRssi;
 
         private int TmpRssiOption;
-
+        private bool isKeepDetectionRssi = true;
         private TaskCompletionSource<bool> _tcs = null;
 
         #endregion
@@ -203,8 +203,7 @@ namespace IndoorNavigation.Views.PopUpPage
                             AppResources.OK_STRING);
 
                         bool isReturn = await alertPage.show();
-
-                        _isKeepDetection = false;
+                        
                         _ipsModules.CloseAllActiveClient();
 
                         _tcs?.SetResult(true);
@@ -213,7 +212,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
                     return false;
                 }
-                return true;
+                return isKeepDetectionRssi;
             });
             Console.WriteLine("<<DetectPositionThreshold");
         }
@@ -237,6 +236,7 @@ namespace IndoorNavigation.Views.PopUpPage
             ConfirmBtn.Clicked -= CancelBtn_Clicked;
             RssiOption = TmpRssiOption;
 
+            isKeepDetectionRssi = false;
             _isKeepDetection = false;
             _ipsModules.CloseAllActiveClient();
 
@@ -289,7 +289,7 @@ namespace IndoorNavigation.Views.PopUpPage
             #region ConfirmButton
             ConfirmBtn.Clicked -= CancelBtn_Clicked;
             ConfirmBtn.Clicked += CheckPositionCorrectBtn_Clicked;
-            ConfirmBtn.Text = "確定";
+            ConfirmBtn.Text = GetResourceString("OK_STRING");
             #endregion          
 
             string _positionName = _nameInformation.GiveWaypointName(_currentWaypointID);
@@ -322,7 +322,7 @@ namespace IndoorNavigation.Views.PopUpPage
             #region Button control
             //ConfirmBtn.Clicked -= CheckPositionCorrectBtn_Clicked;
             ConfirmBtn.Clicked += CancelBtn_Clicked;
-            ConfirmBtn.Text = "取消";
+            ConfirmBtn.Text = GetResourceString("CANCEL_STRING");
             #endregion
 
             AutoAdjustLayout.Children.Clear();
@@ -355,19 +355,33 @@ namespace IndoorNavigation.Views.PopUpPage
         #endregion
 
         #region Another functions
-        private void SetRssiOption()
+        async private void SetRssiOption()
+        {
+            try
+            {
+                _AllRssiList.Sort();
+
+                int count = _AllRssiList.Count;
+                int mid = count / 2;
+                int midian = count % 2 != 0 ?
+                    (int)_AllRssiList[mid] :
+                    (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
+
+                RssiOption = ((int)_currentBeaconRssi - midian) + 2;
+                Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("set Rssi option error - " + exc.Message);
+
+                //await PopupNavigation.Instance.PushAsync()
+            }
+        }
+
+
+        private void SetExceptionView()
         {
 
-            _AllRssiList.Sort();
-
-            int count = _AllRssiList.Count;
-            int mid = count / 2;
-            int midian = count % 2 != 0 ?
-                (int)_AllRssiList[mid] :
-                (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
-
-            RssiOption = ((int)_currentBeaconRssi - midian) + 2;
-            Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
         }
 
         private bool isEmptyGuid(Guid guid)
