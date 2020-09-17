@@ -5,7 +5,8 @@ using System.Text;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
 using Xamarin.Essentials;
-
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using System.Diagnostics;
 namespace IndoorNavigation.Modules.IPSClients
 {
@@ -21,10 +22,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         // a const for reset watch, wait for test it we need to set it how much.
         private const int _clockResetTime = 1;
-
-        //this seems to be useless.
-        //private readonly EventHandler _gpsScanEventHandler;
-        //private List<BeaconSignalModel> _beaconSignalBuffer;
+        private Position _currentPosition = null;        
 
         #endregion
 
@@ -44,6 +42,27 @@ namespace IndoorNavigation.Modules.IPSClients
         {
             Console.WriteLine(">>DetectWaypoints");
 
+            lock (_bufferLock)
+            {                
+                foreach(WaypointBeaconsMapping mapping in _waypointBeaconList)
+                {
+                    foreach(Guid beaconGuid in mapping._Beacons)
+                    {
+                        // if signal meet the coverage, send arrivesd event
+                        // I have not came up with the statement.
+                        if (true)
+                        {
+
+                            _event.OnEventCall(new WaypointSignalEventArgs
+                            {
+                                _detectedRegionWaypoint =
+                                    mapping._WaypointIDAndRegionID
+                            }) ;
+                        }
+                    }
+                }
+            }
+
             Console.WriteLine("<<DetectWaypoints");
         }
 
@@ -57,6 +76,19 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("<<DetectWaypointRssi");
         }    
         
+        private void PositionChanged(object sender, PositionEventArgs e)
+        {
+            Console.WriteLine(">>GPS Client : PositionChanged");
+
+            lock (_bufferLock)
+            {
+                _currentPosition = e.Position;
+            }
+            Console.WriteLine("<<GPS Client : PositionChanged");
+        }
+
+        
+
         private void WatchReset()
         {
             watch.Stop();

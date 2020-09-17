@@ -46,6 +46,8 @@ namespace IndoorNavigation.Models
         public int Major { get; set; }
         public int Minor { get; set; }
         public int RSSI { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
 
     /// <summary>
