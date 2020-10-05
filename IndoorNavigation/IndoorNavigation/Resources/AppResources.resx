@@ -720,8 +720,8 @@ Upon reaching {B1},
     <value>Start</value>
   </data>
   <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
-    <value>FINISH_REGULATION!
-IF the signal is too slow or too fast,
+    <value>Finish to regulation!
+If the signal is too slow or too fast,
 you can go to preference page,
 regulate again. Thanks!</value>
   </data>
@@ -785,5 +785,11 @@ for about {1} m.</value>
     <value>Face {0}.
 Turn {1} and
 then go about {2} m.</value>
+  </data>
+  <data name="DETECT_SIGNAL_NOW_STRING" xml:space="preserve">
+    <value>Detecting signal...</value>
+  </data>
+  <data name="NO_SINGNAL_TAP_START_STRING" xml:space="preserve">
+    <value>Pleae go to any instersection, then press button to start auto adjust</value>
   </data>
 </root>

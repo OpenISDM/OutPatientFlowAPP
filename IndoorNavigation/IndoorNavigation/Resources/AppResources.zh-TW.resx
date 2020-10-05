@@ -783,4 +783,7 @@
 {1}，
 然後直走約{2}公尺</value>
   </data>
+  <data name="DETECT_SIGNAL_NOW_STRING" xml:space="preserve">
+    <value>正在偵測位置中</value>
+  </data>
 </root>

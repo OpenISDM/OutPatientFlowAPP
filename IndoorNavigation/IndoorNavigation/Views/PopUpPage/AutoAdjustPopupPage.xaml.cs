@@ -266,8 +266,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text = "正在偵測位置",
-                FontSize = 32
+                Text = getResourceString("DETECT_SIGNAL_NOW_STRING"),
+                FontSize = 32,
+                TextColor = Color.FromHex("#3f51b5")
             });
 
             AutoAdjustLayout.Children.Add(new Image
@@ -332,7 +333,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 //show current position.
                 Text = string.Format(AppResources.CURRENT_LOCATION_STRING,
                 currentPosition),
-                FontSize = 32
+                FontSize = 32,
+                TextColor = Color.FromHex("#3f51b5")
             });
 
             AutoAdjustLayout.Children.Add(new Label
@@ -340,7 +342,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 Text=getResourceString("SCAN_RSSI_NOW_STRING"),
                 //Text = AppResources.SCAN_RSSI_NOW_STRING,
                 Margin = new Thickness(10,0,10,0),
-                FontSize = 28
+                FontSize = 24,
+                TextColor = Color.FromHex("#3f51b5")
             });
 
             AutoAdjustLayout.Children.Add(new Image
