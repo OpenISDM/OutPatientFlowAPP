@@ -49,6 +49,7 @@ using IndoorNavigation.Utilities;
 using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 using System.Linq;
 using IndoorNavigation.Resources;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Views.PopUpPage
 {

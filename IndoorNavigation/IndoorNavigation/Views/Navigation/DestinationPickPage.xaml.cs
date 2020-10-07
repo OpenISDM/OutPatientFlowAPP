@@ -152,12 +152,12 @@ namespace IndoorNavigation.Views.Navigation
 
     }
 
-    public class DestinationItem
-    {
-        public Guid _regionID { get; set; }
-        public Guid _waypointID { get; set; }
-        public string _waypointName { get; set; }
-        public string _floor { get; set; }
-    }
+    //public class DestinationItem
+    //{
+    //    public Guid _regionID { get; set; }
+    //    public Guid _waypointID { get; set; }
+    //    public string _waypointName { get; set; }
+    //    public string _floor { get; set; }
+    //}
 
 }

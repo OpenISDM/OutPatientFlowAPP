@@ -6,6 +6,7 @@ using Plugin.Settings.Abstractions;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Utilities
 {    

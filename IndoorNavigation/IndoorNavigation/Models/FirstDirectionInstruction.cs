@@ -122,4 +122,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _faceOrBack[currentGuid];
         }
     }
+
+    public enum InitialDirection
+    {
+        Face = 0,
+        Back = 1
+    }
 }

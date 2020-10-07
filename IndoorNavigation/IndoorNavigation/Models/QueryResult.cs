@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections.ObjectModel;
-using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
-using IndoorNavigation.Views.Navigation;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using IndoorNavigation.Models;
 using Xamarin.Forms;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Models
 {
     public class RgRecord : DestinationItem
     {

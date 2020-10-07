@@ -9,6 +9,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IndoorNavigation.Views.Navigation;
 using Rg.Plugins.Popup.Services;
+using IndoorNavigation.Models;
+
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

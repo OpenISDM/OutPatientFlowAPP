@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace IndoorNavigation
+namespace IndoorNavigation.Models
 {
     /*the class is to let Registerlist listview cell show various template*/
     class RegistrationDataTemplateSelect : DataTemplateSelector
