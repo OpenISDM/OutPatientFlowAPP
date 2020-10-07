@@ -106,6 +106,11 @@ namespace IndoorNavigation.Models
         Task<bool> CheckWebSiteAvailable(string url);
         void OpenSettingPage();
     }
+
+    public interface IDownloadFile
+    {
+        Task<bool> DownloadImage(string url, string imageName);
+    }
     #endregion
 
     #region Interface for IPS Client
