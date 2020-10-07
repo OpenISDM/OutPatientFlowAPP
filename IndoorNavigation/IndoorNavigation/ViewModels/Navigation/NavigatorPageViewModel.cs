@@ -71,9 +71,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private const int _originalInstructionLocation = 2;
         private const int _firstDirectionInstructionLocation = 4;
         private const int _firstDirectionInstructionScale = 2;
-        private const int _originalInstructionScale = 4;        
-        private const int _initialFaceDirection = 0;
-        private const int _initialBackDirection = 1;       
+        private const int _originalInstructionScale = 4;             
         #endregion
 
         #region Other Structures
@@ -86,6 +84,8 @@ namespace IndoorNavigation.ViewModels.Navigation
         private NavigationModule _navigationModule;
         private CultureInfo currentLanguage =
             CrossMultilingual.Current.CurrentCultureInfo;
+
+        private IImageChecker checker;
         #endregion
 
         #region Private Data Binding
@@ -118,7 +118,31 @@ namespace IndoorNavigation.ViewModels.Navigation
                                       XMLInformation informationXML)
 
         {
-            Console.WriteLine(">> NavigatorPageViewModel constructor");
+            Console.WriteLine(">> NavigatorPageViewModel constructor");           
+            #region Initial objects
+            _navigationModule = new NavigationModule(navigationGraphName,
+                                                     destinationRegionID,
+                                                     destinationWaypointID);
+            _navigationModule._event._eventHandler += GetNavigationResultEvent;
+            const string resourceId = 
+                "IndoorNavigation.Resources.AppResources";
+
+            _resourceManager =
+                new ResourceManager(resourceId,
+                                    typeof(TranslateExtension)
+                                    .GetTypeInfo().Assembly);
+
+            _naviGraphName = navigationGraphName;          
+            _firstDirectionInstruction = LoadFDXml(navigationGraphName);      
+
+            _navigationGraph = LoadNavigationGraphXml(navigationGraphName);
+
+            _xmlInformation = informationXML;
+
+            checker = DependencyService.Get<IImageChecker>();
+            #endregion
+
+            #region Initial layout
             _firsrDirectionInstructionScaleVale = 1;
             _destinationID = destinationWaypointID;
             DestinationWaypointName = destinationWaypointName;
@@ -136,33 +160,15 @@ namespace IndoorNavigation.ViewModels.Navigation
             _progressBar = "0/0";
             _instructionLocation = _originalInstructionLocation;
 
-            _navigationModule = new NavigationModule(navigationGraphName,
-                                                     destinationRegionID,
-                                                     destinationWaypointID);
-            _navigationModule._event._eventHandler += GetNavigationResultEvent;
-            const string resourceId = 
-                "IndoorNavigation.Resources.AppResources";
-
-            _resourceManager =
-                new ResourceManager(resourceId,
-                                    typeof(TranslateExtension)
-                                    .GetTypeInfo().Assembly);
-
-            _naviGraphName = navigationGraphName;
-
             CurrentWaypointName =
-                _resourceManager.GetString("NULL_STRING", currentLanguage);
+              _resourceManager.GetString("NULL_STRING", currentLanguage);
             CurrentStepLabel =
                 _resourceManager.GetString("NO_SIGNAL_STRING", currentLanguage);
-
-            _firstDirectionInstruction = Storage.LoadFDXml(navigationGraphName);      
-
-            _navigationGraph = Storage.LoadNavigationGraphXml(navigationGraphName);
-
-            _xmlInformation = informationXML;
+            #endregion
             Console.WriteLine("<< NavigatorPageViewModel constructor");
         }
 
+        #region Page life cycle control
         public void Stop()
         {
             _navigationModule.onStop();
@@ -177,7 +183,9 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             _navigationModule.onResume();
         }
+        #endregion
 
+        #region Set Instructions
         /// <summary>
         /// According to each navigation status displays the text and image 
         /// instructions in UI.
@@ -326,8 +334,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                 instruction._information._directionPicture);
             string connectionTypeString = "";
             StepImgIsVisible = true;
-            string nextWaypointName = instruction._nextWaypointName;
-            nextWaypointName =
+            string nextWaypointName = 
                 _xmlInformation.GiveWaypointName(instruction._nextWaypointGuid);
             string nextRegionName = instruction._information._regionName;
             InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;
@@ -344,9 +351,6 @@ namespace IndoorNavigation.ViewModels.Navigation
             InstructionWidthSpanValue = 2;
             #endregion
 
-            IImageChecker checker = DependencyService.Get<IImageChecker>();
-
-            Console.WriteLine("Picture name : " + instruction._information._directionPicture);
             if (checker.DoesImageExist
                 (instruction._information._directionPicture))
             {
@@ -378,7 +382,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                 case TurnDirection.FirstDirection:
                     #region first direction part
-
                     string firstDirection_Landmark =
                         _firstDirectionInstruction
                         .returnLandmark(instruction._currentWaypointGuid);
@@ -405,13 +408,13 @@ namespace IndoorNavigation.ViewModels.Navigation
                         turnDirection = turnDirection - faceDirection;
                     }
 
-                    if (directionFaceorBack == _initialFaceDirection)
+                    if (directionFaceorBack == (int)InitialDirection.Face)
                     {
                         initialDirectionString = _resourceManager.GetString(
                         "DIRECTION_INITIAIL_FACE_STRING",
                         currentLanguage);
                     }
-                    else if (directionFaceorBack == _initialBackDirection)
+                    else if (directionFaceorBack == (int)InitialDirection.Back)
                     {
 
                         initialDirectionString = _resourceManager.GetString(
@@ -575,7 +578,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         //    instructionDirection,
                         //    Environment.NewLine,
                         //    instruction._turnDirectionDistance);
-                        if (directionFaceorBack == _initialFaceDirection)
+                        if (directionFaceorBack == (int)InitialDirection.Face)
                         {
                             if (cardinalDirection == CardinalDirection.North) 
                             {
@@ -836,7 +839,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             _firstDirectionInstruction.returnFaceOrBack
                             (instruction._nextWaypointGuid);
 
-                        if(directionFaceOrBack == _initialBackDirection)
+                        if(directionFaceOrBack == (int)InitialDirection.Back)
                         {
                             if (_turnDirection < 4)
                                 _turnDirection += 4;
@@ -847,7 +850,6 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                         CardinalDirection turnDirection =
                             (CardinalDirection)_turnDirection;
-                            //instruction.._relatedDirectionOfFirstDirection;
                         Console.WriteLine("turn Direction = " + turnDirection.ToString());
                         string instructionDirection="";
                         switch(turnDirection){
@@ -950,6 +952,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                     return instructionString;
             }
         }
+
+        #endregion
+        
 
         /// <summary>
         /// Gets the navigation status event.
