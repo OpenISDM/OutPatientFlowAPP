@@ -44,14 +44,12 @@ namespace IndoorNavigation.Views.PopUpPage
          */
 
         #region Varialbes and structures
-        //current waypoint
         private Guid _currentWaypointID;
         private Guid _currentRegionID;
         private int _currentBeaconRssi;
         private double ProgressValue = 0.66;
         private string naviGraphName;
         private bool _isKeepDetection = true;
-        //private bool _positionIsCorrect = false;
 
         private IPSmodule_ _ipsModules;        
         private NavigationGraph _navigationGraph;        
@@ -61,7 +59,6 @@ namespace IndoorNavigation.Views.PopUpPage
         private XMLInformation _nameInformation;
         private ManualResetEventSlim _detectThreadEvent;
         private ManualResetEventSlim _askCorrectEvent;
-        //private ManualResetEventSlim _startToScanRssi;
 
         private int TmpRssiOption;
         private bool isKeepDetectionRssi = true;
@@ -131,12 +128,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 Console.WriteLine("Detect waypoint ID : " + _currentWaypointID);
 
                 Device.BeginInvokeOnMainThread(() => SetCheckPositionCorrect());
-
-                _askCorrectEvent.Wait();               
-                break;
+                _isKeepDetection = false;
+                _askCorrectEvent.Wait();                
             }
-
-            _isKeepDetection = false;
 
             string currentPosition =
                 _nameInformation.GiveWaypointName(_currentWaypointID);
@@ -180,16 +174,13 @@ namespace IndoorNavigation.Views.PopUpPage
 
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
             {
-                //_detectThreadEvent.Wait();
                 Console.WriteLine(">>StartTimer, count : " + count);
                 _ipsModules.OpenRssiScaning();
                 ProgressValue += 0.01;
-                //AutoAdjustProgressBar.SetValue()
                 AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
-                if (count++ == 33)
-                {
-                    SetRssiOption();
-                    _ipsModules.CloseAllActiveClient();
+                if (count++ == 33 && 
+                PopupNavigation.Instance.PopupStack.Contains(this))
+                {                    
                     Device.BeginInvokeOnMainThread(async () =>
                     {
                         //show finish scan page                     
@@ -198,8 +189,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         AlertDialogPopupPage alertPage =
                             new AlertDialogPopupPage
                             (
-                                getResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
-                            //AppResources.IF_NOT_STABLEGO_TO_PREFER_STRING,
+                                GetResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
                             AppResources.OK_STRING);
 
                         bool isReturn = await alertPage.show();
@@ -209,7 +199,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         _tcs?.SetResult(true);
                     });
 
-
+                    SetRssiOption();                    
                     return false;
                 }
                 return isKeepDetectionRssi;
@@ -239,7 +229,7 @@ namespace IndoorNavigation.Views.PopUpPage
             isKeepDetectionRssi = false;
             _isKeepDetection = false;
             _ipsModules.CloseAllActiveClient();
-
+            _ipsModules.Dispose();
             _tcs?.SetResult(false);
             await PopupNavigation.Instance.RemovePageAsync(this);
         }
@@ -266,7 +256,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text = getResourceString("DETECT_SIGNAL_NOW_STRING"),
+                Text = GetResourceString("DETECT_SIGNAL_NOW_STRING"),
                 FontSize = 32,
                 TextColor = Color.FromHex("#3f51b5")
             });
@@ -339,7 +329,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text=getResourceString("SCAN_RSSI_NOW_STRING"),
+                Text=GetResourceString("SCAN_RSSI_NOW_STRING"),
                 //Text = AppResources.SCAN_RSSI_NOW_STRING,
                 Margin = new Thickness(10,0,10,0),
                 FontSize = 24,
@@ -358,7 +348,7 @@ namespace IndoorNavigation.Views.PopUpPage
         #endregion
 
         #region Another functions
-        async private void SetRssiOption()
+        private void SetRssiOption()
         {
             try
             {
@@ -376,35 +366,13 @@ namespace IndoorNavigation.Views.PopUpPage
             catch(Exception exc)
             {
                 Console.WriteLine("set Rssi option error - " + exc.Message);
-
-                //await PopupNavigation.Instance.PushAsync()
             }
-        }
-
-
-        private void SetExceptionView()
-        {
-
         }
 
         private bool isEmptyGuid(Guid guid)
         {
             return Guid.Empty.Equals(guid);
-        }
-
-        private string getResourceString(string key)
-        {
-            string resourceId = "IndoorNavigation.Resources.AppResources";
-
-            CultureInfo currentLanguage =
-                CrossMultilingual.Current.CurrentCultureInfo;
-            ResourceManager resourceManager =
-                new ResourceManager(resourceId,
-                                    typeof(TranslateExtension)
-                                    .GetTypeInfo().Assembly);
-
-            return resourceManager.GetString(key, currentLanguage);
-        }
+        }      
 
         async public Task<bool> Show()
         {
