@@ -51,6 +51,7 @@ namespace IndoorNavigation.Modules
             #endregion
         }
 
+        private bool _disposedValue = false; // for detect redundant call.
         private void AddMonitorBeaconList(IPSType type,
             Guid regionID,
             List<Guid> waypointIDs)
@@ -166,7 +167,7 @@ namespace IndoorNavigation.Modules
             {
                 if (pair.Value.ContainType)
                 {
-                    //Console.WriteLine("Contains type : " + pair.Key);
+                    Console.WriteLine("Contains type : " + pair.Key);
                     pair.Value.ContainType = false;
                     pair.Value._monitorMappings.Clear();
                     pair.Value.client.Stop();
@@ -257,10 +258,20 @@ namespace IndoorNavigation.Modules
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Console.WriteLine(">>Dispose");
+            Dispose(true);
+            //throw new NotImplementedException();
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                CloseAllActiveClient();
 
+                _disposedValue = true;
+            }
+        }
         #region  For Rssi auto adjustment
 
         WaypointBeaconsMapping _rssiMapping;
