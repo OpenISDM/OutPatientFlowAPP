@@ -63,7 +63,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private int TmpRssiOption;
         private bool isKeepDetectionRssi = true;
         private TaskCompletionSource<bool> _tcs = null;
-
+        private bool IsCancel = false;
         #endregion
 
         #region Page life cycle
@@ -178,28 +178,35 @@ namespace IndoorNavigation.Views.PopUpPage
                 _ipsModules.OpenRssiScaning();
                 ProgressValue += 0.01;
                 AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
-                if (count++ == 33 && 
-                PopupNavigation.Instance.PopupStack.Contains(this))
-                {                    
-                    Device.BeginInvokeOnMainThread(async () =>
+                if (count++ == 33)
+                {
+                    if (PopupNavigation.Instance.PopupStack.Contains(this) && !IsCancel)
                     {
-                        //show finish scan page                     
-                        await PopupNavigation.Instance.RemovePageAsync(this);
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            try
+                            {                 
+                                _ipsModules.CloseAllActiveClient();
+                                //show finish scan page                    
+                                await PopupNavigation.Instance.RemovePageAsync(this);
+                                AlertDialogPopupPage alertPage =
+                                    new AlertDialogPopupPage
+                                    (
+                                        GetResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
+                                    AppResources.OK_STRING);
+                                bool isReturn = await alertPage.show();
+                                
+                                _tcs?.SetResult(true);
+                            }
+                            catch (Exception exc)
+                            {
+                                Console.WriteLine("Auto adjust ment page error : "
+                                    + exc.Message);
+                            }
+                        });
 
-                        AlertDialogPopupPage alertPage =
-                            new AlertDialogPopupPage
-                            (
-                                GetResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
-                            AppResources.OK_STRING);
-
-                        bool isReturn = await alertPage.show();
-                        
-                        _ipsModules.CloseAllActiveClient();
-
-                        _tcs?.SetResult(true);
-                    });
-
-                    SetRssiOption();                    
+                        SetRssiOption();
+                    }
                     return false;
                 }
                 return isKeepDetectionRssi;
@@ -225,7 +232,7 @@ namespace IndoorNavigation.Views.PopUpPage
         {
             ConfirmBtn.Clicked -= CancelBtn_Clicked;
             RssiOption = TmpRssiOption;
-
+            IsCancel = true;
             isKeepDetectionRssi = false;
             _isKeepDetection = false;
             _ipsModules.CloseAllActiveClient();
@@ -258,7 +265,7 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 Text = GetResourceString("DETECT_SIGNAL_NOW_STRING"),
                 FontSize = 32,
-                TextColor = Color.FromHex("#3f51b5")
+                TextColor = Color.Black
             });
 
             AutoAdjustLayout.Children.Add(new Image
@@ -292,7 +299,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     _positionName, _positionName),
                     //_navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID),
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                    TextColor = Color.FromHex("#3f51b5")
+                    TextColor = Color.Black
                 }) ;
         }
 
@@ -324,16 +331,15 @@ namespace IndoorNavigation.Views.PopUpPage
                 Text = string.Format(AppResources.CURRENT_LOCATION_STRING,
                 currentPosition),
                 FontSize = 32,
-                TextColor = Color.FromHex("#3f51b5")
+                TextColor = Color.Black
             });
 
             AutoAdjustLayout.Children.Add(new Label
             {
                 Text=GetResourceString("SCAN_RSSI_NOW_STRING"),
-                //Text = AppResources.SCAN_RSSI_NOW_STRING,
                 Margin = new Thickness(10,0,10,0),
                 FontSize = 24,
-                TextColor = Color.FromHex("#3f51b5")
+                TextColor = Color.Black
             });
 
             AutoAdjustLayout.Children.Add(new Image
