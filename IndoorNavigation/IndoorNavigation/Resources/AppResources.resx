@@ -334,7 +334,7 @@
     <value>Goal : {0}</value>
   </data>
   <data name="CURRENT_LOCATION_STRING" xml:space="preserve">
-    <value>Current: {0}</value>
+    <value>Current location: {0}</value>
   </data>
   <data name="DIRECTION_INITIAIL_FACE_STRING" xml:space="preserve">
     <value>Face to {0}{1}then {2}{3} And go straight about {4} m </value>
@@ -720,10 +720,7 @@ Upon reaching {B1},
     <value>Start</value>
   </data>
   <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
-    <value>Finish to regulation!
-If the signal is too slow or too fast,
-you can go to preference page,
-regulate again. Thanks!</value>
+    <value>Reception tuning complete. Thank you.</value>
   </data>
   <data name="SCAN_RSSI_NOW_STRING" xml:space="preserve">
     <value>Scaning signal...</value>
@@ -761,9 +758,9 @@ Then please go back B1~2F,
 you can use indoor navigation.</value>
   </data>
   <data name="DETECT_POSITION_CLOSE_TO_STRING" xml:space="preserve">
-    <value>Detected position : {0}.
-Please be closed to {1} as much as possible.
-Press confirm to start regulate signal.</value>
+    <value>You are near {0}.
+Please go to as close to {1} as possible.
+Then press OK.</value>
   </data>
   <data name="EXIT_HOSPITAL_STRING" xml:space="preserve">
     <value>Exit hospital</value>

@@ -722,9 +722,7 @@
   </data>
   <data name="IF_NOT_STABLEGO_TO_PREFER_STRING" xml:space="preserve">
     <value>校正完成!
-若訊號過快或過慢，
-您可以到偏好設定頁，
-再次校正。</value>
+謝謝您的幫忙!</value>
   </data>
   <data name="SCAN_RSSI_NOW_STRING" xml:space="preserve">
     <value>正在校正訊號...</value>
@@ -758,9 +756,9 @@
 就能繼續使用導航。</value>
   </data>
   <data name="DETECT_POSITION_CLOSE_TO_STRING" xml:space="preserve">
-    <value>偵測到地點 : {0},
-請盡量靠近{1}的路口。
-接下來請按下確定繼續。</value>
+    <value>您現在在{0},
+請盡量靠近{1}。
+然後按下確定繼續。</value>
   </data>
   <data name="EXIT_HOSPITAL_STRING" xml:space="preserve">
     <value>離開醫院</value>
