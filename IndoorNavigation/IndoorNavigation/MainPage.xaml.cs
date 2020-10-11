@@ -219,18 +219,14 @@ namespace IndoorNavigation
                         //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
-                    bool isFinishProcess = await alertPage.show();
+                    await alertPage.show();
 
                     AutoAdjustPopupPage autoAdjustPage =
                         new AutoAdjustPopupPage(location.sourcePath);
 
-                    isFinishProcess = await autoAdjustPage.Show();
-
-
-                    FirstTimeUse = isFinishProcess;
+                    FirstTimeUse = await autoAdjustPage.Show(); ;
                     Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
-
                 await CheckVersionAndUpdate_(location, navigationGraph);
                 {
                     if (isButtonPressed) return;
