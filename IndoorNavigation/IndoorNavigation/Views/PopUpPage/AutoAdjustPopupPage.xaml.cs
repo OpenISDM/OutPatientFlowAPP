@@ -47,6 +47,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private Guid _currentWaypointID;
         private Guid _currentRegionID;
         private int _currentBeaconRssi;
+                    
         private double ProgressValue = 0.66;
         private string naviGraphName;
         private bool _isKeepDetection = true;
@@ -185,8 +186,8 @@ namespace IndoorNavigation.Views.PopUpPage
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             try
-                            {                 
-                                _ipsModules.CloseAllActiveClient();
+                            {
+                                _ipsModules?.Dispose();
                                 //show finish scan page                    
                                 await PopupNavigation.Instance.RemovePageAsync(this);
                                 AlertDialogPopupPage alertPage =
@@ -236,7 +237,7 @@ namespace IndoorNavigation.Views.PopUpPage
             isKeepDetectionRssi = false;
             _isKeepDetection = false;
             _ipsModules.CloseAllActiveClient();
-            _ipsModules.Dispose();
+            _ipsModules?.Dispose();
             _tcs?.SetResult(false);
             await PopupNavigation.Instance.RemovePageAsync(this);
         }

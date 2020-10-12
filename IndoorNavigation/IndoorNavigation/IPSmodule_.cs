@@ -267,7 +267,8 @@ namespace IndoorNavigation.Modules
         {
             if (!_disposedValue)
             {
-                CloseAllActiveClient();
+                if(disposing)
+                    CloseAllActiveClient();
 
                 _disposedValue = true;
             }
