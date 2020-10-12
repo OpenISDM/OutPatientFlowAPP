@@ -322,6 +322,19 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }      
 
+        private InitialDirection ReverseInitialDirection(InitialDirection direction)
+        {
+            if (direction == InitialDirection.Face)
+                return InitialDirection.Back;
+            return InitialDirection.Face;
+        }
+
+        private int ReverseInitialDirection(int direction)
+        {
+            if (direction == 0)
+                return 1;
+            return 0;
+        }
         private void SetInstruction(NavigationInstruction instruction,
                                     out string stepLabel,
                                     out string stepImage,
@@ -330,8 +343,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                                     out int location,
                                     out int instructionValue)
         {
-            Console.WriteLine("PictureDirection = " + 
-                instruction._information._directionPicture);
+
             string connectionTypeString = "";
             StepImgIsVisible = true;
             string nextWaypointName = 
@@ -494,7 +506,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                     {
                         stepLabel = string.Format(
                             _resourceManager.GetString(
-                            "DIRECTION_INITIAIL_CROSS_REGION_STRING", currentLanguage), instructionDirection,
+                            "DIRECTION_INITIAIL_CROSS_REGION_STRING", 
+                            currentLanguage), 
+                            instructionDirection,
                             Environment.NewLine,
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
@@ -569,15 +583,14 @@ namespace IndoorNavigation.ViewModels.Navigation
                         break;
                     }
                     else
-                    {
+                    {                       
+                        if(cardinalDirection == CardinalDirection.South)
+                        {
+                            directionFaceorBack =
+                                ReverseInitialDirection(directionFaceorBack);
+                            cardinalDirection = CardinalDirection.North;
+                        }
 
-                        //stepLabel = string.Format(
-                        //    initialDirectionString,
-                        //    firstDirection_Landmark,
-                        //    Environment.NewLine,
-                        //    instructionDirection,
-                        //    Environment.NewLine,
-                        //    instruction._turnDirectionDistance);
                         if (directionFaceorBack == (int)InitialDirection.Face)
                         {
                             if (cardinalDirection == CardinalDirection.North) 
