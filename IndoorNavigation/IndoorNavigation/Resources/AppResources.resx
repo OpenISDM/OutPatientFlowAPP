@@ -726,11 +726,15 @@ Upon reaching {B1},
     <value>Scaning signal...</value>
   </data>
   <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
-    <value>Welcome to use the app!
+    <value>Welcome to use Seeing-I-Go!
 Because the signal sensitivity of mobile 
 is not alway the same. 
 So, It need to do regulate process.
 Press confirm to start to auto regulate signal.</value>
+    <comment>Welcome to use Seeing-I-Go!
+Seeing-I-Go need your help to tune navigation signal.
+the tuning steps just need to be done once.
+Press OK to continue.</comment>
   </data>
   <data name="AT_LEAST_ONE_STRING" xml:space="preserve">
     <value>Please keep it have at least  one navigation graph.</value>

@@ -210,13 +210,10 @@ namespace IndoorNavigation
 
                 if (!FirstTimeUse)
                 {
-                    Console.WriteLine("it's first Time use!");
-
                     AlertDialogPopupPage alertPage =
                         new AlertDialogPopupPage
                         (GetResourceString
                         ("WELCOME_USE_START_TO_ADJUST_STRING"),
-                        //AppResources.WELCOME_USE_START_TO_ADJUST_STRING, 
                         AppResources.OK_STRING);
 
                     await alertPage.show();
