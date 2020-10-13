@@ -305,14 +305,26 @@ namespace IndoorNavigation.Modules
                         _currentRegionID;
 
                     navigationInstruction._nextRegionGuid =
-                        _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
+                        _waypointsOnRoute[_nextWaypointStep + 1]._regionID;                    
 
-                    navigationInstruction._turnDirectionDistance =
+                    if (navigationInstruction._information._nextDirection == TurnDirection.FirstDirection)
+                    {
+                        navigationInstruction._turnDirectionDistance =
+                            _navigationGraph.GetDistanceOfLongHallway(
+                                regionWaypointPoint,
+                                2, 
+                                _waypointsOnRoute,
+                                _avoidConnectionTypes);
+                    }
+                    else
+                    {
+                        navigationInstruction._turnDirectionDistance =
                         _navigationGraph
                         .GetDistanceOfLongHallway(regionWaypointPoint,
                                                   1,
                                                   _waypointsOnRoute,
                                                   _avoidConnectionTypes);
+                    }
 
                     _event.OnEventCall(new NavigationEventArgs
                     {
@@ -1138,13 +1150,27 @@ namespace IndoorNavigation.Modules
 
                     navigationInstruction._nextRegionGuid =
                         _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
-                    navigationInstruction._turnDirectionDistance =
-                        _navigationGraph.GetDistanceOfLongHallway(
-                            (args as WaypointSignalEventArgs)
-                            ._detectedRegionWaypoint,
-                            _nextWaypointStep + 1,
-                            _waypointsOnRoute,
-                            _avoidConnectionTypes);
+
+                    if (navigationInstruction._information._nextDirection == 
+                        TurnDirection.FirstDirection)
+                    {
+                        navigationInstruction._turnDirectionDistance =
+                            _navigationGraph.GetDistanceOfLongHallway(
+                                (args as WaypointSignalEventArgs)
+                                ._detectedRegionWaypoint,
+                                _nextWaypointStep+2, _waypointsOnRoute,
+                                _avoidConnectionTypes);
+                    }
+                    else
+                    {
+                        navigationInstruction._turnDirectionDistance =
+                            _navigationGraph.GetDistanceOfLongHallway(
+                                (args as WaypointSignalEventArgs)
+                                ._detectedRegionWaypoint,
+                                _nextWaypointStep + 1,
+                                _waypointsOnRoute,
+                                _avoidConnectionTypes);
+                    }
                     Console.WriteLine("navigation_turn : "
                                 + navigationInstruction._turnDirectionDistance);
                     //Get the progress
@@ -1305,14 +1331,26 @@ namespace IndoorNavigation.Modules
                         navigationInstruction._nextRegionGuid =
                             _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
 
-                        navigationInstruction._turnDirectionDistance =
-                        _navigationGraph
-                        .GetDistanceOfLongHallway
-                        ((args as WaypointSignalEventArgs)
-                        ._detectedRegionWaypoint,
-                        _nextWaypointStep + 1,
-                        _waypointsOnRoute,
-                        _avoidConnectionTypes);
+                        if (navigationInstruction._information._nextDirection 
+                            == TurnDirection.FirstDirection)
+                        {
+                            navigationInstruction._turnDirectionDistance =
+                                _navigationGraph.GetDistanceOfLongHallway(
+                                    (args as WaypointSignalEventArgs)
+                                    ._detectedRegionWaypoint,
+                                    _nextWaypointStep + 2, _waypointsOnRoute,
+                                    _avoidConnectionTypes);
+                        }
+                        else
+                        {
+                            navigationInstruction._turnDirectionDistance =
+                                _navigationGraph.GetDistanceOfLongHallway(
+                                    (args as WaypointSignalEventArgs)
+                                    ._detectedRegionWaypoint,
+                                    _nextWaypointStep + 1,
+                                    _waypointsOnRoute,
+                                    _avoidConnectionTypes);
+                        }
 
                         TmpCurrentProgress += 2;
                         navigationInstruction._progress =

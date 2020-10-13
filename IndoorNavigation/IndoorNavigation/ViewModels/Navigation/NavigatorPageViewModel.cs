@@ -937,6 +937,19 @@ namespace IndoorNavigation.ViewModels.Navigation
 
                         if (instruction._information._turnDirection == TurnDirection.Up)
                         {
+                            if (instruction._turnDirectionDistance != 0) 
+                            {
+                                return string.Format(_resourceManager
+                                .GetString
+                                ("DIRECTION_UP_COMBINE_DIRECTION_STRING"
+                                , currentLanguage),
+                                 connectionType,
+                                 nextRegionName,
+                                 nextRegionName,
+                                 instructionDirection,
+                                 instruction._turnDirectionDistance
+                                );
+                            }
                             return string.Format(_resourceManager
                                 .GetString
                                 ("DIRECTION_UP_COMBINE_DIRECTION_STRING"
@@ -950,6 +963,19 @@ namespace IndoorNavigation.ViewModels.Navigation
                         }
                         else
                         {
+                            if (instruction._turnDirectionDistance != 0)
+                            {
+                                return string.Format(_resourceManager
+                                .GetString
+                                ("DIRECTION_DOWN_COMBINE_DIRECTION_STRING"
+                                , currentLanguage),
+                                 connectionType,
+                                 nextRegionName,
+                                 nextRegionName,
+                                 instructionDirection,
+                                 instruction._turnDirectionDistance
+                                );
+                            }
                             return string.Format(_resourceManager
                                 .GetString
                                 ("DIRECTION_DOWN_COMBINE_DIRECTION_STRING",
