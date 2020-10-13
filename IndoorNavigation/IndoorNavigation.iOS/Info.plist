@@ -23,7 +23,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.OpenISDM.OPFM</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.1103</string>
+	<string>2.0.1108</string>
 	<key>CFBundleName</key>
 	<string>IndoorNavigation</string>
 	<key>NSCameraUsageDescription</key>
@@ -63,5 +63,7 @@
 	<string>帶路機</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>this app would like to access your calenders.</string>
 </dict>
 </plist>
