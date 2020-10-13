@@ -742,7 +742,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString =
                                 _resourceManager.GetString("ESCALATOR_STRING",
                                                            currentLanguage);
-                            stepImage = "Stairs_up";
+                            stepImage = "Escalator_up";
                             break;
                         case ConnectionType.Stair:
                             connectionTypeString =
@@ -783,7 +783,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             connectionTypeString =
                                 _resourceManager.GetString("ESCALATOR_STRING",
                                                            currentLanguage);
-                            stepImage = "Stairs_down";
+                            stepImage = "Escalator_down";
                             break;
                         case ConnectionType.Stair:
                             connectionTypeString =
