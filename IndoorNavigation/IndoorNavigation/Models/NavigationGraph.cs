@@ -1053,14 +1053,34 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         nextnextWaypointID,
                         avoidConnectionTypes).Item1;
 
-                    Console.WriteLine("direction = " + nextWaypointEdge._direction);
-                    Console.WriteLine("nextWaypoint ID = " + nextWaypointID);
-                    Console.WriteLine("nextnextWaypoint ID = " + nextnextWaypointID);
-                    instruction._relatedDirectionOfFirstDirection =
-                        nextWaypointEdge._direction;
+                    if (nextWaypointEdge.Equals(new WaypointEdge()) || nextnextRegionID != nextRegionID)
+                    {
+                        Console.WriteLine("nextWaypointEdge is null");
 
-                    instruction._distance =
-                        Convert.ToInt32(nextWaypointEdge._distance);
+                        RegionEdge regionEdge = 
+                            GetRegionEdgeMostNearSourceWaypoint
+                            (nextRegionID, 
+                            nextWaypointID, 
+                            nextnextRegionID, 
+                            avoidConnectionTypes);
+
+                        instruction._relatedDirectionOfFirstDirection = regionEdge._direction;
+                        instruction._distance = Convert.ToInt32(regionEdge._distance);
+
+                        Console.WriteLine("combine region direction = " + regionEdge._direction);
+                        Console.WriteLine("combine region distance = " + regionEdge._distance);
+                    }
+                    else
+                    {
+                        Console.WriteLine("combine waypoint direction = " + nextWaypointEdge._direction);
+                        Console.WriteLine("combine waypoint nextWaypoint ID = " + nextWaypointID);
+                        Console.WriteLine("combine waypoint nextnextWaypoint ID = " + nextnextWaypointID);
+                        instruction._relatedDirectionOfFirstDirection =
+                            nextWaypointEdge._direction;
+
+                        instruction._distance =
+                            Convert.ToInt32(nextWaypointEdge._distance);
+                    }
                     #endregion
 
                     return instruction;
