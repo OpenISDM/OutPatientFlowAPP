@@ -397,12 +397,20 @@ namespace IndoorNavigation
 
                     bool wantRetry = await noResponsePage.show();
 
+                    await PopupNavigation.Instance.RemovePageAsync(busyPage);
+
                     if (wantRetry)
                         await AddSiteItemMethod_();
+
+                    
                 }
                 finally
                 {
-                    await PopupNavigation.Instance.RemovePageAsync(busyPage);
+                    if (PopupNavigation.Instance.PopupStack.Contains(busyPage))
+                    {
+                        await PopupNavigation.Instance.RemovePageAsync
+                            (busyPage);
+                    }
                 }
             }
         }
@@ -440,7 +448,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            //ToolbarItems.Add(TestToolbarItem);
+            ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -477,8 +485,9 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            await PopupNavigation.Instance.PushAsync
-                (new AutoAdjustPopupPage("CCH_Debug"));
+            //await PopupNavigation.Instance.PushAsync
+            //    (new AutoAdjustPopupPage("CCH_Debug"));
+            await Navigation.PushAsync(new TestPage());
             await Task.CompletedTask;
         }
 
