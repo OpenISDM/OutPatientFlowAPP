@@ -117,6 +117,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public double _distance { get; set; }
             public string _picture12 { get; set; }
             public string _picture21 { get; set; }
+
+            // some stair, escalator or elevator can't be seen at previous 
+            // point.
+            public bool _supportCombine { get; set; }
         }
         #endregion
 
@@ -460,7 +464,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                       false);
                     Console.WriteLine("direction : " + waypointEdge._direction);
 
-                    #region
+                    #region read direction picture part
                     if (xmlEdgeElement.HasAttribute("picture12") && 
                         !string.IsNullOrEmpty
                         (xmlEdgeElement.GetAttribute("picture12"))) 
@@ -473,8 +477,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     if(xmlEdgeElement.HasAttribute("picture21") && 
                         !string.IsNullOrEmpty
                         (xmlEdgeElement.GetAttribute("picture21")))
-                    {
-                        Console.WriteLine("bbbbbbbb");
+                    {                        
                         waypointEdge._picture21 =
                             xmlEdgeElement.GetAttribute("picture21");
                     }
@@ -483,9 +486,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                     waypointEdge._connectionType =
                         (ConnectionType)Enum.Parse(typeof(ConnectionType),
-                                                   xmlEdgeElement.GetAttribute("connection_type"),
+                                                   xmlEdgeElement
+                                                   .GetAttribute
+                                                   ("connection_type"),
                                                    false);
-                    Console.WriteLine("connection_type : " + waypointEdge._connectionType);
+                    Console.WriteLine("connection_type : " + 
+                        waypointEdge._connectionType);
+
+                    waypointEdge._supportCombine =
+                        xmlEdgeElement.HasAttribute("combineInstruction")? false : true;
+
+                    Console.WriteLine("support combine : " + 
+                        waypointEdge._supportCombine);
 
                     // calculate the distance of this edge
                     waypointEdge._distance =
@@ -1062,7 +1074,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             (nextRegionID, 
                             nextWaypointID, 
                             nextnextRegionID, 
-                            avoidConnectionTypes);
+                            avoidConnectionTypes);                        
 
                         instruction._relatedDirectionOfFirstDirection = regionEdge._direction;
                         instruction._distance = Convert.ToInt32(regionEdge._distance);
@@ -1111,16 +1123,34 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 !isSameFloor(nextnextRegionID, nextRegionID))
             {
                 Console.WriteLine("Show please take elevator to 1F");
-                return GetCombineInstruction(
-                    currentRegionID,
-                    currentWaypointID,
-                    nextRegionID,
-                    nextWaypointID,
-                    nextnextRegionID,
-                    nextnextWaypointID,
-                    avoidConnectionTypes,
-                    true
-                    );
+
+                WaypointEdge CurrentNextEdge = 
+                    GetWaypointEdgeInRegion
+                    (currentRegionID, currentWaypointID, 
+                    nextWaypointID, avoidConnectionTypes).Item1;
+
+                if (CurrentNextEdge._supportCombine)
+                {
+                    return GetCombineInstruction(
+                        currentRegionID,
+                        currentWaypointID,
+                        nextRegionID,
+                        nextWaypointID,
+                        nextnextRegionID,
+                        nextnextWaypointID,
+                        avoidConnectionTypes,
+                        true
+                        );
+                }
+                else
+                {
+                    return GetInstructionInformation(currentNavigationStep,
+                        previousRegionID, previousWaypointID,
+                        currentRegionID, currentWaypointID,
+                        nextRegionID, nextWaypointID,
+                        new Guid(), new Guid(),
+                        avoidConnectionTypes);
+                }
             }
             else if (!currentRegionID.Equals(nextRegionID)) {
                 // currentWaypoint and nextWaypoint are in different regions
