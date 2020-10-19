@@ -26,7 +26,7 @@ namespace IndoorNavigation.Modules.Utilities
     {
         //this is apikey for access seeing-i-Go server.
         private const string apikey = "m9AZq97gPlIusBXs7osDOFBjZc345iwtkGDdWy2UVHAe";
-        private const string _localhost = "https://wpin.iis.sinica.edu.tw/";
+        private const string _localhost = "https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/";
         public CloudDownload()
         {            
         }
