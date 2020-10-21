@@ -102,8 +102,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public double _distance { get; set; }
             public CardinalDirection _direction { get; set; }
             public ConnectionType _connectionType { get; set; }
-            //public string _picture12 { get; set; }
-            //public string _picture21 { get; set; }
+            public string _picture12 { get; set; }
+            public string _picture21 { get; set; }            
         }
 
         public struct WaypointEdge
@@ -262,6 +262,23 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                   false);
                 Console.WriteLine("direction : " + regionEdge._direction);
 
+                if (xmlElement.HasAttribute("picture12") &&
+                       !string.IsNullOrEmpty
+                       (xmlElement.GetAttribute("picture12")))
+                {
+                    regionEdge._picture12 =
+                        xmlElement.GetAttribute("picture12");
+                }
+                Console.WriteLine("picture12 : " + regionEdge._picture12);
+
+                if (xmlElement.HasAttribute("picture21") &&
+                    !string.IsNullOrEmpty
+                    (xmlElement.GetAttribute("picture21")))
+                {
+                    regionEdge._picture21 =
+                        xmlElement.GetAttribute("picture21");
+                }
+
                 regionEdge._connectionType =
                     (ConnectionType)Enum.Parse(typeof(ConnectionType),
                     xmlElement.GetAttribute("connection_type"),
@@ -290,7 +307,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 else if (ConnectionType.NormalHallway == 
                          regionEdge._connectionType)
-                {
+                {                    
                     bool foundNode1 = false;
                     double node1Lon = 0;
                     double node1Lat = 0;
@@ -594,13 +611,146 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private static double Rad(double d)
         {
             return (double)d * Math.PI / 180d;
+        }        
+
+        private RegionEdge GetRegionEdgeMostNearSourceWaypoint
+            (Guid sourceRegionID,
+            Guid sourceWaypointID, 
+            Guid sinkRegionID, 
+            ConnectionType[] avoidConnectionTypes, 
+            ref string directionPicture)
+        {
+            RegionEdge regionEdgeItem = new RegionEdge();
+
+            Waypoint sourceWaypoint =
+                _navigraphs[sourceRegionID]._waypoints[sourceWaypointID];
+
+            // compare the normal case (R1, R2)
+            Tuple<Guid, Guid> edgeKeyFromNode1 =
+                new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
+
+            int distance = Int32.MaxValue;
+            int indexEdge = -1;
+            if (_edges.ContainsKey(edgeKeyFromNode1))
+            {
+                for (int i = 0; i < _edges[edgeKeyFromNode1].Count(); i++)
+                {
+                    RegionEdge edgeItem = _edges[edgeKeyFromNode1][i];                    
+
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    {
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                        (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                        1 == edgeItem._source))
+                        {
+                            Waypoint sinkWaypoint =
+                                _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint1];
+                            double distanceFromSource =
+                                GetDistance(sourceWaypoint._lon,
+                                            sourceWaypoint._lat,
+                                            sinkWaypoint._lon,
+                                            sinkWaypoint._lat);
+                            int edgeDistance = System.Convert.ToInt32(distanceFromSource);
+
+                            if (edgeDistance < distance)
+                            {
+                                distance = edgeDistance;
+                                indexEdge = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if (-1 != indexEdge)
+            {
+                regionEdgeItem = _edges[edgeKeyFromNode1][indexEdge];
+                Console.WriteLine("direction picture in NavigationGraph"
+                    + regionEdgeItem._picture12) ;
+                directionPicture = regionEdgeItem._picture12;
+                return regionEdgeItem;
+            }
+
+            // compare the reverse case (R2, R1) because normal case (R1, R2) cannot find regionEdge
+            Tuple<Guid, Guid> edgeKeyFromNode2 =
+                new Tuple<Guid, Guid>(sinkRegionID, sourceRegionID);
+
+            if (_edges.ContainsKey(edgeKeyFromNode2))
+            {
+
+                for (int i = 0; i < _edges[edgeKeyFromNode2].Count(); i++)
+                {
+
+                    RegionEdge edgeItem = _edges[edgeKeyFromNode2][i];
+
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    {
+
+                        if (DirectionalConnection.BiDirection == edgeItem._biDirection ||
+                            (DirectionalConnection.OneWay == edgeItem._biDirection &&
+                            2 == edgeItem._source))
+                        {
+
+
+
+                            Waypoint sinkWaypoint =
+                                _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint2];
+
+                            double distanceFromSource =
+                                GetDistance(sourceWaypoint._lon,
+                                            sourceWaypoint._lat,
+                                            sinkWaypoint._lon,
+                                            sinkWaypoint._lat);
+
+                            int edgeDistance = System.Convert.ToInt32(distanceFromSource);
+
+                            if (edgeDistance < distance)
+                            {
+                                distance = edgeDistance;
+                                indexEdge = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if (-1 != indexEdge)
+            {
+
+                // need to reverse the resulted regionEdge from (R1/W1, R2/W2) pair to
+                // (R2/W2, R1/W1) pair before returning to caller
+                regionEdgeItem._region1 = _edges[edgeKeyFromNode2][indexEdge]._region2;
+                regionEdgeItem._region2 = _edges[edgeKeyFromNode2][indexEdge]._region1;
+                regionEdgeItem._waypoint1 = _edges[edgeKeyFromNode2][indexEdge]._waypoint2;
+                regionEdgeItem._waypoint2 = _edges[edgeKeyFromNode2][indexEdge]._waypoint1;
+                regionEdgeItem._biDirection = _edges[edgeKeyFromNode2][indexEdge]._biDirection;
+                if (2 == _edges[edgeKeyFromNode2][indexEdge]._source)
+                    regionEdgeItem._source = 1;
+                regionEdgeItem._distance = _edges[edgeKeyFromNode2][indexEdge]._distance;
+                if (System.Convert.ToInt32(_edges[edgeKeyFromNode2][indexEdge]._direction) +
+                   4 < 8)
+                {
+                    regionEdgeItem._direction = (CardinalDirection)
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction);
+                }
+                else
+                {
+                    regionEdgeItem._direction = (CardinalDirection)
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction - 8);
+                }
+                regionEdgeItem._connectionType =
+                    _edges[edgeKeyFromNode2][indexEdge]._connectionType;
+                directionPicture = regionEdgeItem._picture21;
+                return regionEdgeItem;
+
+            }
+            return regionEdgeItem;
         }
 
         private RegionEdge GetRegionEdgeMostNearSourceWaypoint
             (Guid sourceRegionID,
              Guid sourceWaypointID,
              Guid sinkRegionID,
-             ConnectionType[] avoidConnectionTypes)
+             ConnectionType[] avoidConnectionTypes
+             )
         {
             RegionEdge regionEdgeItem = new RegionEdge();
 
@@ -1152,6 +1302,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         avoidConnectionTypes);
                 }
             }
+
             else if (!currentRegionID.Equals(nextRegionID)) {
                 // currentWaypoint and nextWaypoint are in different regions
 
@@ -1181,15 +1332,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         // currentWaypoint is the first waypoing from the 
                         // beginning need to refine the turndirection in this 
                         // case
-
+                        Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaa");
                         information._turnDirection = TurnDirection.FirstDirection;
+
+
+                        string directionPicture = "";
 
                         RegionEdge currentEdge =
                             GetRegionEdgeMostNearSourceWaypoint
                             (currentRegionID,
                              currentWaypointID,
                              nextRegionID,
-                             avoidConnectionTypes);
+                             avoidConnectionTypes, ref directionPicture);
                         information._relatedDirectionOfFirstDirection = 
                             currentEdge._direction;
 
@@ -1198,6 +1352,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                         information._distance = 
                             Convert.ToInt32(currentEdge._distance);
+
+                        information._directionPicture = directionPicture;
+
+                        Console.WriteLine("direction picture in information :" +
+                            information._directionPicture);
                     }
                     else
                     {
@@ -1210,15 +1369,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             {
                                 if (!currentRegionID.Equals(nextRegionID))
                                 {
-
+                                    Console.WriteLine("ccccccccccccc");
                                     information._turnDirection = 
                                         TurnDirection.FirstDirection;
+
+                                    string directionPicture = "";
                                     RegionEdge regionEdge = 
                                         GetRegionEdgeMostNearSourceWaypoint
                                         (currentRegionID,
                                          currentWaypointID,
                                          nextRegionID,
-                                         avoidConnectionTypes);
+                                         avoidConnectionTypes,
+                                         ref directionPicture);
                                     information._connectionType = 
                                         regionEdge._connectionType;
 
@@ -1228,9 +1390,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                     information
                                         ._relatedDirectionOfFirstDirection = 
                                         regionEdge._direction;
+
+                                    information._directionPicture = 
+                                        directionPicture;
+                                        
                                 }
                                 else
                                 {
+                                    Console.WriteLine("bbbbbbbbbbbbbbbbbb");
                                     information._turnDirection = 
                                         TurnDirection.FirstDirection;
 
@@ -1270,11 +1437,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                                         avoidConnectionTypes);
                                 CardinalDirection prevEdgeDirection = prevEdge._direction;
 
+                                string directionPicture = "";
+
                                 RegionEdge currentEdge =
-                                    GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
-                                                                        currentWaypointID,
-                                                                        nextRegionID,
-                                                                        avoidConnectionTypes);
+                                    GetRegionEdgeMostNearSourceWaypoint
+                                    (currentRegionID,
+                                     currentWaypointID,
+                                     nextRegionID,
+                                     avoidConnectionTypes,
+                                     ref directionPicture);
                                 CardinalDirection currentEdgeDirection = currentEdge._direction;
 
                                 int prevDirection = System.Convert.ToInt32(prevEdgeDirection);
@@ -1292,8 +1463,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                         (TurnDirection)(currentDirection - prevDirection + 8);
                                 }
                                 information._connectionType = currentEdge._connectionType;
+
                                 information._distance =
                                     System.Convert.ToInt32(currentEdge._distance);
+
+                                information._directionPicture = directionPicture;
                             }
                         }
                         else
