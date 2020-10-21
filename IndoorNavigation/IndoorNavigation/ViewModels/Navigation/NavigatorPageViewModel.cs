@@ -356,6 +356,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             instructionValue = _originalInstructionScale;
             location = _originalInstructionLocation;
 
+            Console.WriteLine("direction picture = " + instruction._information._directionPicture);
+
             #region  For default Layout
             FDPictureHeightScaleValue = 2;
             FDPictureHeightSpanValue = 3;
@@ -588,6 +590,9 @@ namespace IndoorNavigation.ViewModels.Navigation
                         {
                             directionFaceorBack =
                                 ReverseInitialDirection(directionFaceorBack);
+
+                            stepImageString = "Arrow_up";
+
                             cardinalDirection = CardinalDirection.North;
                         }
 
