@@ -201,7 +201,7 @@ namespace IndoorNavigation.Views.PopUpPage
                             }
                             catch (Exception exc)
                             {
-                                Console.WriteLine("Auto adjust ment page error : "
+                                Console.WriteLine("Auto adjustment page error : "
                                     + exc.Message);
                             }
                         });
@@ -367,12 +367,23 @@ namespace IndoorNavigation.Views.PopUpPage
                     (int)_AllRssiList[mid] :
                     (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
 
-                RssiOption = ((int)_currentBeaconRssi - midian) + 2;
-                Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
+                //RssiOption = ((int)_currentBeaconRssi - midian) + 2;
+                //Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
+
+                int result = ((int)_currentBeaconRssi - midian)+2;
+
+                if (result >= 15)
+                    RssiOption = 15;
+                else if (result <= -15)
+                    RssiOption = -15;
+                else
+                    RssiOption = result;
             }
             catch(Exception exc)
             {
                 Console.WriteLine("set Rssi option error - " + exc.Message);
+
+                RssiOption = TmpRssiOption;
             }
         }
 
