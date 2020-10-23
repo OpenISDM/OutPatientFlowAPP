@@ -133,15 +133,16 @@ namespace IndoorNavigation.Modules
             _navigationControllerThread = new Thread(() => NavigatorProgram());
             _navigationControllerThread.Start();
 
-            //Guid sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000004");
-            //Guid sourceRegion = new Guid("11111111-1111-1111-1111-111111111111");
+            //Guid sourceWaypoint = new Guid("33333333-3333-3333-3333-333333333333");
+            //Guid sourceRegion = new Guid("00000000-0000-0000-0000-000000000020");
 
             //Console.WriteLine("Fist Try in Generate Path");
             //GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
 
             //sourceRegion = new Guid("33333333-3333-3333-3333-333333333333");
-            //sourceRegion = new Guid("11111111-1111-1111-1111-111111111111");
-            //sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000002");
+            //sourceRegion = new Guid("22222222-2222-2222-2222-222222222222");
+            ////sourceRegion = new Guid("11111111-1111-1111-1111-111111111111");
+            //sourceWaypoint = new Guid("00000000-0000-0000-0000-000000000016");
 
             //Console.WriteLine("Second Try in Generate Path");
             //GenerateRoute(sourceRegion, sourceWaypoint, destinationRegionID, destinationWaypointID);
@@ -746,14 +747,14 @@ namespace IndoorNavigation.Modules
             #region To remove dumplicate point
             int x = 0;
             int y = 1;
-            while(x<y && y< _waypointsOnRoute.Count)
+            while (x < y && y < _waypointsOnRoute.Count)
             {
                 RegionWaypointPoint point1 = _waypointsOnRoute[x];
                 RegionWaypointPoint point2 = _waypointsOnRoute[y];
-                List<Guid> waypointIDs1 = 
+                List<Guid> waypointIDs1 =
                     _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
                     (point1._regionID, point1._waypointID);
-                List<Guid> waypointIDs2 = 
+                List<Guid> waypointIDs2 =
                     _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
                     (point2._regionID, point2._waypointID);
 
@@ -765,9 +766,9 @@ namespace IndoorNavigation.Modules
                     _navigationGraph.GetWaypointTypeInRegion
                     (point2._regionID, point2._waypointID);
 
-                if(waypointIDs1.Count ==1 && waypointIDs2.Count ==1
-                    && waypointIDs1[0].Equals(waypointIDs2[0])){
-
+                if (waypointIDs1.Count == 1 && waypointIDs2.Count == 1
+                    && waypointIDs1[0].Equals(waypointIDs2[0]))
+                {
                     if (locationType1 == locationTyp2 && locationType1 != LocationType.portal)
                     {
                         _waypointsOnRoute.RemoveAt(y);
@@ -775,10 +776,14 @@ namespace IndoorNavigation.Modules
                     else if (locationType1 != locationTyp2)
                     {
                         if (locationTyp2 == LocationType.portal)
+                        {
                             _waypointsOnRoute.RemoveAt(x);
+                        }
 
                         else if (locationType1 == LocationType.portal)
+                        {
                             _waypointsOnRoute.RemoveAt(y);
+                        }
                     }
                 }
                 x++;
@@ -1055,7 +1060,9 @@ namespace IndoorNavigation.Modules
             else
             {
                 if (_currentRegionID.Equals(_destinationRegionID) &&
-                    _currentWaypointID.Equals(_destinationWaypointID))
+                    _currentWaypointID.Equals(_destinationWaypointID) ||
+                    _currentRegionID.Equals(_waypointsOnRoute.Last()._regionID) 
+                    && _currentWaypointID.Equals(_waypointsOnRoute.Last()._waypointID))
                 {
                     int tempProgress = _waypointsOnRoute.Count() - 1;
                     //navigationInstruction._progressBar = tempProgress + " / "
