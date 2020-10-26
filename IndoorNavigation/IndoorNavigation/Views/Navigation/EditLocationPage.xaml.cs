@@ -101,24 +101,28 @@ namespace IndoorNavigation.Views.Navigation
                 if (isOlderVersion(selectedItem))
                 {
                     await PopupNavigation.Instance
-                       .PushAsync(new AlertDialogPopupPage
-                       (GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
-                       GetResourceString("YES_STRING"),
-                       GetResourceString("NO_STRING"),
-                       "VersionIsOlder"));
+                        .PushAsync(new AlertDialogPopupPage(
+                            GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
+                            GetResourceString("YES_STRING")));
+                    //await PopupNavigation.Instance
+                    //   .PushAsync(new AlertDialogPopupPage
+                    //   (GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
+                    //   GetResourceString("YES_STRING"),
+                    //   GetResourceString("NO_STRING"),
+                    //   "VersionIsOlder"));
 
-                    MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
-                        (this, "VersionIsOlder", async(MsgSender, MsgArgs) =>
-                     {
-                         if ((bool)MsgArgs)
-                         {
-                             await DownloadSiteFile(selectedItem);
-                         }
+                    //MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
+                    //    (this, "VersionIsOlder", async(MsgSender, MsgArgs) =>
+                    // {
+                    //     if ((bool)MsgArgs)
+                    //     {
+                    //         await DownloadSiteFile(selectedItem);
+                    //     }
 
-                         MessagingCenter
-                         .Unsubscribe<AlertDialogPopupPage, bool>
-                         (this, "VersionIsOlder");
-                     });
+                    //     MessagingCenter
+                    //     .Unsubscribe<AlertDialogPopupPage, bool>
+                    //     (this, "VersionIsOlder");
+                    // });
                 }
                 else 
                 {

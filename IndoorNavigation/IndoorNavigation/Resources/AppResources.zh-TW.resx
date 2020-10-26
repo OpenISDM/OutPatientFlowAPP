@@ -640,8 +640,8 @@
     <value>{0}，然後{1}，走約{2}公尺</value>
   </data>
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
-    <value>目前地圖資料已是最新版本，
-請問還要下載嗎?</value>
+    <value>目前該地圖資料已是
+最新版本。</value>
   </data>
   <data name="TEST_STRING" xml:space="preserve">
     <value>測試用字串</value>
