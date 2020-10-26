@@ -16,7 +16,7 @@
       <waypoint id="00000000-0000-0000-0000-000000000014" name="側門" type="terminal" lat="23.962584305555" lon="120.56752813888" category="Exit"/>
       <waypoint id="00000000-0000-0000-0000-000000000015" name="杏一" type="terminal" lat="23.962584305555" lon="120.5674568055555" category="ConvenienceStore"/>
       <waypoint id="00000000-0000-0000-0000-000000000016" name="大廳" type="terminal" lat="23.962584305555" lon="120.567259999999" category="Exit"/>
-      <waypoint id="00000000-0000-0000-0000-000000000028" name="全家" type="terminal" lat="23.962584305555" lon="120.5673599027773" category="ConvenienceStore"/>
+      <waypoint id="00000000-0000-0000-0000-000000000028" name="7-11" type="terminal" lat="23.962584305555" lon="120.5673599027773" category="ConvenienceStore"/>
       <waypoint id="00000000-0000-0000-0000-000000000017" name="手扶梯" type="portal" lat="23.962368833333" lon="120.567259999999" category="Others"/>
       <waypoint id="00000000-0000-0000-0000-000000000018" name="手扶梯" type="portal" lat="23.962584305555" lon="120.567176444444" category="Others"/>
       <waypoint id="00000000-0000-0000-0000-000000000019" name="領藥處" type="terminal" lat="23.962368833333" lon="120.567176444444" category="Pharmacy"/>
