@@ -180,8 +180,8 @@
   <data name="FEEDBACK_STRING" xml:space="preserve">
     <value>意見回饋</value>
   </data>
-  <data name="ABOUT_BIDAE_STRING" xml:space="preserve">
-    <value>關於畢迪科技股份有限公司</value>
+  <data name="ABOUT_SEEING_I_GO_STRING" xml:space="preserve">
+    <value>關於帶路機</value>
   </data>
   <data name="PREFERENCES_STRING" xml:space="preserve">
     <value>偏好設定</value>
