@@ -640,7 +640,8 @@
     <value>{0}，然後{1}，走約{2}公尺</value>
   </data>
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
-    <value>現有的檔案比雲端上的檔案是同樣版本或是更新的版本，請問要繼續下載嗎?</value>
+    <value>目前地圖資料已是最新版本，
+請問還要下載嗎?</value>
   </data>
   <data name="TEST_STRING" xml:space="preserve">
     <value>測試用字串</value>
@@ -729,7 +730,8 @@
   </data>
   <data name="WELCOME_USE_START_TO_ADJUST_STRING" xml:space="preserve">
     <value>歡迎使用帶路機，
-帶路機需要您的幫忙調整導航訊號。
+帶路機需要您的幫忙
+調整導航訊號。
 調整只需要完成一次即可。</value>
     <comment>歡迎使用帶路機，
 帶路機需要您的幫忙調整導航訊號。

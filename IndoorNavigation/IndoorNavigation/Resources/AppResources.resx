@@ -643,7 +643,7 @@
     <value>{0}Then {1},for about {2} m</value>
   </data>
   <data name="ASK_STILL_DOWNLOAD_STRING" xml:space="preserve">
-    <value>Local file version is higher or equal to cloud's, do you still want to continue?</value>
+    <value>Local map data is latest version, do you still want to download?</value>
   </data>
   <data name="DOWNLOAD_STRING" xml:space="preserve">
     <value>Download</value>
