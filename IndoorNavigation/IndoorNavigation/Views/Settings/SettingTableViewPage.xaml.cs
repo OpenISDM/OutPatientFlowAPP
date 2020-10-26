@@ -90,7 +90,10 @@ namespace IndoorNavigation.Views.Settings
         public IList _downloadMap { get; } = new ObservableCollection<string>();
 
         //private bool _connectable = false;
-
+        public ICommand PrivatePolicyCommand => new Command(() => 
+        {
+            Device.OpenUri(new Uri("https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/policy"));
+        });
         #endregion
 
         #region Command defined

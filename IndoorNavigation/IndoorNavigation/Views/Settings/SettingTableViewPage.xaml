@@ -67,12 +67,11 @@
 
             <sv:Section Title="{i18n:Translate LICENSE_AND_PRIVACY_STRING}">
                     <sv:CommandCell x:Name="LicenseButton" Title="{i18n:Translate LICENSE_STRING}" Tapped="LicenseBtn_Tapped"/>
-                    <sv:CommandCell Title="{i18n:Translate PRIVACY_STRING}"/>
+                    <sv:CommandCell Title="{i18n:Translate PRIVACY_STRING}" Command="{Binding PrivatePolicyCommand}"/>
             </sv:Section>
-                
+
             <sv:Section Title="{i18n:Translate OTHERS_STRING}">
-                    <sv:CommandCell Title="{i18n:Translate FEEDBACK_STRING}"/>
-                    <sv:CommandCell Title="{i18n:Translate ABOUT_BIDAE_STRING}"/>
+                <sv:CommandCell Title="{i18n:Translate ABOUT_BIDAE_STRING}"/>
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate VERSION_STRING}">
