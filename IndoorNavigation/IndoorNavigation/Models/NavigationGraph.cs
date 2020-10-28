@@ -1870,7 +1870,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
         Office,
         ConferenceRoom,
         Stair,
-        Escalator
+        Escalator,
+        CommunityHealth,
+        Radiology
     }
   
     #endregion
