@@ -72,5 +72,10 @@ namespace IndoorNavigation.Views.Settings.LicensePages
         {
             await Navigation.PushAsync(new IconLicensePage());
         }
+
+        async private void ThirdParty_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ThirdPartyUsagePage());
+        }
     }
 }

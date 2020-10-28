@@ -792,4 +792,7 @@
   <data name="DETECT_SIGNAL_NOW_STRING" xml:space="preserve">
     <value>正在偵測位置中</value>
   </data>
+  <data name="THIRDPARTY_LICENSE_STRING" xml:space="preserve">
+    <value>第三方套件版權</value>
+  </data>
 </root>

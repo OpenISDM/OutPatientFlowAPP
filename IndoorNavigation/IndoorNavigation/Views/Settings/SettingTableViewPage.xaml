@@ -71,7 +71,7 @@
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate OTHERS_STRING}">
-                <sv:CommandCell Title="{i18n:Translate ABOUT_BIDAE_STRING}"/>
+                <sv:CommandCell Title="{i18n:Translate ABOUT_SEEING_I_GO_STRING}" />
             </sv:Section>
 
             <sv:Section Title="{i18n:Translate VERSION_STRING}">

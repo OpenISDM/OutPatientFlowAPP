@@ -793,4 +793,7 @@ then go about {2} m.</value>
   <data name="NO_SINGNAL_TAP_START_STRING" xml:space="preserve">
     <value>Pleae go to any instersection, then press button to start auto adjust</value>
   </data>
+  <data name="THIRDPARTY_LICENSE_STRING" xml:space="preserve">
+    <value>Third party license</value>
+  </data>
 </root>

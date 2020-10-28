@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThirdParties>
+  <ThirdParty packageName="Xamarin.Forms" authorName="Microsoft" License="MIT"/>
+  <ThirdParty packageName="Xamarin Essentials" authorName="Microsoft" License="MIT"/>
+  <ThirdParty packageName="Xamarin.Forms.Visual.Material" authorName="Microsoft" License="MIT"/>
+  <ThirdParty packageName="NetStandard.Library" authorName="Microsoft" License="MIT"/>
+  <ThirdParty packageName="Xamarin.Forms.InputKit" authorName="Enis Necipoglu" License="MIT"/>
+  <ThirdParty packageName="Newtonsoft.Json" authorName="James Newton-King" License="MIT"/>
+  <ThirdParty packageName="Plugin.Multilingual" authorName="Charlin Agramonte" License="MIT"/>
+  <ThirdParty packageName="Plugin.Permissions" authorName="James Montemagno" License="MIT"/>
+  <ThirdParty packageName="AiForms" authorName="kamu" License="MIT"/>
+  <ThirdParty packageName="Dijkstra.NET" authorName="matiii" License="MIT"/>
+  <ThirdParty packageName="iOS Secondary toolbar item" authorName="AmitManchanda" License="MIT"/>
+  <ThirdParty packageName="ProgressBarView" authorName="DottorPagliaccius" License="MIT"/>
+</ThirdParties>

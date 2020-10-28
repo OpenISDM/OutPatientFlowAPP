@@ -50,7 +50,7 @@
         <sv:SettingsView HeaderPadding="0">
     
             <sv:Section>
-                <sv:CommandCell Title="{i18n:Translate BIDAE_NAVIGATOR_STRING}"/>
+                <sv:CommandCell Title="{i18n:Translate THIRDPARTY_LICENSE_STRING}" Tapped="ThirdParty_Tapped"/>
                 <sv:CommandCell Title="Icons" Tapped="IconsLicenseBtn_Tapped"/>
                 <sv:CommandCell Title="..."/>
             </sv:Section>

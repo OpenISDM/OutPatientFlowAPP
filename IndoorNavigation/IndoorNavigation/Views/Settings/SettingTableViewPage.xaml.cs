@@ -94,6 +94,11 @@ namespace IndoorNavigation.Views.Settings
         {
             Device.OpenUri(new Uri("https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/policy"));
         });
+
+        public ICommand ThirdPartyCommand => new Command(async () =>
+         {
+             await Navigation.PushAsync(new ThirdPartyUsagePage());
+         });
         #endregion
 
         #region Command defined
