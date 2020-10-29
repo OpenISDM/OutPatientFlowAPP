@@ -111,6 +111,14 @@ namespace IndoorNavigation.Models
     {
         Task<bool> DownloadImage(string url, string imageName);
     }
+
+    public interface ICheckLocationEnable
+    {
+        bool IsGPSEnable();
+        bool IsBluetoothEnable();
+        void OpenLocationSetting();
+        void OpenBluetoothSetting();
+    }
     #endregion
 
     #region Interface for IPS Client

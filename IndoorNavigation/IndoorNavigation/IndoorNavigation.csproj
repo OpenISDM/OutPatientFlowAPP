@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Yuanlin_Christian_Hospital_new\" />
-    <Folder Include="Views\Settings\LicensePages\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
   </ItemGroup>
@@ -89,6 +88,7 @@
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\ThirdPartyList.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
@@ -108,6 +108,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Navigation\EditLocationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Navigation\NavigationHomePage_.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PopUpPage\AutoAdjustPopupPage.xaml">
@@ -145,6 +148,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\LicensePages\ThirdPartyUsagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Remove="DefineStructureOfProcess.xml" />
@@ -160,6 +166,7 @@
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_en-US.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_zh-TW.xml" />
     <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
+    <None Remove="Resources\ThirdPartyList.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
