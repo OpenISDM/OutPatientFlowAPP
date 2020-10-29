@@ -24,38 +24,58 @@ namespace IndoorNavigation.Views.Navigation
             _navigationGraphName = location.sourcePath;
             _navigationGraph = navigationGraph;
 
-        }
-
-         
+        }         
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync
                 (new NavigatorSettingPage(_navigationGraphName));
+        }       
+        #region Button click event
+        async private void ExitBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Exit));
         }
 
-        private Grid GetGridLayout()
+        async private void BathroomBtn_Clicked(object sender, EventArgs e)
         {
-            Grid grid = new Grid();
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Bathroom));
+        }
 
-            grid.RowDefinitions.Add(new RowDefinition 
-            { 
-                Height = new GridLength(0.6, GridUnitType.Star) 
-            });
+        async private void ConvenienceStoreBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.ConvenienceStore));
+        }
 
-            grid.RowDefinitions.Add(new RowDefinition 
-            { 
-                Height = new GridLength(0.4, GridUnitType.Star) 
-            });
+        async private void BloodCollectionBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.BloodCollectionCounter));
+        }
 
-            for (int i = 0; i < 3; i++) 
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition
-                {
-                    Width= new GridLength(35, GridUnitType.Star)
-                });
-            }
-            return grid;
+        async private void ExaminationRoomBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.ExaminationRoom));
+        }
+
+        async private void ClinicsBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Clinics));
+        }
+
+        async private void CashierBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Cashier));
+        }
+        #endregion
+
+        async private void RadiologyBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Radiology));
+        }
+
+        async private void CommunityHealthBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.CommunityHealth));
         }
     }
 }

@@ -45,43 +45,43 @@
 
             <!-- Row 1 -->            
             <!--掛號批價櫃台-->
-            <ImageButton x:Name="CashierBtn" Grid.Row="2"  Grid.Column="0" Source="Cashier" BackgroundColor="Transparent" />
+            <ImageButton x:Name="CashierBtn" Grid.Row="2"  Grid.Column="0" Source="Cashier" BackgroundColor="Transparent" Clicked="CashierBtn_Clicked"/>
             <Label Grid.Row="3" Grid.Column="0" Text="掛號批價櫃檯" FontSize="Medium"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--各科門診-->
-            <ImageButton x:Name="ClinicsBtn" Grid.Row="2"  Grid.Column="1" Source="Clinics" BackgroundColor="Transparent" />
+            <ImageButton x:Name="ClinicsBtn" Grid.Row="2"  Grid.Column="1" Source="Clinics" BackgroundColor="Transparent" Clicked="ClinicsBtn_Clicked"/>
             <Label Grid.Row="3" Grid.Column="1" Text="各科門診" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--抽血處-->
-            <ImageButton x:Name="BloodCollectionBtn" Grid.Row="2"  Grid.Column="2" Source="BloodCollectionCounter" BackgroundColor="Transparent"/>
+            <ImageButton x:Name="BloodCollectionBtn" Grid.Row="2"  Grid.Column="2" Source="BloodCollectionCounter" BackgroundColor="Transparent" Clicked="BloodCollectionBtn_Clicked"/>
             <Label Grid.Row="3" Grid.Column="2" Text="抽血處" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             <!-- End row 1 -->
             
             <!-- Row 2 -->
             <!--功能檢查室-->
-            <ImageButton x:Name="ExaminationRoomBtn" Grid.Row="4"  Grid.Column="0" Source="ExaminationRoom" BackgroundColor="Transparent" />
+            <ImageButton x:Name="ExaminationRoomBtn" Grid.Row="4"  Grid.Column="0" Source="ExaminationRoom" BackgroundColor="Transparent" Clicked="ExaminationRoomBtn_Clicked"/>
             <Label Grid.Row="5" Grid.Column="0" Text="功能檢查室" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--放射科檢查-->
-            <ImageButton x:Name="BloodCollectionCounterBtn" Grid.Row="4"  Grid.Column="1" Source="ExaminationRoom" BackgroundColor="Transparent" />
+            <ImageButton x:Name="RadiologyBtn" Grid.Row="4"  Grid.Column="1" Source="ExaminationRoom" BackgroundColor="Transparent" Clicked="RadiologyBtn_Clicked"/>
             <Label Grid.Row="5" Grid.Column="1" Text="放射科檢查" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--健檢中心-->
-            <ImageButton x:Name="ConvenienceStoreBtn" Grid.Row="4"  Grid.Column="2" Source="ExaminationRoom" BackgroundColor="Transparent" />
+            <ImageButton x:Name="CommunityHealthBtn" Grid.Row="4"  Grid.Column="2" Source="ExaminationRoom" BackgroundColor="Transparent" Clicked="CommunityHealthBtn_Clicked"/>
             <Label Grid.Row="5" Grid.Column="2" Text="健檢中心" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             <!--End Row 2-->
             
             <!-- Row 3 -->
             <!--便利商店-->
-            <ImageButton x:Name="OthersBtn" Grid.Row="6"  Grid.Column="0" Source="ConvenienceStore" BackgroundColor="Transparent"/>
+            <ImageButton  x:Name="ConvenienceStoreBtn" Grid.Row="6"  Grid.Column="0" Source="ConvenienceStore" BackgroundColor="Transparent" Clicked="ConvenienceStoreBtn_Clicked"/>
             <Label Grid.Row="7" Grid.Column="0" Text="便利商店" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--廁所-->
-            <ImageButton x:Name="BathroomBtn" Grid.Row="6"  Grid.Column="1" Source="Bathroom" BackgroundColor="Transparent"/>
+            <ImageButton x:Name="BathroomBtn" Grid.Row="6"  Grid.Column="1" Source="Bathroom" BackgroundColor="Transparent" Clicked="BathroomBtn_Clicked"/>
             <Label Grid.Row="7" Grid.Column="1" Text="廁所" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
             <!--出口-->
-            <ImageButton x:Name="ExitBtn" Grid.Row="6"  Grid.Column="2" Source="Exit" BackgroundColor="Transparent"/>
+            <ImageButton x:Name="ExitBtn" Grid.Row="6"  Grid.Column="2" Source="Exit" BackgroundColor="Transparent" Clicked="ExitBtn_Clicked"/>
             <Label Grid.Row="7" Grid.Column="2" Text="出口" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             <!--End Row 3-->
         </Grid>
