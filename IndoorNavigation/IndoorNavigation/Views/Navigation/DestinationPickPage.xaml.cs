@@ -58,7 +58,8 @@ using System.Reflection;
 using IndoorNavigation.Models;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
-
+using Xamarin.Essentials;
+using Plugin.Geolocator;
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class DestinationPickPage : ContentPage
@@ -124,8 +125,30 @@ namespace IndoorNavigation.Views.Navigation
                                                                                waypointGroup);
         }
 
+        private bool IsGPSEnable()
+        {
+            //Console.WriteLine("available : " + CrossGeolocator.Current.IsGeolocationAvailable);
+            //Console.WriteLine("enabled : " + CrossGeolocator.Current.IsGeolocationEnabled);
+            //return CrossGeolocator.Current.IsGeolocationAvailable;
+            return CrossGeolocator.Current.IsGeolocationEnabled;
+        }
+
+        private bool IsBluetoothEnable()
+        {
+            return true;
+        }
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            if (!IsGPSEnable())
+            { 
+                //to ask user to open GPS
+                return; 
+            }
+            if (!IsBluetoothEnable())
+            {
+                //to ask user to open BT
+                return;
+            }
             if (e.Item is DestinationItem destination)
             {
                 Console.WriteLine(">> Handle_ItemTapped in DestinationPickPage");
