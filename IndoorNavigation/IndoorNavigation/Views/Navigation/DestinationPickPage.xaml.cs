@@ -60,6 +60,7 @@ using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
 using Plugin.Geolocator;
+using IndoorNavigation.Views.PopUpPage;
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class DestinationPickPage : ContentPage
@@ -72,6 +73,8 @@ namespace IndoorNavigation.Views.Navigation
         private App app;
         public ObservableCollection<DestinationItem> _destinationItems { get; set; }
         private XMLInformation _nameInformation;
+
+        private ICheckLocationEnable checkLocationEnable;
         public DestinationPickPage(string navigationGraphName, CategoryType category)
         {
             InitializeComponent();
@@ -118,11 +121,15 @@ namespace IndoorNavigation.Views.Navigation
                 }
             }
 
-            MyListView.ItemsSource = from waypoint in _destinationItems
-                                     group waypoint by waypoint._floor into waypointGroup
-                                     orderby waypointGroup.Key
-                                     select new Grouping<string, DestinationItem>(waypointGroup.Key,
-                                                                               waypointGroup);
+            MyListView.ItemsSource = 
+                from waypoint in _destinationItems
+                group waypoint by waypoint._floor into waypointGroup
+                orderby waypointGroup.Key
+                select new Grouping<string, DestinationItem>(waypointGroup.Key,
+                waypointGroup);
+
+            checkLocationEnable = 
+                DependencyService.Get<ICheckLocationEnable>();
         }
 
         private bool IsGPSEnable()
@@ -135,18 +142,28 @@ namespace IndoorNavigation.Views.Navigation
 
         private bool IsBluetoothEnable()
         {
-            return true;
+            return checkLocationEnable.IsBluetoothEnable();
         }
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (!IsGPSEnable() && Device.RuntimePlatform == Device.Android)
-            { 
+            {
                 //to ask user to open GPS
+                AlertDialogPopupPage alertPage = new AlertDialogPopupPage("this service need gps, it will diret to setting page","yes","no");
+
+                if(await alertPage.show())
+                    checkLocationEnable.OpenLocationSetting();
+                
                 return; 
             }
             if (!IsBluetoothEnable())
             {
                 //to ask user to open BT
+
+                AlertDialogPopupPage alertPage = new AlertDialogPopupPage("this service need bt, it will diret to setting page", "yes", "no");
+
+                if(await alertPage.show())
+                    checkLocationEnable.OpenBluetoothSetting();
                 return;
             }
             if (e.Item is DestinationItem destination)
