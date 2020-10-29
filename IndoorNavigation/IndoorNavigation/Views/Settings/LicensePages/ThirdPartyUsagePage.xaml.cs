@@ -22,6 +22,7 @@ namespace IndoorNavigation.Views.Settings.LicensePages
 
             LoadData();
             ThirdPartyListView.ItemsSource = _thirdParties;
+            BindingContext = this;
         }
 
         public void LoadData()
@@ -30,10 +31,11 @@ namespace IndoorNavigation.Views.Settings.LicensePages
 
             XmlDocument doc = XmlReader("Resources.ThirdPartyList.xml");
 
-            XmlNodeList thirdPartyList = doc.SelectNodes("ThirdPartis/ThirdParty");
+            XmlNodeList thirdPartyList = doc.SelectNodes("ThirdParties/ThirdParty");
 
             foreach(XmlNode thirdPartyNode in thirdPartyList)
             {
+                //Console.WriteLine("aaaaaaa");
                 ThirdParty thirdParty = new ThirdParty();
 
                 thirdParty._license = 
@@ -48,7 +50,7 @@ namespace IndoorNavigation.Views.Settings.LicensePages
                 thirdParty._combineString =
                     string.Format("Author: {0}, License: {1}",
                         thirdParty._authorName, thirdParty._license);
-
+                //Console.WriteLine(thirdParty._combineString);
                 _thirdParties.Add(thirdParty);
             }
         }
@@ -56,9 +58,9 @@ namespace IndoorNavigation.Views.Settings.LicensePages
 
     public class ThirdParty
     {
-        public string _license;
-        public string _packageName;
-        public string _authorName;
-        public string _combineString;
+        public string _license { get; set; }
+        public string _packageName { get; set; }
+        public string _authorName { get; set; }
+        public string _combineString { get; set; }
     }
 }

@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
-             x:Class="IndoorNavigation.Views.Settings.LicensePages.ThirdPartyUsagePage">
+             x:Class="IndoorNavigation.Views.Settings.LicensePages.ThirdPartyUsagePage"
+             Title="{i18n:Translate THIRDPARTY_LICENSE_STRING}">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="ThirdPartyListView">
+            <ListView x:Name="ThirdPartyListView" ItemsSource="{Binding _thirdParties}" IsEnabled="False">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding _packageName}" Detail="{Binding _combineString}"/>
