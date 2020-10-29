@@ -139,7 +139,7 @@ namespace IndoorNavigation.Views.Navigation
         }
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (!IsGPSEnable())
+            if (!IsGPSEnable() && Device.RuntimePlatform == Device.Android)
             { 
                 //to ask user to open GPS
                 return; 

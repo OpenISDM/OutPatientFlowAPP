@@ -2,16 +2,18 @@
   <regions region_numbers="3" edge_numbers="3">
     <region id="11111111-1111-1111-1111-111111111111" ips_type="LBeacon" name="地下1樓" floor="-1">
       <waypoint id="00000000-0000-0000-0000-000000000001" name="廁所01" type="terminal" lat="23.96307505555" lon="120.567408138888" category="Bathroom"/>
+      
+      <!--waypoint 2-->
       <waypoint id="00000000-0000-0000-0000-000000000002" name="泌尿外科" type="terminal" lat="23.962990472222" lon="120.567408138888" category="Clinics"/>
-
-      <waypoint id="" name="泌尿外科-超音波02" type="terminal" lat="" lon="" category=""/>
-      <waypoint id="" name="泌尿外科-尿動力檢查02" type="terminal" lat="" lon="" category=""/>
-      <waypoint id="" name="走廊03" type="midpath" lat="" lon="" category=""/>
+      <waypoint id="00000000-0000-0000-0000-100000000002" name="泌尿外科-超音波02" type="terminal" lat="" lon="" category=""/>
+      <waypoint id="00000000-0000-0000-0000-200000000002" name="泌尿外科-尿動力檢查02" type="terminal" lat="" lon="" category=""/>
+      
+      <waypoint id="00000000-0000-0000-0000-000000000003" name="走廊03" type="midpath" lat="" lon="" category="Others"/>
       
       <waypoint id="00000000-0000-0000-0000-000000000004" name="B1批價掛號櫃台" type="terminal" lat="23.962881138888" lon="120.56735038888" category="Cashier"/>
       
-      <waypoint id="" name="梯廳05" type="midpath" lat="" lon="" category="Others"/>
-      <waypoint id="" name="檢體採檢05" type="terminal" lat="" lon="" category="Others"/>
+      <waypoint id="00000000-0000-0000-0000-000000000005" name="梯廳05" type="midpath" lat="" lon="" category="Others"/>
+      <waypoint id="00000000-0000-0000-0000-000000000005" name="檢體採檢05" type="terminal" lat="" lon="" category="Others"/>
       
       <waypoint id="00000000-0000-0000-0000-000000000006" name="牙科" type="terminal" lat="23.962990472222" lon="120.567259999" category="Clinics"/>
       
@@ -41,7 +43,7 @@
       
       <!--waypoint 16-->
       <waypoint id="00000000-0000-0000-0000-000000000016" name="大廳16" type="terminal" lat="23.962584305555" lon="120.567259999999" category="Exit"/>
-      <waypoint id="" name="初診中心16" type="terminal" lat="" lon="" category=""/> 
+      <waypoint id="00000000-0000-0000-0000-100000000016" name="初診中心16" type="terminal" lat="23.962584305555" lon="120.567259999999" category=""/> 
       
       <waypoint id="00000000-0000-0000-0000-000000000028" name="7-11" type="terminal" lat="23.962584305555" lon="120.5673599027773" category="ConvenienceStore"/>
       
@@ -60,19 +62,51 @@
       <waypoint id="00000000-0000-0000-0000-000000000030" name="廁所30" type="terminal" lat="23.962476569444" lon="120.5674568055555" category="Bathroom"/>
     </region>
     <region id="33333333-3333-3333-3333-333333333333" ips_type="LBeacon" name="2樓" floor="2">
+      <!--waypoint 20-->
       <waypoint id="00000000-0000-0000-0000-000000000020" name="手扶梯" type="portal" lat="23.9629125" lon="120.5674171944" category="Others"/>
-      <waypoint id="00000000-0000-0000-0000-000000000021" name="採血區" type="terminal" lat="23.96277191666" lon="120.5674171944" category="BloodCollectionCounter"/>
-      <waypoint id="00000000-0000-0000-0000-000000000022" name="內科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
-
-      <waypoint id="" name="座椅區23" type="portal" lat="" lon="" category=""/>
-      <waypoint id="" name="神經內科" type="terminal" lat="" lon="" category=""/>
-      <waypoint id="" name="衛教室" type="terminal" lat="" lon="" category=""/>
-
-      <waypoint id="" name="電梯24" type="portal" lat="" lon="" category=""/>     
       
-      <waypoint id="00000000-0000-0000-0000-000000000025" name="外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <!--waypoint 21-->
+      <waypoint id="00000000-0000-0000-0000-000000000021" name="採血區" type="terminal" lat="23.96277191666" lon="120.5674171944" category="BloodCollectionCounter"/>
+      <waypoint id="00000000-0000-0000-0000-100000000021" name="檢驗區" type="terminal" lat="23.96277191666" lon="120.5674171944" category=""/>
+      
+      <!--waypoint 22-->
+      <waypoint id="00000000-0000-0000-0000-000000000022" name="復健科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-100000000022" name="家醫科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-200000000022" name="心內科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-300000000022" name="胸內科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-400000000022" name="感染科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-500000000022" name="身心科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-600000000022" name="腸胃科" type="terminal" lat="23.9627333222" lon="120.5674171944" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-700000000022" name="門診檢查" type="terminal" lat="23.9627333222" lon="120.5674171944" category=""/>     
+      
+      <!--waypoint 23-->
+      <waypoint id="00000000-0000-0000-0000-000000000023" name="座椅區23" type="midpath" lat="23.9629125" lon="120.56725999" category="Others"/>
+      <waypoint id="00000000-0000-0000-0000-100000000023" name="神經內科23" type="terminal" lat="23.9629125" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-200000000023" name="衛教室23" type="terminal" lat="23.9629125" lon="120.56725999" category=""/>
+
+      <waypoint id="00000000-0000-0000-0000-000000000024" name="電梯24" type="portal" lat="23.962826111" lon="120.56725999" category="Others"/>     
+      
+      <!--waypoint 25-->
+      <waypoint id="00000000-0000-0000-0000-000000000025" name="神經外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-100000000025" name="胸腔外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-200000000025" name="直腸外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-300000000025" name="門診衛教室" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-400000000025" name="一般外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-500000000025" name="骨科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-600000000025" name="心臟外科" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-700000000025" name="整形外科超音波" type="terminal" lat="23.9627333222" lon="120.56725999" category="Clinics"/>      
+      <waypoint id="00000000-0000-0000-0000-800000000025" name="甲狀腺超音波" type="terminal" lat="23.9627333222" lon="120.56725999" category=""/>
+      <waypoint id="00000000-0000-0000-0000-900000000025" name="外科處置" type="terminal" lat="23.9627333222" lon="120.56725999" category=""/>
+     
+      
       <waypoint id="00000000-0000-0000-0000-000000000026" name="2F批價掛號櫃台" type="terminal" lat="23.962826111" lon="120.5670988611" category="Cashier"/>
+
+      <!--waypont 27-->
       <waypoint id="00000000-0000-0000-0000-000000000027" name="眼科" type="terminal" lat="23.9627333222" lon="120.5670988611" category="Clinics"/>
+       <waypoint id="00000000-0000-0000-0000-100000000027" name="內分泌科" type="terminal" lat="23.9627333222" lon="120.5670988611" category="Clinics"/>
+      <waypoint id="00000000-0000-0000-0000-200000000027" name="第二衛教室" type="terminal" lat="23.9627333222" lon="120.5670988611" category="Clinics"/>
+      
+      <!--others-->
       <waypoint id="00000000-0000-0000-0000-000000000029" name="放射區" type="terminal" lat="23.9629125" lon="120.5674171944" category="ExaminationRoom"/>
       <waypoint id="00000000-0000-0000-0000-000000000031" name="廁所31" type="terminal" lat="23.9627333222" lon="120.56725999" category="Bathroom"/>
     </region>
