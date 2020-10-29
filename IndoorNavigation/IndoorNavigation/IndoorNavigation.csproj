@@ -40,7 +40,6 @@
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Yuanlin_Christian_Hospital_new\" />
     <Folder Include="ViewModels\Navigation\" />
     <Folder Include="Modules\Navigation\Dijkstra.NET\" />
   </ItemGroup>
@@ -72,6 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefineStructureOfProcess.xml" />
+    <EmbeddedResource Include="Resources\CCH_new\CCH_new.xml" />
+    <EmbeddedResource Include="Resources\CCH_new\CCH_new_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\CCH_new\CCH_new_FD_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\CCH_new\CCH_new_info_en-US.xml" />
     <EmbeddedResource Include="Resources\GraphResource.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_FD_en-US.xml" />
@@ -156,6 +159,11 @@
     <None Remove="DefineStructureOfProcess.xml" />
     <None Remove="Legal.txt" />
     <None Remove="Resources\AppResources.English" />
+    <None Remove="Resources\CCH_new\CCH_new.xml" />
+    <None Remove="Resources\CCH_new\CCH_new_FD_en-US.xml" />
+    <None Remove="Resources\CCH_new\CCH_new_FD_zh-TW.xml" />
+    <None Remove="Resources\CCH_new\CCH_new_info_en-US.xml" />
+    <None Remove="Resources\CCH_new\CCH_new_info_zh-TW.xml" />
     <None Remove="Resources\GraphResource.xml" />
     <None Remove="Resources\Lab\Lab_FD_en-US.xml" />
     <None Remove="Resources\Lab\Lab_FD_zh-TW.xml" />
@@ -191,6 +199,9 @@
     <None Remove="Yuanlin_OPFM\PostBody.json" />
     <None Remove="Yuanlin_OPFM\PurposeOptions.xml" />
     <None Remove="Yuanlin_OPFM\RequestBody.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CCH_new\CCH_new_info_zh-TW.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">

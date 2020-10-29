@@ -25,6 +25,12 @@
         <DisplayName name="測試場域" language="zh-TW"/>
       </DisplayNames>
     </Graph>
+    <Graph name="CCH_new" version="1.0">
+      <DisplayNames>        
+        <DisplayName name="CCH new" language="en-US"/>
+        <DisplayName name="debug" language="zh-TW"/>
+      </DisplayNames>
+    </Graph>
   </Graphs>
   <Languages>
     <Language name="zh-TW"/>
