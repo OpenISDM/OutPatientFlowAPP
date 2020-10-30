@@ -24,13 +24,13 @@ namespace IndoorNavigation.Views.Navigation
             _navigationGraphName = location.sourcePath;
             _navigationGraph = navigationGraph;
 
-        }         
+        }
 
         async void InfoButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync
                 (new NavigatorSettingPage(_navigationGraphName));
-        }       
+        }
         #region Button click event
         async private void ExitBtn_Clicked(object sender, EventArgs e)
         {
@@ -70,12 +70,38 @@ namespace IndoorNavigation.Views.Navigation
 
         async private void RadiologyBtn_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.Radiology));
+            await Navigation.PushAsync
+                (new DestinationPickPage(_navigationGraphName, 
+                CategoryType.Radiology));
         }
 
-        async private void CommunityHealthBtn_Clicked(object sender, EventArgs e)
+        async private void CommunityHealthBtn_Clicked
+            (object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DestinationPickPage(_navigationGraphName, CategoryType.CommunityHealth));
+            await Navigation.PushAsync
+                (new DestinationPickPage(_navigationGraphName, 
+                CategoryType.CommunityHealth));
+        }
+
+        async private void HealthEducationBtn_Clicked(object sender, 
+            EventArgs e)
+        {
+            await Navigation.PushAsync
+                (new DestinationPickPage(_navigationGraphName, 
+                CategoryType.HealthEducation));
+        }
+
+        async private void ProceduresBtn_Clicked(object sender, EventArgs e) 
+        {
+            await Navigation.PushAsync
+                (new DestinationPickPage(_navigationGraphName, 
+                CategoryType.Procedures));
+        }
+
+        async private void OtherBtn_Click(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DestinationPickPage
+                (_navigationGraphName, CategoryType.Others));
         }
     }
 }

@@ -88,16 +88,16 @@
             
             <!--Row 4-->
             <!--衛教室-->
-            <ImageButton  Grid.Row="7"  Grid.Column="0" Source="Add_Item2" BackgroundColor="Transparent" Clicked="ExitBtn_Clicked"/>
+            <ImageButton  Grid.Row="7"  Grid.Column="0" Source="Add_Item2" BackgroundColor="Transparent" Clicked="HealthEducationBtn_Clicked"/>
             <Label Grid.Row="8" Grid.Column="0" Text="衛教室" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
-
-            <ImageButton  Grid.Row="7"  Grid.Column="1" Source="BloodCollectionCounter" BackgroundColor="Transparent" Clicked="ExitBtn_Clicked"/>
+            <!--注射處置-->
+            <ImageButton  Grid.Row="7"  Grid.Column="1" Source="BloodCollectionCounter" BackgroundColor="Transparent" Clicked="ProceduresBtn_Clicked"/>
             <Label Grid.Row="8" Grid.Column="1" Text="注射處置" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             
-            
-            <ImageButton  Grid.Row="7"  Grid.Column="2" Source="Exit" BackgroundColor="Transparent" Clicked="ExitBtn_Clicked"/>
-            <Label Grid.Row="8" Grid.Column="2" Text="出口" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            <!--其他-->
+            <ImageButton  Grid.Row="7"  Grid.Column="2" Source="Exit" BackgroundColor="Transparent" Clicked="OtherBtn_Click"/>
+            <Label Grid.Row="8" Grid.Column="2" Text="其他" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             <!--End Row 4-->
         </Grid>
     </ContentPage.Content>
