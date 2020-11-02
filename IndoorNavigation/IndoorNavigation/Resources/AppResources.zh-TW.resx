@@ -795,4 +795,10 @@
   <data name="THIRDPARTY_LICENSE_STRING" xml:space="preserve">
     <value>第三方套件版權</value>
   </data>
+  <data name="NO_BLUETOOTH_GO_SETTING_STRING" xml:space="preserve">
+    <value>尚未開啟藍芽服務，請問要前往設定嗎?</value>
+  </data>
+  <data name="NO_GPS_GO_SETTING_STRING" xml:space="preserve">
+    <value>尚未開啟定位服務，請問要前往設定嗎?</value>
+  </data>
 </root>

@@ -796,4 +796,10 @@ then go about {2} m.</value>
   <data name="THIRDPARTY_LICENSE_STRING" xml:space="preserve">
     <value>Third party license</value>
   </data>
+  <data name="NO_BLUETOOTH_GO_SETTING_STRING" xml:space="preserve">
+    <value>Bluetooth is not available, would you want to go to Setting?</value>
+  </data>
+  <data name="NO_GPS_GO_SETTING_STRING" xml:space="preserve">
+    <value>GPS service is not available, would you want to go to Setting?</value>
+  </data>
 </root>

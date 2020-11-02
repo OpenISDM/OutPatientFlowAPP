@@ -133,10 +133,7 @@ namespace IndoorNavigation.Views.Navigation
         }
 
         private bool IsGPSEnable()
-        {
-            //Console.WriteLine("available : " + CrossGeolocator.Current.IsGeolocationAvailable);
-            //Console.WriteLine("enabled : " + CrossGeolocator.Current.IsGeolocationEnabled);
-            //return CrossGeolocator.Current.IsGeolocationAvailable;
+        {           
             return CrossGeolocator.Current.IsGeolocationEnabled;
         }
 
@@ -149,7 +146,11 @@ namespace IndoorNavigation.Views.Navigation
             if (!IsGPSEnable() && Device.RuntimePlatform == Device.Android)
             {
                 //to ask user to open GPS
-                AlertDialogPopupPage alertPage = new AlertDialogPopupPage("this service need gps, it will diret to setting page","yes","no");
+                AlertDialogPopupPage alertPage = 
+                    new AlertDialogPopupPage
+                    (GetResourceString("NO_GPS_GO_SETTING_STRING"), 
+                    GetResourceString("OK_STRING"),
+                    GetResourceString("CANCEL_STRING"));
 
                 if(await alertPage.show())
                     checkLocationEnable.OpenLocationSetting();
@@ -160,7 +161,11 @@ namespace IndoorNavigation.Views.Navigation
             {
                 //to ask user to open BT
 
-                AlertDialogPopupPage alertPage = new AlertDialogPopupPage("this service need bt, it will diret to setting page", "yes", "no");
+                AlertDialogPopupPage alertPage = 
+                    new AlertDialogPopupPage
+                    (GetResourceString("NO_BLUETOOTH_GO_SETTING_STRING"), 
+                    GetResourceString("OK_STRING"), 
+                    GetResourceString("CANCEL_STRING"));
 
                 if(await alertPage.show())
                     checkLocationEnable.OpenBluetoothSetting();
