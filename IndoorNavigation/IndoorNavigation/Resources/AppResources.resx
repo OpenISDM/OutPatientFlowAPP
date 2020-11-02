@@ -802,4 +802,7 @@ then go about {2} m.</value>
   <data name="NO_GPS_GO_SETTING_STRING" xml:space="preserve">
     <value>GPS service is not available, would you want to go to Setting?</value>
   </data>
+  <data name="ICON_STRING" xml:space="preserve">
+    <value>Icons</value>
+  </data>
 </root>

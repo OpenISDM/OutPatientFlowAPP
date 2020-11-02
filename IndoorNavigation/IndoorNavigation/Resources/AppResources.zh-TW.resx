@@ -801,4 +801,7 @@
   <data name="NO_GPS_GO_SETTING_STRING" xml:space="preserve">
     <value>尚未開啟定位服務，請問要前往設定嗎?</value>
   </data>
+  <data name="ICON_STRING" xml:space="preserve">
+    <value>圖示</value>
+  </data>
 </root>

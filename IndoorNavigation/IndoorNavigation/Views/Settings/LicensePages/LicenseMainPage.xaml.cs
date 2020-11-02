@@ -51,6 +51,8 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
+using System.Collections.Generic;
+using static IndoorNavigation.Utilities.Storage;
 
 namespace IndoorNavigation.Views.Settings.LicensePages
 {
@@ -60,12 +62,20 @@ namespace IndoorNavigation.Views.Settings.LicensePages
         ResourceManager _resourceManager =
             new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
 
+        List<license> _licenses;
+
         public LicenseMainPage()
         {
             InitializeComponent();
             var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             NavigationPage.SetBackButtonTitle(this,
                 _resourceManager.GetString("LICENSE_STRING", currentLanguage));
+
+            LoadData();
+
+            LicenseListView.ItemsSource = _licenses;
+
+            BindingContext = this;
         }
 
         async void IconsLicenseBtn_Tapped(object sender, System.EventArgs e)
@@ -76,6 +86,40 @@ namespace IndoorNavigation.Views.Settings.LicensePages
         async private void ThirdParty_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new ThirdPartyUsagePage());
+        }
+
+        private void LoadData()
+        {
+            _licenses = new List<license>();
+            _licenses.Add(new license
+            {
+                page = new ThirdPartyUsagePage(),
+                name = GetResourceString("THIRDPARTY_LICENSE_STRING")
+            });
+
+            _licenses.Add(new license
+            {
+                page = new IconLicensePage(),
+                name = GetResourceString("ICON_STRING")
+            });
+
+            
+        }
+
+        async private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var item = e.Item as license;
+
+            if (item.page != null)
+            {
+                await Navigation.PushAsync(item.page);
+            }
+        }
+
+        class license
+        {
+            public string name { get; set; }
+            public ContentPage page;
         }
     }
 }

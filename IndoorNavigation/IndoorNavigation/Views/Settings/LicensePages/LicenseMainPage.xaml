@@ -46,16 +46,22 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        
-        <sv:SettingsView HeaderPadding="0">
+        <!--<sv:SettingsView>
     
             <sv:Section>
                 <sv:CommandCell Title="{i18n:Translate THIRDPARTY_LICENSE_STRING}" Tapped="ThirdParty_Tapped"/>
                 <sv:CommandCell Title="Icons" Tapped="IconsLicenseBtn_Tapped"/>
-                <sv:CommandCell Title="..."/>
             </sv:Section>
-        
-        </sv:SettingsView>
+        </sv:SettingsView>-->
+        <StackLayout>
+            <ListView x:Name="LicenseListView" ItemsSource="{Binding _licenses}" ItemTapped="ListView_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding name}" TextColor="#3f51b5"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>        
         
     </ContentPage.Content>
     
