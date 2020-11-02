@@ -124,7 +124,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
         }
         #endregion
 
-        public NavigationGraph(XmlDocument xmlDocument) {
+        public NavigationGraph(XmlDocument xmlDocument)
+        {
             Console.WriteLine(">> NavigationGraph");
 
             EARTH_RADIUS = 6378137;
@@ -201,12 +202,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("lon : " + waypoint._lon);
 
                     waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
-                    Console.WriteLine("lat : " + waypoint._lat);                    
+                    Console.WriteLine("lat : " + waypoint._lat);
 
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
                                                  xmlWaypointElement.GetAttribute("category"),
-                                                 false);                                       
+                                                 false);
 
                     if (!region._waypointsByCategory.ContainsKey(waypoint._category))
                     {
@@ -243,7 +244,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 regionEdge._waypoint2 = Guid.Parse(xmlElement.GetAttribute("waypoint2"));
                 Console.WriteLine("waypoint2 : " + regionEdge._waypoint2);
 
-                regionEdge._biDirection = 
+                regionEdge._biDirection =
                     (DirectionalConnection)Enum.Parse(typeof(DirectionalConnection),
                                                       xmlElement.GetAttribute("bi_direction"),
                                                       false);
@@ -283,7 +284,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     (ConnectionType)Enum.Parse(typeof(ConnectionType),
                     xmlElement.GetAttribute("connection_type"),
                     false);
-                Console.WriteLine("connection_type : " + 
+                Console.WriteLine("connection_type : " +
                     regionEdge._connectionType);
 
                 // calculate the distance of this edge
@@ -295,31 +296,34 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 {
                     regionEdge._distance = distanceElevator;
                 }
-                else if (ConnectionType.Escalator == 
+                else if (ConnectionType.Escalator ==
                     regionEdge._connectionType)
                 {
                     regionEdge._distance = distanceEscalator;
                 }
-                else if (ConnectionType.Stair == 
+                else if (ConnectionType.Stair ==
                          regionEdge._connectionType)
                 {
                     regionEdge._distance = distanceStair;
                 }
-                else if (ConnectionType.NormalHallway == 
+                else if (ConnectionType.NormalHallway ==
                          regionEdge._connectionType)
-                {                    
+                {
                     bool foundNode1 = false;
                     double node1Lon = 0;
                     double node1Lat = 0;
                     bool foundNode2 = false;
                     double node2Lon = 0;
                     double node2Lat = 0;
-                    foreach (KeyValuePair<CategoryType, List<Waypoint>> 
-                        categoryItem in 
-                        _regions[regionEdge._region1]._waypointsByCategory) {
+                    foreach (KeyValuePair<CategoryType, List<Waypoint>>
+                        categoryItem in
+                        _regions[regionEdge._region1]._waypointsByCategory)
+                    {
 
-                        foreach (Waypoint waypoint in categoryItem.Value) {
-                            if (waypoint._id.Equals(regionEdge._waypoint1)) {
+                        foreach (Waypoint waypoint in categoryItem.Value)
+                        {
+                            if (waypoint._id.Equals(regionEdge._waypoint1))
+                            {
                                 node1Lon = waypoint._lon;
                                 node1Lat = waypoint._lat;
                                 foundNode1 = true;
@@ -329,8 +333,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 break;
                         }
                     }
-                    foreach(KeyValuePair < CategoryType, List < Waypoint >> categoryItem in
-                        _regions[regionEdge._region2]._waypointsByCategory) {
+                    foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in
+                        _regions[regionEdge._region2]._waypointsByCategory)
+                    {
 
                         foreach (Waypoint waypoint in categoryItem.Value)
                         {
@@ -358,7 +363,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 // fill data into _edges structure
                 Tuple<Guid, Guid> edgeKey =
                     new Tuple<Guid, Guid>(regionEdge._region1, regionEdge._region2);
-                if (!_edges.ContainsKey(edgeKey)) {
+                if (!_edges.ContainsKey(edgeKey))
+                {
                     List<RegionEdge> tempRegionEdges = new List<RegionEdge>();
                     tempRegionEdges.Add(regionEdge);
                     _edges.Add(edgeKey, tempRegionEdges);
@@ -374,16 +380,17 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
                     _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
                 }
-                else {
+                else
+                {
                     if (1 == regionEdge._source)
                     {
                         _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
                     }
-                    else if(2 == regionEdge._source)
+                    else if (2 == regionEdge._source)
                     {
                         _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
                     }
-                }                
+                }
             }
 
             #region read navigraph block of BuildingName.xml
@@ -434,7 +441,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("lon : " + waypoint._lon);
 
                     waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
-                    Console.WriteLine("lat : " + waypoint._lat);                 
+                    Console.WriteLine("lat : " + waypoint._lat);
 
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
@@ -482,19 +489,19 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     Console.WriteLine("direction : " + waypointEdge._direction);
 
                     #region read direction picture part
-                    if (xmlEdgeElement.HasAttribute("picture12") && 
+                    if (xmlEdgeElement.HasAttribute("picture12") &&
                         !string.IsNullOrEmpty
-                        (xmlEdgeElement.GetAttribute("picture12"))) 
+                        (xmlEdgeElement.GetAttribute("picture12")))
                     {
                         waypointEdge._picture12 =
                             xmlEdgeElement.GetAttribute("picture12");
                     }
                     Console.WriteLine("picture12 : " + waypointEdge._picture12);
 
-                    if(xmlEdgeElement.HasAttribute("picture21") && 
+                    if (xmlEdgeElement.HasAttribute("picture21") &&
                         !string.IsNullOrEmpty
                         (xmlEdgeElement.GetAttribute("picture21")))
-                    {                        
+                    {
                         waypointEdge._picture21 =
                             xmlEdgeElement.GetAttribute("picture21");
                     }
@@ -507,13 +514,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                    .GetAttribute
                                                    ("connection_type"),
                                                    false);
-                    Console.WriteLine("connection_type : " + 
+                    Console.WriteLine("connection_type : " +
                         waypointEdge._connectionType);
 
                     waypointEdge._supportCombine =
-                        xmlEdgeElement.HasAttribute("combineInstruction")? false : true;
+                        xmlEdgeElement.HasAttribute("combineInstruction") ? false : true;
 
-                    Console.WriteLine("support combine : " + 
+                    Console.WriteLine("support combine : " +
                         waypointEdge._supportCombine);
 
                     // calculate the distance of this edge
@@ -552,7 +559,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 #endregion
                 // Read all <beacon> block within <navigraph/beacons>
-                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" + 
+                Console.WriteLine("Read attributes of <navigation_graph><navigraphs>/" +
                                   "<navigraph>/<beacons>/<beacon>");
                 #region read beacons
                 XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
@@ -585,7 +592,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     }
 
                     int beaconRSSI = Int32.Parse(xmlBeaconElement.GetAttribute("threshold"));
-                    navigraph._beaconRSSIThreshold.Add(beaconGuid,beaconRSSI);
+                    navigraph._beaconRSSIThreshold.Add(beaconGuid, beaconRSSI);
                 }
 
                 _navigraphs.Add(navigraph._regionID, navigraph);
@@ -664,8 +671,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             if (-1 != indexEdge)
             {
                 regionEdgeItem = _edges[edgeKeyFromNode1][indexEdge];
-                Console.WriteLine("direction picture in NavigationGraph"
-                    + regionEdgeItem._picture12) ;
+                //Console.WriteLine("direction picture in NavigationGraph"
+                //    + regionEdgeItem._picture12) ;
                 directionPicture = regionEdgeItem._picture12;
                 return regionEdgeItem;
             }
@@ -915,7 +922,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
                 
             }
-            Console.WriteLine("pictrue Direction = " + pictureDirection);
+            //Console.WriteLine("pictrue Direction = " + pictureDirection);
             return new Tuple<WaypointEdge, string>
                 (waypointEdge, pictureDirection);
         }
@@ -1168,7 +1175,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 if (isEmptyGuid(nextnextWaypointID) &&
                     isEmptyGuid(nextnextRegionID))
                 {
-                    Console.WriteLine("nextnext is null");
+                    //Console.WriteLine("nextnext is null");
                     RegionEdge currentEdge =
                         GetRegionEdgeMostNearSourceWaypoint(currentRegionID,
                         currentWaypointID,
@@ -1217,7 +1224,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                     if (nextWaypointEdge.Equals(new WaypointEdge()) || nextnextRegionID != nextRegionID)
                     {
-                        Console.WriteLine("nextWaypointEdge is null");
+                        //Console.WriteLine("nextWaypointEdge is null");
 
                         RegionEdge regionEdge = 
                             GetRegionEdgeMostNearSourceWaypoint
@@ -1229,14 +1236,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         instruction._relatedDirectionOfFirstDirection = regionEdge._direction;
                         instruction._distance = Convert.ToInt32(regionEdge._distance);
 
-                        Console.WriteLine("combine region direction = " + regionEdge._direction);
-                        Console.WriteLine("combine region distance = " + regionEdge._distance);
+                        //Console.WriteLine("combine region direction = " + regionEdge._direction);
+                        //Console.WriteLine("combine region distance = " + regionEdge._distance);
                     }
                     else
                     {
-                        Console.WriteLine("combine waypoint direction = " + nextWaypointEdge._direction);
-                        Console.WriteLine("combine waypoint nextWaypoint ID = " + nextWaypointID);
-                        Console.WriteLine("combine waypoint nextnextWaypoint ID = " + nextnextWaypointID);
+                        //Console.WriteLine("combine waypoint direction = " + nextWaypointEdge._direction);
+                        //Console.WriteLine("combine waypoint nextWaypoint ID = " + nextWaypointID);
+                        //Console.WriteLine("combine waypoint nextnextWaypoint ID = " + nextnextWaypointID);
                         instruction._relatedDirectionOfFirstDirection =
                             nextWaypointEdge._direction;
 
@@ -1272,7 +1279,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 !isSameRegion(nextnextRegionID, nextRegionID) &&
                 !isSameFloor(nextnextRegionID, nextRegionID))
             {
-                Console.WriteLine("Show please take elevator to 1F");
+                //Console.WriteLine("Show please take elevator to 1F");
 
                 WaypointEdge CurrentNextEdge = 
                     GetWaypointEdgeInRegion
@@ -1308,7 +1315,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 if (!isSameFloor(currentRegionID, nextRegionID))
                 {
-                    Console.WriteLine("2F escalator to 1F elevator case");
+                    //Console.WriteLine("2F escalator to 1F elevator case");
                     return GetCombineInstruction(
                         currentRegionID,
                         currentWaypointID,
@@ -1332,7 +1339,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         // currentWaypoint is the first waypoing from the 
                         // beginning need to refine the turndirection in this 
                         // case
-                        Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaa");
+                        //Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaa");
                         information._turnDirection = TurnDirection.FirstDirection;
 
 
@@ -1355,8 +1362,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                         information._directionPicture = directionPicture;
 
-                        Console.WriteLine("direction picture in information :" +
-                            information._directionPicture);
+                        //Console.WriteLine("direction picture in information :" +
+                        //    information._directionPicture);
                     }
                     else
                     {
@@ -1369,7 +1376,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             {
                                 if (!currentRegionID.Equals(nextRegionID))
                                 {
-                                    Console.WriteLine("ccccccccccccc");
+                                    //Console.WriteLine("ccccccccccccc");
                                     information._turnDirection = 
                                         TurnDirection.FirstDirection;
 
@@ -1397,7 +1404,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                 }
                                 else
                                 {
-                                    Console.WriteLine("bbbbbbbbbbbbbbbbbb");
+                                    //Console.WriteLine("bbbbbbbbbbbbbbbbbb");
                                     information._turnDirection = 
                                         TurnDirection.FirstDirection;
 
@@ -1415,7 +1422,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                         ._relatedDirectionOfFirstDirection = 
                                         currentEdge._direction;
 
-                                    Console.WriteLine("relateDirecitonOfFirstDirection = " + currentEdge._direction);
+                                    //Console.WriteLine("relateDirecitonOfFirstDirection = " + currentEdge._direction);
 
                                     information._distance = 
                                         Convert.ToInt32(currentEdge._distance);
@@ -1536,15 +1543,15 @@ namespace IndoorNavigation.Models.NavigaionLayer
                         currentEdge._direction;
                     information._distance = 
                         Convert.ToInt32(currentEdge._distance);
-                    Console.WriteLine("initial picture " + WaypointEdgeTuple.Item2);
+                    //Console.WriteLine("initial picture " + WaypointEdgeTuple.Item2);
                     information._directionPicture = WaypointEdgeTuple.Item2;
                 }
                 else
                 {
-					Console.WriteLine("current = next case");
+					//Console.WriteLine("current = next case");
                     if (!previousRegionID.Equals(currentRegionID))
                     {
-						Console.WriteLine("previous != current case");
+						//Console.WriteLine("previous != current case");
                         // currentWaypoint and nextWaypoint are in the same region
                         // previouWaypoint and currentWaypoint are acrss regions
                         if (!_regions[previousRegionID]._floor.Equals(
@@ -1609,14 +1616,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             information._distance =
                                 Convert.ToInt32(currentEdge._distance);
 
-                            Console.WriteLine("Tuple = " + WaypointEdgeTuple.Item2);
+                            //Console.WriteLine("Tuple = " + WaypointEdgeTuple.Item2);
                             information._directionPicture = 
                                 WaypointEdgeTuple.Item2;
                         }
                     }
                     else
                     {
-						Console.WriteLine("previous = current case");
+						//Console.WriteLine("previous = current case");
                         // currentWaypoint and nextWaypoint are in the same region
                         // previousWaypoint and currentWaypoint are in the same region
 
@@ -1653,7 +1660,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             currentEdge._connectionType;
                         information._distance = 
                             Convert.ToInt32(currentEdge._distance);
-                        Console.WriteLine("Tuple item2 = " + WaypointEdgeTuple.Item2);
+                        //Console.WriteLine("Tuple item2 = " + WaypointEdgeTuple.Item2);
                         information._directionPicture =
                             WaypointEdgeTuple.Item2;
                     }
@@ -1871,8 +1878,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
         ConferenceRoom,
         Stair,
         Escalator,
-        CommunityHealth,
-        Radiology
+        CommunityHealth,  //健檢中心
+        Radiology,        //放射檢查
+        HealthEducation, //衛教室
+        Procedures //處置
     }
   
     #endregion
