@@ -137,6 +137,9 @@
     <EmbeddedResource Update="Views\ProgressBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\AboutSeeing-I-GOPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\CustomToolbarContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

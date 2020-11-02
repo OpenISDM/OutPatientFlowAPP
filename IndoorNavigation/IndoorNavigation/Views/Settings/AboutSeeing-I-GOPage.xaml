@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.Settings.AboutSeeing_I_GOPage">
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout>
+            <Label Text="帶路機是首款結合室內室外導航的APP，美國專利獨家授權，不論是在茫茫人海或都市叢林中，帶路機都能提供您最精準的定位資訊，首創大圖示導引介面，更是讓您一看就懂，有了帶路機，您不用再擔心迷路找不到方向，現在就讓帶路機帶您探索整個城市吧! 大街小巷，裡裡外外，精彩不錯過!" FontSize="22"/>
+                <Label Text=""/>
+                <Label Text="帶路機的強大功能，搶先使用:" FontSize="18"/>
+            
+            <Label Text="1.	室內室外導航好方便
+帶路機可帶領您到任何您想要去的地方，不論是百貨公司、美味餐館、政府機關、醫院診所或公園都可以，室內室外無縫接軌，免設定，免切換，讓您快樂探索整個城市!" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="2.	定位精準好輕鬆
+帶路機採用獨家授權的美國專利定位技術，抗人潮干擾能力強，定位精準度高，不論您在捷運車站、醫院或百貨商場，帶路機都能提供您最精準的定位資訊與導航指令，讓您輕輕鬆鬆到達目的地!" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="3.	圖示字體好清楚
+帶路機採用大型導引圖示，免去傳統手機地圖小螢幕，不論是左右轉、上下樓、搭電梯或爬樓梯，圖示字體清楚，讓您一看就懂，簡單上手!" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="4.	語音導航好貼心
+帶路機提供貼心的語音導航，即時提醒您行走方向，不論是左轉、右轉、直走、上樓、下樓、搭電梯，都不錯過，免除您緊盯螢幕的困擾，安全又方便，最適合長輩與視障朋友使用!" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="5.	自動更新路徑好窩心
+帶路機擁有即時重新路徑規劃功能，有了帶路雞，您再也不用擔心走錯路!" FontSize="18"/>
+                <Label Text=""/>
+                <Label Text="6.	喜好設定好簡單
+帶路機提供您多種喜好設定，包括中英文介面，路徑規劃優先選擇，手機收訊強度設定等，設定簡單，讓您擁有最佳的使用體驗!" FontSize="18"/>
+                <Label Text=""/>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="聯絡我們 : " FontSize="20"/>
+                            <Span Text="sales@bidae.tech" TextColor="#3f51b5" FontSize="20"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="官方網站 : " FontSize="20"/>
+                            <Span Text="https://bidae.tech" TextColor="#3f51b5" FontSize="20"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

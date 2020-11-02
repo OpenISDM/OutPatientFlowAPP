@@ -95,6 +95,9 @@ namespace IndoorNavigation.Views.Settings
             Device.OpenUri(new Uri("https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/policy"));
         });
 
+        public ICommand AboutAppCommand => new Command(async () =>
+          await Navigation.PushAsync(new AboutSeeing_I_GOPage()));
+
         public ICommand ThirdPartyCommand => new Command(async () =>
          {
              await Navigation.PushAsync(new ThirdPartyUsagePage());
