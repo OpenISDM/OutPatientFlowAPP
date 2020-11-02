@@ -114,6 +114,14 @@ namespace IndoorNavigation.Views.Settings.LicensePages
             {
                 await Navigation.PushAsync(item.page);
             }
+
+            RefreshListView();
+        }
+
+        private void RefreshListView()
+        {
+            LicenseListView.ItemsSource = null;
+            LicenseListView.ItemsSource = _licenses;
         }
 
         class license
