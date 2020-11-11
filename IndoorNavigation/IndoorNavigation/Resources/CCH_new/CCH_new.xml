@@ -62,6 +62,9 @@
       <waypoint id="00000000-0000-0000-0000-100000000019" name="注射室" type="terminal" lat="23.962368833333" lon="120.567176444444" category="ExaminationRoom"/>
       
       <waypoint id="00000000-0000-0000-0000-000000000030" name="廁所30" type="terminal" lat="23.962476569444" lon="120.5674568055555" category="Bathroom"/>
+
+      <waypoint id="" name="服務台" type="terminal" lat="" lon="" category=""/>
+      <waypoint id="" name="急診室" type="terminal" lat="" lon="" category=""/>
     </region>
     <region id="33333333-3333-3333-3333-333333333333" ips_type="LBeacon" name="2樓" floor="2">
       <!--waypoint 20-->
