@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
-             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers" 
              Title="{i18n:Translate LOCATION_STRING}">
-    
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
@@ -16,32 +14,25 @@
             </OnPlatform.Platforms>
         </OnPlatform>
     </ContentPage.Padding>
-    
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem Text="{i18n:Translate SETTING_STRING}" Order="Secondary" 
-                     Clicked="SettingBtn_Clicked"/>
-        <ToolbarItem x:Name="EditToolbarItem" Text="新增" Priority="1" 
-                     Order="Primary" Clicked="AddNaviGraphButton_Clicked"/>
-    </ContentPage.ToolbarItems>-->
 
     <ContentPage.Content>
         <Grid VerticalOptions="FillAndExpand" 
               HorizontalOptions="FillAndExpand">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
 
-                <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
+            <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                        Placeholder="{i18n:Translate SELECT_LOCATION_STRING}"
                        CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
                        BackgroundColor="#f0f0f0"
                        VerticalOptions="StartAndExpand"
                        FontSize="Large"/>
-            
-                <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
+
+            <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
                       ItemsSource="{Binding NavigationGraphFiles}"
                       Margin="10, -8, 10,10" HasUnevenRows="true"
                       ItemTapped="Handle_ItemTapped"
@@ -50,39 +41,34 @@
                       Refreshing="LocationListView_Refreshing"
                           VerticalOptions="FillAndExpand"
                           HorizontalOptions="FillAndExpand">
-                
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="ViewCell_Tapped">
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Item_Delete" CommandParameter="{Binding .}"
                                    Text="Delete" IsDestructive="True" />
-                             </ViewCell.ContextActions>
-                            
+                            </ViewCell.ContextActions>
+
                             <StackLayout Orientation="Horizontal"
                                          Padding="20, 20, 20, 1">
-                                
+
                                 <!--<Label Text="ICON"/>-->
-                             <!--   <Image Source="location_icon.png"
+                                <!--   <Image Source="location_icon.png"
                                        Margin="-5, 1, -1, 15"
                                        VerticalOptions="Start"
                                        Scale="0.5"/>-->
-                                
-                                    <Label  Text="{Binding UserNaming}" 
+
+                                <Label  Text="{Binding UserNaming}" 
                                         HorizontalOptions="Start" 
                                         VerticalOptions="Center"
                                        TextColor="#3F51B5" Margin="0, 0, 1, 10" 
                                            FontSize="32"/>
-                                    
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                
-                </ListView>
-            
-            </Grid>
-        
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </ContentPage.Content>
-
 </local:CustomToolbarContentPage>

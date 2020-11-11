@@ -51,14 +51,9 @@ using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.ViewModels;
 using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
-using System.IO;
 using Rg.Plugins.Popup.Services;
-using System.Globalization;
 using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
@@ -70,14 +65,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using static IndoorNavigation.Utilities.TmperorayStatus;
 using IndoorNavigation.Resources;
-using Rg.Plugins.Popup.Events;
 
 namespace IndoorNavigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : CustomToolbarContentPage
     {
-        MainPageViewModel _viewModel;                 
+        MainPageViewModel _viewModel;
         ViewCell lastCell = null;
         bool isButtonPressed = false; //to prevent multi-click       
 
@@ -94,7 +88,6 @@ namespace IndoorNavigation
                 case Device.Android:
                     NaviSearchBar.BackgroundColor = Color.White;
                     break;
-
                 default:
                     break;
             }
@@ -304,7 +297,8 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
-                Device.StartTimer(TimeSpan.FromSeconds(1.5), () => {
+                Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+                {
                     viewCell.View.BackgroundColor = Color.Transparent;
                     return false;
                 });
@@ -336,24 +330,27 @@ namespace IndoorNavigation
                         AppResources.YES_STRING,
                         AppResources.NO_STRING, "ConfirmDelete"));
 
-                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete", (msgSender, msgArgs) =>
+                MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
+                    (this, "ConfirmDelete", (msgSender, msgArgs) =>
                 {
                     Console.WriteLine("the return Args is :" + (bool)msgArgs);
-                    if ((bool)msgArgs) Storage.DeleteBuildingGraph(item.sourcePath);
+                    if ((bool)msgArgs)
+                        DeleteBuildingGraph(item.sourcePath);
 
                     _viewModel.LoadNavigationGraph();
-                    MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>(this, "ConfirmDelete");
+                    MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>
+                        (this, "ConfirmDelete");
                 });
             }
         }
 
         #region iOS SecondToolBarItem Attributes
 
-        async private Task AddSiteItemMethod_()
+        async private Task AddSiteItemMethod()
         {
             IndicatorPopupPage busyPage = new IndicatorPopupPage();
 
-            if(Connectivity.NetworkAccess != NetworkAccess.Internet) 
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 setting = DependencyService.Get<INetworkSetting>();
 
@@ -368,7 +365,7 @@ namespace IndoorNavigation
                     setting.OpenSettingPage();
                 }
             }
-            else if(Connectivity.NetworkAccess == NetworkAccess.Internet) 
+            else if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 Console.WriteLine("The network is fine");
 
@@ -386,13 +383,13 @@ namespace IndoorNavigation
 
                     await Navigation.PushAsync(new EditLocationPage());
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     Console.WriteLine("Enter add site error - " + exc.Message);
                     AlertDialogPopupPage noResponsePage =
                         new AlertDialogPopupPage
-                        (GetResourceString("HAPPEND_ERROR_STRING"), 
-                        GetResourceString("OK_STRING"), 
+                        (GetResourceString("HAPPEND_ERROR_STRING"),
+                        GetResourceString("OK_STRING"),
                         GetResourceString("CANCEL_STRING"));
 
                     bool wantRetry = await noResponsePage.show();
@@ -400,9 +397,8 @@ namespace IndoorNavigation
                     await PopupNavigation.Instance.RemovePageAsync(busyPage);
 
                     if (wantRetry)
-                        await AddSiteItemMethod_();
+                        await AddSiteItemMethod();
 
-                    
                 }
                 finally
                 {
@@ -414,14 +410,16 @@ namespace IndoorNavigation
                 }
             }
         }
-        
+
         public ICommand SettingCommand { get; set; }
         public ICommand AddSiteCommand { get; set; }
         private void RefreshToolbarOptions()
         {
             ToolbarItems.Clear();
-            SettingCommand = new Command(async () =>await SettingItemMethod());
-            AddSiteCommand = new Command(async () =>await AddSiteItemMethod_());
+            SettingCommand = 
+                new Command(async () => await SettingItemMethod());
+            AddSiteCommand = 
+                new Command(async () => await AddSiteItemMethod());
 
             TestItemCommand = new Command(async () => await TestItemMethod());
 
@@ -435,7 +433,7 @@ namespace IndoorNavigation
             ToolbarItem NewSiteToolbarItem = new ToolbarItem
             {
                 Text = GetResourceString("NEW_STRING"),
-                Command =AddSiteCommand,
+                Command = AddSiteCommand,
                 Order = ToolbarItemOrder.Primary
             };
 
@@ -487,10 +485,20 @@ namespace IndoorNavigation
         {
             //await PopupNavigation.Instance.PushAsync
             //    (new AutoAdjustPopupPage("CCH_Debug"));
-            await Navigation.PushAsync(new TestPage());
+            //await Navigation.PushAsync(new TestPage());
+            WriteTestNaviGraph();
+
+            await Navigation.PushAsync
+                (new NavigationHomePage_
+                (new Location { sourcePath = "CCH_new" }, 
+                LoadNavigationGraphXml("CCH_new")));
             await Task.CompletedTask;
         }
 
+        private void WriteTestNaviGraph()
+        {
+            EmbeddedGenerateFile("CCH_new");
+        }
         #endregion
     }
 }
