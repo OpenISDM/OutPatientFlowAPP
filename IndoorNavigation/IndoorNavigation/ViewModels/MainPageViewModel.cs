@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -45,7 +41,6 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Views.Settings;
 using MvvmHelpers;
 using Xamarin.Forms;
@@ -53,7 +48,6 @@ using Plugin.Multilingual;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
-using System;
 using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.ViewModels
@@ -80,18 +74,6 @@ namespace IndoorNavigation.ViewModels
         {
             _locations = new ObservableRangeCollection<Location>();
 
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-
-            //if (!Application.Current.Properties.ContainsKey("FirstUse"))
-            //{
-            //    Storage.EmbeddedGenerateFile("NTUH_Yunlin");
-            //    Storage.EmbeddedGenerateFile("Taipei_City_Hall");
-            //    Storage.EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
-            //    Storage.EmbeddedGenerateFile("Lab");
-            //    Application.Current.Properties["FirstUse"] = false;
-            //}
-
-
             foreach (Location location in
                      Storage.GetAllNaviGraphName())
             {
@@ -116,7 +98,8 @@ namespace IndoorNavigation.ViewModels
                                , currentLanguage),
                     _resourceManager
                     .GetString("OK_STRING", currentLanguage));
-                await mainPage.Navigation.PushAsync(new SettingTableViewPage());
+                await mainPage.Navigation.PushAsync
+                    (new SettingTableViewPage());
             }
         }
 
@@ -164,9 +147,10 @@ namespace IndoorNavigation.ViewModels
                 OnPropertyChanged("SearchedText");
 
                 // Search waypoints
-                var searchedWaypoints = string.IsNullOrEmpty(value) ?
-                                        _locations : _locations
-                                        .Where(c => c.UserNaming.Contains(value));
+                var searchedWaypoints =
+                    string.IsNullOrEmpty(value) ?
+                    _locations : _locations
+                    .Where(c => c.UserNaming.Contains(value));
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }
         }

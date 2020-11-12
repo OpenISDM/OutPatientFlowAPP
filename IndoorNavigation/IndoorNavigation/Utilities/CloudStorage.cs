@@ -1,13 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      AddPopupPage.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@bidae.tech 
+ *      
+ */
+using System;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using Xamarin.Forms;
-using Newtonsoft.Json;
 using System.Net.Security;
-//using IndoorNavigation.Resources;
+
 namespace IndoorNavigation.Modules.Utilities
 {
     #region Notes
@@ -15,27 +36,29 @@ namespace IndoorNavigation.Modules.Utilities
 
     //the word "FD" is mean FirstDirection
 
-    //  /buildingName/main                          is for waypoint id
-    //  /buildingName/infos/language                is for landmark names
-    //  /buildingName/firstdirections/language      is for  firstdirection
-    //  /buildingName/beacondata                    is for beacon ids
-    //  /                                           is for all support map and languages
+    //  /buildingName/main is for waypoint id
+    //  /buildingName/infos/language is for landmark names
+    //  /buildingName/firstdirections/language is for  firstdirection
+    //  /buildingName/beacondata is for beacon ids
+    //  / is for all support map and languages
     #endregion
 
     public class CloudDownload
     {
-        //this is apikey for access seeing-i-Go server.
-        private const string apikey = "m9AZq97gPlIusBXs7osDOFBjZc345iwtkGDdWy2UVHAe";
-        private const string _localhost = "https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/";
+        private const string _localhost =
+            "https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/";
         public CloudDownload()
-        {            
+        {
         }
-       
-        private bool CheckSSLValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+
+        private bool CheckSSLValidation(object sender,
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors errors)
         {
             return true;
         }
-        
+
         public string Download(string url)
         {
             string ContextString = "";
@@ -43,7 +66,9 @@ namespace IndoorNavigation.Modules.Utilities
 
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckSSLValidation);
+                ServicePointManager.ServerCertificateValidationCallback =
+                    new RemoteCertificateValidationCallback
+                    (CheckSSLValidation);
             }
 
             request.Timeout = 5000;
@@ -51,11 +76,11 @@ namespace IndoorNavigation.Modules.Utilities
 
             try
             {
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                using (HttpWebResponse response = request.GetResponse() as
+                    HttpWebResponse)
                 {
-                    Console.WriteLine("url : " + url + ", StatusCode : " + response.StatusCode);
-
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    using (StreamReader reader =
+                        new StreamReader(response.GetResponseStream()))
                     {
                         ContextString = reader.ReadToEnd();
                     }
@@ -63,7 +88,8 @@ namespace IndoorNavigation.Modules.Utilities
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Download Error : " + exc.Message + ", url : " + url);
+                Console.WriteLine("Download Error : " + exc.Message +
+                    ", url : " + url);
                 ContextString = "";
                 throw exc;
             }
@@ -71,7 +97,6 @@ namespace IndoorNavigation.Modules.Utilities
             {
                 request.Abort();
             }
-            Console.WriteLine("url :" + url + ", ContextString : " + ContextString);
             return ContextString;
         }
 
@@ -92,13 +117,7 @@ namespace IndoorNavigation.Modules.Utilities
         {
             return _localhost + graphName + "/main";
         }
-
-        //the function is not supported now.
-        public string getBeaconListUrl(string graphName)
-        {
-            return _localhost + graphName + "/beacons";
-        }
         #endregion
 
-    }    
+    }
 }

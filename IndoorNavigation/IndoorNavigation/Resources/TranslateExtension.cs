@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -61,8 +57,7 @@ namespace IndoorNavigation.Resources.Helpers
 
         static readonly Lazy<ResourceManager> _resourceManager =
             new Lazy<ResourceManager>(() => new ResourceManager(_resourceID,
-                                                                typeof(TranslateExtension).GetTypeInfo()
-                                                                .Assembly));
+            typeof(TranslateExtension).GetTypeInfo().Assembly));
 
         public string Text { get; set; }
 
@@ -79,10 +74,12 @@ namespace IndoorNavigation.Resources.Helpers
             {
 #if DEBUG
                 throw new ArgumentException(
-                    String.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.",
-                                  Text, _resourceID, ci.Name), "Text");
+                    String.Format("Key '{0}' was not found in resources " +
+                    "'{1}' for culture '{2}'.", Text, _resourceID, ci.Name), 
+                    "Text");
 #else
-                translation = Text; // returns the key, which GETS DISPLAYED TO THE USER
+                translation = Text; // returns the key, which GETS DISPLAYED 
+                TO THE USER
 #endif
             }
             return translation;

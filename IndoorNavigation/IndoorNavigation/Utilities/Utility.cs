@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -59,22 +55,14 @@ namespace IndoorNavigation.Modules
         public static LBeaconScan _lbeaconScan;
         public static ITextToSpeech _textToSpeech;
 
-        // Skip SSL checking
-        private static bool ValidateServerCertificate(Object sender,
-            X509Certificate certificate,
-            X509Chain chain,
-            SslPolicyErrors sslPolicyErrors)
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Download navigation graph from specified server
-        /// </summary>
-        /// <param name="URL"></param>
-        /// <param name="navigraphName"></param>
-        /// <returns></returns>
-        //public static bool DownloadNavigraph(string URL, string navigraphName)
+        ///// <summary>
+        ///// Download navigation graph from specified server
+        ///// </summary>
+        ///// <param name="URL"></param>
+        ///// <param name="navigraphName"></param>
+        ///// <returns></returns>
+        //public static bool DownloadNavigraph(string URL, 
+        //string navigraphName)
         //{
         //    string filePath = Path.Combine(NavigraphStorage._navigraphFolder,
         //                                    navigraphName);
@@ -94,12 +82,16 @@ namespace IndoorNavigation.Modules
         //        return false;
         //    }
         //}
-        //public static bool DownloadFirstDirectionFile(string URL, string fileName)
+        //public static bool DownloadFirstDirectionFile
+        //    (string URL, string fileName)
         //{
-        //    string filePath = Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, fileName);
+        //    string filePath = 
+        //        Path.Combine(NavigraphStorage._firstDirectionInstuctionFolder, 
+        //        fileName);
         //    try
         //    {
-        //        if (!Directory.Exists(NavigraphStorage._firstDirectionInstuctionFolder))
+        //        if (!Directory.Exists(NavigraphStorage.
+        //            _firstDirectionInstuctionFolder))
         //            Directory.CreateDirectory(
         //                NavigraphStorage._firstDirectionInstuctionFolder);
 
@@ -115,9 +107,11 @@ namespace IndoorNavigation.Modules
 
         //}
 
-        //public static bool DownloadInformationFile(string URL, string fileName)
+        //public static bool DownloadInformationFile(string URL,
+        //string fileName)
         //{
-        //    string filePath = Path.Combine(NavigraphStorage._informationFolder, fileName);
+        //    string filePath = 
+        //        Path.Combine(NavigraphStorage._informationFolder, fileName);
         //    try
         //    {
         //        if (!Directory.Exists(NavigraphStorage._informationFolder))

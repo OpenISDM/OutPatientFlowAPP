@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -31,13 +27,10 @@
  *      
  */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MvvmHelpers;
 using Plugin.Multilingual;
 using Xamarin.Forms;
 using System.Resources;
-using Xamarin.Essentials;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using Rg.Plugins.Popup.Services;
@@ -79,8 +72,10 @@ namespace IndoorNavigation.ViewModels
         }
         async public void CheckRegister()
         {
-            //await PopupNavigation.Instance.PushAsync(new AskRegisterPopupPage(_naviGraphName));                       
-            await PopupNavigation.Instance.PushAsync(new SelectPurposePopupPage(_naviGraphName));
+            //await PopupNavigation.Instance.PushAsync
+            //(new AskRegisterPopupPage(_naviGraphName));                       
+            await PopupNavigation.Instance.PushAsync
+                (new SelectPurposePopupPage(_naviGraphName));
         }               
         private string GetResourceString(string key)
         {
@@ -103,7 +98,8 @@ namespace IndoorNavigation.ViewModels
     //        if (IDnum.Equals(string.Empty) || patientID.Equals(string.Empty))
     //        {
     //            Console.WriteLine("Enter No IDnumber");               
-    //            await PopupNavigation.Instance.PushAsync(new SignInPopupPage(_naviGraphName));
+    //            await PopupNavigation.Instance.PushAsync
+    //            (new SignInPopupPage(_naviGraphName));
     //        }
     //    }       
     }
