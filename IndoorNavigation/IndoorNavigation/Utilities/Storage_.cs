@@ -1,5 +1,28 @@
-﻿//This is the stroage re-structure version.
-
+﻿/*
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      AddPopupPage.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@bidae.tech 
+ *      
+ */
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.ViewModels;
@@ -11,26 +34,10 @@ using System.Xml;
 using Plugin.Multilingual;
 using System.Xml.Linq;
 using System.Text;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
-using System.Security;
 using System.Linq;
 using System.Globalization;
-using System.Security.Authentication;
-using Dijkstra.NET.Model;
-using IndoorNavigation.Views.Navigation;
-using System.Net;
 using System.Resources;
 using IndoorNavigation.Resources.Helpers;
-using Prism.Navigation.Xaml;
-/*
-note :
-1. We need to define the stroage path first
-2. A resource object to offer information, like : Languages, MapNames. 
-the object will constructor when call static storage class.
-to store those data, need to define the storage name, format, class structure.
-3. 
-then, FD means FirstDirection.
-*/
 
 namespace IndoorNavigation.Utilities
 {
@@ -38,7 +45,8 @@ namespace IndoorNavigation.Utilities
     {
         #region Static Pathes and objects
         internal static readonly string _LocalData =
-           Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+           Environment.GetFolderPath
+            (Environment.SpecialFolder.LocalApplicationData);
 
         internal static readonly string _navigraphFolder =
             Path.Combine(_LocalData, "Navigraph");
@@ -50,16 +58,17 @@ namespace IndoorNavigation.Utilities
              = Path.Combine(_LocalData, "Information");
 
 
-        private static readonly string _resourceID = 
+        private static readonly string _resourceID =
             "IndoorNavigation.Resources.AppResources";
         private static ResourceManager _resourceManager =
-            new ResourceManager(_resourceID, 
+            new ResourceManager(_resourceID,
                 typeof(TranslateExtension).GetTypeInfo().Assembly);
 
         private static object _fileLock = new object();
         public static GraphResources _resources;
         public static Dictionary<string, GraphInfo> _localResources;
-        public static CultureInfo _currentCulture = CrossMultilingual.Current.CurrentCultureInfo;
+        public static CultureInfo _currentCulture =
+            CrossMultilingual.Current.CurrentCultureInfo;
         public static Dictionary<string, GraphInfo> _serverResources;
         #endregion
 
@@ -85,7 +94,6 @@ namespace IndoorNavigation.Utilities
         static public List<Location> GetAllNaviGraphName()
         {
             Console.WriteLine(">>GetAllNaviGraphName");
-            Console.WriteLine("Graph count : " + _resources._graphResources.Count);
             List<Location> names = new List<Location>();
             names =
                 _resources._graphResources.Select
@@ -101,13 +109,15 @@ namespace IndoorNavigation.Utilities
         static public List<Location> GetLocalGraphNames()
         {
             List<Location> LocalNames = new List<Location>();
-            _localResources = GraphInfoReader(XmlReader("Resources.GraphResource.xml"));
+            _localResources =
+                GraphInfoReader(XmlReader("Resources.GraphResource.xml"));
             LocalNames =
                     _localResources.Select(o =>
                         new Location
                         {
                             sourcePath = o.Key,
-                            UserNaming = o.Value._displayNames[_currentCulture.Name]
+                            UserNaming = o.Value._displayNames
+                            [_currentCulture.Name]
                         })
                         .ToList();
             return LocalNames;
@@ -115,7 +125,8 @@ namespace IndoorNavigation.Utilities
         static public NavigationGraph LoadNavigationGraphXml(string fileName)
         {
             Console.WriteLine(">>LoadNavigationGraphXml");
-            string filePath = Path.Combine(_navigraphFolder, fileName + ".xml");
+            string filePath =
+                Path.Combine(_navigraphFolder, fileName + ".xml");
             XmlDocument doc = new XmlDocument();
             try
             {
@@ -123,7 +134,8 @@ namespace IndoorNavigation.Utilities
             }
             catch (Exception exc)
             {
-                Console.WriteLine("LoadNavigationGraphXml error : " + exc.Message);
+                Console.WriteLine("LoadNavigationGraphXml error : "
+                    + exc.Message);
                 throw exc;
             }
             return new NavigationGraph(doc);
@@ -133,7 +145,9 @@ namespace IndoorNavigation.Utilities
             Console.WriteLine(">>NaviStorage : LoadFDXml");
 
 
-            string filePath = Path.Combine(_firstDirectionInstuctionFolder, $"{fileName}_FD_{_currentCulture}.xml");
+            string filePath =
+                Path.Combine(_firstDirectionInstuctionFolder,
+                $"{fileName}_FD_{_currentCulture}.xml");
             Console.WriteLine("First Direction File path : " + filePath);
             XmlDocument doc = new XmlDocument();
             try
@@ -151,8 +165,8 @@ namespace IndoorNavigation.Utilities
         static public XMLInformation LoadXmlInformation(string fileName)
         {
             Console.WriteLine(">>LoadXmlInformation");
-            string filePath = Path.Combine(_informationFolder, $"{fileName}_info_{_currentCulture.Name}.xml");
-            Console.WriteLine("Information file path : " + filePath);
+            string filePath = Path.Combine(_informationFolder,
+                $"{fileName}_info_{_currentCulture.Name}.xml");
             XmlDocument doc = new XmlDocument();
 
             try
@@ -166,7 +180,7 @@ namespace IndoorNavigation.Utilities
             }
             return new XMLInformation(doc);
         }
-        
+
 
         #region Others      
         static private void CreateDirectory()
@@ -203,26 +217,33 @@ namespace IndoorNavigation.Utilities
                 Console.WriteLine("first Use Generate Success");
             }
         }
-        static public Dictionary<string, GraphInfo> GraphInfoReader(XmlDocument xmlDocument)
+        static public Dictionary<string, GraphInfo> GraphInfoReader
+            (XmlDocument xmlDocument)
         {
-            Dictionary<string, GraphInfo> result = new Dictionary<string, GraphInfo>();
+            Dictionary<string, GraphInfo> result =
+                new Dictionary<string, GraphInfo>();
 
-            XmlNodeList GraphsList = xmlDocument.SelectNodes("GraphResource/Graphs/Graph");
+            XmlNodeList GraphsList =
+                xmlDocument.SelectNodes("GraphResource/Graphs/Graph");
 
             foreach (XmlNode GraphNode in GraphsList)
             {
                 GraphInfo info = new GraphInfo();
 
                 string GraphName = GraphNode.Attributes["name"].Value;
-                info._currentVersion =double.Parse(GraphNode.Attributes["version"].Value);
+                info._currentVersion =
+                    double.Parse(GraphNode.Attributes["version"].Value);
+
                 info._graphName = GraphName;
 
-                XmlNodeList DisplayNameList = GraphNode.SelectNodes("DisplayNames/DisplayName");
+                XmlNodeList DisplayNameList =
+                    GraphNode.SelectNodes("DisplayNames/DisplayName");
 
                 foreach (XmlNode displayName in DisplayNameList)
                 {
-                    Console.WriteLine("DisplayName context : " + displayName.Attributes["name"].Value);
-                    info._displayNames.Add(displayName.Attributes["language"].Value, displayName.Attributes["name"].Value);
+                    info._displayNames
+                        .Add(displayName.Attributes["language"].Value,
+                        displayName.Attributes["name"].Value);
                 }
                 result.Add(GraphName, info);
             }
@@ -236,8 +257,9 @@ namespace IndoorNavigation.Utilities
 
             string sourceContext = "";
 
-            Stream stream = 
-                assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{FileName}");
+            Stream stream =
+                assembly.GetManifestResourceStream
+                ($"{assembly.GetName().Name}.{FileName}");
             using (StreamReader reader = new StreamReader(stream))
             {
                 sourceContext = reader.ReadToEnd();
@@ -272,7 +294,8 @@ namespace IndoorNavigation.Utilities
                 DeleteNaviGraph(location.sourcePath);
                 DeleteXmlInformation(location.sourcePath);
                 DeleteFDXml(location.sourcePath);
-                UpdateGraphList(location.sourcePath, AccessGraphOperate.Delete);
+                UpdateGraphList(location.sourcePath,
+                    AccessGraphOperate.Delete);
             }
         }
         static public void DeleteBuildingGraph(string fileName)
@@ -288,7 +311,9 @@ namespace IndoorNavigation.Utilities
 
             foreach (string language in _resources._languages)
             {
-                string filePath = Path.Combine(_firstDirectionInstuctionFolder, $"{fileName}_FD_{language}.xml");
+                string filePath =
+                    Path.Combine(_firstDirectionInstuctionFolder,
+                    $"{fileName}_FD_{language}.xml");
                 lock (_fileLock)
                     File.Delete(filePath);
             }
@@ -305,7 +330,8 @@ namespace IndoorNavigation.Utilities
             //use loop to access multi-language
             foreach (string language in _resources._languages)
             {
-                string filePath = Path.Combine(_informationFolder, $"{fileName}_info_{language}.xml");
+                string filePath = Path.Combine(_informationFolder,
+                    $"{fileName}_info_{language}.xml");
 
                 lock (_fileLock)
                     File.Delete(filePath);
@@ -321,20 +347,29 @@ namespace IndoorNavigation.Utilities
 
             try
             {
-                string sourceNaviGraph = $"Resources.{sourceName}.{sourceName}.xml";
-                string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");
+                string sourceNaviGraph =
+                    $"Resources.{sourceName}.{sourceName}.xml";
+                string sinkNaviGraph =
+                    Path.Combine(_navigraphFolder, sourceName + ".xml");
 
                 EmbeddedStoring(sourceNaviGraph, sinkNaviGraph);
                 foreach (string language in _resources._languages)
                 {
-                    string sourceInfomation = $"Resources.{sourceName}.{sourceName}_info_{language}.xml";
-                    Console.WriteLine("sourceInfo : " + sourceInfomation);
-                    string sourceFDFile = $"Resources.{sourceName}.{sourceName}_FD_{language}.xml";
-                    Console.WriteLine("sourceFD : " + sourceFDFile);
+                    string sourceInfomation =
+                        $"Resources.{sourceName}." +
+                        $"{sourceName}_info_{language}.xml";
 
-                    string sinkInformationPath = Path.Combine(_informationFolder, $"{sourceName}_info_{language}.xml");
-  
-                    string sinkFDPath = Path.Combine(_firstDirectionInstuctionFolder, $"{sourceName}_FD_{language}.xml");
+                    string sourceFDFile =
+                        $"Resources.{sourceName}." +
+                        $"{sourceName}_FD_{language}.xml";
+                    string sinkInformationPath =
+                        Path.Combine(_informationFolder,
+                        $"{sourceName}_info_{language}.xml");
+
+                    string sinkFDPath =
+                        Path.Combine(_firstDirectionInstuctionFolder,
+                        $"{sourceName}_FD_{language}.xml");
+
                     EmbeddedStoring(sourceInfomation, sinkInformationPath);
                     EmbeddedStoring(sourceFDFile, sinkFDPath);
                 }
@@ -344,42 +379,57 @@ namespace IndoorNavigation.Utilities
             }
             catch (Exception exc)
             {
-                Console.WriteLine("EmbeddedGenerateFile error : " + exc.Message);
+                Console.WriteLine("EmbeddedGenerateFile error : "
+                    + exc.Message);
                 throw exc;
             }
         }
-        static private void EmbeddedStoring(string sourceRoute, string sinkRoute)
+        static private void EmbeddedStoring(string sourceRoute,
+            string sinkRoute)
         {
-            Console.WriteLine(">>EmbeddedStoring, sourceRoute : " +sourceRoute);
+            Console.WriteLine(">>EmbeddedStoring, sourceRoute : " +
+                sourceRoute);
+
             Console.WriteLine("sinkRoute : " + sinkRoute);
             string FileContext = EmbeddedSourceReader(sourceRoute);
 
             if (string.IsNullOrEmpty(FileContext))
-                throw new Exception("the value can't be null attributeName: " + sourceRoute);
+                throw new Exception("the value can't be null attributeName: "
+                    + sourceRoute);
             File.WriteAllText(sinkRoute, FileContext);
         }
         static public void CloudGenerateFile(string sourceName)
         {
             CloudDownload _clouddownload = new CloudDownload();
-            string sourceNaviGraph = _clouddownload.Download(_clouddownload.getMainUrl(sourceName));            
+
+            string sourceNaviGraph =
+                _clouddownload.Download(_clouddownload
+                .getMainUrl(sourceName));
+
             ValidateDownloadString(sourceNaviGraph);
 
-            string sinkNaviGraph = Path.Combine(_navigraphFolder, sourceName + ".xml");
-            Console.WriteLine("SinkNaviGraph path : " + sinkNaviGraph);
+            string sinkNaviGraph =
+                Path.Combine(_navigraphFolder, sourceName + ".xml");
+
             CloudStoring(sourceNaviGraph, sinkNaviGraph);
 
             foreach (string language in _resources._languages)
             {
                 //lock (_downloadLock)
                 {
-                    string sourceFD = _clouddownload.Download(_clouddownload.getFDUrl(sourceName, language));
-                    string sourceInfo = _clouddownload.Download(_clouddownload.getInfoUrl(sourceName, language));
+                    string sourceFD =
+                        _clouddownload.Download(_clouddownload
+                        .getFDUrl(sourceName, language));
+                    string sourceInfo =
+                        _clouddownload.Download
+                        (_clouddownload.getInfoUrl(sourceName, language));
 
-                    string sinkFD = Path.Combine(_firstDirectionInstuctionFolder, $"{sourceName}_FD_{language}.xml");
-                    string sinkInfo = Path.Combine(_informationFolder, $"{sourceName}_info_{language}.xml");
-
-                    Console.WriteLine("Sink FirstDirection path : " + sinkFD);
-                    Console.WriteLine("Sink InformationXml path : " + sinkInfo);
+                    string sinkFD =
+                        Path.Combine(_firstDirectionInstuctionFolder,
+                        $"{sourceName}_FD_{language}.xml");
+                    string sinkInfo =
+                        Path.Combine(_informationFolder,
+                        $"{sourceName}_info_{language}.xml");
 
                     ValidateDownloadString(sourceFD);
                     ValidateDownloadString(sourceInfo);
@@ -397,9 +447,9 @@ namespace IndoorNavigation.Utilities
 
             try
             {
-                doc.LoadXml(downloadString);                
+                doc.LoadXml(downloadString);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("validateDownloadString error - " +
                     exc.Message);
@@ -410,12 +460,13 @@ namespace IndoorNavigation.Utilities
         static private void CloudStoring(string Context, string sinkRoute)
         {
             if (string.IsNullOrEmpty(Context))
-                throw new Exception("Download context can't be null or empty. Please check url or network");
+                throw new Exception("Download context can't be null or empty. "
+                    + "Please check url or network");
             File.WriteAllText(sinkRoute, Context);
         }
         #endregion
         #region Update
-        static private void UpdateGraphList(string fileName, 
+        static private void UpdateGraphList(string fileName,
             AccessGraphOperate operate)
         {
             Console.WriteLine(">>UpdateGraphList");
@@ -424,14 +475,15 @@ namespace IndoorNavigation.Utilities
                 case AccessGraphOperate.AddLocal:
                     {
                         Console.WriteLine(">>AddLocal");
-                        if (!_resources._graphResources.ContainsKey(fileName))
+                        if (!_resources._graphResources
+                            .ContainsKey(fileName))
                         {
                             _resources._graphResources
                                 .Add(fileName, _localResources[fileName]);
                         }
                         else
                         {
-                            _resources._graphResources[fileName] = 
+                            _resources._graphResources[fileName] =
                                 _localResources[fileName];
                         }
                         break;
@@ -440,7 +492,7 @@ namespace IndoorNavigation.Utilities
                     {
                         Console.WriteLine(">>AddServer");
                         if (!_resources._graphResources.ContainsKey(fileName))
-                        {                            
+                        {
                             _resources._graphResources
                                 .Add(fileName, _serverResources[fileName]);
                         }
@@ -473,7 +525,7 @@ namespace IndoorNavigation.Utilities
                     break;
             }
             StoreGraphStatus();
-        }        
+        }
         static private void GraphResourceParse()
         {
             Console.WriteLine(">>GraphResourceParse");
@@ -487,10 +539,13 @@ namespace IndoorNavigation.Utilities
 
             Console.WriteLine("Next to parse Language");
 
-            XmlNodeList LanguageList = doc.SelectNodes("GraphResource/Languages/Language");
+            XmlNodeList LanguageList =
+                doc.SelectNodes("GraphResource/Languages/Language");
+
             foreach (XmlNode languageNode in LanguageList)
             {
-                _resources._languages.Add(languageNode.Attributes["name"].Value);
+                _resources._languages
+                    .Add(languageNode.Attributes["name"].Value);
             }
             _resources._graphResources = Graphinfos;
         }
@@ -500,12 +555,16 @@ namespace IndoorNavigation.Utilities
             XElement root = new XElement("GraphResource");
             XElement GraphsElement = new XElement("Graphs");
 
-            foreach (KeyValuePair<string, GraphInfo> pair in _resources._graphResources)
+            foreach (KeyValuePair<string, GraphInfo> pair in
+                _resources._graphResources)
             {
                 XElement displayNameElement = new XElement("DisplayNames");
-                foreach (KeyValuePair<string, string> displaynamePair in pair.Value._displayNames)
+                foreach (KeyValuePair<string, string> displaynamePair in
+                    pair.Value._displayNames)
                 {
-                    displayNameElement.Add(new XElement("DisplayName", new XAttribute("name", displaynamePair.Value), new XAttribute("language", displaynamePair.Key)));
+                    displayNameElement.Add(new XElement("DisplayName",
+                        new XAttribute("name", displaynamePair.Value),
+                        new XAttribute("language", displaynamePair.Key)));
                 }
                 GraphsElement.Add(new XElement("Graph",
                     new XAttribute("name", pair.Key),
@@ -517,25 +576,26 @@ namespace IndoorNavigation.Utilities
 
             foreach (string language in _resources._languages)
             {
-                LanguageElement.Add(new XElement("Language", new XAttribute("name", language)));
+                LanguageElement.Add(new XElement("Language",
+                    new XAttribute("name", language)));
             }
             root.Add(GraphsElement, LanguageElement);
 
-            XDocument doc = new XDocument(new XDeclaration("1.0", "utf-8", null), root);
+            XDocument doc =
+                new XDocument(new XDeclaration("1.0", "utf-8", null), root);
 
             using (StringWriter writer = new Utf8StringWriter())
             {
                 doc.Save(writer);
-                string filePath = Path.Combine(_LocalData, "ResourceStatus.xml");
+                string filePath = Path.Combine(_LocalData,
+                    "ResourceStatus.xml");
                 File.WriteAllText(filePath, writer.ToString());
-
-                Console.WriteLine(">>StoreGraphStatus writer : " + writer.ToString());
             }
             Console.WriteLine("<<StoreGraphStatus");
         }
 
-        static public bool CheckVersionNumber(string fileName, 
-            double currentVersion, 
+        static public bool CheckVersionNumber(string fileName,
+            double currentVersion,
             AccessGraphOperate operate)
         {
             Console.WriteLine(">>CheckVersionNumber, Operate : " + operate);
@@ -544,26 +604,25 @@ namespace IndoorNavigation.Utilities
                 case AccessGraphOperate.CheckLocalVersion:
                     {
                         Console.WriteLine(">>CheckVersionNumber -> local");
-                        Console.WriteLine("installed version : " + currentVersion);
-                        
-                        if (_localResources.ContainsKey(fileName) && 
-                            _localResources[fileName]._currentVersion > 
+                        Console.WriteLine("installed version : " +
+                            currentVersion);
+
+                        if (_localResources.ContainsKey(fileName) &&
+                            _localResources[fileName]._currentVersion >
                             currentVersion)
                         {
-                            Console.WriteLine("local resource version : " + 
+                            Console.WriteLine("local resource version : " +
                                 _localResources[fileName]._currentVersion);
                             return true;
                         }
-
-
                         return false;
                     }
                 case AccessGraphOperate.CheckCloudVersion:
                     {
                         Console.WriteLine(">>CheckVersionNumber -> Cloud");
-                        if (_serverResources != null && 
-                            _serverResources.ContainsKey(fileName) && 
-                            _serverResources[fileName]._currentVersion > 
+                        if (_serverResources != null &&
+                            _serverResources.ContainsKey(fileName) &&
+                            _serverResources[fileName]._currentVersion >
                             currentVersion)
                             return true;
                         return false;
@@ -595,7 +654,8 @@ namespace IndoorNavigation.Utilities
                 _displayNames = new Dictionary<string, string>();
             }
             public Dictionary<string, string> _displayNames { get; set; }
-            public string _displayName { 
+            public string _displayName
+            {
                 get
                 {
                     try
@@ -612,7 +672,8 @@ namespace IndoorNavigation.Utilities
             public SiteSourceFrom _siteSourceFrom { get; set; }
             public string _graphName { get; set; }
             public double _currentVersion { get; set; }
-            public override string ToString() => _displayNames[_currentCulture.Name];
+            public override string ToString() =>
+                _displayNames[_currentCulture.Name];
 
         }
 
