@@ -1,4 +1,29 @@
-﻿using Android;
+﻿/*
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      MainActivity.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@bidae.tech 
+ *      
+ */
+using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -16,7 +41,7 @@ namespace IndoorNavigation.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
-        
+
         App xamarinApp;
 
         protected override void OnCreate(Bundle bundle)
@@ -70,7 +95,7 @@ namespace IndoorNavigation.Droid
             {
                 // base.OnBackPressed();
             }
-            
+
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
@@ -85,7 +110,7 @@ namespace IndoorNavigation.Droid
         {
             xamarinApp.OnStop();
             base.OnDestroy();
-        }      
+        }
     }
 }
 

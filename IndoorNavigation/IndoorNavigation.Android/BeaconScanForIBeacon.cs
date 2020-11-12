@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -52,7 +48,9 @@ using System.Linq;
 [assembly: Xamarin.Forms.Dependency(typeof(BeaconScanForIBeacon))]
 namespace IndoorNavigation.Droid
 {
-    public class BeaconScanForIBeacon : Java.Lang.Object, BluetoothAdapter.ILeScanCallback, IBeaconScan
+    public class BeaconScanForIBeacon : Java.Lang.Object,
+        BluetoothAdapter.ILeScanCallback,
+        IBeaconScan
     {
         protected BluetoothAdapter _adapter;
         protected BluetoothManager _manager;
@@ -65,7 +63,8 @@ namespace IndoorNavigation.Droid
         {
             _event = new NavigationEvent();
             var appContext = Android.App.Application.Context;
-            this._manager = (BluetoothManager)appContext.GetSystemService("bluetooth");
+            this._manager =
+                (BluetoothManager)appContext.GetSystemService("bluetooth");
             this._adapter = this._manager.Adapter;
         }
 
@@ -122,18 +121,9 @@ namespace IndoorNavigation.Droid
             //Console.WriteLine(">> Beacon Scan Dispose");
         }
 
-        private void UpdatedState(object sender, EventArgs args)
-        {
-        }
-       
         private string ExtractBeaconUUID(string stringAdvertisementSpecificData)
         {
-            Console.WriteLine($"Extract BeaconUUID : {stringAdvertisementSpecificData}");
             string[] parse = stringAdvertisementSpecificData.Split("-");
-            //Console.WriteLine($"stringAdverisement specific Data is : {}");
-            //for (int i = 0; i < parse.Length; i++) {
-            //    Console.WriteLine($"parse[{i}] is :{parse[i]}");
-            //}
             if (parse.Count() < 60)
             {
                 return stringAdvertisementSpecificData;
@@ -141,15 +131,12 @@ namespace IndoorNavigation.Droid
             else
             {
                 /*var parser =*/
-                return string.Format("00000000-0402-{0}{1}-0000-{2}{3}{4}{5}{6}{7}",
-                                            parse[43], parse[42],
-                                            parse[46], parse[47], parse[48], parse[49], parse[50], parse[51]);
+                return string.Format
+                    ("00000000-0402-{0}{1}-0000-{2}{3}{4}{5}{6}{7}",
+                    parse[43], parse[42],
+                    parse[46], parse[47], parse[48], parse[49],
+                    parse[50], parse[51]);
 
-                //var parser= string.Format("{0}{1}{2}{3}-{4}{5}-{6}{7}-{8}{9}-{10}{11}{12}{13}{14}{15}",
-                //        parse[9], parse[10], parse[11], parse[12], parse[13], parse[14], parse[15], parse[16], parse[17], parse[18],
-                //        parse[19], parse[20], parse[21], parse[22], parse[23], parse[24]);//parser.ToString();
-                //Console.WriteLine($"parser in ibeacon result = {parser}");
-                //return parser;
             }
         }
     }
