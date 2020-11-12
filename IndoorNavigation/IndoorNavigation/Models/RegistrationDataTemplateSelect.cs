@@ -1,6 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      AddPopupPage.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@bidae.tech 
+ *      
+ */
+using System;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Models
@@ -14,7 +37,7 @@ namespace IndoorNavigation.Models
         public DataTemplate AddItemDataTemplate { get; set; }
         //public DataTemplate NullTemplate { get; set; }
         protected override DataTemplate OnSelectTemplate
-                                        (Object item, BindableObject container)
+            (Object item, BindableObject container)
         {
             var o = item as RgRecord;
             if (o.isAccept || o.type.Equals(RecordType.Invalid))

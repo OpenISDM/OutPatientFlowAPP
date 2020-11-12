@@ -1,4 +1,29 @@
-﻿using IndoorNavigation.Models;
+﻿/*
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
+ *
+ * Project Name:
+ *
+ *      IndoorNavigation
+ *
+ * Version:
+ *
+ *      1.0.0, 20200221
+ * 
+ * File Name:
+ *
+ *      AddPopupPage.cs
+ *
+ * Abstract:
+ *      
+ *
+ *      
+ * Authors:
+ * 
+ *      Jason Chang, jasonchang@bidae.tech 
+ *      
+ */
+using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.ViewModels;

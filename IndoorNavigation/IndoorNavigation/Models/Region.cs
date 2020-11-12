@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -56,7 +52,8 @@ namespace IndoorNavigation.Models
         public string _name { get; set; }
         public int _floor { get; set; }
         public List<Guid> _neighbors { get; set; }
-        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory { get; set; }
+        public Dictionary<CategoryType, List<Waypoint>> _waypointsByCategory 
+        { get; set; }
     }
 
     public struct RegionWaypointPoint

@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -47,7 +43,7 @@ using System.Collections.Generic;
 using IndoorNavigation.Models.NavigaionLayer;
 
 namespace IndoorNavigation.Models
-{   
+{
     public class Waypoint
     {
         public Guid _id { get; set; }
@@ -67,5 +63,5 @@ namespace IndoorNavigation.Models
         public Guid _portalWaypoint1 { get; set; }
         public Guid _portalWaypoint2 { get; set; }
     }
-    
+
 }
