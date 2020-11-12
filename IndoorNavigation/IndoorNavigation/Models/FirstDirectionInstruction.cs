@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -23,14 +19,15 @@
  *
  * Abstract:
  *
- *      This file used to get the first direction information. When the user first uses our APP
- *      They do not know where there are and which direction they should face.
- *      FirstDirectionInstruction can tell the user their nearest landmark that they should face to.
+ *      This file used to get the first direction information. When the user 
+ *      first uses our APP They do not know where there are and which direction
+ *      they should face.
+ *      FirstDirectionInstruction can tell the user their nearest landmark that
+ *      they should face to.
  *      
  * Authors:
  *
  *      Eric Lee, ericlee@iis.sinica.edu.tw
- *     
  *
  */
 
@@ -38,8 +35,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using Xamarin.Essentials;
-using Xamarin.Forms.Xaml;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -48,7 +43,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         private Dictionary<Guid, string> _landmark;
         private Dictionary<Guid, CardinalDirection> _relatedDirection;
         private Dictionary<Guid, int> _faceOrBack;
-        private Dictionary<Tuple<Guid,Guid>, string> _specialString;
+        private Dictionary<Tuple<Guid, Guid>, string> _specialString;
 
         public FirstDirectionInstruction(XmlDocument fileName)
         {
@@ -56,17 +51,18 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _landmark = new Dictionary<Guid, string>();
             _relatedDirection = new Dictionary<Guid, CardinalDirection>();
             _faceOrBack = new Dictionary<Guid, int>();
-            _specialString = new Dictionary<Tuple<Guid,Guid>, string>();
+            _specialString = new Dictionary<Tuple<Guid, Guid>, string>();
 
-            XmlNodeList xmlWaypoint = fileName.SelectNodes("first_direction_XML/waypoint");
+            XmlNodeList xmlWaypoint =
+                fileName.SelectNodes("first_direction_XML/waypoint");
 
-            foreach(XmlNode xmlNode in xmlWaypoint)
-            {                
+            foreach (XmlNode xmlNode in xmlWaypoint)
+            {
                 string tempLandmark = "";
                 CardinalDirection tempRelatedDirection;
                 int tempFaceOrBack = 0;
                 XmlElement xmlElement = (XmlElement)xmlNode;
-                
+
                 tempLandmark = xmlElement.GetAttribute("Landmark").ToString();
                 tempRelatedDirection = (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
                                                   xmlElement.GetAttribute("RelatedDirection"),
@@ -82,31 +78,40 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     _relatedDirection.Add(waypointID, tempRelatedDirection);
                     _faceOrBack.Add(waypointID, tempFaceOrBack);
                 }
-                
+
             }
 
             Console.WriteLine(">>Read Special string part");
-            XmlNodeList specialStringNode = fileName.SelectNodes("first_direction_XML/specials/special");
+            XmlNodeList specialStringNode =
+                fileName.SelectNodes("first_direction_XML/specials/special");
 
-            foreach(XmlNode node in specialStringNode)
+            foreach (XmlNode node in specialStringNode)
             {
                 //Guid tmpGuid = new Guid(node.Attributes["id"].Value);
-                Guid source = new Guid(node.Attributes["source"].Value);
-                Guid destination = new Guid(node.Attributes["destination"].Value);
+                Guid source =
+                    new Guid(node.Attributes["source"].Value);
+
+                Guid destination =
+                    new Guid(node.Attributes["destination"].Value);
+
                 String specialString = node.Attributes["instruction"].Value;
 
 
                 Console.WriteLine("source Guid = " + source.ToString());
-                Console.WriteLine("destination guid = " + destination.ToString());
+                Console.WriteLine("destination guid = " +
+                    destination.ToString());
                 Console.WriteLine("instruction = " + specialString);
-                Tuple<Guid, Guid> pair = new Tuple<Guid, Guid>(source, destination);
+
+                Tuple<Guid, Guid> pair =
+                    new Tuple<Guid, Guid>(source, destination);
+
                 _specialString.Add(pair, specialString);
             }
         }
 
         public string GetSpecialString(Guid source, Guid destination)
         {
-            return _specialString[new Tuple<Guid, Guid>(source,destination)];
+            return _specialString[new Tuple<Guid, Guid>(source, destination)];
         }
 
         public string returnLandmark(Guid currentGuid)

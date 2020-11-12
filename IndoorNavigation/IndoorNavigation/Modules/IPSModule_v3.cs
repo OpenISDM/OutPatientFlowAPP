@@ -8,13 +8,13 @@ using IndoorNavigation.Modules.IPSClients;
 
 namespace IndoorNavigation.Modules
 {
-    public class IPSModule_ : IDisposable
+    public class IPSModule_v3 : IDisposable
     {
         private NavigationGraph _naviGraph;
         public NavigationEvent _event { get; private set; }
         private Dictionary<IPSType, IPSClient> _multiClients;
         private HashSet<IPSType> OpenedIPSType;
-        public IPSModule_(NavigationGraph naviGraph)
+        public IPSModule_v3(NavigationGraph naviGraph)
         {
             Console.WriteLine(">>IPSmodule : constructor");
 

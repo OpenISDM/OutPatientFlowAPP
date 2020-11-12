@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -32,14 +28,7 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Xml;
-using Xamarin.Forms;
-using IndoorNavigation.Modules.Utilities;
-using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Models;
 using IndoorNavigation.Utilities;
 
 namespace IndoorNavigation.Models
@@ -65,11 +54,12 @@ namespace IndoorNavigation.Models
                 Dguid =
                     new Guid(destinationNode.Attributes["id"].Value);
                 Rguid =
-                    new Guid(destinationNode.ParentNode.Attributes["id"].Value);
+                    new Guid(destinationNode.ParentNode.Attributes["id"]
+                    .Value);
 
                 _clinicsPositions
                 .Add(destinationNode.Attributes["name"].Value,
-                     new RegionWaypointPoint(Rguid, Dguid));                         
+                     new RegionWaypointPoint(Rguid, Dguid));
             }
         }
         public Guid GetRegionID(string key)

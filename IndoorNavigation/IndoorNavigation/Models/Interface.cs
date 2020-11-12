@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -49,7 +45,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GeoCoordinatePortable;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Models
@@ -128,7 +123,6 @@ namespace IndoorNavigation.Models
         void DetectWaypointRssi(WaypointBeaconsMapping mapping);
         void SetWaypointList(List<WaypointBeaconsMapping> WaypointList);
         void Stop();
-
         void OnRestart();
         NavigationEvent _event { get; }
     }
