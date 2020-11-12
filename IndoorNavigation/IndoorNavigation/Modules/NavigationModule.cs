@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -47,7 +43,6 @@ using IndoorNavigation.Models.NavigaionLayer;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.Models;
 using IndoorNavigation.Utilities;
 
@@ -90,14 +85,14 @@ namespace IndoorNavigation.Modules
             if (Application.Current.Properties.ContainsKey("AvoidStair"))
             {
                 avoidList.Add(
-                        (bool)Application.Current.Properties["AvoidStair"] ?
-                         ConnectionType.Stair : ConnectionType.NormalHallway);
+                    (bool)Application.Current.Properties["AvoidStair"] ?
+                    ConnectionType.Stair : ConnectionType.NormalHallway);
                 avoidList.Add(
-                        (bool)Application.Current.Properties["AvoidElevator"] ?
-                        ConnectionType.Elevator : ConnectionType.NormalHallway);
+                    (bool)Application.Current.Properties["AvoidElevator"] ?
+                    ConnectionType.Elevator : ConnectionType.NormalHallway);
                 avoidList.Add(
-                        (bool)Application.Current.Properties["AvoidEscalator"] ?
-                        ConnectionType.Escalator : ConnectionType.NormalHallway);
+                    (bool)Application.Current.Properties["AvoidEscalator"] ?
+                    ConnectionType.Escalator : ConnectionType.NormalHallway);
 
                 avoidList = avoidList.Distinct().ToList();
                 avoidList.Remove(ConnectionType.NormalHallway);
@@ -111,7 +106,8 @@ namespace IndoorNavigation.Modules
                     _destinationWaypointID,
                     avoidList.ToArray());
                     
-            _navigationResultEventHandler = new EventHandler(HandleNavigationResult);
+            _navigationResultEventHandler = 
+                new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
 
         }
@@ -150,7 +146,8 @@ namespace IndoorNavigation.Modules
                 {
                     // Dispose managed state (managed objects).
                 }
-                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // Free unmanaged resources (unmanaged objects) and override a 
+                // finalizer below. 
                 // Set large fields to null.
                 _session._event._eventHandler -= _navigationResultEventHandler;
                 
