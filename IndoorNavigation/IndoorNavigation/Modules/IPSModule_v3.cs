@@ -134,18 +134,58 @@ namespace IndoorNavigation.Modules
             return beaconMapping;
         }
 
+        //public void AddSingleMonitorBeacon(Guid regionID, Guid waypointID)
+        //{
+        //    Console.WriteLine(">>IPSModule : AddSingleMonitorBeacon");
+
+        //    IPSType type = _naviGraph.GetRegionIPSType(regionID);
+        //    _multiClients[type].ContainType = true;
+        //    _multiClients[type].client._event._eventHandler +=
+        //        PassMatchedWaypointEvent;
+
+        //    //_multiClients[type]._monitorBeaconMapping.AddRange(GetBeaconMapping(regionID, new )
+
+        //    _multiClients[type].client.SetWaypointList(_multiClients[type]._monitorBeaconMapping);
+        //    OpenedIPSType.Add(type);
+        //    Console.WriteLine(">>IPSModule : AddSingleMonitorBeacon");
+        //}
+
+        public void AddMonitorBeacon(Guid regionID, Guid waypointID)
+        {
+            Console.WriteLine(">>IPSModule : AddMonitorBeacon");
+
+            IPSType type = _naviGraph.GetRegionIPSType(regionID);
+
+            if (!_multiClients[type].ContainType)
+            {
+                _multiClients[type].ContainType = true;
+                _multiClients[type].client._event._eventHandler +=
+                    PassMatchedWaypointEvent;
+                OpenedIPSType.Add(type);
+            }
+
+            _multiClients[type]._monitorBeaconMapping.Add
+                (GetSingleBeaconMapping(regionID, waypointID));
+            Console.WriteLine("<<IPSModule : AddMonitorBeacon");
+        }
         public void AddMonitorBeaconList(Guid regionID, List<Guid> waypointIDs)
         {
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
-            _multiClients[type].ContainType = true;
-            _multiClients[type].client._event._eventHandler +=
-                PassMatchedWaypointEvent;
+
+            if (! OpenedIPSType.Contains(type) && 
+                _multiClients[type].ContainType)
+            {
+                _multiClients[type].ContainType = true;
+                _multiClients[type].client._event._eventHandler +=
+                    PassMatchedWaypointEvent;
+                OpenedIPSType.Add(type);
+            }
+
             _multiClients[type]._monitorBeaconMapping.AddRange
                 (GetBeaconMapping(regionID, waypointIDs));
-            _multiClients[type].client.SetWaypointList(_multiClients[type]._monitorBeaconMapping);
-            OpenedIPSType.Add(type);
+           
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
 
@@ -153,6 +193,15 @@ namespace IndoorNavigation.Modules
         {
             CleanMappingBeaconList();
             _event.OnEventCall(args as WaypointSignalEventArgs);
+        }       
+
+        public void SetMonitorBeaconList()
+        {
+            foreach(IPSType type in OpenedIPSType)
+            {
+                _multiClients[type].client.SetWaypointList
+                    (_multiClients[type]._monitorBeaconMapping);
+            }
         }
         #endregion
 

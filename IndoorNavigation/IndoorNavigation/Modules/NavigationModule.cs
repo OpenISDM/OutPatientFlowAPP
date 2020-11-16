@@ -50,14 +50,14 @@ namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
-        private Session _session;
+        private Session_tmp _session;
 
         private string _navigationGraphName;
 
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
 
-        private EventHandler _navigationResultEventHandler;        
+        private EventHandler _navigationResultEventHandler;
         public NavigationEvent _event { get; private set; }
 
         public NavigationModule(string navigationGraphName,
@@ -100,13 +100,13 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("-- end of setup preference --- ");
 
             // Start the session
-            _session = new Session(
+            _session = new Session_tmp(
                     Storage.LoadNavigationGraphXml(_navigationGraphName),
                     _destinationRegionID,
                     _destinationWaypointID,
                     avoidList.ToArray());
-                    
-            _navigationResultEventHandler = 
+
+            _navigationResultEventHandler =
                 new EventHandler(HandleNavigationResult);
             _session._event._eventHandler += _navigationResultEventHandler;
 
@@ -117,11 +117,12 @@ namespace IndoorNavigation.Modules
         /// raise event to notify the NavigatorPageViewModel.
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
-        {            
+        {
             _event.OnEventCall(args);
         }
 
-        public void onStop() {
+        public void onStop()
+        {
             _session.CloseSession();
         }
 
@@ -150,7 +151,7 @@ namespace IndoorNavigation.Modules
                 // finalizer below. 
                 // Set large fields to null.
                 _session._event._eventHandler -= _navigationResultEventHandler;
-                
+
                 disposedValue = true;
             }
         }
