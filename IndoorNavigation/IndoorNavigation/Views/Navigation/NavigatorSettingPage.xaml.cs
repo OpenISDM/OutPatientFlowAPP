@@ -55,14 +55,14 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Input;
 using Xamarin.Forms;
-
+using static IndoorNavigation.Utilities.Storage;
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
 
         public IList _chooseRssi { get; } = new ObservableCollection<string>();
-        public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
+        //public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
         public IList _voiceSearchItems { get; } =
             new ObservableCollection<string>(new List<string> { "中文", "英文" });
         const string _resourceId = "IndoorNavigation.Resources.AppResources";
@@ -74,7 +74,7 @@ namespace IndoorNavigation.Views.Navigation
         public NavigatorSettingPage(string naviGraphName)
         {
             InitializeComponent();
-            AddItems();
+            //AddItems();
 
             BindingContext = this;
 
@@ -118,33 +118,33 @@ namespace IndoorNavigation.Views.Navigation
             //    }
             //}
 
-            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
+            //CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
         }
 
-        private void HandleChangeRssi()
-        {
-            //switch (OptionPicker.SelectedItem.ToString().Trim())
-            //{
-            //    case "Strong":
-            //    case "強":
-            //        Application.Current.Properties["StrongRssi"] = true;
-            //        Application.Current.Properties["MediumRssi"] = false;
-            //        Application.Current.Properties["WeakRssi"] = false;
-            //        break;
-            //    case "Weak":
-            //    case "弱":
-            //        Application.Current.Properties["StrongRssi"] = false;
-            //        Application.Current.Properties["MediumRssi"] = false;
-            //        Application.Current.Properties["WeakRssi"] = true;
-            //        break;
-            //    case "Medium":
-            //    case "中":
-            //        Application.Current.Properties["StrongRssi"] = false;
-            //        Application.Current.Properties["MediumRssi"] = true;
-            //        Application.Current.Properties["WeakRssi"] = false;
-            //        break;
-            //}
-        }
+        //private void HandleChangeRssi()
+        //{
+        //    switch (OptionPicker.SelectedItem.ToString().Trim())
+        //    {
+        //        case "Strong":
+        //        case "強":
+        //            Application.Current.Properties["StrongRssi"] = true;
+        //            Application.Current.Properties["MediumRssi"] = false;
+        //            Application.Current.Properties["WeakRssi"] = false;
+        //            break;
+        //        case "Weak":
+        //        case "弱":
+        //            Application.Current.Properties["StrongRssi"] = false;
+        //            Application.Current.Properties["MediumRssi"] = false;
+        //            Application.Current.Properties["WeakRssi"] = true;
+        //            break;
+        //        case "Medium":
+        //        case "中":
+        //            Application.Current.Properties["StrongRssi"] = false;
+        //            Application.Current.Properties["MediumRssi"] = true;
+        //            Application.Current.Properties["WeakRssi"] = false;
+        //            break;
+        //    }
+        //}
 
         protected override void OnDisappearing()
         {
@@ -195,17 +195,20 @@ namespace IndoorNavigation.Views.Navigation
         async void Handle_OptionPropertyChanged(object sender,
                                                 System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.PropertyName == AiForms.Renderers.SwitchCell.OnProperty.PropertyName)
             {
                 if (AvoidStair.On && AvoidElevator.On && AvoidEscalator.On)
                 {
                     (sender as AiForms.Renderers.SwitchCell).On = false;
 
-                    await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
-                        _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
-                                                   currentLanguage),
-                        _resourceManager.GetString("OK_STRING", currentLanguage));
+                    //await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
+                    //    _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
+                    //                               currentLanguage),
+                    //    _resourceManager.GetString("OK_STRING", currentLanguage));
+                    await DisplayAlert(
+                        GetResourceString("ERROR_STRING"),
+                        GetResourceString("AVOID_ALL_CONNECTION_TYPE_STRING"),
+                        GetResourceString("OK_STRING"));
                 }
             }
 
@@ -214,13 +217,11 @@ namespace IndoorNavigation.Views.Navigation
         async private void RssiPicker_Tapped(object sender, EventArgs e)
         {
             Console.WriteLine(">> Tapped RssiItem");
-
-            //TestRssiPopupPage page = new TestRssiPopupPage();
             ManualAdjustPopupPage page = new ManualAdjustPopupPage();
 
             await page.show();
 
-            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
+            // CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
         }
 
         async private void AutoAdjust_Tapped(object sender, EventArgs e)
@@ -231,9 +232,7 @@ namespace IndoorNavigation.Views.Navigation
 
             await page.Show();
 
-            CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
-            //await PopupNavigation.Instance.PushAsync
-            //    (new AutoAdjustPopupPage(_naviGraphName));
+            //CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();          
         }
 
     }
