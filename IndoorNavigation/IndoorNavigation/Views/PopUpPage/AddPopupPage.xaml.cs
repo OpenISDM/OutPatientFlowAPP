@@ -274,8 +274,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     HeightRequest = 1,
                     Color = Color.FromHex("#3f51b5")
                 });
-                //mainStackLayout.Children.Add
-                //    (getColorLine(Color.FromHex("#3f51b5")));
+
                 _allContentInAdd.Add(keys, outSideGrid);
             }
             #endregion
@@ -343,9 +342,7 @@ namespace IndoorNavigation.Views.PopUpPage
             _allContentInAdd.Add(keys, outSideGrid);
             mainStackLayout.Children.Add(outSideGrid);
 
-            //blue line for dividing every depart
-            //mainStackLayout.Children.Add
-            //    (getColorLine(Color.FromHex("#3f51b5")));
+
             mainStackLayout.Children.Add(new BoxView
             {
                 HeightRequest = 1,
@@ -387,21 +384,21 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 key = 0;
                 StackLayout CheckboxStackLayout =
-                   new StackLayout 
+                   new StackLayout
                    { Orientation = StackOrientation.Horizontal };
                 BoxLayout = new StackLayout
                 {
                     Padding = new Thickness(0, 0, 15, 0)
                 };
                 int CheckboxCount = 0;
-                foreach (AddExaminationItem item in 
+                foreach (AddExaminationItem item in
                     _examinationItemDict[clinicfloorName])
                 {
                     CheckBox box = new CheckBox
                     {
                         Text = item.DisplayName,
                         TextFontSize =
-                         Device.GetNamedSize(NamedSize.Large, 
+                         Device.GetNamedSize(NamedSize.Large,
                          typeof(CheckBox)),
                         Margin = new Thickness(0, -3),
                         Key = key++,
@@ -421,7 +418,6 @@ namespace IndoorNavigation.Views.PopUpPage
                         };
                         CheckboxCount = 0;
                     }
-                    //boxList.Add(box);
                 }
 
                 if (CheckboxCount != 0)
@@ -441,12 +437,9 @@ namespace IndoorNavigation.Views.PopUpPage
                 outSideGrid.Children.Add(image, 0, 2, 0, 4);
                 outSideGrid.Children.Add(DptNameLabel, 0, 2, 4, 5);
                 outSideGrid.Children.Add(clinicScrollView, 2, 5, 0, 5);
-                //BoxesDict.Add(clinicfloorName, boxList);
                 _allContentInAdd.Add(keys, outSideGrid);
                 mainStackLayout.Children.Add(outSideGrid);
 
-                //mainStackLayout.Children.Add
-                //    (getColorLine(Color.FromHex("#3f51b5")));
                 mainStackLayout.Children.Add(new BoxView
                 {
                     HeightRequest = 1,
@@ -484,7 +477,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 BoxLayout = new StackLayout();
                 key = 0;
-                foreach (AddExaminationItem item in 
+                foreach (AddExaminationItem item in
                     _examinationItemDict[dptName])
                 {
                     CheckBox box = new CheckBox
@@ -512,9 +505,6 @@ namespace IndoorNavigation.Views.PopUpPage
                 //BoxesDict.Add(dptName, boxList);
                 mainStackLayout.Children.Add(outSideGrid);
 
-                //blue line for dividing every depart
-                //mainStackLayout.Children.Add
-                //    (getColorLine(Color.FromHex("#3f51b5")));
                 mainStackLayout.Children.Add(new BoxView
                 {
                     HeightRequest = 1,
@@ -596,10 +586,7 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             return tmp;
         }
-        private BoxView getColorLine(Color color)
-        {
-            return new BoxView { HeightRequest = 1, Color = color };
-        }
+
         private void AddCancelButton_Clicked(object sender, EventArgs e)
         {
             if (isButtonPressed) return;
@@ -667,7 +654,7 @@ namespace IndoorNavigation.Views.PopUpPage
                         await PopupNavigation.Instance.PushAsync(new
                             AlertDialogPopupPage(
                             string.Format(_resourceManager.GetString
-                            ("SELECT_DUMPLICATE_CONTENT_STRING", 
+                            ("SELECT_DUMPLICATE_CONTENT_STRING",
                             currentLanguage), optionBox.Text),
                             _resourceManager.GetString
                             ("OK_STRING", currentLanguage))
@@ -695,7 +682,7 @@ namespace IndoorNavigation.Views.PopUpPage
             #region Part of Clinic 
             foreach (string floorClinic in ClinicList)
             {
-                List<AddExaminationItem> items = 
+                List<AddExaminationItem> items =
                     _examinationItemDict[floorClinic];
                 foreach (AddExaminationItem item in items)
                 {
@@ -803,13 +790,13 @@ namespace IndoorNavigation.Views.PopUpPage
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage(_resourceManager.GetString
                             ("NO_SELECT_DESTINATION_STRING", currentLanguage),
-                        _resourceManager.GetString("OK_STRING", 
+                        _resourceManager.GetString("OK_STRING",
                         currentLanguage)));
                 else if (dumplicateCount >= 1)
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage(_resourceManager.GetString
                         ("SELECT_DUPLICATE_EXAM_STRING", currentLanguage),
-                       _resourceManager.GetString("OK_STRING", 
+                       _resourceManager.GetString("OK_STRING",
                        currentLanguage)));
                 return;
             }
@@ -854,7 +841,7 @@ namespace IndoorNavigation.Views.PopUpPage
             OnBackgroundClicked();
         }
 
-        private void AddSearchBar_TextChanged(object sender, 
+        private void AddSearchBar_TextChanged(object sender,
             TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(e.NewTextValue))

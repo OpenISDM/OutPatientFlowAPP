@@ -20,13 +20,6 @@ namespace IndoorNavigation.Views.Navigation
     public partial class EditLocationPage : ContentPage
     {
         List<GraphInfo> _allNewSiteItems;
-        const string _resourceId =
-            "IndoorNavigation.Resources.AppResources";
-
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId,
-                                typeof(TranslateExtension).GetTypeInfo()
-                                .Assembly);
 
         public EditLocationPage()
         {
@@ -43,7 +36,7 @@ namespace IndoorNavigation.Views.Navigation
             //LoadFakeData();
             _allNewSiteItems = new List<GraphInfo>();
             LoadData(xmlDocument);
-            RefreshListView();           
+            RefreshListView();
         }
 
         private void LoadData()
@@ -66,37 +59,35 @@ namespace IndoorNavigation.Views.Navigation
                 _allNewSiteItems.Add(p.Value);
                 return true;
             });
-        }        
+        }
 
         #region View Event define
-        private void AddNewSite_TextChanged(object sender, 
+        private void AddNewSite_TextChanged(object sender,
             TextChangedEventArgs e)
         {
             AddNewSiteListView.BeginRefresh();
             if (string.IsNullOrEmpty(e.NewTextValue))
-            {                
+            {
                 RefreshListView();
             }
             else
             {
-                AddNewSiteListView.ItemsSource=
+                AddNewSiteListView.ItemsSource =
                     _allNewSiteItems.Where
-                    (p => p._displayName.Contains(e.NewTextValue));                
+                    (p => p._displayName.Contains(e.NewTextValue));
             }
             AddNewSiteListView.EndRefresh();
-        }                
-        
-     
-        private void AddNewSiteListView_ItemSelected(object sender, 
+        }
+        private void AddNewSiteListView_ItemSelected(object sender,
             SelectedItemChangedEventArgs e)
         {
             AddNewSiteListView.SelectedItem = null;
         }
 
-        async private void AddNewSiteListView_ItemTapped(object sender, 
+        async private void AddNewSiteListView_ItemTapped(object sender,
             ItemTappedEventArgs e)
-        {           
-            if(e.Item is GraphInfo selectedItem)
+        {
+            if (e.Item is GraphInfo selectedItem)
             {
                 if (isOlderVersion(selectedItem))
                 {
@@ -104,27 +95,8 @@ namespace IndoorNavigation.Views.Navigation
                         .PushAsync(new AlertDialogPopupPage(
                             GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
                             GetResourceString("YES_STRING")));
-                    //await PopupNavigation.Instance
-                    //   .PushAsync(new AlertDialogPopupPage
-                    //   (GetResourceString("ASK_STILL_DOWNLOAD_STRING"),
-                    //   GetResourceString("YES_STRING"),
-                    //   GetResourceString("NO_STRING"),
-                    //   "VersionIsOlder"));
-
-                    //MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
-                    //    (this, "VersionIsOlder", async(MsgSender, MsgArgs) =>
-                    // {
-                    //     if ((bool)MsgArgs)
-                    //     {
-                    //         await DownloadSiteFile(selectedItem);
-                    //     }
-
-                    //     MessagingCenter
-                    //     .Unsubscribe<AlertDialogPopupPage, bool>
-                    //     (this, "VersionIsOlder");
-                    // });
                 }
-                else 
+                else
                 {
                     await PopupNavigation.Instance
                         .PushAsync(new AlertDialogPopupPage
@@ -145,9 +117,9 @@ namespace IndoorNavigation.Views.Navigation
                         MessagingCenter.Unsubscribe<AlertDialogPopupPage, bool>
                         (this, "DoYouWantToDownloadIt");
                     });
-                }                
+                }
                 RefreshListView();
-            }          
+            }
         }
         #endregion
         private void RefreshListView()
@@ -155,7 +127,7 @@ namespace IndoorNavigation.Views.Navigation
             AddNewSiteListView.ItemsSource = null;
             AddNewSiteListView.ItemsSource = _allNewSiteItems;
         }
-        
+
         async private Task DownloadSiteFile(GraphInfo selectedItem)
         {
             IndicatorPopupPage busyPage =
@@ -168,7 +140,7 @@ namespace IndoorNavigation.Views.Navigation
                 CloudGenerateFile(selectedItem._graphName);
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage(GetResourceString
-                    ("DOWNLOAD_SUCCESS_STRING"), 
+                    ("DOWNLOAD_SUCCESS_STRING"),
                     GetResourceString
                     ("OK_STRING")));
             }
@@ -185,7 +157,7 @@ namespace IndoorNavigation.Views.Navigation
                                    (new AlertDialogPopupPage
                                    (GetResourceString("BAD_NETWORK_STRING"),
                                    GetResourceString("GO_TO_SETTING")
-                                   , GetResourceString("NO_STRING"), 
+                                   , GetResourceString("NO_STRING"),
                                    "GoToSettingInEdit"));
                     MessagingCenter.Subscribe
                         <AlertDialogPopupPage, bool>
@@ -209,9 +181,9 @@ namespace IndoorNavigation.Views.Navigation
                 {
                     await PopupNavigation.Instance.PushAsync
                              (new AlertDialogPopupPage
-                             (GetResourceString("HAPPEND_ERROR_STRING"), 
+                             (GetResourceString("HAPPEND_ERROR_STRING"),
                              GetResourceString("RETRY_STRING"),
-                             GetResourceString("NO_STRING"), 
+                             GetResourceString("NO_STRING"),
                              "WantRetryInEdit"));
                     MessagingCenter.Subscribe
                         <AlertDialogPopupPage, bool>
@@ -230,13 +202,13 @@ namespace IndoorNavigation.Views.Navigation
             await PopupNavigation.Instance
             .RemovePageAsync(busyPage);
 
-            await Task.CompletedTask;            
+            await Task.CompletedTask;
         }
         private bool isOlderVersion(GraphInfo selectedItem)
         {
-            if(_resources._graphResources.ContainsKey(selectedItem._graphName)
+            if (_resources._graphResources.ContainsKey(selectedItem._graphName)
                 &&
-                selectedItem._currentVersion<=
+                selectedItem._currentVersion <=
                 _resources._graphResources[selectedItem._graphName]
                 ._currentVersion)
             {
@@ -244,11 +216,5 @@ namespace IndoorNavigation.Views.Navigation
             }
             return false;
         }
-
-        private string GetResourceString(string key)
-        {
-            return _resourceManager.GetString(key, _currentCulture);
-        }
-        
-    }  
+    }
 }
