@@ -868,7 +868,7 @@ namespace IndoorNavigation.Views.OPFM
                                        GetResourceString("OK_STRING"),
                                        GetResourceString("NO_STRING"));
                 //BusyIndicatorShow(false);
-                PopupNavigation.Instance.PopAsync();
+                await PopupNavigation.Instance.PopAsync();
                 if (CheckWantToSetting)
                 {
                     //NetworkSettings.OpenSettingPage();
