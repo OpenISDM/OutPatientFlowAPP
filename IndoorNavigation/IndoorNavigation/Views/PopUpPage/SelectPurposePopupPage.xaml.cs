@@ -44,23 +44,23 @@ namespace IndoorNavigation.Views.PopUpPage
             XmlDocument doc = XmlReader(_documentPath);
             XmlNodeList PurposeNodeList = doc.SelectNodes("Purposes/Purpose");
             Console.WriteLine("purpose node list child count : " + PurposeNodeList.Count);
-            foreach(XmlNode purposeNode in PurposeNodeList)
+            foreach (XmlNode purposeNode in PurposeNodeList)
             {
                 PurposeOption option = new PurposeOption();
 
-                option.OptionName = 
+                option.OptionName =
                     purposeNode.Attributes["access_name"].Value;
                 option.id =
-                    int.Parse(purposeNode.Attributes["id"].Value);                
+                    int.Parse(purposeNode.Attributes["id"].Value);
                 options.Add(option.OptionName, option);
-            }            
+            }
         }
 
         //generate radio button and add to view.
         private void SetRadioButton()
         {
             foreach (KeyValuePair<string, PurposeOption> pair in options)
-            {                
+            {
                 RadioButton raido = new RadioButton
                 {
                     Text = pair.Key,
@@ -80,9 +80,9 @@ namespace IndoorNavigation.Views.PopUpPage
 
             if (isButtonClick) return;
 
-            isButtonClick = true;         
+            isButtonClick = true;
 
-            foreach(RadioButton optionButton in PurposeRadioGroup.Children)
+            foreach (RadioButton optionButton in PurposeRadioGroup.Children)
             {
                 if (optionButton.IsChecked)
                 {
@@ -90,33 +90,33 @@ namespace IndoorNavigation.Views.PopUpPage
 
                     PurposeOptionID = options[optionButton.Text].id;
 
-                    if(options[optionButton.Text].id != 0)
+                    if (options[optionButton.Text].id != 0)
                     {
-                        HospitalProcessParse processParse = 
+                        HospitalProcessParse processParse =
                             new HospitalProcessParse();
 
-                        List<RgRecord> processes=
+                        List<RgRecord> processes =
                             processParse.ParseProcess(
                                 new ProcessOption
                                 {
-                                    processID = 
+                                    processID =
                                         options[optionButton.Text].id
                                         .ToString(),
                                     processName = optionButton.Text
                                 }).ToList();
 
-                        foreach(RgRecord process in processes)
+                        foreach (RgRecord process in processes)
                         {
                             ((App)Application.Current).records.Add(process);
                         }
 
                         ((App)Application.Current).OrderDistrict
                             .Add(options[optionButton.Text].id, 0);
-                    }                                        
-                    
+                    }
+
                     await PopupNavigation.Instance.RemovePageAsync(this);
 
-                    
+
 
                     await PopupNavigation.Instance.PushAsync
                         (new AskRegisterPopupPage(_naviGraphName));
@@ -127,8 +127,7 @@ namespace IndoorNavigation.Views.PopUpPage
             //show please select one.
             await PopupNavigation.Instance.PushAsync
                 (new AlertDialogPopupPage(
-                    getResourceString("PLEASE_SELECT_OPTION_STRING"),
-                    //AppResources.PLEASE_SELECT_OPTION_STRING, 
+                    GetResourceString("PLEASE_SELECT_OPTION_STRING"),
                     AppResources.OK_STRING));
             isButtonClick = false;
         }
@@ -150,23 +149,10 @@ namespace IndoorNavigation.Views.PopUpPage
         async private void CancelSelectBtn_Clicked(object sender, EventArgs e)
         {
             Page page = Application.Current.MainPage;
-
             ((App)Application.Current).isRigistered = false;
 
             await page.Navigation.PopAsync();
             await PopupNavigation.Instance.RemovePageAsync(this);
-        }
-        private string getResourceString(string key)
-        {
-            string resourceId = "IndoorNavigation.Resources.AppResources";
-            CultureInfo currentLanguage =
-                CrossMultilingual.Current.CurrentCultureInfo;
-            ResourceManager resourceManager =
-                new ResourceManager(resourceId,
-                                    typeof(TranslateExtension)
-                                    .GetTypeInfo().Assembly);
-
-            return resourceManager.GetString(key, currentLanguage);
         }
     }
     public class PurposeOption
