@@ -1,10 +1,6 @@
 ﻿/*
- * Copyright (c) 2019 Academia Sinica, Institude of Information Science
- *
- * License:
- *      GPL 3.0 : The content of this file is subject to the terms and
- *      conditions defined in file 'COPYING.txt', which is part of this source
- *      code package.
+ * 2020 © Copyright (c) BiDaE Technology Inc. 
+ * Provided under BiDaE SHAREWARE LICENSE-1.0 in the LICENSE.
  *
  * Project Name:
  *
@@ -24,8 +20,9 @@
  * Abstract:
  *
  *      This file used to read the XML information, includes, the building name
- *      the waypoint name and the region name. Because we have several languages, therefore,
- *      we need this file to help to read all kinds of languages
+ *      the waypoint name and the region name. Because we have several 
+ *      languages, therefore, we need this file to help to read all kinds of 
+ *      languages
  *      
  * Authors:
  *
@@ -37,7 +34,6 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using Xamarin.Forms;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -51,35 +47,35 @@ namespace IndoorNavigation.Models.NavigaionLayer
             XmlNode buildingName =
                 fileName.SelectSingleNode("navigation_graph");
 
-            XmlElement buildingElement = 
+            XmlElement buildingElement =
                 (XmlElement)buildingName;
 
-            _buildingName = 
+            _buildingName =
                 buildingElement.GetAttribute("building_name");
 
-            XmlNodeList xmlRegion = 
+            XmlNodeList xmlRegion =
                 fileName.SelectNodes("navigation_graph/regions/region");
 
-            XmlNodeList xmlWaypoint = 
+            XmlNodeList xmlWaypoint =
                 fileName.SelectNodes("navigation_graph/waypoints/waypoint");
 
-            returnWaypointName = 
+            returnWaypointName =
                 new Dictionary<Guid, string>();
 
-            returnRegionName = 
+            returnRegionName =
                 new Dictionary<Guid, string>();
 
             foreach (XmlNode xmlNode in xmlRegion)
             {
                 string name = "";
-                Guid RegionGuid = 
+                Guid RegionGuid =
                     new Guid();
-                XmlElement xmlElement = 
+                XmlElement xmlElement =
                     (XmlElement)xmlNode;
 
                 name = xmlElement.GetAttribute("name").ToString();
                 RegionGuid = new Guid(xmlElement.GetAttribute("id"));
-                returnRegionName.Add(RegionGuid,name);
+                returnRegionName.Add(RegionGuid, name);
             }
 
             foreach (XmlNode xmlNode in xmlWaypoint)
@@ -102,7 +98,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         {
             return returnWaypointName[guid];
         }
-        public string GiveGraphName()
+        public string GetGraphName()
         {
             return _buildingName;
         }
