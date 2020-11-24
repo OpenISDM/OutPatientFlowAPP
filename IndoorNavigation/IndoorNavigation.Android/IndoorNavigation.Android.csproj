@@ -106,7 +106,6 @@
     <Compile Include="DownloadFile.cs" />
     <Compile Include="ImageChecker.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="MainApplication.cs" />
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
