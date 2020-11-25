@@ -297,7 +297,6 @@ namespace IndoorNavigation.Modules
                     {
                         navigationInstruction._turnDirectionDistance =
                             _navigationGraph.GetDistanceOfLongHallway(
-                                regionWaypointPoint,
                                 2,
                                 _waypointsOnRoute,
                                 _avoidConnectionTypes);
@@ -306,8 +305,7 @@ namespace IndoorNavigation.Modules
                     {
                         navigationInstruction._turnDirectionDistance =
                         _navigationGraph
-                        .GetDistanceOfLongHallway(regionWaypointPoint,
-                                                  1,
+                        .GetDistanceOfLongHallway(1,
                                                   _waypointsOnRoute,
                                                   _avoidConnectionTypes);
                     }
@@ -1205,8 +1203,6 @@ namespace IndoorNavigation.Modules
                     {
                         navigationInstruction._turnDirectionDistance =
                             _navigationGraph.GetDistanceOfLongHallway(
-                                (args as WaypointSignalEventArgs)
-                                ._detectedRegionWaypoint,
                                 _nextWaypointStep + 2, _waypointsOnRoute,
                                 _avoidConnectionTypes);
                     }
@@ -1214,8 +1210,6 @@ namespace IndoorNavigation.Modules
                     {
                         navigationInstruction._turnDirectionDistance =
                             _navigationGraph.GetDistanceOfLongHallway(
-                                (args as WaypointSignalEventArgs)
-                                ._detectedRegionWaypoint,
                                 _nextWaypointStep + 1,
                                 _waypointsOnRoute,
                                 _avoidConnectionTypes);
@@ -1384,8 +1378,6 @@ namespace IndoorNavigation.Modules
                         {
                             navigationInstruction._turnDirectionDistance =
                                 _navigationGraph.GetDistanceOfLongHallway(
-                                    (args as WaypointSignalEventArgs)
-                                    ._detectedRegionWaypoint,
                                     _nextWaypointStep + 2, _waypointsOnRoute,
                                     _avoidConnectionTypes);
                         }
@@ -1393,8 +1385,6 @@ namespace IndoorNavigation.Modules
                         {
                             navigationInstruction._turnDirectionDistance =
                                 _navigationGraph.GetDistanceOfLongHallway(
-                                    (args as WaypointSignalEventArgs)
-                                    ._detectedRegionWaypoint,
                                     _nextWaypointStep + 1,
                                     _waypointsOnRoute,
                                     _avoidConnectionTypes);
