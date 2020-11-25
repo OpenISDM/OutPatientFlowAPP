@@ -56,26 +56,16 @@ namespace IndoorNavigation.Views.PopUpPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ExitPopupPage : PopupPage
     {
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId,
-                                typeof(TranslateExtension)
-                                .GetTypeInfo().Assembly);
-
         App app = (App)Application.Current;
         string _navigationGraphName;
-        //ExitPopupViewModel _viewmodel;
-        CultureInfo currentLanguage =
-            CrossMultilingual.Current.CurrentCultureInfo;
         private XMLInformation _nameInformation;
-
         private Dictionary<Guid, DestinationItem> ElevatorPosition;
 
         public ExitPopupPage(string navigationGraphName)
         {
             InitializeComponent();
             _navigationGraphName = navigationGraphName;
-            _nameInformation = LoadXmlInformation(_navigationGraphName);         
+            _nameInformation = LoadXmlInformation(_navigationGraphName);
             LoadData();
             setRadioButton();
         }
@@ -108,24 +98,22 @@ namespace IndoorNavigation.Views.PopUpPage
                 Console.WriteLine(exc.StackTrace);
             }
         }
-        private Guid _allF_Guid =
+        private Guid allFFFFGuid =
             new Guid("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
-
+        
         private void LoadElevator()
         {
             ElevatorPosition = new Dictionary<Guid, DestinationItem>();
             XmlDocument doc = XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
-
-            doc = Storage.XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
             XmlNodeList ElevatorNodeList = doc.GetElementsByTagName("elevator");
 
             foreach (XmlNode elevatorNode in ElevatorNodeList)
             {
                 DestinationItem item = new DestinationItem();
 
-                item._regionID = 
+                item._regionID =
                     new Guid(elevatorNode.Attributes["region_id"].Value);
-                item._waypointID = 
+                item._waypointID =
                     new Guid(elevatorNode.Attributes["waypoint_id"].Value);
 
                 item._floor = elevatorNode.Attributes["floor"].Value;
@@ -155,12 +143,10 @@ namespace IndoorNavigation.Views.PopUpPage
 
         protected override bool OnBackButtonPressed()
         {
-            DisplayAlert(_resourceManager
-                            .GetString("MESSAGE_STRING", currentLanguage),
-                         _resourceManager
-                            .GetString("SELECT_EXIT_STRING", currentLanguage),
-                         _resourceManager
-                            .GetString("OK_STRING", currentLanguage));
+            DisplayAlert(
+                GetResourceString("MESSAGE_STRING"),
+                GetResourceString("SELECT_EXIT_STRING"),
+                GetResourceString("OK_STRING"));
 
             return true;
             // Return true if you don't want to close this popup page when a 
@@ -169,26 +155,21 @@ namespace IndoorNavigation.Views.PopUpPage
 
         protected override bool OnBackgroundClicked()
         {
-
-            DisplayAlert(_resourceManager
-                            .GetString("MESSAGE_STRING",
-                                       currentLanguage),
-                         _resourceManager
-                            .GetString("SELECT_EXIT_STRING",
-                                       currentLanguage),
-                         _resourceManager
-                            .GetString("OK_STRING",
-                                       currentLanguage));
+            DisplayAlert(
+                GetResourceString("MESSAGE_STRING"), 
+                GetResourceString("SELECT_EXIT_STRING"), 
+                GetResourceString("OK_STRING"));
+            
             return false;
             // Return false if you don't want to close this popup page when a 
             // background of the popup page is clicked
-        }        
+        }
 
         async private void ExitCancelBtn_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.Instance.RemovePageAsync(this);
             MessagingCenter.Send(this, "ExitCancel", false);
-                
+
         }
 
         async private void ExitConfirmBtn_Clicked(object sender, EventArgs e)
@@ -203,25 +184,24 @@ namespace IndoorNavigation.Views.PopUpPage
                        app.OrderDistrict[0] : 0;
                     DestinationItem item = ExitItems[radioName];
 
-                    if (item._regionID == _allF_Guid &&
-                        item._waypointID == _allF_Guid)
+                    if (item._regionID == allFFFFGuid &&
+                        item._waypointID == allFFFFGuid)
                     {
                         LoadElevator();
                         Console.WriteLine("this range of item haven't been supported now.");
 
                         await PopupNavigation.Instance.PushAsync
-                            (new AlertDialogPopupPage
-                            (_resourceManager.GetString
-                            ("WILL_BRING_YOU_TO_ELEVATOR_STRING"
-                            , currentLanguage),
-                                //AppResources.WILL_BRING_YOU_TO_ELEVATOR_STRING,
-                            AppResources.OK_STRING));
-
+                            (new AlertDialogPopupPage(
+                                GetResourceString(
+                                    "WILL_BRING_YOU_TO_ELEVATOR_STRING"
+                                    ),
+                                GetResourceString("OK_STRING")));
                         DestinationItem elevatorItem;
 
                         try
                         {
-                            elevatorItem = ElevatorPosition[app.lastFinished._regionID];
+                            elevatorItem = 
+                                ElevatorPosition[app.lastFinished._regionID];
                         }
                         catch
                         {
@@ -240,10 +220,10 @@ namespace IndoorNavigation.Views.PopUpPage
                         });
 
                         app._globalNavigatorPage = new NavigatorPage
-                            (_navigationGraphName, 
+                            (_navigationGraphName,
                              elevatorItem._regionID,
-                             elevatorItem._waypointID, 
-                             elevatorItem._waypointName, 
+                             elevatorItem._waypointID,
+                             elevatorItem._waypointName,
                              _nameInformation);
                         Page page = Application.Current.MainPage;
                         await PopupNavigation.Instance.RemovePageAsync(this);
@@ -270,19 +250,17 @@ namespace IndoorNavigation.Views.PopUpPage
                         radioName,
                         _nameInformation);
                     await Navigation.PushAsync(app._globalNavigatorPage);
-                    await PopupNavigation.Instance.RemovePageAsync(this);                    
+                    await PopupNavigation.Instance.RemovePageAsync(this);
                     return;
                 }
             }
+            await DisplayAlert(
+                GetResourceString("MESSAGE_STRING"), 
+                GetResourceString("SELECT_EXIT_STRING"), 
+                GetResourceString("OK_STRING")
+                );
 
-            await DisplayAlert(_resourceManager.GetString("MESSAGE_STRING",
-                                                currentLanguage),
-                     _resourceManager.GetString("SELECT_EXIT_STRING",
-                                                currentLanguage),
-                     _resourceManager.GetString("OK_STRING",
-                                                currentLanguage));
-
-            MessagingCenter.Send(this, "ExitCancel",true);
+            MessagingCenter.Send(this, "ExitCancel", true);
         }
     }
 }
