@@ -590,6 +590,54 @@ namespace IndoorNavigation.Modules
 
             #endregion
 
+            #region To remove dumplicate point
+            int x = 0;
+            int y = 1;
+            while (x < y && y < _waypointsOnRoute.Count)
+            {
+                RegionWaypointPoint point1 = _waypointsOnRoute[x];
+                RegionWaypointPoint point2 = _waypointsOnRoute[y];
+                List<Guid> waypointIDs1 =
+                    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
+                    (point1._regionID, point1._waypointID);
+                List<Guid> waypointIDs2 =
+                    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
+                    (point2._regionID, point2._waypointID);
+
+                LocationType locationType1 =
+                    _navigationGraph.GetWaypointTypeInRegion
+                    (point1._regionID, point1._waypointID);
+
+                LocationType locationTyp2 =
+                    _navigationGraph.GetWaypointTypeInRegion
+                    (point2._regionID, point2._waypointID);
+
+                if (waypointIDs1.Count == 1 && waypointIDs2.Count == 1
+                    && waypointIDs1[0].Equals(waypointIDs2[0]))
+                {
+                    if (locationType1 == locationTyp2 && locationType1 !=
+                        LocationType.portal)
+                    {
+                        _waypointsOnRoute.RemoveAt(y);
+                    }
+                    else if (locationType1 != locationTyp2)
+                    {
+                        if (locationTyp2 == LocationType.portal)
+                        {
+                            _waypointsOnRoute.RemoveAt(x);
+                        }
+
+                        else if (locationType1 == LocationType.portal)
+                        {
+                            _waypointsOnRoute.RemoveAt(y);
+                        }
+                    }
+                }
+                x++;
+                y++;
+            }
+            #endregion
+
             #region Wrong Point decide
             int nextStep = 1;
             _waypointsOnWrongWay =
@@ -761,7 +809,6 @@ namespace IndoorNavigation.Modules
                         subtable.Add(_navigationGraph
                             .GetRegionIPSType(wrongWaypoint._regionID));
                     }
-                    IPSTable.Add(subtable);
                 }
                 catch (Exception exc)
                 {
@@ -769,58 +816,13 @@ namespace IndoorNavigation.Modules
                         exc.Message + ", waypoint id : " +
                         waypoint._waypointID);
                 }
+                IPSTable.Add(subtable);
             }
             _iPSModules.SetIPStable(IPSTable);
 
             #endregion
 
-            #region To remove dumplicate point
-            int x = 0;
-            int y = 1;
-            while (x < y && y < _waypointsOnRoute.Count)
-            {
-                RegionWaypointPoint point1 = _waypointsOnRoute[x];
-                RegionWaypointPoint point2 = _waypointsOnRoute[y];
-                List<Guid> waypointIDs1 =
-                    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
-                    (point1._regionID, point1._waypointID);
-                List<Guid> waypointIDs2 =
-                    _navigationGraph.GetAllBeaconIDInOneWaypointOfRegion
-                    (point2._regionID, point2._waypointID);
-
-                LocationType locationType1 =
-                    _navigationGraph.GetWaypointTypeInRegion
-                    (point1._regionID, point1._waypointID);
-
-                LocationType locationTyp2 =
-                    _navigationGraph.GetWaypointTypeInRegion
-                    (point2._regionID, point2._waypointID);
-
-                if (waypointIDs1.Count == 1 && waypointIDs2.Count == 1
-                    && waypointIDs1[0].Equals(waypointIDs2[0]))
-                {
-                    if (locationType1 == locationTyp2 && locationType1 !=
-                        LocationType.portal)
-                    {
-                        _waypointsOnRoute.RemoveAt(y);
-                    }
-                    else if (locationType1 != locationTyp2)
-                    {
-                        if (locationTyp2 == LocationType.portal)
-                        {
-                            _waypointsOnRoute.RemoveAt(x);
-                        }
-
-                        else if (locationType1 == LocationType.portal)
-                        {
-                            _waypointsOnRoute.RemoveAt(y);
-                        }
-                    }
-                }
-                x++;
-                y++;
-            }
-            #endregion
+            
 
             #region For Calculate progress 
             TmpTotalProgress = _waypointsOnRoute.Count + TmpCurrentProgress;

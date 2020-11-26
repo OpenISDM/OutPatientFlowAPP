@@ -29,7 +29,7 @@ namespace IndoorNavigation.Modules
             if (_usedIPS.Contains(IPSType.LBeacon))
             {
                 _multiClients.Add(IPSType.LBeacon, new IPSClient
-                {
+                    {
                     type = IPSType.LBeacon,
                     client = new WaypointClient(),
                     _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
@@ -88,7 +88,7 @@ namespace IndoorNavigation.Modules
             {
                 foreach (IPSType type in _ipsTable[nextStep])
                 {
-                    //Console.WriteLine("OpenScanning : " + type);
+                    Console.WriteLine("OpenScanning : " + type);
                     _multiClients[type].client.DetectWaypoints();
                 }
             }
@@ -166,6 +166,8 @@ namespace IndoorNavigation.Modules
 
             _multiClients[type]._monitorBeaconMapping.Add
                 (GetSingleBeaconMapping(regionID, waypointID));
+
+            Console.WriteLine($"add beacon type:{type}, waypoint :{waypointID}");
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
         public void AddMonitorBeaconList(Guid regionID, List<Guid> waypointIDs)
@@ -207,6 +209,12 @@ namespace IndoorNavigation.Modules
             {
                 foreach (IPSType type in _ipsTable[nextStep])
                 {
+                    Console.WriteLine($"current step:{nextStep}, {type} 's monitor list count : " + _multiClients[type]._monitorBeaconMapping.Count);
+
+                    foreach(WaypointBeaconsMapping mapping in _multiClients[type]._monitorBeaconMapping)
+                    {
+                        Console.WriteLine($"loop print beacon's id :{mapping._WaypointIDAndRegionID._waypointID}");
+                    }
                     _multiClients[type].client.SetWaypointList
                         (_multiClients[type]._monitorBeaconMapping);
                 }
