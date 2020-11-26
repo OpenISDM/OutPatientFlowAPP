@@ -145,13 +145,13 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("Continue to navigate to next step, current"
                     + "location {0}/{1}", _currentRegionID, _currentWaypointID);
 
+                _nextWaypointEvent.Wait();
+
                 checkWrongRegionWaypoint._regionID = _currentRegionID;
                 checkWrongRegionWaypoint._waypointID = _currentWaypointID;
 
-                _nextWaypointEvent.Wait();
-
-
                 Console.WriteLine("current waypointID : " + _currentWaypointID);
+
                 if (_currentRegionID.Equals(_destinationRegionID) &&
                     _currentWaypointID.Equals(_destinationWaypointID))
                 {
@@ -327,6 +327,7 @@ namespace IndoorNavigation.Modules
                 }
                 _nextWaypointEvent.Reset();
             }
+            Console.WriteLine("<<Navigator Program");
         }
 
         private void NavigateToNextWaypoint(int nextStep)
@@ -822,7 +823,7 @@ namespace IndoorNavigation.Modules
 
             #endregion
 
-            
+
 
             #region For Calculate progress 
             TmpTotalProgress = _waypointsOnRoute.Count + TmpCurrentProgress;
@@ -1050,11 +1051,11 @@ namespace IndoorNavigation.Modules
                 (args as WaypointSignalEventArgs)._detectedRegionWaypoint
                 ._regionID;
 
-            //Console.WriteLine("CheckArrived currentWaypoint : "
-            //                    + _currentWaypointID);
+            Console.WriteLine("CheckArrived currentWaypoint : "
+                                + _currentWaypointID);
 
-            //Console.WriteLine("CheckArrived currentRegion : "
-            //                    + _currentRegionID);
+            Console.WriteLine("CheckArrived currentRegion : "
+                                + _currentRegionID);
 
             RegionWaypointPoint detectWrongWay = new RegionWaypointPoint();
             detectWrongWay._waypointID = _currentWaypointID;
