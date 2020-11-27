@@ -34,7 +34,6 @@ using Plugin.Permissions;
 using System;
 using System.Threading;
 using Plugin.CurrentActivity;
-using Sharpnado.HorizontalListView.Droid;
 
 namespace IndoorNavigation.Droid
 {
@@ -57,7 +56,6 @@ namespace IndoorNavigation.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-            SharpnadoInitializer.Initialize();
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
             {
                 ActivityCompat.RequestPermissions(this, new String[] {
