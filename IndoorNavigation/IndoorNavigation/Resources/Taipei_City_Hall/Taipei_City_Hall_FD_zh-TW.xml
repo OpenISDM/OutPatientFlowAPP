@@ -122,7 +122,7 @@
     <waypoint id='00000000-0000-0000-0000-000000000037' Landmark='電梯' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000038' Landmark='環境教育中心' RelatedDirection = '0' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000040' Landmark='電梯' RelatedDirection = '4' FaceOrBack = "0"/>
-    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯41' RelatedDirection = '2' FaceOrBack = "0"/>
+    <waypoint id='00000000-0000-0000-0000-000000000041' Landmark='電梯' RelatedDirection = '2' FaceOrBack = "0"/>
     <waypoint id='00000000-0000-0000-0000-000000000045' Landmark='南區電梯' RelatedDirection = '2' FaceOrBack = "1"/>
     <waypoint id='00000000-0000-0000-0000-000000000043' Landmark='北區電梯' RelatedDirection = '2' FaceOrBack = "1"/>
     <waypoint id='00000000-0000-0000-0000-000000000044' Landmark='廁所前岔路' RelatedDirection = '2' FaceOrBack = "0"/>
