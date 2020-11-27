@@ -54,7 +54,6 @@ using Plugin.Multilingual;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using Rg.Plugins.Popup.Services;
-using IndoorNavigation.Utilities;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.Utilities;
 using System.Linq;
@@ -195,7 +194,6 @@ namespace IndoorNavigation
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
             if (e.Item is Location location)
             {
                 NavigationGraph navigationGraph =
@@ -215,7 +213,6 @@ namespace IndoorNavigation
                         new AutoAdjustPopupPage(location.sourcePath);
 
                     FirstTimeUse = await autoAdjustPage.Show(); ;
-                    Console.WriteLine("FirstTime use : " + FirstTimeUse);
                 }
                 await CheckVersionAndUpdate_(location, navigationGraph);
                 {
@@ -224,26 +221,22 @@ namespace IndoorNavigation
 
                     switch (navigationGraph.GetIndustryServer())
                     {
-
                         case "hospital":
-                            if (location.UserNaming ==
-                                GetResourceString
-                                ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
+                            //if (location.UserNaming ==
+                            //    GetResourceString
+                            //    ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
 
-                                await PopupNavigation.Instance
-                                      .PushAsync(new SelectTwoWayPopupPage
-                                      (location));
-                            else
+                            //    await PopupNavigation.Instance
+                            //          .PushAsync(new SelectTwoWayPopupPage
+                            //          (location));
+                            //else
                                 await Navigation.PushAsync
                                   (new NavigationHomePage(location));
                             break;
-
                         case "city_hall":
                             await Navigation.PushAsync
                                   (new CityHallHomePage(location));
-
                             break;
-
                         default:
                             Console.WriteLine("Unknown _industryService");
                             break;
@@ -316,7 +309,6 @@ namespace IndoorNavigation
                     await PopupNavigation.Instance.PushAsync
                         (new AlertDialogPopupPage
                         (GetResourceString("AT_LEAST_ONE_STRING"),
-                        //AppResources.AT_LEAST_ONE_STRING,
                         AppResources.OK_STRING));
                     return;
                 }
@@ -324,7 +316,6 @@ namespace IndoorNavigation
                 await PopupNavigation.Instance.PushAsync
                     (new AlertDialogPopupPage
                     (string.Format(
-                        //AppResources.DO_YOU_WANT_TO_DELETE_IS_STRING,
                         GetResourceString("DO_YOU_WANT_TO_DELETE_IS_STRING"),
                         item.UserNaming),
                         AppResources.YES_STRING,
@@ -333,7 +324,6 @@ namespace IndoorNavigation
                 MessagingCenter.Subscribe<AlertDialogPopupPage, bool>
                     (this, "ConfirmDelete", (msgSender, msgArgs) =>
                 {
-                    Console.WriteLine("the return Args is :" + (bool)msgArgs);
                     if ((bool)msgArgs)
                         DeleteBuildingGraph(item.sourcePath);
 
@@ -416,9 +406,9 @@ namespace IndoorNavigation
         private void RefreshToolbarOptions()
         {
             ToolbarItems.Clear();
-            SettingCommand = 
+            SettingCommand =
                 new Command(async () => await SettingItemMethod());
-            AddSiteCommand = 
+            AddSiteCommand =
                 new Command(async () => await AddSiteItemMethod());
 
             TestItemCommand = new Command(async () => await TestItemMethod());
@@ -483,15 +473,13 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            //await PopupNavigation.Instance.PushAsync
-            //    (new AutoAdjustPopupPage("CCH_Debug"));
-            //await Navigation.PushAsync(new TestPage());
-            WriteTestNaviGraph();
+            //WriteTestNaviGraph();
+            //await Navigation.PushAsync
+            //    (new NavigationHomePage_
+            //    (new Location { sourcePath = "CCH_new" },
+            //    LoadNavigationGraphXml("CCH_new")));
 
-            await Navigation.PushAsync
-                (new NavigationHomePage_
-                (new Location { sourcePath = "CCH_new" }, 
-                LoadNavigationGraphXml("CCH_new")));
+            await Navigation.PushAsync(new TestPage());
             await Task.CompletedTask;
         }
 
