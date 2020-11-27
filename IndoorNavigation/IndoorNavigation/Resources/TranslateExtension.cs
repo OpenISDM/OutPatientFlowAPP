@@ -79,7 +79,7 @@ namespace IndoorNavigation.Resources.Helpers
                     "Text");
 #else
                 translation = Text; // returns the key, which GETS DISPLAYED 
-                TO THE USER
+                //TO THE USER
 #endif
             }
             return translation;
