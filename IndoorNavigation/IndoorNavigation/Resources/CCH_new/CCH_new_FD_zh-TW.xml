@@ -1,35 +1,90 @@
 ﻿<first_direction_XML country='Taiwan' city_county='Changhua' industry_service='hospital' owner_organization='BiDaE' building_name='Yuanlin_Christian_Hospital'>
   <waypoint id="00000000-0000-0000-0000-000000000001" Landmark = "廁所" RelatedDirection = "6" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000002" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-100000000002" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-200000000002" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000003" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
   <waypoint id="00000000-0000-0000-0000-000000000004" Landmark = "批價領藥櫃台" RelatedDirection = "0" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000005" Landmark = "檢驗科" RelatedDirection = "0" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000005" Landmark = "檢驗科" RelatedDirection = "0" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000006" Landmark = "牙科" RelatedDirection = "6" FaceOrBack = "1" />
   <waypoint id="00000000-0000-0000-0000-000000000007" Landmark = "手扶梯" RelatedDirection = "4" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000008" Landmark = "手扶梯" RelatedDirection = "6" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000009" Landmark = "乳房中心" RelatedDirection = "6" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000009" Landmark = "乳房中心" RelatedDirection = "6" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000010" Landmark = "健檢中心" RelatedDirection = "4" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000010" Landmark = "健檢中心" RelatedDirection = "4" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000010" Landmark = "健檢中心" RelatedDirection = "4" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000011" Landmark = "化療等候區" RelatedDirection = "4" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000012" Landmark = "耳鼻喉科" RelatedDirection = "4" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000013" Landmark = "兒科" RelatedDirection = "4" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000013" Landmark = "兒科" RelatedDirection = "4" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000013" Landmark = "兒科" RelatedDirection = "4" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-300000000013" Landmark = "兒科" RelatedDirection = "4" FaceOrBack = "1"/>
+
 
   <waypoint id="00000000-0000-0000-0000-000000000014" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
   <waypoint id="00000000-0000-0000-0000-000000000015" Landmark = "大廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000016" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-100000000016" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-200000000016" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000017" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000017" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000018" Landmark = "手扶梯口" RelatedDirection = "0" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000018" Landmark = "手扶梯口" RelatedDirection = "0" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000019" Landmark = "領藥處" RelatedDirection = "2" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-100000000019" Landmark = "領藥處" RelatedDirection = "2" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000030" Landmark="廁所"  RelatedDirection="0" FaceOrBack="0"/>
   <waypoint id="00000000-0000-0000-0000-000000000028" Landmark = "前門" RelatedDirection = "4" FaceOrBack = "0"/>
 
   <waypoint id="00000000-0000-0000-0000-000000000020" Landmark = "手扶梯" RelatedDirection = "4" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000021" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  <waypoint id="00000000-0000-0000-0000-100000000021" Landmark = "梯廳" RelatedDirection = "4" FaceOrBack = "0"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-300000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-400000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-500000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-600000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-700000000022" Landmark = "內科" RelatedDirection = "2" FaceOrBack = "1"/>
+
   <waypoint id="00000000-0000-0000-0000-000000000023" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000023" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000023" Landmark = "手扶梯" RelatedDirection = "0" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000024" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+
   <waypoint id="00000000-0000-0000-0000-000000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-300000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-400000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-500000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-600000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-700000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-800000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-900000000025" Landmark = "外科" RelatedDirection = "2" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000026" Landmark = "批價掛號櫃台" RelatedDirection = "4" FaceOrBack = "1"/>
   <waypoint id="00000000-0000-0000-0000-000000000027" Landmark = "眼科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000027" Landmark = "眼科" RelatedDirection = "2" FaceOrBack = "1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000027" Landmark = "眼科" RelatedDirection = "2" FaceOrBack = "1"/>
+  
   <waypoint id="00000000-0000-0000-0000-000000000029" Landmark="手扶梯"  RelatedDirection="4" FaceOrBack="1"/>
   <waypoint id="00000000-0000-0000-0000-000000000031" Landmark="外科"  RelatedDirection="2" FaceOrBack="1"/>
 
