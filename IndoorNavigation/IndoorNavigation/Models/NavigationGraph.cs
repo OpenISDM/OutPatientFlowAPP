@@ -49,6 +49,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dijkstra.NET.Model;
 using System.Xml;
+using static IndoorNavigation.Utilities.Storage;
 
 namespace IndoorNavigation.Models.NavigaionLayer
 {
@@ -69,7 +70,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         //second one is destination region's guid.
         private Dictionary<Tuple<Guid, Guid>, List<RegionEdge>> _edges
         { get; set; }
-
+        private Dictionary<string, string> _banners;
         private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
 
         #region Nest structures and classes
@@ -182,6 +183,10 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _version =
                 Convert.ToDouble(elementInNavigationGraph
                 .GetAttribute("version"));
+
+            #endregion
+
+            #region Read Banners
 
             #endregion
 
@@ -666,6 +671,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return (double)d * Math.PI / 180d;
         }
 
+        private string GetBanner()
+        {
+            if (!_banners.ContainsKey(_currentCulture.Name))
+            {
+                return _banners.First().Value;
+            }
+            return _banners[_currentCulture.Name];
+        }
         private RegionEdge GetRegionEdgeMostNearSourceWaypoint
             (Guid sourceRegionID,
             Guid sourceWaypointID,

@@ -196,10 +196,13 @@ namespace IndoorNavigation
         {
             if (e.Item is Location location)
             {
+                if (isButtonPressed) return;
+                isButtonPressed = true;
+
                 NavigationGraph navigationGraph =
                     LoadNavigationGraphXml(location.sourcePath);
 
-                if (!FirstTimeUse)
+                if (!FirstTimeUse && Device.RuntimePlatform == Device.Android)
                 {
                     AlertDialogPopupPage alertPage =
                         new AlertDialogPopupPage
@@ -215,36 +218,31 @@ namespace IndoorNavigation
                     FirstTimeUse = await autoAdjustPage.Show(); ;
                 }
                 await CheckVersionAndUpdate_(location, navigationGraph);
+
+                switch (navigationGraph.GetIndustryServer())
                 {
-                    if (isButtonPressed) return;
-                    isButtonPressed = true;
+                    case "hospital":
+                        //if (location.UserNaming ==
+                        //    GetResourceString
+                        //    ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
 
-                    switch (navigationGraph.GetIndustryServer())
-                    {
-                        case "hospital":
-                            //if (location.UserNaming ==
-                            //    GetResourceString
-                            //    ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
-
-                            //    await PopupNavigation.Instance
-                            //          .PushAsync(new SelectTwoWayPopupPage
-                            //          (location));
-                            //else
-                                await Navigation.PushAsync
-                                  (new NavigationHomePage(location));
-                            break;
-                        case "city_hall":
-                            await Navigation.PushAsync
-                                  (new CityHallHomePage(location));
-                            break;
-                        default:
-                            Console.WriteLine("Unknown _industryService");
-                            break;
-                    }
-                    isButtonPressed = false;
-                    ((ListView)sender).SelectedItem = null;
+                        //    await PopupNavigation.Instance
+                        //          .PushAsync(new SelectTwoWayPopupPage
+                        //          (location));
+                        //else
+                        await Navigation.PushAsync
+                          (new NavigationHomePage(location));
+                        break;
+                    case "city_hall":
+                        await Navigation.PushAsync
+                              (new CityHallHomePage(location));
+                        break;
+                    default:
+                        Console.WriteLine("Unknown _industryService");
+                        break;
                 }
-
+                isButtonPressed = false;
+                ((ListView)sender).SelectedItem = null;
             }
         }
 
@@ -436,7 +434,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            //ToolbarItems.Add(TestToolbarItem);
+            ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -473,13 +471,13 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            //WriteTestNaviGraph();
-            //await Navigation.PushAsync
-            //    (new NavigationHomePage_
-            //    (new Location { sourcePath = "CCH_new" },
-            //    LoadNavigationGraphXml("CCH_new")));
+            WriteTestNaviGraph();
+            await Navigation.PushAsync
+                (new NavigationHomePage_
+                (new Location { sourcePath = "CCH_new" },
+                LoadNavigationGraphXml("CCH_new")));
 
-            await Navigation.PushAsync(new TestPage());
+            //await Navigation.PushAsync(new TestPage());
             await Task.CompletedTask;
         }
 

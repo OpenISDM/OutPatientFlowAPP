@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +16,8 @@ namespace IndoorNavigation.Views.Navigation
     public partial class ShiftAlertPopupPage : PopupPage
     {
         private string _prefs;
-        int kind = 0;
+        private TaskCompletionSource<bool> _tcs;
+
         public ShiftAlertPopupPage()
         {
             InitializeComponent();
@@ -25,7 +27,6 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage(string AlertContext, string cancel,string prefs)
         {
             InitializeComponent();
-            kind = 1;
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
@@ -49,7 +50,6 @@ namespace IndoorNavigation.Views.Navigation
         public ShiftAlertPopupPage(string AlertContext,string confirm,string cancel,string prefs)
         {
             InitializeComponent();
-            kind = 2;
             BackgroundColor = Color.FromRgba(150, 150, 150, 70);
             ShiftAlertLabel.Text = AlertContext;
             _prefs = prefs;
@@ -105,6 +105,13 @@ namespace IndoorNavigation.Views.Navigation
             //MessagingCenter.Send(this, _prefs, true);
             MessagingCenter.Send(this, "AlertBack", true);
             PopupNavigation.Instance.PopAsync();
+        }
+
+        async public Task<bool> Show()
+        {
+            _tcs = new TaskCompletionSource<bool>();
+            await Navigation.PushPopupAsync(this);
+            return await _tcs.Task;
         }
     }
 }
