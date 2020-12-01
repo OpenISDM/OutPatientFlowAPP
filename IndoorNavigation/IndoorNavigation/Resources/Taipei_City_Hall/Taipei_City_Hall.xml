@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<navigation_graph country='Taiwan' city_county='Taipei' industry_service='city_hall' owner_organization='BiDaE' building_name='Taipei_City_Hall' version = '1.0004'>
+<navigation_graph country='Taiwan' city_county='Taipei' industry_service='city_hall' owner_organization='BiDaE' building_name='Taipei_City_Hall' version = '1.0005'>
     <Banners>
-      <Banner text="目前此地區只支援地下一樓及二樓的室內" language="zh-TW"/>
+      <Banner text="目前市政府僅支援B1及2F的室內，因此在B1或2F之外的區域無法使用，煩請見諒，謝謝" language="zh-TW"/>
     </Banners>
     <regions region_numbers='2' edge_numbers='6'>
         <region id='22222222-2222-2222-2222-222222222222' ips_type='iBeacon' name='2F' floor='2'>
