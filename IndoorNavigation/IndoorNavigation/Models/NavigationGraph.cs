@@ -187,7 +187,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
             #endregion
 
             #region Read Banners
+            XmlNodeList BannerNodeList = xmlDocument.SelectNodes("navigation_graph/Banners/Banner");
+            Console.WriteLine("Banner Node List count : " + BannerNodeList.Count);
+            foreach(XmlNode BannerNode in BannerNodeList)
+            {
 
+            }
             #endregion
 
             #region Read navigation_graph/regions/region

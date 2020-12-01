@@ -196,9 +196,6 @@ namespace IndoorNavigation
         {
             if (e.Item is Location location)
             {
-                if (isButtonPressed) return;
-                isButtonPressed = true;
-
                 NavigationGraph navigationGraph =
                     LoadNavigationGraphXml(location.sourcePath);
 
@@ -215,9 +212,12 @@ namespace IndoorNavigation
                     AutoAdjustPopupPage autoAdjustPage =
                         new AutoAdjustPopupPage(location.sourcePath);
 
-                    FirstTimeUse = await autoAdjustPage.Show(); ;
+                    FirstTimeUse = await autoAdjustPage.Show();
                 }
                 await CheckVersionAndUpdate_(location, navigationGraph);
+                
+                if (isButtonPressed) return;
+                isButtonPressed = true;
 
                 switch (navigationGraph.GetIndustryServer())
                 {
