@@ -445,7 +445,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            ToolbarItems.Add(TestToolbarItem);
+           // ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
