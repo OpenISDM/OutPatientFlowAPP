@@ -87,10 +87,14 @@ namespace IndoorNavigation.Views.Navigation
             BtnLayout.Children.Add(ConfirmBtn);
             BtnLayout.Children.Add(CancelBtn);
         }
+
+      
         private void isCheck(string prefs)
         {            
             if (CheckNeverShow.IsChecked)
                 Preferences.Set(prefs, true);
+
+            _tcs?.SetResult(true);
         }
 
         protected override bool OnBackButtonPressed()

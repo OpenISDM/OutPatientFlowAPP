@@ -160,7 +160,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             _regions = new Dictionary<Guid, Region>();
             _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
             _navigraphs = new Dictionary<Guid, Navigraph>();
-
+            _banners = new Dictionary<string, string>();
             #region Read navigation_graph attrs
             //Console.WriteLine("Read attributes of <navigation_graph>");
             XmlElement elementInNavigationGraph =
@@ -191,7 +191,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Console.WriteLine("Banner Node List count : " + BannerNodeList.Count);
             foreach(XmlNode BannerNode in BannerNodeList)
             {
-
+                XmlElement bannerElement = (XmlElement)BannerNode;
+                Console.WriteLine("banner text : " + bannerElement.GetAttribute("text"));
+                Console.WriteLine("language : " + bannerElement.GetAttribute("language"));
+                _banners.Add(bannerElement.GetAttribute("language"),
+                    bannerElement.GetAttribute("text"));
             }
             #endregion
 
@@ -676,7 +680,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return (double)d * Math.PI / 180d;
         }
 
-        private string GetBanner()
+        public bool ContainsBanner()
+        {
+            return !(_banners.Count == 0);
+        }
+        public string GetBanner()
         {
             if (!_banners.ContainsKey(_currentCulture.Name))
             {

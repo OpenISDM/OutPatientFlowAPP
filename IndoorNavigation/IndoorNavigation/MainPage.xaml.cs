@@ -215,22 +215,33 @@ namespace IndoorNavigation
                     FirstTimeUse = await autoAdjustPage.Show();
                 }
                 await CheckVersionAndUpdate_(location, navigationGraph);
-                
+
+                if (navigationGraph.ContainsBanner() && 
+                    !Preferences.Get(navigationGraph.GetBuildingName()+"Banner",false))
+                {
+                    ShiftAlertPopupPage alertpage = 
+                        new ShiftAlertPopupPage(navigationGraph.GetBanner(), 
+                        GetResourceString("OK_STRING"), 
+                        navigationGraph.GetBuildingName() + "Banner");
+
+                    bool a = await alertpage.Show();
+
+                }
                 if (isButtonPressed) return;
                 isButtonPressed = true;
 
                 switch (navigationGraph.GetIndustryServer())
                 {
                     case "hospital":
-                        //if (location.UserNaming ==
-                        //    GetResourceString
-                        //    ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
-
-                        //    await PopupNavigation.Instance
-                        //          .PushAsync(new SelectTwoWayPopupPage
-                        //          (location));
-                        //else
-                        await Navigation.PushAsync
+                        if (location.UserNaming ==
+                            GetResourceString
+                            ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
+                            await Navigation.PushAsync(new NavigationHomePage_(location, navigationGraph));
+                        //await PopupNavigation.Instance
+                        //      .PushAsync(new SelectTwoWayPopupPage
+                        //      (location));
+                        else
+                            await Navigation.PushAsync
                           (new NavigationHomePage(location));
                         break;
                     case "city_hall":

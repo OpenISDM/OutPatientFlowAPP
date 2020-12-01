@@ -71,10 +71,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefineStructureOfProcess.xml" />
-    <EmbeddedResource Include="Resources\CCH_new\CCH_new.xml" />
-    <EmbeddedResource Include="Resources\CCH_new\CCH_new_FD_en-US.xml" />
-    <EmbeddedResource Include="Resources\CCH_new\CCH_new_FD_zh-TW.xml" />
-    <EmbeddedResource Include="Resources\CCH_new\CCH_new_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
     <EmbeddedResource Include="Resources\GraphResource.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab.xml" />
     <EmbeddedResource Include="Resources\Lab\Lab_FD_en-US.xml" />
@@ -92,11 +92,11 @@
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_en-US.xml" />
     <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
     <EmbeddedResource Include="Resources\ThirdPartyList.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CareRoomMapp.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CashierStation.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ElevatorsMap.xml" />
@@ -162,11 +162,6 @@
     <None Remove="DefineStructureOfProcess.xml" />
     <None Remove="Legal.txt" />
     <None Remove="Resources\AppResources.English" />
-    <None Remove="Resources\CCH_new\CCH_new.xml" />
-    <None Remove="Resources\CCH_new\CCH_new_FD_en-US.xml" />
-    <None Remove="Resources\CCH_new\CCH_new_FD_zh-TW.xml" />
-    <None Remove="Resources\CCH_new\CCH_new_info_en-US.xml" />
-    <None Remove="Resources\CCH_new\CCH_new_info_zh-TW.xml" />
     <None Remove="Resources\GraphResource.xml" />
     <None Remove="Resources\Lab\Lab_FD_en-US.xml" />
     <None Remove="Resources\Lab\Lab_FD_zh-TW.xml" />
@@ -183,6 +178,11 @@
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_en-US.xml" />
+    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
     <None Remove="TestingXML.xml" />
     <None Remove="Resources\Lab\Lab.xml" />
     <None Remove="Resources\Lab\Lab_info_en-US.xml" />
@@ -204,7 +204,7 @@
     <None Remove="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CCH_new\CCH_new_info_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\AppResources.Designer.cs">
