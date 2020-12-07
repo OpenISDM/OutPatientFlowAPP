@@ -17,12 +17,12 @@ namespace IndoorNavigation.Views.Navigation
 
         private string _navigationGraphName;
         private NavigationGraph _navigationGraph;
-        public NavigationHomePage_(Location location, NavigationGraph navigationGraph)
+        public NavigationHomePage_(Location location)
         {
             InitializeComponent();
 
             _navigationGraphName = location.sourcePath;
-            _navigationGraph = navigationGraph;
+            _navigationGraph = LoadNavigationGraphXml(location.sourcePath);
 
         }
 
