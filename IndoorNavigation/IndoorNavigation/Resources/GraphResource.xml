@@ -13,7 +13,7 @@
         <DisplayName name="Yuanlin Christian Hospital" language="en-US"/>
       </DisplayNames>
     </Graph>
-    <Graph name="Taipei_City_Hall" version="1.0005">
+    <Graph name="Taipei_City_Hall" version="1.0006">
       <DisplayNames>
         <DisplayName name="台北市政府" language="zh-TW"/>
         <DisplayName name="Taipei City Hall" language="en-US"/>
