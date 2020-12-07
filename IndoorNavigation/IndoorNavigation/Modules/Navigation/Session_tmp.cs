@@ -633,10 +633,20 @@ namespace IndoorNavigation.Modules
                             _waypointsOnRoute.RemoveAt(y);
                         }
                     }
+                    else if (point2._waypointID.Equals(_destinationWaypointID) 
+                        && locationType1 == locationTyp2 && 
+                        locationTyp2 == LocationType.portal)
+                    {
+                        _waypointsOnRoute.RemoveAt(x);
+                    }
                 }
                 x++;
                 y++;
             }
+
+            x = _waypointsOnRoute.Count-1;
+            y = _waypointsOnRoute.Count - 2;
+
             #endregion
 
             #region Wrong Point decide
@@ -1238,7 +1248,9 @@ namespace IndoorNavigation.Modules
 
                     // Raise event to notify the UI/main thread with the result                   
                     if (navigationInstruction._information._connectionType ==
-                        ConnectionType.VirtualHallway)
+                        ConnectionType.VirtualHallway ||
+                        navigationInstruction._information._isVirtualWay == 
+                        true)
                     {
                         _accumulateStraightDistance = 0;
                         navigationInstruction._progressBar =
@@ -1406,7 +1418,9 @@ namespace IndoorNavigation.Modules
                             previousRegionID;
 
                         if (navigationInstruction._information._connectionType
-                            == ConnectionType.VirtualHallway)
+                            == ConnectionType.VirtualHallway || 
+                            navigationInstruction._information._isVirtualWay 
+                            == true)
                         {
                             _accumulateStraightDistance = 0;
                             navigationInstruction._progressBar =

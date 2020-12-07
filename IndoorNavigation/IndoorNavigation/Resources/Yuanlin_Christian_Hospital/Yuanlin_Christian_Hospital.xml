@@ -135,43 +135,34 @@
       <waypoint id="00000000-0000-0000-0000-000000000034" name="停車場34" type="portal" lat="23.962798972222" lon="120.567259999" category="Exit" virutalpoint="true"/>
     </region>
     
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000007" region2="22222222-2222-2222-2222-222222222222" waypoint2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="8" connection_type="Escalator"/>
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000007" region2="33333333-3333-3333-3333-333333333333" waypoint2="00000000-0000-0000-0000-000000000020" bi_direction="2" source="" direction="8" connection_type="Escalator"/>
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-000000000017" region2="33333333-3333-3333-3333-333333333333" waypoint2="00000000-0000-0000-0000-000000000020" bi_direction="2" source="" direction="8" connection_type="Escalator"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000007" region2="22222222-2222-2222-2222-222222222222" waypoint2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="8" connection_type="Escalator" isvirtualEdge="true"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000007" region2="33333333-3333-3333-3333-333333333333" waypoint2="00000000-0000-0000-0000-000000000020" bi_direction="2" source="" direction="8" connection_type="Escalator" isvirtualEdge="true"/>
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-000000000017" region2="33333333-3333-3333-3333-333333333333" waypoint2="00000000-0000-0000-0000-000000000020" bi_direction="2" source="" direction="8" connection_type="Escalator" isvirtualEdge="true"/>
     
     <!--B1 virtual hall way-->
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    
-    <!--B1 to 5F-->
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    
-    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="11111111-1111-1111-1111-111111111111" waypoint1="00000000-0000-0000-0000-000000000008" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
 
     <!--1F virtual hall way-->
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-
-    <!--1F to 5F-->
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    
-    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>  
+    <edge region1="22222222-2222-2222-2222-222222222222" waypoint1="00000000-0000-0000-0000-100000000017" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
 
     <!--2F virtual hall way-->
-    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    
-    <!--2F to 5F-->
-    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
-    
-    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator"/>
+    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="44444444-4444-4444-4444-444444444444" waypoint2="00000000-0000-0000-0000-000000000032" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-000000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-100000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="55555555-5555-5555-5555-555555555555" waypoint2="00000000-0000-0000-0000-200000000033" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
+    <edge region1="33333333-3333-3333-3333-333333333333" waypoint1="00000000-0000-0000-0000-000000000024" region2="66666666-6666-6666-6666-666666666666" waypoint2="00000000-0000-0000-0000-000000000034" bi_direction="1" source="1" direction="0" connection_type="Elevator" isvirtualEdge="true"/>
     <!--<edge region1="" waypoint1="" region2="" waypoint2="" bi_direction="" source="" direction="" connection_type="VirtualHallWay" />
     <edge region1="" waypoint1="" region2="" waypoint2="" bi_direction="" source="" direction="" connection_type="VirtualHallway" />-->
   </regions>
-  <navigraphs navigrap_numbers="3">
+  <navigraphs navigrap_numbers="6">
     <navigraph region_id="11111111-1111-1111-1111-111111111111" waypoint_numbers="13" edge_numbers="16">
       <waypoint id="00000000-0000-0000-0000-000000000001" name="廁所01" type="terminal" lat="23.96307505555" lon="120.567408138888" category="Bathroom"/>
 

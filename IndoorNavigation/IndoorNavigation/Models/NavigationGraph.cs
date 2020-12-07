@@ -100,6 +100,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public double _distance { get; set; }
             public CardinalDirection _direction { get; set; }
             public ConnectionType _connectionType { get; set; }
+            public bool _isVirtualEdge { get; set; }
             public string _picture12 { get; set; }
             public string _picture21 { get; set; }
         }
@@ -330,6 +331,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
                                                   xmlElement.GetAttribute("direction"),
                                                   false);
                 //Console.WriteLine("direction : " + regionEdge._direction);
+
+                if (xmlElement.HasAttribute("isvirtualEdge"))
+                {
+                    regionEdge._isVirtualEdge = 
+                        XmlConvert.ToBoolean
+                        (xmlElement.GetAttribute("isvirtualEdge"));
+                }
 
                 if (xmlElement.HasAttribute("picture12") &&
                        !string.IsNullOrEmpty
@@ -1286,7 +1294,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 instruction._distance = Convert.ToInt32(currentEdge._distance);
                 instruction._regionName = _regions[nextnextRegionID]._name;
                 instruction._nextDirection = TurnDirection.Null;
-
                 return instruction;
             }
             //to show instruction "please take elevator to 2F then turn right"
@@ -1310,7 +1317,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     instruction._connectionType =
                         currentEdge._connectionType;
                     instruction._nextDirection = TurnDirection.Null;
-
+                    instruction._isVirtualWay = currentEdge._isVirtualEdge;
                     return instruction;
                 }
                 else
@@ -1390,7 +1397,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             information._floor = _regions[nextRegionID]._floor;
             information._regionName = _regions[nextRegionID]._name;
             if (!(isEmptyGuid(nextnextRegionID) &&
-                isEmptyGuid(nextnextRegionID)) &&
+                isEmptyGuid(nextnextWaypointID)) &&
                 !isSameRegion(nextnextRegionID, nextRegionID) &&
                 !isSameFloor(nextnextRegionID, nextRegionID))
             {
@@ -1461,7 +1468,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                             (currentRegionID,
                              currentWaypointID,
                              nextRegionID,
-                             avoidConnectionTypes, ref directionPicture);
+                             avoidConnectionTypes, 
+                             ref directionPicture);
                         information._relatedDirectionOfFirstDirection =
                             currentEdge._direction;
 
@@ -1946,6 +1954,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
         public string _regionName { get; set; }
         public int _distance { get; set; }
         public string _directionPicture { get; set; }
+        public bool _isVirtualWay { get; set; }
     }
 
     public enum LocationType
