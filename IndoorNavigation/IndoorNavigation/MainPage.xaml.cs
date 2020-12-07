@@ -118,6 +118,15 @@ namespace IndoorNavigation
         async private Task CheckVersionAndUpdate_(Location location,
             NavigationGraph navigationGraph)
         {
+            if(_localResources.ContainsKey(location.sourcePath) && 
+                CheckVersionNumber(location.sourcePath, 
+                navigationGraph.GetVersion(), 
+                AccessGraphOperate.CheckLocalVersion))
+            {
+                Console.WriteLine("write local file.");
+                EmbeddedGenerateFile(location.sourcePath);
+            }
+
             if (_serverResources != null &&
                 CheckVersionNumber(location.sourcePath,
                 navigationGraph.GetVersion(),
@@ -236,7 +245,7 @@ namespace IndoorNavigation
                         if (location.UserNaming ==
                             GetResourceString
                             ("YUANLIN_CHRISTIAN_HOSPITAL_STRING"))
-                            await Navigation.PushAsync(new NavigationHomePage_(location, navigationGraph));
+                            await Navigation.PushAsync(new NavigationHomePage_(location));
                         //await PopupNavigation.Instance
                         //      .PushAsync(new SelectTwoWayPopupPage
                         //      (location));
@@ -485,8 +494,7 @@ namespace IndoorNavigation
             WriteTestNaviGraph();
             await Navigation.PushAsync
                 (new NavigationHomePage_
-                (new Location { sourcePath = "CCH_new" },
-                LoadNavigationGraphXml("CCH_new")));
+                (new Location { sourcePath = "CCH_new" }));
 
             //await Navigation.PushAsync(new TestPage());
             await Task.CompletedTask;

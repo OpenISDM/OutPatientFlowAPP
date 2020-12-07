@@ -7,7 +7,7 @@
         <DisplayName name="台大醫院雲林分院" language="zh-TW"/>
       </DisplayNames>
     </Graph>
-    <Graph name="Yuanlin_Christian_Hospital" version="1.0016">
+    <Graph name="Yuanlin_Christian_Hospital" version="1.0017">
       <DisplayNames>
         <DisplayName name="員林基督教醫院" language="zh-TW"/>
         <DisplayName name="Yuanlin Christian Hospital" language="en-US"/>
