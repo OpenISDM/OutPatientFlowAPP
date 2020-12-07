@@ -1,30 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
-
 using IndoorNavigation.Modules;
 using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using static IndoorNavigation.Utilities.TmperorayStatus;
 using System.Threading;
-using System.Net.Http.Headers;
 using IndoorNavigation.Modules.IPSClients;
 using Rg.Plugins.Popup.Services;
-using MvvmHelpers;
 using IndoorNavigation.Resources;
 using Rg.Plugins.Popup.Extensions;
-using System.Globalization;
-using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -47,13 +36,13 @@ namespace IndoorNavigation.Views.PopUpPage
         private Guid _currentWaypointID;
         private Guid _currentRegionID;
         private int _currentBeaconRssi;
-                    
+
         private double ProgressValue = 0.66;
         private string naviGraphName;
         private bool _isKeepDetection = true;
 
-        private IPSmodule_ _ipsModules;        
-        private NavigationGraph _navigationGraph;        
+        private IPSmodule_ _ipsModules;
+        private NavigationGraph _navigationGraph;
         private Thread _detectWaypointThread;
         private Thread _detectPositionControllThread;
         private List<int> _AllRssiList;
@@ -77,7 +66,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
 
             TmpRssiOption = RssiOption;
-            RssiOption += 15;
+            RssiOption = 15;
 
             _detectThreadEvent = new ManualResetEventSlim(false);
             _askCorrectEvent = new ManualResetEventSlim(false);
@@ -98,7 +87,7 @@ namespace IndoorNavigation.Views.PopUpPage
             _detectPositionControllThread = new Thread(() => ThreadWork());//ScanPosition());
 
             Console.WriteLine("<<AutoAdjustPopupPage : Constructor");
-        }      
+        }
 
         protected override bool OnBackButtonPressed()
         {
@@ -121,16 +110,16 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 if (isEmptyGuid(_currentRegionID) || isEmptyGuid(_currentWaypointID))
                 {
-                    Console.WriteLine("WaypointID is empty.");                   
+                    Console.WriteLine("WaypointID is empty.");
                     _detectThreadEvent.Reset();
-                    continue;                        
+                    continue;
                 }
                 Console.WriteLine("Detect region ID : " + _currentRegionID);
                 Console.WriteLine("Detect waypoint ID : " + _currentWaypointID);
 
                 Device.BeginInvokeOnMainThread(() => SetCheckPositionCorrect());
                 _isKeepDetection = false;
-                _askCorrectEvent.Wait();                
+                _askCorrectEvent.Wait();
             }
 
             string currentPosition =
@@ -155,7 +144,8 @@ namespace IndoorNavigation.Views.PopUpPage
                     ._waypointID;
 
                 _ipsModules.CloseAllActiveClient();
-            } else if (args is WaypointRssiEventArgs RssiArgs)
+            }
+            else if (args is WaypointRssiEventArgs RssiArgs)
             {
                 _currentBeaconRssi = RssiArgs._BeaconThreshold;
                 _AllRssiList.Add(RssiArgs._scanBeaconRssi);
@@ -164,22 +154,25 @@ namespace IndoorNavigation.Views.PopUpPage
             }
             _detectThreadEvent.Set();
             Console.WriteLine("<<DetectWaypointResult");
-        }       
+        }
 
         //To scan current beacon rssi
         private void DetectPositionThreshold()
         {
             _ipsModules.SetRssiMonitor(_currentRegionID, _currentWaypointID);
             int count = 0;
-
+            double progressTmp = ProgressValue;
 
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
             {
-                Console.WriteLine(">>StartTimer, count : " + count);
+                Console.WriteLine(">>StartTimer, count : " + _AllRssiList.Count);
+
                 _ipsModules.OpenRssiScaning();
-                ProgressValue += 0.01;
+                ProgressValue = progressTmp + _AllRssiList.Count * 0.01;
+                Console.WriteLine("ProgressValue : " + ProgressValue);
+                Console.WriteLine("Count/33 : " + _AllRssiList.Count * 0.01);
                 AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
-                if (count++ == 33)
+                if (_AllRssiList.Count == 34)
                 {
                     if (PopupNavigation.Instance.PopupStack.Contains(this) && !IsCancel)
                     {
@@ -196,7 +189,7 @@ namespace IndoorNavigation.Views.PopUpPage
                                         GetResourceString("IF_NOT_STABLEGO_TO_PREFER_STRING"),
                                     AppResources.OK_STRING);
                                 bool isReturn = await alertPage.show();
-                                
+
                                 _tcs?.SetResult(true);
                             }
                             catch (Exception exc)
@@ -253,7 +246,7 @@ namespace IndoorNavigation.Views.PopUpPage
         }
 
         private void SetStartScanView()
-        {            
+        {
             AutoAdjustLayout.Children.Clear();
 
             #region Button Control
@@ -301,13 +294,13 @@ namespace IndoorNavigation.Views.PopUpPage
                     //_navigationGraph.GetWaypointNameInRegion(_currentRegionID, _currentWaypointID),
                     FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                     TextColor = Color.Black
-                }) ;
+                });
         }
 
-        private void CheckPositionCorrectBtn_Clicked(object sender, 
+        private void CheckPositionCorrectBtn_Clicked(object sender,
             EventArgs e)
         {
-            Console.WriteLine(">>CheckPositionCorrect");       
+            Console.WriteLine(">>CheckPositionCorrect");
             _askCorrectEvent.Set();
             ConfirmBtn.Clicked -= CheckPositionCorrectBtn_Clicked;
             Console.WriteLine("<<CheckPositionCorrect");
@@ -337,8 +330,8 @@ namespace IndoorNavigation.Views.PopUpPage
 
             AutoAdjustLayout.Children.Add(new Label
             {
-                Text=GetResourceString("SCAN_RSSI_NOW_STRING"),
-                Margin = new Thickness(10,0,10,0),
+                Text = GetResourceString("SCAN_RSSI_NOW_STRING"),
+                Margin = new Thickness(10, 0, 10, 0),
                 FontSize = 24,
                 TextColor = Color.Black
             });
@@ -370,7 +363,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 //RssiOption = ((int)_currentBeaconRssi - midian) + 2;
                 //Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
 
-                int result = ((int)_currentBeaconRssi - midian)+2;
+                int result = (_currentBeaconRssi - midian) + 2;
 
                 if (result >= 15)
                     RssiOption = 15;
@@ -378,8 +371,9 @@ namespace IndoorNavigation.Views.PopUpPage
                     RssiOption = -15;
                 else
                     RssiOption = result;
+                Console.WriteLine("Rssi option result : " + RssiOption);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("set Rssi option error - " + exc.Message);
 
@@ -390,7 +384,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private bool isEmptyGuid(Guid guid)
         {
             return Guid.Empty.Equals(guid);
-        }      
+        }
 
         async public Task<bool> Show()
         {
@@ -399,7 +393,7 @@ namespace IndoorNavigation.Views.PopUpPage
             await Navigation.PushPopupAsync(this);
             return await _tcs.Task;
         }
-        
+
         #endregion
     }
 
