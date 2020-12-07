@@ -88,4 +88,13 @@
   <waypoint id="00000000-0000-0000-0000-000000000029" Landmark="手扶梯"  RelatedDirection="4" FaceOrBack="1"/>
   <waypoint id="00000000-0000-0000-0000-000000000031" Landmark="外科"  RelatedDirection="2" FaceOrBack="1"/>
 
+  <!--virtual waypoints-->
+  <waypoint id="00000000-0000-0000-0000-000000000032" Landmark="麻醉外科"  RelatedDirection="2" FaceOrBack="1"/>
+  
+  <waypoint id="00000000-0000-0000-0000-000000000033" Landmark="婦產科"  RelatedDirection="2" FaceOrBack="1"/>
+  <waypoint id="00000000-0000-0000-0000-100000000033" Landmark="婦產科"  RelatedDirection="2" FaceOrBack="1"/>
+  <waypoint id="00000000-0000-0000-0000-200000000033" Landmark="婦產科"  RelatedDirection="2" FaceOrBack="1"/>
+  
+  <waypoint id="00000000-0000-0000-0000-000000000034" Landmark="停車場"  RelatedDirection="2" FaceOrBack="1"/>
+  
 </first_direction_XML>

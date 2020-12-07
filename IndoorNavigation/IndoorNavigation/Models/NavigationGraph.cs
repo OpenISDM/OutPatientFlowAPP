@@ -258,15 +258,22 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     waypoint._lon = Double.Parse(xmlWaypointElement.GetAttribute("lon"));
                     //Console.WriteLine("lon : " + waypoint._lon);
 
-                    waypoint._lat = Double.Parse(xmlWaypointElement.GetAttribute("lat"));
+                    waypoint._lat = double.Parse(xmlWaypointElement.GetAttribute("lat"));
                     //Console.WriteLine("lat : " + waypoint._lat);
 
                     waypoint._category =
                         (CategoryType)Enum.Parse(typeof(CategoryType),
-                                                 xmlWaypointElement.GetAttribute("category"),
+                                                 xmlWaypointElement
+                                                 .GetAttribute("category"),
                                                  false);
-
-                    if (!region._waypointsByCategory.ContainsKey(waypoint._category))
+                    if (xmlWaypointElement.HasAttribute("virutalpoint"))
+                    {
+                        waypoint._isVirtualPoint =
+                          XmlConvert.ToBoolean
+                          (xmlWaypointElement.GetAttribute("virutalpoint"));
+                    }
+                    if (!region._waypointsByCategory.ContainsKey
+                        (waypoint._category))
                     {
                         List<Waypoint> tempList = new List<Waypoint>();
                         tempList.Add(waypoint);
@@ -276,6 +283,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
                     {
                         region._waypointsByCategory[waypoint._category].Add(waypoint);
                     }
+
+                    
                 }
                 _regions.Add(region._id, region);
             }

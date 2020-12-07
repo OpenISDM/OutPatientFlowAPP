@@ -56,6 +56,8 @@ namespace IndoorNavigation.Models
         // WaypointEdge later while parsing <edge> in XML
         public double _lon { get; set; }
         public double _lat { get; set; }
+
+        public bool _isVirtualPoint { get; set; }
     }
 
     public class PortalWaypoints

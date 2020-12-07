@@ -100,7 +100,10 @@ namespace IndoorNavigation.Views.Navigation
                     {
                         string waypointName = waypoint._name;
                         waypointName = _nameInformation.GiveWaypointName(waypoint._id);
-                        if (waypoint._type.ToString() == "terminal" || waypoint._type.ToString() == "landmark")
+                        if (waypoint._type == LocationType.terminal || 
+                            waypoint._type == LocationType.landmark ||
+                            (waypoint._type == LocationType.portal && 
+                            waypoint._isVirtualPoint == true))
                         {
                             Console.WriteLine("check type : " + waypoint._type.ToString());
                             _destinationItems.Add(new DestinationItem
