@@ -106,6 +106,7 @@
       "minimum-system-version": "7.0",
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen_2048x2732.png",
       "size": "1024x1366",
       "scale": "2x",
       "idiom": "ipad"
@@ -133,6 +134,7 @@
       "minimum-system-version": "7.0",
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen_768x1024.png",
       "size": "768x1024",
       "scale": "1x",
       "idiom": "ipad"
@@ -141,6 +143,7 @@
       "minimum-system-version": "7.0",
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen_1536x2048.png",
       "size": "768x1024",
       "scale": "2x",
       "idiom": "ipad"
@@ -172,6 +175,7 @@
     {
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen(640x960).png",
       "size": "320x480",
       "scale": "2x",
       "idiom": "iphone"
@@ -179,6 +183,7 @@
     {
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen(640x1136).png",
       "size": "320x568",
       "subtype": "retina4",
       "scale": "2x",
@@ -187,6 +192,7 @@
     {
       "orientation": "portrait",
       "extent": "to-status-bar",
+      "filename": "SplashScreen_768x1004.png",
       "size": "768x1004",
       "scale": "1x",
       "idiom": "ipad"
@@ -194,6 +200,7 @@
     {
       "orientation": "portrait",
       "extent": "to-status-bar",
+      "filename": "SplashScreen_1536x2008.png",
       "size": "768x1004",
       "scale": "2x",
       "idiom": "ipad"
@@ -201,6 +208,7 @@
     {
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen_768x1024.png",
       "size": "768x1024",
       "scale": "1x",
       "idiom": "ipad"
@@ -208,6 +216,7 @@
     {
       "orientation": "portrait",
       "extent": "full-screen",
+      "filename": "SplashScreen_1536x2048.png",
       "size": "768x1024",
       "scale": "2x",
       "idiom": "ipad"
