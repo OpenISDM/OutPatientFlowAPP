@@ -182,16 +182,36 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen%28320x480%29.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\iPadNotifications_20x20.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\iPadNotifications_29x29.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_152x152.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_167x167.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_76x76.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_2048x2732.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_768x1024.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_1536x2048.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_768x1004.png" />
-    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_1536x2008.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\iPadNotifications_20x20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\iPadNotifications_29x29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_152x152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_167x167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_76x76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_2048x2732.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_768x1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_1536x2048.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_768x1004.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\SplashScreen_1536x2008.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
