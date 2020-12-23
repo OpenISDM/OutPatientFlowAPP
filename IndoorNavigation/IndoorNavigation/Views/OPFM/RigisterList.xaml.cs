@@ -12,7 +12,7 @@
  * 
  * File Name:
  *
- *      AddPopupPage.cs
+ *      RigisterList.xaml.cs
  *
  * Abstract:
  *      
@@ -85,11 +85,9 @@ namespace IndoorNavigation.Views.OPFM
             LeaveHospitalBtn.IsEnabled =
                 app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
-                //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             LeaveHospitalBtn.IsVisible = app.records.Count() > 0 &&
                 (app.FinishCount == app.records.Count) &&
-                //(app.HaveCashier) &&
                 !(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
             LoadPositionData();
             BindingContext = _viewmodel;
@@ -111,18 +109,11 @@ namespace IndoorNavigation.Views.OPFM
                 app.FinishCount == app.records.Count &&
                 !(app.records.Count == 1 &&
                     app.records[0].type == RecordType.Register);
-            //app.records.Count() > 0 &&
-            //(app.FinishCount == app.records.Count) &&
-            //(!app.HaveCashier) &&
-            //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
+
             LeaveHospitalBtn.IsVisible = app.records.Count > 0 &&
                 app.FinishCount == app.records.Count &&
                 !(app.records.Count == 1 &&
                     app.records[0].type == RecordType.Register);
-            //app.records.Count() > 0 &&
-            //(app.FinishCount == app.records.Count) &&
-            //(!app.HaveCashier) &&
-            //!(app.records.Count() == 1 && app.records[0].type == RecordType.Register);
 
             if (app.lastFinished != null && !app.HaveCashier)
             {
@@ -167,10 +158,10 @@ namespace IndoorNavigation.Views.OPFM
             #endregion           
             if (e.Item is RgRecord record)
             {
-                if (app.OrderDistrict.ContainsKey(record._groupID) && 
-                    !(app.OrderDistrict[record._groupID] == record.order || 
+                if (app.OrderDistrict.ContainsKey(record._groupID) &&
+                    !(app.OrderDistrict[record._groupID] == record.order ||
                     app.OrderDistrict[record._groupID] == record.order - 1)
-                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))               
+                    || (!app.OrderDistrict.ContainsKey(record._groupID) && (record.order != 1)))
                 {
                     Console.WriteLine("please do something first");
                     string BannerName = "";
@@ -450,7 +441,7 @@ namespace IndoorNavigation.Views.OPFM
             }
 
             return true;
-        }      
+        }
 
         /*to show popup page for add route to listview*/
         async private void AddBtn_Clicked(object sender, EventArgs e)
@@ -676,39 +667,9 @@ namespace IndoorNavigation.Views.OPFM
         #region  For Get Value
         public void LoadPositionData()
         {
-            //CashierPosition = new Dictionary<Guid, DestinationItem>();
-            //PharmacyPostition = new Dictionary<Guid, DestinationItem>();
+
             ElevatorPosition = new Dictionary<Guid, DestinationItem>();
             XmlDocument doc;
-            #region Load Cashier and Pharmacy position
-            //XmlDocument doc = Storage.XmlReader("Yuanlin_OPFM.CashierStation.xml");
-            //XmlNodeList CashiernodeList = doc.GetElementsByTagName("Cashierstation");
-            //XmlNodeList PharmacyNodeList = doc.GetElementsByTagName("Pharmacystation");
-            //foreach (XmlNode node in CashiernodeList)
-            //{
-            //    DestinationItem item = new DestinationItem();
-
-            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
-            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-            //    item._floor = node.Attributes["floor"].Value;
-            //    item._waypointName = node.Attributes["name"].Value;
-
-            //    Console.WriteLine(item._waypointName + " region id:" + item._regionID + ", waypoint id: " + item._waypointID);
-
-            //    CashierPosition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            //}
-
-            //foreach (XmlNode node in PharmacyNodeList)
-            //{
-            //    DestinationItem item = new DestinationItem();
-            //    item._regionID = new Guid(node.Attributes["region_id"].Value);
-            //    item._waypointID = new Guid(node.Attributes["waypoint_id"].Value);
-            //    item._floor = node.Attributes["floor"].Value;
-            //    item._waypointName = node.Attributes["name"].Value;
-
-            //    PharmacyPostition.Add(new Guid(node.Attributes["region_id"].Value), item);
-            //}
-            #endregion
 
             #region Load Elevator
             doc = Storage.XmlReader("Yuanlin_OPFM.ElevatorsMap.xml");
@@ -765,8 +726,6 @@ namespace IndoorNavigation.Views.OPFM
 
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             Week TodayOfWeekDay = GetDayofWeek();
-            Console.WriteLine("CurrentTimeSpan : " + CurrentTime);
-            Console.WriteLine("Week : " + TodayOfWeekDay);
 
             foreach (OpeningTime openTime in openingTimes)
             {
@@ -778,10 +737,7 @@ namespace IndoorNavigation.Views.OPFM
                     TimeSpan.Compare(openTime.endTime, CurrentTime);
 
                 if (StartTimeCompare == 1 && EndTimeCompare == 1)
-                {
-                    Console.WriteLine("Current, the room is available now");
                     return true;
-                }
             }
 
             return false;
@@ -789,6 +745,11 @@ namespace IndoorNavigation.Views.OPFM
         #endregion
 
         #region UI View Control
+        private void Buttonable(ref Button button, bool enable)
+        {
+            button.IsEnabled = enable;
+            button.IsVisible = enable;
+        }
         private void Buttonable(bool enable)
         {
             AddBtn.IsEnabled = enable;
@@ -1069,10 +1030,10 @@ namespace IndoorNavigation.Views.OPFM
 
             XmlDocument doc = XmlReader("Yuanlin_OPFM.CashierStation.xml");
 
-            XmlNodeList CashierNodeList = 
+            XmlNodeList CashierNodeList =
                 doc.GetElementsByTagName("Cashierstation");
 
-            XmlNodeList PharmacyNodeList = 
+            XmlNodeList PharmacyNodeList =
                 doc.GetElementsByTagName("Pharmacystation");
 
 
@@ -1113,22 +1074,22 @@ namespace IndoorNavigation.Views.OPFM
 
         public ICommand LeaveHospitalCommand { get; set; }
         private void SetPharmacyBtn()
-        {            
-            LeaveHospitalCommand = 
+        {
+            LeaveHospitalCommand =
                 new Command(() => PharmacyMethod());
-            
+
             LeaveHospitalBtn.Text = AppResources.PAYMENT_MEDICINE_STRING;
-            LeaveHospitalBtn.Command = LeaveHospitalCommand;            
+            LeaveHospitalBtn.Command = LeaveHospitalCommand;
         }
         private void SetExitBtn()
         {
-            LeaveHospitalCommand = 
+            LeaveHospitalCommand =
                 new Command(async () => await ExitBtnMethod());
 
             LeaveHospitalBtn.Command = LeaveHospitalCommand;
             LeaveHospitalBtn.Text =
                 GetResourceString("EXIT_HOSPITAL_STRING");
-                //AppResources.EXIT_HOSPITAL_STRING;
+            //AppResources.EXIT_HOSPITAL_STRING;
         }
         private void PharmacyMethod()
         {
@@ -1138,7 +1099,7 @@ namespace IndoorNavigation.Views.OPFM
 
             LeaveHospitalBtn.IsVisible = false;
             LeaveHospitalBtn.IsEnabled = false;
-            app.HaveCashier = true;            
+            app.HaveCashier = true;
 
             LoadCashierPosition();
 
@@ -1175,7 +1136,7 @@ namespace IndoorNavigation.Views.OPFM
                 ScrollToPosition.MakeVisible, true);
 
             Buttonable(false);
-            isButtonPressed = false;    
+            isButtonPressed = false;
         }
         private async Task ExitBtnMethod()
         {
