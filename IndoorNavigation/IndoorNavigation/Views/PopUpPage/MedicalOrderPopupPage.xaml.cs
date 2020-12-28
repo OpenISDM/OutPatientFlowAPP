@@ -12,9 +12,30 @@ namespace IndoorNavigation.Views.PopUpPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MedicalOrderPopupPage : PopupPage
     {
+
         public MedicalOrderPopupPage()
         {
             InitializeComponent();
+        }
+
+        private void MedicalOderConfirmBtn_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadData()
+        {
+
+        }
+
+        private void GenerateCheckBox()
+        {
+
+        }
+
+        private void bindingRevisitBox_Tapped(object sender, EventArgs e)
+        {
+            RevisitCheckBox.IsChecked = !RevisitCheckBox.IsChecked;
         }
     }
 }

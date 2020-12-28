@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.PopUpPage.DepartmentPopupPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BackgroundColor="White" VerticalOptions="CenterAndExpand" Margin="15,0,15,0">
+                <StackLayout>
+                    <Label/>
+                    <ScrollView>
+                        <StackLayout></StackLayout>
+                    </ScrollView>
+                    <Button />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</pages:PopupPage>

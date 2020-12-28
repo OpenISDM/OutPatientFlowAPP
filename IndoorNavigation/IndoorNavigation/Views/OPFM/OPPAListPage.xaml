@@ -68,8 +68,7 @@
                     />
             <Button x:Name="ShiftBtn"
                     Text="{i18n:Translate EXCHANGE_STRING}"
-                    Style="{x:StaticResource FloatButton}"
-                    Clicked= "ShiftBtn_Clicked"                  
+                    Style="{x:StaticResource FloatButton}"                  
                     AbsoluteLayout.LayoutBounds= "0.96,0.74,70,70"/>
 
             <Button x:Name="LeaveHospitalBtn" FontSize="Large"                                       

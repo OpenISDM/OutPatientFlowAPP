@@ -14,13 +14,13 @@ namespace IndoorNavigation.ViewModels
         {
 
         }
+
+
+        #region First visit 
         public bool HaveFirstVisitCenter()
         {
             return true;
         }
-
-        #region First visit 
-
         #endregion
 
         #region Re- visit
