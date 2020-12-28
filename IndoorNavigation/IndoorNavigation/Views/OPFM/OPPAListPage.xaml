@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:CustomToolbarContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             xmlns:local="clr-namespace:IndoorNavigation"
+             mc:Ignorable="d"
+             x:Class="IndoorNavigation.Views.OPFM.OPPAListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" BaseResourceKey="FloatButton">
+                <Setter Property="BackgroundColor" Value="#3f51b5"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="CornerRadius" Value="35"/>
+                <Setter Property="FontFamily" Value="Bold"/>
+                <Setter Property="AbsoluteLayout.LayoutFlags" Value="PositionProportional"/>
+            </Style>
+            <DataTemplate x:Key="DepartmentGroupTemplate">
+                <ViewCell Height="60">
+                    <Frame>
+                        
+                    </Frame>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="SubGroupTemplate">
+                <ViewCell>
+                    <Frame>
+                        
+                    </Frame>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform = "iOS" Value="0, 20, 0, 0" />
+                <On Platform = "Android" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="RigisterListAbsoluteLayout">
+            <Grid x:Name="RigistListGrid" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "*" />
+                    <RowDefinition Height="19*"/>
+                </Grid.RowDefinitions>
+                <Label Text ="{i18n:Translate COMMEND_ORDER_STRING}" TextColor="#3f51b5" BackgroundColor="#f2e4e4" 
+                   VerticalOptions="CenterAndExpand" FontSize="Large" Grid.Row="0" Padding="5,0,5,0"/>
+
+                <ListView x:Name= "RgListView" 
+                          Grid.Row="1"
+                          ItemTapped= "RgListView_ItemTapped"
+                          VerticalScrollBarVisibility= "Always"
+                          HasUnevenRows= "True" 
+                          VerticalOptions="FillAndExpand"
+                          ItemTemplate= "{StaticResource RegistrationDataTemplateSelecter}" 
+                          SeparatorColor= "#3f51b5"/>
+            </Grid >
+            <Button x:Name= "AddBtn"                   
+                    Text= "{i18n:Translate NEW_STRING}"
+                    Style="{x:StaticResource FloatButton}"
+                    AbsoluteLayout.LayoutBounds= "0.96,0.9,70,70"
+                    />
+            <Button x:Name="ShiftBtn"
+                    Text="{i18n:Translate EXCHANGE_STRING}"
+                    Style="{x:StaticResource FloatButton}"
+                    Clicked= "ShiftBtn_Clicked"                  
+                    AbsoluteLayout.LayoutBounds= "0.96,0.74,70,70"/>
+
+            <Button x:Name="LeaveHospitalBtn" FontSize="Large"                                       
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0,1,1,0.1"
+                    BorderColor= "#3f51b5"
+                    BackgroundColor="#3f51b5"
+                    TextColor= "White"/>
+        </AbsoluteLayout >
+    </ContentPage.Content>
+</local:CustomToolbarContentPage>
