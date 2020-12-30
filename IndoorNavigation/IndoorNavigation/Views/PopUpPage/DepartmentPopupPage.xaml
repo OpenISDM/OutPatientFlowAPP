@@ -10,11 +10,13 @@
         <StackLayout>
             <Frame BackgroundColor="White" VerticalOptions="CenterAndExpand" Margin="15,0,15,0">
                 <StackLayout>
-                    <Label/>
+                    <Label Text="請選擇您要看的科別"/>
                     <ScrollView>
-                        <StackLayout></StackLayout>
+                        <StackLayout x:Name="DepartmentStackLayout" Margin="20,0,20,0">
+                            
+                        </StackLayout>
                     </ScrollView>
-                    <Button />
+                    <Button x:Name="DepartmentConfirmBtn" Text="確定"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
