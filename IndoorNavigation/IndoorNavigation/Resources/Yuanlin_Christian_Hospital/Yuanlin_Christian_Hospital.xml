@@ -1,4 +1,4 @@
-﻿<navigation_graph country="Taiwan" city_county="Changhua" industry_service="hospital" owner_organization="BiDaE" building_name="Yuanlin_Christian_Hospital" version="1.0018">
+﻿<navigation_graph country="Taiwan" city_county="Changhua" industry_service="hospital" owner_organization="BiDaE" building_name="Yuanlin_Christian_Hospital" version="1.0019">
   <regions region_numbers="3" edge_numbers="3">
     <region id="11111111-1111-1111-1111-111111111111" ips_type="LBeacon" name="地下1樓" floor="-1">
       <waypoint id="00000000-0000-0000-0000-000000000001" name="廁所01" type="terminal" lat="23.96307505555" lon="120.567408138888" category="Bathroom"/>
@@ -206,6 +206,10 @@
       <edge node1="00000000-0000-0000-0000-000000000001" node2="00000000-0000-0000-0000-200000000002" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000001" node2="00000000-0000-0000-0000-100000000002" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
 
+      <!-- 2 to 2-->
+      <edge node1="00000000-0000-0000-0000-000000000002" node2="00000000-0000-0000-0000-100000000002" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000002" node2="00000000-0000-0000-0000-200000000002" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <!-- 2 to 3-->
       <edge node1="00000000-0000-0000-0000-000000000002" node2="00000000-0000-0000-0000-000000000003" bi_direction="2" source="" direction="4" picture12="" picture21="CCH11100302" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-100000000002" node2="00000000-0000-0000-0000-000000000003" bi_direction="2" source="" direction="4" picture12="" picture21="CCH11100302" connection_type="NormalHallway"/>
@@ -219,12 +223,16 @@
       <edge node1="00000000-0000-0000-0000-000000000004" node2="00000000-0000-0000-0000-000000000005" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000004" node2="00000000-0000-0000-0000-100000000005" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       
+      <!-- 5 to 5-->
+      <edge node1="00000000-0000-0000-0000-000000000005" node2="00000000-0000-0000-0000-100000000005" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <!-- 5 to 8-->
       <edge node1="00000000-0000-0000-0000-000000000005" node2="00000000-0000-0000-0000-000000000008" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-100000000005" node2="00000000-0000-0000-0000-000000000008" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
 
       <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-000000000007" bi_direction="2" source="" direction="2" picture12="" picture21="CCH11100706" connection_type="NormalHallway"/>
-      <!-- 9 to 10-->
+      
+      <!-- 6 to 10-->
       <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-000000000009" bi_direction="2" source="" direction="4" picture12="CCH11100609" picture21="CCH11100906" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000006" node2="00000000-0000-0000-0000-100000000009" bi_direction="2" source="" direction="4" picture12="CCH11100609" picture21="CCH11100906" connection_type="NormalHallway"/>
 
@@ -239,6 +247,10 @@
       <edge node1="00000000-0000-0000-0000-000000000004" node2="00000000-0000-0000-0000-000000000007" bi_direction="2" source="" direction="4" picture12="" picture21="CCH11100704" connection_type="NormalHallway"/>
 
       <edge node1="00000000-0000-0000-0000-000000000008" node2="00000000-0000-0000-0000-000000000011" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      
+      <!-- 9 to 9-->
+      <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-100000000009" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <!-- 9 to 10-->
       <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-000000000010" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000009" node2="00000000-0000-0000-0000-100000000010" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
@@ -258,6 +270,11 @@
       <edge node1="00000000-0000-0000-0000-100000000009" node2="00000000-0000-0000-0000-300000000013" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <!--end 9 to 13-->
       
+      <!-- 10 to 10-->
+      <edge node1="00000000-0000-0000-0000-000000000010" node2="00000000-0000-0000-0000-100000000010" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000010" node2="00000000-0000-0000-0000-200000000010" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+
+
       <!--10 to 11-->
       <edge node1="00000000-0000-0000-0000-000000000010" node2="00000000-0000-0000-0000-000000000011" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-100000000010" node2="00000000-0000-0000-0000-000000000011" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
@@ -270,6 +287,10 @@
       <edge node1="00000000-0000-0000-0000-000000000012" node2="00000000-0000-0000-0000-200000000013" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000012" node2="00000000-0000-0000-0000-300000000013" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
 
+      <!-- 13 to 13-->
+      <edge node1="00000000-0000-0000-0000-000000000013" node2="00000000-0000-0000-0000-100000000013" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000013" node2="00000000-0000-0000-0000-200000000013" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000013" node2="00000000-0000-0000-0000-300000000013" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <beacons beacon_numbers="13">
         <beacon uuid="00010014-0000-0000-5200-000000017500" waypoint_ids="00000000-0000-0000-0000-000000000001" threshold="-55"/>
         <beacon uuid="00010014-0000-0000-7500-000000016700" waypoint_ids="00000000-0000-0000-0000-000000000002;00000000-0000-0000-0000-100000000002;00000000-0000-0000-0000-200000000002" threshold="-55"/>
@@ -320,6 +341,9 @@
       <edge node1="00000000-0000-0000-0000-000000000028" node2="00000000-0000-0000-0000-000000000016" bi_direction="2" source="" direction="4" picture12="CCH22202816" picture21="CCH22201628" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000028" node2="00000000-0000-0000-0000-100000000016" bi_direction="2" source="" direction="4" picture12="CCH22202816" picture21="CCH22201628" connection_type="NormalHallway"/>
       
+      <!-- 16 to 16-->
+      <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-100000000016" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <!-- 16 to 17-->
       <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-000000000017" bi_direction="2" source="" direction="2" picture12="" picture21="CCH22201716" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-100000000017" bi_direction="2" source="" direction="2" picture12="" picture21="CCH22201716" connection_type="NormalHallway"/>
@@ -328,7 +352,7 @@
 
       <!-- 16 to 18-->
       <edge node1="00000000-0000-0000-0000-000000000016" node2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="4" picture12="CCH22201618" picture21="CCH22201816" connection_type="NormalHallway"/>
-      <edge node1="00000000-0000-0000-0000-100000000016" node2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="4" picture12="CCH22201618" picture21="CCH22201816" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-100000000016" node2="00000000-0000-0000-0000-000000000018" bi_direction="2" source="" direction="4" picture12="CCH22201618" picture21="CCH22201816" connection_type="NormalHallway"/>                
       
       <!-- 17 to 19 -->
       <edge node1="00000000-0000-0000-0000-000000000017" node2="00000000-0000-0000-0000-000000000019" bi_direction="2" source="" direction="4" picture12="CCH22201719" picture21="CCH22201917" connection_type="NormalHallway" combineInstruction='false'/>
@@ -336,7 +360,14 @@
       <edge node1="00000000-0000-0000-0000-000000000017" node2="00000000-0000-0000-0000-100000000019" bi_direction="2" source="" direction="4" picture12="CCH22201719" picture21="CCH22201917" connection_type="NormalHallway" combineInstruction='false'/>
       <edge node1="00000000-0000-0000-0000-100000000017" node2="00000000-0000-0000-0000-100000000019" bi_direction="2" source="" direction="4" picture12="CCH22201719" picture21="CCH22201917" connection_type="NormalHallway" combineInstruction='false'/>
 
+      <!-- 17 to 17-->
       <edge node1="00000000-0000-0000-0000-000000000017" node2="00000000-0000-0000-0000-100000000017" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
+      <!-- 18 to 18-->
+      <edge node1="00000000-0000-0000-0000-000000000018" node2="00000000-0000-0000-0000-100000000018" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
+      <!-- 19 to 19-->
+      <edge node1="00000000-0000-0000-0000-000000000019" node2="00000000-0000-0000-0000-100000000019" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       
       <!-- 18 to 19-->
       <edge node1="00000000-0000-0000-0000-000000000018" node2="00000000-0000-0000-0000-000000000019" bi_direction="2" source="" direction="2" picture12="CCH22201819" picture21="" connection_type="NormalHallway"/>
@@ -415,12 +446,19 @@
       <!-- 20 to 21-->
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000021" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-100000000021" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
-
+      
+      <!-- 21 to 21-->
+      <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-100000000021" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <!-- 20 to 23-->
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000023" bi_direction="2" source="" direction="4" picture12="CCH33302023" picture21="CCH33302320" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-100000000023" bi_direction="2" source="" direction="4" picture12="CCH33302023" picture21="CCH33302320" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-200000000023" bi_direction="2" source="" direction="4" picture12="CCH33302023" picture21="CCH33302320" connection_type="NormalHallway"/>
-
+      
+      <!-- 23 to 23-->
+      <edge node1="00000000-0000-0000-0000-000000000023" node2="00000000-0000-0000-0000-100000000023" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000023" node2="00000000-0000-0000-0000-200000000023" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      
       <edge node1="00000000-0000-0000-0000-000000000020" node2="00000000-0000-0000-0000-000000000029" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       
       <!-- 29 to 21-->
@@ -431,7 +469,8 @@
       <edge node1="00000000-0000-0000-0000-000000000029" node2="00000000-0000-0000-0000-000000000023" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000029" node2="00000000-0000-0000-0000-100000000023" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000029" node2="00000000-0000-0000-0000-200000000023" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
-
+      
+      <!-- 21 to 22-->
       <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000022" bi_direction="2" source="" direction="2" picture12="CCH33302122" picture21="CCH33302221" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-100000000022" bi_direction="2" source="" direction="2" picture12="CCH33302122" picture21="CCH33302221" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-200000000022" bi_direction="2" source="" direction="2" picture12="CCH33302122" picture21="CCH33302221" connection_type="NormalHallway"/>
@@ -452,6 +491,15 @@
       <!--21 to 24-->
       <edge node1="00000000-0000-0000-0000-000000000021" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="4" picture12="CCH33302124" picture21="CCH33302421" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-100000000021" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="4" picture12="CCH33302124" picture21="CCH33302421" connection_type="NormalHallway"/>
+      
+      <!-- 22 to 22-->
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-100000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-200000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-300000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-400000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-500000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-600000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-700000000022" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       
       <!-- 22 to 25-->
       <edge node1="00000000-0000-0000-0000-000000000022" node2="00000000-0000-0000-0000-000000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
@@ -553,7 +601,18 @@
       <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-900000000025" bi_direction="2" source="" direction="2" picture12="CCH33302425" picture21="CCH33302524" connection_type="NormalHallway"/>
 
       <edge node1="00000000-0000-0000-0000-000000000024" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="CCH33302426" picture21="CCH33302624" connection_type="NormalHallway"/>
-      
+
+      <!-- 25 to 25-->
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-100000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-200000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-300000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-400000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-500000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-600000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-700000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-800000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-900000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+            
       <!-- 25 to 26-->
       <edge node1="00000000-0000-0000-0000-000000000025" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-100000000025" node2="00000000-0000-0000-0000-000000000026" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
@@ -597,6 +656,10 @@
       <edge node1="00000000-0000-0000-0000-900000000025" node2="00000000-0000-0000-0000-000000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-900000000025" node2="00000000-0000-0000-0000-100000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       <edge node1="00000000-0000-0000-0000-900000000025" node2="00000000-0000-0000-0000-200000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+
+      <!--27 to 27-->
+      <edge node1="00000000-0000-0000-0000-000000000027" node2="00000000-0000-0000-0000-100000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
+      <edge node1="00000000-0000-0000-0000-000000000027" node2="00000000-0000-0000-0000-200000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       
       <!--26 to 27-->
       <edge node1="00000000-0000-0000-0000-000000000026" node2="00000000-0000-0000-0000-000000000027" bi_direction="2" source="" direction="2" picture12="" picture21="" connection_type="NormalHallway"/>
@@ -609,6 +672,9 @@
       <edge node1="00000000-0000-0000-0000-000000000031" node2="00000000-0000-0000-0000-200000000027" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
 
       <edge node1="00000000-0000-0000-0000-000000000031" node2="00000000-0000-0000-0000-000000000024" bi_direction="2" source="" direction="6" picture12="CCH33302524" picture21="CCH33302425" connection_type="NormalHallway"/>
+      
+      <!--31 to 25-->
+      <edge node1="00000000-0000-0000-0000-000000000031" node2="00000000-0000-0000-0000-000000000025" bi_direction="2" source="" direction="4" picture12="" picture21="" connection_type="NormalHallway"/>
       
       <!--31 to 22-->
       <edge node1="00000000-0000-0000-0000-000000000031" node2="00000000-0000-0000-0000-000000000022" bi_direction="2" source="" direction="0" picture12="" picture21="" connection_type="NormalHallway"/>
