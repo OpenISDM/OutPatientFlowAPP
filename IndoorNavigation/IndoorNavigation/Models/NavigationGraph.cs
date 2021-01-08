@@ -116,7 +116,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             public double _distance { get; set; }
             public string _picture12 { get; set; }
             public string _picture21 { get; set; }
-
+            //public string _directionPicture { get; set; }
             // some stair, escalator or elevator can't be seen at previous 
             // point.
             public bool _supportCombine { get; set; }
@@ -677,7 +677,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Console.WriteLine("<< NavigationGraph");
         }
 
-        private double GetDistance(double lon1, double lat1, double lon2, double lat2)
+        private double GetDistance(double lon1, double lat1, double lon2, 
+            double lat2)
         {
             double radLat1 = Rad(lat1);
             double radLng1 = Rad(lon1);
@@ -725,7 +726,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Tuple<Guid, Guid> edgeKeyFromNode1 =
                 new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
 
-            int distance = Int32.MaxValue;
+            int distance = int.MaxValue;
             int indexEdge = -1;
             if (_edges.ContainsKey(edgeKeyFromNode1))
             {
@@ -865,8 +866,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             (Guid sourceRegionID,
              Guid sourceWaypointID,
              Guid sinkRegionID,
-             ConnectionType[] avoidConnectionTypes
-             )
+             ConnectionType[] avoidConnectionTypes)
         {
             RegionEdge regionEdgeItem = new RegionEdge();
 
@@ -877,7 +877,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             Tuple<Guid, Guid> edgeKeyFromNode1 =
                 new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
 
-            int distance = Int32.MaxValue;
+            int distance = int.MaxValue;
             int indexEdge = -1;
             if (_edges.ContainsKey(edgeKeyFromNode1))
             {
@@ -1038,7 +1038,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
                 pictureDirection =
                     _navigraphs[regionID]._edges[edgeKeyFromNode2]._picture21;
-                if (System.Convert.ToInt32(waypointEdge._direction) + 4 < 8)
+                if (Convert.ToInt32(waypointEdge._direction) + 4 < 8)
                 {
                     waypointEdge._direction =
                         (4 + waypointEdge._direction);
@@ -1050,7 +1050,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
 
             }
-            //Console.WriteLine("pictrue Direction = " + pictureDirection);
             return new Tuple<WaypointEdge, string>
                 (waypointEdge, pictureDirection);
         }
@@ -1195,34 +1194,26 @@ namespace IndoorNavigation.Models.NavigaionLayer
             // and source properties.
             // While this edge is queried, we should serve both (R1, R2) and 
             // (R2, R1) cases with corresponding portal waypoints.
-
-            PortalWaypoints portalWaypoints = new PortalWaypoints();
-
             RegionEdge regionEdge =
                 GetRegionEdgeMostNearSourceWaypoint(sourceRegionID,
                 sourceWaypointID,
                 sinkRegionID,
                 avoidConnectionTypes);
-
-            portalWaypoints._portalWaypoint1 = regionEdge._waypoint1;
-            portalWaypoints._portalWaypoint2 = regionEdge._waypoint2;
-
-            return portalWaypoints;
+            return new PortalWaypoints(regionEdge._waypoint1, 
+                regionEdge._waypoint2);
         }
 
         public RegionWaypointPoint GiveNeighborWaypointInNeighborRegion
             (Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID)
         {
-            RegionWaypointPoint regionWaypointPoint = new RegionWaypointPoint();
-            ConnectionType[] emptyAvoid = new ConnectionType[0];
             RegionEdge regionEdge =
                 GetRegionEdgeMostNearSourceWaypoint(sourceRegionID,
                     sourceWaypointID,
                     sinkRegionID,
-                    emptyAvoid);
-            regionWaypointPoint._waypointID = regionEdge._waypoint2;
-            regionWaypointPoint._regionID = regionEdge._region2;
-            return regionWaypointPoint;
+                    new ConnectionType[] { });
+
+            return new RegionWaypointPoint
+                (regionEdge._region2, regionEdge._waypoint2);
         }
 
         public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
@@ -1816,9 +1807,9 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 uint node2Key = graph.Where(node => node.Item.Equals(node2))
                                 .Select(node => node.Key).First();
 
-                int node1EdgeDistance = Int32.MaxValue;
+                int node1EdgeDistance = int.MaxValue;
                 int node1EdgeIndex = -1;
-                int node2EdgeDistance = Int32.MaxValue;
+                int node2EdgeDistance = int.MaxValue;
                 int node2EdgeIndex = -1;
                 for (int i = 0; i < regionEdgeItem.Value.Count(); i++)
                 {
@@ -1859,12 +1850,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 if (-1 != node1EdgeIndex)
                 {
                     graph.Connect
-                        (node1Key, node2Key, node1EdgeDistance, String.Empty);
+                        (node1Key, node2Key, node1EdgeDistance, string.Empty);
                 }
                 if (-1 != node2EdgeIndex)
                 {
                     graph.Connect
-                        (node2Key, node1Key, node2EdgeDistance, String.Empty);
+                        (node2Key, node1Key, node2EdgeDistance, string.Empty);
                 }
             }
             return graph;
@@ -1932,12 +1923,11 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
         public List<IPSType> GetUsedIPSTyps()
         {
-            List<IPSType> type = new List<IPSType>();
-
+            HashSet<IPSType> type = new HashSet<IPSType>();
             foreach (Guid regionID in GetAllRegionIDs())
                 type.Add(GetRegionIPSType(regionID));
 
-            return type.Distinct().ToList();
+            return type.ToList();
         }
     }
 

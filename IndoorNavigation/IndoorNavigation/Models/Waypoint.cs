@@ -64,6 +64,12 @@ namespace IndoorNavigation.Models
     {
         public Guid _portalWaypoint1 { get; set; }
         public Guid _portalWaypoint2 { get; set; }
+
+        public PortalWaypoints(Guid waypoint1, Guid waypoint2)
+        {
+            _portalWaypoint1 = waypoint1;
+            _portalWaypoint2 = waypoint2;
+        }
     }
 
 }
