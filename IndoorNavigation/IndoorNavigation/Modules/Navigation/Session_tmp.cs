@@ -612,7 +612,6 @@ namespace IndoorNavigation.Modules
                 LocationType locationTyp2 =
                     _navigationGraph.GetWaypointTypeInRegion
                     (point2._regionID, point2._waypointID);
-
                 if (waypointIDs1.Count == 1 && waypointIDs2.Count == 1
                     && waypointIDs1[0].Equals(waypointIDs2[0]))
                 {
@@ -621,8 +620,22 @@ namespace IndoorNavigation.Modules
                     {
                         _waypointsOnRoute.RemoveAt(y);
                     }
+                    else if (point2._waypointID.Equals(_destinationWaypointID) &&
+                       _waypointsOnRoute.Count == 2)
+                    {
+                        Console.WriteLine("dddddd");
+                        _waypointsOnRoute.RemoveAt(x);
+                    }                    
+                    else if (point2._waypointID.Equals(_destinationWaypointID)
+                        && locationType1 == locationTyp2 &&
+                        locationTyp2 == LocationType.portal)
+                    {
+                        Console.WriteLine("wwwwww");
+                        _waypointsOnRoute.RemoveAt(x);
+                    }
                     else if (locationType1 != locationTyp2)
                     {
+                        Console.WriteLine("eeeee");
                         if (locationTyp2 == LocationType.portal)
                         {
                             _waypointsOnRoute.RemoveAt(x);
@@ -632,12 +645,6 @@ namespace IndoorNavigation.Modules
                         {
                             _waypointsOnRoute.RemoveAt(y);
                         }
-                    }
-                    else if (point2._waypointID.Equals(_destinationWaypointID)
-                        && locationType1 == locationTyp2 &&
-                        locationTyp2 == LocationType.portal)
-                    {
-                        _waypointsOnRoute.RemoveAt(x);
                     }
                 }
                 x++;
