@@ -22,10 +22,13 @@
                                FontSize="Large"/>
                     </StackLayout>
 
+                    <Label x:Name="ProgressPercentLab" Text="0%" HorizontalOptions="EndAndExpand"/>
+
                     <ProgressBar x:Name="AutoAdjustProgressBar"
                                  VerticalOptions="CenterAndExpand"
                                  FlowDirection="LeftToRight"                               
                                  />
+
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="EndAndExpand" 
                                  VerticalOptions="EndAndExpand">
@@ -37,7 +40,7 @@
                                 VerticalOptions="End"
                                 Clicked="StartBtn_Clicked"/>
                     </StackLayout>
-                                          
+
                 </StackLayout>
             </Frame>
         </StackLayout>

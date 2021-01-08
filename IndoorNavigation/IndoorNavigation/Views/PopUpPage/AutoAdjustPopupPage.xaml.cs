@@ -114,8 +114,7 @@ namespace IndoorNavigation.Views.PopUpPage
                     _detectThreadEvent.Reset();
                     continue;
                 }
-                Console.WriteLine("Detect region ID : " + _currentRegionID);
-                Console.WriteLine("Detect waypoint ID : " + _currentWaypointID);
+
 
                 Device.BeginInvokeOnMainThread(() => SetCheckPositionCorrect());
                 _isKeepDetection = false;
@@ -160,7 +159,6 @@ namespace IndoorNavigation.Views.PopUpPage
         private void DetectPositionThreshold()
         {
             _ipsModules.SetRssiMonitor(_currentRegionID, _currentWaypointID);
-            int count = 0;
             double progressTmp = ProgressValue;
 
             Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
@@ -169,6 +167,7 @@ namespace IndoorNavigation.Views.PopUpPage
 
                 _ipsModules.OpenRssiScaning();
                 ProgressValue = progressTmp + _AllRssiList.Count * 0.01;
+                ProgressPercentLab.Text = (ProgressValue * 100).ToString() + "%";
                 Console.WriteLine("ProgressValue : " + ProgressValue);
                 Console.WriteLine("Count/33 : " + _AllRssiList.Count * 0.01);
                 AutoAdjustProgressBar.ProgressTo(ProgressValue, 250, Easing.Linear);
@@ -269,7 +268,7 @@ namespace IndoorNavigation.Views.PopUpPage
             });
 
             AutoAdjustProgressBar.ProgressTo(0.33, 250, Easing.Linear);
-
+            ProgressPercentLab.Text = "33%";
         }
 
         #region to Check Position is correct or wrong with user.
@@ -343,6 +342,7 @@ namespace IndoorNavigation.Views.PopUpPage
             });
 
             AutoAdjustProgressBar.ProgressTo(0.66, 250, Easing.Linear);
+            ProgressPercentLab.Text = "66%";
         }
 
         #endregion
@@ -357,14 +357,11 @@ namespace IndoorNavigation.Views.PopUpPage
                 int count = _AllRssiList.Count;
                 int mid = count / 2;
                 int midian = count % 2 != 0 ?
-                    (int)_AllRssiList[mid] :
-                    (int)((_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2);
-
-                //RssiOption = ((int)_currentBeaconRssi - midian) + 2;
-                //Console.WriteLine("Result is : " + (_currentBeaconRssi - midian));
+                    _AllRssiList[mid] :
+                    (_AllRssiList[mid] + _AllRssiList[mid + 1]) / 2;
 
                 int result = (_currentBeaconRssi - midian) + 2;
-
+                //int result = -57 - midian;
                 if (result >= 15)
                     RssiOption = 15;
                 else if (result <= -15)
