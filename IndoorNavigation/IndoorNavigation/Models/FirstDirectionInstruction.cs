@@ -58,22 +58,22 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             foreach (XmlNode xmlNode in xmlWaypoint)
             {
-                string tempLandmark = "";
-                CardinalDirection tempRelatedDirection;
-                int tempFaceOrBack = 0;
                 XmlElement xmlElement = (XmlElement)xmlNode;
+                string tempLandmark =
+                    xmlElement.GetAttribute("Landmark").ToString();
+                CardinalDirection tempRelatedDirection =
+                    (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
+                    xmlElement.GetAttribute("RelatedDirection"),
+                    false);
+                int tempFaceOrBack = 
+                    int.Parse(xmlElement.GetAttribute("FaceOrBack"));
 
-                tempLandmark = xmlElement.GetAttribute("Landmark").ToString();
-                tempRelatedDirection = (CardinalDirection)Enum.Parse(typeof(CardinalDirection),
-                                                  xmlElement.GetAttribute("RelatedDirection"),
-                                                  false);
-                tempFaceOrBack = Int32.Parse(xmlElement.GetAttribute("FaceOrBack"));
                 string waypointIDs = xmlElement.GetAttribute("id");
                 string[] arrayWaypointIDs = waypointIDs.Split(';');
+
                 for (int i = 0; i < arrayWaypointIDs.Count(); i++)
                 {
-                    Guid waypointID = new Guid();
-                    waypointID = Guid.Parse(arrayWaypointIDs[i]);
+                    Guid waypointID = Guid.Parse(arrayWaypointIDs[i]);
                     _landmark.Add(waypointID, tempLandmark);
                     _relatedDirection.Add(waypointID, tempRelatedDirection);
                     _faceOrBack.Add(waypointID, tempFaceOrBack);
@@ -87,20 +87,13 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             foreach (XmlNode node in specialStringNode)
             {
-                //Guid tmpGuid = new Guid(node.Attributes["id"].Value);
                 Guid source =
                     new Guid(node.Attributes["source"].Value);
 
                 Guid destination =
                     new Guid(node.Attributes["destination"].Value);
 
-                String specialString = node.Attributes["instruction"].Value;
-
-
-                Console.WriteLine("source Guid = " + source.ToString());
-                Console.WriteLine("destination guid = " +
-                    destination.ToString());
-                Console.WriteLine("instruction = " + specialString);
+                string specialString = node.Attributes["instruction"].Value;
 
                 Tuple<Guid, Guid> pair =
                     new Tuple<Guid, Guid>(source, destination);
