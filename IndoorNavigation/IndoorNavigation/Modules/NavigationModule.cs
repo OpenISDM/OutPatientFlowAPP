@@ -50,14 +50,11 @@ namespace IndoorNavigation.Modules
 {
     public class NavigationModule : IDisposable
     {
-        private Session_tmp _session;
-
+        private Session _session;
         private string _navigationGraphName;
 
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
-
-        private EventHandler _navigationResultEventHandler;
         public NavigationEvent _event { get; private set; }
 
         public NavigationModule(string navigationGraphName,
@@ -100,15 +97,11 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("-- end of setup preference --- ");
 
             // Start the session
-            _session = new Session_tmp(
-                    Storage.LoadNavigationGraphXml(_navigationGraphName),
-                    _destinationRegionID,
-                    _destinationWaypointID,
-                    avoidList.ToArray());
 
-            _navigationResultEventHandler =
+            _session = new Session(Storage.LoadNavigationGraphXml(_navigationGraphName), _destinationRegionID, _destinationWaypointID, avoidList.ToArray());
+
+            _session._event._eventHandler +=
                 new EventHandler(HandleNavigationResult);
-            _session._event._eventHandler += _navigationResultEventHandler;
 
         }
 
@@ -118,6 +111,7 @@ namespace IndoorNavigation.Modules
         /// </summary>
         private void HandleNavigationResult(object sender, EventArgs args)
         {
+            Console.WriteLine(">>HandleNavigationResult");
             _event.OnEventCall(args);
         }
 
@@ -150,7 +144,8 @@ namespace IndoorNavigation.Modules
                 // Free unmanaged resources (unmanaged objects) and override a 
                 // finalizer below. 
                 // Set large fields to null.
-                _session._event._eventHandler -= _navigationResultEventHandler;
+                _session._event._eventHandler -=
+                    new EventHandler(HandleNavigationResult);
 
                 disposedValue = true;
             }

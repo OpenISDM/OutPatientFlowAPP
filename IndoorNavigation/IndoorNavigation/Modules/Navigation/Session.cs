@@ -41,7 +41,7 @@ using IndoorNavigation.Modules.IPSClients;
 
 namespace IndoorNavigation.Modules
 {
-    public class Session_tmp
+    public class Session
     {
         #region Attributes and Objects
         private int _nextWaypointStep;
@@ -87,14 +87,12 @@ namespace IndoorNavigation.Modules
         private IPSModule_v3 _iPSModules;
         private const int _tooCLoseDistance = 8;
 
-        #region wait for test variable
         private int TmpCurrentProgress = 0;
         private int TmpTotalProgress = 0;
         private bool _DetectWrongWaypoint = true;
         #endregion
-        #endregion
 
-        public Session_tmp(NavigationGraph navigationGraph,
+        public Session(NavigationGraph navigationGraph,
                        Guid destinationRegionID,
                        Guid destinationWaypointID,
                        ConnectionType[] avoidConnectionTypes)
