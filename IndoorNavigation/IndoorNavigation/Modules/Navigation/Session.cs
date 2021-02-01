@@ -84,7 +84,7 @@ namespace IndoorNavigation.Modules
         private Dictionary<Guid, Region> _regiongraphs =
             new Dictionary<Guid, Region>();
 
-        private IPSModule_v3 _iPSModules;
+        private IPSModule _iPSModules;
         private const int _tooCLoseDistance = 8;
 
         private int TmpCurrentProgress = 0;
@@ -114,7 +114,7 @@ namespace IndoorNavigation.Modules
             _regiongraphs = _navigationGraph.GetRegions();
             _nextWaypointStep = -1;
             _isKeepDetection = true;
-            _iPSModules = new IPSModule_v3(_navigationGraph);
+            _iPSModules = new IPSModule(_navigationGraph);
             _iPSModules._event._eventHandler +=
                 new EventHandler(CheckArrivedWaypoint);
 
