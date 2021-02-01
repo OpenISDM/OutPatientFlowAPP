@@ -26,8 +26,6 @@
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Forms.InputKit" Version="3.3.1" />
-    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
-    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.3" />
     <PackageReference Include="Prism.Forms" Version="7.1.0.431" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
@@ -58,7 +56,6 @@
     <Compile Remove="Modules\SignalProcessingAlgorithms\WaypointSignalProcessing.cs" />
     <Compile Remove="Modules\Navigation\Algorithms\WayPointAlgorithm.cs" />
     <Compile Remove="Modules\Navigation\WaypointRoutePlan.cs" />
-    <Compile Remove="Modules\IPSModule.cs" />
     <Compile Remove="Models\NavigraphModel.cs" />
     <Compile Remove="Utilities\XMLParser.cs" />
     <Compile Remove="Views\Navigation\PickRegion.xaml.cs" />
@@ -85,26 +82,14 @@
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_zh-TW.xml" />
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin.xml" />
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_zh-TW.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_zh-TW.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
     <EmbeddedResource Include="Resources\NTUH_Yunlin\NTUH_Yunlin_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
     <EmbeddedResource Include="Resources\ThirdPartyList.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_en-US.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_en-US.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
-    <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CareRoomMapp.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\CashierStation.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ElevatorsMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <EmbeddedResource Include="Yuanlin_OPFM\ExitMap.xml" />
-    <EmbeddedResource Include="Yuanlin_OPFM\PostBody.json" />
     <EmbeddedResource Include="Yuanlin_OPFM\PurposeOptions.xml" />
-    <EmbeddedResource Include="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="TestPage.xaml">
@@ -175,28 +160,17 @@
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_en-US.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_zh-TW.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_info_zh-TW.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_FD_zh-TW.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_zh-TW.xml" />
     <None Remove="Resources\ThirdPartyList.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_en-US.xml" />
     <None Remove="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_en-US.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_en-US.xml" />
-    <None Remove="Resources\Yuanlin_Christian_Hospital_old\Yuanlin_Christian_Hospital_info_zh-TW.xml" />
     <None Remove="TestingXML.xml" />
     <None Remove="Resources\Lab\Lab.xml" />
     <None Remove="Resources\Lab\Lab_info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_Info_en-US.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall_info_en-US.xml" />
-    <None Remove="Resources\Taipei_City_Hall\Taipei_City_Hall.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_Info_en-US.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_info_en-US.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_YunLin_Info_en-US.xml" />
@@ -205,9 +179,7 @@
     <None Remove="Yuanlin_OPFM\ElevatorsMap.xml" />
     <None Remove="Yuanlin_OPFM\ExaminationRoomMap.xml" />
     <None Remove="Yuanlin_OPFM\ExitMap.xml" />
-    <None Remove="Yuanlin_OPFM\PostBody.json" />
     <None Remove="Yuanlin_OPFM\PurposeOptions.xml" />
-    <None Remove="Yuanlin_OPFM\RequestBody.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_info_zh-TW.xml" />

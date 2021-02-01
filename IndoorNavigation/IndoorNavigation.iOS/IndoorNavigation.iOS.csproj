@@ -120,7 +120,6 @@
     <None Include="Info.plist" />
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QrCodeDecoder.cs" />
     <Compile Include="Renderers\CustomContentPageRenderer.cs" />
     <None Include="Helpers\TranslateExtension.txt" />
     <Compile Include="Renderers\RightToolbarMenuCustomRenderer.cs" />
@@ -295,7 +294,6 @@
     <BundleResource Include="Resources\Arrow_right.png" />
     <BundleResource Include="Resources\close_circle_button.png" />
     <BundleResource Include="Resources\cloud_computing.png" />
-    <BundleResource Include="Resources\Lab11100004.png" />
     <BundleResource Include="Resources\NTUH_Yunlin33300020.png" />
     <BundleResource Include="Resources\NTUH_Yunlin33300021.png" />
     <BundleResource Include="Resources\NTUH_Yunlin33300022.png" />
@@ -308,25 +306,11 @@
     <BundleResource Include="Resources\NTUH_Yunlin33300037.png" />
     <BundleResource Include="Resources\NTUH_Yunlin33300038.png" />
     <BundleResource Include="Resources\NTUH_Yunlin33300039.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100206.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100205.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100203.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100202.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11101415.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11101011.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100102.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100103.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100105.png" />
-    <BundleResource Include="Resources\Taipei_City_Hall11100106.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Add_Item1.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Lab\" />
-    <Folder Include="Resources\NTUH_YunLin\" />
-    <Folder Include="Resources\Taipei_City_Hall\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BundleResource Include="Resources\Add_Item2.png" />
   </ItemGroup>
@@ -365,27 +349,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100001.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100002.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100003.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100005.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100006.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100007.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Lab11100008.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Clinic_1F.png" />
