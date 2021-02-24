@@ -2,37 +2,37 @@
 <navigation_graph country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH_Hsinchu' version='1.0'>
 	<regions region_numbers='1' edge_numbers='1'>
 		<region id='' ips_type='LBeacon' name='' floor='5'>
-			<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='0.00035954' lon='0.00045240' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='0.00058022' lon='0.00045240' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='0.00064258' lon='0.00045240' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='0.00064258' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='0.00068096' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='0.00071934' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='0.00078650' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='0.00086326' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='0.00093042' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='0.00072894' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='0.00076731' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='0.00080569' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='0.00084407' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='0.00088485' lon='0.00027954' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000001' name='訪客電梯01' type='terminal' lat='0.00035954' lon='0.00045240' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000002' name='病床電梯02' type='terminal' lat='0.00058022' lon='0.00045240' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='terminal' lat='0.00064258' lon='0.00045240' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='terminal' lat='0.00064258' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='terminal' lat='0.00068096' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='terminal' lat='0.00071934' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='terminal' lat='0.00078650' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='terminal' lat='0.00086326' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='terminal' lat='0.00093042' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='terminal' lat='0.00072894' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='terminal' lat='0.00076731' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='terminal' lat='0.00080569' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='terminal' lat='0.00084407' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='terminal' lat='0.00088485' lon='0.00027954' category='' />
 		</region>
 	</regions>
 	<navigraphs navigraph_numbers='1'>
-		<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='' lon='' category='' />
-		<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='' lon='' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000001' name='訪客電梯01' type='terminal' lat='0.00035954' lon='0.00045240' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000002' name='病床電梯02' type='terminal' lat='0.00058022' lon='0.00045240' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000003' name='' type='terminal' lat='0.00064258' lon='0.00045240' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000004' name='' type='terminal' lat='0.00064258' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000005' name='' type='terminal' lat='0.00068096' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000006' name='' type='terminal' lat='0.00071934' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000007' name='' type='terminal' lat='0.00078650' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000008' name='' type='terminal' lat='0.00086326' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000009' name='' type='terminal' lat='0.00093042' lon='0.00049558' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000010' name='' type='terminal' lat='0.00072894' lon='0.00055315' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000011' name='' type='terminal' lat='0.00076731' lon='0.00055315' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000012' name='' type='terminal' lat='0.00080569' lon='0.00055315' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000013' name='' type='terminal' lat='0.00084407' lon='0.00055315' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000014' name='' type='terminal' lat='0.00088485' lon='0.00027954' category='' />
 
 		<edge node1='00000000-0000-0000-0000-000000000001' node2='00000000-0000-0000-0000-000000000002' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
 		<edge node1='00000000-0000-0000-0000-000000000002' node2='00000000-0000-0000-0000-000000000003' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
@@ -51,20 +51,20 @@
 		<edge node1='00000000-0000-0000-0000-000000000013' node2='00000000-0000-0000-0000-000000000014' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
 
 		<beacons beacon_numbers='14'>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000006' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000007' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000008' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000009' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000010' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000011' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000012' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000013' threshold=''/>
-			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000014' threshold=''/>
+			<beacon uuid='00010019-0000-0004-5240-000000035954' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-5240-000000058022' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-5240-000000064258' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000064258' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000068096' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000071934' waypoint_ids='00000000-0000-0000-0000-000000000006' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000078650' waypoint_ids='00000000-0000-0000-0000-000000000007' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000082326' waypoint_ids='00000000-0000-0000-0000-000000000008' threshold='-45'/>
+			<beacon uuid='00010019-0000-0004-9558-000000093042' waypoint_ids='00000000-0000-0000-0000-000000000009' threshold='-45'/>
+			<beacon uuid='00010019-0000-0005-5315-000000072894' waypoint_ids='00000000-0000-0000-0000-000000000010' threshold='-45'/>
+			<beacon uuid='00010019-0000-0005-5315-000000076731' waypoint_ids='00000000-0000-0000-0000-000000000011' threshold='-45'/>
+			<beacon uuid='00010019-0000-0005-5315-000000080569' waypoint_ids='00000000-0000-0000-0000-000000000012' threshold='-45'/>
+			<beacon uuid='00010019-0000-0005-5315-000000084407' waypoint_ids='00000000-0000-0000-0000-000000000013' threshold='-45'/>
+			<beacon uuid='00010019-0000-0002-7954-000000088485' waypoint_ids='00000000-0000-0000-0000-000000000014' threshold='-45'/>
 		</beacons>
 	</navigraphs>
 </navigation_graph>
