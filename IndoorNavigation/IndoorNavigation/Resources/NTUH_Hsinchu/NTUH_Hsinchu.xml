@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <navigation_graph country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH_Hsinchu' version='1.0'>
 	<regions region_numbers='1' edge_numbers='1'>
-		<region id='' ips_type='LBeacon' name='' floor=''>
-			<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='' lon='' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='' lon='' category='' />
+		<region id='' ips_type='LBeacon' name='' floor='5'>
+			<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='0.00035954' lon='0.00045240' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='0.00058022' lon='0.00045240' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='0.00064258' lon='0.00045240' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='0.00064258' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='0.00068096' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='0.00071934' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='0.00078650' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='0.00086326' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='0.00093042' lon='0.00049558' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='0.00072894' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='0.00076731' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='0.00080569' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='0.00084407' lon='0.00055315' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='0.00088485' lon='0.00027954' category='' />
 		</region>
 	</regions>
 	<navigraphs navigraph_numbers='1'>
