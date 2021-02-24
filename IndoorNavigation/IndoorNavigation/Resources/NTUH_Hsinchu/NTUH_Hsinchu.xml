@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation_graph country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH_Hsinchu' version='1.0'>
+	<regions region_numbers='1' edge_numbers='1'>
+		<region id='' ips_type='LBeacon' name='' floor=''>
+			<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='' lon='' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='' lon='' category='' />
+		</region>
+	</regions>
+	<navigraphs navigraph_numbers='1'>
+		<waypoint id='00000000-0000-0000-0000-000000000001' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000002' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='' lat='' lon='' category='' />
+		<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='' lat='' lon='' category='' />
+
+		<edge node1='00000000-0000-0000-0000-000000000001' node2='00000000-0000-0000-0000-000000000002' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000002' node2='00000000-0000-0000-0000-000000000003' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000003' node2='00000000-0000-0000-0000-000000000004' bi_direction='2' source='' direction='2' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000004' node2='00000000-0000-0000-0000-000000000005' bi_direction='2' source='' direction='6' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000005' node2='00000000-0000-0000-0000-000000000006' bi_direction='2' source='' direction='6' connection_type='NormalHallway'/>
+		<!--left side-->
+		<edge node1='00000000-0000-0000-0000-000000000006' node2='00000000-0000-0000-0000-000000000007' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000008' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000009' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<!--right side-->
+		<edge node1='00000000-0000-0000-0000-000000000006' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source='' direction='2' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000010' node2='00000000-0000-0000-0000-000000000011' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000011' node2='00000000-0000-0000-0000-000000000012' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000012' node2='00000000-0000-0000-0000-000000000013' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000013' node2='00000000-0000-0000-0000-000000000014' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+
+		<beacons beacon_numbers='14'>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000006' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000007' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000008' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000009' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000010' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000011' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000012' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000013' threshold=''/>
+			<beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000014' threshold=''/>
+		</beacons>
+	</navigraphs>
+</navigation_graph>
