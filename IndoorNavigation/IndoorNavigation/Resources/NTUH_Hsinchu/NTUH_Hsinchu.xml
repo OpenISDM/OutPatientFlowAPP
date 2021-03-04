@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <navigation_graph country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH_Hsinchu' version='1.0'>
 	<regions region_numbers='1' edge_numbers='1'>
-		<region id='' ips_type='LBeacon' name='' floor='5'>
+		<region id='11111111-1111-1111-1111-111111111111' ips_type='LBeacon' name='5C病房' floor='5'>
 			<waypoint id='00000000-0000-0000-0000-000000000001' name='訪客電梯01' type='terminal' lat='0.00035954' lon='0.00045240' category='Others' />
 			<waypoint id='00000000-0000-0000-0000-000000000002' name='病床電梯02' type='terminal' lat='0.00058022' lon='0.00045240' category='Others' />
-			<waypoint id='00000000-0000-0000-0000-000000000003' name='' type='terminal' lat='0.00064258' lon='0.00045240' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000004' name='' type='terminal' lat='0.00064258' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000005' name='' type='terminal' lat='0.00068096' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000006' name='' type='terminal' lat='0.00071934' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000007' name='' type='terminal' lat='0.00078650' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000008' name='' type='terminal' lat='0.00086326' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000009' name='' type='terminal' lat='0.00093042' lon='0.00049558' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000010' name='' type='terminal' lat='0.00072894' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000011' name='' type='terminal' lat='0.00076731' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000012' name='' type='terminal' lat='0.00080569' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000013' name='' type='terminal' lat='0.00084407' lon='0.00055315' category='' />
-			<waypoint id='00000000-0000-0000-0000-000000000014' name='' type='terminal' lat='0.00088485' lon='0.00027954' category='' />
+			<waypoint id='00000000-0000-0000-0000-000000000003' name='轉角03' type='terminal' lat='0.00064258' lon='0.00045240' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000004' name='轉角04' type='terminal' lat='0.00064258' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000005' name='走道05' type='terminal' lat='0.00068096' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000006' name='走道06' type='terminal' lat='0.00071934' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000007' name='走道07' type='terminal' lat='0.00078650' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000008' name='走道08' type='terminal' lat='0.00086326' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000009' name='走到09' type='terminal' lat='0.00093042' lon='0.00049558' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000010' name='房間10' type='terminal' lat='0.00072894' lon='0.00055315' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000011' name='房間11' type='terminal' lat='0.00076731' lon='0.00055315' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000012' name='房間12' type='terminal' lat='0.00080569' lon='0.00055315' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000013' name='房間13' type='terminal' lat='0.00084407' lon='0.00055315' category='Others' />
+			<waypoint id='00000000-0000-0000-0000-000000000014' name='房間14' type='terminal' lat='0.00088485' lon='0.00027954' category='Others' />
 		</region>
 	</regions>
 	<navigraphs navigraph_numbers='1'>
     <waypoint id='00000000-0000-0000-0000-000000000001' name='訪客電梯01' type='terminal' lat='0.00035954' lon='0.00045240' category='Others' />
     <waypoint id='00000000-0000-0000-0000-000000000002' name='病床電梯02' type='terminal' lat='0.00058022' lon='0.00045240' category='Others' />
-    <waypoint id='00000000-0000-0000-0000-000000000003' name='' type='terminal' lat='0.00064258' lon='0.00045240' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000004' name='' type='terminal' lat='0.00064258' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000005' name='' type='terminal' lat='0.00068096' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000006' name='' type='terminal' lat='0.00071934' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000007' name='' type='terminal' lat='0.00078650' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000008' name='' type='terminal' lat='0.00086326' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000009' name='' type='terminal' lat='0.00093042' lon='0.00049558' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000010' name='' type='terminal' lat='0.00072894' lon='0.00055315' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000011' name='' type='terminal' lat='0.00076731' lon='0.00055315' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000012' name='' type='terminal' lat='0.00080569' lon='0.00055315' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000013' name='' type='terminal' lat='0.00084407' lon='0.00055315' category='' />
-    <waypoint id='00000000-0000-0000-0000-000000000014' name='' type='terminal' lat='0.00088485' lon='0.00027954' category='' />
+    <waypoint id='00000000-0000-0000-0000-000000000003' name='轉角03' type='terminal' lat='0.00064258' lon='0.00045240' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000004' name='轉角04' type='terminal' lat='0.00064258' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000005' name='走道05' type='terminal' lat='0.00068096' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000006' name='走道06' type='terminal' lat='0.00071934' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000007' name='走道07' type='terminal' lat='0.00078650' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000008' name='走道08' type='terminal' lat='0.00086326' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000009' name='走道09' type='terminal' lat='0.00093042' lon='0.00049558' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000010' name='房間10' type='terminal' lat='0.00072894' lon='0.00055315' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000011' name='房間11' type='terminal' lat='0.00076731' lon='0.00055315' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000012' name='房間12' type='terminal' lat='0.00080569' lon='0.00055315' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000013' name='房間13' type='terminal' lat='0.00084407' lon='0.00055315' category='Others' />
+    <waypoint id='00000000-0000-0000-0000-000000000014' name='房間14' type='terminal' lat='0.00088485' lon='0.00027954' category='Others' />
 
 		<edge node1='00000000-0000-0000-0000-000000000001' node2='00000000-0000-0000-0000-000000000002' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
 		<edge node1='00000000-0000-0000-0000-000000000002' node2='00000000-0000-0000-0000-000000000003' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
@@ -40,15 +40,15 @@
 		<edge node1='00000000-0000-0000-0000-000000000004' node2='00000000-0000-0000-0000-000000000005' bi_direction='2' source='' direction='6' connection_type='NormalHallway'/>
 		<edge node1='00000000-0000-0000-0000-000000000005' node2='00000000-0000-0000-0000-000000000006' bi_direction='2' source='' direction='6' connection_type='NormalHallway'/>
 		<!--left side-->
-		<edge node1='00000000-0000-0000-0000-000000000006' node2='00000000-0000-0000-0000-000000000007' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000008' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000009' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<!--right side-->
 		<edge node1='00000000-0000-0000-0000-000000000006' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source='' direction='2' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000010' node2='00000000-0000-0000-0000-000000000011' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000011' node2='00000000-0000-0000-0000-000000000012' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000012' node2='00000000-0000-0000-0000-000000000013' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
-		<edge node1='00000000-0000-0000-0000-000000000013' node2='00000000-0000-0000-0000-000000000014' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000011' bi_direction='2' source='' direction='3' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000012' bi_direction='2' source='' direction='1' connection_type='NormalHallway'/>
+		<!--right side-->
+		<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000013' bi_direction='2' source='' direction='3' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000014' bi_direction='2' source='' direction='1' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000009' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<!--<edge node1='00000000-0000-0000-0000-000000000012' node2='00000000-0000-0000-0000-000000000013' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>
+		<edge node1='00000000-0000-0000-0000-000000000013' node2='00000000-0000-0000-0000-000000000014' bi_direction='2' source='' direction='0' connection_type='NormalHallway'/>-->
 
 		<beacons beacon_numbers='14'>
 			<beacon uuid='00010019-0000-0004-5240-000000035954' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold='-45'/>

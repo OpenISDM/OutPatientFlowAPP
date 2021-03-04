@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <navigation_graph country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH Hsinchu'>
 	<regions>
-		<region id='' name=''/>
+		<region id='11111111-1111-1111-1111-111111111111' name='5th Floor'/>
 	</regions>
 	<waypoints>
-		<waypoint id='00000000-0000-0000-0000-000000000001' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000002' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000003' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000004' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000005' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000006' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000007' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000008' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000009' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000010' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000011' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000012' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000013' name=''/>
-		<waypoint id='00000000-0000-0000-0000-000000000014' name=''/>
+		<waypoint id='00000000-0000-0000-0000-000000000001' name='Visitor elevator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000002' name='Bed elevator'/>
+		<waypoint id='00000000-0000-0000-0000-000000000003' name='cornor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000004' name='cornor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000005' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000006' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000007' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000008' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000009' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000010' name='Room1'/>
+		<waypoint id='00000000-0000-0000-0000-000000000011' name='Room2'/>
+		<waypoint id='00000000-0000-0000-0000-000000000012' name='Room3'/>
+		<waypoint id='00000000-0000-0000-0000-000000000013' name='Room4'/>
+		<waypoint id='00000000-0000-0000-0000-000000000014' name='Room5'/>
 	</waypoints>
 </navigation_graph>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <first_direction_XML country='Taiwan' city_county='Hsinchu' industry_service='hospital' owner_organization='BiDaE' building_name='NTUH_Hsinchu'>
-	<waypoint id='00000000-0000-0000-0000-000000000001' Landmark='' RelatedDirection='' FaceOrBack=''/>
+	<!--<waypoint id='00000000-0000-0000-0000-000000000001' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000002' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000003' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000004' Landmark='' RelatedDirection='' FaceOrBack=''/>
@@ -13,5 +13,20 @@
 	<waypoint id='00000000-0000-0000-0000-000000000011' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000012' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000013' Landmark='' RelatedDirection='' FaceOrBack=''/>
-	<waypoint id='00000000-0000-0000-0000-000000000014' Landmark='' RelatedDirection='' FaceOrBack=''/>
+	<waypoint id='00000000-0000-0000-0000-000000000014' Landmark='' RelatedDirection='' FaceOrBack=''/>-->
+  
+  <waypoint id='00000000-0000-0000-0000-000000000001' Landmark='電梯' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000002' Landmark='電梯' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000003' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000004' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000005' Landmark='轉角' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000006' Landmark='轉角' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000007' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000008' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000009' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000010' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000011' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000012' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000013' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000014' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
 </first_direction_XML>
