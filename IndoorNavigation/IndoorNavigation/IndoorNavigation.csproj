@@ -68,6 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DefineStructureOfProcess.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Hsinchu\NTUH_Hsinchu.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Hsinchu\NTUH_Hsinchu_FD_en-US.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Hsinchu\NTUH_Hsinchu_FD_zh-TW.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Hsinchu\NTUH_Hsinchu_info_en-US.xml" />
+    <EmbeddedResource Include="Resources\NTUH_Hsinchu\NTUH_Hsinchu_info_zh-TW.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_en-US.xml" />
     <EmbeddedResource Include="Resources\Yuanlin_Christian_Hospital\Yuanlin_Christian_Hospital_FD_zh-TW.xml" />
@@ -157,6 +162,11 @@
     <None Remove="Resources\Lab\Lab_FD_en-US.xml" />
     <None Remove="Resources\Lab\Lab_FD_zh-TW.xml" />
     <None Remove="Resources\Lab\Lab_info_zh-TW.xml" />
+    <None Remove="Resources\NTUH_Hsinchu\NTUH_Hsinchu.xml" />
+    <None Remove="Resources\NTUH_Hsinchu\NTUH_Hsinchu_FD_en-US.xml" />
+    <None Remove="Resources\NTUH_Hsinchu\NTUH_Hsinchu_FD_zh-TW.xml" />
+    <None Remove="Resources\NTUH_Hsinchu\NTUH_Hsinchu_info_en-US.xml" />
+    <None Remove="Resources\NTUH_Hsinchu\NTUH_Hsinchu_info_zh-TW.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_en-US.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_FD_zh-TW.xml" />
     <None Remove="Resources\NTUH_Yunlin\NTUH_Yunlin_info_zh-TW.xml" />

@@ -213,7 +213,8 @@ namespace IndoorNavigation.Utilities
                 EmbeddedGenerateFile("NTUH_Yunlin");
                 EmbeddedGenerateFile("Yuanlin_Christian_Hospital");
                 //EmbeddedGenerateFile("Lab");
-                EmbeddedGenerateFile("Taipei_City_Hall");
+                //EmbeddedGenerateFile("Taipei_City_Hall");
+                EmbeddedGenerateFile("NTUH_Hsinchu");
                 Console.WriteLine("first Use Generate Success");
             }
         }
@@ -381,7 +382,7 @@ namespace IndoorNavigation.Utilities
             {
                 Console.WriteLine("EmbeddedGenerateFile error : "
                     + exc.Message);
-                throw exc;
+                //throw exc;
             }
         }
         static private void EmbeddedStoring(string sourceRoute,
