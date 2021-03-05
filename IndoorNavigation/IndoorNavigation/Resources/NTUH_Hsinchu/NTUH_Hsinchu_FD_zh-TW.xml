@@ -15,15 +15,15 @@
 	<waypoint id='00000000-0000-0000-0000-000000000013' Landmark='' RelatedDirection='' FaceOrBack=''/>
 	<waypoint id='00000000-0000-0000-0000-000000000014' Landmark='' RelatedDirection='' FaceOrBack=''/>-->
 
-  <waypoint id='00000000-0000-0000-0000-000000000001' Landmark='訪客電梯梯廳' RelatedDirection='6' FaceOrBack='1'/>
-  <waypoint id='00000000-0000-0000-0000-000000000002' Landmark='病床電梯梯廳' RelatedDirection='6' FaceOrBack='1'/>
+  <waypoint id='00000000-0000-0000-0000-000000000001' Landmark='訪客電梯梯廳' RelatedDirection='2' FaceOrBack='1'/>
+  <waypoint id='00000000-0000-0000-0000-000000000002' Landmark='病床電梯梯廳' RelatedDirection='2' FaceOrBack='1'/>
   <waypoint id='00000000-0000-0000-0000-000000000003' Landmark='緊急出口' RelatedDirection='2' FaceOrBack='0'/>
   <waypoint id='00000000-0000-0000-0000-000000000004' Landmark='空調室' RelatedDirection='0' FaceOrBack='0'/>
-  <waypoint id='00000000-0000-0000-0000-000000000005' Landmark='緊急出口' RelatedDirection='0' FaceOrBack='0'/>
-  <waypoint id='00000000-0000-0000-0000-000000000006' Landmark='5C01' RelatedDirection='6' FaceOrBack='0'/>
-  <waypoint id='00000000-0000-0000-0000-000000000007' Landmark='5C02' RelatedDirection='6' FaceOrBack='0'/>
-  <waypoint id='00000000-0000-0000-0000-000000000008' Landmark='5C03' RelatedDirection='6' FaceOrBack='0'/>
-  <waypoint id='00000000-0000-0000-0000-000000000009' Landmark='5C09病房' RelatedDirection='4' FaceOrBack='0'/>
+  <waypoint id='00000000-0000-0000-0000-000000000005' Landmark='緊急出口' RelatedDirection='4' FaceOrBack='0'/>
+  <waypoint id='00000000-0000-0000-0000-000000000006' Landmark='5C01病房' RelatedDirection='2' FaceOrBack='0'/>
+  <waypoint id='00000000-0000-0000-0000-000000000007' Landmark='5C02病房' RelatedDirection='2' FaceOrBack='0'/>
+  <waypoint id='00000000-0000-0000-0000-000000000008' Landmark='5C03病房' RelatedDirection='2' FaceOrBack='0'/>
+  <waypoint id='00000000-0000-0000-0000-000000000009' Landmark='5C09病房' RelatedDirection='0' FaceOrBack='0'/>
   <waypoint id='00000000-0000-0000-0000-000000000010' Landmark='門口' RelatedDirection='6' FaceOrBack='0'/>
   <waypoint id='00000000-0000-0000-0000-000000000011' Landmark='門口' RelatedDirection='6' FaceOrBack='0'/>
   <waypoint id='00000000-0000-0000-0000-000000000012' Landmark='門口' RelatedDirection='6' FaceOrBack='0'/>
