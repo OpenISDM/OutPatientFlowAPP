@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
-using System.Resources;
-using System.Reflection;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
-
-using IndoorNavigation.Resources.Helpers;
 using static IndoorNavigation.Utilities.Storage;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
-using Plugin.Multilingual;
 namespace IndoorNavigation.Views.PopUpPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

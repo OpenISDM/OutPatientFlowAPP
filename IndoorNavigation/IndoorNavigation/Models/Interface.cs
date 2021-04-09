@@ -72,11 +72,6 @@ namespace IndoorNavigation.Models
         bool DoesImageExist(string image);
     }
 
-    public interface IQrCodeDecoder
-    {
-        Task<string> ScanAsync();
-    }
-
     public interface ITextToSpeech
     {
         void Speak(string text, string language);

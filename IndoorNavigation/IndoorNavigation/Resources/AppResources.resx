@@ -268,7 +268,7 @@
     <value>Taipei City Hall</value>
   </data>
   <data name="PICK_LOCATION_STRING" xml:space="preserve">
-    <value>【Click picture to select the location】</value>
+    <value>【Click picture to select the destination】</value>
   </data>
   <data name="CATEGORY_CLINICS_STRING" xml:space="preserve">
     <value>Clinics</value>
