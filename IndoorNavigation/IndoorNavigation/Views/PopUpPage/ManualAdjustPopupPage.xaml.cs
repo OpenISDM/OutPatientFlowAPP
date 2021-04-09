@@ -33,7 +33,6 @@ namespace IndoorNavigation.Views.PopUpPage
                 TmperorayStatus.RssiOption += 1;
 
                 ManualRssiLabel.Text =
-                    //string.Format("靈敏度 : {0}", TmperorayStatus.RssiOption);
                     TmperorayStatus.RssiOption.ToString();
             }
         }
@@ -44,7 +43,6 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 TmperorayStatus.RssiOption -= 1;
                 ManualRssiLabel.Text =
-                    //string.Format("靈敏度 : {0}", TmperorayStatus.RssiOption);
                     TmperorayStatus.RssiOption.ToString();
             }
         }

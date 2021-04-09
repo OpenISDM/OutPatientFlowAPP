@@ -44,29 +44,6 @@
                     </Grid>
                     <BoxView HeightRequest="7"
                              Color="Transparent"/>
-                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                        <Button x:Name="StepperCutBtn" Text="減弱" Clicked="StepperCutBtn_Clicked" 
-                                Grid.Column="0"/>
-                        -->
-                    <!--<Label x:Name="ManualRssiLabel" 
-                               FontSize="Large" 
-                               HorizontalOptions="CenterAndExpand"                               
-                               FontAttributes="Bold" 
-                               TextColor="#3f51b5" 
-                               HorizontalTextAlignment="Center"
-                               VerticalTextAlignment="Center"
-                               Grid.Column="1"/>-->
-                    <!--
-                        <Entry x:Name="ManualRssiLabel"
-                               FontSize="Large"
-                                FontAttributes="Bold"
-                               TextColor="#3f51b5"
-                               IsReadOnly="True"
-                               />
-
-                        <Button x:Name="StepperAddBtn" Text="增強" Clicked="StepperAddBtn_Clicked"                                
-                                Grid.Column="2"/>
-                    </StackLayout>-->
                     <Button x:Name="ConfirmBtn" Text="確定" 
                             HorizontalOptions="EndAndExpand" 
                             VerticalOptions="EndAndExpand" 

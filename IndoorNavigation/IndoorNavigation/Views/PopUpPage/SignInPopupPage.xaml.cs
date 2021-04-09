@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 
 using IndoorNavigation.Resources.Helpers;
-
+using static IndoorNavigation.Utilities.Storage;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using Plugin.Multilingual;
@@ -112,6 +112,7 @@ namespace IndoorNavigation.Views.PopUpPage
             if (string.IsNullOrEmpty(IDnumberEntry.Text) || !CheckIDLegal(IDnumberEntry.Text))
             {
                 await currentPage.DisplayAlert(
+
                     GetResourceString("ERROR_STRING"),
                     GetResourceString("IDNUM_TYPE_WRONG_STRING"),
                     GetResourceString("OK_STRING")
@@ -136,7 +137,6 @@ namespace IndoorNavigation.Views.PopUpPage
 
         protected override bool OnBackgroundClicked()
         {
-            Console.WriteLine(">>SignInPopupPage : Back Button Click");
             Device.BeginInvokeOnMainThread(async () =>
             {
                 if (string.IsNullOrEmpty(app.IDnumber) || string.IsNullOrEmpty(IDnumberEntry.Text))
@@ -149,21 +149,10 @@ namespace IndoorNavigation.Views.PopUpPage
                     await PopupNavigation.Instance.PopAsync();
                 }
             });
-            //return false ;
             return base.OnBackgroundClicked();
         }
-
-        private string GetResourceString(string key)
-        {
-            CultureInfo currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            ResourceManager manager = new ResourceManager("IndoorNavigation.Resources.AppResources", typeof(TranslateExtension).GetTypeInfo().Assembly);
-
-            return manager.GetString(key, currentLanguage);
-        }
-
         protected override bool OnBackButtonPressed()
         {
-            Console.WriteLine(">>SignInPopupPage : Back Button Click");
             Device.BeginInvokeOnMainThread(async () =>
             {
                 if (string.IsNullOrEmpty(app.IDnumber) || string.IsNullOrEmpty(IDnumberEntry.Text))
@@ -176,7 +165,6 @@ namespace IndoorNavigation.Views.PopUpPage
                     await PopupNavigation.Instance.PopAsync();
                 }
             });
-
             return true;
         }
     }

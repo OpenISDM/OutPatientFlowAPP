@@ -8,13 +8,6 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.PopUpPage.SignInPopupPage">
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>-->
     <pages:PopupPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
