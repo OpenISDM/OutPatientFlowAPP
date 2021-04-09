@@ -13,12 +13,6 @@
         <DisplayName name="Yuanlin Christian Hospital" language="en-US"/>
       </DisplayNames>
     </Graph>
-    <Graph name="NTUH_Hsinchu" version="1.0002">
-      <DisplayNames>
-        <DisplayName name="台大醫院新竹分院" language="zh-TW"/>
-        <DisplayName name="NTUH Hsinchu" language="en-US"/>
-      </DisplayNames>
-    </Graph>
   </Graphs>
   <Languages>
     <Language name="zh-TW"/>
