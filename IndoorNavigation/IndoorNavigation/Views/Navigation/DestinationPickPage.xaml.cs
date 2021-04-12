@@ -50,15 +50,8 @@ using Xamarin.Forms;
 using MvvmHelpers;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Linq;
-using IndoorNavigation.Modules.Utilities;
-using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
 using IndoorNavigation.Models;
 using static IndoorNavigation.Utilities.Storage;
-using IndoorNavigation.Utilities;
-using Xamarin.Essentials;
 using Plugin.Geolocator;
 using IndoorNavigation.Views.PopUpPage;
 namespace IndoorNavigation.Views.Navigation
@@ -67,7 +60,6 @@ namespace IndoorNavigation.Views.Navigation
     {
         private string _navigationGraphName;
         private NavigationGraph _navigationGraph;
-        public ResourceManager _resourceManager;
 
         public ObservableCollection<string> _items { get; set; }
         private App app;
@@ -78,20 +70,16 @@ namespace IndoorNavigation.Views.Navigation
         public DestinationPickPage(string navigationGraphName, CategoryType category)
         {
             InitializeComponent();
-
-            const string resourceId = "IndoorNavigation.Resources.AppResources";
-            _resourceManager = new ResourceManager(resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
- 
             _destinationItems = new ObservableCollection<DestinationItem>();
 
             _navigationGraphName = navigationGraphName;
-            _navigationGraph = Storage.LoadNavigationGraphXml(_navigationGraphName);
-            _nameInformation = Storage.LoadXmlInformation(_navigationGraphName);
+            _navigationGraph = LoadNavigationGraphXml(_navigationGraphName);
+            _nameInformation = LoadXmlInformation(_navigationGraphName);
             app = (App)Application.Current;
 
-            NavigationPage.SetBackButtonTitle(this, _resourceManager.GetString("BACK_STRING", CrossMultilingual.Current.CurrentCultureInfo));
+            NavigationPage.SetBackButtonTitle(this, GetResourceString("BACK_STRING"));
 
-            foreach (KeyValuePair<Guid, IndoorNavigation.Models.Region> pairRegion in _navigationGraph.GetRegions())
+            foreach (KeyValuePair<Guid, Models.Region> pairRegion in _navigationGraph.GetRegions())
             {
                 string floorName = _nameInformation.GiveRegionName(pairRegion.Value._id);
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
@@ -163,7 +151,6 @@ namespace IndoorNavigation.Views.Navigation
             if (!IsBluetoothEnable())
             {
                 //to ask user to open BT
-
                 AlertDialogPopupPage alertPage = 
                     new AlertDialogPopupPage
                     (GetResourceString("NO_BLUETOOTH_GO_SETTING_STRING"), 
@@ -186,26 +173,9 @@ namespace IndoorNavigation.Views.Navigation
 
 
                 await Navigation.PushAsync(app._globalNavigatorPage);
-                //await Navigation.PushAsync(new NavigatorPage(_navigationGraphName,
-                //                                             destination._regionID,
-                //                                             destination._waypointID,
-                //                                             destination._waypointName,
-                //                                             _nameInformation
-                //                                             ));
             }
-
-            //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
 
     }
-
-    //public class DestinationItem
-    //{
-    //    public Guid _regionID { get; set; }
-    //    public Guid _waypointID { get; set; }
-    //    public string _waypointName { get; set; }
-    //    public string _floor { get; set; }
-    //}
-
 }
