@@ -47,35 +47,22 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        
+
         <sv:SettingsView x:Name="NavigationSettingsView" 
                          HasUnevenRows="true" >
-    
             <sv:Section Title="{i18n:Translate ROUTE_OPTION_STRING}">
                 <sv:SwitchCell x:Name="AvoidStair" Title="{i18n:Translate AVOID_STAIR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
                 <sv:SwitchCell x:Name="AvoidElevator" Title="{i18n:Translate AVOID_ELEVATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
                 <sv:SwitchCell x:Name="AvoidEscalator" Title="{i18n:Translate AVOID_ESCALATOR_STRING}" On="false" PropertyChanged="Handle_OptionPropertyChanged"/>
             </sv:Section>
-            
             <sv:Section Title="{i18n:Translate RSSI_OPTION_STRING}">
-                <!--<sv:TextPickerCell x:Name="OptionPicker"
-                                   Title="{i18n:Translate RSSI_OPTION_STRING}" 
-                                   Items="{Binding _chooseRssi}" 
-                                   SelectedCommand=
-                                   "{Binding _changeRssiCommand}"/>-->
-                
-                <!--<sv:CommandCell x:Name="RssiSlidePicker"
-                                   Title="{i18n:Translate MANUAL_ADJUST_STRING}"
-                                   Tapped="RssiPicker_Tapped"/>-->
-
+                <sv:Section.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean" iOS="False" Android="True"/>
+                </sv:Section.IsVisible>
                 <sv:CommandCell x:Name="AutoAdjustPicker"
                                 Title="{i18n:Translate AUTO_ADJUST_STRING}"
                                 Tapped="AutoAdjust_Tapped"/>
-
             </sv:Section>
-            <!--<sv:Section Title="Debug mode">
-                <sv:LabelCell x:Name="CurrentRssiLabel"/>
-            </sv:Section>-->
         </sv:SettingsView>
         
     </ContentPage.Content>

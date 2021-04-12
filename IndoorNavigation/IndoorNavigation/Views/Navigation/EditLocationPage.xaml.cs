@@ -10,9 +10,6 @@ using Rg.Plugins.Popup.Services;
 using IndoorNavigation.Models;
 using System.Xml;
 using Xamarin.Essentials;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
 
 namespace IndoorNavigation.Views.Navigation
 {

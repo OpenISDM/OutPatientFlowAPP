@@ -316,7 +316,6 @@ namespace IndoorNavigation.Modules
 
                     });
                     _accumulateStraightDistance =
-
                         _accumulateStraightDistance +
                         navigationInstruction._information._distance;
                     _nextWaypointStep++;
@@ -338,12 +337,6 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("NavigateProgram");
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
-                //_iPSModules.CompareToCurrentAndNextIPSType(_currentRegionID,
-                //                                           checkPoint._regionID,
-                //                                           _nextWaypointStep);
-
-                //_iPSModules.PSTurnOFF();
-
                 _iPSModules.AddMonitorBeacon
                     (checkPoint._regionID, checkPoint._waypointID);
 
@@ -354,16 +347,11 @@ namespace IndoorNavigation.Modules
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID ==
                         _currentRegionID)
                     {
-                        //_iPSModules
-                        //.AddNextNextWaypointInterestedGuid
-                        //(_waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                        // _waypointsOnRoute[_nextWaypointStep + 1]._waypointID);
                         _iPSModules.AddMonitorBeacon
                             (_waypointsOnRoute[_nextWaypointStep + 1]
                             ._regionID,
                             _waypointsOnRoute[_nextWaypointStep + 1]
                             ._waypointID);
-
                     }
                 }
 
@@ -378,10 +366,6 @@ namespace IndoorNavigation.Modules
                             in _waypointsOnWrongWay
                             [_waypointsOnRoute[_nextWaypointStep - 1]])
                         {
-
-                            //_iPSModules
-                            //.AddWrongWaypointInterestedGuid(items._regionID,
-                            //                                items._waypointID);
                             _iPSModules.AddMonitorBeacon
                                 (items._regionID, items._waypointID);
                         }
@@ -976,7 +960,7 @@ namespace IndoorNavigation.Modules
                             nearWaypointofSameRegion
                         );
 
-                    double distanceBetweenNextAndNearNeighbor = 0;
+                    double distanceBetweenNextAndNearNeighbor;
                     if (locationRegionWaypoint._regionID ==
                         _waypointsOnRoute[nextStep]._regionID)
                     {

@@ -41,41 +41,18 @@
  *      Paul Chang, paulchang@iis.sinica.edu.tw
  *
  */
-using IndoorNavigation.Resources.Helpers;
-using IndoorNavigation.Utilities;
 using IndoorNavigation.Views.PopUpPage;
-using Plugin.Multilingual;
-using Prism.Commands;
-using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Resources;
-using System.Windows.Input;
 using Xamarin.Forms;
 using static IndoorNavigation.Utilities.Storage;
 namespace IndoorNavigation.Views.Navigation
 {
     public partial class NavigatorSettingPage : ContentPage
     {
-
-        public IList _chooseRssi { get; } = new ObservableCollection<string>();
-        //public ICommand _changeRssiCommand => new DelegateCommand(HandleChangeRssi);
-        public IList _voiceSearchItems { get; } =
-            new ObservableCollection<string>(new List<string> { "中文", "英文" });
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
-
         private string _naviGraphName;
-
         public NavigatorSettingPage(string naviGraphName)
         {
             InitializeComponent();
-            //AddItems();
-
             BindingContext = this;
 
             _naviGraphName = naviGraphName;
@@ -101,95 +78,14 @@ namespace IndoorNavigation.Views.Navigation
                 AvoidElevator.On = (bool)Application.Current.Properties["AvoidElevator"];
                 AvoidEscalator.On = (bool)Application.Current.Properties["AvoidEscalator"];
             }
-
-            //if (Application.Current.Properties.ContainsKey("StrongRssi"))
-            //{
-            //    if ((bool)Application.Current.Properties["StrongRssi"] == true)
-            //    {
-            //        OptionPicker.SelectedItem = _resourceManager.GetString("STRONG_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            //    }
-            //    else if ((bool)Application.Current.Properties["MediumRssi"] == true)
-            //    {
-            //        OptionPicker.SelectedItem = _resourceManager.GetString("MEDIUM_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            //    }
-            //    else if ((bool)Application.Current.Properties["WeakRssi"] == true)
-            //    {
-            //        OptionPicker.SelectedItem = _resourceManager.GetString("WEAK_STRING", CrossMultilingual.Current.CurrentCultureInfo);
-            //    }
-            //}
-
-            //CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
         }
-
-        //private void HandleChangeRssi()
-        //{
-        //    switch (OptionPicker.SelectedItem.ToString().Trim())
-        //    {
-        //        case "Strong":
-        //        case "強":
-        //            Application.Current.Properties["StrongRssi"] = true;
-        //            Application.Current.Properties["MediumRssi"] = false;
-        //            Application.Current.Properties["WeakRssi"] = false;
-        //            break;
-        //        case "Weak":
-        //        case "弱":
-        //            Application.Current.Properties["StrongRssi"] = false;
-        //            Application.Current.Properties["MediumRssi"] = false;
-        //            Application.Current.Properties["WeakRssi"] = true;
-        //            break;
-        //        case "Medium":
-        //        case "中":
-        //            Application.Current.Properties["StrongRssi"] = false;
-        //            Application.Current.Properties["MediumRssi"] = true;
-        //            Application.Current.Properties["WeakRssi"] = false;
-        //            break;
-        //    }
-        //}
-
         protected override void OnDisappearing()
         {
             // Before page close, store the status of each route options
             Application.Current.Properties["AvoidStair"] = AvoidStair.On;
             Application.Current.Properties["AvoidElevator"] = AvoidElevator.On;
             Application.Current.Properties["AvoidEscalator"] = AvoidEscalator.On;
-            //if (OptionPicker.SelectedItem != null)
-            //{
-            //    Device.BeginInvokeOnMainThread(async () =>
-            //    {
-            //        switch (OptionPicker.SelectedItem.ToString().Trim())
-            //        {
-            //            case "Strong":
-            //            case "強":
-            //                Application.Current.Properties["StrongRssi"] = true;
-            //                Application.Current.Properties["MediumRssi"] = false;
-            //                Application.Current.Properties["WeakRssi"] = false;
-            //                break;
-            //            case "Medium":
-            //            case "中":
-            //                Application.Current.Properties["StrongRssi"] = false;
-            //                Application.Current.Properties["MediumRssi"] = true;
-            //                Application.Current.Properties["WeakRssi"] = false;
-            //                break;
-            //            case "Weak":
-            //            case "弱":
-            //                Application.Current.Properties["StrongRssi"] = false;
-            //                Application.Current.Properties["MediumRssi"] = false;
-            //                Application.Current.Properties["WeakRssi"] = true;
-            //                break;
-            //        }
-            //        await Application.Current.SavePropertiesAsync();
-            //    });
-            //}
             base.OnDisappearing();
-        }
-
-        private void AddItems()
-        {
-            var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            _chooseRssi.Clear();
-            _chooseRssi.Add(_resourceManager.GetString("STRONG_STRING", ci));
-            _chooseRssi.Add(_resourceManager.GetString("MEDIUM_STRING", ci));
-            _chooseRssi.Add(_resourceManager.GetString("WEAK_STRING", ci));
         }
 
         async void Handle_OptionPropertyChanged(object sender,
@@ -201,10 +97,6 @@ namespace IndoorNavigation.Views.Navigation
                 {
                     (sender as AiForms.Renderers.SwitchCell).On = false;
 
-                    //await DisplayAlert(_resourceManager.GetString("ERROR_STRING", currentLanguage),
-                    //    _resourceManager.GetString("AVOID_ALL_CONNECTION_TYPE_STRING",
-                    //                               currentLanguage),
-                    //    _resourceManager.GetString("OK_STRING", currentLanguage));
                     await DisplayAlert(
                         GetResourceString("ERROR_STRING"),
                         GetResourceString("AVOID_ALL_CONNECTION_TYPE_STRING"),
@@ -213,26 +105,11 @@ namespace IndoorNavigation.Views.Navigation
             }
 
         }
-
-        async private void RssiPicker_Tapped(object sender, EventArgs e)
-        {
-            Console.WriteLine(">> Tapped RssiItem");
-            ManualAdjustPopupPage page = new ManualAdjustPopupPage();
-
-            await page.show();
-
-            // CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();
-        }
-
         async private void AutoAdjust_Tapped(object sender, EventArgs e)
         {
             Console.WriteLine(">> Tapped AutoAdjust");
-
             AutoAdjustPopupPage page = new AutoAdjustPopupPage(_naviGraphName);
-
-            await page.Show();
-
-            //CurrentRssiLabel.ValueText = TmperorayStatus.RssiOption.ToString();          
+            await page.Show();       
         }
 
     }

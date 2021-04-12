@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +15,9 @@ namespace IndoorNavigation.Views.Settings.LicensePages
             BindingContext = this;
         }
 
-        public ICommand HyperlinkClickCommand => new Command<string>((url) =>
+        public ICommand HyperlinkClickCommand => new Command<string>(async (url) =>
         {
-            Device.OpenUri(new Uri(url));
+            await Launcher.TryOpenAsync(new Uri(url));
         });
     }
 }

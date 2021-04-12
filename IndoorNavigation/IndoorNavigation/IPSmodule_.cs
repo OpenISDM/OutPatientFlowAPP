@@ -229,24 +229,6 @@ namespace IndoorNavigation.Modules
                 }
             }
         }
-        //public void CleanMappingBeaconList()
-        //{
-        //    foreach(KeyValuePair<IPSType, IpsClient> pair in
-        //        _multiClients)
-        //    {
-        //        pair.Value._monitorMappings.Clear();
-        //    }
-        //}
-
-        //public void Close()
-        //{
-        //    foreach(KeyValuePair<IPSType, IpsClient> pair in _multiClients)
-        //    {
-        //        pair.Value._monitorMappings.Clear();
-        //        pair.Value.client.Stop();
-        //        pair.Value.ContainType = false;
-        //    }
-        //}
 
         public class IpsClient
         {
@@ -260,7 +242,6 @@ namespace IndoorNavigation.Modules
         {
             Console.WriteLine(">>Dispose");
             Dispose(true);
-            //throw new NotImplementedException();
         }
 
         protected virtual void Dispose(bool disposing)
