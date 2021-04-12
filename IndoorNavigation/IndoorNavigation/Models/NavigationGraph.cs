@@ -50,7 +50,7 @@ using System.Linq;
 using Dijkstra.NET.Model;
 using System.Xml;
 using static IndoorNavigation.Utilities.Storage;
-
+using static IndoorNavigation.Utilities.Helper;
 namespace IndoorNavigation.Models.NavigaionLayer
 {
     public class NavigationGraph
@@ -1075,7 +1075,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
             for (int i = nextStep - 1; i < allRoute.Count(); i++)
             {
-                if (!isSameRegion(allRoute[i]._regionID, 
+                if (!isSameGuid(allRoute[i]._regionID, 
                     allRoute[i+1]._regionID))
                 {
                     if(isSameFloor(allRoute[i]._regionID, 
@@ -1236,11 +1236,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return GetDistance(lon1, lat1, lon2, lat2);
         }
 
-        private bool isSameRegion(Guid region1, Guid region2)
-        {
-            return region1.Equals(region2);
-        }
-
         private bool isSameFloor(Guid region1, Guid region2)
         {
             try
@@ -1372,12 +1367,6 @@ namespace IndoorNavigation.Models.NavigaionLayer
                 }
             }
         }
-
-        private bool isEmptyGuid(Guid guid)
-        {
-            return Guid.Empty.Equals(guid);
-        }
-
         public InstructionInformation GetInstructionInformation(
             int currentNavigationStep,
             Guid previousRegionID, Guid previousWaypointID,
@@ -1393,7 +1382,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             if (!(isEmptyGuid(nextnextRegionID) &&
                 isEmptyGuid(nextnextWaypointID)) &&
-                !isSameRegion(nextnextRegionID, nextRegionID) &&
+                !isSameGuid(nextnextRegionID, nextRegionID) &&
                 !isSameFloor(nextnextRegionID, nextRegionID))
             {
                 WaypointEdge CurrentNextEdge =
