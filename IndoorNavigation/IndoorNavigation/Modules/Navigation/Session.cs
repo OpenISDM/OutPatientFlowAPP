@@ -38,6 +38,7 @@ using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
 using IndoorNavigation.Modules.IPSClients;
+using static IndoorNavigation.Utilities.Helper;
 
 namespace IndoorNavigation.Modules
 {
@@ -1442,16 +1443,8 @@ namespace IndoorNavigation.Modules
 
                 _nextWaypointEvent.Set();
             }
-
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
-
-        private double GetPercentage(int current, int total)
-        {
-            return (double)Math.Round(100 * ((decimal)current /
-                               (total)), 3);
-        }
-
         public void HandleWrongWay()
         {
             _accumulateStraightDistance = 0;

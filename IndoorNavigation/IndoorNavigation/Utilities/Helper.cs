@@ -15,5 +15,11 @@ namespace IndoorNavigation.Utilities
         {
             return uuid1.Equals(uuid2);
         }
+
+        public static double GetPercentage(int current, int total)
+        {
+            return (double)Math.Round(100 * ((decimal)current /
+                               (total)), 3);
+        }
     }
 }
