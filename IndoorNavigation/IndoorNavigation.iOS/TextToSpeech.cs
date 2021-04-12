@@ -53,11 +53,15 @@ namespace IndoorNavigation.iOS
 {
     public class TextToSpeech : ITextToSpeech
     {
-        public TextToSpeech() { }
+        AVSpeechSynthesizer speechSynthesizer;
+
+        public TextToSpeech()
+        {
+            speechSynthesizer = new AVSpeechSynthesizer();
+        }
 
         public void Speak(string text, string language)
         {
-            var speechSynthesizer = new AVSpeechSynthesizer();
             var speechUtterance = new AVSpeechUtterance(text)
             {
                 Rate = AVSpeechUtterance.MaximumSpeechRate / 2,
