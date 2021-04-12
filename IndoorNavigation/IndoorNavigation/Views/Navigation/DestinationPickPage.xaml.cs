@@ -81,13 +81,13 @@ namespace IndoorNavigation.Views.Navigation
 
             foreach (KeyValuePair<Guid, Models.Region> pairRegion in _navigationGraph.GetRegions())
             {
-                string floorName = _nameInformation.GiveRegionName(pairRegion.Value._id);
+                string floorName = _nameInformation.GetRegionName(pairRegion.Value._id);
                 if (pairRegion.Value._waypointsByCategory.ContainsKey(category))
                 {
                     foreach (Waypoint waypoint in pairRegion.Value._waypointsByCategory[category])
                     {
                         string waypointName = waypoint._name;
-                        waypointName = _nameInformation.GiveWaypointName(waypoint._id);
+                        waypointName = _nameInformation.GetWaypointName(waypoint._id);
                         if (waypoint._type == LocationType.terminal || 
                             waypoint._type == LocationType.landmark ||
                             (waypoint._type == LocationType.portal && 

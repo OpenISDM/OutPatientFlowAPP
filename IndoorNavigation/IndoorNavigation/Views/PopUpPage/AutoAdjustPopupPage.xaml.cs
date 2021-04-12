@@ -122,7 +122,7 @@ namespace IndoorNavigation.Views.PopUpPage
             }
 
             string currentPosition =
-                _nameInformation.GiveWaypointName(_currentWaypointID);
+                _nameInformation.GetWaypointName(_currentWaypointID);
 
             Device.BeginInvokeOnMainThread(() => SetScanRssiView(currentPosition));
             _ipsModules.CloseAllActiveClient();
@@ -283,7 +283,7 @@ namespace IndoorNavigation.Views.PopUpPage
             ConfirmBtn.Text = GetResourceString("OK_STRING");
             #endregion          
 
-            string _positionName = _nameInformation.GiveWaypointName(_currentWaypointID);
+            string _positionName = _nameInformation.GetWaypointName(_currentWaypointID);
             AutoAdjustLayout.Children.Add(
                 new Label
                 {

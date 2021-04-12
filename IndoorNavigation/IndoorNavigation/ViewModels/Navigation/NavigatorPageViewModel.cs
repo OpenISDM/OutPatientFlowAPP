@@ -218,7 +218,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         InstructionLocationValue = locationValue;
                         isPlaying = false;
                         CurrentWaypointName =
-                            _xmlInformation.GiveWaypointName(instruction
+                            _xmlInformation.GetWaypointName(instruction
                             ._currentWaypointGuid);
                         NavigationProgress = instruction._progress;
                         ProgressBar = instruction._progressBar;
@@ -232,7 +232,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                 case NavigationResult.ArrivaIgnorePoint:
                     {
                         CurrentWaypointName =
-                            _xmlInformation.GiveWaypointName(instruction
+                            _xmlInformation.GetWaypointName(instruction
                             ._currentWaypointGuid);
                         NavigationProgress = instruction._progress;
                         ProgressBar = instruction._progressBar;
@@ -257,7 +257,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         #endregion
 
                         CurrentWaypointName =
-                          _xmlInformation.GiveWaypointName(_destinationID);
+                          _xmlInformation.GetWaypointName(_destinationID);
                         CurrentStepLabel =
                             _resourceManager.GetString
                             ("DIRECTION_ARRIVED_STRING",
@@ -303,7 +303,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                         NavigationProgress = 100;
                         ProgressBar = instruction._progressBar;
                         CurrentWaypointName =
-                            _xmlInformation.GiveWaypointName(instruction.
+                            _xmlInformation.GetWaypointName(instruction.
                             _currentWaypointGuid);
                         FirstDirectionPicture = firstDirectionPicture;
                         InstructionLocationValue = locationValue;
@@ -338,7 +338,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             string connectionTypeString = "";
             StepImgIsVisible = true;
             string nextWaypointName =
-                _xmlInformation.GiveWaypointName
+                _xmlInformation.GetWaypointName
                 (instruction._nextWaypointGuid);
             string nextRegionName = instruction._information._regionName;
             InstructionLabVerticalOption = LayoutOptions.CenterAndExpand;

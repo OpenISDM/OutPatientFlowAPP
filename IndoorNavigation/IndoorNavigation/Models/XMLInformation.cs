@@ -67,9 +67,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             foreach (XmlNode xmlNode in xmlRegion)
             {
-                string name = "";
-                Guid RegionGuid =
-                    new Guid();
+                string name;
+                Guid RegionGuid;
                 XmlElement xmlElement =
                     (XmlElement)xmlNode;
 
@@ -80,8 +79,8 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
             foreach (XmlNode xmlNode in xmlWaypoint)
             {
-                string name = "";
-                Guid WaypointGuid = new Guid();
+                string name;
+                Guid WaypointGuid;
                 XmlElement xmlElement = (XmlElement)xmlNode;
                 name = xmlElement.GetAttribute("name").ToString();
                 WaypointGuid = new Guid(xmlElement.GetAttribute("id"));
@@ -89,12 +88,12 @@ namespace IndoorNavigation.Models.NavigaionLayer
             }
         }
 
-        public string GiveRegionName(Guid guid)
+        public string GetRegionName(Guid guid)
         {
             return returnRegionName[guid];
         }
 
-        public string GiveWaypointName(Guid guid)
+        public string GetWaypointName(Guid guid)
         {
             return returnWaypointName[guid];
         }
