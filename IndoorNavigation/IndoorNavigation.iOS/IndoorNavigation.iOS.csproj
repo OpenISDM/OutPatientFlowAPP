@@ -121,7 +121,6 @@
     <Compile Include="NetworkSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\CustomContentPageRenderer.cs" />
-    <None Include="Helpers\TranslateExtension.txt" />
     <Compile Include="Renderers\RightToolbarMenuCustomRenderer.cs" />
     <Compile Include="Services\TableSource.cs" />
     <Compile Include="TextToSpeech.cs" />
@@ -310,7 +309,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\Add_Item1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin11100406.png" />
+  </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Add_Item2.png" />
   </ItemGroup>
@@ -535,5 +536,83 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\NTUH_Yunlin33304846.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin11100603.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin11100604.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin22200915.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin22200919.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200010.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200011.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200012.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200013.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin22200014.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin33300023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin33300044.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_YunLin33300045.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302223.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302322.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302325.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302523.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302526.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33302531.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303137.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303231.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303233.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33303742.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NTUH_Yunlin33304648.png" />
   </ItemGroup>
 </Project>
