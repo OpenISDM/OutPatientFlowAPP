@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GraphResource >
   <Graphs>
-    <Graph name="NTUH_Yunlin" version="1.0008">
+    <Graph name="NTUH_Yunlin" version="1.0010">
       <DisplayNames>
         <DisplayName name="NTUH Yunlin" language="en-US"/>
         <DisplayName name="台大醫院雲林分院" language="zh-TW"/>
