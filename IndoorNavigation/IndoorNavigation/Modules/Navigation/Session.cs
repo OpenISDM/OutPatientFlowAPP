@@ -880,7 +880,7 @@ namespace IndoorNavigation.Modules
                                 locationRegionWaypoint._regionID,
                                 guid,
                                 regionNeighborGuid);
-                if (portalWaypointRegionGuid._waypointID != Guid.Empty)
+                if(!isEmptyGuid(portalWaypointRegionGuid._waypointID))
                 {
                     if (_waypointsOnRoute.Count() > nextStep)
                     {
