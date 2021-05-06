@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<navigation_graph country='USA' city_county='Downey, CA' industry_service='hospital' owner_organization='BiDaE' building_name='Rancho Los Amigo National Rehabilitation Center' version='1.0002'>
+  <regions>
+    <region id='11111111-1111-1111-1111-111111111111' ips_type='LBeacon' name='outdoor' floor='1'>
+      <waypoint id='00000000-0000-0000-0000-000000000001' name='BusStop02' type='terminal' lat='33.93027' lon='-118.15840' category='' />
+      <waypoint id='00000000-0000-0000-0000-000000000002' name='corridor' type='midpath' lat='33.93018' lon='-118.15844' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000003' name='cornor' type='junction' lat='33.93002' lon='-118.15859' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000004' name='mainEntrace' type='portal' lat='33.92989' lon='-15822' category='Exits' />
+      <waypoint id='00000000-0000-0000-0000-000000000005' name='corridor' type='midpath' lat='33.92974' lon='-118.15806' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000006' name='BusStop03' type='terminal' lat='33.92957' lon='-118.15788' category='' />
+    </region>
+    <region id='22222222-2222-2222-2222-222222222222' ips_type='LBeacon' name='wellness center' floor='1'>
+      <waypoint id='00000000-0000-0000-0000-000000000007' name='Exercise Room' type='terminal' lat='33.92988' lon='-118.15869' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000008' name='Multiple Room' type='terminal' lat='33.92984' lon='-118.15847' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000009' name='Corridor' type='midpath' lat='33.92981' lon='-118.15831' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000010' name='Main entrace' type='portal' lat='33.92983' lon='-118.15823' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000011' name='Therapy pool' type='terminal' lat='33.92974' lon='-118.15845' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000012' name='Activity Room' type='terminal' lat='33.92971' lon='-118.15828' category=''/>
+    </region>
+    <edge region1='11111111-1111-1111-1111-111111111111' waypoint1='00000000-0000-0000-0000-000000000004' region2='22222222-2222-2222-2222-222222222222' waypoin2='00000000-0000-0000-0000-000000000010' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+  </regions>
+  <navigraphs>
+    <navigraph region_id='11111111-1111-1111-1111-111111111111'>
+      <waypoint id='00000000-0000-0000-0000-000000000001' name='BusStop02' type='terminal' lat='33.93027' lon='-118.15840' category='' />
+      <waypoint id='00000000-0000-0000-0000-000000000002' name='corridor' type='midpath' lat='33.93018' lon='-118.15844' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000003' name='cornor' type='junction' lat='33.93002' lon='-118.15859' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000004' name='mainEntrace' type='portal' lat='33.92989' lon='-15822' category='Exits' />
+      <waypoint id='00000000-0000-0000-0000-000000000005' name='corridor' type='midpath' lat='33.92974' lon='-118.15806' category='Others' />
+      <waypoint id='00000000-0000-0000-0000-000000000006' name='BusStop03' type='terminal' lat='33.92957' lon='-118.15788' category='' />
+
+      <edge node1='00000000-0000-0000-0000-000000000001' node2='00000000-0000-0000-0000-000000000002' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000002' node2='00000000-0000-0000-0000-000000000003' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000003' node2='00000000-0000-0000-0000-000000000004' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000004' node2='00000000-0000-0000-0000-000000000005' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000005' node2='00000000-0000-0000-0000-000000000006' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <beacons beacon_numbers='6'>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000001' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000002' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000003' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000004' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000005' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000006' threshold='-60'/>
+      </beacons>
+    </navigraph>
+    <navigraph region_id='22222222-2222-2222-2222-222222222222' waypoint_numbers='8' edge_numbers='7'>
+      <waypoint id='00000000-0000-0000-0000-000000000007' name='Exercise Room' type='terminal' lat='33.92988' lon='-118.15869' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000008' name='Multiple Room' type='terminal' lat='33.92984' lon='-118.15847' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000009' name='Corridor' type='midpath' lat='33.92981' lon='-118.15831' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000010' name='Main entrace' type='portal' lat='33.92983' lon='-118.15823' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000011' name='Therapy pool' type='terminal' lat='33.92974' lon='-118.15845' category=''/>
+      <waypoint id='00000000-0000-0000-0000-000000000012' name='Activity Room' type='terminal' lat='33.92971' lon='-118.15828' category=''/>
+
+      <edge node1='00000000-0000-0000-0000-000000000007' node2='00000000-0000-0000-0000-000000000008' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000008' node2='00000000-0000-0000-0000-000000000009' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000009' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000011' node2='00000000-0000-0000-0000-000000000012' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <edge node1='00000000-0000-0000-0000-000000000012' node2='00000000-0000-0000-0000-000000000010' bi_direction='2' source='' direction='' connection_type='NormalHallway'/>
+      <beacons beacon_numbers='6'>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000007' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000008' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000009' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000010' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000011' threshold='-60'/>
+        <beacon uuid='' waypoint_ids='00000000-0000-0000-0000-000000000012' threshold='-60'/>
+      </beacons>
+    </navigraph>
+  </navigraphs>
+ </navigation_graph>
