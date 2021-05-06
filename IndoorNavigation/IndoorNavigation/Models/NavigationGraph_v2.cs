@@ -5,6 +5,9 @@ using System.Xml;
 using static IndoorNavigation.Utilities.Storage;
 using static IndoorNavigation.Utilities.Helper;
 using IndoorNavigation.Models.NavigaionLayer;
+using Dijkstra.NET.Model;
+using System.Linq;
+using Dijkstra.NET.Extensions;
 
 namespace IndoorNavigation.Models
 {
@@ -24,6 +27,7 @@ namespace IndoorNavigation.Models
         private Dictionary<Guid, Region> _regions { get; set; }
         private Dictionary<Tuple<Guid, Guid>, List<RegionEdge>> _edges { get; set; }
 
+        private Graph<Guid, string> _graphRegionGraph;
         #endregion
 
         #region For multilingual
@@ -67,9 +71,11 @@ namespace IndoorNavigation.Models
             public Guid _waypoint1 { get; set; }
             public Guid _waypoint2 { get; set; }
             public int _source { get; set; }
-
-            public ConnectionType _connectType { get; set; }
+            public DirectionalConnection _biDirection { get;set }
+            public ConnectionType _connectionType
+            { get; set; }
             public bool _isVirtualEdge { get; set; }
+            public int _distance { get; set; }
         }
         #endregion
         public NavigationGraph_v2(XmlDocument xmlDocument)
@@ -93,8 +99,88 @@ namespace IndoorNavigation.Models
             return new Dictionary<Guid, Region>();
         }
 
+        public Graph<Guid, string> GenerateRegionGraph(ConnectionType[] avoidConnectionTypes)
+        {
+            Graph<Guid, string> graph = new Graph<Guid, string>();
+
+            foreach (KeyValuePair<Guid, Region> regionItem in _regions)
+            {
+                graph.AddNode(regionItem.Key);
+            }
+
+            foreach (KeyValuePair<Tuple<Guid, Guid>, List<RegionEdge>> regionEdgeItem in _edges)
+            {
+                Guid node1 = regionEdgeItem.Key.Item1;
+                Guid node2 = regionEdgeItem.Key.Item2;
+
+                uint node1Key = graph.Where(node => node.Item.Equals(node1)).Select(node => node.Key).First();
+
+                uint node2Key = graph.Where(node => node.Item.Equals(node2)).Select(node => node.Key).First();
+
+                int node1EdgeDistance = int.MaxValue;
+                int node1EdgeIndex = -1;
+                int node2EdgeDistance = int.MaxValue;
+                int node2EdgeIndex = -1;
+                for (int i = 0; i < regionEdgeItem.Value.Count(); i++)
+                {
+                    RegionEdge edgeItem = regionEdgeItem.Value[i];
+                    if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                    {
+
+                        if (DirectionalConnection.BiDirection ==
+                            edgeItem._biDirection ||
+                            (DirectionalConnection.OneWay ==
+                            edgeItem._biDirection && 1 == edgeItem._source))
+                        {
+                            int edgeDistance =
+                                Convert.ToInt32(edgeItem._distance);
+                            if (edgeDistance < node1EdgeDistance)
+                            {
+                                node1EdgeDistance = edgeDistance;
+                                node1EdgeIndex = i;
+                            }
+                        }
+
+                        if (DirectionalConnection.BiDirection ==
+                            edgeItem._biDirection ||
+                        (DirectionalConnection.OneWay ==
+                        edgeItem._biDirection && 2 == edgeItem._source))
+                        {
+                            int edgeDistance =
+                                Convert.ToInt32(edgeItem._distance);
+                            if (edgeDistance < node2EdgeDistance)
+                            {
+                                node2EdgeDistance = edgeDistance;
+                                node2EdgeIndex = i;
+                            }
+                        }
+
+                    }
+                }
+                if (-1 != node1EdgeIndex)
+                {
+                    graph.Connect
+                        (node1Key, node2Key, node1EdgeDistance, string.Empty);
+                }
+                if (-1 != node2EdgeIndex)
+                {
+                    graph.Connect
+                        (node2Key, node1Key, node2EdgeDistance, string.Empty);
+                }
+
+            }
+
+            return graph;
+        }
+
         public void GenerateRoute(Guid sourceRegionID, Guid sourceWaypointID, Guid destinationRegionID, Guid destinationWaypointID)
         {
+            uint region1Key = _graphRegionGraph.Where(node=> node.Item.Equals(sourceRegionID)).Select(node=>node.Key).First();
+            uint region2Key = _graphRegionGraph.Where(node=> node.Item.Equals(destinationRegionID)).Select(node=>node.Key).First();
+
+            var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
+
+            
 
         }
 
@@ -130,5 +216,11 @@ namespace IndoorNavigation.Models
             return _version;
         }
         #endregion
+    }
+
+    public enum DirectionalConnection
+    {
+        OneWay = 1,
+        BiDirection = 2,
     }
 }
