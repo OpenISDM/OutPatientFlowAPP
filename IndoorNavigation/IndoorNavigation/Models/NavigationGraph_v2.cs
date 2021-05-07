@@ -8,7 +8,8 @@ using IndoorNavigation.Models.NavigaionLayer;
 using Dijkstra.NET.Model;
 using System.Linq;
 using Dijkstra.NET.Extensions;
-
+using static IndoorNavigation.Modules.Session;
+using static IndoorNavigation.Utilities.Constants;
 namespace IndoorNavigation.Models
 {
     public class NavigationGraph_v2
@@ -23,11 +24,13 @@ namespace IndoorNavigation.Models
         #endregion
 
         #region For generate route
-        private Dictionary<Guid, NavigationGraph> _navigraphs { get; set; }
+        private Dictionary<Guid, Navigraph> _navigraphs { get; set; }
         private Dictionary<Guid, Region> _regions { get; set; }
         private Dictionary<Tuple<Guid, Guid>, List<RegionEdge>> _edges { get; set; }
 
         private Graph<Guid, string> _graphRegionGraph;
+        private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>> _waypointsOnWrongWay;
+        private List<RegionWaypointPoint> _waypointsOnRoute;
         #endregion
 
         #region For multilingual
@@ -52,6 +55,7 @@ namespace IndoorNavigation.Models
             public Guid _node2 { get; set; }
             public int _source { get; set; }
             public ConnectionType _connectionType { get; set; }
+            public DirectionalConnection _biDirection { get; set; }
             public double _distance { get; set; }
             public bool _isVirtualWay { get; set; }
             // for picture value.
@@ -71,16 +75,424 @@ namespace IndoorNavigation.Models
             public Guid _waypoint1 { get; set; }
             public Guid _waypoint2 { get; set; }
             public int _source { get; set; }
-            public DirectionalConnection _biDirection { get;set }
+            public DirectionalConnection _biDirection { get; set; }
             public ConnectionType _connectionType
             { get; set; }
             public bool _isVirtualEdge { get; set; }
-            public int _distance { get; set; }
+            public double _distance { get; set; }
+            public string _picture12 { get; set; }
+            public string _picture21 { get; set; }
+            public CardinalDirection _direction { get; set; }
         }
         #endregion
         public NavigationGraph_v2(XmlDocument xmlDocument)
         {
+            _regions = new Dictionary<Guid, Region>();
+            _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
+            _navigraphs = new Dictionary<Guid, Navigraph>();
+            #region root basic attributes
+            XmlElement navigationGraphElement =
+                (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
+            _country =
+                navigationGraphElement.GetAttribute("country");
+            _cityCounty =
+                navigationGraphElement.GetAttribute("city_county");
+            _industryService =
+                navigationGraphElement.GetAttribute("industry_service");
+            _ownerOrganization =
+                navigationGraphElement.GetAttribute("owner_organization");
+            _buildingName =
+                navigationGraphElement.GetAttribute("building_name");
+            _version =
+                Convert.ToDouble(navigationGraphElement
+                .GetAttribute("version"));
+            #endregion
 
+            #region Read navigation_graph/regions/region
+            XmlNodeList xmlRegion =
+                xmlDocument.SelectNodes("navigation_graph/regions/region");
+            foreach (XmlNode regionNode in xmlRegion)
+            {
+                Region region = new Region();
+                region._neighbors = new List<Guid>();
+                region._waypointsByCategory =
+                    new Dictionary<CategoryType, List<Waypoint>>();
+
+                XmlElement xmlElement = (XmlElement)regionNode;
+                region._id = Guid.Parse(xmlElement.GetAttribute("id"));
+
+                region._IPSType =
+                    (IPSType)Enum.Parse(typeof(IPSType),
+                    xmlElement.GetAttribute("ips_type"),
+                    false);
+                region._name = xmlElement.GetAttribute("name");
+
+                region._floor = int.Parse(xmlElement.GetAttribute("floor"));
+
+                XmlNodeList xmlWaypoint = regionNode.SelectNodes("waypoint");
+                foreach (XmlNode waypointNode in xmlWaypoint)
+                {
+                    Waypoint waypoint = new Waypoint();
+
+                    waypoint._neighbors = new List<Guid>();
+                    XmlElement xmlWaypointElement =
+                        (XmlElement)waypointNode;
+
+                    waypoint._id =
+                        Guid.Parse(xmlWaypointElement.GetAttribute("id"));
+                    waypoint._name =
+                        xmlWaypointElement.GetAttribute("name");
+                    waypoint._type =
+                        (LocationType)Enum.Parse(typeof(LocationType),
+                        xmlWaypointElement.GetAttribute("type"), false);
+                    waypoint._lon =
+                        double.Parse(xmlWaypointElement.GetAttribute("lon"));
+                    waypoint._lat =
+                        double.Parse(xmlWaypointElement.GetAttribute("lat"));
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                        xmlWaypointElement
+                        .GetAttribute("category"),
+                        false);
+                    if (xmlWaypointElement.HasAttribute("virutalpoint"))
+                    {
+                        waypoint._isVirtualPoint =
+                          XmlConvert.ToBoolean
+                          (xmlWaypointElement.GetAttribute("virutalpoint"));
+                    }
+                    if (!region._waypointsByCategory.ContainsKey
+                        (waypoint._category))
+                    {
+                        region._waypointsByCategory.Add
+                            (waypoint._category,
+                            new List<Waypoint>() { waypoint });
+                    }
+                    else
+                    {
+                        region._waypointsByCategory[waypoint._category]
+                            .Add(waypoint);
+                    }
+                }
+                _regions.Add(region._id, region);
+            }
+            #endregion
+
+            #region Read Edge
+            XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
+            foreach (XmlNode regionEdgeNode in xmlRegionEdge)
+            {
+                RegionEdge regionEdge = new RegionEdge();
+                XmlElement xmlElement = (XmlElement)regionEdgeNode;
+                regionEdge._region1 =
+                    Guid.Parse(xmlElement.GetAttribute("region1"));
+                regionEdge._waypoint1 =
+                    Guid.Parse(xmlElement.GetAttribute("waypoint1"));
+                regionEdge._region2 =
+                    Guid.Parse(xmlElement.GetAttribute("region2"));
+                regionEdge._waypoint2 =
+                    Guid.Parse(xmlElement.GetAttribute("waypoint2"));
+                regionEdge._biDirection =
+                    (DirectionalConnection)Enum
+                    .Parse(typeof(DirectionalConnection),
+                    xmlElement.GetAttribute("bi_direction"),
+                    false);
+
+                regionEdge._source = 0;
+                if (!string.IsNullOrEmpty(xmlElement.GetAttribute("source")))
+                {
+                    regionEdge._source =
+                        int.Parse(xmlElement.GetAttribute("source"));
+                }
+
+                regionEdge._direction =
+                    (CardinalDirection)Enum.Parse
+                    (typeof(CardinalDirection)
+                    , xmlElement.GetAttribute("direction")
+                    , false);
+                if (xmlElement.HasAttribute("isvirtualEdge"))
+                {
+                    regionEdge._isVirtualEdge =
+                        XmlConvert.ToBoolean
+                        (xmlElement.GetAttribute("isvirtualEdge"));
+                }
+                //may be the picture will not be used anymore.
+                //regionEdge._picture12 = xmlElement.GetAttribute("picture12") ?? " ";
+                //regionEdge._picture21 = xmlElement.GetAttribute("picture21") ?? " ";
+
+                regionEdge._connectionType =
+                    (ConnectionType)Enum.Parse(typeof(ConnectionType),
+                    xmlElement.GetAttribute("connection_type"),
+                    false);
+
+                regionEdge._distance = 0;
+                int distanceElevator = 3;
+                int distanceEscalator = 5;
+                int distanceStair = 7;
+
+                switch (regionEdge._connectionType)
+                {
+                    case ConnectionType.Elevator:
+                        regionEdge._distance = distanceElevator;
+                        break;
+                    case ConnectionType.Escalator:
+                        regionEdge._distance = distanceEscalator;
+                        break;
+                    case ConnectionType.Stair:
+                        regionEdge._distance = distanceStair;
+                        break;
+                    case ConnectionType.NormalHallway:
+                    case ConnectionType.VirtualHallway:
+                        bool foundNode1 = false;
+                        double node1Lon = 0;
+                        double node1Lat = 0;
+                        bool foundNode2 = false;
+                        double node2Lon = 0;
+                        double node2Lat = 0;
+                        foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in _regions[regionEdge._region1]._waypointsByCategory)
+                        {
+                            foreach (Waypoint waypoint in categoryItem.Value)
+                            {
+                                if (waypoint._id.Equals(regionEdge._waypoint1))
+                                {
+                                    node1Lon = waypoint._lon;
+                                    node1Lat = waypoint._lat;
+                                    foundNode1 = true;
+                                    break;
+                                }
+                                if (foundNode1)
+                                    break;
+                            }
+                        }
+                        foreach (KeyValuePair<CategoryType, List<Waypoint>> categoryItem in
+                            _regions[regionEdge._region2]._waypointsByCategory)
+                        {
+                            foreach (Waypoint waypoint in categoryItem.Value)
+                            {
+                                if (waypoint._id.Equals(regionEdge._waypoint2))
+                                {
+                                    node2Lon = waypoint._lon;
+                                    node2Lat = waypoint._lat;
+                                    foundNode2 = true;
+                                    break;
+                                }
+                                if (foundNode2)
+                                    break;
+                            }
+                        }
+
+                        regionEdge._distance = GetDistance(node1Lon,
+                                                           node1Lat,
+                                                           node2Lon,
+                                                           node2Lat);
+
+                        break;
+                }
+
+                Tuple<Guid, Guid> edgeKey =
+                    new Tuple<Guid, Guid>(regionEdge._region1, regionEdge._region2);
+                if (!_edges.ContainsKey(edgeKey))
+                {
+                    _edges.Add(edgeKey, new List<RegionEdge>() { regionEdge });
+                }
+                else
+                {
+                    _edges[edgeKey].Add(regionEdge);
+                }
+                if (DirectionalConnection.BiDirection == regionEdge._biDirection)
+                {
+                    _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
+                    _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
+                }
+                else
+                {
+                    if (1 == regionEdge._source)
+                    {
+                        _regions[regionEdge._region1]._neighbors.Add(regionEdge._region2);
+                    }
+                    else if (2 == regionEdge._source)
+                    {
+                        _regions[regionEdge._region2]._neighbors.Add(regionEdge._region1);
+                    }
+                }
+            }
+            #endregion
+            #region read navigraph block of BuildingName.xml
+            XmlNodeList xmlNavigraph =
+                xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+            foreach (XmlNode navigraphNode in xmlNavigraph)
+            {
+                Navigraph navigraph = new Navigraph();
+
+                navigraph._waypoints = new Dictionary<Guid, Waypoint>();
+                navigraph._edges = new Dictionary<Tuple<Guid, Guid>, WaypointEdge>();
+                navigraph._beacons = new Dictionary<Guid, List<Guid>>();
+                navigraph._beaconRSSIThreshold = new Dictionary<Guid, int>();
+                XmlElement xmlElement = (XmlElement)navigraphNode;
+                navigraph._regionID = Guid.Parse(xmlElement.GetAttribute("region_id"));
+
+                XmlNodeList xmlWaypoint = navigraphNode.SelectNodes("waypoint");
+                foreach (XmlNode waypointNode in xmlWaypoint)
+                {
+                    Waypoint waypoint = new Waypoint();
+                    waypoint._neighbors = new List<Guid>();
+
+                    XmlElement xmlWaypointElement = (XmlElement)waypointNode;
+                    waypoint._id =
+                        Guid.Parse(xmlWaypointElement.GetAttribute("id"));
+
+                    waypoint._name = xmlWaypointElement.GetAttribute("name");
+                    waypoint._type =
+                        (LocationType)Enum.Parse(typeof(LocationType),
+                        xmlWaypointElement.GetAttribute("type"), false);
+                    waypoint._lon =
+                        double.Parse(xmlWaypointElement.GetAttribute("lon"));
+                    waypoint._lat =
+                        double.Parse(xmlWaypointElement.GetAttribute("lat"));
+
+                    waypoint._category =
+                        (CategoryType)Enum.Parse(typeof(CategoryType),
+                        xmlWaypointElement.GetAttribute("category"), false);
+                    navigraph._waypoints.Add(waypoint._id, waypoint);
+                }
+                #endregion
+
+                #region read edges block
+                XmlNodeList xmlWaypointEdge =
+                    navigraphNode.SelectNodes("edge");
+                foreach (XmlNode waypointEdgeNode in xmlWaypointEdge)
+                {
+                    WaypointEdge waypointEdge = new WaypointEdge();
+                    XmlElement xmlEdgeElement = (XmlElement)waypointEdgeNode;
+                    waypointEdge._node1 =
+                        Guid.Parse(xmlEdgeElement.GetAttribute("node1"));
+                    waypointEdge._node2 =
+                        Guid.Parse(xmlEdgeElement.GetAttribute("node2"));
+
+                    waypointEdge._biDirection =
+                        (DirectionalConnection)Enum.Parse
+                        (typeof(DirectionalConnection),
+                        xmlEdgeElement.GetAttribute("bi_direction"),
+                        false);
+
+                    waypointEdge._source = 0;
+                    if (!string.IsNullOrEmpty
+                        (xmlEdgeElement.GetAttribute("source")))
+                    {
+                        waypointEdge._source =
+                            int.Parse(xmlEdgeElement.GetAttribute("source"));
+                    }
+
+                    //waypointEdge._direction =
+                    //    (CardinalDirection)Enum.Parse
+                    //    (typeof(CardinalDirection),
+                    //    xmlEdgeElement.GetAttribute("direction"),
+                    //    false);
+
+                    #region read direction picture part
+
+                    //waypointEdge._picture12 = xmlEdgeElement.GetAttribute("picture12") ?? " ";
+                    //waypointEdge._picture21 = xmlEdgeElement.GetAttribute("picture21") ?? " ";
+
+                    //Console.WriteLine("picture 12 = "+ waypointEdge._picture12);
+                    #endregion
+
+                    waypointEdge._connectionType =
+                        (ConnectionType)Enum.Parse(typeof(ConnectionType),
+                                                   xmlEdgeElement
+                                                   .GetAttribute
+                                                   ("connection_type"),
+                                                   false);
+                    //Console.WriteLine("connection_type : " +
+                    //    waypointEdge._connectionType);
+
+                    //waypointEdge._supportCombine =
+                    //    xmlEdgeElement.HasAttribute("combineInstruction")
+                    //    ? false : true;
+
+
+                    waypointEdge._distance =
+                        GetDistance(navigraph._waypoints[waypointEdge._node1]._lon,
+                                    navigraph._waypoints[waypointEdge._node1]._lat,
+                                    navigraph._waypoints[waypointEdge._node2]._lon,
+                                    navigraph._waypoints[waypointEdge._node2]._lat);
+
+                    Tuple<Guid, Guid> edgeKey =
+                        new Tuple<Guid, Guid>(waypointEdge._node1, waypointEdge._node2);
+                    navigraph._edges.Add(edgeKey, waypointEdge);
+
+                    if (DirectionalConnection.BiDirection == waypointEdge._biDirection)
+                    {
+                        navigraph._waypoints[waypointEdge._node1]._neighbors.Add(waypointEdge._node2);
+                        navigraph._waypoints[waypointEdge._node2]._neighbors.Add(waypointEdge._node1);
+                    }
+                    else
+                    {
+                        if (1 == waypointEdge._source)
+                        {
+                            navigraph._waypoints[waypointEdge._node1]._neighbors
+                                .Add(waypointEdge._node2);
+                        }
+                        else if (2 == waypointEdge._source)
+                        {
+                            navigraph._waypoints[waypointEdge._node2]._neighbors
+                                .Add(waypointEdge._node1);
+                        }
+                    }
+                }
+                #endregion
+
+                #region read beacons
+                XmlNodeList xmlBeacon = navigraphNode.SelectNodes("beacons/beacon");
+                foreach (XmlNode beaconNode in xmlBeacon)
+                {
+                    XmlElement xmlBeaconElement = (XmlElement)beaconNode;
+                    Guid beaconGuid = Guid.Parse(xmlBeaconElement.GetAttribute("uuid"));
+
+                    string waypointIDs = xmlBeaconElement.GetAttribute("waypoint_ids");
+
+                    string[] arrayWaypointIDs = waypointIDs.Split(';');
+                    for (int i = 0; i < arrayWaypointIDs.Count(); i++)
+                    {
+                        Guid waypointID = Guid.Parse(arrayWaypointIDs[i]);
+                        if (!navigraph._beacons.ContainsKey(waypointID))
+                        {
+                            navigraph._beacons.Add
+                                (waypointID,
+                                new List<Guid>() { beaconGuid });
+                        }
+                        else
+                        {
+                            navigraph._beacons[waypointID].Add(beaconGuid);
+                        }
+                    }
+
+                    int beaconRSSI =
+                        int.Parse(xmlBeaconElement.GetAttribute("threshold"));
+                    navigraph._beaconRSSIThreshold.Add(beaconGuid, beaconRSSI);
+                }
+
+                _navigraphs.Add(navigraph._regionID, navigraph);
+            }
+            #endregion
+            Console.WriteLine("<< NavigationGraph");
+        }
+
+        private double GetDistance(double lon1, double lat1, double lon2, double lat2)
+        {
+            double radLat1 = Rad(lat1);
+            double radLng1 = Rad(lon1);
+            double radLat2 = Rad(lat2);
+            double radLng2 = Rad(lon2);
+            double a = radLat1 - radLat2;
+            double b = radLng1 - radLng2;
+            return
+                2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) +
+                Math.Cos(radLat1) * Math.Cos(radLat2) *
+                Math.Pow(Math.Sin(b / 2), 2))) * EARTH_RADIUS;
+        }
+        private double Rad(double d)
+        {
+            return (double)d * Math.PI / 180d;
         }
 
 
@@ -91,7 +503,26 @@ namespace IndoorNavigation.Models
 
         private WaypointEdge GetWaypointEdge(Guid regionID, Guid sourceWaypointID, Guid sinkWaypointID)
         {
-            return new WaypointEdge();
+            WaypointEdge waypointEdge = new WaypointEdge();
+
+            Tuple<Guid, Guid> edgeKeyFromNode1 =
+                new Tuple<Guid, Guid>(sourceWaypointID,
+                sinkWaypointID);
+            Tuple<Guid, Guid> edgeKeyFromNode2 =
+                new Tuple<Guid, Guid>(sinkWaypointID, sourceWaypointID);
+            if (_navigraphs[regionID]._edges.ContainsKey(edgeKeyFromNode1))
+            {
+                // XML file contains (W1, W2) and the query input is 
+                // (W1, W2) as well.
+                waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode1];
+            }
+            else if (_navigraphs[regionID]._edges.ContainsKey
+                (edgeKeyFromNode2))
+            {
+                // XML file contains (W1, W2) but the query string is (W2, W1).
+                waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
+            }
+            return waypointEdge;
         }
 
         public Dictionary<Guid, Region> GetRegions()
@@ -167,28 +598,198 @@ namespace IndoorNavigation.Models
                     graph.Connect
                         (node2Key, node1Key, node2EdgeDistance, string.Empty);
                 }
-
             }
-
             return graph;
         }
 
         public void GenerateRoute(Guid sourceRegionID, Guid sourceWaypointID, Guid destinationRegionID, Guid destinationWaypointID)
         {
-            uint region1Key = _graphRegionGraph.Where(node=> node.Item.Equals(sourceRegionID)).Select(node=>node.Key).First();
-            uint region2Key = _graphRegionGraph.Where(node=> node.Item.Equals(destinationRegionID)).Select(node=>node.Key).First();
+            uint region1Key = _graphRegionGraph.Where(node => node.Item.Equals(sourceRegionID)).Select(node => node.Key).First();
+            uint region2Key = _graphRegionGraph.Where(node => node.Item.Equals(destinationRegionID)).Select(node => node.Key).First();
 
             var pathRegions = _graphRegionGraph.Dijkstra(region1Key, region2Key).GetPath();
 
-            
+            if (0 == pathRegions.Count())
+            {
+                Console.WriteLine("No path.Need to change avoid connection" +
+                                  " type");
 
+                // TODO 修改"沒有路徑"的處理方式
+                //_event.OnEventCall(new NavigationEventArgs
+                //{
+                //    _result = NavigationResult.NoRoute
+                //});
+                return;
+            }
+
+            // store the generate Dijkstra path across regions
+            List<Guid> regionsOnRoute = new List<Guid>();
+            for (int i = 0; i < pathRegions.Count(); i++)
+            {
+                regionsOnRoute.Add
+                    (_graphRegionGraph[pathRegions.ToList()
+                    [i]].Item);
+            }
+            _waypointsOnRoute.Add(
+                new RegionWaypointPoint
+                {
+                    _regionID = sourceRegionID,
+                    _waypointID = sourceWaypointID
+                });
+
+            for (int i = 0; i < _waypointsOnRoute.Count(); i++)
+            {
+                RegionWaypointPoint checkPoint = _waypointsOnRoute[i];
+                Console.WriteLine("check index = {0}, count = {1}, region {2}"
+                    + " waypoint {3}",
+                    i,
+                    _waypointsOnRoute.Count(),
+                    checkPoint._regionID,
+                    checkPoint._waypointID);
+                if (regionsOnRoute.IndexOf(checkPoint._regionID) + 1 <
+                    regionsOnRoute.Count())
+                {
+                    LocationType waypointType =
+                        GetWaypointType(checkPoint._regionID, checkPoint._waypointID);
+
+                    Guid nextRegionID =
+                        regionsOnRoute[regionsOnRoute.
+                                       IndexOf(checkPoint._regionID) + 1];
+
+                    ConnectionType[] _avoidConnectionTypes = new ConnectionType[0];
+                    //TODO 將avoidConnectionType直接帶入navigationGraph.
+                    PortalWaypoints portalWaypoints =
+                        GetPortalWaypoints(checkPoint._regionID,
+               checkPoint._waypointID,
+                   nextRegionID,
+                   _avoidConnectionTypes);
+
+                    if (LocationType.portal != waypointType)
+                    {
+                        _waypointsOnRoute.Add(new RegionWaypointPoint
+                        {
+                            _regionID = checkPoint._regionID,
+                            _waypointID =
+                            portalWaypoints._portalWaypoint1
+                        });
+                    }
+                    else if (LocationType.portal == waypointType)
+                    {
+                        if (!checkPoint._waypointID.Equals(portalWaypoints._portalWaypoint1))
+                        {
+                            _waypointsOnRoute.Add(new RegionWaypointPoint
+                            {
+                                _regionID = checkPoint._regionID,
+                                _waypointID = portalWaypoints._portalWaypoint1
+                            });
+                        }
+                        else
+                        {
+                            _waypointsOnRoute.Add(new RegionWaypointPoint
+                            {
+                                _regionID = nextRegionID,
+                                _waypointID = portalWaypoints._portalWaypoint2
+                            });
+                        }
+                    }
+                }
+            }
+            int indexLastCheckPoint = _waypointsOnRoute.Count() - 1;
+            if (!(destinationRegionID.
+                Equals(_waypointsOnRoute[indexLastCheckPoint]._regionID) &&
+                destinationWaypointID.
+                Equals(_waypointsOnRoute[indexLastCheckPoint]._waypointID)))
+            {
+                _waypointsOnRoute.Add(new RegionWaypointPoint
+                {
+                    _regionID = destinationRegionID,
+                    _waypointID = destinationWaypointID
+                });
+            }
         }
 
-        public void GenerateWrongWayDetect()
+        public LocationType GetWaypointType(Guid regionID, Guid waypointID)
+        {
+            return _navigraphs[regionID]._waypoints[waypointID]._type;
+        }
+
+        public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID, ConnectionType[] avoidConnectionTypes)
+        {
+            RegionEdge regionEdge =
+                GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID, avoidConnectionTypes);
+
+            return new PortalWaypoints(regionEdge._waypoint1, regionEdge._waypoint2);
+        }
+
+        public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
+        {
+            return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
+        }
+
+        public void GenerateWrongWay()
+        {
+            _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
+
+            foreach (RegionWaypointPoint waypoint in _waypointsOnRoute)
+            {
+                //TODO implement getNeighBor
+                //List<Guid> neightborGuid = GetNeighbor()
+            }
+        }
+
+        public IPSType GetRegionIPSType(Guid regionID)
+        {
+            return _regions[regionID]._IPSType;
+        }
+
+        public void GenerateIPSTable()
+        {
+            List<HashSet<IPSType>> IPSTable = new List<HashSet<IPSType>>();
+
+            foreach (RegionWaypointPoint waypoint in _waypointsOnRoute)
+            {
+                HashSet<IPSType> subTabe = new HashSet<IPSType>();
+                subTabe.Add(GetRegionIPSType(waypoint._regionID));
+
+                try
+                {
+                    foreach (RegionWaypointPoint wrongWaypoint in _waypointsOnWrongWay[waypoint])
+                    {
+
+                        subTabe.Add(GetRegionIPSType(wrongWaypoint._regionID));
+                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("generate ips table exception : " + e.Message);
+                }
+                IPSTable.Add(subTabe);
+            }
+        }
+        public void AddPortalWrongWaypoint() { }
+        public void AddWrongWaypoint() { }
+        public void AdditionLayerWrongWay()
         {
 
         }
 
+        public int GetBeaconRSSIThreshold(Guid regionGuid, Guid beaconUUID)
+        {
+            return _navigraphs[regionGuid]._beaconRSSIThreshold[beaconUUID];
+        }
+        public double DistanceBetweenWaypoints(Guid regionID1, Guid waypointID1, Guid regionID2, Guid waypointID2)
+        {
+            double lat1 = _navigraphs[regionID1]._waypoints[waypointID1]._lat;
+            double lon1 = _navigraphs[regionID1]._waypoints[waypointID1]._lon;
+            double lat2 = _navigraphs[regionID2]._waypoints[waypointID2]._lat;
+            double lon2 = _navigraphs[regionID2]._waypoints[waypointID2]._lon;
+            return GetDistance(lon1, lat1, lon2, lat2);
+        }
+
+        public InstructionInformation GetInstruction(RegionWaypointPoint previous, RegionWaypointPoint current, RegionWaypointPoint next, RegionWaypointPoint nextnext)
+        {
+
+        }
         #region Get NavigationGraph Attributes
         public string GetOwnerOrganization()
         {
