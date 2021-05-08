@@ -59,15 +59,6 @@ namespace IndoorNavigation.Models
             public DirectionalConnection _biDirection { get; set; }
             public double _distance { get; set; }
             public bool _isVirtualWay { get; set; }
-            // for picture value.
-            // it might not be required in new navigationGraph
-            //public string _picture12 { get; set; }
-            //public string _picture21 { get; set; }
-
-            // some stair, escalator or elevator can't be seen at previous 
-            // point.
-            // it might not be required in new navigationGraph
-            //public bool _supportCombine { get; set; }
         }
         public struct RegionEdge
         {
@@ -81,9 +72,6 @@ namespace IndoorNavigation.Models
             { get; set; }
             public bool _isVirtualEdge { get; set; }
             public double _distance { get; set; }
-            public string _picture12 { get; set; }
-            public string _picture21 { get; set; }
-            public CardinalDirection _direction { get; set; }
         }
         #endregion
         public NavigationGraph_v2(XmlDocument xmlDocument)
@@ -205,20 +193,12 @@ namespace IndoorNavigation.Models
                         int.Parse(xmlElement.GetAttribute("source"));
                 }
 
-                regionEdge._direction =
-                    (CardinalDirection)Enum.Parse
-                    (typeof(CardinalDirection)
-                    , xmlElement.GetAttribute("direction")
-                    , false);
                 if (xmlElement.HasAttribute("isvirtualEdge"))
                 {
                     regionEdge._isVirtualEdge =
                         XmlConvert.ToBoolean
                         (xmlElement.GetAttribute("isvirtualEdge"));
                 }
-                //may be the picture will not be used anymore.
-                //regionEdge._picture12 = xmlElement.GetAttribute("picture12") ?? " ";
-                //regionEdge._picture21 = xmlElement.GetAttribute("picture21") ?? " ";
 
                 regionEdge._connectionType =
                     (ConnectionType)Enum.Parse(typeof(ConnectionType),
@@ -383,33 +363,12 @@ namespace IndoorNavigation.Models
                             int.Parse(xmlEdgeElement.GetAttribute("source"));
                     }
 
-                    //waypointEdge._direction =
-                    //    (CardinalDirection)Enum.Parse
-                    //    (typeof(CardinalDirection),
-                    //    xmlEdgeElement.GetAttribute("direction"),
-                    //    false);
-
-                    #region read direction picture part
-
-                    //waypointEdge._picture12 = xmlEdgeElement.GetAttribute("picture12") ?? " ";
-                    //waypointEdge._picture21 = xmlEdgeElement.GetAttribute("picture21") ?? " ";
-
-                    //Console.WriteLine("picture 12 = "+ waypointEdge._picture12);
-                    #endregion
-
                     waypointEdge._connectionType =
                         (ConnectionType)Enum.Parse(typeof(ConnectionType),
                                                    xmlEdgeElement
                                                    .GetAttribute
                                                    ("connection_type"),
                                                    false);
-                    //Console.WriteLine("connection_type : " +
-                    //    waypointEdge._connectionType);
-
-                    //waypointEdge._supportCombine =
-                    //    xmlEdgeElement.HasAttribute("combineInstruction")
-                    //    ? false : true;
-
 
                     waypointEdge._distance =
                         GetDistance(navigraph._waypoints[waypointEdge._node1]._lon,
@@ -543,7 +502,6 @@ namespace IndoorNavigation.Models
             }
             return index;
         }
-        //TODO the Case(R1, R2) and Case (R2, R1) statement are similar that would be simplied.
         private RegionEdge GetRegionEdgeNearSourceWaypoint(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID, ConnectionType[] avoidConnectionTypes)
         {
             RegionEdge regionEdgeItem = new RegionEdge();
@@ -590,24 +548,11 @@ namespace IndoorNavigation.Models
                     regionEdgeItem._source = 1;
                 regionEdgeItem._distance =
                     _edges[edgeKeyFromNode2][indexEdge]._distance;
-                if (Convert.ToInt32(_edges[edgeKeyFromNode2][indexEdge]
-                    ._direction) + 4 < 8)
-                {
-                    regionEdgeItem._direction =
-                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction);
-                }
-                else
-                {
-                    regionEdgeItem._direction =
-                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction
-                        - 8);
-                }
+                
                 regionEdgeItem._connectionType =
                     _edges[edgeKeyFromNode2][indexEdge]._connectionType;
                 return regionEdgeItem;
-
             }
-
             return regionEdgeItem;
         }
 
@@ -633,11 +578,6 @@ namespace IndoorNavigation.Models
                 waypointEdge = _navigraphs[regionID]._edges[edgeKeyFromNode2];
             }
             return waypointEdge;
-        }
-
-        public Dictionary<Guid, Region> GetRegions()
-        {
-            return new Dictionary<Guid, Region>();
         }
 
         public Graph<Guid, string> GenerateRegionGraph(ConnectionType[] avoidConnectionTypes)
@@ -763,8 +703,8 @@ namespace IndoorNavigation.Models
                     ConnectionType[] _avoidConnectionTypes = new ConnectionType[0];
                     //TODO 將avoidConnectionType直接帶入navigationGraph.
                     PortalWaypoints portalWaypoints =
-                        GetPortalWaypoints(checkPoint._regionID, 
-                        checkPoint._waypointID, 
+                        GetPortalWaypoints(checkPoint._regionID,
+                        checkPoint._waypointID,
                         nextRegionID);
 
                     if (LocationType.portal != waypointType)
@@ -869,11 +809,43 @@ namespace IndoorNavigation.Models
                 IPSTable.Add(subTabe);
             }
         }
-        public void AddPortalWrongWaypoint() { }
-        public void AddWrongWaypoint() { }
-        public void AdditionLayerWrongWay()
+        public void AddPortalWrongWaypoint(RegionWaypointPoint currentWaypoint, int index, Guid neighborGuid) 
         {
+            foreach(Guid neighborRegionID in _regions[currentWaypoint._regionID]._neighbors)
+            {
+                RegionEdge 
+            }
+        }
+        public void AddWrongWaypoint(RegionWaypointPoint currentWaypoint, RegionWaypointPoint wrongWayWaypoint)
+        {
+            if (!_waypointsOnWrongWay.Keys.Contains(currentWaypoint))
+            {
+                _waypointsOnWrongWay.Add(currentWaypoint, new List<RegionWaypointPoint> { wrongWayWaypoint });
+            }
+            else
+            {
+                _waypointsOnWrongWay[currentWaypoint].Add(wrongWayWaypoint);
+            }
+        }
+        public void AdditionLayerWrongWay(Guid neighborWaypointID, RegionWaypointPoint currentWaypoint, int index)
+        {
+            // when the neighbor type is portal, need to add wrong waypoint that next region.
+            if (GetWaypointType(currentWaypoint._regionID, neighborWaypointID) == LocationType.portal)
+            {
+                //TODO remember to add parameter to this.
+                AddPortalWrongWaypoint();
+            }
 
+            List<Guid> NeighborWaypointsOfNeighbor = GetNeighbor(currentWaypoint._regionID, neighborWaypointID);
+
+            //TODO the logic is the same in GenerateWrongWay function, just write one.
+            foreach (Guid neighborWaypoint in NeighborWaypointsOfNeighbor)
+            {
+                if (_waypointsOnRoute.Count() > index)
+                {
+
+                }
+            }
         }
 
         public int GetBeaconRSSIThreshold(Guid regionGuid, Guid beaconUUID)
