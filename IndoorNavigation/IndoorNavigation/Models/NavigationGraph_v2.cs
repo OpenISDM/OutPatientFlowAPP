@@ -31,6 +31,7 @@ namespace IndoorNavigation.Models
         private Graph<Guid, string> _graphRegionGraph;
         private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>> _waypointsOnWrongWay;
         private List<RegionWaypointPoint> _waypointsOnRoute;
+        private ConnectionType[] _avoidConnectionTypes;
         #endregion
 
         #region For multilingual
@@ -495,10 +496,119 @@ namespace IndoorNavigation.Models
             return (double)d * Math.PI / 180d;
         }
 
+        private bool isConnectable(RegionEdge edge, int source)
+        {
+            return edge._biDirection == DirectionalConnection.BiDirection ||
+                (edge._biDirection == DirectionalConnection.OneWay && edge._source == source);
+        }
 
+        private int GetMostCloseRegionEdge(Waypoint sourceWaypoint, Guid sourceRegionID, Tuple<Guid, Guid> edgeKey, int source)
+        {
+            if (!_edges.ContainsKey(edgeKey)) return -1;
+            int index = 0;
+            int minimumDistance = int.MaxValue;
+            for (int i = 0; i < _edges[edgeKey].Count(); i++)
+            {
+                RegionEdge edgeItem = _edges[edgeKey][i];
+                if (!_avoidConnectionTypes.Contains(edgeItem._connectionType))
+                {
+                    if (isConnectable(edgeItem, source))
+                    {
+                        Waypoint sinkWaypoint;
+                        switch (source)
+                        {
+                            case 1:
+                                sinkWaypoint = _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint1];
+                                break;
+                            case 2:
+                                sinkWaypoint = _navigraphs[sourceRegionID]._waypoints[edgeItem._waypoint2];
+                                break;
+                            default:
+                                throw new Exception("Error setting, please check the configs");
+                        }
+
+                        int edgeDistance =
+                            (int)GetDistance(sourceWaypoint._lon
+                            , sourceWaypoint._lat
+                            , sinkWaypoint._lon
+                            , sinkWaypoint._lat);
+
+                        if (edgeDistance < minimumDistance)
+                        {
+                            minimumDistance = edgeDistance;
+                            index = i;
+                        }
+                    }
+                }
+            }
+            return index;
+        }
+        //TODO the Case(R1, R2) and Case (R2, R1) statement are similar that would be simplied.
         private RegionEdge GetRegionEdgeNearSourceWaypoint(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID, ConnectionType[] avoidConnectionTypes)
         {
-            return new RegionEdge();
+            RegionEdge regionEdgeItem = new RegionEdge();
+
+            Waypoint sourceWaypoint =
+                _navigraphs[sourceRegionID]._waypoints[sourceWaypointID];
+
+            // compare the normal case (R1, R2)
+            Tuple<Guid, Guid> edgeKeyFromNode1 =
+                new Tuple<Guid, Guid>(sourceRegionID, sinkRegionID);
+
+            int indexEdge = GetMostCloseRegionEdge(sourceWaypoint, sourceRegionID, edgeKeyFromNode1, 1);
+            if (-1 != indexEdge)
+            {
+                regionEdgeItem = _edges[edgeKeyFromNode1][indexEdge];
+                return regionEdgeItem;
+            }
+
+            // compare the reverse case (R2, R1) because normal case (R1, R2) 
+            //cannot find regionEdge
+            Tuple<Guid, Guid> edgeKeyFromNode2 =
+                new Tuple<Guid, Guid>(sinkRegionID, sourceRegionID);
+            GetMostCloseRegionEdge(sourceWaypoint, sourceRegionID, edgeKeyFromNode2, 2);
+            if (-1 != indexEdge)
+            {
+                // need to reverse the resulted regionEdge from (R1/W1, R2/W2)
+                // pair to (R2/W2, R1/W1) pair before returning to caller
+                regionEdgeItem._region1 =
+                    _edges[edgeKeyFromNode2][indexEdge]._region2;
+
+                regionEdgeItem._region2 =
+                    _edges[edgeKeyFromNode2][indexEdge]._region1;
+
+                regionEdgeItem._waypoint1 =
+                    _edges[edgeKeyFromNode2][indexEdge]._waypoint2;
+
+                regionEdgeItem._waypoint2 =
+                    _edges[edgeKeyFromNode2][indexEdge]._waypoint1;
+
+                regionEdgeItem._biDirection =
+                    _edges[edgeKeyFromNode2][indexEdge]._biDirection;
+
+                if (2 == _edges[edgeKeyFromNode2][indexEdge]._source)
+                    regionEdgeItem._source = 1;
+                regionEdgeItem._distance =
+                    _edges[edgeKeyFromNode2][indexEdge]._distance;
+                if (Convert.ToInt32(_edges[edgeKeyFromNode2][indexEdge]
+                    ._direction) + 4 < 8)
+                {
+                    regionEdgeItem._direction =
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction);
+                }
+                else
+                {
+                    regionEdgeItem._direction =
+                        (4 + _edges[edgeKeyFromNode2][indexEdge]._direction
+                        - 8);
+                }
+                regionEdgeItem._connectionType =
+                    _edges[edgeKeyFromNode2][indexEdge]._connectionType;
+                return regionEdgeItem;
+
+            }
+
+            return regionEdgeItem;
         }
 
         private WaypointEdge GetWaypointEdge(Guid regionID, Guid sourceWaypointID, Guid sinkWaypointID)
@@ -558,10 +668,7 @@ namespace IndoorNavigation.Models
                     if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
                     {
 
-                        if (DirectionalConnection.BiDirection ==
-                            edgeItem._biDirection ||
-                            (DirectionalConnection.OneWay ==
-                            edgeItem._biDirection && 1 == edgeItem._source))
+                        if (isConnectable(edgeItem, 1))
                         {
                             int edgeDistance =
                                 Convert.ToInt32(edgeItem._distance);
@@ -572,10 +679,7 @@ namespace IndoorNavigation.Models
                             }
                         }
 
-                        if (DirectionalConnection.BiDirection ==
-                            edgeItem._biDirection ||
-                        (DirectionalConnection.OneWay ==
-                        edgeItem._biDirection && 2 == edgeItem._source))
+                        if (isConnectable(edgeItem, 1))
                         {
                             int edgeDistance =
                                 Convert.ToInt32(edgeItem._distance);
@@ -659,10 +763,9 @@ namespace IndoorNavigation.Models
                     ConnectionType[] _avoidConnectionTypes = new ConnectionType[0];
                     //TODO 將avoidConnectionType直接帶入navigationGraph.
                     PortalWaypoints portalWaypoints =
-                        GetPortalWaypoints(checkPoint._regionID,
-               checkPoint._waypointID,
-                   nextRegionID,
-                   _avoidConnectionTypes);
+                        GetPortalWaypoints(checkPoint._regionID, 
+                        checkPoint._waypointID, 
+                        nextRegionID);
 
                     if (LocationType.portal != waypointType)
                     {
@@ -713,10 +816,10 @@ namespace IndoorNavigation.Models
             return _navigraphs[regionID]._waypoints[waypointID]._type;
         }
 
-        public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID, ConnectionType[] avoidConnectionTypes)
+        public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID)
         {
             RegionEdge regionEdge =
-                GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID, avoidConnectionTypes);
+                GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID, _avoidConnectionTypes);
 
             return new PortalWaypoints(regionEdge._waypoint1, regionEdge._waypoint2);
         }
@@ -759,7 +862,7 @@ namespace IndoorNavigation.Models
                         subTabe.Add(GetRegionIPSType(wrongWaypoint._regionID));
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("generate ips table exception : " + e.Message);
                 }
@@ -786,10 +889,10 @@ namespace IndoorNavigation.Models
             return GetDistance(lon1, lat1, lon2, lat2);
         }
 
-        public InstructionInformation GetInstruction(RegionWaypointPoint previous, RegionWaypointPoint current, RegionWaypointPoint next, RegionWaypointPoint nextnext)
-        {
+        //public InstructionInformation GetInstruction(RegionWaypointPoint previous, RegionWaypointPoint current, RegionWaypointPoint next, RegionWaypointPoint nextnext)
+        //{
 
-        }
+        //}
         #region Get NavigationGraph Attributes
         public string GetOwnerOrganization()
         {
