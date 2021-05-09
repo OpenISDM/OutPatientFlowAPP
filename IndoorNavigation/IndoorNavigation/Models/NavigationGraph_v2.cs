@@ -502,7 +502,7 @@ namespace IndoorNavigation.Models
             }
             return index;
         }
-        private RegionEdge GetRegionEdgeNearSourceWaypoint(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID, ConnectionType[] avoidConnectionTypes)
+        private RegionEdge GetRegionEdgeNearSourceWaypoint(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID)
         {
             RegionEdge regionEdgeItem = new RegionEdge();
 
@@ -548,7 +548,7 @@ namespace IndoorNavigation.Models
                     regionEdgeItem._source = 1;
                 regionEdgeItem._distance =
                     _edges[edgeKeyFromNode2][indexEdge]._distance;
-                
+
                 regionEdgeItem._connectionType =
                     _edges[edgeKeyFromNode2][indexEdge]._connectionType;
                 return regionEdgeItem;
@@ -749,6 +749,8 @@ namespace IndoorNavigation.Models
                     _waypointID = destinationWaypointID
                 });
             }
+
+            //TODO : remeber to implement "remove dumplicate waypoint"
         }
 
         public LocationType GetWaypointType(Guid regionID, Guid waypointID)
@@ -759,7 +761,7 @@ namespace IndoorNavigation.Models
         public PortalWaypoints GetPortalWaypoints(Guid sourceRegionID, Guid sourceWaypointID, Guid sinkRegionID)
         {
             RegionEdge regionEdge =
-                GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID, _avoidConnectionTypes);
+                GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID);
 
             return new PortalWaypoints(regionEdge._waypoint1, regionEdge._waypoint2);
         }
@@ -771,12 +773,58 @@ namespace IndoorNavigation.Models
 
         public void GenerateWrongWay()
         {
+            int index = 1;
             _waypointsOnWrongWay = new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>();
 
-            foreach (RegionWaypointPoint waypoint in _waypointsOnRoute)
+            foreach (RegionWaypointPoint currentWaypoint in _waypointsOnRoute)
             {
-                //TODO implement getNeighBor
-                //List<Guid> neightborGuid = GetNeighbor()
+                if (GetWaypointType(currentWaypoint._regionID, currentWaypoint._waypointID) == LocationType.portal)
+                {
+                    AddPortalWrongWaypoint(currentWaypoint, index, currentWaypoint._waypointID);
+                }
+
+                foreach (Guid neighborWaypointID in GetNeighbor(currentWaypoint._regionID, currentWaypoint._waypointID))
+                {
+                    if (_waypointsOnRoute.Count > index)
+                    {
+                        if (_waypointsOnRoute[index]._waypointID != neighborWaypointID)
+                        {
+                            double distanceBetweenCurrentAndNeighbor =
+                                GetDistanceBetweenWaypoints(currentWaypoint._regionID, currentWaypoint._waypointID, neighborWaypointID);
+                            double distanceBetweenNextAndNeighbor;
+
+                            if (currentWaypoint._regionID == _waypointsOnRoute[index]._regionID)
+                                distanceBetweenNextAndNeighbor =
+                                    GetDistanceBetweenWaypoints(currentWaypoint._regionID,
+                                    _waypointsOnRoute[index]._waypointID, neighborWaypointID);
+                            else
+                                distanceBetweenNextAndNeighbor = distanceBetweenCurrentAndNeighbor;
+
+                            if (distanceBetweenCurrentAndNeighbor >= WRONG_WAY_DISTANCE &&
+                                distanceBetweenNextAndNeighbor >= WRONG_WAY_DISTANCE)
+                            {
+                                if (index < 2 || (index >= 2 && _waypointsOnRoute[index - 2]._waypointID != neighborWaypointID))
+                                {
+                                    AddWrongWaypoint(currentWaypoint,
+                                        new RegionWaypointPoint(currentWaypoint._regionID, neighborWaypointID));
+                                }
+                            }
+                            else if (distanceBetweenCurrentAndNeighbor < WRONG_WAY_DISTANCE)
+                            {
+                                AdditionLayerWrongWay(neighborWaypointID, currentWaypoint, index);
+                            }
+
+                            if(index >= 2 && _waypointsOnRoute[index-2]._waypointID == neighborWaypointID)
+                            {
+                                AdditionLayerWrongWay(neighborWaypointID, currentWaypoint, index);
+                            }
+                        }
+                        else if (!_waypointsOnWrongWay.Keys.Contains(currentWaypoint))
+                            _waypointsOnWrongWay.Add(currentWaypoint, new List<RegionWaypointPoint>());
+                    }
+                    else break;
+                }
+                index++;
             }
         }
 
@@ -809,11 +857,30 @@ namespace IndoorNavigation.Models
                 IPSTable.Add(subTabe);
             }
         }
-        public void AddPortalWrongWaypoint(RegionWaypointPoint currentWaypoint, int index, Guid neighborGuid) 
+        public void AddPortalWrongWaypoint(RegionWaypointPoint currentWaypoint, int index, Guid neighborGuid)
         {
-            foreach(Guid neighborRegionID in _regions[currentWaypoint._regionID]._neighbors)
+            foreach (Guid neighborRegionID in _regions[currentWaypoint._regionID]._neighbors)
             {
-                RegionEdge 
+                RegionEdge connectRegionEdge =
+                    GetRegionEdgeNearSourceWaypoint(currentWaypoint._regionID, neighborGuid, neighborRegionID);
+                if (!isEmptyGuid(connectRegionEdge._waypoint2))
+                {
+                    if (_waypointsOnRoute.Count() > index)
+                    {
+                        if (_waypointsOnRoute[index]._waypointID != connectRegionEdge._waypoint2)
+                        {
+                            AddWrongWaypoint(currentWaypoint,
+                              new RegionWaypointPoint(connectRegionEdge._region2, connectRegionEdge._waypoint2));
+                        }
+                        else
+                        {
+                            if (!_waypointsOnWrongWay.Keys.Contains(currentWaypoint))
+                            {
+                                _waypointsOnWrongWay.Add(currentWaypoint, new List<RegionWaypointPoint>());
+                            }
+                        }
+                    }
+                }
             }
         }
         public void AddWrongWaypoint(RegionWaypointPoint currentWaypoint, RegionWaypointPoint wrongWayWaypoint)
@@ -827,23 +894,46 @@ namespace IndoorNavigation.Models
                 _waypointsOnWrongWay[currentWaypoint].Add(wrongWayWaypoint);
             }
         }
+        //TODO the code is similar to GenerateWrongWay function, maybe could use one-time recursion to simply this part.
         public void AdditionLayerWrongWay(Guid neighborWaypointID, RegionWaypointPoint currentWaypoint, int index)
         {
             // when the neighbor type is portal, need to add wrong waypoint that next region.
             if (GetWaypointType(currentWaypoint._regionID, neighborWaypointID) == LocationType.portal)
             {
                 //TODO remember to add parameter to this.
-                AddPortalWrongWaypoint();
+                AddPortalWrongWaypoint(currentWaypoint, index, neighborWaypointID);
             }
 
-            List<Guid> NeighborWaypointsOfNeighbor = GetNeighbor(currentWaypoint._regionID, neighborWaypointID);
-
             //TODO the logic is the same in GenerateWrongWay function, just write one.
-            foreach (Guid neighborWaypoint in NeighborWaypointsOfNeighbor)
+            foreach (Guid nextNeighborWaypointID in GetNeighbor(currentWaypoint._regionID, neighborWaypointID))
             {
                 if (_waypointsOnRoute.Count() > index)
                 {
+                    double distanceBetweenCurrentAndNeighbor =
+                        GetDistanceBetweenWaypoints(currentWaypoint._regionID, currentWaypoint._waypointID, nextNeighborWaypointID);
+                    double distanceBetweenNextAndNearNeighbor;
 
+                    if (currentWaypoint._regionID == _waypointsOnRoute[index]._regionID)
+                        distanceBetweenNextAndNearNeighbor =
+                            GetDistanceBetweenWaypoints(currentWaypoint._regionID, nextNeighborWaypointID, _waypointsOnRoute[index]._waypointID);
+                    else
+                        distanceBetweenNextAndNearNeighbor = distanceBetweenCurrentAndNeighbor;
+
+                    if (_waypointsOnRoute[index]._waypointID != nextNeighborWaypointID &&
+                        nextNeighborWaypointID != neighborWaypointID &&
+                        distanceBetweenCurrentAndNeighbor >= WRONG_WAY_DISTANCE &&
+                        distanceBetweenNextAndNearNeighbor >= WRONG_WAY_DISTANCE)
+                    {
+                        if (index < 2 ||
+                              (index >= 2 && _waypointsOnRoute[index - 2]._waypointID != nextNeighborWaypointID))
+                        {
+                            AddWrongWaypoint(currentWaypoint,
+                                  new RegionWaypointPoint(currentWaypoint._regionID,
+                                  nextNeighborWaypointID));
+                        }
+                    }
+                    else if (!_waypointsOnWrongWay.Keys.Contains(currentWaypoint))
+                        _waypointsOnWrongWay.Add(currentWaypoint, new List<RegionWaypointPoint>());
                 }
             }
         }
@@ -852,12 +942,12 @@ namespace IndoorNavigation.Models
         {
             return _navigraphs[regionGuid]._beaconRSSIThreshold[beaconUUID];
         }
-        public double DistanceBetweenWaypoints(Guid regionID1, Guid waypointID1, Guid regionID2, Guid waypointID2)
+        public double GetDistanceBetweenWaypoints(Guid regionID, Guid waypointID1, Guid waypointID2)
         {
-            double lat1 = _navigraphs[regionID1]._waypoints[waypointID1]._lat;
-            double lon1 = _navigraphs[regionID1]._waypoints[waypointID1]._lon;
-            double lat2 = _navigraphs[regionID2]._waypoints[waypointID2]._lat;
-            double lon2 = _navigraphs[regionID2]._waypoints[waypointID2]._lon;
+            double lat1 = _navigraphs[regionID]._waypoints[waypointID1]._lat;
+            double lon1 = _navigraphs[regionID]._waypoints[waypointID1]._lon;
+            double lat2 = _navigraphs[regionID]._waypoints[waypointID2]._lat;
+            double lon2 = _navigraphs[regionID]._waypoints[waypointID2]._lon;
             return GetDistance(lon1, lat1, lon2, lat2);
         }
 
