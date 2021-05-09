@@ -2,16 +2,36 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace IndoorNavigation.Modules.Navigation
 {
     public class Session_v2
     {
-        private int _nextWaypointStep = -1;
+        private int _nextWaypointStep;
+        private Guid _currentWaypointID, _currentRegionID;
+        private Guid _destinationWaypointID, _destinationRegionID;
+        private bool _isKeepDetecting;
+        private Thread _waypointDetectionThread;
+        private Thread _navigationControlThread;
+
+        private ManualResetEventSlim _nextWaypointEvent;
+        private ManualResetEventSlim _pauseNavigationEvent;
+        public NavigationEvent _event { get; private set; }
+        private NavigationGraph_v2 _navigaionGraph;
 
         public Session_v2() { }
 
         private void NavigatorProgram()
+        {
+            _nextWaypointStep = -1;
+            _currentRegionID = new Guid();
+            _currentWaypointID = new Guid();
+
+        }
+
+        private void NavigateToNextWaypoint(int nextStep)
         {
 
         }
