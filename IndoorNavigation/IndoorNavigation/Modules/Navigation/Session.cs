@@ -345,8 +345,7 @@ namespace IndoorNavigation.Modules
                 if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
                 {
 
-                    if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID ==
-                        _currentRegionID)
+                    if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID == _currentRegionID)
                     {
                         _iPSModules.AddMonitorBeacon
                             (_waypointsOnRoute[_nextWaypointStep + 1]
@@ -875,12 +874,12 @@ namespace IndoorNavigation.Modules
         {
             foreach (Guid regionNeighborGuid in tempRegion._neighbors)
             {
-                RegionWaypointPoint portalWaypointRegionGuid =                   
+                RegionWaypointPoint portalWaypointRegionGuid =
                     _navigationGraph.GiveNeighborWaypointInNeighborRegion(
                                 locationRegionWaypoint._regionID,
                                 guid,
                                 regionNeighborGuid);
-                if(!isEmptyGuid(portalWaypointRegionGuid._waypointID))
+                if (!isEmptyGuid(portalWaypointRegionGuid._waypointID))
                 {
                     if (_waypointsOnRoute.Count() > nextStep)
                     {
@@ -912,16 +911,16 @@ namespace IndoorNavigation.Modules
                                      RegionWaypointPoint locationRegionWaypoint)
         {
             if (!_waypointsOnWrongWay.Keys.Contains(locationRegionWaypoint))
-            {                    
+            {
                 _waypointsOnWrongWay
                 .Add(locationRegionWaypoint,
-                     new List<RegionWaypointPoint> { 
+                     new List<RegionWaypointPoint> {
                          new RegionWaypointPoint(regionID, waypointID)
                         }
                      );
             }
             else
-            {                
+            {
                 _waypointsOnWrongWay[locationRegionWaypoint]
                 .Add(new RegionWaypointPoint(regionID, waypointID));
             }

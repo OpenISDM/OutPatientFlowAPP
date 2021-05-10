@@ -766,6 +766,26 @@ namespace IndoorNavigation.Models
             return new PortalWaypoints(regionEdge._waypoint1, regionEdge._waypoint2);
         }
 
+        public int getWaypointsCountOnRoute()
+        {
+            return _waypointsOnRoute.Count;
+        }
+
+        public List<Guid> GetAllRegionIDs()
+        {
+            return new List<Guid>(_regions.Keys);
+        }
+
+        public RegionWaypointPoint getWaypointOnRoute(int index)
+        {
+            return _waypointsOnRoute[index];
+        }
+
+        public List<RegionWaypointPoint> getWrongWaypoints(RegionWaypointPoint currentWaypoint)
+        {
+            return _waypointsOnWrongWay[_waypointsOnWrongWay];
+        }
+
         public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
         {
             return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
