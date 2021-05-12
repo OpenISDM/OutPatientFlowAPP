@@ -776,6 +776,11 @@ namespace IndoorNavigation.Models
             return new List<Guid>(_regions.Keys);
         }
 
+        public bool isGetWrongWay(int currentStep, RegionWaypointPoint currentWaypoint)
+        {
+            return _waypointsOnWrongWay[_waypointsOnRoute[currentStep]].Contains(currentWaypoint);
+        }
+
         public RegionWaypointPoint getWaypointOnRoute(int index)
         {
             return _waypointsOnRoute[index];

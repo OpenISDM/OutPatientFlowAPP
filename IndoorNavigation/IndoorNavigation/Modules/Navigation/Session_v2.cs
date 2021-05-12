@@ -23,6 +23,9 @@ namespace IndoorNavigation.Modules.Navigation
         private NavigationGraph_v2 _navigaionGraph;
         public NavigationEvent _event { get; private set; }
 
+        private int TotalProgress = 0;
+        private int CurrentProgress = 0;
+
         public Session_v2(NavigationGraph_v2 navigationGraph, Guid destinationRegionID, Guid destinationWaypointID)
         {
             _event = new NavigationEvent();
@@ -43,13 +46,15 @@ namespace IndoorNavigation.Modules.Navigation
 
         private bool isArrivedDestination()
         {
-            return _currentRegionID.Equals(_destinationRegionID) && _currentWaypointID.Equals(_destinationWaypointID));
+            return _currentRegionID.Equals(_destinationRegionID) && _currentWaypointID.Equals(_destinationWaypointID);
         }
+
         private void NavigatorProgram()
         {
             _nextWaypointStep = -1;
             _currentRegionID = new Guid();
             _currentWaypointID = new Guid();
+            RegionWaypointPoint currentWaypoint = new RegionWaypointPoint();
 
             while (_isKeepDetecting && !isArrivedDestination())
             {
@@ -58,6 +63,9 @@ namespace IndoorNavigation.Modules.Navigation
                 _pauseNavigationEvent.Wait();
                 _nextWaypointEvent.Wait();
 
+                currentWaypoint._regionID = _currentRegionID;
+                currentWaypoint._waypointID = _currentWaypointID;
+
                 if (isArrivedDestination())
                 {
                     _isKeepDetecting = false;
@@ -65,11 +73,30 @@ namespace IndoorNavigation.Modules.Navigation
                     break;
                 }
 
-                if (_nextWaypointStep == -1) { }
-                else if (true) // when user arrive at next waypoint at route.
-                { }
-                else if (true) // when user arrive at wrong way.
-                { }
+                if (_nextWaypointStep == -1)
+                {
+                    _navigaionGraph.GenerateRoute(_currentRegionID, _currentWaypointID, _destinationRegionID, _destinationWaypointID);
+
+                    _nextWaypointStep++;
+                    NavigateToNextWaypoint(_nextWaypointStep);
+                }
+                else if (_navigaionGraph.getWaypointOnRoute(_nextWaypointStep).Equals(currentWaypoint)) // when user arrive at next waypoint at route.
+                {
+                    Console.WriteLine("Arrived region/waypoint : {0}/{1}", _currentRegionID, _currentWaypointID);
+
+                    _nextWaypointStep++;
+                    NavigateToNextWaypoint(_nextWaypointStep);
+                }
+                //TODO need a condition to prevent it from calling duplicating.
+                else if (_nextWaypointStep >= 1 && _navigaionGraph.isGetWrongWay(_nextWaypointStep - 1, currentWaypoint)) // when user arrive at wrong way.
+                {
+                    Console.WriteLine("Wrong way");
+
+                    _navigaionGraph.GenerateRoute(_currentRegionID, _currentWaypointID, _destinationRegionID, _destinationWaypointID);
+
+
+
+                }
                 _nextWaypointEvent.Reset();
             }
         }
@@ -77,6 +104,7 @@ namespace IndoorNavigation.Modules.Navigation
         // for set up ips client switch.
         private void NavigateToNextWaypoint(int nextStep)
         {
+            //TODO this is for check the "nextStep" and "_nextWaypointStep" value.
             Console.WriteLine("next Step in local : " + nextStep);
             Console.WriteLine("nextStep in global : " + _nextWaypointStep);
             if (nextStep == -1) // when user is at initial step. to scan all beacon.
@@ -97,18 +125,19 @@ namespace IndoorNavigation.Modules.Navigation
                     RegionWaypointPoint nextnextWaypoint = _navigaionGraph.getWaypointOnRoute(_nextWaypointStep + 1);
                     _IPSModule.AddMonitorBeacon(nextnextWaypoint._regionID, nextnextWaypoint._waypointID);
                 }
-                
-                if (_nextWaypointStep >= 1)
+
+                if (_nextWaypointStep >= 1 && _navigaionGraph.getWrongWaypoints(_navigaionGraph.getWaypointOnRoute(_nextWaypointStep - 1)) != null)
                 {
-                    if (_navigaionGraph.getWrongWaypoints(_navigaionGraph.getWaypointOnRoute(_nextWaypointStep - 1)) != null)
+                    foreach (RegionWaypointPoint waypoint in _navigaionGraph.getWrongWaypoints(_navigaionGraph.getWaypointOnRoute(_nextWaypointStep - 1)))
                     {
-                        
+                        _IPSModule.AddMonitorBeacon(waypoint._regionID, waypoint._waypointID);
                     }
                 }
+
+                _IPSModule.SetMonitorBeaconList(nextStep);
             }
         }
 
-        private void NavigateToNextWaypoint() { }
         private void InvokeIPSWork() { }
         public void CheckArrivedWaypoint(object sender, EventArgs e)
         {
