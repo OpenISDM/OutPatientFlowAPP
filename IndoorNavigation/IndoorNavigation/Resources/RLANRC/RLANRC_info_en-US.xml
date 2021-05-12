@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<navigation_graph country='USA' city_county='Downey, CA' industry_service='hospital' owner_organization='BiDaE' building_name='Rancho Los Amigo National Rehabilitation Center'>
+	<regions>
+		<region id='11111111-1111-1111-1111-111111111111' name='outdoor'/>
+		<region id='22222222-2222-2222-2222-222222222222' name='wellness center'/>
+	</regions>
+	<waypoints>
+		<waypoint id='00000000-0000-0000-0000-000000000001' name='Bus Stop 02'/>
+		<waypoint id='00000000-0000-0000-0000-000000000002' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000003' name='cornor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000004' name='main entrace'/>
+		<waypoint id='00000000-0000-0000-0000-000000000005' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000006' name='Bus stop 03'/>
+		<waypoint id='00000000-0000-0000-0000-000000000007' name='Exercise Room'/>
+		<waypoint id='00000000-0000-0000-0000-000000000008' name='Multiple room'/>
+		<waypoint id='00000000-0000-0000-0000-000000000009' name='corridor'/>
+		<waypoint id='00000000-0000-0000-0000-000000000010' name='main entrace'/>
+		<waypoint id='00000000-0000-0000-0000-000000000011' name='Therapy pool'/>
+		<waypoint id='00000000-0000-0000-0000-000000000012' name='Activity room'/>
+	</waypoints>
+</navigation_graph>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<first_direction_XML country='USA' city_county='Downey, CA' industry_service='hospital' owner_organization='BiDaE' building_name='Rancho Los Amigo National Rehabilitation Center'>
+  	<waypoint id='00000000-0000-0000-0000-000000000001' Landmark='公車站 02' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000002' Landmark='走道' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000003' Landmark='轉角' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000004' Landmark='大門口' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000005' Landmark='走廊' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000006' Landmark='公車站 03' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000007' Landmark='健身房' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000008' Landmark='多功能室' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000009' Landmark='走廊' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000010' Landmark='大門口' RelatedDirection='0' FaceOrBack='0'/>
+	<waypoint id='00000000-0000-0000-0000-000000000011' Landmark='治療池' RelatedDirection='0' FaceOrBack='1'/>
+	<waypoint id='00000000-0000-0000-0000-000000000012' Landmark='活動室' RelatedDirection='0' FaceOrBack='0'/>
+</first_direction_XML>
