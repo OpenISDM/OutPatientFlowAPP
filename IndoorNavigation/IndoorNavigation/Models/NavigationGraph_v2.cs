@@ -76,6 +76,7 @@ namespace IndoorNavigation.Models
         #endregion
         public NavigationGraph_v2(XmlDocument xmlDocument)
         {
+            _avoidConnectionTypes = new ConnectionType[0];
             _regions = new Dictionary<Guid, Region>();
             _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
             _navigraphs = new Dictionary<Guid, Navigraph>();
@@ -434,6 +435,8 @@ namespace IndoorNavigation.Models
                 _navigraphs.Add(navigraph._regionID, navigraph);
             }
             #endregion
+
+            _graphRegionGraph = GenerateRegionGraph(_avoidConnectionTypes);
             Console.WriteLine("<< NavigationGraph");
         }
 
@@ -648,6 +651,10 @@ namespace IndoorNavigation.Models
 
         public void GenerateRoute(Guid sourceRegionID, Guid sourceWaypointID, Guid destinationRegionID, Guid destinationWaypointID)
         {
+            Console.WriteLine("sourceRegionID : " + sourceRegionID);
+            Console.WriteLine("sourceWaypointID : " + sourceWaypointID);
+            Console.WriteLine("destinationRegionID : " + destinationRegionID);
+            Console.WriteLine("destinationWaypointID : " + destinationWaypointID);
             uint region1Key = _graphRegionGraph.Where(node => node.Item.Equals(sourceRegionID)).Select(node => node.Key).First();
             uint region2Key = _graphRegionGraph.Where(node => node.Item.Equals(destinationRegionID)).Select(node => node.Key).First();
 
@@ -670,10 +677,15 @@ namespace IndoorNavigation.Models
             List<Guid> regionsOnRoute = new List<Guid>();
             for (int i = 0; i < pathRegions.Count(); i++)
             {
+                Console.WriteLine("i = " + i);
                 regionsOnRoute.Add
                     (_graphRegionGraph[pathRegions.ToList()
                     [i]].Item);
+
+                Console.WriteLine("node : " + _graphRegionGraph[pathRegions.ToList()[i]].Item);
             }
+
+            _waypointsOnRoute = new List<RegionWaypointPoint>();
             _waypointsOnRoute.Add(
                 new RegionWaypointPoint
                 {
@@ -750,6 +762,46 @@ namespace IndoorNavigation.Models
                 });
             }
 
+            for (int i = 0; i < _waypointsOnRoute.Count() - 1; i++)
+            {
+                RegionWaypointPoint currentCheckPoint = _waypointsOnRoute[i];
+                RegionWaypointPoint nextCheckPoint = _waypointsOnRoute[i + 1];
+
+                if (currentCheckPoint._regionID.Equals
+                    (nextCheckPoint._regionID))
+                {
+                    Graph<Guid, string> _graphNavigraph =
+                        GenerateNavigraph(currentCheckPoint._regionID,
+                                           _avoidConnectionTypes);
+
+                    // generate path between two waypoints in the
+                    // same region / navigraph
+                    uint waypoint1Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                        .Equals(currentCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
+                    uint waypoint2Key = _graphNavigraph
+                                        .Where(node => node.Item
+                                        .Equals(nextCheckPoint._waypointID))
+                                        .Select(node => node.Key).First();
+
+                    var pathWaypoints =
+                        _graphNavigraph.Dijkstra(waypoint1Key, waypoint2Key).GetPath();
+
+                    for (int j = pathWaypoints.Count() - 1; j > 0; j--)
+                    {
+                        if (j != 0 && j != pathWaypoints.Count() - 1)
+                        {
+                            _waypointsOnRoute.Insert(i + 1, new RegionWaypointPoint
+                            {
+                                _regionID = currentCheckPoint._regionID,
+                                _waypointID = _graphNavigraph[pathWaypoints.ToList()[j]].Item
+                            });
+                        }
+                    }
+                }
+            }
+
             //TODO : remeber to implement "remove dumplicate waypoint"
         }
 
@@ -764,6 +816,64 @@ namespace IndoorNavigation.Models
                 GetRegionEdgeNearSourceWaypoint(sourceRegionID, sourceWaypointID, sinkRegionID);
 
             return new PortalWaypoints(regionEdge._waypoint1, regionEdge._waypoint2);
+        }
+
+        private Graph<Guid, string> GenerateNavigraph(Guid regionID, ConnectionType[] avoidConnectionTypes)
+        {
+            Graph<Guid, string> graph = new Graph<Guid, string>();
+
+            foreach (KeyValuePair<Guid, Waypoint> waypointItem
+                     in _navigraphs[regionID]._waypoints)
+            {
+                graph.AddNode(waypointItem.Key);
+            }
+
+            foreach (KeyValuePair<Tuple<Guid, Guid>, WaypointEdge>
+                waypointEdgeItem in _navigraphs[regionID]._edges)
+            {
+                Guid node1 = waypointEdgeItem.Key.Item1;
+                Guid node2 = waypointEdgeItem.Key.Item2;
+                uint node1Key = graph.Where(node => node.Item.Equals(node1))
+                                  .Select(node => node.Key).First();
+                uint node2Key = graph.Where(node => node.Item.Equals(node2))
+                                  .Select(node => node.Key).First();
+
+                // should refine distance, bi-direction, direction, connection
+                // type later
+                int distance = int.MaxValue;
+                Tuple<Guid, Guid> edgeKey =
+                    new Tuple<Guid, Guid>(node1, node2);
+                WaypointEdge edgeItem = _navigraphs[regionID]._edges[edgeKey];
+                if (!avoidConnectionTypes.Contains(edgeItem._connectionType))
+                {
+                    distance = Convert.ToInt32(edgeItem._distance);
+
+                    if (DirectionalConnection.BiDirection ==
+                        edgeItem._biDirection)
+                    {
+                        // Graph.Connect is on-way, not bi-drectional
+                        graph.Connect(node1Key, node2Key, distance,
+                            string.Empty);
+                        graph.Connect(node2Key, node1Key, distance,
+                            string.Empty);
+                    }
+                    else if (DirectionalConnection.OneWay ==
+                        edgeItem._biDirection)
+                    {
+                        if (1 == edgeItem._source)
+                        {
+                            graph.Connect(node1Key, node2Key, distance,
+                                string.Empty);
+                        }
+                        else if (2 == edgeItem._source)
+                        {
+                            graph.Connect(node2Key, node1Key, distance,
+                                string.Empty);
+                        }
+                    }
+                }
+            }
+            return graph;
         }
 
         public int getWaypointsCountOnRoute()
@@ -788,12 +898,58 @@ namespace IndoorNavigation.Models
 
         public List<RegionWaypointPoint> getWrongWaypoints(RegionWaypointPoint currentWaypoint)
         {
-            return _waypointsOnWrongWay[_waypointsOnWrongWay];
+            return _waypointsOnWrongWay[currentWaypoint];
         }
 
         public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
         {
             return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
+        }
+
+        public void PrintAllResult()
+        {
+            #region Display Result
+            // display the resulted full path of region/waypoint between 
+            // source and destination
+
+            #region display route
+            foreach (RegionWaypointPoint checkPoint in _waypointsOnRoute)
+            {
+                Console.WriteLine("full-path region/waypoint = {0}/{1}",
+                                  checkPoint._regionID,
+                                  checkPoint._waypointID);
+            }
+            #endregion
+            #region display possible wrong way
+            //Print All Possible Wrong Way
+            foreach (KeyValuePair<RegionWaypointPoint, List<RegionWaypointPoint>>
+                     item in _waypointsOnWrongWay)
+            {
+                Console.WriteLine("Region ID : " + item.Key._regionID);
+                Console.WriteLine("Waypoint ID : " + item.Key._waypointID);
+                Console.WriteLine("All possible Wrong : ");
+                foreach (RegionWaypointPoint items in item.Value)
+                {
+                    Console.WriteLine
+                        ($"{item.Key._waypointID}'s possible wrong " +
+                        "Region Guid : " + items._regionID +
+                        ", Waypoint Guid : " + items._waypointID);
+                }
+                Console.WriteLine("\n");
+            }
+            #endregion
+
+            #region display used ips type       
+            for (int i = 0; i < IPSTable.Count; i++)
+            {
+                foreach (IPSType type in IPSTable[i])
+                {
+                    Console.WriteLine($"{i}th path ips type : " + type);
+                }
+            }
+            #endregion
+
+            #endregion
         }
 
         public void GenerateWrongWay()
@@ -839,7 +995,7 @@ namespace IndoorNavigation.Models
                                 AdditionLayerWrongWay(neighborWaypointID, currentWaypoint, index);
                             }
 
-                            if(index >= 2 && _waypointsOnRoute[index-2]._waypointID == neighborWaypointID)
+                            if (index >= 2 && _waypointsOnRoute[index - 2]._waypointID == neighborWaypointID)
                             {
                                 AdditionLayerWrongWay(neighborWaypointID, currentWaypoint, index);
                             }
@@ -857,10 +1013,10 @@ namespace IndoorNavigation.Models
         {
             return _regions[regionID]._IPSType;
         }
-
+        List<HashSet<IPSType>> IPSTable;
         public void GenerateIPSTable()
         {
-            List<HashSet<IPSType>> IPSTable = new List<HashSet<IPSType>>();
+            IPSTable = new List<HashSet<IPSType>>();
 
             foreach (RegionWaypointPoint waypoint in _waypointsOnRoute)
             {
