@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IndoorNavigation.Modules.IPSClients;
 using IndoorNavigation.Models.NavigaionLayer;
+using static IndoorNavigation.Modules.Session;
 
 namespace IndoorNavigation.Modules.Navigation
 {
@@ -49,6 +50,7 @@ namespace IndoorNavigation.Modules.Navigation
             return _currentRegionID.Equals(_destinationRegionID) && _currentWaypointID.Equals(_destinationWaypointID);
         }
 
+        //TODO Need to consider bus stop scenario.
         private void NavigatorProgram()
         {
             _nextWaypointStep = -1;
@@ -87,15 +89,12 @@ namespace IndoorNavigation.Modules.Navigation
                     _nextWaypointStep++;
                     NavigateToNextWaypoint(_nextWaypointStep);
                 }
-                //TODO need a condition to prevent it from calling duplicating.
+                //TODO need a condition to prevent it from calling duplicately.
                 else if (_nextWaypointStep >= 1 && _navigaionGraph.isGetWrongWay(_nextWaypointStep - 1, currentWaypoint)) // when user arrive at wrong way.
                 {
                     Console.WriteLine("Wrong way");
 
                     _navigaionGraph.GenerateRoute(_currentRegionID, _currentWaypointID, _destinationRegionID, _destinationWaypointID);
-
-
-
                 }
                 _nextWaypointEvent.Reset();
             }
@@ -141,8 +140,53 @@ namespace IndoorNavigation.Modules.Navigation
         private void InvokeIPSWork() { }
         public void CheckArrivedWaypoint(object sender, EventArgs e)
         {
-            if (_nextWaypointStep == -1) { }
-            else { }
+            RegionWaypointPoint currentWaypoint = (e as WaypointSignalEventArgs)._detectedRegionWaypoint;
+
+            _currentRegionID = currentWaypoint._regionID;
+            _currentWaypointID = currentWaypoint._waypointID;
+
+            NavigationInstruction navigationInstruction = new NavigationInstruction();
+
+            if (isArrivedDestination())
+            {
+                //send arrive destination event
+
+                _event.OnEventCall(new NavigationEventArgs
+                {
+                    //_result = NavigationResult.Arrival
+                }) ;
+            }
+            //next
+            else if(_nextWaypointStep > 0 && _navigaionGraph.getWaypointOnRoute(_nextWaypointStep).Equals(currentWaypoint))
+            {
+                //setup progress.
+
+                //
+            }
+            // next next
+            else if (_nextWaypointStep +1 < _navigaionGraph.getWaypointsCountOnRoute()) 
+            {
+                if (_navigaionGraph.getWaypointOnRoute(_nextWaypointStep + 1).Equals(currentWaypoint))
+                {
+
+                }
+            }
+            
+            _nextWaypointEvent.Set();
+        }
+
+        private void setInstruction(NavigationInstruction instruction, RegionWaypointPoint currentWaypoint, NavigationResult result)
+        {
+            instruction = new NavigationInstruction();
+
+            instruction._currentWaypointName = _navigaionGraph.GetWaypointName(currentWaypoint);
+
+            _event.OnEventCall(new NavigationEventArgs
+            {
+                //_result = result
+                _nextInstruction = instruction
+            });
+
         }
 
         public void PauseSession() { }
