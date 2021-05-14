@@ -1070,7 +1070,7 @@ namespace IndoorNavigation.Models
             {
                 _waypointsOnWrongWay.Add(currentWaypoint, new List<RegionWaypointPoint> { wrongWayWaypoint });
             }
-            else
+            else if (!_waypointsOnWrongWay[currentWaypoint].Contains(wrongWayWaypoint))
             {
                 _waypointsOnWrongWay[currentWaypoint].Add(wrongWayWaypoint);
             }
