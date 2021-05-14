@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Globalization;
 using static IndoorNavigation.Utilities.Storage;
 using static IndoorNavigation.Utilities.Helper;
 using IndoorNavigation.Models.NavigaionLayer;
@@ -34,10 +35,35 @@ namespace IndoorNavigation.Models
         private ConnectionType[] _avoidConnectionTypes;
         #endregion
 
-        #region For multilingual
-        #endregion
+        #region for mutlilngual infos
+        MultilingualGraph _multilingualGraph;
+        #endregion 
 
         #region Nest Structs and Classes
+        public class MultilingualGraph
+        {
+            public Dictionary<Guid, NavigationInstruction> _insturctions { get; set; }
+            public Dictionary<Guid, string> _regionNames { get; set; }
+            public Dictionary<RegionWaypointPoint, string> _waypointNames { get; set; }
+
+            public CultureInfo _currnetCulture { get; set; }
+            public MultilingualGraph() { }
+            public MultilingualGraph(XmlDocument multilingualGraphXml)
+            {
+
+            }
+        }
+
+        //TODO this name need to be rename.
+        public class NavigationInstruction
+        {
+            public RegionWaypointPoint _previousWaypoint;
+            public RegionWaypointPoint _currentWaypoint;
+            public RegionWaypointPoint _nextWaypoint;
+            public RegionWaypointPoint _nextnextWaypoint;
+            public string _instructionText;
+            public TurnDirection _turnDirection;
+        }
         public class Navigraph
         {
             public Guid _regionID { get; set; }
@@ -74,15 +100,18 @@ namespace IndoorNavigation.Models
             public double _distance { get; set; }
         }
         #endregion
-        public NavigationGraph_v2(XmlDocument xmlDocument)
+        public NavigationGraph_v2(XmlDocument navigationGraphXml, XmlDocument multilingualXml, ConnectionType[] avoidConnectionType)
         {
-            _avoidConnectionTypes = new ConnectionType[0];
+            _avoidConnectionTypes = avoidConnectionType;
             _regions = new Dictionary<Guid, Region>();
             _edges = new Dictionary<Tuple<Guid, Guid>, List<RegionEdge>>();
             _navigraphs = new Dictionary<Guid, Navigraph>();
+            Console.WriteLine(">>NavigationGraph");
+
+            #region Load NavigationGraph
             #region root basic attributes
             XmlElement navigationGraphElement =
-                (XmlElement)xmlDocument.SelectSingleNode("navigation_graph");
+                (XmlElement)navigationGraphXml.SelectSingleNode("navigation_graph");
             _country =
                 navigationGraphElement.GetAttribute("country");
             _cityCounty =
@@ -100,7 +129,7 @@ namespace IndoorNavigation.Models
 
             #region Read navigation_graph/regions/region
             XmlNodeList xmlRegion =
-                xmlDocument.SelectNodes("navigation_graph/regions/region");
+                navigationGraphXml.SelectNodes("navigation_graph/regions/region");
             foreach (XmlNode regionNode in xmlRegion)
             {
                 Region region = new Region();
@@ -168,7 +197,7 @@ namespace IndoorNavigation.Models
             #endregion
 
             #region Read Edge
-            XmlNodeList xmlRegionEdge = xmlDocument.SelectNodes("navigation_graph/regions/edge");
+            XmlNodeList xmlRegionEdge = navigationGraphXml.SelectNodes("navigation_graph/regions/edge");
             foreach (XmlNode regionEdgeNode in xmlRegionEdge)
             {
                 RegionEdge regionEdge = new RegionEdge();
@@ -300,7 +329,7 @@ namespace IndoorNavigation.Models
             #endregion
             #region read navigraph block of BuildingName.xml
             XmlNodeList xmlNavigraph =
-                xmlDocument.SelectNodes("navigation_graph/navigraphs/navigraph");
+                navigationGraphXml.SelectNodes("navigation_graph/navigraphs/navigraph");
             foreach (XmlNode navigraphNode in xmlNavigraph)
             {
                 Navigraph navigraph = new Navigraph();
@@ -435,8 +464,30 @@ namespace IndoorNavigation.Models
                 _navigraphs.Add(navigraph._regionID, navigraph);
             }
             #endregion
+            #endregion
 
+            #region Load Mutlilingual File
+            //TODO need to access current locale.
+            _multilingualGraph = new MultilingualGraph();
+
+
+            XmlNodeList regionsNodeList = multilingualXml.SelectNodes("multilingualgraph/basicinfo/regions");
+
+            foreach(XmlNode regionNode in regionsNodeList)
+            {
+                XmlElement regionElement = (XmlElement)regionNode;
+
+                XmlNodeList waypointsNodeList = regionElement.SelectNodes("region/waypoints");
+
+
+            }
+
+
+            #endregion
+
+            #region Other Initialize
             _graphRegionGraph = GenerateRegionGraph(_avoidConnectionTypes);
+            #endregion
             Console.WriteLine("<< NavigationGraph");
         }
 
@@ -904,6 +955,16 @@ namespace IndoorNavigation.Models
         public List<Guid> GetNeighbor(Guid regionID, Guid waypointID)
         {
             return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
+        }
+
+        public string GetWaypointName(Guid regionID, Guid waypointID)
+        {
+            return _navigraphs[regionID]._waypoints[waypointID]._name;
+        }
+
+        public string GetWaypointName(RegionWaypointPoint waypoint)
+        {
+            return GetWaypointName(waypoint._regionID, waypoint._waypointID);
         }
 
         public void PrintAllResult()
