@@ -153,7 +153,7 @@ namespace IndoorNavigation.Modules.Navigation
 
                 _event.OnEventCall(new NavigationEventArgs
                 {
-                    //_result = NavigationResult.Arrival
+                    _result = NavigationResult.Arrival
                 }) ;
             }
             //next
@@ -180,10 +180,11 @@ namespace IndoorNavigation.Modules.Navigation
             instruction = new NavigationInstruction();
 
             instruction._currentWaypointName = _navigaionGraph.GetWaypointName(currentWaypoint);
-
+            instruction._progress = CurrentProgress;
+            instruction._progressBar = string.Format($"{CurrentProgress}/{TotalProgress}");
             _event.OnEventCall(new NavigationEventArgs
             {
-                //_result = result
+                _result = result,
                 _nextInstruction = instruction
             });
 
@@ -193,21 +194,5 @@ namespace IndoorNavigation.Modules.Navigation
         public void ResumeSession() { }
         public void CloseSession() { }
 
-        public enum NavigationResult
-        {
-            Run = 0,
-            Arrival,
-            NoRoute,
-            ArriveVirtualPoint,
-            ArriveIgnorPoint,
-        }
-        public class NavigationInstruction
-        {
-            public string _currentWaypointName;
-            public RegionWaypointPoint _nextWaypoint;
-            public RegionWaypointPoint _currentWaypoint;
-            public RegionWaypointPoint _previousWaypoint;
-
-        }
     }
 }
