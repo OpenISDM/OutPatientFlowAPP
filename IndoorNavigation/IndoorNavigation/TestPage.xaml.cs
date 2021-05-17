@@ -36,7 +36,7 @@ namespace IndoorNavigation
                 ImageService.SaveImageToDisk("aaa.jpg", imageByte);
             }
 
-            TestImage.Source = ImageService.GetImageFromDisk("aaa.jpg");
+            //TestImage.Source = ImageService.GetImageFromDisk("aaa.jpg");
         }
         #region  to try to use GPS location package.
         //private IGeolocator Locator => CrossGeolocator.Current;
