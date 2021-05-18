@@ -41,7 +41,7 @@ namespace IndoorNavigation.Views.PopUpPage
         private string naviGraphName;
         private bool _isKeepDetection = true;
 
-        private IPSmodule_ _ipsModules;
+        private IPSModule _ipsModules;
         private NavigationGraph _navigationGraph;
         private Thread _detectWaypointThread;
         private Thread _detectPositionControllThread;
@@ -72,7 +72,7 @@ namespace IndoorNavigation.Views.PopUpPage
             _askCorrectEvent = new ManualResetEventSlim(false);
             //_startToScanRssi = new ManualResetEventSlim(false);
 
-            _ipsModules = new IPSmodule_(_navigationGraph);
+            _ipsModules = new IPSModule(_navigationGraph);
             _AllRssiList = new List<int>();
 
             _nameInformation = LoadXmlInformation(_naviGraphName);
@@ -103,8 +103,8 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 _ipsModules.InitialStep_DetectAllBeacon
                     (_navigationGraph.GetAllRegionIDs());
-
-                _ipsModules.StartAllExistClient();
+                _ipsModules.SetMonitorBeaconList(-1);
+                //_ipsModules.StartAllExistClient();
                 _detectThreadEvent.Wait();
 
 
@@ -165,7 +165,7 @@ namespace IndoorNavigation.Views.PopUpPage
             {
                 Console.WriteLine(">>StartTimer, count : " + _AllRssiList.Count);
 
-                _ipsModules.OpenRssiScaning();
+                _ipsModules.OpenRssiScanning();
                 ProgressValue = progressTmp + _AllRssiList.Count * 0.01;
                 ProgressPercentLab.Text = (ProgressValue * 100).ToString() + "%";
                 Console.WriteLine("ProgressValue : " + ProgressValue);
@@ -214,7 +214,8 @@ namespace IndoorNavigation.Views.PopUpPage
                 Console.WriteLine(">>InvokeIPSWork");
                 //keep detection.
                 Thread.Sleep(500);
-                _ipsModules.OpenBeaconScanning();
+                //this is initial step, so the value put the "-1".
+                _ipsModules.OpenBeaconScanning(-1); 
                 Console.WriteLine("<<InvokeIPSWork");
             }
         }

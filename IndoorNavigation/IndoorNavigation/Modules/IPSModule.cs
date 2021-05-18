@@ -26,6 +26,7 @@ namespace IndoorNavigation.Modules
             _usedIPS = _naviGraph.GetUsedIPSTyps();
 
             #region PS type initial
+            #region LBeacon part
             if (_usedIPS.Contains(IPSType.LBeacon))
             {
                 _multiClients.Add(IPSType.LBeacon, new IPSClient
@@ -38,6 +39,9 @@ namespace IndoorNavigation.Modules
                 _multiClients[IPSType.LBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
             }
+            #endregion
+
+            #region iBeacon part
             if (_usedIPS.Contains(IPSType.iBeacon))
             {
                 _multiClients.Add(IPSType.iBeacon, new IPSClient
@@ -50,7 +54,9 @@ namespace IndoorNavigation.Modules
                 _multiClients[IPSType.iBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
             }
+            #endregion
 
+            #region GPS part
             //this is not supported now.
             //_multiClient.Add(IPSType.GPS, new IPSClient
             //{
@@ -58,6 +64,8 @@ namespace IndoorNavigation.Modules
             //    type = IPSType.GPS,
             //    _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
             //});
+            #endregion
+
             #endregion
 
             Console.WriteLine("<<IPSmodule : constructor");
@@ -175,11 +183,9 @@ namespace IndoorNavigation.Modules
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
-
             _multiClients[type]._monitorBeaconMapping.AddRange
                 (GetBeaconMapping(regionID, waypointIDs));
-            Console.WriteLine("_multiClient count :" + 
-                _multiClients[type]._monitorBeaconMapping.Count);
+            
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
 
