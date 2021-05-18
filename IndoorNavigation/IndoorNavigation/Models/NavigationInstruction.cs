@@ -27,6 +27,12 @@ namespace IndoorNavigation.Models
         public Guid _previousRegionGuid;
 
         public int _turnDirectionDistance;
+
+        #region for extend new type navigation graph.
+        public string _currentInstruction;
+        public string _currentDirection;
+
+        #endregion
     }
 
     public class NavigationEventArgs : EventArgs
