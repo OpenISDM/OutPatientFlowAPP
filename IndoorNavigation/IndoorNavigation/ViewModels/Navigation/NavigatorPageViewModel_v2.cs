@@ -6,7 +6,9 @@ using Xamarin.Forms;
 using MvvmHelpers;
 using IndoorNavigation.Modules;
 using static IndoorNavigation.Modules.Session;
-using NavigationEventArgs = IndoorNavigation.Modules.Session.NavigationEventArgs;
+using IndoorNavigation.Models;
+using NavigationEventArgs = IndoorNavigation.Models.NavigationEventArgs;
+using IndoorNavigation.Views.Navigation;
 
 namespace IndoorNavigation.ViewModels.Navigation
 {
@@ -15,7 +17,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         #region variables and structures
         private Guid _destinationWaypointID;
         private Guid _destinationRegionID;
-
+        private string _naviGraphName;
         #endregion
 
         public NavigatorPageViewModel_v2(Guid destinationRegionID, Guid destinationWaypointID)
@@ -23,11 +25,46 @@ namespace IndoorNavigation.ViewModels.Navigation
 
         }
 
-        #region Other functions?
-
+        #region Other functions
+        public void AdjustAvoidType()
+        {
+            Page CurrentPage = Application.Current.MainPage;
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                for (int PageIndex = CurrentPage.Navigation.NavigationStack.Count - 1; PageIndex > 1; PageIndex--)
+                {
+                    CurrentPage.Navigation.RemovePage(CurrentPage.Navigation.NavigationStack[PageIndex]);
+                }
+                await CurrentPage.Navigation.PushAsync
+                    (new NavigatorSettingPage(_naviGraphName), true);
+                await CurrentPage.DisplayAlert(
+                    GetResourceString("WARN_STRING"),
+                    GetResourceString("PLEASE_ADJUST_AVOID_ROUTE_STRING"),
+                    GetResourceString("OK_STRING"));
+            });
+        }
         #endregion
 
         #region UI update
+
+        #region Layout control
+        private void SetDefaultLayout()
+        {
+            FDPictureHeightScaleValue = 2;
+            FDPictureHeightSpanValue = 3;
+            InstructionWidthScaleValue = 1;
+            InstructionWidthSpanValue = 2;
+
+        }
+        private void SetPicturesLayout()
+        {
+            FDPictureHeightScaleValue = 1;
+            FDPictureHeightSpanValue = 4;
+            InstructionWidthScaleValue = 0;
+            InstructionWidthSpanValue = 3;
+        }
+        #endregion
+
         private void SetInstruction()
         {
 
@@ -37,9 +74,14 @@ namespace IndoorNavigation.ViewModels.Navigation
         {
             Console.WriteLine("recieved event raised from NavigationModule.");
 
+            NavigationInstruction nextInstruction = (args as NavigationEventArgs)._nextInstruction;
+
             switch ((args as NavigationEventArgs)._result)
             {
                 case NavigationResult.Run:
+                    CurrentStepLabel = nextInstruction._currentInstruction;
+                    ProgressRatio = nextInstruction._progress;
+                    ProgressText = nextInstruction._progressBar;
                     break;
                 case NavigationResult.ArrivaIgnorePoint:
                     break;
@@ -49,7 +91,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                     break;
                 case NavigationResult.NoRoute:
                     break;
-
+                default:
+                    break;
             }
         }
         #endregion
@@ -61,6 +104,13 @@ namespace IndoorNavigation.ViewModels.Navigation
         #endregion
 
         #region Data Binding
+        private string _currentWaypointName;
+        public string CurrentWaypointName
+        {
+            get => _currentWaypointName;
+            set => SetProperty(ref _currentWaypointName, value);
+        }
+
         private string _currentStepLabel;
         public string CurrentStepLabel
         {
@@ -95,14 +145,57 @@ namespace IndoorNavigation.ViewModels.Navigation
             set => SetProperty(ref _progressRatio, value);
         }
 
-        #region Page layout
+        #region Layout properties
+        private int _fdPictureHeightSpanValue;
+        public int FDPictureHeightSpanValue
+        {
+            get => _fdPictureHeightSpanValue;
+            set => SetProperty(ref _fdPictureHeightSpanValue, value);
+        }
 
+        private int _fdPictureHeightScaleValue;
+        public int FDPictureHeightScaleValue
+        {
+            get => _fdPictureHeightScaleValue;
+            set => SetProperty(ref _fdPictureHeightScaleValue, value);
+        }
+
+        private int _instructionWidthSpanValue;
+        public int InstructionWidthSpanValue
+        {
+            get => _instructionWidthSpanValue;
+            set => SetProperty(ref _instructionWidthSpanValue, value);
+        }
+
+        private LayoutOptions _instructionLabVerticalOption;
+        public LayoutOptions InstructionLabVerticalOption
+        {
+            get => _instructionLabVerticalOption;
+            set => SetProperty(ref _instructionLabVerticalOption, value);
+        }
+
+        //TODO the attribute name need to be replace in .xaml
+        private bool _isArrowImgVisible;
+        public bool IsArrowImgVisible
+        {
+            get => _isArrowImgVisible;
+            set => SetProperty(ref _isArrowImgVisible, value);
+        }
+
+        private int _instructionWidthScaleValue;
+        public int InstructionWidthScaleValue
+        {
+            get => _instructionWidthScaleValue;
+            set => SetProperty(ref _instructionWidthScaleValue, value);
+
+        }
         #endregion
+
         #endregion
 
         #region IDisposable Support
         private bool _disposedValue = false; // to prevent redundant call.
-        protected virtual void Dipose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
             {
