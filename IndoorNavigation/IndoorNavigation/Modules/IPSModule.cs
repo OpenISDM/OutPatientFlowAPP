@@ -79,6 +79,16 @@ namespace IndoorNavigation.Modules
             _ipsTable = ipsTable;
         }
 
+        public void OpenBeaconMonitoring(int previousStep)
+        {
+            if (previousStep <= 0) return;
+
+            foreach(IPSType type in _ipsTable[previousStep])
+            {
+                _multiClients[type].client.MonitorWaypoints();
+            }
+        }
+
         public void OpenBeaconScanning(int nextStep)
         {
             Console.WriteLine(">>IPSModule : OpenBeaconScanning");
@@ -198,7 +208,8 @@ namespace IndoorNavigation.Modules
             //OpenedIPSType.Clear();
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
-
+        
+        //TODO : the term "MonitorBeacon list should be remove.
         public void SetMonitorBeaconList(int nextStep)
         {
             //Console.WriteLine("openIPStype count : " + OpenedIPSType.Count);
@@ -207,8 +218,9 @@ namespace IndoorNavigation.Modules
             {
                 foreach (IPSType type in _usedIPS)
                 {
+                    //TODO: To think how to fill in the monitor beacon list.
                     _multiClients[type].client.SetWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._monitorBeaconMapping, new List<WaypointBeaconsMapping>());
                 }
             }
             else
@@ -221,8 +233,9 @@ namespace IndoorNavigation.Modules
                     {
                         Console.WriteLine($"loop print beacon's id :{mapping._WaypointIDAndRegionID._waypointID}");
                     }
+                    //TODO : think how to fill the monitor Beacon List.
                     _multiClients[type].client.SetWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._monitorBeaconMapping, new List<WaypointBeaconsMapping>());
                 }
             }
             Console.WriteLine("<<SetMonitorBeaconList");

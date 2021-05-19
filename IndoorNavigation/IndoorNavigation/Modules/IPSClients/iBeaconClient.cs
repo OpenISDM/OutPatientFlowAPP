@@ -37,14 +37,15 @@ using System.Collections.Generic;
 using System.Linq;
 using IndoorNavigation.Models;
 using IndoorNavigation.Utilities;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
     class IBeaconClient : IIPSClient
     {
-        private List<WaypointBeaconsMapping> _waypointBeaconsList =
+        private List<WaypointBeaconsMapping> _detectedWaypointBeaconsList =
+            new List<WaypointBeaconsMapping>();
+        private List<WaypointBeaconsMapping> _monitorWaypointBeaconList =
             new List<WaypointBeaconsMapping>();
 
         private const int _clockResetTime = 90000;
@@ -76,19 +77,24 @@ namespace IndoorNavigation.Modules.IPSClients
                 new EventHandler(HandleBeaconScan);
 
             Utility._ibeaconScan._event._eventHandler +=
-                _beaconScanEventHandler;
-
-            _waypointBeaconsList = new List<WaypointBeaconsMapping>();
+                _beaconScanEventHandler;           
             rssiOption = 0;
 
             watch.Start();
         }
         public void SetWaypointList
-            (List<WaypointBeaconsMapping> waypointBeaconsList)
+            (List<WaypointBeaconsMapping> DetectedWaypointBeaconsList,
+            List<WaypointBeaconsMapping> MonitorWaypointBeaconList)
         {
             rssiOption = TmperorayStatus.RssiOption;
-            _waypointBeaconsList = waypointBeaconsList;
+            _detectedWaypointBeaconsList = DetectedWaypointBeaconsList;
+            _monitorWaypointBeaconList = MonitorWaypointBeaconList;
             Utility._ibeaconScan.StartScan();
+        }
+
+        public void MonitorWaypoints()
+        {
+
         }
 
         public void DetectWaypoints()
@@ -135,7 +141,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in
-                        _waypointBeaconsList)
+                        _detectedWaypointBeaconsList)
                     {
                         foreach (Guid beaconGuid in
                             waypointBeaconsMapping._Beacons)
@@ -366,7 +372,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _bufferLock = new object();
             Utility._ibeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
-            _waypointBeaconsList.Clear();
+            _detectedWaypointBeaconsList.Clear();
             Utility._ibeaconScan._event._eventHandler -=
                 _beaconScanEventHandler;
             watch.Stop();
