@@ -805,4 +805,10 @@ then go about {2} m.</value>
   <data name="ICON_STRING" xml:space="preserve">
     <value>Icons</value>
   </data>
+  <data name="DEVELOPMENT_MODE_STRING" xml:space="preserve">
+    <value>Developer mode</value>
+  </data>
+  <data name="ENABLE_DOWNLOAD_TEST_GRAPH_STRING" xml:space="preserve">
+    <value>Enable download testing navigation graph</value>
+  </data>
 </root>
