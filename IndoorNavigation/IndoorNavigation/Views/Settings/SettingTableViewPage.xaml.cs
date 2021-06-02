@@ -84,6 +84,8 @@ namespace IndoorNavigation.Views.Settings
          {
              await Navigation.PushAsync(new ThirdPartyUsagePage());
          });
+
+        public ICommand VersionTapCommand => new Command(() => VersionTapped());
         #endregion
 
         #region Command defined
@@ -130,6 +132,14 @@ namespace IndoorNavigation.Views.Settings
         #endregion
 
         #region Command Handle
+        private int _tapCount=0;
+        private void VersionTapped()
+        {
+            if (_tapCount >= 5)
+                DevelopmentSection.IsVisible = true;
+            _tapCount++;
+        }
+
         private async void HandleChangeLanguage()
         {
             switch (LanguagePicker.SelectedItem.ToString())
