@@ -110,17 +110,12 @@ namespace IndoorNavigation
         private INetworkSetting setting;
         private CloudDownload _download = new CloudDownload();
 
-        async void SettingBtn_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SettingTableViewPage());
-        }
-
         async private Task CheckVersionAndUpdate_(Location location,
             NavigationGraph navigationGraph)
         {
-            if(_localResources.ContainsKey(location.sourcePath) && 
-                CheckVersionNumber(location.sourcePath, 
-                navigationGraph.GetVersion(), 
+            if (_localResources.ContainsKey(location.sourcePath) &&
+                CheckVersionNumber(location.sourcePath,
+                navigationGraph.GetVersion(),
                 AccessGraphOperate.CheckLocalVersion))
             {
                 Console.WriteLine("write local file.");
@@ -225,12 +220,12 @@ namespace IndoorNavigation
                 }
                 await CheckVersionAndUpdate_(location, navigationGraph);
 
-                if (navigationGraph.ContainsBanner() && 
-                    !Preferences.Get(navigationGraph.GetBuildingName()+"Banner",false))
+                if (navigationGraph.ContainsBanner() &&
+                    !Preferences.Get(navigationGraph.GetBuildingName() + "Banner", false))
                 {
-                    ShiftAlertPopupPage alertpage = 
-                        new ShiftAlertPopupPage(navigationGraph.GetBanner(), 
-                        GetResourceString("OK_STRING"), 
+                    ShiftAlertPopupPage alertpage =
+                        new ShiftAlertPopupPage(navigationGraph.GetBanner(),
+                        GetResourceString("OK_STRING"),
                         navigationGraph.GetBuildingName() + "Banner");
 
                     bool a = await alertpage.Show();
@@ -429,8 +424,6 @@ namespace IndoorNavigation
             AddSiteCommand =
                 new Command(async () => await AddSiteItemMethod());
 
-            TestItemCommand = new Command(async () => await TestItemMethod());
-
             ToolbarItem SettingItem = new ToolbarItem
             {
                 Text = GetResourceString("SETTING_STRING"),
@@ -444,17 +437,8 @@ namespace IndoorNavigation
                 Command = AddSiteCommand,
                 Order = ToolbarItemOrder.Primary
             };
-
-            ToolbarItem TestToolbarItem = new ToolbarItem
-            {
-                Text = "Test",
-                Command = TestItemCommand,
-                Order = ToolbarItemOrder.Secondary
-            };
-
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-            ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -485,31 +469,5 @@ namespace IndoorNavigation
         public override float TableWidth => 250;
         #endregion
 
-        #region TestItem 
-
-        public ICommand TestItemCommand { get; set; }
-
-        async private Task TestItemMethod()
-        {
-            //WriteTestNaviGraph();
-            //await Navigation.PushAsync
-            //    (new NavigationHomePage_
-            //    (new Location { sourcePath = "CCH_new" }));
-            //IdentityCheckPopupPage checkPage = new IdentityCheckPopupPage();
-            //bool result = await checkPage.showPopupPage();
-            //Console.WriteLine(result + "grrger");
-            //await PopupNavigation.Instance.PushAsync(new IdentityCheckPopupPage());
-            //await Navigation.PushAsync(new TestPage());
-            await Navigation.PushAsync(new TestPage());
-            //await PopupNavigation.Instance.PushAsync(new DownloadGraphPopupPage());
-
-            await Task.CompletedTask;
-        }
-
-        private void WriteTestNaviGraph()
-        {
-            EmbeddedGenerateFile("CCH_new");
-        }
-        #endregion
     }
 }

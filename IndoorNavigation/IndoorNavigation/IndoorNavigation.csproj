@@ -97,9 +97,6 @@
     <EmbeddedResource Include="Yuanlin_OPFM\PurposeOptions.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="TestPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\Navigation\EditLocationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
