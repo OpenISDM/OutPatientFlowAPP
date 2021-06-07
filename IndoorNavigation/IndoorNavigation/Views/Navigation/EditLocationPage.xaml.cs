@@ -10,14 +10,13 @@ using Rg.Plugins.Popup.Services;
 using IndoorNavigation.Models;
 using System.Xml;
 using Xamarin.Essentials;
-
+using static IndoorNavigation.Utilities.Constants;
 namespace IndoorNavigation.Views.Navigation
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditLocationPage : ContentPage
     {
         List<GraphInfo> _allNewSiteItems;
-
         public EditLocationPage()
         {
             InitializeComponent();
@@ -28,9 +27,6 @@ namespace IndoorNavigation.Views.Navigation
         public EditLocationPage(XmlDocument xmlDocument)
         {
             InitializeComponent();
-
-            //When constructor run, we need to load the site item first.            
-            //LoadFakeData();
             _allNewSiteItems = new List<GraphInfo>();
             LoadData(xmlDocument);
             RefreshListView();
@@ -38,22 +34,27 @@ namespace IndoorNavigation.Views.Navigation
 
         private void LoadData()
         {
+            bool isBeta = Preferences.Get(nameof(IS_BETA_MODE), false);
             if (_serverResources != null)
             {
                 _serverResources.All(p =>
                 {
-                    _allNewSiteItems.Add(p.Value);
+                    //to filter beta item when the isBeta is checked or not.
+                    if (isBeta || !p.Value._isBeta)
+                        _allNewSiteItems.Add(p.Value);
                     return true;
                 });
             }
         }
         private void LoadData(XmlDocument doc)
         {
+            bool isBeta = Preferences.Get(nameof(IS_BETA_MODE), false);
             _serverResources = GraphInfoReader(doc);
 
             _serverResources.All(p =>
             {
-                _allNewSiteItems.Add(p.Value);
+                if (isBeta || !p.Value._isBeta)
+                    _allNewSiteItems.Add(p.Value);
                 return true;
             });
         }
@@ -127,19 +128,15 @@ namespace IndoorNavigation.Views.Navigation
 
         async private Task DownloadSiteFile(GraphInfo selectedItem)
         {
-            IndicatorPopupPage busyPage =
-                                new IndicatorPopupPage();
-
-            await PopupNavigation.Instance.PushAsync(busyPage);
+            //IndicatorPopupPage busyPage =
+            //                    new IndicatorPopupPage();
+            //if(PopupNavigation.Instance.PopupStack.Contains())
+            DownloadGraphPopupPage downloadPage = new DownloadGraphPopupPage();
             try
             {
                 Console.WriteLine("Download from server");
-                CloudGenerateFile(selectedItem._graphName);
-                await PopupNavigation.Instance.PushAsync
-                    (new AlertDialogPopupPage(GetResourceString
-                    ("DOWNLOAD_SUCCESS_STRING"),
-                    GetResourceString
-                    ("OK_STRING")));
+                await PopupNavigation.Instance.PushAsync(downloadPage);
+                await Task.Run(async()=> await CloudGenerateFile(selectedItem._graphName, selectedItem._isBeta));
             }
             catch (Exception exc)
             {
@@ -195,9 +192,14 @@ namespace IndoorNavigation.Views.Navigation
                         });
                 }
             }
+            finally
+            {
+                if (PopupNavigation.Instance.PopupStack.Contains(downloadPage))
+                    await PopupNavigation.Instance.RemovePageAsync(downloadPage);
+            }
 
-            await PopupNavigation.Instance
-            .RemovePageAsync(busyPage);
+            //await PopupNavigation.Instance
+            //.RemovePageAsync(busyPage);
 
             await Task.CompletedTask;
         }

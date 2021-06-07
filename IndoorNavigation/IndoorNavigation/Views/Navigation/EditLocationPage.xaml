@@ -33,7 +33,7 @@
                             <StackLayout Padding="20,20,20,1">
                                 <Label x:Name="AddSiteLabel" 
                                        HorizontalOptions="Start"
-                                       TextColor="#3f51b5"
+                                       TextColor="{Binding _displayColor}"
                                        VerticalOptions="Center"
                                        Text="{Binding _displayName}"  
                                        Margin="0,0,1,10"

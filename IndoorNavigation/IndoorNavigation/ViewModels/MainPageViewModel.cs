@@ -49,6 +49,8 @@ using System.Resources;
 using IndoorNavigation.Resources.Helpers;
 using System.Reflection;
 using IndoorNavigation.Utilities;
+using static IndoorNavigation.Utilities.Constants;
+using System;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -59,10 +61,6 @@ namespace IndoorNavigation.ViewModels
         private IEnumerable<Location> _returnedLocations;
         private Location _selectedItem;
         private string _searchedText;
-        const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension)
-                                             .GetTypeInfo().Assembly);
 
         public MainPageViewModel()
         {
@@ -70,36 +68,26 @@ namespace IndoorNavigation.ViewModels
             LoadNavigationGraph();
         }
 
-        public async void LoadNavigationGraph()
+        public void LoadNavigationGraph()
         {
             _locations = new ObservableRangeCollection<Location>();
 
             foreach (Location location in
                      Storage.GetAllNaviGraphName())
             {
-                _locations.Add(location);
+                _locations.Add(new Location
+                {
+                    sourcePath = location.sourcePath,
+                    UserNaming = location.UserNaming,
+                    displayTextColor = 
+                    location.UserNaming.Trim().ToUpper().Contains(BETA_STRING)
+                        ? "#808A87"
+                        : "#3f51b5"
+                }); 
             }
-
             if (_locations.Any())
             {
                 NavigationGraphFiles = _locations;
-            }
-            else
-            {
-                var currentLanguage =
-                    CrossMultilingual.Current.CurrentCultureInfo;
-                Page mainPage = Application.Current.MainPage;
-
-                await mainPage.DisplayAlert(
-                    _resourceManager
-                    .GetString("GO_SETTING_PAGE_STRING", currentLanguage),
-                    _resourceManager
-                    .GetString("DOWNLOAD_NAVIGATION_GRAPH_STRING"
-                               , currentLanguage),
-                    _resourceManager
-                    .GetString("OK_STRING", currentLanguage));
-                await mainPage.Navigation.PushAsync
-                    (new SettingTableViewPage());
             }
         }
 
@@ -150,7 +138,7 @@ namespace IndoorNavigation.ViewModels
                 var searchedWaypoints =
                     string.IsNullOrEmpty(value) ?
                     _locations : _locations
-                    .Where(c => c.UserNaming.Contains(value));
+                    .Where(c => c.UserNaming.ToUpper().Contains(value.ToUpper()));
                 NavigationGraphFiles = searchedWaypoints.ToList();
             }
         }
@@ -161,6 +149,7 @@ namespace IndoorNavigation.ViewModels
         public string UserNaming { get; set; }
         public string sourcePath { get; set; }
 
+        public string displayTextColor { get; set; }
         public override string ToString() => UserNaming;
     }
 }

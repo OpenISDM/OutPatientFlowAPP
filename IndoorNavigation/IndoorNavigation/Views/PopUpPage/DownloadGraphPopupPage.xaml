@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IndoorNavigation.Views.PopUpPage.DownloadGraphPopupPage"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+                 BackgroundColor="#70c0c0c0">
+    <StackLayout>
+        <Frame 	x:Name="AlertFrame" 
+				BackgroundColor="White" 				 
+				CornerRadius="8"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Margin="15,0,15,0"
+                >
+            <StackLayout>
+                <Label 	x:Name="TempMessage" 
+						Text="{i18n:Translate DOWNLOAD_LABEL_STRING}" 
+						FontSize="26" 
+						HorizontalOptions="StartAndExpand" 
+						VerticalOptions="CenterAndExpand" 
+						TextColor="Black"  
+						HorizontalTextAlignment="Start"  
+						VerticalTextAlignment="Center" 
+						LineBreakMode="WordWrap"/>
+                <ProgressBar x:Name="DownloadProgressBar" Progress="{Binding ProgressBarValue, Mode=TwoWay}"/>
+                <Label x:Name="DownloadProgressText" Text="{Binding ProgressBarText, Mode=TwoWay}"  HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>

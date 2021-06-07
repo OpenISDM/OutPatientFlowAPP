@@ -62,7 +62,8 @@
                                 <Label  Text="{Binding UserNaming}" 
                                         HorizontalOptions="Start" 
                                         VerticalOptions="Center"
-                                       TextColor="#3F51B5" Margin="0, 0, 1, 10" 
+                                        TextColor="{Binding displayTextColor}" 
+                                        Margin="0, 0, 1, 10" 
                                            FontSize="32"/>
                             </StackLayout>
                         </ViewCell>

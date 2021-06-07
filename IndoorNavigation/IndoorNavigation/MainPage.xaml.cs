@@ -145,7 +145,7 @@ namespace IndoorNavigation
                 {
                     await PopupNavigation.Instance.PushAsync(busyPage);
 
-                    try { CloudGenerateFile(location.sourcePath); }
+                    try { CloudGenerateFile(location.sourcePath, false); }
                     catch (Exception exc)
                     {
                         Console.WriteLine("updated error - " + exc.Message);
@@ -308,7 +308,7 @@ namespace IndoorNavigation
             if (viewCell.View != null)
             {
                 viewCell.View.BackgroundColor = Color.FromHex("FFFF88");
-                Device.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+                Device.StartTimer(TimeSpan.FromSeconds(5), () =>
                 {
                     viewCell.View.BackgroundColor = Color.Transparent;
                     return false;
@@ -454,7 +454,7 @@ namespace IndoorNavigation
 
             ToolbarItems.Add(SettingItem);
             ToolbarItems.Add(NewSiteToolbarItem);
-           // ToolbarItems.Add(TestToolbarItem);
+            ToolbarItems.Add(TestToolbarItem);
             OnToolbarItemAdded();
         }
         async private Task SettingItemMethod()
@@ -491,12 +491,18 @@ namespace IndoorNavigation
 
         async private Task TestItemMethod()
         {
-            WriteTestNaviGraph();
-            await Navigation.PushAsync
-                (new NavigationHomePage_
-                (new Location { sourcePath = "CCH_new" }));
-
+            //WriteTestNaviGraph();
+            //await Navigation.PushAsync
+            //    (new NavigationHomePage_
+            //    (new Location { sourcePath = "CCH_new" }));
+            //IdentityCheckPopupPage checkPage = new IdentityCheckPopupPage();
+            //bool result = await checkPage.showPopupPage();
+            //Console.WriteLine(result + "grrger");
+            //await PopupNavigation.Instance.PushAsync(new IdentityCheckPopupPage());
             //await Navigation.PushAsync(new TestPage());
+            await Navigation.PushAsync(new TestPage());
+            //await PopupNavigation.Instance.PushAsync(new DownloadGraphPopupPage());
+
             await Task.CompletedTask;
         }
 
