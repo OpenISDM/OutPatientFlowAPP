@@ -54,7 +54,7 @@ using System.Resources;
 using Xamarin.Forms;
 using static IndoorNavigation.Modules.Session;
 using static IndoorNavigation.Utilities.Storage;
-
+using static IndoorNavigation.Utilities.ImageService;
 namespace IndoorNavigation.ViewModels.Navigation
 {
     public class NavigatorPageViewModel : BaseViewModel, IDisposable
@@ -87,7 +87,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private bool _isfinished = false;
         private string _currentStepLabelName = " ";
         private string _currentStepImageName;
-        private string _firstDirectionPicture;
+        private ImageSource _firstDirectionPicture;
         private string _naviGraphName;
         private int _firstDirectionRotationValue;
         private int _firsrDirectionInstructionScaleVale;
@@ -194,7 +194,7 @@ namespace IndoorNavigation.ViewModels.Navigation
             string currentStepImage;
             string currentStepLabel;
 
-            string firstDirectionPicture = null;
+            ImageSource firstDirectionPicture = null;
             int rotationValue = 0;
             int locationValue = _originalInstructionLocation;
             int instructionScale = _originalInstructionScale;
@@ -329,7 +329,7 @@ namespace IndoorNavigation.ViewModels.Navigation
         private void SetInstruction(NavigationInstruction instruction,
                                     out string stepLabel,
                                     out string stepImage,
-                                    out string firstDirectionImage,
+                                    out ImageSource firstDirectionImage,
                                     out int rotation,
                                     out int location,
                                     out int instructionValue)
@@ -359,7 +359,8 @@ namespace IndoorNavigation.ViewModels.Navigation
             #endregion
 
             if (checker.DoesImageExist
-                (instruction._information._directionPicture))
+                (instruction._information._directionPicture) || 
+                CheckImageExistInDisk(instruction._information._directionPicture))
             {
                 Console.WriteLine(">> direction picture is not null");
 
@@ -380,8 +381,8 @@ namespace IndoorNavigation.ViewModels.Navigation
                 stepImage =
                     null;
 
-                firstDirectionImage =
-                    instruction._information._directionPicture;
+                firstDirectionImage = GetImageSource(instruction._information._directionPicture);
+                    //instruction._information._directionPicture;
 
                 return;
             }
@@ -536,7 +537,7 @@ namespace IndoorNavigation.ViewModels.Navigation
                             Environment.NewLine,
                             instruction._turnDirectionDistance);
 
-                        firstDirectionImage = pictureName;
+                        firstDirectionImage = GetImageSource(pictureName);
                         stepImage = stepImageString;
                         rotation = 75;
                         location = _originalInstructionLocation;
@@ -991,6 +992,20 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
+        private ImageSource GetImageSource(string pictureName)
+        {
+            if (!(pictureName.EndsWith(".jpg") || pictureName.EndsWith(".png")))
+                pictureName += ".png";
+            Console.WriteLine("pictureName : " + pictureName);
+            if (CheckImageExistInDisk(pictureName))
+            {
+                Console.WriteLine("load from disk");
+                return GetImageFromDisk(pictureName);
+            }
+            Console.WriteLine("load from embedded source");
+            return ImageSource.FromFile(pictureName);
+        }
+
         #endregion
 
 
@@ -1127,20 +1142,9 @@ namespace IndoorNavigation.ViewModels.Navigation
             }
         }
 
-        public string FirstDirectionPicture
+        public ImageSource FirstDirectionPicture
         {
-            get
-            {
-                if (!string.IsNullOrEmpty(_firstDirectionPicture) &&
-                    _firstDirectionPicture.EndsWith(".jpg"))
-                    return _firstDirectionPicture;
-                else if (!string.IsNullOrEmpty(_firstDirectionPicture) &&
-                    _firstDirectionPicture.EndsWith(".png"))
-
-                    return _firstDirectionPicture;
-                return string.Format("{0}.png", _firstDirectionPicture);
-            }
-
+            get => _firstDirectionPicture;
             set
             {
                 if (_firstDirectionPicture != value)
