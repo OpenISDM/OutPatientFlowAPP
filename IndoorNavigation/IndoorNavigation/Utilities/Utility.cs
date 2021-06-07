@@ -38,14 +38,7 @@
  *      
  */
 
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using GeoCoordinatePortable;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Utilities;
 
 namespace IndoorNavigation.Modules
 {

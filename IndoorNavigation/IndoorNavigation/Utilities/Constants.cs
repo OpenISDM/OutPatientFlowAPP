@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IndoorNavigation.Utilities
+﻿namespace IndoorNavigation.Utilities
 {
     public static class Constants
     {

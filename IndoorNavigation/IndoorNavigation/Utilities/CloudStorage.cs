@@ -33,7 +33,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IndoorNavigation.Modules.Utilities
+namespace IndoorNavigation.Utilities
 {
     #region Notes
     //this class should be run in a thread instead of ui thread

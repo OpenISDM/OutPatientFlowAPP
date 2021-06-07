@@ -50,7 +50,6 @@ using IndoorNavigation.Views.Settings;
 using IndoorNavigation.Views.Navigation;
 using IndoorNavigation.Views.PopUpPage;
 using IndoorNavigation.ViewModels;
-using Plugin.Multilingual;
 using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using Rg.Plugins.Popup.Services;
