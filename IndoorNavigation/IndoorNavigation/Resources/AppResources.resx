@@ -478,7 +478,7 @@
     <value>Swap</value>
   </data>
   <data name="NEW_STRING" xml:space="preserve">
-    <value>Add</value>
+    <value>Download</value>
   </data>
   <data name="DRNAME_STRING" xml:space="preserve">
     <value>Doctor : {0}</value>
@@ -810,5 +810,30 @@ then go about {2} m.</value>
   </data>
   <data name="ENABLE_DOWNLOAD_TEST_GRAPH_STRING" xml:space="preserve">
     <value>Enable download testing navigation graph</value>
+  </data>
+  <data name="INPUT_DEVELOPER_PASSWORD_STRING" xml:space="preserve">
+    <value>Developer password</value>
+  </data>
+  <data name="LOGIN_SUCCESSFULLY_STRING" xml:space="preserve">
+    <value>Login successfully.</value>
+  </data>
+  <data name="PLEASE_INPUT_DEVELOPER_PASSWORD_STRING" xml:space="preserve">
+    <value>Please input 
+your developer password 
+in the following entry 
+to check your identity.</value>
+  </data>
+  <data name="UNAVAILABLE_PASSWORD_STRING" xml:space="preserve">
+    <value>Login failed,  
+incorrect password.</value>
+  </data>
+  <data name="DOWNLOAD_COMPLETELTY_STRING" xml:space="preserve">
+    <value>Download completely.</value>
+  </data>
+  <data name="DOWNLOAD_LABEL_STRING" xml:space="preserve">
+    <value>Downloading...
+To insure data completion,
+please do not shut down the App
+and keep good network connection.</value>
   </data>
 </root>

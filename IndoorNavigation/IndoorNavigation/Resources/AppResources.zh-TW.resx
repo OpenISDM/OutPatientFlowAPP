@@ -523,7 +523,7 @@
     <value>下次不要再顯示</value>
   </data>
   <data name="NEW_STRING" xml:space="preserve">
-    <value>新增</value>
+    <value>下載</value>
   </data>
   <data name="NO_REVISIT_RECORD_STRING" xml:space="preserve">
     <value>尚未完成門診，因此無法回診。</value>
@@ -812,5 +812,25 @@
   </data>
   <data name="ENABLE_DOWNLOAD_TEST_GRAPH_STRING" xml:space="preserve">
     <value>開放下載測試中圖資</value>
+  </data>
+  <data name="INPUT_DEVELOPER_PASSWORD_STRING" xml:space="preserve">
+    <value>開發者密碼</value>
+  </data>
+  <data name="LOGIN_SUCCESSFULLY_STRING" xml:space="preserve">
+    <value>登入成功</value>
+  </data>
+  <data name="PLEASE_INPUT_DEVELOPER_PASSWORD_STRING" xml:space="preserve">
+    <value>請在此輸入您的開發者密碼以此確認您的身分</value>
+  </data>
+  <data name="UNAVAILABLE_PASSWORD_STRING" xml:space="preserve">
+    <value>登入失敗，請確認您的密碼是否正確</value>
+  </data>
+  <data name="DOWNLOAD_COMPLETELTY_STRING" xml:space="preserve">
+    <value>下載完成</value>
+  </data>
+  <data name="DOWNLOAD_LABEL_STRING" xml:space="preserve">
+    <value>正在下載圖資中，
+為保障資料完整性，
+請勿隨意退出或切斷電源</value>
   </data>
 </root>
