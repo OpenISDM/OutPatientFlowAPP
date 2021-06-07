@@ -21,5 +21,12 @@ namespace IndoorNavigation.Utilities
             return (double)Math.Round(100 * ((decimal)current /
                                (total)), 3);
         }
+
+        public static bool StrToBool(string str)
+        {
+            if (str.Trim().ToUpper() == "TRUE")
+                return true;
+            return false;
+        }
     }
 }
