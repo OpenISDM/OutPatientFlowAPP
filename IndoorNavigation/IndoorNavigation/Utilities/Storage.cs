@@ -24,7 +24,6 @@
  *      
  */
 using IndoorNavigation.Models.NavigaionLayer;
-using IndoorNavigation.Modules.Utilities;
 using IndoorNavigation.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -41,7 +40,6 @@ using IndoorNavigation.Resources.Helpers;
 using Newtonsoft.Json;
 using static IndoorNavigation.Utilities.ImageService;
 using IndoorNavigation.Models;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace IndoorNavigation.Utilities

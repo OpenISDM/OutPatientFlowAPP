@@ -54,7 +54,7 @@ using IndoorNavigation.Models.NavigaionLayer;
 using System.Xml;
 using Rg.Plugins.Popup.Services;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.Utilities;
+using IndoorNavigation.Utilities;
 using System.Linq;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;

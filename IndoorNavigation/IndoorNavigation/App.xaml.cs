@@ -63,7 +63,6 @@ using IndoorNavigation.Views.Navigation;
 
 using System.Collections.Generic;
 using IndoorNavigation.Utilities;
-using IndoorNavigation.Modules.Utilities;
 using static IndoorNavigation.Utilities.Storage;
 using System.Xml;
 using System.Threading.Tasks;
@@ -213,8 +212,6 @@ namespace IndoorNavigation
             {
                 _globalNavigatorPage.OnStop();
             }
-
-            
         }                     
     }
 }
