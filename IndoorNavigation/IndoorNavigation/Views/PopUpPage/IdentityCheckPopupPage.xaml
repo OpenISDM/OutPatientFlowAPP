@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             x:Class="IndoorNavigation.Views.PopUpPage.IdentityCheckPopupPage"
+                 BackgroundColor="#70c0c0c0">
+    <StackLayout>
+        <Frame 	x:Name="AlertFrame" 
+				BackgroundColor="White" 				 
+				CornerRadius="8"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Margin="15,0,15,0"
+                >
+            <StackLayout>
+                <Label 	x:Name="TempMessage" 
+						Text="{i18n:Translate PLEASE_INPUT_DEVELOPER_PASSWORD_STRING}" 
+						FontSize="26" 
+						HorizontalOptions="StartAndExpand" 
+						VerticalOptions="CenterAndExpand" 
+						TextColor="Black"  
+						HorizontalTextAlignment="Start"  
+						VerticalTextAlignment="Center" 
+						LineBreakMode="WordWrap"/>
+                <Entry x:Name="PasswordEntry" Placeholder="{i18n:Translate INPUT_DEVELOPER_PASSWORD_STRING}" Text="{Binding EntryText}"/>
+                <StackLayout 	x:Name="buttonLayout" 
+								Orientation="Horizontal" 							
+								HorizontalOptions="End">
+                    <Button x:Name="CancelBtn" Text="{i18n:Translate CANCEL_STRING}" Clicked="CancelBtn_Clicked"/>
+                    <Button x:Name="ConfirmBtn" Text="{i18n:Translate OK_STRING}" Clicked="ConfirmBtn_Clicked"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>

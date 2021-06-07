@@ -45,7 +45,6 @@
  */
 using IndoorNavigation.Modules;
 using IndoorNavigation.Resources;
-using IndoorNavigation.Resources.Helpers;
 using IndoorNavigation.Views.Settings.LicensePages;
 using Plugin.Multilingual;
 using Prism.Commands;
@@ -53,25 +52,21 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Reflection;
-using System.Resources;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using IndoorNavigation.Views.PopUpPage;
 using static IndoorNavigation.Utilities.Storage;
+using static IndoorNavigation.Utilities.Constants;
 namespace IndoorNavigation.Views.Settings
 {
     public partial class SettingTableViewPage : ContentPage
     {
         #region Variables and Objects
-
-        private const string _resourceId = "IndoorNavigation.Resources.AppResources";
-        private ResourceManager _resourceManager =
-            new ResourceManager(_resourceId, typeof(TranslateExtension).GetTypeInfo().Assembly);
         public IList _selectNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _cleanNaviGraphItems { get; } = new ObservableCollection<string>();
         public IList _languageItems { get; } = new ObservableCollection<string>();
-        public ICommand PrivatePolicyCommand => new Command(async() => 
+        public ICommand PrivatePolicyCommand => new Command(async () =>
         {
             await Launcher.TryOpenAsync(new Uri
                 ("https://ec2-18-183-238-222.ap-northeast-1.compute.amazonaws.com/policy"));
@@ -86,6 +81,35 @@ namespace IndoorNavigation.Views.Settings
          });
 
         public ICommand VersionTapCommand => new Command(() => VersionTapped());
+        private bool _isDevelopModeOpened = Preferences.Get(nameof(IS_BETA_MODE), false);
+        public bool isDevelopModeOpened
+        {
+            get { return _isDevelopModeOpened; }
+            set
+            {
+                Console.WriteLine("_opened : " + _isDevelopModeOpened);
+                Console.WriteLine("value  : " + value);
+                if (_isDevelopModeOpened != value)
+                {
+                    if (!_isDevelopModeOpened)
+                    {
+                        Device.InvokeOnMainThreadAsync(async () =>
+                        {
+                            IdentityCheckPopupPage checkPage = new IdentityCheckPopupPage();
+                            _isDevelopModeOpened = await checkPage.showPopupPage();
+                            DevelopSwitchCell.On = _isDevelopModeOpened;
+                            Preferences.Set(nameof(IS_BETA_MODE), _isDevelopModeOpened);
+                        });
+                    }
+                    else
+                    {
+                        _isDevelopModeOpened = false;
+                        Preferences.Set(nameof(IS_BETA_MODE), _isDevelopModeOpened);
+                    }
+                    
+                }
+            }
+        }
         #endregion
 
         #region Command defined
@@ -99,13 +123,13 @@ namespace IndoorNavigation.Views.Settings
             VersionTracking.Track();
             BindingContext = this;
 
+            DevelopmentSection.IsVisible = Preferences.Get(nameof(DEVELOPER_MODE_OPENED), false);
+
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
-            var currentLanguage = CrossMultilingual.Current.CurrentCultureInfo;
-            _languageItems.Add(_resourceManager.GetString("CHINESE_STRING", currentLanguage));
-            _languageItems.Add(_resourceManager.GetString("ENGLISH_STRING", currentLanguage));
-
+            _languageItems.Add(GetResourceString("CHINESE_STRING"));
+            _languageItems.Add(GetResourceString("ENGLISH_STRING"));
             if (Application.Current.Properties.ContainsKey("LanguagePicker"))
             {
                 LanguagePicker.SelectedItem = Application.Current.Properties["LanguagePicker"].ToString();
@@ -126,18 +150,35 @@ namespace IndoorNavigation.Views.Settings
 
         void SpeechTestBtn_Tapped(object sender, EventArgs e)
         {
-            Utility._textToSpeech.Speak(GetResourceString("VOICE_SPEAK_STRING"), 
+            Utility._textToSpeech.Speak(GetResourceString("VOICE_SPEAK_STRING"),
                 GetResourceString("CULTURE_VERSION_STRING"));
         }
         #endregion
 
         #region Command Handle
-        private int _tapCount=0;
+        private int _tapCount = 0;
         private void VersionTapped()
         {
             if (_tapCount >= 5)
+            {
                 DevelopmentSection.IsVisible = true;
+                Preferences.Set(nameof(DEVELOPER_MODE_OPENED), true);
+            }
             _tapCount++;
+        }
+
+        async private void EnableBetaDownload_Changed(object sender, EventArgs e)
+        {
+            Console.WriteLine("_opened in Cell click : " + _isDevelopModeOpened);
+            Console.WriteLine("Open in cell click : " + isDevelopModeOpened);
+            if (isDevelopModeOpened)
+            {
+                isDevelopModeOpened = false;
+                return;
+            }
+            IdentityCheckPopupPage checkPage = new IdentityCheckPopupPage();
+            _isDevelopModeOpened = await checkPage.showPopupPage();
+
         }
 
         private async void HandleChangeLanguage()
@@ -156,7 +197,6 @@ namespace IndoorNavigation.Views.Settings
                 default:
                     break;
             }
-            Console.WriteLine("Current Culture is : " + CultureInfo.CurrentCulture.Name);
             AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
             _currentCulture = AppResources.Culture;
             await Navigation.PushAsync(new MainPage());
@@ -168,18 +208,17 @@ namespace IndoorNavigation.Views.Settings
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    var ci = CrossMultilingual.Current.CurrentCultureInfo;
                     var languageSelected = "";
 
                     switch (LanguagePicker.SelectedItem.ToString())
                     {
                         case "英文":
                         case "English":
-                            languageSelected = _resourceManager.GetString("ENGLISH_STRING", ci);
+                            languageSelected = GetResourceString("ENGLISH_STRING");
                             break;
                         case "中文":
                         case "Chinese":
-                            languageSelected = _resourceManager.GetString("CHINESE_STRING", ci);
+                            languageSelected = GetResourceString("CHINESE_STRING");
                             break;
                     }
                     Application.Current.Properties["LanguagePicker"] = languageSelected;

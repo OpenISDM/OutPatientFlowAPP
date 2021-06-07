@@ -68,7 +68,7 @@
                 <sv:CommandCell x:Name="VersionNumberCell" Title="null" Command="{Binding VersionTapCommand}"/>
             </sv:Section>
             <sv:Section x:Name="DevelopmentSection" Title="{i18n:Translate DEVELOPMENT_MODE_STRING}" IsVisible="False">
-                <sv:SwitchCell Title="{i18n:Translate ENABLE_DOWNLOAD_TEST_GRAPH_STRING}"/>
+                <sv:SwitchCell x:Name="DevelopSwitchCell" Title="{i18n:Translate ENABLE_DOWNLOAD_TEST_GRAPH_STRING}" On="{Binding isDevelopModeOpened, Mode=TwoWay}"/>
             </sv:Section>
         </sv:SettingsView>
         
