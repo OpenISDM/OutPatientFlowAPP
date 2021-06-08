@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
-             Title="新增圖資">
+             Title="{i18n:Translate DOWNLOAD_MAP_STRING}">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
