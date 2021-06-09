@@ -51,12 +51,11 @@ using Dijkstra.NET.Model;
 using System.Xml;
 using static IndoorNavigation.Utilities.Storage;
 using static IndoorNavigation.Utilities.Helper;
+using static IndoorNavigation.Utilities.Constants;
 namespace IndoorNavigation.Models.NavigaionLayer
 {
     public class NavigationGraph
     {
-        private const double EARTH_RADIUS = 6378137;
-
         #region Navi-Graph basic infos.
         private string _country;
         private string _cityCounty;

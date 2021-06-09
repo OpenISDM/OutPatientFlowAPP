@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using IndoorNavigation.Models;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Modules.IPSClients;

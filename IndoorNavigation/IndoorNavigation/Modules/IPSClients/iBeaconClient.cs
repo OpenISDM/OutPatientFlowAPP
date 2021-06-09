@@ -39,7 +39,7 @@ using IndoorNavigation.Models;
 using IndoorNavigation.Utilities;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-
+using static IndoorNavigation.Utilities.Constants;
 namespace IndoorNavigation.Modules.IPSClients
 {
     class IBeaconClient : IIPSClient
@@ -48,8 +48,6 @@ namespace IndoorNavigation.Modules.IPSClients
             new List<WaypointBeaconsMapping>();
         private List<WaypointBeaconsMapping> _monitorWaypointsList =
             new List<WaypointBeaconsMapping>();
-
-        private const int _clockResetTime = 90000;
 
         private object _bufferLock;
 
@@ -120,7 +118,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
 
-                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
+                if (watch.Elapsed.TotalMilliseconds >= BEACON_DETECTED_CLOCK_RESET_TIME)
                 {
                     WatchReset();
                     Utility._ibeaconScan.StopScan();
@@ -302,7 +300,7 @@ namespace IndoorNavigation.Modules.IPSClients
                     new Dictionary<RegionWaypointPoint, List<BeaconSignal>>();
 
 
-                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
+                if (watch.Elapsed.TotalMilliseconds >= BEACON_DETECTED_CLOCK_RESET_TIME)
                 {
                     WatchReset();
                     Utility._ibeaconScan.StopScan();

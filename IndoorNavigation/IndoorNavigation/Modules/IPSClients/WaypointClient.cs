@@ -41,7 +41,7 @@ using System.Collections.Generic;
 using IndoorNavigation.Models;
 using Xamarin.Forms;
 using static IndoorNavigation.Utilities.TmperorayStatus;
-
+using static IndoorNavigation.Utilities.Constants;
 
 namespace IndoorNavigation.Modules.IPSClients
 {
@@ -54,7 +54,6 @@ namespace IndoorNavigation.Modules.IPSClients
 
         private object _bufferLock;
         private readonly EventHandler _beaconScanEventHandler;
-        private const int _clockResetTime = 90000;
         public NavigationEvent _event { get; private set; }
         private List<BeaconSignalModel> _beaconSignalBuffer =
             new List<BeaconSignalModel>();
@@ -104,7 +103,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
-                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
+                if (watch.Elapsed.TotalMilliseconds >= BEACON_DETECTED_CLOCK_RESET_TIME)
                 {
                     WatchReset();
                     Utility._lbeaconScan.StopScan();
@@ -163,7 +162,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 _beaconSignalBuffer.Where(c =>
                 c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
 
-                if (watch.Elapsed.TotalMilliseconds >= _clockResetTime)
+                if (watch.Elapsed.TotalMilliseconds >= BEACON_DETECTED_CLOCK_RESET_TIME)
                 {
                     WatchReset();
                     Utility._lbeaconScan.StopScan();
