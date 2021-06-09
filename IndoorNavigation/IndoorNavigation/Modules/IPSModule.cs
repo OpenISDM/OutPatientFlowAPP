@@ -26,10 +26,11 @@ namespace IndoorNavigation.Modules
             _usedIPS = _naviGraph.GetUsedIPSTyps();
 
             #region PS type initial
+            #region LBeacon part
             if (_usedIPS.Contains(IPSType.LBeacon))
             {
                 _multiClients.Add(IPSType.LBeacon, new IPSClient
-                    {
+                {
                     type = IPSType.LBeacon,
                     client = new WaypointClient(),
                     _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
@@ -38,6 +39,9 @@ namespace IndoorNavigation.Modules
                 _multiClients[IPSType.LBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
             }
+            #endregion
+
+            #region iBeacon part
             if (_usedIPS.Contains(IPSType.iBeacon))
             {
                 _multiClients.Add(IPSType.iBeacon, new IPSClient
@@ -50,7 +54,9 @@ namespace IndoorNavigation.Modules
                 _multiClients[IPSType.iBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
             }
+            #endregion
 
+            #region GPS part
             //this is not supported now.
             //_multiClient.Add(IPSType.GPS, new IPSClient
             //{
@@ -58,6 +64,8 @@ namespace IndoorNavigation.Modules
             //    type = IPSType.GPS,
             //    _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
             //});
+            #endregion
+
             #endregion
 
             Console.WriteLine("<<IPSmodule : constructor");
@@ -69,6 +77,16 @@ namespace IndoorNavigation.Modules
         public void SetIPStable(List<HashSet<IPSType>> ipsTable)
         {
             _ipsTable = ipsTable;
+        }
+
+        public void OpenBeaconMonitoring(int previousStep)
+        {
+            if (previousStep <= 0) return;
+
+            foreach (IPSType type in _ipsTable[previousStep])
+            {
+                _multiClients[type].client.MonitorWaypoints();
+            }
         }
 
         public void OpenBeaconScanning(int nextStep)
@@ -175,11 +193,9 @@ namespace IndoorNavigation.Modules
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
-
             _multiClients[type]._monitorBeaconMapping.AddRange
                 (GetBeaconMapping(regionID, waypointIDs));
-            Console.WriteLine("_multiClient count :" + 
-                _multiClients[type]._monitorBeaconMapping.Count);
+
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
 
@@ -193,6 +209,7 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
 
+        //TODO : the term "MonitorBeacon list should be remove.
         public void SetMonitorBeaconList(int nextStep)
         {
             //Console.WriteLine("openIPStype count : " + OpenedIPSType.Count);
@@ -201,8 +218,9 @@ namespace IndoorNavigation.Modules
             {
                 foreach (IPSType type in _usedIPS)
                 {
+                    //TODO: To think how to fill in the monitor beacon list.
                     _multiClients[type].client.SetWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._monitorBeaconMapping, new List<WaypointBeaconsMapping>());
                 }
             }
             else
@@ -211,12 +229,13 @@ namespace IndoorNavigation.Modules
                 {
                     Console.WriteLine($"current step:{nextStep}, {type} 's monitor list count : " + _multiClients[type]._monitorBeaconMapping.Count);
 
-                    foreach(WaypointBeaconsMapping mapping in _multiClients[type]._monitorBeaconMapping)
+                    foreach (WaypointBeaconsMapping mapping in _multiClients[type]._monitorBeaconMapping)
                     {
                         Console.WriteLine($"loop print beacon's id :{mapping._WaypointIDAndRegionID._waypointID}");
                     }
+                    //TODO : think how to fill the monitor Beacon List.
                     _multiClients[type].client.SetWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._monitorBeaconMapping, new List<WaypointBeaconsMapping>());
                 }
             }
             Console.WriteLine("<<SetMonitorBeaconList");

@@ -44,7 +44,9 @@ namespace IndoorNavigation.Modules.IPSClients
 {
     class IBeaconClient : IIPSClient
     {
-        private List<WaypointBeaconsMapping> _waypointBeaconsList =
+        private List<WaypointBeaconsMapping> _detectedWaypointsList =
+            new List<WaypointBeaconsMapping>();
+        private List<WaypointBeaconsMapping> _monitorWaypointsList =
             new List<WaypointBeaconsMapping>();
 
         private const int _clockResetTime = 90000;
@@ -71,23 +73,23 @@ namespace IndoorNavigation.Modules.IPSClients
                 DependencyService.Get<IBeaconScan>();
 
             _bufferLock = new object();
-
             _beaconScanEventHandler =
                 new EventHandler(HandleBeaconScan);
 
             Utility._ibeaconScan._event._eventHandler +=
                 _beaconScanEventHandler;
 
-            _waypointBeaconsList = new List<WaypointBeaconsMapping>();
             rssiOption = 0;
 
             watch.Start();
         }
         public void SetWaypointList
-            (List<WaypointBeaconsMapping> waypointBeaconsList)
+            (List<WaypointBeaconsMapping> DetectedWaypointsList,
+            List<WaypointBeaconsMapping> MonitorWaypointsList)
         {
             rssiOption = TmperorayStatus.RssiOption;
-            _waypointBeaconsList = waypointBeaconsList;
+            _detectedWaypointsList = DetectedWaypointsList;
+            _monitorWaypointsList = MonitorWaypointsList;
             Utility._ibeaconScan.StartScan();
         }
 
@@ -135,7 +137,7 @@ namespace IndoorNavigation.Modules.IPSClients
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in
-                        _waypointBeaconsList)
+                        _detectedWaypointsList)
                     {
                         foreach (Guid beaconGuid in
                             waypointBeaconsMapping._Beacons)
@@ -271,6 +273,8 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
 
+        public void MonitorWaypoints() { }
+
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
             Console.WriteLine(">>In DetectWaypoints IBeacon");
@@ -366,7 +370,7 @@ namespace IndoorNavigation.Modules.IPSClients
             _bufferLock = new object();
             Utility._ibeaconScan.StopScan();
             _beaconSignalBuffer.Clear();
-            _waypointBeaconsList.Clear();
+            _detectedWaypointsList.Clear();
             Utility._ibeaconScan._event._eventHandler -=
                 _beaconScanEventHandler;
             watch.Stop();
