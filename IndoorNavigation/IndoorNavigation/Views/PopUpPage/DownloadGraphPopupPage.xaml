@@ -5,6 +5,9 @@
              x:Class="IndoorNavigation.Views.PopUpPage.DownloadGraphPopupPage"
                  xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
                  BackgroundColor="#70c0c0c0">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <StackLayout>
         <Frame 	x:Name="AlertFrame" 
 				BackgroundColor="White" 				 

@@ -8,6 +8,7 @@
              Title="{i18n:Translate PREFERENCES_STRING}">
     
     <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
         <!-- SettingsView properties settings -->
         <ResourceDictionary>
             <Color x:Key="AppBackground">#ffffff</Color>

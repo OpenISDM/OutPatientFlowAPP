@@ -7,13 +7,9 @@
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Settings.LicensePages.IconLicensePage"
              Title="Icons">
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontSize" Value="14"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView Margin="10">
             <Label FontSize="18" FontAttributes="Bold">
@@ -123,7 +119,7 @@
                         </Span>
                         <Span Text=" from www.onlinewebfonts.com&#10;"/>
                         <!--#endregion-->
-                        
+
                         <!--#region Clinic Doctor-->
                         <Span Text="&#10;Doctor icon from&#10;"/>
                         <Span Text="www.flaticon.com/free-icon&#10;" TextColor="Blue">
@@ -133,7 +129,7 @@
                             </Span.GestureRecognizers>
                         </Span>
                         <!--#endregion-->
-                        
+
                         <!--#region Examination Process-->
                         <Span Text="&#10;Examaination icon from&#10;"/>
                         <Span Text="www.flaticon.com/free-icon&#10;" TextColor="Blue">
@@ -143,7 +139,7 @@
                             </Span.GestureRecognizers>
                         </Span>
                         <!--#endregion-->
-                        
+
                         <!--#region Exit-->
                         <Span Text="&#10;Exit icon made by "/>
                         <Span Text="Freepik" TextColor="Blue">
@@ -154,7 +150,7 @@
                         </Span>
                         <Span Text=" from www.flaticon.com&#10;"/>
                         <!--#endregion-->
-                        
+
                         <!--#region Pharmacy-->
                         <Span Text="&#10;Pharmacy icon made by "/>
                         <Span Text="Freepik" TextColor="Blue">
@@ -165,7 +161,7 @@
                         </Span>
                         <Span Text=" from www.flaticon.com&#10;"/>
                         <!--#endregion-->
-                        
+
                         <!--#region Cashier-->
                         <Span Text="&#10;Cashier icon made by "/>
                         <Span Text="Freepik" TextColor="Blue">

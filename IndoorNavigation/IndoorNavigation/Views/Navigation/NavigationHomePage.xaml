@@ -4,7 +4,9 @@
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"   
              Title="{Binding myProperty}">
-
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
