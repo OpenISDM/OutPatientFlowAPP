@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:aiforms="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+                    xmlns:customePage ="clr-namespace:IndoorNavigation.Views.Settings"
              >
     <!-- Light theme-->
     <Color x:Key="LightPageBackgroundColor">White</Color>
@@ -14,21 +15,20 @@
     <Color x:Key="LightTransparentColor">Transparent</Color>
 
     <!-- Dark theme-->
-    <Color x:Key="DarkPageBackgroundColor">Black</Color>
-    <Color x:Key="DarkNavigationBarColor">#3f51b5</Color>
+    <Color x:Key="DarkPageBackgroundColor">White</Color>
+    <Color x:Key="DarkNavigationBarColor">WhiteSmoke</Color>
     <Color x:Key="DarkPrimaryColor">WhiteSmoke</Color>
-    <Color x:Key="DarkSecondaryColor">Black</Color>
-    <Color x:Key="DarkPrimaryTextColor">White</Color>
-    <Color x:Key="DarkSecondaryTextColor">Black</Color>
+    <Color x:Key="DarkSecondaryColor">#c0c0c0</Color>
+    <Color x:Key="DarkPrimaryTextColor">Black</Color>
+    <Color x:Key="DarkSecondaryTextColor">White</Color>
     <Color x:Key="DarkTertiaryTextColor">Gray</Color>
     <Color x:Key="DarkTransparentColor">Transparent</Color>
 
-    <Style TargetType="ContentPage">
+    <Style TargetType="ListView">
         <Setter Property="BackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
-            Dark={StaticResource DarkPageBackgroundColor}}"/>
+                Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, 
+            Light={StaticResource LightPrimaryColor}}"/>
     </Style>
-
     <Style TargetType="SearchBar">
         <Setter Property="CancelButtonColor" 
                 Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, 
@@ -37,7 +37,7 @@
                 Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
             Dark={StaticResource DarkPageBackgroundColor}}"/>
     </Style>
-
+    
     <Style  TargetType="Button" >
         <Setter Property="TextColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 
@@ -49,9 +49,15 @@
 
     <Style TargetType="Label">
         <Setter Property="TextColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 
+            Dark={StaticResource DarkPrimaryTextColor}}"/>
     </Style>
     <Style TargetType="aiforms:SettingsView">
-        <!--<Setter Property="HeaderBackgroundColor" Value="{AppThemeBinding Light={}}"/>-->
+        <Setter Property="HeaderBackgroundColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor},
+            Dark={StaticResource DarkPrimaryColor}}"/>
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
+            Dark={StaticResource DarkPrimaryColor}}"/>
     </Style>
 </ResourceDictionary>
