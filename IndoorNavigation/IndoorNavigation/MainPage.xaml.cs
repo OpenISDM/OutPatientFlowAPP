@@ -109,7 +109,7 @@ namespace IndoorNavigation
         private INetworkSetting setting;
         private CloudDownload _download = new CloudDownload();
 
-        async private Task CheckVersionAndUpdate_(Location location,
+        async private Task CheckVersionAndUpdate(Location location,
             NavigationGraph navigationGraph)
         {
             if (_localResources.ContainsKey(location.sourcePath) &&
@@ -162,7 +162,7 @@ namespace IndoorNavigation
 
                             if (WantRetry)
                             {
-                                await CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate(location,
                                     navigationGraph);
                             }
                         }
@@ -180,7 +180,7 @@ namespace IndoorNavigation
                             {
                                 setting.OpenSettingPage();
 
-                                await CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate(location,
                                     navigationGraph);
                             }
                         }
@@ -217,7 +217,7 @@ namespace IndoorNavigation
 
                     FirstTimeUse = await autoAdjustPage.Show();
                 }
-                await CheckVersionAndUpdate_(location, navigationGraph);
+                await CheckVersionAndUpdate(location, navigationGraph);
 
                 if (navigationGraph.ContainsBanner() &&
                     !Preferences.Get(navigationGraph.GetBuildingName() + "Banner", false))
