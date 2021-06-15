@@ -148,7 +148,7 @@ namespace IndoorNavigation.Views.Navigation
                 
                 return; 
             }
-            if (!IsBluetoothEnable())
+            if (!IsBluetoothEnable() && Device.RuntimePlatform == Device.Android)
             {
                 //to ask user to open BT
                 AlertDialogPopupPage alertPage = 
