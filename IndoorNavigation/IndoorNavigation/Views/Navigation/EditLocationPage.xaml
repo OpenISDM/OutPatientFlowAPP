@@ -4,7 +4,6 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
              Title="{i18n:Translate DOWNLOAD_MAP_STRING}">
@@ -22,7 +21,7 @@
                        TextChanged="AddNewSite_TextChanged"  
                        Grid.Row="0"/>
             
-            <ListView x:Name="AddNewSiteListView" Margin="10,-8,10,10"
+            <ListView x:Name="AddNewSiteListView"
                       Grid.Row="1" 
                       ItemSelected="AddNewSiteListView_ItemSelected" 
                       HasUnevenRows="True"
@@ -43,7 +42,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                
             </ListView>
         </Grid>
     </ContentPage.Content>
