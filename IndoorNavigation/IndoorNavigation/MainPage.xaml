@@ -19,9 +19,7 @@
 
             <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                        Placeholder="{i18n:Translate SELECT_LOCATION_STRING}"
-                       CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
-                       BackgroundColor="#f0f0f0"
                        VerticalOptions="StartAndExpand"
                        FontSize="Large"/>
 
@@ -43,12 +41,6 @@
 
                             <StackLayout Orientation="Horizontal"
                                          Padding="20, 20, 20, 1">
-
-                                <!--<Label Text="ICON"/>-->
-                                <!--   <Image Source="location_icon.png"
-                                       Margin="-5, 1, -1, 15"
-                                       VerticalOptions="Start"
-                                       Scale="0.5"/>-->
 
                                 <Label  Text="{Binding UserNaming}" 
                                         HorizontalOptions="Start" 

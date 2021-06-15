@@ -4,6 +4,9 @@
              x:Class="IndoorNavigation.Views.Navigation.DestinationPickPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              Title="{i18n:Translate PICK_DESTINATION_STRING}">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="MyListView"
                   HasUnevenRows="true"

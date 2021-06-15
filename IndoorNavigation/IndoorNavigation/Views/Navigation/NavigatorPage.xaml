@@ -58,6 +58,7 @@
     </ContentPage.Padding>
 
     <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
         <ResourceDictionary>
             <Style TargetType="BoxView">
                 <Setter Property="HorizontalOptions" 
@@ -122,16 +123,12 @@
 
                 <Image x:Name="FirstDirectionImg" Source="{Binding FirstDirectionPicture}" Grid.Row="{Binding FDPictureHeightScaleValue}" Grid.RowSpan="{Binding FDPictureHeightSpanValue}" Grid.Column="0" Grid.ColumnSpan="3" 
                         Aspect="Fill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-
-
                 <Button x:Name="FinishButton" Text="{i18n:Translate RETURN_STRING}"
                         FontSize="Large"
                         Clicked="FinishButton_Clicked" IsVisible="{Binding isFinished}"
                         Grid.Row="3" Grid.Column="2" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
                         />
-
             </Grid>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
