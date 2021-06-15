@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:aiforms="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+             >
+    <!-- Light theme-->
+    <Color x:Key="LightPageBackgroundColor">White</Color>
+    <Color x:Key="LightNavigationBarColor">WhiteSmoke</Color>
+    <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
+    <Color x:Key="LightSecondaryColor">#c0c0c0</Color>
+    <Color x:Key="LightPrimaryTextColor">Black</Color>
+    <Color x:Key="LightSecondaryTextColor">White</Color>
+    <Color x:Key="LightTertiaryTextColor">Gray</Color>
+    <Color x:Key="LightTransparentColor">Transparent</Color>
+
+    <!-- Dark theme-->
+    <Color x:Key="DarkPageBackgroundColor">Black</Color>
+    <Color x:Key="DarkNavigationBarColor">#3f51b5</Color>
+    <Color x:Key="DarkPrimaryColor">WhiteSmoke</Color>
+    <Color x:Key="DarkSecondaryColor">Black</Color>
+    <Color x:Key="DarkPrimaryTextColor">White</Color>
+    <Color x:Key="DarkSecondaryTextColor">Black</Color>
+    <Color x:Key="DarkTertiaryTextColor">Gray</Color>
+    <Color x:Key="DarkTransparentColor">Transparent</Color>
+
+    <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding}"/>
+    </Style>
+
+    <Style TargetType="ListView">
+        <Setter Property="color"/>
+    </Style>
+    
+    <Style  TargetType="Button" >
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"/>
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"/>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"/>
+    </Style>
+    <Style TargetType="aiforms:SettingsView">
+        <!--<Setter Property="HeaderBackgroundColor" Value="{AppThemeBinding Light={}}"/>-->
+    </Style>
+</ResourceDictionary>
