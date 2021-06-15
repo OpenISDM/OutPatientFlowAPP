@@ -25,18 +25,26 @@
 
     <Style TargetType="ContentPage">
         <Setter Property="BackgroundColor" 
-                Value="{AppThemeBinding}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
+            Dark={StaticResource DarkPageBackgroundColor}}"/>
     </Style>
 
-    <Style TargetType="ListView">
-        <Setter Property="color"/>
+    <Style TargetType="SearchBar">
+        <Setter Property="CancelButtonColor" 
+                Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, 
+            Dark={StaticResource DarkNavigationBarColor}}"/>
+        <Setter Property="BackgroundColor" 
+                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
+            Dark={StaticResource DarkPageBackgroundColor}}"/>
     </Style>
-    
+
     <Style  TargetType="Button" >
         <Setter Property="TextColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, Dark={StaticResource DarkPrimaryTextColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 
+            Dark={StaticResource DarkPrimaryTextColor}}"/>
         <Setter Property="BackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
+            Dark={StaticResource DarkPrimaryColor}}"/>
     </Style>
 
     <Style TargetType="Label">
