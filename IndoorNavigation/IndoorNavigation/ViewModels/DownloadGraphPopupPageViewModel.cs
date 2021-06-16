@@ -3,6 +3,7 @@ using MvvmHelpers;
 using static IndoorNavigation.Utilities.Storage;
 using IndoorNavigation.Views.PopUpPage;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -23,12 +24,13 @@ namespace IndoorNavigation.ViewModels
             if (args._finishCount == args._totalCount)
             {
                 await PopupNavigation.Instance.PopAsync();
-                await PopupNavigation.Instance.PushAsync(
-                    new AlertDialogPopupPage(
-                        GetResourceString("DOWNLOAD_COMPLETELTY_STRING"), 
-                        GetResourceString("OK_STRING")
-                        )
-                    );
+                Device.BeginInvokeOnMainThread(async()=>
+                    await PopupNavigation.Instance.PushAsync(
+                        new AlertDialogPopupPage(
+                            GetResourceString("DOWNLOAD_COMPLETELTY_STRING"),
+                            GetResourceString("OK_STRING")
+                            )
+                    ));
                 _downloadEvent._eventHandler -= new EventHandler(DownloadEventResult);
             }
         }
