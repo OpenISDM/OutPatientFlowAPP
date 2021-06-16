@@ -4,6 +4,7 @@
              xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              x:Class="IndoorNavigation.Views.Settings.SettingTableViewPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate SETTING_STRING}">
     
     <ContentPage.Resources>
@@ -28,8 +29,6 @@
             <Style TargetType="sv:SettingsView">
                 <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
                 <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
-                <Setter Property="BackgroundColor" Value="{StaticResource LightPrimaryColor}" />
-                <Setter Property="HeaderBackgroundColor" Value="{StaticResource LightPrimaryColor}" />
                 <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
                 <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />
                 <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />

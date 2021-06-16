@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
              x:Class="IndoorNavigation.Views.Settings.LicensePages.LicenseMainPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate BIDAE_NAVIGATOR_STRING}">
 
     <ContentPage.Resources>
@@ -15,7 +15,10 @@
             <ListView x:Name="LicenseListView" ItemsSource="{Binding _licenses}" ItemTapped="ListView_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding name}" TextColor="#3f51b5"/>
+                        <TextCell Text="{Binding name}"
+                                  TextColor="{AppThemeBinding
+                            Light={StaticResource LightPrimaryTextColor},
+                            Dark={StaticResource DarkPrimaryTextColor}}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

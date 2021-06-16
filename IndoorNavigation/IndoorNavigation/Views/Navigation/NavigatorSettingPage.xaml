@@ -5,6 +5,7 @@
              xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              x:Class="IndoorNavigation.Views.Navigation.NavigatorSettingPage"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate PREFERENCES_STRING}">
     
     <ContentPage.Resources>

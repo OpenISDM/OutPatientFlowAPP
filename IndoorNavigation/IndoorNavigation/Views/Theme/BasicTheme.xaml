@@ -5,25 +5,30 @@
                     xmlns:customePage ="clr-namespace:IndoorNavigation.Views.Settings"
              >
     <!-- Light theme-->
-    <Color x:Key="LightPageBackgroundColor">White</Color>
-    <Color x:Key="LightNavigationBarColor">WhiteSmoke</Color>
+    <Color x:Key="LightPageBackgroundColor">WhiteSmoke</Color>
+    <Color x:Key="LightNavigationBarColor">#3f51b5</Color>
     <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
     <Color x:Key="LightSecondaryColor">#b0b0b0</Color>
     <Color x:Key="LightPrimaryTextColor">Black</Color>
-    <Color x:Key="LightSecondaryTextColor">White</Color>
+    <Color x:Key="LightSecondaryTextColor">#b0b0b0</Color>
     <Color x:Key="LightTertiaryTextColor">Gray</Color>
     <Color x:Key="LightTransparentColor">Transparent</Color>
 
     <!-- Dark theme-->
-    <Color x:Key="DarkPageBackgroundColor">White</Color>
-    <Color x:Key="DarkNavigationBarColor">WhiteSmoke</Color>
-    <Color x:Key="DarkPrimaryColor">WhiteSmoke</Color>
-    <Color x:Key="DarkSecondaryColor">#b0b0b0</Color>
-    <Color x:Key="DarkPrimaryTextColor">Black</Color>
-    <Color x:Key="DarkSecondaryTextColor">White</Color>
+    <Color x:Key="DarkPageBackgroundColor">#463a3c</Color>
+    <Color x:Key="DarkNavigationBarColor">#202925</Color>
+    <Color x:Key="DarkPrimaryColor">#463a3c</Color>
+    <Color x:Key="DarkSecondaryColor">#fcfcfc</Color>
+    <Color x:Key="DarkPrimaryTextColor">WhiteSmoke</Color>
+    <Color x:Key="DarkSecondaryTextColor">#eeeeee</Color>
     <Color x:Key="DarkTertiaryTextColor">Gray</Color>
     <Color x:Key="DarkTransparentColor">Transparent</Color>
 
+    <Style TargetType="ContentPage" x:Key="PageStyle">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor},
+            Dark={StaticResource DarkPageBackgroundColor}}"/>
+    </Style>
     <Style TargetType="ListView">
         <Setter Property="BackgroundColor" 
                 Value="{AppThemeBinding Dark={StaticResource DarkPrimaryColor}, 
@@ -31,15 +36,15 @@
     </Style>
     <Style TargetType="SearchBar">
         <Setter Property="CancelButtonColor" 
-                Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, 
-            Dark={StaticResource DarkNavigationBarColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightSecondaryTextColor}, 
+            Dark={StaticResource DarkSecondaryTextColor}}"/>
         <Setter Property="BackgroundColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
             Dark={StaticResource DarkPrimaryColor}}"/>
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource LightSecondaryColor},
             Dark={StaticResource DarkSecondaryColor}}"/>
     </Style>
-    
+
     <Style  TargetType="Button" >
         <Setter Property="TextColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 

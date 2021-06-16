@@ -95,8 +95,21 @@ namespace IndoorNavigation
         {
             base.OnAppearing();
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                Color.FromHex("#3F51B5");
+            switch(AppInfo.RequestedTheme){
+                case AppTheme.Light:
+                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+                        (Color)Application.Current.Resources["LightNavigationBarColor"];
+                    break;
+                case AppTheme.Dark:
+                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+                        (Color)Application.Current.Resources["DarkNavigationBarColor"];
+                    break;
+                default:
+                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+                        (Color)Application.Current.Resources["LightNavigationBarColor"];
+                    break;
+            }
+
             ((NavigationPage)Application.Current.MainPage).BarTextColor =
                 Color.White;
 

@@ -6,6 +6,7 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Settings.LicensePages.ThirdPartyUsagePage"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate THIRDPARTY_LICENSE_STRING}">
     <ContentPage.Resources>
         <ResourceDictionary Source="../../Theme/BasicTheme.xaml"/>

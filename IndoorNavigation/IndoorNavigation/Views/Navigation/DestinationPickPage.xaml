@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.DestinationPickPage"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate PICK_DESTINATION_STRING}">
     <ContentPage.Resources>
         <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
@@ -17,9 +17,6 @@
                   CachingStrategy="RecycleElement"
                   IsGroupingEnabled="true"
                   GroupDisplayBinding="{Binding Key}"
-                  SeparatorColor="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}"
-                  ios:ListView.GroupHeaderStyle="Plain"
-                  ios:ListView.SeparatorStyle="FullWidth"           
                   >
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
@@ -30,7 +27,9 @@
                             Light={StaticResource LightPrimaryColor},
                             Dark={StaticResource DarkPrimaryColor}}">
                             <Label Text="{Binding Key, StringFormat='{0}'}"
-                                   TextColor="#3F51B5"
+                                   TextColor="{AppThemeBinding
+                                Light={StaticResource LightSecondaryTextColor},
+                                Dark={StaticResource DarkSecondaryTextColor}}"
                                    FontAttributes="Bold"
                                    FontSize="32"/>
                         </StackLayout>

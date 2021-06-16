@@ -6,6 +6,7 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.Navigation.EditLocationPage"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate DOWNLOAD_MAP_STRING}">
     <ContentPage.Resources>
         <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>

@@ -46,7 +46,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.NavigatorPage"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
-             xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls">
+             xmlns:controls="clr-namespace:IndoorNavigation.Views.Controls"
+             Style="{StaticResource PageStyle}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>
@@ -76,7 +77,7 @@
                 <BoxView HeightRequest="3" BackgroundColor="Transparent"/>
                 <Label Text="{Binding CurrentWaypointName, StringFormat={i18n:Translate CURRENT_LOCATION_STRING}}" FontSize="Large" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
-            <Grid x:Name="TestGrid" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+            <Grid x:Name="TestGrid" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
