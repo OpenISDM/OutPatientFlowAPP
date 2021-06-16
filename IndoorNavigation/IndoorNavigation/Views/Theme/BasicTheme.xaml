@@ -11,9 +11,7 @@
     <Color x:Key="LightSecondaryColor">#b0b0b0</Color>
     <Color x:Key="LightPrimaryTextColor">Black</Color>
     <Color x:Key="LightSecondaryTextColor">#b0b0b0</Color>
-    <Color x:Key="LightTertiaryTextColor">Gray</Color>
-    <Color x:Key="LightTransparentColor">Transparent</Color>
-
+    <Color x:Key="LightTertiaryTextColor">#3f51b5</Color>
     <!-- Dark theme-->
     <Color x:Key="DarkPageBackgroundColor">#463a3c</Color>
     <Color x:Key="DarkNavigationBarColor">#202925</Color>
@@ -21,8 +19,20 @@
     <Color x:Key="DarkSecondaryColor">#fcfcfc</Color>
     <Color x:Key="DarkPrimaryTextColor">WhiteSmoke</Color>
     <Color x:Key="DarkSecondaryTextColor">#eeeeee</Color>
-    <Color x:Key="DarkTertiaryTextColor">Gray</Color>
-    <Color x:Key="DarkTransparentColor">Transparent</Color>
+    <Color x:Key="DarkTertiaryTextColor">#e4e4e4</Color>
+
+    <Style TargetType="Frame">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding
+            Light={StaticResource LightPrimaryColor},
+            Dark={StaticResource DarkPrimaryColor}}"/>
+    </Style>
+
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color"
+                Value="{AppThemeBinding Light={StaticResource LightTertiaryTextColor},
+            Dark={StaticResource DarkTertiaryTextColor}}"/>
+    </Style>
 
     <Style TargetType="ContentPage" x:Key="PageStyle">
         <Setter Property="BackgroundColor"
@@ -61,10 +71,13 @@
     </Style>
     <Style TargetType="sv:SettingsView">
         <Setter Property="HeaderBackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor},
-            Dark={StaticResource DarkPrimaryColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor},
+            Dark={StaticResource DarkPageBackgroundColor}}"/>
         <Setter Property="BackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
+                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
+            Dark={StaticResource DarkPageBackgroundColor}}"/>
+        <Setter Property="CellBackgroundColor" Value="{AppThemeBinding
+            Light={StaticResource LightPrimaryColor},
             Dark={StaticResource DarkPrimaryColor}}"/>
     </Style>
 </ResourceDictionary>
