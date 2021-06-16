@@ -7,9 +7,11 @@
              Title="{i18n:Translate SETTING_STRING}">
     
     <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
         <!-- SettingsView properties settings -->
         <ResourceDictionary>
             <Color x:Key="AppBackground">#ffffff</Color>
+            <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
             <Color x:Key="AccentColor">#3F51B5</Color>
             <Color x:Key="DisabledColor">#E6DAB9</Color>
             <Color x:Key="TitleTextColor">#3F51B5</Color>
@@ -26,6 +28,8 @@
             <Style TargetType="sv:SettingsView">
                 <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
                 <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource LightPrimaryColor}" />
+                <Setter Property="HeaderBackgroundColor" Value="{StaticResource LightPrimaryColor}" />
                 <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
                 <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />
                 <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />

@@ -16,6 +16,7 @@
             <Color x:Key="DisabledColor">#E6DAB9</Color>
             <Color x:Key="TitleTextColor">#3F51B5</Color>
             <!--Color x:Key="PaleBackColorPrimary"></Color-->
+            <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
             <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
             <Color x:Key="DeepTextColor">#000</Color>
             <Color x:Key="NormalTextColor">#666666</Color>
@@ -28,8 +29,8 @@
 
             <Style TargetType="sv:SettingsView">
                 <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
-                <!--Setter Property="BackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
-                <!--Setter Property="HeaderBackgroundColor" Value="{StaticResource PaleBackColorPrimary}" /-->
+                <Setter Property="BackgroundColor" Value="{StaticResource LightPrimaryColor}" />
+                <Setter Property="HeaderBackgroundColor" Value="{StaticResource LightPrimaryColor}" />
                 <Setter Property="CellBackgroundColor" Value="{StaticResource AppBackground}" />
                 <Setter Property="CellTitleColor" Value="{StaticResource DeepTextColor}" />
                 <Setter Property="CellValueTextColor" Value="{StaticResource NormalTextColor}" />

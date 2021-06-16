@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:aiforms="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+                    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
                     xmlns:customePage ="clr-namespace:IndoorNavigation.Views.Settings"
              >
     <!-- Light theme-->
     <Color x:Key="LightPageBackgroundColor">White</Color>
     <Color x:Key="LightNavigationBarColor">WhiteSmoke</Color>
     <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
-    <Color x:Key="LightSecondaryColor">#c0c0c0</Color>
+    <Color x:Key="LightSecondaryColor">#b0b0b0</Color>
     <Color x:Key="LightPrimaryTextColor">Black</Color>
     <Color x:Key="LightSecondaryTextColor">White</Color>
     <Color x:Key="LightTertiaryTextColor">Gray</Color>
@@ -18,7 +18,7 @@
     <Color x:Key="DarkPageBackgroundColor">White</Color>
     <Color x:Key="DarkNavigationBarColor">WhiteSmoke</Color>
     <Color x:Key="DarkPrimaryColor">WhiteSmoke</Color>
-    <Color x:Key="DarkSecondaryColor">#c0c0c0</Color>
+    <Color x:Key="DarkSecondaryColor">#b0b0b0</Color>
     <Color x:Key="DarkPrimaryTextColor">Black</Color>
     <Color x:Key="DarkSecondaryTextColor">White</Color>
     <Color x:Key="DarkTertiaryTextColor">Gray</Color>
@@ -34,15 +34,17 @@
                 Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor}, 
             Dark={StaticResource DarkNavigationBarColor}}"/>
         <Setter Property="BackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
-            Dark={StaticResource DarkPageBackgroundColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
+            Dark={StaticResource DarkPrimaryColor}}"/>
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource LightSecondaryColor},
+            Dark={StaticResource DarkSecondaryColor}}"/>
     </Style>
     
     <Style  TargetType="Button" >
         <Setter Property="TextColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 
             Dark={StaticResource DarkPrimaryTextColor}}"/>
-        <Setter Property="BackgroundColor" 
+        <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, 
             Dark={StaticResource DarkPrimaryColor}}"/>
     </Style>
@@ -52,7 +54,7 @@
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor}, 
             Dark={StaticResource DarkPrimaryTextColor}}"/>
     </Style>
-    <Style TargetType="aiforms:SettingsView">
+    <Style TargetType="sv:SettingsView">
         <Setter Property="HeaderBackgroundColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPrimaryColor},
             Dark={StaticResource DarkPrimaryColor}}"/>
