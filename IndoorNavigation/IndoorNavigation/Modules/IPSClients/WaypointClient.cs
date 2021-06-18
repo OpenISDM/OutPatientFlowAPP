@@ -74,7 +74,6 @@ namespace IndoorNavigation.Modules.IPSClients
             _bufferLock = new object();
             watch.Start();
         }
-
         public void SetWaypointList
             (List<WaypointBeaconsMapping> DetectedWaypointsList, 
             List<WaypointBeaconsMapping> MonitorWaypointsList)
@@ -90,9 +89,7 @@ namespace IndoorNavigation.Modules.IPSClients
 
         public void DetectWaypoints()
         {
-
             Console.WriteLine(">> In DetectWaypoints LBeacon");
-
             // Remove the obsolete data from buffer
             List<BeaconSignalModel> removeSignalBuffer =
             new List<BeaconSignalModel>();
@@ -203,7 +200,6 @@ namespace IndoorNavigation.Modules.IPSClients
             watch.Reset();
             watch.Start();
         }
-
         public void OnRestart()
         {
             watch.Start();
