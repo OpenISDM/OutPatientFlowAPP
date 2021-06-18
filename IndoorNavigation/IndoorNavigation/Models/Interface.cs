@@ -50,7 +50,6 @@ using Xamarin.Forms;
 namespace IndoorNavigation.Models
 {
     #region Interface for connecting both iOS project and Android project
-
     public interface IBeaconScan
     {
         void StartScan();
@@ -58,7 +57,6 @@ namespace IndoorNavigation.Models
         void Close();
         NavigationEvent _event { get; }
     }
-
     public interface LBeaconScan
     {
         void StartScan();
@@ -97,11 +95,6 @@ namespace IndoorNavigation.Models
         void OpenSettingPage();
     }
 
-    public interface IDownloadFile
-    {
-        Task<bool> DownloadImage(string url, string imageName);
-    }
-
     public interface ICheckLocationEnable
     {
         bool IsGPSEnable();
@@ -123,7 +116,6 @@ namespace IndoorNavigation.Models
         void OnRestart();
         NavigationEvent _event { get; }
     }
-
     public class WaypointBeaconsMapping
     {
         public RegionWaypointPoint _waypoint { get; set; }
