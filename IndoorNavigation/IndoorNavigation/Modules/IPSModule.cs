@@ -146,9 +146,9 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<IPSmodule : GetSingleBeaconMapping");
             return new WaypointBeaconsMapping
             {
-                _Beacons = beaconIDs,
-                _BeaconThreshold = beaconThresholdMapping,
-                _WaypointIDAndRegionID = new RegionWaypointPoint
+                _beacons = beaconIDs,
+                _beaconThreshold = beaconThresholdMapping,
+                _waypoint = new RegionWaypointPoint
                 {
                     _regionID = regionID,
                     _waypointID = waypointID
@@ -229,7 +229,7 @@ namespace IndoorNavigation.Modules
 
                     foreach (WaypointBeaconsMapping mapping in _multiClients[type]._monitorBeaconMapping)
                     {
-                        Console.WriteLine($"loop print beacon's id :{mapping._WaypointIDAndRegionID._waypointID}");
+                        Console.WriteLine($"loop print beacon's id :{mapping._waypoint._waypointID}");
                     }
                     //TODO : think how to fill the monitor Beacon List.
                     _multiClients[type].client.SetWaypointList

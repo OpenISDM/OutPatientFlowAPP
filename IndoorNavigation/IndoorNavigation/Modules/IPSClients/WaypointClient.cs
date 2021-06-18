@@ -74,17 +74,25 @@ namespace IndoorNavigation.Modules.IPSClients
             _bufferLock = new object();
             watch.Start();
         }
-        public void SetWaypointList
-            (List<WaypointBeaconsMapping> DetectedWaypointsList, 
-            List<WaypointBeaconsMapping> MonitorWaypointsList)
+        public void SetDetectedWaypointList
+            (List<WaypointBeaconsMapping> DetectedWaypointsList)
         {
-            Console.WriteLine(">>WaypointClient : SetWaypointList");
+            Console.WriteLine(">>WaypointClient : SetDetectedWaypointList");
 
             rssiOption = RssiOption;
             _detectedWaypointsList = DetectedWaypointsList;
-            _monitoryWaypointsList = MonitorWaypointsList;            
             Utility._lbeaconScan.StartScan();
-            Console.WriteLine("<<WaypointClient : SetWaypointList");
+            Console.WriteLine("<<WaypointClient : SetDetectedWaypointList");
+        }
+        //the list would be contained one element usually. 
+        //but there maybe have some exceptions in every scenarios?
+        public void SetMonitorWaypointList(List<WaypointBeaconsMapping> MonitorWaypointsList)
+        {
+            Console.WriteLine(">>WaypointClient : SetMonitorWaypointList");
+            _monitoryWaypointsList = MonitorWaypointsList;
+            Utility._lbeaconScan.StartScan();
+
+            Console.WriteLine("<<WaypointClient : SetMonitorWaypointList");
         }
 
         public void DetectWaypoints()
@@ -119,12 +127,12 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     foreach (WaypointBeaconsMapping waypointBeaconsMapping in _detectedWaypointsList)
                     {
-                        foreach (Guid beaconGuid in waypointBeaconsMapping._Beacons)
+                        foreach (Guid beaconGuid in waypointBeaconsMapping._beacons)
                         {
                             if (beacon.UUID.Equals(beaconGuid))
                             {
                                 if (beacon.RSSI >
-                                    (waypointBeaconsMapping._BeaconThreshold
+                                    (waypointBeaconsMapping._beaconThreshold
                                     [beacon.UUID] - rssiOption))
                                 {
                                     WatchReset();
@@ -133,7 +141,8 @@ namespace IndoorNavigation.Modules.IPSClients
                                         {
                                             _detectedRegionWaypoint =
                                         waypointBeaconsMapping
-                                        ._WaypointIDAndRegionID
+                                        ._waypoint,
+                                            _signalMode = SignalMode.Detecting
                                         });
                                     return;
                                 }
@@ -144,9 +153,62 @@ namespace IndoorNavigation.Modules.IPSClients
             }
             Console.WriteLine("<< In DetectWaypoints LBeacon");
         }
+        public void MonitorWaypoints()
+        {
+            Console.WriteLine(">>MonitorWaypoints");
 
-        public void MonitorWaypoints() { }
+            List<BeaconSignalModel> removeSignalBuffer =
+           new List<BeaconSignalModel>();
 
+            lock (_bufferLock)
+            {
+                removeSignalBuffer.AddRange(
+                _beaconSignalBuffer.Where(c =>
+                c.Timestamp < DateTime.Now.AddMilliseconds(-500)));
+
+                if (watch.Elapsed.TotalMilliseconds >= BEACON_DETECTED_CLOCK_RESET_TIME)
+                {
+                    WatchReset();
+                    Utility._lbeaconScan.StopScan();
+                    Utility._lbeaconScan.StartScan();
+                }
+
+                foreach (var obsoleteBeaconSignal in removeSignalBuffer)
+                    _beaconSignalBuffer.Remove(obsoleteBeaconSignal);
+
+                //Sort beacons through their RSSI, to let the less beacon 
+                //can get in first
+                _beaconSignalBuffer.Sort((x, y) =>
+                { return x.RSSI.CompareTo(y.RSSI); });
+
+                foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
+                {
+                    foreach (WaypointBeaconsMapping waypointBeaconsMapping in _monitoryWaypointsList)
+                    {
+                        foreach (Guid beaconGuid in waypointBeaconsMapping._beacons)
+                        {
+                            if (beacon.UUID.Equals(beaconGuid))
+                            {
+                                if (beacon.RSSI < -75) //the number need a test.
+                                {
+                                    WatchReset();
+                                    _event.OnEventCall
+                                        (new WaypointSignalEventArgs
+                                        {
+                                            _detectedRegionWaypoint =
+                                        waypointBeaconsMapping
+                                        ._waypoint,
+                                            _signalMode = SignalMode.Monitor
+                                        });
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("<<MonitorWaypoints");
+        }
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
             Console.WriteLine(">>In DetectWaypoint LBeacon Rssi");
@@ -173,11 +235,11 @@ namespace IndoorNavigation.Modules.IPSClients
                     { return y.RSSI.CompareTo(x.RSSI); });
                 foreach (BeaconSignalModel beacon in _beaconSignalBuffer)
                 {
-                    foreach (Guid beaconGuid in mapping._Beacons)
+                    foreach (Guid beaconGuid in mapping._beacons)
                     {
                         if (beacon.UUID.Equals(beaconGuid) &&
                             beacon.RSSI >
-                            mapping._BeaconThreshold[beacon.UUID])
+                            mapping._beaconThreshold[beacon.UUID])
                         {
                             Console.WriteLine("Mapping LBeacon!");
                             WatchReset();
@@ -185,7 +247,7 @@ namespace IndoorNavigation.Modules.IPSClients
                             {
                                 _scanBeaconRssi = beacon.RSSI,
                                 _BeaconThreshold =
-                                    mapping._BeaconThreshold[beacon.UUID]
+                                    mapping._beaconThreshold[beacon.UUID]
                             });
                             return;
                         }

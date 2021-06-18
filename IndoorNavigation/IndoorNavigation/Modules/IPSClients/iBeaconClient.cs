@@ -138,27 +138,27 @@ namespace IndoorNavigation.Modules.IPSClients
                         _detectedWaypointsList)
                     {
                         foreach (Guid beaconGuid in
-                            waypointBeaconsMapping._Beacons)
+                            waypointBeaconsMapping._beacons)
                         {
                             if ((beacon.UUID.Equals(beaconGuid)) &&
                                 (beacon.RSSI >
                                 (waypointBeaconsMapping
-                                ._BeaconThreshold[beacon.UUID] - rssiOption)))
+                                ._beaconThreshold[beacon.UUID] - rssiOption)))
                             {
                                 if (!scannedData.Keys
                                     .Contains
                                     (waypointBeaconsMapping
-                                    ._WaypointIDAndRegionID))
+                                    ._waypoint))
                                 {
                                     scannedData.Add
                                         (waypointBeaconsMapping
-                                        ._WaypointIDAndRegionID,
+                                        ._waypoint,
                                         new List<BeaconSignal> { beacon });
                                 }
                                 else
                                 {
                                     scannedData[waypointBeaconsMapping
-                                        ._WaypointIDAndRegionID].Add(beacon);
+                                        ._waypoint].Add(beacon);
                                 }
                             }
                         }
@@ -311,11 +311,11 @@ namespace IndoorNavigation.Modules.IPSClients
 
                 foreach (BeaconSignalModel singalModel in _beaconSignalBuffer)
                 {
-                    foreach (Guid beaconGuid in mapping._Beacons)
+                    foreach (Guid beaconGuid in mapping._beacons)
                     {
                         if (singalModel.UUID.Equals(beaconGuid) &&
                             singalModel.RSSI >
-                            mapping._BeaconThreshold[singalModel.UUID])
+                            mapping._beaconThreshold[singalModel.UUID])
                         {
                             Console.WriteLine("Mapping iBeacon!");
 
@@ -324,7 +324,7 @@ namespace IndoorNavigation.Modules.IPSClients
                             {
                                 _scanBeaconRssi = singalModel.RSSI,
                                 _BeaconThreshold =
-                                    mapping._BeaconThreshold[singalModel.UUID]
+                                    mapping._beaconThreshold[singalModel.UUID]
                             });
                             return;
                         }

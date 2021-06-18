@@ -46,7 +46,7 @@ namespace IndoorNavigation.Modules.IPSClients
             {                
                 foreach(WaypointBeaconsMapping mapping in _waypointBeaconList)
                 {
-                    foreach(Guid beaconGuid in mapping._Beacons)
+                    foreach(Guid beaconGuid in mapping._beacons)
                     {
                         // if signal meet the coverage, send arrivesd event
                         // I have not came up with the statement.
@@ -56,7 +56,7 @@ namespace IndoorNavigation.Modules.IPSClients
                             _event.OnEventCall(new WaypointSignalEventArgs
                             {
                                 _detectedRegionWaypoint =
-                                    mapping._WaypointIDAndRegionID
+                                    mapping._waypoint
                             }) ;
                         }
                     }
