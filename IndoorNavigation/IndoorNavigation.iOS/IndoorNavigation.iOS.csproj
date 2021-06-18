@@ -112,7 +112,6 @@
   <ItemGroup>
     <Compile Include="BeaconScan.cs" />
     <Compile Include="CheckLocationEnable.cs" />
-    <Compile Include="DownloadFile.cs" />
     <Compile Include="ImageChecker.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

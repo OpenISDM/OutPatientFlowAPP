@@ -109,7 +109,6 @@
     <Compile Include="BeaconScan.cs" />
     <Compile Include="BeaconScanForIBeacon.cs" />
     <Compile Include="CheckLocationEnable.cs" />
-    <Compile Include="DownloadFile.cs" />
     <Compile Include="ImageChecker.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="NetworkSetting.cs" />

@@ -67,7 +67,7 @@
     <EmbeddedResource Remove="Views\Navigation\TabbedPageNavigation.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DefineStructureOfProcess.xml" />
+    <EmbeddedResource Include="Yuanlin_OPFM\DefineStructureOfProcess.xml" />
     <EmbeddedResource Include="Resources\RLANRC\RLANRC.xml" />
     <EmbeddedResource Include="Resources\RLANRC\RLANRC_FD_en-US.xml" />
     <EmbeddedResource Include="Resources\RLANRC\RLANRC_FD_zh-TW.xml" />
