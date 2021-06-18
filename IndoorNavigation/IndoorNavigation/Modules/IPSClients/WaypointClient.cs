@@ -230,15 +230,4 @@ namespace IndoorNavigation.Modules.IPSClients
             watch.Stop();
         }
     }
-
-    public class WaypointSignalEventArgs : EventArgs
-    {
-        public RegionWaypointPoint _detectedRegionWaypoint { get; set; }
-    }
-
-    public class WaypointRssiEventArgs : EventArgs
-    {
-        public int _scanBeaconRssi { get; set; }
-        public int _BeaconThreshold { get; set; }
-    }
 }
