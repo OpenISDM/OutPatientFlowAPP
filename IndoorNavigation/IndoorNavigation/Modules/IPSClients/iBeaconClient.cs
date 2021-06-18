@@ -89,7 +89,12 @@ namespace IndoorNavigation.Modules.IPSClients
             Utility._ibeaconScan.StartScan();
         }
 
-        public void SetMonitorWaypointList(List<WaypointBeaconsMapping> MonitorWaypointsList) { }
+        public void SetMonitorWaypointList
+            (List<WaypointBeaconsMapping> MonitorWaypointsList) 
+        {
+            _monitorWaypointsList = MonitorWaypointsList;
+            Utility._ibeaconScan.StartScan();
+        }
 
         public void DetectWaypoints()
         {
@@ -175,7 +180,6 @@ namespace IndoorNavigation.Modules.IPSClients
 
                     foreach (BeaconSignal beaconSignal in interestedBeacon.Value)
                     {
-
                         if (!tempSave.Keys.Contains(beaconSignal.UUID))
                         {
                             tempSave.Add(beaconSignal.UUID,
@@ -191,7 +195,6 @@ namespace IndoorNavigation.Modules.IPSClients
                         correctData.Add(interestedBeacon.Key,
                             interestedBeacon.Value);
                     }
-
                 }
 
                 foreach (KeyValuePair<RegionWaypointPoint, List<BeaconSignal>>
@@ -208,8 +211,7 @@ namespace IndoorNavigation.Modules.IPSClients
                         calculateData.Value.Sort((x, y) =>
                         { return x.RSSI.CompareTo(y.RSSI); });
                         int avgSignal = 0;
-                        //int averageSignal = 0;
-                        //List<int> signalOfEachBeacon = new List<int>();
+
                         //If we have more than ten data, we remove the highest 
                         //10% and the lowest 10%, and calculate their average
                         //If we have not more than 10 data,
@@ -240,9 +242,8 @@ namespace IndoorNavigation.Modules.IPSClients
                 }
 
                 int tempValue = -100;
-                bool haveThing = false;
-                RegionWaypointPoint possibleRegionWaypoint =
-                    new RegionWaypointPoint();
+                bool isMatched = false;
+                RegionWaypointPoint possibleWaypoint;
                 // Compare all data we have, and get the highest Rssi Waypoint 
                 // as our interested waypoint
                 foreach (KeyValuePair<RegionWaypointPoint, int>
@@ -250,20 +251,19 @@ namespace IndoorNavigation.Modules.IPSClients
                 {
                     if (tempValue < calculateMax.Value)
                     {
-                        possibleRegionWaypoint = new RegionWaypointPoint();
-                        possibleRegionWaypoint = calculateMax.Key;
-                        haveThing = true;
+                        possibleWaypoint = calculateMax.Key;
+                        isMatched = true;
                     }
                     tempValue = calculateMax.Value;
                 }
 
-                if (haveThing == true)
+                if (isMatched)
                 {
                     WatchReset();
                     Console.WriteLine("Matched IBeacon");
                     _event.OnEventCall(new WaypointSignalEventArgs
                     {
-                        _detectedRegionWaypoint = possibleRegionWaypoint
+                        _detectedRegionWaypoint = possibleWaypoint
                     });
                     return;
                 }
@@ -271,7 +271,9 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
 
-        public void MonitorWaypoints() { }
+        public void MonitorWaypoints() {
+            //this part I need sometime to consider.
+        }
 
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
         {
@@ -344,16 +346,9 @@ namespace IndoorNavigation.Modules.IPSClients
         private void HandleBeaconScan(object sender, EventArgs e)
         {
             IEnumerable<BeaconSignalModel> signals =
-                (e as BeaconScanEventArgs)._signals;
-
-            foreach (BeaconSignalModel signal in signals)
-            {
-                Console.WriteLine("Detected Beacon UUID : " + signal.UUID + " RSSI = " + signal.RSSI);
-            }
-
+                (e as BeaconScanEventArgs)._signals;           
             lock (_bufferLock)
                 _beaconSignalBuffer.AddRange(signals);
-
         }
 
         public void OnRestart()
