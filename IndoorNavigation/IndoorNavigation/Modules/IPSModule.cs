@@ -182,8 +182,6 @@ namespace IndoorNavigation.Modules
 
             _multiClients[type]._monitorBeaconMapping.Add
                 (GetSingleBeaconMapping(regionID, waypointID));
-
-            Console.WriteLine($"add beacon type:{type}, waypoint :{waypointID}");
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
         public void AddMonitorBeaconList(Guid regionID, List<Guid> waypointIDs)
@@ -207,6 +205,11 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
 
+        public void SetMonitorBeaconList()
+        {
+
+        }
+
         //TODO : the term "MonitorBeacon list should be remove.
         public void SetDetectedBeaconList(int nextStep)
         {
@@ -225,12 +228,6 @@ namespace IndoorNavigation.Modules
             {
                 foreach (IPSType type in _ipsTable[nextStep])
                 {
-                    Console.WriteLine($"current step:{nextStep}, {type} 's monitor list count : " + _multiClients[type]._monitorBeaconMapping.Count);
-
-                    foreach (WaypointBeaconsMapping mapping in _multiClients[type]._monitorBeaconMapping)
-                    {
-                        Console.WriteLine($"loop print beacon's id :{mapping._waypoint._waypointID}");
-                    }
                     //TODO : think how to fill the monitor Beacon List.
                     _multiClients[type].client.SetDetectedWaypointList
                         (_multiClients[type]._monitorBeaconMapping);
