@@ -81,15 +81,15 @@ namespace IndoorNavigation.Modules.IPSClients
 
             watch.Start();
         }
-        public void SetWaypointList
-            (List<WaypointBeaconsMapping> DetectedWaypointsList,
-            List<WaypointBeaconsMapping> MonitorWaypointsList)
+        public void SetDetectedWaypointList
+            (List<WaypointBeaconsMapping> DetectedWaypointsList)
         {
             rssiOption = TmperorayStatus.RssiOption;
             _detectedWaypointsList = DetectedWaypointsList;
-            _monitorWaypointsList = MonitorWaypointsList;
             Utility._ibeaconScan.StartScan();
         }
+
+        public void SetMonitorWaypointList(List<WaypointBeaconsMapping> MonitorWaypointsList) { }
 
         public void DetectWaypoints()
         {

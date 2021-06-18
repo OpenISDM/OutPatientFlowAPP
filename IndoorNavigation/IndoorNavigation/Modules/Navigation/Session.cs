@@ -331,7 +331,7 @@ namespace IndoorNavigation.Modules
             if (nextStep == -1)
             {
                 _iPSModules.InitialStep_DetectAllBeacon(_navigationGraph.GetAllRegionIDs());
-                _iPSModules.SetMonitorBeaconList(nextStep);
+                _iPSModules.SetDetectedBeaconList(nextStep);
             }
             else
             {
@@ -372,7 +372,7 @@ namespace IndoorNavigation.Modules
                         }
                     }
                 }
-                _iPSModules.SetMonitorBeaconList(nextStep);
+                _iPSModules.SetDetectedBeaconList(nextStep);
             }
 
         }

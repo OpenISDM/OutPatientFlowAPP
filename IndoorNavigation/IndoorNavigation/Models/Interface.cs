@@ -116,7 +116,9 @@ namespace IndoorNavigation.Models
     {
         void DetectWaypoints();
         void DetectWaypointRssi(WaypointBeaconsMapping mapping);
-        void SetWaypointList(List<WaypointBeaconsMapping> WaypointList);
+        void SetDetectedWaypointList(List<WaypointBeaconsMapping> DetectedWaypointsList);
+        void SetMonitorWaypointList(List<WaypointBeaconsMapping> MonitorWaypointsList);
+        void MonitorWaypoints();
         void Stop();
         void OnRestart();
         NavigationEvent _event { get; }
@@ -124,9 +126,9 @@ namespace IndoorNavigation.Models
 
     public class WaypointBeaconsMapping
     {
-        public RegionWaypointPoint _WaypointIDAndRegionID { get; set; }
-        public List<Guid> _Beacons { get; set; }
-        public Dictionary<Guid, int> _BeaconThreshold { get; set; }
+        public RegionWaypointPoint _waypoint { get; set; }
+        public List<Guid> _beacons { get; set; }
+        public Dictionary<Guid, int> _beaconThreshold { get; set; }
     }
     #endregion
 }

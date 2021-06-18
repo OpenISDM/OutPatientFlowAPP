@@ -10,10 +10,10 @@ using IndoorNavigation.Models.NavigaionLayer;
 using static IndoorNavigation.Utilities.Storage;
 using static IndoorNavigation.Utilities.TmperorayStatus;
 using System.Threading;
-using IndoorNavigation.Modules.IPSClients;
 using Rg.Plugins.Popup.Services;
 using IndoorNavigation.Resources;
 using Rg.Plugins.Popup.Extensions;
+using IndoorNavigation.Models;
 
 namespace IndoorNavigation.Views.PopUpPage
 {
@@ -104,7 +104,7 @@ namespace IndoorNavigation.Views.PopUpPage
                 _ipsModules.InitialStep_DetectAllBeacon
                     (_navigationGraph.GetAllRegionIDs());
 
-                _ipsModules.SetMonitorBeaconList(-1);
+                _ipsModules.SetDetectedBeaconList(-1);
                 _detectThreadEvent.Wait();
 
 

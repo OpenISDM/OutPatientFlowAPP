@@ -32,12 +32,19 @@ namespace IndoorNavigation.Modules.IPSClients
             _bufferLock = new object();
             watch.Start();
         }
-        public void SetWaypointList(List<WaypointBeaconsMapping> WaypointList) 
+        public void SetDetectedWaypointList(List<WaypointBeaconsMapping> DetectedWaypointsList) 
         {
             Console.WriteLine(">>GPS client : SetWaypointList");
-            this._waypointBeaconList = WaypointList;           
+            this._waypointBeaconList = DetectedWaypointsList;           
             Console.WriteLine("<<GPS client : SetWaypointList");
         }
+
+        public void SetMonitorWaypointList(List<WaypointBeaconsMapping> MonitorWaypointsList)
+        {
+
+        }
+
+        public void MonitorWaypoints() { }
         public void DetectWaypoints() 
         {
             Console.WriteLine(">>DetectWaypoints");
