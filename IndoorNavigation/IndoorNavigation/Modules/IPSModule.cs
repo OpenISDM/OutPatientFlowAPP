@@ -205,9 +205,15 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
 
-        public void SetMonitorBeaconList()
+        public void SetMonitorBeaconList(int nextStep, List<RegionWaypointPoint> MonitorBeaconList)
         {
-
+            if (nextStep == -1) return;
+            // TODO : To monitor Beacons, need to consider how to implement.
+            foreach(IPSType type in _ipsTable[nextStep-1]) // to monitor previous one or next one?
+            {
+                
+                //_multiClients[type].client.SetMonitorWaypointList(MonitorBeaconList);
+            }
         }
 
         //TODO : the term "MonitorBeacon list should be remove.
