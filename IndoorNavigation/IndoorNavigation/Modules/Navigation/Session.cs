@@ -627,8 +627,8 @@ namespace IndoorNavigation.Modules
             _waypointsOnWrongWay =
                 new Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
                 ();
-            Region tempRegion = new Region();
-            List<Guid> neighborGuid = new List<Guid>();
+            Region tempRegion;
+            List<Guid> neighborGuid;
 
             //For each waypoint in _waypointsOnRoute, decide their wrong 
             //waypoint.
@@ -654,7 +654,7 @@ namespace IndoorNavigation.Modules
                         );
                 // If the waypoints are portal, we need to get its related 
                 // portal waypoints in other regions.
-                if (locationType.ToString() == "portal")
+                if (locationType == LocationType.portal)
                 {
                     AddPortalWrongWaypoint(tempRegion,
                                            locationRegionWaypoint,
@@ -805,8 +805,6 @@ namespace IndoorNavigation.Modules
             _iPSModules.SetIPStable(IPSTable);
 
             #endregion
-
-
 
             #region For Calculate progress 
             TmpTotalProgress = _waypointsOnRoute.Count + TmpCurrentProgress;
