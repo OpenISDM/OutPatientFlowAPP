@@ -37,7 +37,6 @@ using Dijkstra.NET.Model;
 using Dijkstra.NET.Extensions;
 using IndoorNavigation.Models.NavigaionLayer;
 using IndoorNavigation.Models;
-using IndoorNavigation.Modules.IPSClients;
 using static IndoorNavigation.Utilities.Helper;
 
 namespace IndoorNavigation.Modules
@@ -47,18 +46,12 @@ namespace IndoorNavigation.Modules
         #region Attributes and Objects
         private int _nextWaypointStep;
 
-        private List<RegionWaypointPoint> _waypointsOnRoute =
-            new List<RegionWaypointPoint>();
-
+        private List<RegionWaypointPoint> _waypointsOnRoute;
         private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
-            _waypointsOnWrongWay =
-                new Dictionary<RegionWaypointPoint,
-                    List<RegionWaypointPoint>>();
-
-        private Graph<Guid, string> _graphRegionGraph =
-            new Graph<Guid, string>();
-
+            _waypointsOnWrongWay;
+        private Graph<Guid, string> _graphRegionGraph;
         private NavigationGraph _navigationGraph;
+
         private Guid _destinationRegionID;
         private Guid _destinationWaypointID;
 
@@ -82,8 +75,7 @@ namespace IndoorNavigation.Modules
 
         public NavigationEvent _event { get; private set; }
 
-        private Dictionary<Guid, Region> _regiongraphs =
-            new Dictionary<Guid, Region>();
+        private Dictionary<Guid, Region> _regiongraphs;
 
         private IPSModule _iPSModules;
         private const int _tooCLoseDistance = 8;
