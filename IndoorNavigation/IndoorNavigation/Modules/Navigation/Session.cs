@@ -202,18 +202,12 @@ namespace IndoorNavigation.Modules
                     _DetectWrongWaypoint = true;
                     Console.WriteLine("Finish Construct New Route");
 
-                    Guid previousRegionID = new Guid();
-                    Guid previousWaypointID = new Guid();
-
                     // Add this function can avoid that when users go to the 
                     // worong waypoint, the instuction will jump to fast.
-                    RegionWaypointPoint regionWaypointPoint =
-                        new RegionWaypointPoint();
-                    regionWaypointPoint._regionID = _currentRegionID;
-                    regionWaypointPoint._waypointID = _currentWaypointID;
-
                     NavigationInstruction navigationInstruction =
                         new NavigationInstruction();
+
+                    navigationInstruction._information = getInsturctions(Guid.Empty, Guid.Empty);
 
                     navigationInstruction._currentWaypointName =
                         _navigationGraph.
@@ -232,45 +226,7 @@ namespace IndoorNavigation.Modules
                         string.Format("{0}/{1}", TmpCurrentProgress,
                         TmpTotalProgress);
 
-                    try
-                    {
-                        navigationInstruction._information = _navigationGraph
-                            .GetInstructionInformation(
-                                    _nextWaypointStep,
-                                    previousRegionID,
-                                    previousWaypointID,
-                                    _currentRegionID,
-                                    _currentWaypointID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._regionID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._waypointID,
-                                    _waypointsOnRoute[_nextWaypointStep + 2]
-                                    ._regionID,
-                                    _waypointsOnRoute[_nextWaypointStep + 2]
-                                    ._waypointID,
-                                    _avoidConnectionTypes
-                                    );
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("GetInstructionError - "
-                            + exc.Message);
-                        navigationInstruction._information = _navigationGraph
-                            .GetInstructionInformation
-                            (
-                                _nextWaypointStep,
-                                previousRegionID, previousWaypointID,
-                                _currentRegionID, _currentWaypointID,
-                                _waypointsOnRoute[_nextWaypointStep + 1]
-                                ._regionID,
-                                _waypointsOnRoute[_nextWaypointStep + 1]
-                                ._waypointID,
-                                new Guid(),
-                                new Guid(),
-                                _avoidConnectionTypes
-                            );
-                    }
+                    
                     navigationInstruction._currentWaypointGuid =
                         _currentWaypointID;
 
@@ -300,7 +256,6 @@ namespace IndoorNavigation.Modules
                                                   _waypointsOnRoute,
                                                   _avoidConnectionTypes);
                     }
-
                     _event.OnEventCall(new NavigationEventArgs
                     {
 
@@ -380,6 +335,48 @@ namespace IndoorNavigation.Modules
             }
         }
 
+        private InstructionInformation getInsturctions(Guid previousRegionID, Guid previousWaypointID)
+        {
+            try
+            {
+                return _navigationGraph
+                    .GetInstructionInformation(
+                            _nextWaypointStep,
+                            previousRegionID,
+                            previousWaypointID,
+                            _currentRegionID,
+                            _currentWaypointID,
+                            _waypointsOnRoute[_nextWaypointStep + 1]
+                            ._regionID,
+                            _waypointsOnRoute[_nextWaypointStep + 1]
+                            ._waypointID,
+                            _waypointsOnRoute[_nextWaypointStep + 2]
+                            ._regionID,
+                            _waypointsOnRoute[_nextWaypointStep + 2]
+                            ._waypointID,
+                            _avoidConnectionTypes
+                            );
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("GetInstructionError - "
+                    + exc.Message);
+                return _navigationGraph
+                    .GetInstructionInformation
+                    (
+                        _nextWaypointStep,
+                        previousRegionID, previousWaypointID,
+                        _currentRegionID, _currentWaypointID,
+                        _waypointsOnRoute[_nextWaypointStep + 1]
+                        ._regionID,
+                        _waypointsOnRoute[_nextWaypointStep + 1]
+                        ._waypointID,
+                        new Guid(),
+                        new Guid(),
+                        _avoidConnectionTypes
+                    );
+            }
+        }
         #region GeneratePath Methods
         public void GenerateRoute(Guid sourceRegionID,
                                    Guid sourceWaypointID,
@@ -1104,8 +1101,8 @@ namespace IndoorNavigation.Modules
                             _waypointsOnRoute[_nextWaypointStep + 1]
                             ._waypointID);
 
-                    Guid previousRegionID = new Guid();
-                    Guid previousWaypointID = new Guid();
+                    Guid previousRegionID = Guid.Empty;
+                    Guid previousWaypointID = Guid.Empty;
                     if (_nextWaypointStep - 1 >= 0)
                     {
                         previousRegionID =
@@ -1115,43 +1112,7 @@ namespace IndoorNavigation.Modules
                             ._waypointID;
                     }
 
-                    try
-                    {
-                        navigationInstruction._information = _navigationGraph
-                            .GetInstructionInformation(
-                                    _nextWaypointStep,
-                                    previousRegionID,
-                                    previousWaypointID,
-                                    _currentRegionID,
-                                    _currentWaypointID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._regionID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._waypointID,
-                                    _waypointsOnRoute[_nextWaypointStep + 2]
-                                    ._regionID,
-                                    _waypointsOnRoute[_nextWaypointStep + 2]
-                                    ._waypointID,
-                                    _avoidConnectionTypes
-                                    );
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("GetInstructionError - "
-                            + exc.Message);
-                        navigationInstruction._information = _navigationGraph
-                            .GetInstructionInformation
-                            (
-                                _nextWaypointStep,
-                                previousRegionID, previousWaypointID,
-                                _currentRegionID, _currentWaypointID,
-                            _waypointsOnRoute[_nextWaypointStep + 1]._regionID,
-                          _waypointsOnRoute[_nextWaypointStep + 1]._waypointID,
-                                new Guid(),
-                                new Guid(),
-                                _avoidConnectionTypes
-                            );
-                    }
+                   navigationInstruction._information = getInsturctions(previousRegionID, previousWaypointID);
                     navigationInstruction._currentWaypointGuid =
                         _currentWaypointID;
 
@@ -1180,14 +1141,7 @@ namespace IndoorNavigation.Modules
                                 _waypointsOnRoute,
                                 _avoidConnectionTypes);
                     }
-                    Console.WriteLine("navigation_turn : "
-                                + navigationInstruction
-                                ._turnDirectionDistance);
 
-                    //Get the progress
-                    Console.WriteLine("calculate progress: {0}/{1}",
-                                      _nextWaypointStep,
-                                      _waypointsOnRoute.Count);
 
                     navigationInstruction._progress =
                         GetPercentage(++TmpCurrentProgress, TmpTotalProgress);
@@ -1268,8 +1222,8 @@ namespace IndoorNavigation.Modules
                                 _waypointsOnRoute[_nextWaypointStep + 1]
                                 ._waypointID);
 
-                        Guid previousRegionID = new Guid();
-                        Guid previousWaypointID = new Guid();
+                        Guid previousRegionID = Guid.Empty;
+                        Guid previousWaypointID = Guid.Empty;
                         if (_nextWaypointStep - 1 >= 0)
                         {
                             previousRegionID =
@@ -1279,48 +1233,8 @@ namespace IndoorNavigation.Modules
                                 _waypointsOnRoute[_nextWaypointStep - 1]
                                 ._waypointID;
                         }
-
-                        try
-                        {
-                            navigationInstruction._information =
-                                _navigationGraph
-                                .GetInstructionInformation(
-                                        _nextWaypointStep,
-                                        previousRegionID,
-                                        previousWaypointID,
-                                        _currentRegionID,
-                                        _currentWaypointID,
-                                        _waypointsOnRoute
-                                        [_nextWaypointStep + 1]._regionID,
-                                        _waypointsOnRoute
-                                        [_nextWaypointStep + 1]._waypointID,
-                                        _waypointsOnRoute
-                                        [_nextWaypointStep + 2]._regionID,
-                                        _waypointsOnRoute
-                                        [_nextWaypointStep + 2]._waypointID,
-                                        _avoidConnectionTypes
-                                        );
-                        }
-                        catch (Exception exc)
-                        {
-                            Console.WriteLine("GetInstructionError - "
-                                + exc.Message);
-                            navigationInstruction._information =
-                                _navigationGraph
-                                .GetInstructionInformation
-                                (
-                                    _nextWaypointStep,
-                                    previousRegionID, previousWaypointID,
-                                    _currentRegionID, _currentWaypointID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._regionID,
-                                    _waypointsOnRoute[_nextWaypointStep + 1]
-                                    ._waypointID,
-                                    new Guid(),
-                                    new Guid(),
-                                    _avoidConnectionTypes
-                                );
-                        }
+                        navigationInstruction._information = 
+                            getInsturctions(previousRegionID, previousWaypointID);
 
                         navigationInstruction._currentWaypointGuid =
                             _currentWaypointID;
