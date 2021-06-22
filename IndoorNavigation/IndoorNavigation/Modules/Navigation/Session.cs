@@ -45,7 +45,6 @@ namespace IndoorNavigation.Modules
     {
         #region Attributes and Objects
         private int _nextWaypointStep;
-
         private List<RegionWaypointPoint> _waypointsOnRoute;
         private Dictionary<RegionWaypointPoint, List<RegionWaypointPoint>>
             _waypointsOnWrongWay;
@@ -57,10 +56,7 @@ namespace IndoorNavigation.Modules
 
         private Thread _waypointDetectionThread;
         private Thread _navigationControllerThread;
-
-        private const int _remindDistance = 50;
         private int _accumulateStraightDistance = 0;
-
         private bool _isKeepDetection;
         private Guid _currentRegionID;
         private Guid _currentWaypointID;
