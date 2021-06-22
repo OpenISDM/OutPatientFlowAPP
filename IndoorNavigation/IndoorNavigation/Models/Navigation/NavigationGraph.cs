@@ -348,7 +348,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                 regionEdge._picture12 = xmlElement.GetAttribute("picture12") ?? " ";
                 regionEdge._picture21 = xmlElement.GetAttribute("picture21") ?? " ";
-                
+
                 regionEdge._connectionType =
                     (ConnectionType)Enum.Parse(typeof(ConnectionType),
                     xmlElement.GetAttribute("connection_type"),
@@ -566,7 +566,7 @@ namespace IndoorNavigation.Models.NavigaionLayer
 
                     waypointEdge._picture12 = xmlEdgeElement.GetAttribute("picture12") ?? " ";
                     waypointEdge._picture21 = xmlEdgeElement.GetAttribute("picture21") ?? " ";
-                    
+
                     //Console.WriteLine("picture 12 = "+ waypointEdge._picture12);
                     #endregion
 
@@ -1197,6 +1197,14 @@ namespace IndoorNavigation.Models.NavigaionLayer
             return _navigraphs[regionID]._waypoints[waypointID]._neighbors;
         }
 
+        public double StraightDistanceBetweenWaypoints(RegionWaypointPoint waypoint1, RegionWaypointPoint waypoint2)
+        {
+            double lat1 = _navigraphs[waypoint1._regionID]._waypoints[waypoint1._waypointID]._lat;
+            double lon1 = _navigraphs[waypoint1._regionID]._waypoints[waypoint1._waypointID]._lon;
+            double lat2 = _navigraphs[waypoint2._regionID]._waypoints[waypoint2._waypointID]._lat;
+            double lon2 = _navigraphs[waypoint2._regionID]._waypoints[waypoint2._waypointID]._lon;
+            return GetDistance(lon1, lat1, lon2, lat2);
+        }
         public double StraightDistanceBetweenWaypoints(Guid region,
             Guid waypointID1, Guid waypointID2)
         {
