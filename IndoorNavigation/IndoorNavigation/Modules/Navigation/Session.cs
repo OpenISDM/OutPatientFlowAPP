@@ -78,6 +78,7 @@ namespace IndoorNavigation.Modules
         private int TmpCurrentProgress = 0;
         private int TmpTotalProgress = 0;
         private bool _DetectWrongWaypoint = true;
+        private bool _DetectionMode = true;
         #endregion
 
         public Session(NavigationGraph navigationGraph,
@@ -158,7 +159,12 @@ namespace IndoorNavigation.Modules
 
                     NavigateToNextWaypoint(_nextWaypointStep);
                 }
+                else if (NeedtoMonitorPreviousWaypoint())
+                {
+                    Console.WriteLine("the user is go on in monitore mode.");
 
+                    SetupMonitorWaypoint(_nextWaypointStep);
+                }
                 else if (isArrivedWaypoint(0))
                 {
                     Console.WriteLine("Arrived region/waypoint: {0}/{1}",
@@ -204,7 +210,27 @@ namespace IndoorNavigation.Modules
             }
             Console.WriteLine("<<Navigator Program");
         }
+        private bool NeedtoMonitorPreviousWaypoint()
+        {
+            //inital step would not know previous waypoints infor.
+            if (_nextWaypointStep <= 0 ) return false;
+            RegionWaypointPoint previousWaypoint = _waypointsOnRoute[_nextWaypointStep - 1];
+            RegionWaypointPoint currentWaypoint = _waypointsOnRoute[_nextWaypointStep];
 
+            // to consider the elevator and escalator scenario, the distance would not too far,
+            // but if user chang region by hallway, it's different. so I remove this line.  
+            //if (previousWaypoint._regionID != currentWaypoint._regionID) return false;
+            
+            if (_navigationGraph.StraightDistanceBetweenWaypoints
+                (previousWaypoint, currentWaypoint) > 
+                WAYPOINT_TO_CLOSE_DISTANCE) 
+                return true;
+            return false;
+        }
+        private void SetupMonitorWaypoint(int nextStep)
+        {
+            _iPSModules.SetMonitorBeaconList(nextStep);
+        }
         private void NavigateToNextWaypoint(int nextStep)
         {
             if (nextStep == -1)
@@ -263,9 +289,12 @@ namespace IndoorNavigation.Modules
             {
                 _pauseThreadEvent.Wait();
                 Thread.Sleep(500);
-                _iPSModules.OpenBeaconScanning(_nextWaypointStep);
+                if (_DetectionMode)
+                    _iPSModules.OpenBeaconScanning(_nextWaypointStep);
+                else
+                    _iPSModules.OpenBeaconMonitoring(_nextWaypointStep);
             }
-        }        
+        }
         #region GeneratePath Methods
         public void GenerateRoute(Guid sourceRegionID,
                                    Guid sourceWaypointID,
@@ -898,7 +927,8 @@ namespace IndoorNavigation.Modules
         //contains four elements that Navigation main and UI need.
         //Moreover, if the users are not on the right path, we reroute and 
         //tell users the new path.
-        public void CheckArrivedWaypoint(object sender, EventArgs args)
+        #region Event functions
+        private void CheckArrivedWaypoint(object sender, EventArgs args)
         {
             Console.WriteLine(">> CheckArrivedWaypoint ");
             _currentWaypointID =
@@ -983,6 +1013,19 @@ namespace IndoorNavigation.Modules
             _nextWaypointEvent.Set();
             Console.WriteLine("<< CheckArrivedWaypoint ");
         }
+        private void LeavePreviousWaypointEvent(object sender, EventArgs args)
+        {
+            Console.WriteLine(">>LeavePreviousWaypoints");
+
+            _event.OnEventCall(new NavigationEventArgs
+            {
+                _result = NavigationResult.ArrivaIgnorePoint
+            });
+            //There need to resume NavigatorProgram.
+
+            Console.WriteLine(">>LeavePreviousWaypoints");
+        }
+        #endregion
         #region Instruction generate and actions.
         private void HandleSentEvnet(NavigationInstruction navigationInstruction)
         {

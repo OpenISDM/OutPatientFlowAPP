@@ -205,7 +205,14 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
 
-        public void SetMonitorBeaconList(int nextStep, List<RegionWaypointPoint> MonitorBeaconList)
+        private void GetMonitorWaypointEvent(object sender, EventArgs args)
+        {
+            Console.WriteLine(">>GetMonitorWaypointEvent");
+            //To define what rssi is user leave the waypoints.
+            Console.WriteLine("<<GetMonitorWaypointEvent");
+        }
+
+        public void SetMonitorBeaconList(int nextStep)
         {
             if (nextStep == -1) return;
             // TODO : To monitor Beacons, need to consider how to implement.
