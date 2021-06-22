@@ -121,16 +121,14 @@ namespace IndoorNavigation.Modules
         private void NavigatorProgram()
         {
             _nextWaypointStep = -1;
-            _currentRegionID = new Guid();
-            _currentWaypointID = new Guid();
+            _currentRegionID = Guid.Empty;
+            _currentWaypointID = Guid.Empty;
             RegionWaypointPoint checkWrongRegionWaypoint =
                 new RegionWaypointPoint();
 
             NavigateToNextWaypoint(_nextWaypointStep);
 
-            while (true == _isKeepDetection &&
-                   !(_currentRegionID.Equals(_destinationRegionID) &&
-                     _currentWaypointID.Equals(_destinationWaypointID)))
+            while (true == _isKeepDetection && !isArrivedDestination())
             {
                 _pauseThreadEvent.Wait();
                 Console.WriteLine("Continue to navigate to next step, current"
@@ -143,13 +141,11 @@ namespace IndoorNavigation.Modules
 
                 Console.WriteLine("current waypointID : " + _currentWaypointID);
 
-                if (_currentRegionID.Equals(_destinationRegionID) &&
-                    _currentWaypointID.Equals(_destinationWaypointID))
+                if (isArrivedDestination())
                 {
                     Console.WriteLine("Arrived destination! {0}/{1}",
                                       _destinationRegionID,
                                       _destinationWaypointID);
-
                     _isKeepDetection = false;
                     _iPSModules.CloseAllActiveClient();
                     break;
@@ -171,10 +167,7 @@ namespace IndoorNavigation.Modules
                     NavigateToNextWaypoint(_nextWaypointStep);
                 }
 
-                else if (_currentRegionID.Equals(
-                         _waypointsOnRoute[_nextWaypointStep]._regionID) &&
-                         _currentWaypointID.Equals(
-                         _waypointsOnRoute[_nextWaypointStep]._waypointID))
+                else if (isArrivedWaypoint(0))
                 {
                     Console.WriteLine("Arrived region/waypoint: {0}/{1}",
                                       _currentRegionID,
@@ -183,13 +176,8 @@ namespace IndoorNavigation.Modules
 
                     NavigateToNextWaypoint(_nextWaypointStep);
                 }
-                else if (_nextWaypointStep >= 1 &&
-                    _waypointsOnWrongWay
-                    [_waypointsOnRoute[_nextWaypointStep - 1]]
-                    .Contains(checkWrongRegionWaypoint) == true &&
-                    _DetectWrongWaypoint == false)
+                else if (isGetWrongWaypoint() && !_DetectWrongWaypoint)
                 {
-
                     Console.WriteLine("In Program Wrong, going to Re-calculate"
                         + "the route");
                     _nextWaypointStep = 0;
@@ -200,25 +188,8 @@ namespace IndoorNavigation.Modules
                                     _destinationRegionID,
                                     _destinationWaypointID);
                     _DetectWrongWaypoint = true;
-                    Console.WriteLine("Finish Construct New Route");
-
-                    // Add this function can avoid that when users go to the 
-                    // worong waypoint, the instuction will jump to fast.
                     NavigationInstruction navigationInstruction =
-                        new NavigationInstruction();
-
-                    navigationInstruction._information = getInformation(Guid.Empty, Guid.Empty);
-
-                    navigationInstruction._currentWaypointName =
-                        _navigationGraph.
-                        GetWaypointNameInRegion(_currentRegionID,
-                                                _currentWaypointID);
-
-                    navigationInstruction._nextWaypointName =
-                        _navigationGraph
-                        .GetWaypointNameInRegion(_waypointsOnRoute[1]._regionID,
-                                              _waypointsOnRoute[1]._waypointID);
-
+                       getInstruction(0);
 
                     navigationInstruction._progress =
                         TmpCurrentProgress / --TmpTotalProgress;
@@ -226,36 +197,6 @@ namespace IndoorNavigation.Modules
                         string.Format("{0}/{1}", TmpCurrentProgress,
                         TmpTotalProgress);
 
-
-                    navigationInstruction._currentWaypointGuid =
-                        _currentWaypointID;
-
-                    navigationInstruction._nextWaypointGuid =
-                        _waypointsOnRoute[_nextWaypointStep + 1]._waypointID;
-
-                    navigationInstruction._currentRegionGuid =
-                        _currentRegionID;
-
-                    navigationInstruction._nextRegionGuid =
-                        _waypointsOnRoute[_nextWaypointStep + 1]._regionID;
-
-                    if (navigationInstruction._information._nextDirection ==
-                        TurnDirection.FirstDirection)
-                    {
-                        navigationInstruction._turnDirectionDistance =
-                            _navigationGraph.GetDistanceOfLongHallway(
-                                2,
-                                _waypointsOnRoute,
-                                _avoidConnectionTypes);
-                    }
-                    else
-                    {
-                        navigationInstruction._turnDirectionDistance =
-                        _navigationGraph
-                        .GetDistanceOfLongHallway(1,
-                                                  _waypointsOnRoute,
-                                                  _avoidConnectionTypes);
-                    }
                     _event.OnEventCall(new NavigationEventArgs
                     {
 
@@ -263,8 +204,7 @@ namespace IndoorNavigation.Modules
                         _nextInstruction = navigationInstruction
 
                     });
-                    _accumulateStraightDistance =
-                        _accumulateStraightDistance +
+                    _accumulateStraightDistance +=
                         navigationInstruction._information._distance;
                     _nextWaypointStep++;
                 }
@@ -335,9 +275,13 @@ namespace IndoorNavigation.Modules
             }
         }
 
-        private NavigationInstruction getInstruction(bool isNextNextWaypoint)
+        private NavigationInstruction getInstruction(int steps)
         {
-            if (isNextNextWaypoint) _nextWaypointStep++;
+            if (steps >= 1)
+            {
+                _nextWaypointStep += steps - 1;
+                TmpCurrentProgress += steps;
+            }
 
             NavigationInstruction navigationInstruction = new NavigationInstruction();
             navigationInstruction._currentWaypointName =
@@ -391,10 +335,8 @@ namespace IndoorNavigation.Modules
                         _avoidConnectionTypes);
             }
 
-            if (isNextNextWaypoint) TmpCurrentProgress++;
-
             navigationInstruction._progress =
-                GetPercentage(++TmpCurrentProgress, TmpTotalProgress);
+                GetPercentage(TmpCurrentProgress, TmpTotalProgress);
 
             navigationInstruction._progressBar =
                 string.Format("{0}/{1}", TmpCurrentProgress,
@@ -983,7 +925,6 @@ namespace IndoorNavigation.Modules
                 .Add(new RegionWaypointPoint(regionID, waypointID));
             }
         }
-
         public void OneMoreLayer(Guid guid,
                                  RegionWaypointPoint locationRegionWaypoint,
                                  int nextStep)
@@ -1086,27 +1027,21 @@ namespace IndoorNavigation.Modules
             _currentWaypointID =
                 (args as WaypointSignalEventArgs)._detectedRegionWaypoint
                 ._waypointID;
-
             _currentRegionID =
                 (args as WaypointSignalEventArgs)._detectedRegionWaypoint
                 ._regionID;
-
             Console.WriteLine("CheckArrived currentWaypoint : "
                                 + _currentWaypointID);
 
             Console.WriteLine("CheckArrived currentRegion : "
                                 + _currentRegionID);
 
-            RegionWaypointPoint detectWrongWay = new RegionWaypointPoint(_currentRegionID, _currentWaypointID);
-
             //NavigationInstruction is a structure that contains five
             //elements that need to be passed to the main and UI
-            NavigationInstruction navigationInstruction =
-                new NavigationInstruction();
+            NavigationInstruction navigationInstruction;
 
             if (_nextWaypointStep == -1)
             {
-                Console.WriteLine("current Waypoint : " + _currentWaypointID);
                 _accumulateStraightDistance = 0;
 
                 if (_currentRegionID.Equals(_destinationRegionID) &&
@@ -1127,7 +1062,6 @@ namespace IndoorNavigation.Modules
                         }
                     });
                 }
-                _nextWaypointEvent.Set();
             }
             else
             {
@@ -1147,167 +1081,88 @@ namespace IndoorNavigation.Modules
                             string.Format("{0}/{1}", TmpTotalProgress,
                         TmpTotalProgress)
                         }
-                    })
-                    );
+                    });
 
                 }
-                else if (isArrivedWaypoint(0)
+                else if (isArrivedWaypoint(0))
                 {
                     Console.WriteLine("---- [case: arrived waypoint] .... ");
-
-                    Console.WriteLine("current region/waypoint: {0}/{1}",
-                                      _currentRegionID,
-                                      _currentWaypointID);
-                    navigationInstruction = getInstruction(false);
-
-                    if (navigationInstruction._information._connectionType ==
-                        ConnectionType.VirtualHallway ||
-                        navigationInstruction._information._isVirtualWay ==
-                        true)
-                    {
-                        _accumulateStraightDistance = 0;
-                        navigationInstruction._progressBar =
-                            string.Format("{0}/{1}", TmpTotalProgress,
-                            TmpTotalProgress);
-
-                        _event.OnEventCall(new NavigationEventArgs
-                        {
-                            _result = NavigationResult.ArriveVirtualPoint,
-                            _nextInstruction = navigationInstruction
-                        });
-                    }
-                    else
-                    {
-                        if (navigationInstruction._information._turnDirection
-                            == TurnDirection.Forward &&
-                            _nextWaypointStep != -1 &&
-                            _accumulateStraightDistance >= _remindDistance)
-                        {
-                            _accumulateStraightDistance +=
-                                navigationInstruction._information._distance;
-
-                            _event.OnEventCall(new NavigationEventArgs
-                            {
-                                _result = NavigationResult.ArrivaIgnorePoint,
-                                _nextInstruction = navigationInstruction
-                            });
-
-                        }
-                        else
-                        {
-
-                            _accumulateStraightDistance =
-                                navigationInstruction._information._distance;
-                            _event.OnEventCall(new NavigationEventArgs
-                            {
-                                _result = NavigationResult.Run,
-                                _nextInstruction = navigationInstruction
-                            });
-                        }
-
-                    }
+                    navigationInstruction = getInstruction(1);
+                    HandleSentEvnet(navigationInstruction);
                 }
-                else if (_nextWaypointStep + 1 < _waypointsOnRoute.Count())
+                else if (isArrivedWaypoint(1))
                 {
-                    if (isArrivedWaypoint(1))
-                    {
-                        navigationInstruction = getInstruction(true);
+                    Console.WriteLine("---- [case: arrived next next waypoint]----");
+                    navigationInstruction = getInstruction(2);
+                    HandleSentEvnet(navigationInstruction);
 
-                        if (navigationInstruction._information._nextDirection
-                            == TurnDirection.FirstDirection)
-                        {
-                            navigationInstruction._turnDirectionDistance =
-                                _navigationGraph.GetDistanceOfLongHallway(
-                                    _nextWaypointStep + 2, _waypointsOnRoute,
-                                    _avoidConnectionTypes);
-                        }
-                        else
-                        {
-                            navigationInstruction._turnDirectionDistance =
-                                _navigationGraph.GetDistanceOfLongHallway(
-                                    _nextWaypointStep + 1,
-                                    _waypointsOnRoute,
-                                    _avoidConnectionTypes);
-                        }
-
-                        if (navigationInstruction._information._connectionType
+                }
+                else if (isGetWrongWaypoint() && _DetectWrongWaypoint)
+                {
+                    Console.WriteLine("---- [case: arrrive at wrongWay] ----");
+                    HandleWrongWay();
+                }
+            }
+            _nextWaypointEvent.Set();
+            Console.WriteLine("<< CheckArrivedWaypoint ");
+        }
+        private void HandleSentEvnet(NavigationInstruction navigationInstruction)
+        {
+            if (navigationInstruction._information._connectionType
                             == ConnectionType.VirtualHallway ||
                             navigationInstruction._information._isVirtualWay
                             == true)
-                        {
-                            _accumulateStraightDistance = 0;
-                            navigationInstruction._progressBar =
-                                string.Format("{0}/{1}",
-                                TmpTotalProgress, TmpTotalProgress);
+            {
+                _accumulateStraightDistance = 0;
+                navigationInstruction._progressBar =
+                    string.Format("{0}/{1}",
+                    TmpTotalProgress, TmpTotalProgress);
 
-                            _event.OnEventCall(new NavigationEventArgs
-                            {
-                                _result = NavigationResult.ArriveVirtualPoint,
-                                _nextInstruction = navigationInstruction
-                            });
-                        }
-                        else
-                        {
-                            if (navigationInstruction._information
-                                ._turnDirection == TurnDirection.Forward &&
-                                _nextWaypointStep != -1 &&
-                                _accumulateStraightDistance >= _remindDistance)
-                            {
-                                _accumulateStraightDistance =
-                                    _accumulateStraightDistance +
-                                    navigationInstruction._information._distance;
-                                _event.OnEventCall(new NavigationEventArgs
-                                {
-                                    _result = NavigationResult.ArrivaIgnorePoint,
-                                    _nextInstruction = navigationInstruction
-                                });
-                            }
-                            else
-                            {
-                                _accumulateStraightDistance = 0;
-                                _accumulateStraightDistance =
-                                    _accumulateStraightDistance +
-                                    navigationInstruction._information
-                                    ._distance;
-                                _event.OnEventCall(new NavigationEventArgs
-                                {
-                                    _result = NavigationResult.Run,
-                                    _nextInstruction = navigationInstruction
-                                });
-                            }
-                        }
-
-                    }
-                    else if (_nextWaypointStep >= 1 &&
-                             _waypointsOnWrongWay
-                             [_waypointsOnRoute[_nextWaypointStep - 1]]
-                             .Contains(detectWrongWay) == true &&
-                             _DetectWrongWaypoint)
-                    {
-                        HandleWrongWay();
-                    }
-
-                    Console.WriteLine("<< In next next");
-                }
-                else if (isGetWrongWaypoint())
+                _event.OnEventCall(new NavigationEventArgs
                 {
-                    HandleWrongWay();
-                }
-
-                _nextWaypointEvent.Set();
+                    _result = NavigationResult.ArriveVirtualPoint,
+                    _nextInstruction = navigationInstruction
+                });
             }
-            Console.WriteLine("<< CheckArrivedWaypoint ");
+            else
+            {
+                if (navigationInstruction._information
+                    ._turnDirection == TurnDirection.Forward &&
+                    _nextWaypointStep != -1 &&
+                    _accumulateStraightDistance >= _remindDistance)
+                {
+                    _accumulateStraightDistance +=
+                        navigationInstruction._information._distance;
+                    _event.OnEventCall(new NavigationEventArgs
+                    {
+                        _result = NavigationResult.ArrivaIgnorePoint,
+                        _nextInstruction = navigationInstruction
+                    });
+                }
+                else
+                {
+                    _accumulateStraightDistance =
+                        navigationInstruction._information
+                        ._distance;
+                    _event.OnEventCall(new NavigationEventArgs
+                    {
+                        _result = NavigationResult.Run,
+                        _nextInstruction = navigationInstruction
+                    });
+
+                }
+            }
         }
         private bool isGetWrongWaypoint()
         {
             return _nextWaypointStep >= 1 &&
                          _waypointsOnWrongWay
                          [_waypointsOnRoute[_nextWaypointStep - 1]].
-                         Contains(new RegionWaypointPoint(_currentRegionID, _currentWaypointID)) == true &&
-                         _DetectWrongWaypoint;
+                         Contains(new RegionWaypointPoint(_currentRegionID, _currentWaypointID)));
         }
         private bool isArrivedWaypoint(int steps)
         {
+            if (steps > 0 && _nextWaypointStep + 1 < _waypointsOnRoute.Count()) return false;
             return _currentRegionID.Equals(
                              _waypointsOnRoute[_nextWaypointStep + steps]._regionID) &&
                          _currentWaypointID.Equals(
