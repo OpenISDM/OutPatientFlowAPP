@@ -11,5 +11,7 @@
         public static string CONTENT_TYPE = "application/json";
         public static int BEACON_DETECTED_CLOCK_RESET_TIME = 90000;
         public static double EARTH_RADIUS = 6378137;
+        public static int WAYPOINT_TO_CLOSE_DISTANCE = 10;
+        public static int REMIND_DISTANCE = 50; //TODO : To clarify what the fuck it is.
     }
 }
