@@ -162,8 +162,7 @@ namespace IndoorNavigation.Modules
                 else if (NeedtoMonitorPreviousWaypoint())
                 {
                     Console.WriteLine("the user is go on in monitore mode.");
-
-                    SetupMonitorWaypoint(_nextWaypointStep);
+                    SetMonitorWaypoint(_nextWaypointStep);
                 }
                 else if (isArrivedWaypoint(0))
                 {
@@ -213,21 +212,21 @@ namespace IndoorNavigation.Modules
         private bool NeedtoMonitorPreviousWaypoint()
         {
             //inital step would not know previous waypoints infor.
-            if (_nextWaypointStep <= 0 ) return false;
+            if (_nextWaypointStep <= 0 && !_DetectionMode) return false;
             RegionWaypointPoint previousWaypoint = _waypointsOnRoute[_nextWaypointStep - 1];
             RegionWaypointPoint currentWaypoint = _waypointsOnRoute[_nextWaypointStep];
 
             // to consider the elevator and escalator scenario, the distance would not too far,
             // but if user chang region by hallway, it's different. so I remove this line.  
             //if (previousWaypoint._regionID != currentWaypoint._regionID) return false;
-            
+
             if (_navigationGraph.StraightDistanceBetweenWaypoints
-                (previousWaypoint, currentWaypoint) > 
-                WAYPOINT_TO_CLOSE_DISTANCE) 
+                (previousWaypoint, currentWaypoint) >
+                WAYPOINT_TO_CLOSE_DISTANCE)
                 return true;
             return false;
         }
-        private void SetupMonitorWaypoint(int nextStep)
+        private void SetMonitorWaypoint(int nextStep)
         {
             _iPSModules.SetMonitorBeaconList(nextStep);
         }
@@ -1022,7 +1021,8 @@ namespace IndoorNavigation.Modules
                 _result = NavigationResult.ArrivaIgnorePoint
             });
             //There need to resume NavigatorProgram.
-
+            _DetectionMode = true;
+            _nextWaypointEvent.Set();
             Console.WriteLine(">>LeavePreviousWaypoints");
         }
         #endregion
