@@ -271,8 +271,9 @@ namespace IndoorNavigation.Modules.IPSClients
             Console.WriteLine("<< In DetectWaypoints IBeacon");
         }
 
+        //TODO: iBeacon part is not implement.
         public void MonitorWaypoints() {
-            //this part I need sometime to consider.
+            //this part I need some time to consider.
         }
 
         public void DetectWaypointRssi(WaypointBeaconsMapping mapping)
