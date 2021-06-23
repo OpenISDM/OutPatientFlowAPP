@@ -31,8 +31,9 @@ namespace IndoorNavigation.Modules
                 {
                     type = IPSType.LBeacon,
                     client = new WaypointClient(),
+                    _detectedBeaconMapping = new List<WaypointBeaconsMapping>(),
                     _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
-                });
+                }) ;
 
                 _multiClients[IPSType.LBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
@@ -46,6 +47,7 @@ namespace IndoorNavigation.Modules
                 {
                     type = IPSType.iBeacon,
                     client = new IBeaconClient(),
+                    _detectedBeaconMapping = new List<WaypointBeaconsMapping>(),
                     _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
                 });
 
@@ -172,7 +174,7 @@ namespace IndoorNavigation.Modules
 
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
 
-            _multiClients[type]._monitorBeaconMapping.Add
+            _multiClients[type]._detectedBeaconMapping.Add
                 (GetSingleBeaconMapping(regionID, waypointID));
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
@@ -181,7 +183,7 @@ namespace IndoorNavigation.Modules
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
-            _multiClients[type]._monitorBeaconMapping.AddRange
+            _multiClients[type]._detectedBeaconMapping.AddRange
                 (GetBeaconMapping(regionID, waypointIDs));
 
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
@@ -196,7 +198,7 @@ namespace IndoorNavigation.Modules
                 {
                     //TODO: To think how to fill in the monitor beacon list.
                     _multiClients[type].client.SetDetectedWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._detectedBeaconMapping);
                 }
             }
             else
@@ -205,7 +207,7 @@ namespace IndoorNavigation.Modules
                 {
                     //TODO : think how to fill the monitor Beacon List.
                     _multiClients[type].client.SetDetectedWaypointList
-                        (_multiClients[type]._monitorBeaconMapping);
+                        (_multiClients[type]._detectedBeaconMapping);
                 }
             }
             Console.WriteLine("<<SetMonitorBeaconList");
@@ -231,6 +233,7 @@ namespace IndoorNavigation.Modules
         }
         public void AddMonitorBeacon(Guid regionID, Guid waypointID) 
         {
+            IPSType type = _naviGraph.GetRegionIPSType(regionID);
 
         }
         public void SetMonitorBeaconList(int nextStep)
@@ -289,7 +292,7 @@ namespace IndoorNavigation.Modules
                 if (pair.Value.ContainType)
                 {
                     pair.Value.ContainType = false;
-                    pair.Value._monitorBeaconMapping.Clear();
+                    pair.Value._detectedBeaconMapping.Clear();
                     pair.Value.client.Stop();
                     pair.Value.client._event._eventHandler -=
                         new EventHandler(PassMatchedWaypointEvent);
@@ -301,6 +304,7 @@ namespace IndoorNavigation.Modules
         {
             foreach (IPSType type in _usedIPS)
             {
+                _multiClients[type]._detectedBeaconMapping.Clear();
                 _multiClients[type]._monitorBeaconMapping.Clear();
             }
         }
@@ -331,8 +335,9 @@ namespace IndoorNavigation.Modules
             public IPSType type { get; set; }
             public bool ContainType { get; set; } = false;
             public IIPSClient client { get; set; }
-            public List<WaypointBeaconsMapping> _monitorBeaconMapping
+            public List<WaypointBeaconsMapping> _detectedBeaconMapping
             { get; set; }
+            public List<WaypointBeaconsMapping> _monitorBeaconMapping { get; set; }
         }
         #endregion
     }
