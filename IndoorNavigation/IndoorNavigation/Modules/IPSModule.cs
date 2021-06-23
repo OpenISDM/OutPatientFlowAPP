@@ -33,7 +33,7 @@ namespace IndoorNavigation.Modules
                     client = new WaypointClient(),
                     _detectedBeaconMapping = new List<WaypointBeaconsMapping>(),
                     _monitorBeaconMapping = new List<WaypointBeaconsMapping>()
-                }) ;
+                });
 
                 _multiClients[IPSType.LBeacon].client._event._eventHandler +=
                     PassMatchedWaypointEvent;
@@ -212,7 +212,6 @@ namespace IndoorNavigation.Modules
             }
             Console.WriteLine("<<SetMonitorBeaconList");
         }
-
         private void PassMatchedWaypointEvent(object sender, EventArgs args)
         {
             Console.WriteLine(">>PassMatchedWaypointEvent");
@@ -231,19 +230,20 @@ namespace IndoorNavigation.Modules
             //To define what rssi is user leave the waypoints.
             Console.WriteLine("<<GetMonitorWaypointEvent");
         }
-        public void AddMonitorBeacon(Guid regionID, Guid waypointID) 
+        public void AddMonitorBeacon(Guid regionID, Guid waypointID)
         {
             IPSType type = _naviGraph.GetRegionIPSType(regionID);
-
+            _multiClients[type]._monitorBeaconMapping.Add
+                (GetSingleBeaconMapping(regionID, waypointID));
         }
         public void SetMonitorBeaconList(int nextStep)
         {
-            if (nextStep == -1) return;
+            if (nextStep <= 0) return;
             // TODO : To monitor Beacons, need to consider how to implement.
             foreach (IPSType type in _ipsTable[nextStep - 1]) // to monitor previous one or next one?
             {
-
-                //_multiClients[type].client.SetMonitorWaypointList(MonitorBeaconList);
+                _multiClients[type].client.SetMonitorWaypointList
+                    (_multiClients[type]._monitorBeaconMapping); ;
             }
         }
         public void OpenBeaconMonitoring(int previousStep)
@@ -252,7 +252,8 @@ namespace IndoorNavigation.Modules
 
             foreach (IPSType type in _ipsTable[previousStep])
             {
-                _multiClients[type].client.MonitorWaypoints();
+                if(_multiClients[type]._monitorBeaconMapping.Count > 0)
+                    _multiClients[type].client.MonitorWaypoints();
             }
         }
         #endregion

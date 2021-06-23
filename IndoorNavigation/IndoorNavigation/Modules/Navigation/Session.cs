@@ -78,7 +78,7 @@ namespace IndoorNavigation.Modules
         private int TmpCurrentProgress = 0;
         private int TmpTotalProgress = 0;
         private bool _DetectWrongWaypoint = true;
-        private bool _DetectionMode = true;
+        private bool _monitorModeOn = false;
         #endregion
 
         public Session(NavigationGraph navigationGraph,
@@ -212,7 +212,7 @@ namespace IndoorNavigation.Modules
         private bool NeedtoMonitorPreviousWaypoint()
         {
             //inital step would not know previous waypoints infor.
-            if (_nextWaypointStep <= 0 && !_DetectionMode) return false;
+            if (_nextWaypointStep <= 0) return false;
             RegionWaypointPoint previousWaypoint = _waypointsOnRoute[_nextWaypointStep - 1];
             RegionWaypointPoint currentWaypoint = _waypointsOnRoute[_nextWaypointStep];
 
@@ -228,7 +228,14 @@ namespace IndoorNavigation.Modules
         }
         private void SetMonitorWaypoint(int nextStep)
         {
-            _iPSModules.SetMonitorBeaconList(nextStep);
+            if (nextStep > 1)
+            {
+                _iPSModules.AddMonitorBeacon(
+                    _waypointsOnRoute[nextStep - 1]._regionID, 
+                    _waypointsOnRoute[nextStep - 1]._waypointID
+                    );
+            }
+            _iPSModules.SetMonitorBeaconList(nextStep - 1);
         }
         private void NavigateToNextWaypoint(int nextStep)
         {
@@ -259,8 +266,6 @@ namespace IndoorNavigation.Modules
                             ._waypointID);
                     }
                 }
-
-
                 if (_nextWaypointStep >= 1)
                 {
                     if (_waypointsOnWrongWay
@@ -288,10 +293,9 @@ namespace IndoorNavigation.Modules
             {
                 _pauseThreadEvent.Wait();
                 Thread.Sleep(500);
-                if (_DetectionMode)
                     _iPSModules.OpenBeaconScanning(_nextWaypointStep);
-                else
-                    _iPSModules.OpenBeaconMonitoring(_nextWaypointStep);
+                if(_monitorModeOn)
+                    _iPSModules.OpenBeaconMonitoring(_nextWaypointStep-1);
             }
         }
         #region GeneratePath Methods
