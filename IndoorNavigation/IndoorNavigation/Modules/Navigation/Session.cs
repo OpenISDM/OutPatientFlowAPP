@@ -242,7 +242,7 @@ namespace IndoorNavigation.Modules
                 Console.WriteLine("NavigateProgram");
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
 
-                _iPSModules.AddMonitorBeacon
+                _iPSModules.AddDetectedBeacon
                     (checkPoint._regionID, checkPoint._waypointID);
 
 
@@ -252,7 +252,7 @@ namespace IndoorNavigation.Modules
                     if (_waypointsOnRoute[_nextWaypointStep + 1]._regionID ==
                         _currentRegionID)
                     {
-                        _iPSModules.AddMonitorBeacon
+                        _iPSModules.AddDetectedBeacon
                             (_waypointsOnRoute[_nextWaypointStep + 1]
                             ._regionID,
                             _waypointsOnRoute[_nextWaypointStep + 1]
@@ -271,7 +271,7 @@ namespace IndoorNavigation.Modules
                             in _waypointsOnWrongWay
                             [_waypointsOnRoute[_nextWaypointStep - 1]])
                         {
-                            _iPSModules.AddMonitorBeacon
+                            _iPSModules.AddDetectedBeacon
                                 (items._regionID, items._waypointID);
                         }
                     }

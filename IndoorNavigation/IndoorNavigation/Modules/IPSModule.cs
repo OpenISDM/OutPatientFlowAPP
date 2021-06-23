@@ -69,47 +69,12 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<IPSmodule : constructor");
         }
 
-
-        #region for detect waypoint
-
+        #region Initial and Session control interface.
         public void SetIPStable(List<HashSet<IPSType>> ipsTable)
         {
             _ipsTable = ipsTable;
         }
 
-        public void OpenBeaconMonitoring(int previousStep)
-        {
-            if (previousStep <= 0) return;
-
-            foreach (IPSType type in _ipsTable[previousStep])
-            {
-                _multiClients[type].client.MonitorWaypoints();
-            }
-        }
-
-        public void OpenBeaconScanning(int nextStep)
-        {
-            Console.WriteLine(">>IPSModule : OpenBeaconScanning");
-
-            //when nextstep = -1, it will open all position system to know 
-            //where user is.
-            if (nextStep == -1)
-            {
-                foreach (IPSType type in _usedIPS)
-                {
-                    _multiClients[type].client.DetectWaypoints();
-                }
-            }
-            else
-            {
-                foreach (IPSType type in _ipsTable[nextStep])
-                {
-                    Console.WriteLine("OpenScanning : " + type);
-                    _multiClients[type].client.DetectWaypoints();
-                }
-            }
-            Console.WriteLine("<<IPSModule : OpenBeaconScanning");
-        }
         public void InitialStep_DetectAllBeacon(List<Guid> regionIDs)
         {
             Console.WriteLine(">>InitialStep_DetectAllBeacon");
@@ -119,12 +84,14 @@ namespace IndoorNavigation.Modules
                 List<Guid> waypointIDs =
                     _naviGraph.GetAllWaypointIDInOneRegion(regionID);
 
-                AddMonitorBeaconList(regionID, waypointIDs);
+                AddDetectedBeaconList(regionID, waypointIDs);
             }
 
             Console.WriteLine("<<InitialStep_DetectAllBeacon");
         }
+        #endregion
 
+        #region Get beacon mapping
         private WaypointBeaconsMapping GetSingleBeaconMapping(Guid regionID,
             Guid waypointID)
         {
@@ -173,8 +140,33 @@ namespace IndoorNavigation.Modules
             Console.WriteLine("<<IPSmodule : GetBeaconWaypointMapping");
             return BeaconWaypointMapping;
         }
+        #endregion
 
-        public void AddMonitorBeacon(Guid regionID, Guid waypointID)
+        #region For detected waypoint.
+        public void OpenBeaconScanning(int nextStep)
+        {
+            Console.WriteLine(">>IPSModule : OpenBeaconScanning");
+
+            //when nextstep = -1, it will open all position system to know 
+            //where user is.
+            if (nextStep == -1)
+            {
+                foreach (IPSType type in _usedIPS)
+                {
+                    _multiClients[type].client.DetectWaypoints();
+                }
+            }
+            else
+            {
+                foreach (IPSType type in _ipsTable[nextStep])
+                {
+                    Console.WriteLine("OpenScanning : " + type);
+                    _multiClients[type].client.DetectWaypoints();
+                }
+            }
+            Console.WriteLine("<<IPSModule : OpenBeaconScanning");
+        }
+        public void AddDetectedBeacon(Guid regionID, Guid waypointID)
         {
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
@@ -184,7 +176,7 @@ namespace IndoorNavigation.Modules
                 (GetSingleBeaconMapping(regionID, waypointID));
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
-        public void AddMonitorBeaconList(Guid regionID, List<Guid> waypointIDs)
+        public void AddDetectedBeaconList(Guid regionID, List<Guid> waypointIDs)
         {
             Console.WriteLine(">>IPSModule : AddMonitorBeacon");
 
@@ -194,36 +186,6 @@ namespace IndoorNavigation.Modules
 
             Console.WriteLine("<<IPSModule : AddMonitorBeacon");
         }
-
-        private void PassMatchedWaypointEvent(object sender, EventArgs args)
-        {
-            Console.WriteLine(">>PassMatchedWaypointEvent");
-            CleanMappingBeaconList();
-            _event.OnEventCall(args as WaypointSignalEventArgs);
-
-            //OpenedIPSType.Clear();
-            Console.WriteLine("<<PassMatchedWaypointEvent");
-        }
-
-        private void GetMonitorWaypointEvent(object sender, EventArgs args)
-        {
-            Console.WriteLine(">>GetMonitorWaypointEvent");
-            //To define what rssi is user leave the waypoints.
-            Console.WriteLine("<<GetMonitorWaypointEvent");
-        }
-
-        public void SetMonitorBeaconList(int nextStep)
-        {
-            if (nextStep == -1) return;
-            // TODO : To monitor Beacons, need to consider how to implement.
-            foreach(IPSType type in _ipsTable[nextStep-1]) // to monitor previous one or next one?
-            {
-                
-                //_multiClients[type].client.SetMonitorWaypointList(MonitorBeaconList);
-            }
-        }
-
-        //TODO : the term "MonitorBeacon list should be remove.
         public void SetDetectedBeaconList(int nextStep)
         {
             //Console.WriteLine("openIPStype count : " + OpenedIPSType.Count);
@@ -247,6 +209,48 @@ namespace IndoorNavigation.Modules
                 }
             }
             Console.WriteLine("<<SetMonitorBeaconList");
+        }
+
+        private void PassMatchedWaypointEvent(object sender, EventArgs args)
+        {
+            Console.WriteLine(">>PassMatchedWaypointEvent");
+            CleanMappingBeaconList();
+            _event.OnEventCall(args as WaypointSignalEventArgs);
+
+            //OpenedIPSType.Clear();
+            Console.WriteLine("<<PassMatchedWaypointEvent");
+        }
+        #endregion
+
+        #region For monitor waypoint
+        private void GetMonitorWaypointEvent(object sender, EventArgs args)
+        {
+            Console.WriteLine(">>GetMonitorWaypointEvent");
+            //To define what rssi is user leave the waypoints.
+            Console.WriteLine("<<GetMonitorWaypointEvent");
+        }
+        public void AddMonitorBeacon(Guid regionID, Guid waypointID) 
+        {
+
+        }
+        public void SetMonitorBeaconList(int nextStep)
+        {
+            if (nextStep == -1) return;
+            // TODO : To monitor Beacons, need to consider how to implement.
+            foreach (IPSType type in _ipsTable[nextStep - 1]) // to monitor previous one or next one?
+            {
+
+                //_multiClients[type].client.SetMonitorWaypointList(MonitorBeaconList);
+            }
+        }
+        public void OpenBeaconMonitoring(int previousStep)
+        {
+            if (previousStep <= 0) return;
+
+            foreach (IPSType type in _ipsTable[previousStep])
+            {
+                _multiClients[type].client.MonitorWaypoints();
+            }
         }
         #endregion
 
@@ -275,6 +279,8 @@ namespace IndoorNavigation.Modules
             _event.OnEventCall(args as WaypointRssiEventArgs);
         }
         #endregion
+
+        #region Life Cycle control
         public void CloseAllActiveClient()
         {
             Console.WriteLine(">>IPSmodule : CloseAllActiveClient");
@@ -318,7 +324,7 @@ namespace IndoorNavigation.Modules
             Dispose(true);
         }
         #endregion
-
+        #endregion
         #region Data Structure
         public class IPSClient
         {
