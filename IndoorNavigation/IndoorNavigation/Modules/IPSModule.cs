@@ -215,10 +215,9 @@ namespace IndoorNavigation.Modules
         private void PassMatchedWaypointEvent(object sender, EventArgs args)
         {
             Console.WriteLine(">>PassMatchedWaypointEvent");
-            CleanMappingBeaconList();
+            if (((WaypointSignalEventArgs)args)._signalMode == SignalMode.Detecting)
+                CleanMappingBeaconList();
             _event.OnEventCall(args as WaypointSignalEventArgs);
-
-            //OpenedIPSType.Clear();
             Console.WriteLine("<<PassMatchedWaypointEvent");
         }
         #endregion
@@ -252,7 +251,7 @@ namespace IndoorNavigation.Modules
 
             foreach (IPSType type in _ipsTable[previousStep])
             {
-                if(_multiClients[type]._monitorBeaconMapping.Count > 0)
+                if (_multiClients[type]._monitorBeaconMapping.Count > 0)
                     _multiClients[type].client.MonitorWaypoints();
             }
         }
