@@ -111,7 +111,6 @@ namespace IndoorNavigation.Modules
             _navigationControllerThread = new Thread(() => NavigatorProgram());
             _navigationControllerThread.Start();
         }
-
         private void NavigatorProgram()
         {
             _nextWaypointStep = -1;
@@ -1213,7 +1212,9 @@ namespace IndoorNavigation.Modules
         }
         private bool isArrivedWaypoint(int steps)
         {
-            if (steps > 0 && _nextWaypointStep + 1 < _waypointsOnRoute.Count()) return false;
+            Console.WriteLine("add steps : " + steps);
+            Console.WriteLine("current step : " + _nextWaypointStep);
+            if (steps > 0 && _nextWaypointStep + steps >= _waypointsOnRoute.Count()) return false;
             return _currentRegionID.Equals(
                              _waypointsOnRoute[_nextWaypointStep + steps]._regionID) &&
                          _currentWaypointID.Equals(
@@ -1224,7 +1225,7 @@ namespace IndoorNavigation.Modules
             if (_currentRegionID == Guid.Empty && _currentWaypointID == Guid.Empty) return false;
             //if (_waypointsOnRoute is null) return false;
             return _currentRegionID.Equals(_destinationRegionID) &&
-                    _currentWaypointID.Equals(_destinationWaypointID) ||(! (_waypointsOnRoute is null) &&
+                    _currentWaypointID.Equals(_destinationWaypointID) || (!(_waypointsOnRoute is null) &&
                     _currentRegionID.Equals(_waypointsOnRoute.Last()._regionID)
                     && _currentWaypointID.Equals(_waypointsOnRoute.Last()
                     ._waypointID));
