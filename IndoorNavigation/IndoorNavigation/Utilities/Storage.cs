@@ -240,7 +240,7 @@ namespace IndoorNavigation.Utilities
                 info._graphName = GraphName;
                 XmlNodeList DisplayNameList =
                     GraphNode.SelectNodes("DisplayNames/DisplayName");
-
+                info._displayColor = Helper.GetListTextColor(GraphName);
                 foreach (XmlNode displayName in DisplayNameList)
                 {
                     info._displayNames
@@ -753,7 +753,7 @@ namespace IndoorNavigation.Utilities
                 private set { }
             }
             public string _graphName { get; set; }
-            public string _displayColor { get; set; } = "#3f51b5";
+            public string _displayColor { get; set; }
             public double _currentVersion { get; set; }
             public bool _isBeta { get; set; } = false;
             public List<string> _pictureList { get; set; }

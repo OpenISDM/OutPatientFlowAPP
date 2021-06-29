@@ -56,8 +56,8 @@ namespace IndoorNavigation.Views.PopUpPage
             Setters ={
                 new Setter{Property=Button.FontSizeProperty,
                     Value=Device.GetNamedSize(NamedSize.Large,typeof(Button))},
-                new Setter{Property=Button.TextColorProperty,
-                    Value=Color.FromHex("#3f51b5")},
+                //new Setter{Property=Button.TextColorProperty,
+                    //Value=Color.FromHex("#3f51b5")},
                 new Setter{Property=Button.HorizontalOptionsProperty,
                     Value=LayoutOptions.End},
                 new Setter{Property=Button.VerticalOptionsProperty,

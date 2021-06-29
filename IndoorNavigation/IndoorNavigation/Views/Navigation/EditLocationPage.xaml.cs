@@ -127,10 +127,7 @@ namespace IndoorNavigation.Views.Navigation
         }
 
         async private Task DownloadSiteFile(GraphInfo selectedItem)
-        {
-            //IndicatorPopupPage busyPage =
-            //                    new IndicatorPopupPage();
-            //if(PopupNavigation.Instance.PopupStack.Contains())
+        {          
             DownloadGraphPopupPage downloadPage = new DownloadGraphPopupPage();
             try
             {

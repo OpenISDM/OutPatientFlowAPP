@@ -3,18 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:IndoorNavigation"
              x:Class="IndoorNavigation.MainPage"
-             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers" 
+             xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"                   
+                                Style="{StaticResource PageStyle}"
              Title="{i18n:Translate LOCATION_STRING}">
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 25, 0, 0" />
-                <On Platform="Android" Value="0, 0, 0, 0" />
-                <On Platform="UWP" Value="0, 0, 0, 0" />
-            </OnPlatform.Platforms>
-        </OnPlatform>
-    </ContentPage.Padding>
-
+    <ContentPage.Resources>
+        <ResourceDictionary Source="Views/Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid VerticalOptions="FillAndExpand" 
               HorizontalOptions="FillAndExpand">
@@ -26,19 +20,15 @@
 
             <SearchBar x:Name="NaviSearchBar" Grid.Row="0" 
                        Placeholder="{i18n:Translate SELECT_LOCATION_STRING}"
-                       CancelButtonColor="#007BFF"
                        Text="{Binding SearchedText, Mode=TwoWay}"
-                       BackgroundColor="#f0f0f0"
                        VerticalOptions="StartAndExpand"
                        FontSize="Large"/>
 
             <ListView x:Name="LocationListView" Grid.Row="1" Grid.RowSpan="2"
                       ItemsSource="{Binding NavigationGraphFiles}"
-                      Margin="10, -8, 10,10" HasUnevenRows="true"
+                      HasUnevenRows="true"
                       ItemTapped="Handle_ItemTapped"
-                      SelectedItem="LocationListView_ItemSelected"
                       IsPullToRefreshEnabled="true"                      
-                      Refreshing="LocationListView_Refreshing"
                           VerticalOptions="FillAndExpand"
                           HorizontalOptions="FillAndExpand">
 
@@ -52,12 +42,6 @@
 
                             <StackLayout Orientation="Horizontal"
                                          Padding="20, 20, 20, 1">
-
-                                <!--<Label Text="ICON"/>-->
-                                <!--   <Image Source="location_icon.png"
-                                       Margin="-5, 1, -1, 15"
-                                       VerticalOptions="Start"
-                                       Scale="0.5"/>-->
 
                                 <Label  Text="{Binding UserNaming}" 
                                         HorizontalOptions="Start" 

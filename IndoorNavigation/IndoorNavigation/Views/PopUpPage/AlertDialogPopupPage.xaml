@@ -39,9 +39,11 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.PopUpPage.AlertDialogPopupPage">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <StackLayout>
         <Frame 	x:Name="AlertFrame" 
-				BackgroundColor="White" 				 
 				CornerRadius="8"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="FillAndExpand"
@@ -53,7 +55,6 @@
 						FontSize="26" 
 						HorizontalOptions="StartAndExpand" 
 						VerticalOptions="CenterAndExpand" 
-						TextColor="Black"  
 						HorizontalTextAlignment="Start"  
 						VerticalTextAlignment="Center" 
 						LineBreakMode="WordWrap"/>

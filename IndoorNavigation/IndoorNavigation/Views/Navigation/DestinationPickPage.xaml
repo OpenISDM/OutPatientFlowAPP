@@ -2,35 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="IndoorNavigation.Views.Navigation.DestinationPickPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Style="{StaticResource PageStyle}"
              Title="{i18n:Translate PICK_DESTINATION_STRING}">
-    
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <OnPlatform.Platforms>
-                <On Platform="iOS" Value="0, 0, 0, 25" />
-                <On Platform="Android" Value="0, 0, 0, 0" />
-                <On Platform="UWP" Value="0, 0, 0, 0" />
-            </OnPlatform.Platforms>
-        </OnPlatform>
-    </ContentPage.Padding>
-    
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="MyListView"
-                  Margin="10, 5, 20, 10" HasUnevenRows="true"
+                  HasUnevenRows="true"
                   ItemsSource="{Binding DestinationItems}" 
                   ItemTapped="Handle_ItemTapped" 
                   CachingStrategy="RecycleElement"
                   IsGroupingEnabled="true"
-                  GroupDisplayBinding="{Binding Key}">
-            
+                  GroupDisplayBinding="{Binding Key}"
+                  >
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout VerticalOptions="CenterAndExpand"
-                                     Padding="15, 1, 15, 1">
+                                     Padding="15, 0, 15, 0"
+                                     BackgroundColor="{AppThemeBinding
+                            Light={StaticResource LightPrimaryColor},
+                            Dark={StaticResource DarkPrimaryColor}}">
                             <Label Text="{Binding Key, StringFormat='{0}'}"
-                                   TextColor="#3F51B5"
+                                   TextColor="{AppThemeBinding
+                                Light={StaticResource LightSecondaryTextColor},
+                                Dark={StaticResource DarkSecondaryTextColor}}"
                                    FontAttributes="Bold"
                                    FontSize="32"/>
                         </StackLayout>
