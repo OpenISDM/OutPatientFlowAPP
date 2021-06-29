@@ -59,6 +59,7 @@ using System.Linq;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
 using static IndoorNavigation.Utilities.Storage;
+using static IndoorNavigation.Utilities.Helper;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static IndoorNavigation.Utilities.TmperorayStatus;
@@ -96,20 +97,20 @@ namespace IndoorNavigation
             base.OnAppearing();
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                Color.FromHex("#3F51B5");
+                GetNavigationBarColor();
+
             ((NavigationPage)Application.Current.MainPage).BarTextColor =
                 Color.White;
 
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
             RefreshToolbarOptions();
-            //RefreshListView();
         }
 
         private INetworkSetting setting;
         private CloudDownload _download = new CloudDownload();
 
-        async private Task CheckVersionAndUpdate_(Location location,
+        async private Task CheckVersionAndUpdate(Location location,
             NavigationGraph navigationGraph)
         {
             if (_localResources.ContainsKey(location.sourcePath) &&
@@ -162,7 +163,7 @@ namespace IndoorNavigation
 
                             if (WantRetry)
                             {
-                                await CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate(location,
                                     navigationGraph);
                             }
                         }
@@ -180,7 +181,7 @@ namespace IndoorNavigation
                             {
                                 setting.OpenSettingPage();
 
-                                await CheckVersionAndUpdate_(location,
+                                await CheckVersionAndUpdate(location,
                                     navigationGraph);
                             }
                         }
@@ -217,7 +218,7 @@ namespace IndoorNavigation
 
                     FirstTimeUse = await autoAdjustPage.Show();
                 }
-                await CheckVersionAndUpdate_(location, navigationGraph);
+                await CheckVersionAndUpdate(location, navigationGraph);
 
                 if (navigationGraph.ContainsBanner() &&
                     !Preferences.Get(navigationGraph.GetBuildingName() + "Banner", false))

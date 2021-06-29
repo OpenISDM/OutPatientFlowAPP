@@ -5,11 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
+             Style="{StaticResource PageStyle}"
              x:Class="IndoorNavigation.Views.Settings.AboutSeeing_I_GOPage"
              Title="{i18n:Translate ABOUT_SEEING_I_GO_STRING}">
     <ContentPage.Resources>
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="Black"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
     </ContentPage.Resources>

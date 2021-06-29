@@ -125,8 +125,8 @@ namespace IndoorNavigation.Views.Settings
 
             DevelopmentSection.IsVisible = Preferences.Get(nameof(DEVELOPER_MODE_OPENED), false);
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#3F51B5");
+            //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
             _languageItems.Add(GetResourceString("CHINESE_STRING"));
             _languageItems.Add(GetResourceString("ENGLISH_STRING"));

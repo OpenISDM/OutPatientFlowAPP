@@ -6,7 +6,11 @@
              xmlns:i18n="clr-namespace:IndoorNavigation.Resources.Helpers"
              Title="員林基督教醫院"
              mc:Ignorable="d"
+             Style="{StaticResource PageStyle}"
              x:Class="IndoorNavigation.Views.Navigation.NavigationHomePage_">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <OnPlatform.Platforms>

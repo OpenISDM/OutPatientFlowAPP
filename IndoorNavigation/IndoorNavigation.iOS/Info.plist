@@ -33,7 +33,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>XSLaunchImageAssets</key>
-	<string>SplashScreen.storyboard</string>
+	<string>Assets.xcassets/LaunchImage.launchimage</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleLocalizations</key>
@@ -61,8 +61,6 @@
 	<string>12.2</string>
 	<key>CFBundleDisplayName</key>
 	<string>帶路機</string>
-	<key>UILaunchStoryboardName</key>
-	<string>SplashScreen</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>this app would like to access your calenders.</string>
 </dict>

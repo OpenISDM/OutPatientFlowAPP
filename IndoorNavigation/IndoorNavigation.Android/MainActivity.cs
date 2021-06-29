@@ -34,6 +34,7 @@ using Plugin.Permissions;
 using System;
 using System.Threading;
 using Plugin.CurrentActivity;
+using AndroidX.AppCompat.App;
 
 namespace IndoorNavigation.Droid
 {
@@ -75,6 +76,10 @@ namespace IndoorNavigation.Droid
 
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            //to disable Android Dark mode.
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+
             xamarinApp = new App();
             LoadApplication(xamarinApp);
 

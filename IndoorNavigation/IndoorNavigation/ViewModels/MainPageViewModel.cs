@@ -41,16 +41,10 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using IndoorNavigation.Views.Settings;
 using MvvmHelpers;
-using Xamarin.Forms;
-using Plugin.Multilingual;
-using System.Resources;
-using IndoorNavigation.Resources.Helpers;
-using System.Reflection;
 using IndoorNavigation.Utilities;
 using static IndoorNavigation.Utilities.Constants;
-using System;
+using static IndoorNavigation.Utilities.Helper;
 
 namespace IndoorNavigation.ViewModels
 {
@@ -79,17 +73,14 @@ namespace IndoorNavigation.ViewModels
                 {
                     sourcePath = location.sourcePath,
                     UserNaming = location.UserNaming,
-                    displayTextColor = 
-                    location.UserNaming.Trim().ToUpper().Contains(BETA_STRING)
-                        ? "#808A87"
-                        : "#3f51b5"
+                    displayTextColor = GetListTextColor(location.UserNaming)                
                 }); 
             }
             if (_locations.Any())
             {
                 NavigationGraphFiles = _locations;
             }
-        }
+        }        
 
         public IList<Location> NavigationGraphFiles
         {

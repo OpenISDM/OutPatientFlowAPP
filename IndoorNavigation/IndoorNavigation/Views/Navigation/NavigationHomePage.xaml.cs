@@ -81,10 +81,10 @@ namespace IndoorNavigation.Views.Navigation
             NavigationPage.SetBackButtonTitle
                 (this,
                  _resourceManager.GetString("BACK_STRING", currentLanguage));
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                Color.FromHex("#3F51B5");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor =
-                Color.White;
+            //((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+            //    Color.FromHex("#3F51B5");
+            //((NavigationPage)Application.Current.MainPage).BarTextColor =
+            //    Color.White;
 
             switch (Device.RuntimePlatform)
             {

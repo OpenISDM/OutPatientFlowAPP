@@ -7,6 +7,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="IndoorNavigation.Views.PopUpPage.AutoAdjustPopupPage">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Theme/BasicTheme.xaml"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Frame BackgroundColor="White"
