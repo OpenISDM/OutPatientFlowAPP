@@ -2,7 +2,6 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
-                    xmlns:customePage ="clr-namespace:IndoorNavigation.Views.Settings"
              >
     <!-- Light theme-->
     <Color x:Key="LightPageBackgroundColor">WhiteSmoke</Color>
@@ -10,16 +9,20 @@
     <Color x:Key="LightPrimaryColor">WhiteSmoke</Color>
     <Color x:Key="LightSecondaryColor">#b0b0b0</Color>
     <Color x:Key="LightPrimaryTextColor">Black</Color>
-    <Color x:Key="LightSecondaryTextColor">#b0b0b0</Color>
+    <Color x:Key="LightSecondaryTextColor">#3f51b5</Color>
     <Color x:Key="LightTertiaryTextColor">#3f51b5</Color>
+    <Color x:Key="LightSettingViewCellColor">WhiteSmoke</Color>
+    <Color x:Key="LightSettingViewHeadColor">#e5e5e5</Color>
     <!-- Dark theme-->
     <Color x:Key="DarkPageBackgroundColor">#463a3c</Color>
     <Color x:Key="DarkNavigationBarColor">#202925</Color>
     <Color x:Key="DarkPrimaryColor">#463a3c</Color>
-    <Color x:Key="DarkSecondaryColor">#fcfcfc</Color>
+    <Color x:Key="DarkSecondaryColor">#d0d0d0</Color>
     <Color x:Key="DarkPrimaryTextColor">WhiteSmoke</Color>
     <Color x:Key="DarkSecondaryTextColor">#eeeeee</Color>
     <Color x:Key="DarkTertiaryTextColor">#e4e4e4</Color>
+    <Color x:Key="DarkSettingViewCellColor">#606060</Color>
+    <Color x:Key="DarkSettingViewHeadColor">#444444</Color>
 
     <Style TargetType="Frame">
         <Setter Property="BackgroundColor"
@@ -71,13 +74,13 @@
     </Style>
     <Style TargetType="sv:SettingsView">
         <Setter Property="HeaderBackgroundColor" 
-                Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor},
-            Dark={StaticResource DarkPageBackgroundColor}}"/>
+                Value="{AppThemeBinding Light={StaticResource LightSettingViewHeadColor},
+            Dark={StaticResource DarkSettingViewHeadColor}}"/>
         <Setter Property="BackgroundColor" 
                 Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, 
             Dark={StaticResource DarkPageBackgroundColor}}"/>
         <Setter Property="CellBackgroundColor" Value="{AppThemeBinding
-            Light={StaticResource LightPrimaryColor},
-            Dark={StaticResource DarkPrimaryColor}}"/>
+            Light={StaticResource LightSettingViewCellColor},
+            Dark={StaticResource DarkSettingViewCellColor}}"/>
     </Style>
 </ResourceDictionary>

@@ -59,6 +59,7 @@ using System.Linq;
 using Xamarin.Essentials;
 using Location = IndoorNavigation.ViewModels.Location;
 using static IndoorNavigation.Utilities.Storage;
+using static IndoorNavigation.Utilities.Helper;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static IndoorNavigation.Utilities.TmperorayStatus;
@@ -95,20 +96,8 @@ namespace IndoorNavigation
         {
             base.OnAppearing();
 
-            switch(AppInfo.RequestedTheme){
-                case AppTheme.Light:
-                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                        (Color)Application.Current.Resources["LightNavigationBarColor"];
-                    break;
-                case AppTheme.Dark:
-                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                        (Color)Application.Current.Resources["DarkNavigationBarColor"];
-                    break;
-                default:
-                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
-                        (Color)Application.Current.Resources["LightNavigationBarColor"];
-                    break;
-            }
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+                GetNavigationBarColor();
 
             ((NavigationPage)Application.Current.MainPage).BarTextColor =
                 Color.White;
@@ -116,7 +105,6 @@ namespace IndoorNavigation
             _viewModel = new MainPageViewModel();
             BindingContext = _viewModel;
             RefreshToolbarOptions();
-            //RefreshListView();
         }
 
         private INetworkSetting setting;

@@ -78,7 +78,7 @@ namespace IndoorNavigation.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             //to disable Android Dark mode.
-            //AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
 
             xamarinApp = new App();
             LoadApplication(xamarinApp);

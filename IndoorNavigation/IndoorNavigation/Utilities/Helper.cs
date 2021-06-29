@@ -1,6 +1,7 @@
 ﻿using System;
 using static IndoorNavigation.Utilities.Constants;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 namespace IndoorNavigation.Utilities
 {
     public static class Helper
@@ -30,6 +31,7 @@ namespace IndoorNavigation.Utilities
         public static string GetListTextColor(string userNaming)
         {
             if (userNaming.Trim().ToUpper().Contains(BETA_STRING)) return "#808A87";
+            if (Device.RuntimePlatform == Device.Android) return "#3f51b5";                    
             switch (AppInfo.RequestedTheme){
                 case AppTheme.Dark:
                     return "#f5f5f5";                    
@@ -37,6 +39,23 @@ namespace IndoorNavigation.Utilities
                 default:
                     return "#3f51b5";
             }
+        }
+        public static Color GetNavigationBarColor()
+        {
+            if(Device.RuntimePlatform == Device.Android) 
+                return (Color)Application.Current.Resources["LightNavigationBarColor"];
+
+            switch (AppInfo.RequestedTheme)
+            {
+                case AppTheme.Dark:
+                   return (Color)Application.Current.Resources["DarkNavigationBarColor"];
+                case AppTheme.Light:
+                default:
+                    ((NavigationPage)Application.Current.MainPage).BarBackgroundColor =
+                        (Color)Application.Current.Resources["LightNavigationBarColor"];
+                    break;            
+            }
+            return (Color)Application.Current.Resources["LightNavigationBarColor"];
         }
     }
 }
