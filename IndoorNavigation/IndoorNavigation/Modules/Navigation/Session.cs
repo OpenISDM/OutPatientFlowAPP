@@ -194,6 +194,7 @@ namespace IndoorNavigation.Modules
                         string.Format("{0}/{1}", TmpCurrentProgress,
                         TmpTotalProgress);
 
+                    Console.WriteLine("nextSteps after add getInstruction = " + _nextWaypointStep);
                     _event.OnEventCall(new NavigationEventArgs
                     {
 
@@ -204,6 +205,7 @@ namespace IndoorNavigation.Modules
                     _accumulateStraightDistance +=
                         navigationInstruction._information._distance;
                     _nextWaypointStep++;
+                    NavigateToNextWaypoint(_nextWaypointStep);
                 }
                 _nextWaypointEvent.Reset();
             }
@@ -251,7 +253,8 @@ namespace IndoorNavigation.Modules
             {
                 Console.WriteLine("NavigateProgram");
                 RegionWaypointPoint checkPoint = _waypointsOnRoute[nextStep];
-
+                Console.WriteLine("next step : " + nextStep);
+                Console.WriteLine("checkpoint id : " + checkPoint._waypointID);
                 _iPSModules.AddDetectedBeacon
                     (checkPoint._regionID, checkPoint._waypointID);
 
@@ -296,6 +299,7 @@ namespace IndoorNavigation.Modules
             {
                 _pauseThreadEvent.Wait();
                 Thread.Sleep(500);
+                Console.WriteLine("DetectBeacons");
                 _iPSModules.OpenBeaconScanning(_nextWaypointStep);
                 if (_monitorModeOn)
                     _iPSModules.OpenBeaconMonitoring(_nextWaypointStep - 1);
